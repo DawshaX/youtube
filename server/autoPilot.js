@@ -1,8 +1,11 @@
 // Cosmic Auto-Pilot Engine
 // Runs autonomously without human intervention: scans trends, generates scripts, and publishes
 
+import path from 'path';
+import fs from 'fs';
 import { getTrendingVideos, publishVideo, loadConfig, saveConfig } from './youtubeService.js';
 import { generateViralBlueprint, generateInfiniteViralIdeas } from './viralEngine.js';
+import { listProducedVideos } from './videoFactoryBridge.js';
 
 let autoPilotInterval = null;
 let turboTimeout = null;
@@ -71,17 +74,34 @@ export async function runAutoPilotCycle() {
     const chosenTitle = blueprint.titles[0]?.titleAr || ideaTitle;
     const desc = `${blueprint.multiLanguagePack?.arabic?.description || ''}\n\n${blueprint.hashtagsString}`;
 
-    // 3. Auto Publish / Queue
+    // 3. Link with produced MP4 video file
+    let videoFilePath = null;
+    let thumbnailFilePath = null;
+    try {
+      const producedList = listProducedVideos();
+      if (producedList && producedList.length > 0) {
+        // Pick the latest produced video or mrbeast_challenge
+        const matchedVid = producedList.find(v => v.id === 'mrbeast_challenge') || producedList[0];
+        videoFilePath = matchedVid.path;
+        const cover = path.resolve('content/vids', `${matchedVid.id}-cover.png`);
+        if (fs.existsSync(cover)) thumbnailFilePath = cover;
+        addAutoPilotLog(`ربط ملف الفيديو الفيروسي الحقيقي MP4 (${matchedVid.filename}, ${matchedVid.sizeMB}MB)...`);
+      }
+    } catch (e) {
+      console.warn('Video linking notice:', e.message);
+    }
+
+    // 4. Auto Publish / Queue
     addAutoPilotLog(`نشر الفيديو تلقائياً لقناتك: "${chosenTitle}"`);
     const result = await publishVideo({
-      videoFilePath: null,
-      thumbnailFilePath: null,
+      videoFilePath,
+      thumbnailFilePath,
       title: chosenTitle,
       description: desc,
       tags: blueprint.tags,
       privacyStatus: 'public',
       categoryId: '24',
-      isShort: false
+      isShort: true
     });
 
     autoPilotState.totalAutoPublished += 1;
