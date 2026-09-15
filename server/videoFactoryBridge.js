@@ -219,6 +219,12 @@ print(json.dumps({"ok": True, "video": str(res["video"]), "episode": target_topi
         }
       }, 5000);
 
+      pyProcess.on('error', (err) => {
+        clearInterval(interval);
+        activeJobs[jobId].status = 'error';
+        activeJobs[jobId].error = err.message;
+      });
+
       pyProcess.on('close', (code) => {
         clearInterval(interval);
         try { fs.unlinkSync(topicJsonPath); } catch (_) {}
@@ -226,6 +232,9 @@ print(json.dumps({"ok": True, "video": str(res["video"]), "episode": target_topi
         if (code === 0) {
           try {
             const outPath = path.join(VIDS_DIR, `${topicId}.mp4`);
+            if (!fs.existsSync(outPath) || fs.statSync(outPath).size === 0) {
+              throw new Error('Renderer did not produce a nonempty MP4');
+            }
             activeJobs[jobId].status = 'completed';
             activeJobs[jobId].progress = 100;
             activeJobs[jobId].stage = '✅ تم إنتاج حلقة الفيديو MP4 بنجاح وجاهزة للعرض والنشر!';

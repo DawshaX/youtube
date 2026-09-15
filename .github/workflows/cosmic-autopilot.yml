@@ -1,83 +1,54 @@
 name: CosmicTube Autonomous Auto-Pilot 24/7
-
 on:
   schedule:
-    # Run every 30 minutes 24/7 automatically (00, 30 of every hour)
     - cron: '*/30 * * * *'
-  workflow_dispatch: # Allows manual trigger anytime from GitHub Actions tab or CLI
-
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: cosmictube-channel-publisher
+  cancel-in-progress: false
 jobs:
   run-autopilot:
-    name: Execute 30-Min Viral Cycle
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      actions: write
-
+    timeout-minutes: 28
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
-
-      - name: Setup Node.js 22
-        uses: actions/setup-node@v4
+          ref: arena/01a0a6ed-youtube
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Setup Configuration
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install render dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng fonts-dejavu-core
+          python -m pip install pillow numpy requests edge-tts imageio-ffmpeg arabic-reshaper python-bidi
+      - run: npm ci
+      - name: Produce and publish one real video
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: node scripts/run-autopilot.js
+      - name: Persist confirmed upload history
+        if: always()
         run: |
-          node -e "
-          const fs = require('fs');
-          const path = 'data/config.json';
-          let existing = {};
-          if (fs.existsSync(path)) {
-            try { existing = JSON.parse(fs.readFileSync(path, 'utf-8')); } catch (_) {}
-          }
-          const config = {
-            apiKey: process.env.YOUTUBE_API_KEY || existing.apiKey || '',
-            clientId: process.env.YOUTUBE_CLIENT_ID || existing.clientId || '',
-            clientSecret: process.env.YOUTUBE_CLIENT_SECRET || existing.clientSecret || '',
-            redirectUri: existing.redirectUri || 'http://localhost:3000/api/auth/callback',
-            tokens: existing.tokens || {},
-            connected: true,
-            mode: 'live',
-            channel: existing.channel || {
-              id: 'UC_COSMIC_CHANNEL_001',
-              title: 'Cosmic One - القناة الكونية رقم 1'
-            }
-          };
-          fs.mkdirSync('data', { recursive: true });
-          fs.writeFileSync(path, JSON.stringify(config, null, 2), 'utf-8');
-          console.log('✅ Config successfully prepared for GitHub Actions runner.');
-          "
-
-      - name: Run CosmicTube AutoPilot Cycle
-        run: |
-          node -e "
-          import('./server/autoPilot.js').then(async (m) => {
-            console.log('🚀 [GitHub Cloud Runner] Executing 30-minute AutoPilot viral cycle...');
-            await m.runAutoPilotCycle();
-            console.log('✅ AutoPilot cycle completed successfully.');
-            process.exit(0);
-          }).catch(err => {
-            console.error('❌ AutoPilot execution failed:', err);
-            process.exit(1);
-          });
-          "
-
-      - name: Commit & Push Cycle State to Repository
-        run: |
-          git config --global user.name "CosmicTube AutoPilot [Bot]"
-          git config --global user.email "bot@cosmictube.internal"
-          git add data/saved_videos.json || true
-          git diff --staged --quiet || git commit -m "chore(autopilot): record automated 30-min cycle publish [skip ci]"
-          git push origin main || git push origin arena/01a0a5d4-youtube || true
+          git config user.name 'CosmicTube AutoPilot [Bot]'
+          git config user.email 'bot@cosmictube.internal'
+          git add data/saved_videos.json
+          if ! git diff --staged --quiet; then
+            git commit -m 'chore: record confirmed YouTube upload [skip ci]'
+            git push origin HEAD:arena/01a0a6ed-youtube
+          fi
+      - name: Preserve upload history if pushing fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-history
+          path: data/saved_videos.json
