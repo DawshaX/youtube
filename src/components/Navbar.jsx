@@ -10,7 +10,8 @@ import {
   CheckCircle2, 
   Radio, 
   ExternalLink,
-  Bot
+  Bot,
+  Play
 } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, channelInfo, isConnected, mode, lang, toggleLang }) {
