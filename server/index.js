@@ -69,6 +69,7 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static uploads
 app.use('/uploads', express.static(UPLOADS_DIR));
 app.use('/content/vids', express.static(path.join(ROOT_DIR, 'content', 'vids')));
+app.use('/assets/footage', express.static(path.join(ROOT_DIR, 'assets', 'footage')));
 
 // Configure multer for video & thumbnail uploads
 const storage = multer.diskStorage({
@@ -386,6 +387,98 @@ app.post('/api/github/sync', async (req, res) => {
 // 15. Real Video Factory & 2099 Montage Engine
 app.get('/api/factory/videos', (req, res) => {
   res.json(listProducedVideos());
+});
+
+app.get('/api/footage', (req, res) => {
+  const footageDir = path.join(ROOT_DIR, 'assets', 'footage');
+  if (!fs.existsSync(footageDir)) {
+    return res.json({ clips: [], total: 0 });
+  }
+  const meta = {
+    '01_fire_hook_motion.mp4': {
+      titleAr: 'خطاف الصدمة الناري — ألسنة لهب وشظايا متطايرة',
+      titleEn: 'Fire Hook Shockwave — Roaring Flames & Flying Embers',
+      category: 'challenges',
+      categoryAr: 'تحديات خطيرة',
+      tags: ['fire', 'flames', 'hook', 'mrbeast', 'action', 'danger'],
+      duration: '5.0s',
+      fps: 30,
+      res: '1080x1920 (9:16 Shorts)'
+    },
+    '02_cash_rain_motion.mp4': {
+      titleAr: 'أمطار أوراق النقد 3D — ملايين الدولارات تتساقط',
+      titleEn: '3D Cash Rain Motion — Millions Raining Down',
+      category: 'money',
+      categoryAr: 'أموال وجوائز',
+      tags: ['money', 'cash', 'dollars', 'jackpot', 'mrbeast', 'luxury'],
+      duration: '6.0s',
+      fps: 30,
+      res: '1080x1920 (9:16 Shorts)'
+    },
+    '03_blizzard_freeze_motion.mp4': {
+      titleAr: 'عاصفة ثلجية جليدية — رياح عاتية وصقيع متجمد',
+      titleEn: 'Arctic Blizzard Gale — Freezing Wind & Lens Frost',
+      category: 'survival',
+      categoryAr: 'بقاء وتحمل',
+      tags: ['ice', 'blizzard', 'snow', 'freeze', 'survival', 'arctic'],
+      duration: '6.0s',
+      fps: 30,
+      res: '1080x1920 (9:16 Shorts)'
+    },
+    '04_countdown_hud_motion.mp4': {
+      titleAr: 'مؤقت الخطر وإنذار الطوارئ — رادار وعداد ثوانٍ رقمي',
+      titleEn: 'Emergency Danger HUD — Radar & Digital Countdown Timer',
+      category: 'countdown',
+      categoryAr: 'عدادات وإنذار',
+      tags: ['timer', 'countdown', 'alarm', 'siren', 'hud', 'danger'],
+      duration: '5.0s',
+      fps: 30,
+      res: '1080x1920 (9:16 Shorts)'
+    },
+    '05_confetti_winner_motion.mp4': {
+      titleAr: 'احتفال الفوز الأسطوري — انفجار كونفيتي وأشعة ذهبية',
+      titleEn: 'Epic Winner Celebration — Golden Confetti Cannon Explosion',
+      category: 'celebration',
+      categoryAr: 'فوز وتتويج',
+      tags: ['winner', 'trophy', 'confetti', 'celebration', 'victory'],
+      duration: '5.0s',
+      fps: 30,
+      res: '1080x1920 (9:16 Shorts)'
+    },
+    '06_cash_struggle_close.mp4': {
+      titleAr: 'صراع الأيدي على الكاش — شبكة ليزر أمني وترقب حاسم',
+      titleEn: 'Cash Hands Tension — Security Laser Grid & Lock-In',
+      category: 'money',
+      categoryAr: 'تحدي الصمود',
+      tags: ['hands', 'cash', 'laser', 'contestants', 'tension'],
+      duration: '5.0s',
+      fps: 30,
+      res: '1080x1920 (9:16 Shorts)'
+    }
+  };
+
+  const files = fs.readdirSync(footageDir).filter(f => f.endsWith('.mp4')).sort();
+  const clips = files.map(file => {
+    const fpath = path.join(footageDir, file);
+    const stat = fs.statSync(fpath);
+    const m = meta[file] || {
+      titleAr: `لقطة فيديو ${file}`,
+      titleEn: `Footage Clip ${file}`,
+      category: 'general',
+      categoryAr: 'عام',
+      tags: ['footage', 'viral'],
+      duration: '5.0s',
+      fps: 30,
+      res: '1080x1920'
+    };
+    return {
+      filename: file,
+      url: `/assets/footage/${file}`,
+      sizeMB: (stat.size / (1024 * 1024)).toFixed(2),
+      ...m
+    };
+  });
+  res.json({ clips, total: clips.length });
 });
 
 app.get('/api/factory/topics', (req, res) => {

@@ -11,7 +11,8 @@ import {
   Radio, 
   ExternalLink,
   Bot,
-  Film
+  Film,
+  Clapperboard
 } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, channelInfo, isConnected, mode, lang, toggleLang }) {
@@ -20,6 +21,7 @@ export default function Navbar({ activeTab, setActiveTab, channelInfo, isConnect
   const navItems = [
     { id: 'trends', label: isAr ? 'الرادار والترند' : 'Viral Radar', icon: Flame },
     { id: 'player', label: isAr ? 'مصنع الفيديوهات 2099' : '2099 Video Factory', icon: Film },
+    { id: 'footage', label: isAr ? 'مكتبة اللقطات الجاهزة' : 'Footage Vault', icon: Clapperboard },
     { id: 'script', label: isAr ? 'استوديو السيناريو' : 'Script Studio', icon: Video },
     { id: 'publisher', label: isAr ? 'مركز النشر والرفع' : 'Smart Publisher', icon: UploadCloud },
     { id: 'seo', label: isAr ? 'سيو والهاشتاجات' : 'Tags & SEO', icon: Hash },

@@ -7,6 +7,7 @@ import SeoDominator from './components/SeoDominator.jsx';
 import ChannelConnect from './components/ChannelConnect.jsx';
 import AutoPilot from './components/AutoPilot.jsx';
 import VideoSamplePlayer from './components/VideoSamplePlayer.jsx';
+import FootageVault from './components/FootageVault.jsx';
 import { 
   Flame, 
   Sparkles, 
@@ -129,6 +130,13 @@ export default function App() {
         {activeTab === 'player' && (
           <VideoSamplePlayer 
             onPublishSample={(v) => fetchStatus()}
+            isAr={isAr}
+          />
+        )}
+
+        {activeTab === 'footage' && (
+          <FootageVault 
+            onSelectClipForFactory={(clip) => setActiveTab('player')}
             isAr={isAr}
           />
         )}
