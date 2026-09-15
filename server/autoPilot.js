@@ -3,9 +3,11 @@
 
 import path from 'path';
 import fs from 'fs';
-import { getTrendingVideos, publishVideo, loadConfig, saveConfig } from './youtubeService.js';
-import { generateViralBlueprint, generateInfiniteViralIdeas } from './viralEngine.js';
-import { listProducedVideos } from './videoFactoryBridge.js';
+import { publishVideo } from './youtubeService.js';
+import { startProduceJob, getJobStatus } from './videoFactoryBridge.js';
+import { loadSavedVideos, getYouTubeClient } from './youtubeService.js';
+
+let cycleActive = false;
 
 let autoPilotInterval = null;
 let turboTimeout = null;
@@ -35,94 +37,48 @@ export function addAutoPilotLog(message) {
 }
 
 export async function runAutoPilotCycle() {
-  addAutoPilotLog('بدء دورة الأتمتة الكونية الشاملة...');
+  if (cycleActive) throw new Error('A publishing cycle is already running');
+  cycleActive = true;
   autoPilotState.lastRun = new Date().toISOString();
-
   try {
-    let ideaTitle = '';
-    let category = 'challenges';
+    const { client, isOAuth } = getYouTubeClient();
+    if (!isOAuth || !client) throw new Error('YouTube OAuth is missing. Configure client ID, client secret and refresh token.');
+    const channels = await client.channels.list({ part: ['snippet'], mine: true });
+    if (!channels.data.items?.length) throw new Error('No YouTube channel found for this authorization');
+    addAutoPilotLog(`القناة المتصلة: ${channels.data.items[0].snippet.title}`);
 
-    if (autoPilotState.continuousTurbo) {
-      // Pick a fresh viral idea from the infinite matrix
-      const freshIdeas = generateInfiniteViralIdeas(1);
-      const chosen = freshIdeas[0];
-      ideaTitle = chosen.titleAr;
-      category = chosen.niche || 'challenges';
-      addAutoPilotLog(`[الوضع التوربيني المستمر] سحب فكرة جديدة من مصفوفة الملايين: "${ideaTitle}"`);
-    } else {
-      // 1. Scan Global Trends
-      addAutoPilotLog('مسح ترندات يوتيوب العالمية لرصد الفيديوهات رقم 1...');
-      const trends = await getTrendingVideos('US', 'all');
-      if (trends && trends.length > 0) {
-        const topTrend = trends[Math.floor(Math.random() * Math.min(trends.length, 5))];
-        ideaTitle = topTrend.title;
-        category = topTrend.category || 'challenges';
-        addAutoPilotLog(`تم التقاط أقوى فكرة متصدرة: "${ideaTitle}"`);
-      } else {
-        const fresh = generateInfiniteViralIdeas(1)[0];
-        ideaTitle = fresh.titleAr;
-        category = fresh.niche;
-      }
+    // Use a finite, authored queue, not unrelated trending titles or recycled MP4s.
+    const topics = JSON.parse(fs.readFileSync(path.resolve('content/topics.json'), 'utf8'));
+    const published = loadSavedVideos().filter(v => v.liveUploaded);
+    const topic = topics.find(t => !published.some(v => v.title === `${t.title_ar} #Shorts` || v.title === t.title_ar));
+    if (!topic) throw new Error('Topic queue exhausted. Add new original topics before publishing again.');
+    autoPilotState.currentPublishingTitle = topic.title_ar;
+    const job = await startProduceJob(topic);
+    const deadline = Date.now() + 20 * 60 * 1000;
+    let status;
+    while (Date.now() < deadline) {
+      status = getJobStatus(job.jobId);
+      if (status.status === 'error') throw new Error(status.error);
+      if (status.status === 'completed') break;
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
-
-    autoPilotState.currentPublishingTitle = ideaTitle;
-
-    // 2. Generate Viral Package
-    addAutoPilotLog('توليد السيناريو، خطاف الـ 3 ثواني، وسيو التوزيع الخوارزمي...');
-    const blueprint = generateViralBlueprint(ideaTitle, category);
-
-    const chosenTitle = blueprint.titles[0]?.titleAr || ideaTitle;
-    const desc = `${blueprint.multiLanguagePack?.arabic?.description || ''}\n\n${blueprint.hashtagsString}`;
-
-    // 3. Link with produced MP4 video file
-    let videoFilePath = null;
-    let thumbnailFilePath = null;
-    try {
-      const producedList = listProducedVideos();
-      if (producedList && producedList.length > 0) {
-        // Pick the latest produced video or mrbeast_challenge
-        const matchedVid = producedList.find(v => v.id === 'mrbeast_challenge') || producedList[0];
-        videoFilePath = matchedVid.path;
-        const cover = path.resolve('content/vids', `${matchedVid.id}-cover.png`);
-        if (fs.existsSync(cover)) thumbnailFilePath = cover;
-        addAutoPilotLog(`ربط ملف الفيديو الفيروسي الحقيقي MP4 (${matchedVid.filename}, ${matchedVid.sizeMB}MB)...`);
-      }
-    } catch (e) {
-      console.warn('Video linking notice:', e.message);
-    }
-
-    // 4. Auto Publish / Queue
-    addAutoPilotLog(`نشر الفيديو تلقائياً لقناتك: "${chosenTitle}"`);
+    if (status?.status !== 'completed') throw new Error('Video production timed out');
     const result = await publishVideo({
-      videoFilePath,
-      thumbnailFilePath,
-      title: chosenTitle,
-      description: desc,
-      tags: blueprint.tags,
-      privacyStatus: 'public',
-      categoryId: '24',
-      isShort: true
+      videoFilePath: status.outputVideo.filePath,
+      title: topic.title_ar,
+      description: [topic.hook_ar, ...(topic.facts_ar || []), topic.outro_ar].join('\n\n'),
+      tags: (topic.tags || '').split(','),
+      privacyStatus: 'public', categoryId: '28', isShort: true
     });
-
+    if (!result.video?.liveUploaded) throw new Error('Live upload was not confirmed');
     autoPilotState.totalAutoPublished += 1;
-    addAutoPilotLog(`✅ تم النشر التلقائي بنجاح! رابط الفيديو: ${result.video.url}`);
-
-    // If Continuous Turbo Mode is ON, immediately queue the next video!
-    if (autoPilotState.continuousTurbo && autoPilotState.running) {
-      const delay = autoPilotState.turboDelaySeconds || 20;
-      autoPilotState.nextRun = new Date(Date.now() + delay * 1000).toISOString();
-      addAutoPilotLog(`⚡ [الوضع التوربيني المستمر] تم إنجاز الفيديو #${autoPilotState.totalAutoPublished}! سيبدأ تجهيز ونشر الفيديو التالي تلقائياً بعد ${delay} ثانية...`);
-      
-      if (turboTimeout) clearTimeout(turboTimeout);
-      turboTimeout = setTimeout(() => {
-        if (autoPilotState.running && autoPilotState.continuousTurbo) {
-          runAutoPilotCycle();
-        }
-      }, delay * 1000);
-    }
-
+    addAutoPilotLog(`✅ رابط الفيديو الحقيقي: ${result.video.url}`);
+    return result;
   } catch (err) {
-    addAutoPilotLog(`❌ خطأ أثناء دورة الأتمتة: ${err.message}`);
+    addAutoPilotLog(`❌ ${err.message}`);
+    throw err;
+  } finally {
+    cycleActive = false;
   }
 }
 
@@ -137,16 +93,16 @@ export function startAutoPilot(intervalHours = 0.5, continuousTurbo = false, tur
 
   if (autoPilotState.continuousTurbo) {
     addAutoPilotLog(`🚀 تم تفعيل الوضع التوربيني المستمر (النشر المتواصل غير المنقطع: كل ما ينتهي فيديو يُنشر التالي فوراً بعد ${autoPilotState.turboDelaySeconds} ثانية).`);
-    runAutoPilotCycle();
+    runAutoPilotCycle().catch(() => {});
   } else {
     const ms = autoPilotState.intervalHours * 60 * 60 * 1000;
     autoPilotState.nextRun = new Date(Date.now() + ms).toISOString();
     const intervalMins = Math.round(autoPilotState.intervalHours * 60);
     addAutoPilotLog(`⚡ تم تفعيل الطيار الآلي المستمر بنجاح (النشر التلقائي يعمل دورياً كل ${intervalMins} دقيقة 24/7).`);
-    runAutoPilotCycle();
+    runAutoPilotCycle().catch(() => {});
 
     autoPilotInterval = setInterval(() => {
-      runAutoPilotCycle();
+      runAutoPilotCycle().catch(() => {});
       autoPilotState.nextRun = new Date(Date.now() + ms).toISOString();
     }, ms);
   }

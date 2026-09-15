@@ -365,6 +365,7 @@ export async function publishVideo({
       });
 
       const uploadedVideoId = res.data.id;
+      if (!uploadedVideoId) throw new Error('YouTube returned no video ID');
       let thumbnailUploaded = false;
 
       // Upload thumbnail if provided
@@ -404,40 +405,5 @@ export async function publishVideo({
     }
   }
 
-  // Autonomous / Ready Mode (Simulated upload for seamless immediate testing and production staging)
-  const syntheticId = 'cosmic_' + Math.random().toString(36).substring(2, 11);
-  const formattedTitle = isShort && !title.includes('#Shorts') ? `${title} #Shorts` : title;
-  
-  const videoRecord = {
-    id: syntheticId,
-    title: formattedTitle,
-    description: `${description}\n\n#Viral #Trending #CosmicTube`,
-    publishedAt: new Date().toISOString(),
-    privacyStatus,
-    url: `https://youtu.be/${syntheticId}`,
-    thumbnailUrl: thumbnailFilePath ? `/uploads/${path.basename(thumbnailFilePath)}` : 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=600&auto=format&fit=crop&q=80',
-    liveUploaded: false,
-    channelTitle: config.channel?.title || 'Cosmic One - القناة الكونية رقم 1',
-    views: 1250,
-    likes: 184,
-    tags: Array.isArray(tags) ? tags : tags.split(',').map(t => t.trim())
-  };
-
-  saveVideoRecord(videoRecord);
-
-  // Also update channel stats
-  if (config.channel?.statistics) {
-    const currentCount = parseInt(config.channel.statistics.videoCount || '48', 10);
-    config.channel.statistics.videoCount = (currentCount + 1).toString();
-    saveConfig(config);
-  }
-
-  return {
-    success: true,
-    video: videoRecord,
-    isDemoMode: !config.connected,
-    message: config.connected 
-      ? 'تم تسجيل ونشر الفيديو بنجاح!' 
-      : 'تم تجهيز وحفظ الفيديو بنجاح! عند إدخال مفاتيح OAuth 2.0 في قسم الإعدادات، سيتم الرفع الحي المباشر لقناتك.'
-  };
+  throw new Error('النشر الحقيقي يتطلب ربط OAuth صالحًا وملف فيديو موجودًا؛ لم يتم نشر أي فيديو.');
 }
