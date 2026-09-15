@@ -72,10 +72,32 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
     }
   };
 
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const fetchAuthUrl = async () => {
+    try {
+      const res = await fetch('/api/auth/url');
+      const data = await res.json();
+      if (data.success && data.url) {
+        setAuthUrl(data.url);
+      }
+    } catch (e) {
+      // not ready yet
+    }
+  };
+
   useEffect(() => {
     fetchSettings();
     fetchGitStatus();
+    fetchAuthUrl();
   }, []);
+
+  const handleCopyAuthUrl = () => {
+    if (!authUrl) return;
+    navigator.clipboard.writeText(authUrl);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
+  };
 
   const handleJsonUpload = (e) => {
     const file = e.target.files?.[0];
@@ -597,61 +619,77 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
         </div>
 
         {/* Verification Helper Modal/Box */}
-        {showCodeInput && (
-          <div className="mt-4 p-5 rounded-2xl bg-slate-950 border-2 border-red-500/50 space-y-3 animate-fadeIn">
+        {(showCodeInput || authUrl) && (
+          <div className="mt-4 p-5 rounded-2xl bg-slate-950 border-2 border-red-500/50 space-y-4 animate-fadeIn">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <h4 className="text-xs font-black text-white">
-                  {isAr ? 'تم فتح صفحة تسجيل الدخول بجوجل في نافذة جديدة' : 'Google Auth Opened in New Tab'}
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                <h4 className="text-sm font-black text-white">
+                  {isAr ? '🔗 رابط تفويض القناة المباشر من Google' : 'Direct Google Authorization Link'}
                 </h4>
               </div>
-              <button 
-                type="button" 
-                onClick={() => setShowCodeInput(false)}
-                className="text-xs text-slate-400 hover:text-white"
-              >
-                ✕
-              </button>
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed">
               {isAr 
-                ? 'بعد تسجيل الدخول والموافقة على الصلاحيات في نافذة جوجل، إذا تم تحويلك لصفحة localhost انسخ الرابط كاملاً من شريط المتصفح (أو كود code=) والصقه هنا لتأكيد التفعيل فوراً:'
-                : 'After approving on Google, paste the redirected URL or authorization code here to complete connection:'}
+                ? 'اضغط على الزر الأخضر أدناه لفتح صفحة تسجيل الدخول بجوجل، أو انسخ الرابط وافتحه في المتصفح. بعد تسجيل الدخول واختيار حساب القناة، انسخ الرابط الذي سيظهر لك في شريط العنوان وضعه في الخانة لتأكيد الربط مدى الحياة:'
+                : 'Click the green button below to open Google Login, or copy the URL. After approving, paste the redirected URL here:'}
             </p>
 
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={manualCode}
-                onChange={(e) => setManualCode(e.target.value)}
-                placeholder="http://localhost:3000/api/auth/callback?code=4/0A..."
-                className="flex-1 px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-mono placeholder-slate-500 focus:outline-none focus:border-red-500"
-              />
-              <button
-                type="button"
-                onClick={handleManualCodeSubmit}
-                disabled={exchangingCode || !manualCode.trim()}
-                className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition disabled:opacity-50 flex items-center gap-1.5"
-              >
-                <span>{exchangingCode ? (isAr ? 'جاري التحقق...' : 'Verifying...') : (isAr ? 'تأكيد الربط' : 'Confirm')}</span>
-              </button>
-            </div>
-
+            {/* Direct Open & Copy Link Row */}
             {authUrl && (
-              <div className="pt-2 text-[11px] text-slate-400">
-                <span>{isAr ? 'إذا لم تفتح النافذة تلقائياً، ' : 'If tab did not open, '}</span>
-                <a 
-                  href={authUrl} 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="text-red-400 hover:text-red-300 underline font-semibold"
-                >
-                  {isAr ? 'اضغط هنا لفتح صفحة تسجيل الدخول يدوياً' : 'click here to open login'}
-                </a>
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                  <a
+                    href={authUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs text-center shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>{isAr ? 'اضغط هنا لفتح رابط تسجيل الدخول الآن 🚀' : 'Open Google Auth Link Now 🚀'}</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={handleCopyAuthUrl}
+                    className="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center justify-center gap-1.5 shrink-0"
+                  >
+                    <span>{copiedLink ? (isAr ? 'تم نسخ الرابط! ✅' : 'Copied! ✅') : (isAr ? 'نسخ الرابط 📋' : 'Copy Link 📋')}</span>
+                  </button>
+                </div>
+
+                <div className="text-[11px] font-mono text-slate-500 truncate select-all px-1">
+                  {authUrl}
+                </div>
               </div>
             )}
+
+            {/* Code / URL Input */}
+            <div className="space-y-2 pt-1">
+              <label className="block text-xs font-bold text-slate-300">
+                {isAr ? 'ضع رابط التوجيه (أو كود التفويض code=) هنا لتأكيد التفعيل:' : 'Paste redirect URL or code here:'}
+              </label>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="text"
+                  value={manualCode}
+                  onChange={(e) => setManualCode(e.target.value)}
+                  placeholder="http://localhost:3000/api/auth/callback?code=4/0A..."
+                  className="flex-1 px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-mono placeholder-slate-500 focus:outline-none focus:border-red-500"
+                />
+                <button
+                  type="button"
+                  onClick={handleManualCodeSubmit}
+                  disabled={exchangingCode || !manualCode.trim()}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-black text-xs shadow-lg shadow-red-600/30 transition disabled:opacity-50 flex items-center justify-center gap-2 shrink-0"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>{exchangingCode ? (isAr ? 'جاري التحقق...' : 'Verifying...') : (isAr ? 'تأكيد التفعيل والربط ⚡' : 'Confirm Authorization ⚡')}</span>
+                </button>
+              </div>
+            </div>
+
           </div>
         )}
 
