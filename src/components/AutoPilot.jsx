@@ -231,6 +231,7 @@ export default function AutoPilot({ isAr }) {
             onChange={(e) => setSelectedInterval(Number(e.target.value))}
             className="w-full bg-slate-950 text-white text-xs font-bold p-2 rounded-xl border border-slate-700 focus:outline-none focus:border-red-500"
           >
+            <option value={0.5}>{isAr ? '⚡ كل 30 دقيقة (نشر كثيف مستمر)' : '⚡ Every 30 Minutes'}</option>
             <option value={1}>{isAr ? 'كل ساعة (للقنوات الكبرى)' : 'Every 1 Hour'}</option>
             <option value={3}>{isAr ? 'كل 3 ساعات' : 'Every 3 Hours'}</option>
             <option value={6}>{isAr ? 'كل 6 ساعات (موصى به)' : 'Every 6 Hours (Recommended)'}</option>

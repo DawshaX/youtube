@@ -331,7 +331,7 @@ export default function TrendRadar({ onRemakeVideo, isAr }) {
 
                   {/* Tags */}
                   <div className="mt-2.5 flex flex-wrap gap-1">
-                    {idea.tags.slice(0, 4).map((t, idx) => (
+                    {idea.tags && Array.isArray(idea.tags) && idea.tags.slice(0, 4).map((t, idx) => (
                       <span key={idx} className="px-2 py-0.5 rounded text-[10px] bg-slate-800 text-slate-400">
                         #{t}
                       </span>

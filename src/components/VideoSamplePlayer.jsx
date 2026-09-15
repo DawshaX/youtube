@@ -137,7 +137,7 @@ export default function VideoSamplePlayer({ onPublishSample, isAr }) {
     }
   };
 
-  const currentTimelineItem = currentSample.timeline.find(
+  const currentTimelineItem = currentSample?.timeline?.find(
     (item) => currentTime >= item.start && currentTime <= item.end
   );
 
@@ -251,10 +251,10 @@ export default function VideoSamplePlayer({ onPublishSample, isAr }) {
             {/* Kinetic Animated Subtitle (Just like MrBeast shorts) */}
             <div className="max-w-xl mx-auto p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/10 shadow-2xl">
               <div className="text-sm sm:text-xl font-black text-yellow-300 leading-snug drop-shadow-md">
-                "{currentSample.hookTextAr}"
+                "{currentSample?.hookTextAr || ''}"
               </div>
               <div className="text-xs sm:text-sm text-slate-300 font-mono italic mt-1.5">
-                "{currentSample.hookTextEn}"
+                "{currentSample?.hookTextEn || ''}"
               </div>
             </div>
           </div>
