@@ -454,6 +454,36 @@ app.get('/api/footage', (req, res) => {
       duration: '5.0s',
       fps: 30,
       res: '1080x1920 (9:16 Shorts)'
+    },
+    '07_space_warp_cosmic.mp4': {
+      titleAr: 'قفزة فضاء كونية — سرعة الضوء وسديم مجري',
+      titleEn: 'Cosmic Hyperspace Warp — Light Speed & Galactic Nebula',
+      category: 'science',
+      categoryAr: 'فضاء وعلوم',
+      tags: ['space', 'cosmic', 'warp', 'stars', 'galaxy', 'universe'],
+      duration: '5.0s',
+      fps: 30,
+      res: '1080x1920 (9:16 Shorts)'
+    },
+    '08_neon_cyber_grid.mp4': {
+      titleAr: 'شبكة نيون سايبر — أفق مستقبلي وشمس رقمية',
+      titleEn: 'Neon Cyber Grid — Retro Horizon & Pulsing Digital Sun',
+      category: 'countdown',
+      categoryAr: 'سايبر ومستقبل',
+      tags: ['cyber', 'neon', 'grid', 'synthwave', 'futuristic'],
+      duration: '5.0s',
+      fps: 30,
+      res: '1080x1920 (9:16 Shorts)'
+    },
+    '09_lightning_storm_danger.mp4': {
+      titleAr: 'عاصفة برق ورعد — ومضات صاعقة وأمطار غزيرة',
+      titleEn: 'Violent Lightning Storm — Strobe Flashes & Heavy Rain',
+      category: 'survival',
+      categoryAr: 'عواصف وخطر',
+      tags: ['lightning', 'storm', 'thunder', 'rain', 'extreme'],
+      duration: '5.0s',
+      fps: 30,
+      res: '1080x1920 (9:16 Shorts)'
     }
   };
 
@@ -479,6 +509,112 @@ app.get('/api/footage', (req, res) => {
     };
   });
   res.json({ clips, total: clips.length });
+});
+
+// 15b. Curated Royalty-Free Video Sources Hub
+app.get('/api/footage/sources', (req, res) => {
+  res.json({
+    sources: [
+      {
+        id: 'pexels',
+        name: 'Pexels Videos',
+        badge: 'الأفضل للفيديوهات العمودية 9:16',
+        descriptionAr: 'أكثر من 50,000+ فيديو مجاني 4K وبدون أي حقوق ملكية أو علامة مائية، مع فلتر مخصص للفيديوهات العمودية Portrait لـ Shorts و TikTok.',
+        descriptionEn: '50,000+ free 4K/HD clips with dedicated vertical 9:16 filter. Zero copyright, no watermark, commercial use allowed.',
+        url: 'https://www.pexels.com/videos/',
+        verticalSearchUrl: 'https://www.pexels.com/search/videos/%D8%AA%D8%AD%D8%AF%D9%8A%D8%A7%D8%AA/?orientation=portrait',
+        license: 'Pexels License (Free Commercial Use, No Attribution Required)',
+        apiSupported: true,
+        apiDocs: 'https://www.pexels.com/api/'
+      },
+      {
+        id: 'pixabay',
+        name: 'Pixabay Videos',
+        badge: 'أكبر تنوع للمؤثرات والأنيميشن',
+        descriptionAr: 'مكتبة ضخمة تضم أكثر من 40,000 فيديو ومؤثر بصري وانفجارات وكروما جاهزة للاستخدام الحر المباشر.',
+        descriptionEn: 'Over 40,000 high-quality video clips, visual effects, motion backgrounds, and green screens.',
+        url: 'https://pixabay.com/videos/',
+        verticalSearchUrl: 'https://pixabay.com/videos/search/challenge/',
+        license: 'Pixabay Content License (Commercial Use Allowed, No Attribution Required)',
+        apiSupported: true,
+        apiDocs: 'https://pixabay.com/api/docs/#api_videos'
+      },
+      {
+        id: 'mixkit',
+        name: 'Mixkit (Envato)',
+        badge: 'جودة سينمائية منتقاة',
+        descriptionAr: 'مكتبة سينمائية منتقاة بعناية فائقة من مصوري ومحرري هوليوود بدون أي تسجيل دخول وبتحميل مباشر وفوري.',
+        descriptionEn: 'High-end curated cinematic stock video clips and transitions with instant direct download.',
+        url: 'https://mixkit.co/free-stock-video/',
+        verticalSearchUrl: 'https://mixkit.co/free-stock-video/vertical/',
+        license: 'Mixkit Free License (Free for Commercial YouTube & Social Media)',
+        apiSupported: false
+      },
+      {
+        id: 'coverr',
+        name: 'Coverr.co',
+        badge: 'فيديوهات خلفيات وترندات',
+        descriptionAr: 'منصة متخصصة في المشاهد الجمالية السريعة واللقطات العمودية المخصصة لصناع المحتوى ومنصات التواصل.',
+        descriptionEn: 'Beautiful free stock video footage curated specifically for modern creators and vertical formats.',
+        url: 'https://coverr.co/',
+        verticalSearchUrl: 'https://coverr.co/vertical-videos',
+        license: 'Coverr License (100% Free Commercial Use)',
+        apiSupported: false
+      },
+      {
+        id: 'nasa',
+        name: 'NASA Image & Video Library',
+        badge: 'فضاء وثقوب سوداء ملك عام (Public Domain)',
+        descriptionAr: 'الأرشيف الرسمي المفتوح لوكالة ناسا يضم آلاف الساعات من لقطات الفضاء الحقيقية والمكوك والانفجارات النجمية بدقة 4K مجاناً.',
+        descriptionEn: 'Official NASA media repository with public domain space, planetary, and cosmic footage.',
+        url: 'https://images.nasa.gov/',
+        verticalSearchUrl: 'https://images.nasa.gov/search-results?q=black%20hole&media=video',
+        license: 'Public Domain / Free for Public Education & Creation',
+        apiSupported: true
+      },
+      {
+        id: 'wikimedia',
+        name: 'Wikimedia Commons Video',
+        badge: 'أرشيف عالمي حر (CC0 / CC-BY)',
+        descriptionAr: 'ملايين مقاطع الفيديو المفتوحة والموثقة لطبيعة وتاريخ وأحداث وتجارب علمية من مختلف أنحاء العالم.',
+        descriptionEn: 'Global open repository of educational, nature, and scientific motion videos.',
+        url: 'https://commons.wikimedia.org/wiki/Category:Videos',
+        verticalSearchUrl: 'https://commons.wikimedia.org/w/index.php?search=motion+video',
+        license: 'Creative Commons (CC0 & CC-BY)',
+        apiSupported: true
+      }
+    ]
+  });
+});
+
+// 15c. Dynamic Footage Ingestion & Generation for Factory
+app.post('/api/footage/fetch', express.json(), async (req, res) => {
+  try {
+    const { query = 'space', duration = 5.0 } = req.body;
+    const { exec } = await import('child_process');
+    const util = await import('util');
+    const execAsync = util.promisify(exec);
+
+    const pyCmd = `python3 -c "from xtrendaw.generate_footage_vault import generate_clip_on_demand; print(generate_clip_on_demand('${query.replace(/'/g, "")}', ${duration}))"`;
+    const { stdout, stderr } = await execAsync(pyCmd, { cwd: ROOT_DIR });
+
+    const filename = stdout.trim().split('\n').pop().trim();
+    const clipUrl = `/assets/footage/${filename}`;
+
+    res.json({
+      success: true,
+      message: `تم جلب وتجهيز مشهد «${query}» بنجاح في مكتبة المصنع!`,
+      clip: {
+        filename,
+        url: clipUrl,
+        query,
+        duration: `${duration}s`,
+        res: '1080x1920 (9:16 Shorts)'
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 app.get('/api/factory/topics', (req, res) => {
