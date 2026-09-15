@@ -15,7 +15,10 @@ import {
   Sparkles,
   PlaySquare,
   FileVideo,
-  Layers
+  Layers,
+  Download,
+  Copy,
+  Check
 } from 'lucide-react';
 
 export default function Publisher({ prefillData, channelInfo, isConnected, isAr }) {
@@ -36,6 +39,8 @@ export default function Publisher({ prefillData, channelInfo, isConnected, isAr 
   const [errorMsg, setErrorMsg] = useState('');
 
   const [publishedVideos, setPublishedVideos] = useState([]);
+  const [latestProducedVideo, setLatestProducedVideo] = useState(null);
+  const [copiedAll, setCopiedAll] = useState(false);
   const fileInputRef = useRef(null);
   const thumbInputRef = useRef(null);
 
@@ -48,7 +53,7 @@ export default function Publisher({ prefillData, channelInfo, isConnected, isAr 
     }
   }, [prefillData]);
 
-  // Load uploaded channel videos
+  // Load uploaded channel videos & factory videos
   const fetchUploadedVideos = async () => {
     try {
       const res = await fetch('/api/videos');
@@ -61,8 +66,21 @@ export default function Publisher({ prefillData, channelInfo, isConnected, isAr 
     }
   };
 
+  const fetchFactoryVideos = async () => {
+    try {
+      const res = await fetch('/api/factory/videos');
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        setLatestProducedVideo(data[0]);
+      }
+    } catch (err) {
+      console.error('Fetch factory vids err:', err);
+    }
+  };
+
   useEffect(() => {
     fetchUploadedVideos();
+    fetchFactoryVideos();
   }, []);
 
   const handleVideoSelect = (e) => {
@@ -177,6 +195,89 @@ export default function Publisher({ prefillData, channelInfo, isConnected, isAr 
           </div>
         </div>
       </div>
+
+      {/* Featured Ready-to-Upload Episode (e.g. MrBeast Challenge) */}
+      {latestProducedVideo && (
+        <div className="p-6 rounded-3xl bg-gradient-to-r from-red-950/60 via-slate-900 to-amber-950/30 border-2 border-red-500/40 shadow-2xl flex flex-col md:flex-row items-center gap-6">
+          <div className="w-full md:w-48 aspect-[9/16] rounded-2xl overflow-hidden bg-black shrink-0 border border-red-500/30 shadow-lg relative group">
+            <video
+              src={latestProducedVideo.url}
+              loop
+              muted
+              autoPlay
+              playsInline
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-red-600/90 text-white font-extrabold text-[9px]">
+              MP4 1080×1920
+            </div>
+            <div className="absolute bottom-2 inset-x-2 text-center">
+              <span className="px-2 py-0.5 rounded-md bg-black/80 text-amber-300 font-mono text-[10px]">
+                {latestProducedVideo.sizeMB} MB
+              </span>
+            </div>
+          </div>
+
+          <div className="flex-1 space-y-3 text-right rtl:text-right ltr:text-left">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-bold">
+              <CheckCircle2 className="w-4 h-4" />
+              <span>{isAr ? 'حلقة التحدي الفيروسي جاهزة بالكامل بأعلى جودة' : 'Viral Challenge Episode Ready'}</span>
+            </div>
+
+            <h3 className="text-xl sm:text-2xl font-black text-white leading-tight">
+              {latestProducedVideo.title}
+            </h3>
+
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              {isAr 
+                ? 'فيديو كامل بمشاهد فيديو حقيقية (نيران، أمطار أموال، عواصف، رادار طوارئ، كونفيتي فوز) + تعليق صوتي بشري حماسي + ساوند ديزاين احترافي وكابشنز حركية.'
+                : 'Rendered with 100% fluid motion video clips, human voiceover, hype audio design, and kinetic ASS subtitles.'}
+            </p>
+
+            {/* Quick Actions Bar */}
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              <a
+                href={latestProducedVideo.url}
+                download={latestProducedVideo.filename}
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-red-600/30 transition active:scale-95"
+              >
+                <Download className="w-4 h-4" />
+                <span>{isAr ? 'تحميل الفيديو MP4 لجهازك' : 'Download MP4 File'}</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const metaText = `العنوان:\n${latestProducedVideo.title} #Shorts\n\nالوصف:\nتحدي مستر بيست الأسطوري: 4 متسابقين يتنافسون على 250,000 دولار كاش وسط عواصف ثلجية ونيران مشتعلة وإنذار طوارئ متسارع! من يصمد للنهاية؟\n\n#Viral #Trending #CosmicTube #Shorts #MrBeast\n\nالتاجات:\nShorts, MrBeast, تحدي_النقود, تحديات, BeastGames, كاش, CosmicTube, Viral`;
+                  navigator.clipboard.writeText(metaText);
+                  setCopiedAll(true);
+                  setTimeout(() => setCopiedAll(false), 3000);
+                }}
+                className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs sm:text-sm flex items-center gap-2 border border-slate-700 transition"
+              >
+                {copiedAll ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-slate-400" />}
+                <span>{copiedAll ? (isAr ? 'تم نسخ كل البيانات!' : 'Copied!') : (isAr ? 'نسخ العنوان والوصف والتاجات' : 'Copy Title, Desc & Tags')}</span>
+              </button>
+
+              <a
+                href="https://studio.youtube.com/channel/upload"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2.5 rounded-xl bg-red-950/60 hover:bg-red-900/60 text-red-300 font-bold text-xs sm:text-sm flex items-center gap-2 border border-red-800/60 transition"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span>{isAr ? 'فتح YouTube Studio للرفع فوراً' : 'Open YouTube Studio'}</span>
+              </a>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+              💡 <strong className="text-slate-200">{isAr ? 'توضيح مهم للرفع الحي:' : 'Live Upload Note:'}</strong> {isAr 
+                ? 'نظراً لأن بيئة السحاب مؤمنة وتمنع الاتصال المباشر بالإنترنت الخارجي لسيرفرات جوجل، يمكنك تحميل ملف الـ MP4 بنقرة واحدة ورفعه مباشرة على قناتك، أو تشغيل الكود محلياً على حاسوبك/سيرفرك الخاص (المربوط بـ GitHub) حيث سيعمل الرفع التلقائي المباشر عبر YouTube Data API v3 فوراً.'
+                : 'Because the sandbox environment enforces strict outbound security firewalls, you can download the ready MP4 file and upload it via YouTube Studio, or run the project locally on your machine where YouTube API uploads stream live.'}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Publishing Form Grid */}
       <form onSubmit={handlePublish} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
