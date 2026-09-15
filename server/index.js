@@ -169,6 +169,24 @@ app.post('/api/auth/exchange-code', async (req, res) => {
   }
 });
 
+// 5c. Save Exchanged Tokens Directly
+app.post('/api/auth/save-tokens', async (req, res) => {
+  try {
+    const { tokens, channel } = req.body;
+    const config = loadConfig();
+    config.tokens = tokens;
+    config.connected = true;
+    config.mode = 'live';
+    if (channel) {
+      config.channel = channel;
+    }
+    saveConfig(config);
+    res.json({ success: true, message: 'تم حفظ وتفعيل توكنات القناة بنجاح!' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // 6. Disconnect Channel
 app.post('/api/auth/disconnect', (req, res) => {
   disconnectChannel();

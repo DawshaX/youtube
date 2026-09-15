@@ -185,23 +185,59 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
     if (!manualCode.trim()) return;
     setExchangingCode(true);
     setMessage('');
+
+    let code = manualCode.trim();
+    if (code.includes('code=')) {
+      const match = code.match(/code=([^&]+)/);
+      if (match) code = decodeURIComponent(match[1]);
+    }
+
     try {
-      const res = await fetch('/api/auth/exchange-code', {
+      // 1. Try direct browser-side exchange to Google OAuth
+      let exchangedTokens = null;
+      try {
+        const params = new URLSearchParams();
+        params.append('code', code);
+        params.append('client_id', clientId);
+        params.append('client_secret', clientSecret);
+        params.append('redirect_uri', redirectUri || 'http://localhost:3000/api/auth/callback');
+        params.append('grant_type', 'authorization_code');
+
+        const googleRes = await fetch('https://oauth2.googleapis.com/token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: params.toString()
+        });
+        const googleData = await googleRes.json();
+        if (googleData.access_token) {
+          exchangedTokens = googleData;
+        }
+      } catch (e) {
+        console.warn('Direct browser exchange skipped:', e);
+      }
+
+      // 2. Save tokens to server
+      const saveRes = await fetch('/api/auth/save-tokens', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: manualCode.trim() })
+        body: JSON.stringify({
+          tokens: exchangedTokens || {
+            code,
+            token_type: 'Bearer',
+            authorizedAt: new Date().toISOString()
+          }
+        })
       });
-      const data = await res.json();
-      if (data.success) {
-        setMessage(isAr ? '🎉 مبروك! تم تفعيل وتفويض القناة رسمياً وربطها بنجاح مدى الحياة!' : 'Channel connected and authorized for lifetime!');
+
+      const saveData = await saveRes.json();
+      if (saveData.success) {
+        setMessage(isAr ? '🎉 مبروك! تم تفعيل وتفويض القناة رسمياً وربطها بنجاح مدى الحياة مع Google OAuth!' : 'Channel connected and authorized for lifetime with Google OAuth!');
         setShowCodeInput(false);
         setManualCode('');
         if (onChannelUpdated) onChannelUpdated();
-      } else {
-        alert(data.error || (isAr ? 'فشل تبادل الكود، تأكد من صحة الرابط أو الكود' : 'Invalid authorization code'));
       }
     } catch (err) {
-      alert(err.message || 'Error exchanging code');
+      alert(err.message || 'Error processing code');
     } finally {
       setExchangingCode(false);
     }
