@@ -246,6 +246,22 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
             </div>
 
             <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex gap-3">
+              <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0">
+                ♾️
+              </div>
+              <div>
+                <h4 className="font-bold text-emerald-300 text-sm mb-1">
+                  {isAr ? 'كيف يعمل الاتصال مدى الحياة ويتجدد تلقائياً؟ (Refresh Token)' : 'How Permanent Auto-Renewal Works'}
+                </h4>
+                <p className="text-slate-400 leading-relaxed">
+                  {isAr 
+                    ? 'عند الضغط على "ربط القناة بحساب Google"، يطلب النظام تصريح (Offline Access)، وهذا يمنحه مفتاح تجديد دائم (Refresh Token). خادمنا يقوم بتجديد الاتصال تلقائياً كل ساعة في الخلفية بدون الحاجة لتدخل منك مدى الحياة!'
+                    : 'System requests offline access which yields a permanent Refresh Token that automatically refreshes every hour in the background.'}
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex gap-3">
               <div className="w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold shrink-0">
                 2
               </div>
