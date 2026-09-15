@@ -304,8 +304,8 @@ app.get('/api/autopilot', (req, res) => {
 });
 
 app.post('/api/autopilot/start', (req, res) => {
-  const { intervalHours = 6 } = req.body;
-  const status = startAutoPilot(Number(intervalHours));
+  const { intervalHours = 6, continuousTurbo = false, turboDelaySeconds = 20 } = req.body;
+  const status = startAutoPilot(Number(intervalHours), continuousTurbo, Number(turboDelaySeconds));
   res.json({ success: true, status });
 });
 

@@ -6,6 +6,7 @@ import Publisher from './components/Publisher.jsx';
 import SeoDominator from './components/SeoDominator.jsx';
 import ChannelConnect from './components/ChannelConnect.jsx';
 import AutoPilot from './components/AutoPilot.jsx';
+import VideoSamplePlayer from './components/VideoSamplePlayer.jsx';
 import { 
   Flame, 
   Sparkles, 
@@ -122,6 +123,13 @@ export default function App() {
           <TrendRadar 
             onRemakeVideo={handleRemakeVideo} 
             isAr={isAr} 
+          />
+        )}
+
+        {activeTab === 'player' && (
+          <VideoSamplePlayer 
+            onPublishSample={(v) => fetchStatus()}
+            isAr={isAr}
           />
         )}
 

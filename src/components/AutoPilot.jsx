@@ -19,14 +19,18 @@ import {
 export default function AutoPilot({ isAr }) {
   const [status, setStatus] = useState({
     running: false,
+    continuousTurbo: false,
     lastRun: null,
     nextRun: null,
     intervalHours: 6,
+    turboDelaySeconds: 20,
     totalAutoPublished: 0,
     logs: []
   });
   const [loading, setLoading] = useState(false);
   const [selectedInterval, setSelectedInterval] = useState(6);
+  const [enableTurbo, setEnableTurbo] = useState(false);
+  const [turboDelay, setTurboDelay] = useState(20);
 
   const fetchStatus = async () => {
     try {
@@ -34,6 +38,8 @@ export default function AutoPilot({ isAr }) {
       const data = await res.json();
       setStatus(data);
       if (data.intervalHours) setSelectedInterval(data.intervalHours);
+      if (data.continuousTurbo !== undefined) setEnableTurbo(data.continuousTurbo);
+      if (data.turboDelaySeconds) setTurboDelay(data.turboDelaySeconds);
     } catch (err) {
       console.error('Fetch autopilot status error:', err);
     }
@@ -49,7 +55,11 @@ export default function AutoPilot({ isAr }) {
     setLoading(true);
     try {
       const endpoint = status.running ? '/api/autopilot/stop' : '/api/autopilot/start';
-      const body = status.running ? {} : { intervalHours: selectedInterval };
+      const body = status.running ? {} : { 
+        intervalHours: selectedInterval,
+        continuousTurbo: enableTurbo,
+        turboDelaySeconds: turboDelay
+      };
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -130,6 +140,58 @@ export default function AutoPilot({ isAr }) {
               )}
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Turbo Endless Stream Toggle Banner */}
+      <div className="p-5 rounded-2xl bg-gradient-to-r from-red-950/60 via-slate-900 to-purple-950/60 border-2 border-red-500/40 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-2xl bg-red-500/20 text-red-400 flex items-center justify-center font-black text-xl border border-red-500/40 shrink-0">
+            ⚡
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm sm:text-base font-black text-white">
+                {isAr ? 'الوضع التوربيني للنشر المستمر (Continuous Turbo Stream)' : 'Continuous Turbo Auto-Publisher'}
+              </h3>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-red-500/20 text-red-300 border border-red-500/30 animate-pulse">
+                {isAr ? 'متواصل بدون توقف' : 'Non-Stop'}
+              </span>
+            </div>
+            <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">
+              {isAr 
+                ? 'كل ما ينتهي فيديو من النشر، يسحب الروبوت فكرة جديدة فوراً من مصفوفة الملايين وينشرها تلقائياً بدون انقطاع!' 
+                : 'As soon as one video publishes, immediately generates the next viral idea & publishes non-stop!'}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2 text-xs">
+            <span className="text-slate-400 font-bold">{isAr ? 'الفاصل الزمني:' : 'Delay:'}</span>
+            <select
+              value={turboDelay}
+              onChange={(e) => setTurboDelay(Number(e.target.value))}
+              disabled={status.running}
+              className="bg-slate-950 text-white text-xs font-bold px-2.5 py-1.5 rounded-xl border border-slate-700 focus:outline-none focus:border-red-500"
+            >
+              <option value={10}>{isAr ? '10 ثوانٍ (سريع جداً)' : '10s (Ultra Fast)'}</option>
+              <option value={20}>{isAr ? '20 ثانية (موصى به)' : '20s (Recommended)'}</option>
+              <option value={60}>{isAr ? '1 دقيقة' : '1 Minute'}</option>
+              <option value={300}>{isAr ? '5 دقائق' : '5 Minutes'}</option>
+            </select>
+          </div>
+
+          <label className="flex items-center gap-2 cursor-pointer p-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-red-500/50 transition">
+            <input
+              type="checkbox"
+              checked={enableTurbo}
+              onChange={(e) => setEnableTurbo(e.target.checked)}
+              disabled={status.running}
+              className="w-4 h-4 rounded text-red-600 focus:ring-red-500 bg-slate-800 border-slate-700 cursor-pointer"
+            />
+            <span className="text-xs font-black text-white">{isAr ? 'تفعيل التوربيني' : 'Enable Turbo'}</span>
+          </label>
         </div>
       </div>
 
