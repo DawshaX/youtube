@@ -1,6 +1,6 @@
 {
-  "apiKey": "",
-  "clientId": "",
+  "apiKey": "AIzaSyD8q5xjEqksnUeZxsPByOl__cpC4ZpfIZ4",
+  "clientId": "213467887466-ph910ianqn2e2t7ip12scu6uq9ed5a53.apps.googleusercontent.com",
   "clientSecret": "",
   "redirectUri": "http://localhost:3000/api/auth/callback",
   "tokens": null,

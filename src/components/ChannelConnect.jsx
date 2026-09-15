@@ -27,7 +27,6 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [showGuide, setShowGuide] = useState(true);
-  const [guideStep, setGuideStep] = useState(1);
   const [gitStatus, setGitStatus] = useState(null);
   const [syncingGit, setSyncingGit] = useState(false);
   const [gitSyncMsg, setGitSyncMsg] = useState('');
@@ -74,8 +73,46 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
     fetchGitStatus();
   }, []);
 
+  const handleJsonUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      try {
+        const parsed = JSON.parse(event.target.result);
+        const creds = parsed.web || parsed.installed;
+        if (creds) {
+          if (creds.client_id) setClientId(creds.client_id);
+          if (creds.client_secret) setClientSecret(creds.client_secret);
+          
+          const res = await fetch('/api/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              apiKey,
+              clientId: creds.client_id,
+              clientSecret: creds.client_secret,
+              redirectUri
+            })
+          });
+          const data = await res.json();
+          if (data.success) {
+            setMessage(isAr ? '🎉 تم استخراج وحفظ بيانات OAuth من ملف JSON بنجاح!' : 'OAuth credentials extracted and saved!');
+            if (onChannelUpdated) onChannelUpdated();
+          }
+        } else {
+          alert(isAr ? 'الملف ليس بتنسيق Google OAuth JSON المعروف' : 'Invalid Google OAuth JSON format');
+        }
+      } catch (err) {
+        alert(isAr ? 'تعذر قراءة ملف JSON' : 'Failed to parse JSON file');
+      }
+    };
+    reader.readAsText(file);
+  };
+
   const handleSave = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     setSaving(true);
     setMessage('');
     try {
@@ -108,7 +145,7 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
       if (data.success && data.url) {
         window.location.href = data.url;
       } else {
-        alert(data.error || (isAr ? 'يرجى إدخال Client ID و Client Secret أولاً في النموذج أدناه.' : 'Please configure Client ID & Secret below first.'));
+        alert(data.error || (isAr ? 'يرجى إدخال Client ID و Client Secret أولاً في النموذج أدناه أو استيراد ملف JSON.' : 'Please configure Client ID & Secret below first.'));
       }
     } catch (err) {
       alert(err.message || 'Error generating auth url');
@@ -406,11 +443,38 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
 
       {/* Credentials Configuration Form */}
       <form onSubmit={handleSave} className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-6">
-        <div className="flex items-center gap-2">
-          <Sliders className="w-5 h-5 text-red-500" />
-          <h3 className="text-base font-black text-white">
-            {isAr ? 'إدخال مفاتيح الاعتماد (API Credentials)' : 'API Credentials Configuration'}
-          </h3>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Sliders className="w-5 h-5 text-red-500" />
+            <h3 className="text-base font-black text-white">
+              {isAr ? 'إدخال مفاتيح الاعتماد (API Credentials)' : 'API Credentials Configuration'}
+            </h3>
+          </div>
+
+          <label className="cursor-pointer px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-red-400 border border-slate-700 flex items-center gap-1.5 transition">
+            <input 
+              type="file" 
+              accept=".json" 
+              onChange={handleJsonUpload} 
+              className="hidden" 
+            />
+            <Database className="w-3.5 h-3.5" />
+            <span>{isAr ? 'استيراد ملف client_secret.json' : 'Import JSON File'}</span>
+          </label>
+        </div>
+
+        {/* Quick Drop Notice */}
+        <div className="p-4 rounded-xl bg-red-950/20 border border-red-500/30 flex items-center justify-between gap-4">
+          <div className="text-xs text-slate-300">
+            <span className="font-bold text-white block mb-0.5">
+              {isAr ? '⚡ استيراد فوري بضغطة زر:' : '⚡ 1-Click Fast Import:'}
+            </span>
+            <span>
+              {isAr 
+                ? 'إذا كان لديك ملف client_secret_....json الذي حملته من Google Cloud، اضغط على زر "استيراد ملف" فوق ليتم ملء Client ID والـ Secret تلقائياً!' 
+                : 'Upload your downloaded client_secret JSON file to auto-populate Client ID & Secret.'}
+            </span>
+          </div>
         </div>
 
         <div className="space-y-4">
