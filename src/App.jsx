@@ -5,6 +5,7 @@ import ScriptStudio from './components/ScriptStudio.jsx';
 import Publisher from './components/Publisher.jsx';
 import SeoDominator from './components/SeoDominator.jsx';
 import ChannelConnect from './components/ChannelConnect.jsx';
+import AutoPilot from './components/AutoPilot.jsx';
 import { 
   Flame, 
   Sparkles, 
@@ -143,6 +144,12 @@ export default function App() {
 
         {activeTab === 'seo' && (
           <SeoDominator 
+            isAr={isAr} 
+          />
+        )}
+
+        {activeTab === 'autopilot' && (
+          <AutoPilot 
             isAr={isAr} 
           />
         )}

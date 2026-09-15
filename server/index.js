@@ -20,6 +20,12 @@ import {
   generateViralBlueprint, 
   extractViralTags 
 } from './viralEngine.js';
+import {
+  getAutoPilotStatus,
+  startAutoPilot,
+  stopAutoPilot,
+  runAutoPilotCycle
+} from './autoPilot.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -237,6 +243,27 @@ app.post('/api/upload', upload.fields([
 app.get('/api/videos', (req, res) => {
   const videos = loadSavedVideos();
   res.json(videos);
+});
+
+// 13. Autonomous Auto-Pilot System
+app.get('/api/autopilot', (req, res) => {
+  res.json(getAutoPilotStatus());
+});
+
+app.post('/api/autopilot/start', (req, res) => {
+  const { intervalHours = 6 } = req.body;
+  const status = startAutoPilot(Number(intervalHours));
+  res.json({ success: true, status });
+});
+
+app.post('/api/autopilot/stop', (req, res) => {
+  const status = stopAutoPilot();
+  res.json({ success: true, status });
+});
+
+app.post('/api/autopilot/run-now', async (req, res) => {
+  await runAutoPilotCycle();
+  res.json({ success: true, status: getAutoPilotStatus() });
 });
 
 // Serve frontend build in production
