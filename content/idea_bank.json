@@ -1,5 +1,5 @@
 {
-  "_about": "بنك أفكار نوفا — خطة 3 سنين. كل فكرة سلسلة جاهزة للتنفيذ؛ المصنع يستدعيها وقت الحاجة بالتدريج. الإضافة هنا لا تحذف شيئًا قائمًا.",
+  "_about": "بنك أفكار CosmicTube — خطة 3 سنين. كل فكرة سلسلة جاهزة للتنفيذ؛ المصنع يستدعيها وقت الحاجة بالتدريج. الإضافة هنا لا تحذف شيئًا قائمًا.",
   "series_ready_now": [
     {"id": "quran-windows", "name": "نوافذ القرآن — كل 114 سورة", "status": "شغالة", "volume": "~1500 نافذة × 3 قراء ≈ 4500 حلقة"},
     {"id": "tafsir-windows", "name": "التفسير الميسر لكل نافذة", "status": "شغالة", "volume": "~1500 حلقة"},
@@ -24,7 +24,7 @@
   "media_sources": {
     "images": ["Wikimedia Commons (أساسي)", "Internet Archive (بديل)", "NASA (فضاء/علوم)", "Pollinations AI (مشاهد تاريخية)", "Pixabay (بمفتاح PIXABAY_KEY اختياري)"],
     "videos": ["Internet Archive (عام)", "Pixabay Videos (بمفتاح اختياري)"],
-    "audio": ["islamic.network CDN (تلاوات)", "Piper TTS (صوت نوفا)", "edge-tts (احتياطي)"],
+    "audio": ["islamic.network CDN (تلاوات)", "Piper TTS (صوت CosmicTube)", "edge-tts (احتياطي)"],
     "texts": ["api.alquran.cloud (قرآن/تفسير/ترجمة)", "din_stock.json (مخزون محلي موثق)"]
   },
   "growth_rules": [

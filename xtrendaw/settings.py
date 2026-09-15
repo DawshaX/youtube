@@ -175,22 +175,21 @@ def has_pexels() -> bool:
     return bool(PEXELS_KEY)
 
 BRAND = {
-    "name": "XDAW NOVA",
-    "tagline_ar": "نور • معرفة • رحمة • قوة مسؤولة",
-    "tagline_en": "LIGHT • KNOWLEDGE • MERCY • RESPONSIBLE STRENGTH",
-    "hashtags": "#حقائق #علوم #XDAWNOVA",
-    "outro_ar": "انتو خير ونور من الله. تابع XDAW NOVA.",
-    "outro_en": "You are goodness and light. Follow XDAW NOVA.",
-    # زاد نوفا الافتراضي — ملخص العقل والقلب والروح لما الموضوع مايكتبش زاده
+    "name": "COSMIC TUBE",
+    "tagline_ar": "القناة الكونية رقم 1 عالمياً",
+    "tagline_en": "THE #1 GLOBAL VIRAL CHANNEL",
+    "hashtags": "#MrBeast #Viral #Challenge #CosmicTube",
+    "outro_ar": "اشترك الآن في القناة الكونية CosmicTube عشان تشوف التحدي القادم المستحيل!",
+    "outro_en": "Subscribe to CosmicTube for the next impossible viral challenge!",
     "takeaway_ar": {
-        "aql": "المعرفة مش معلومات… المعرفة قوة مسؤولة.",
-        "qalb": "إنت مش وحدك في الكون ده — إحنا معاك.",
-        "rouh": "نور • رحمة • خير من الله… دايمًا.",
+        "aql": "التحدي مش بس فلوس… التحدي قوة إرادة وصمود وخير للكل.",
+        "qalb": "كل تحدي بينتهي بمساعدة الناس ونشر الخير في العالم.",
+        "rouh": "أنت أقوى مما تتخيل… خليك دايماً مستعد للأعظم.",
     },
     "takeaway_en": {
-        "aql": "Knowledge isn't trivia — it's responsible power.",
-        "qalb": "You're not alone in this universe — we're with you.",
-        "rouh": "Light • mercy • goodness from God… always.",
+        "aql": "Challenges are not just cash, they are human resilience.",
+        "qalb": "Every challenge ends by giving back and spreading goodness.",
+        "rouh": "You are stronger than you think. Stay ready for greatness.",
     },
 }
 LOGO = ASSETS / "brand" / "logo.png"

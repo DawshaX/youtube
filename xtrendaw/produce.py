@@ -41,9 +41,9 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
         if kind.startswith("fact") and 1 <= i <= 3:
             chip = CHIPS_AR[i - 1]
         elif item["seg"] == "takeaway":
-            chip = "زاد نوفا"
+            chip = "سر التحدي الكوني"
         elif item["seg"] == "cta":
-            chip = "كلمتك مسموعة"
+            chip = "تحدي مستر بيست"
         subject = ""
         if i < len(en_lines):
             subject = en_lines[i]

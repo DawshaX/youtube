@@ -1,0 +1,35 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: HookHero,Amiri,92,&H0000FFFF,&H000000FF,&H00000000,&H96000000,-1,0,0,0,100,100,0,0,1,8,3,2,60,60,320,1
+Style: SubHero,Amiri,78,&H00FFFFFF,&H000000FF,&H00000000,&H96000000,-1,0,0,0,100,100,0,0,1,6,2,2,60,60,300,1
+Style: EnglishHero,DejaVuSans,46,&H00E0E0E0,&H000000FF,&H00000000,&H96000000,-1,0,0,0,100,100,0,0,1,4,1,2,60,60,180,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:03.50,HookHero,,0,0,0,,آخر شخص يرفع يده عن جبل النقود!
+Dialogue: 0,0:00:00.00,0:00:03.50,EnglishHero,,0,0,0,,Last to Take Hand Off Cash Wins!
+Dialogue: 0,0:00:03.50,0:00:07.50,HookHero,,0,0,0,,يربح 250,000$ كاش فوراً!
+Dialogue: 0,0:00:03.50,0:00:07.50,EnglishHero,,0,0,0,,Wins $250,000 in Cold Hard Cash!
+Dialogue: 0,0:00:07.50,0:00:11.80,SubHero,,0,0,0,,التحدي بدأ ومعنا 4 متسابقين!
+Dialogue: 0,0:00:07.50,0:00:11.80,EnglishHero,,0,0,0,,The Challenge Begins with 4 Contestants!
+Dialogue: 0,0:00:11.80,0:00:16.00,SubHero,,0,0,0,,الكل يرفض الاستسلام نهائياً!
+Dialogue: 0,0:00:11.80,0:00:16.00,EnglishHero,,0,0,0,,Nobody Refuses to Give Up!
+Dialogue: 0,0:00:16.00,0:00:21.00,HookHero,,0,0,0,,بعد 10 ساعات.. بدأت الصدمة الأولى!
+Dialogue: 0,0:00:16.00,0:00:21.00,EnglishHero,,0,0,0,,After 10 Hours.. The First Twist Hits!
+Dialogue: 0,0:00:21.00,0:00:26.50,HookHero,,0,0,0,,تساقط الثلج وانخفاض لـ -10°C!
+Dialogue: 0,0:00:21.00,0:00:26.50,EnglishHero,,0,0,0,,Freezing Blizzard Dropped to -10°C!
+Dialogue: 0,0:00:26.50,0:00:30.50,SubHero,,0,0,0,,في آخر ثانية قبل انفجار المؤقت...
+Dialogue: 0,0:00:26.50,0:00:30.50,EnglishHero,,0,0,0,,In The Final Second Before Zero...
+Dialogue: 0,0:00:30.50,0:00:34.00,HookHero,,0,0,0,,المتسابق الأخير رفع يده!
+Dialogue: 0,0:00:30.50,0:00:34.00,EnglishHero,,0,0,0,,The Final Contestant Lifted His Hand!
+Dialogue: 0,0:00:34.00,0:00:38.00,HookHero,,0,0,0,,مبروك الفوز بـ 250,000$ وتبرع بالخير!
+Dialogue: 0,0:00:34.00,0:00:38.00,EnglishHero,,0,0,0,,Winner Takes $250,000 & Donates to Charity!
+Dialogue: 0,0:00:38.00,0:00:41.12,SubHero,,0,0,0,,اشترك الآن لتشاهد التحدي المستحيل القادم!
+Dialogue: 0,0:00:38.00,0:00:41.12,EnglishHero,,0,0,0,,Subscribe for the Next Impossible Challenge!

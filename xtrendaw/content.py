@@ -160,10 +160,8 @@ LABELS_AR = ["الحقيقة الأولى:", "الحقيقة الثانية:", "
 LABELS_EN = ["Fact one:", "Fact two:", "And fact three:"]
 
 # دعوة المشاركة الثابتة — المصنع بيكلم المشاهد كأنه قاعد جنبه، وبيسيبه حر
-CTA_AR = ("وقولنا إنت عايز تشوف إيه؟ كل واحد حر — اكتب براحتك في التعليقات أو افتح Issue عندنا، "
-          "ومتستحش… نوفا بتقرأ كل حاجة، وبصراحة بتحب تدلّع جمهورها.")
-CTA_EN = ("Tell us what YOU want to see. Everyone's free — comment or open an Issue, don't be shy… "
-          "NOVA reads everything, and honestly loves spoiling its audience.")
+CTA_AR = ("اشترك الآن في CosmicTube واكتب في التعليقات التحدي الخارق القادم اللي نفسك نخوضه!")
+CTA_EN = ("Subscribe to CosmicTube now and drop your craziest challenge ideas in the comments below!")
 
 
 def _takeaway_text(topic: dict, lang: str) -> str:
@@ -197,7 +195,7 @@ def compose_script(topic: dict, lang: str = "ar") -> list[dict]:
     for i, fact in enumerate(facts[:3]):
         label = labels[i] if i < len(labels) else f"Fact {i + 1}:" if lang == "en" else f"الحقيقة {i + 1}:"
         segs.append({"seg": f"fact{i + 1}", "text": f"{label} {fact.strip()}"})
-    # زاد نوفا — ملخص ذكي للعقل والقلب والروح (الجدّ يستاهل ختامه)
+    # ملخص ذكي للعقل والقلب والروح (الجدّ يستاهل ختامه)
     raw_tk = topic.get(f"takeaway_{lang}")
     if not isinstance(raw_tk, dict):
         raw_tk = None

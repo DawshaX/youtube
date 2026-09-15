@@ -37,25 +37,25 @@ def pending() -> list[dict]:
 
 
 def topic_from(req: dict) -> dict:
-    """طلب مشاهد → موضوع بنفس روح نوفا (بلا اختلاق وقائع)."""
+    """طلب مشاهد → موضوع فيروسي جذاب (بلا اختلاق وقائع)."""
     want = re.sub(r"\s+", " ", req["title"]).strip()[:60]
     return {
         "angle": f"طلب:{req['issue']}",
-        "title_ar": f"إنتو طلبتوها: «{want}»… ونوفا لبّت النداء!",
-        "title_en": f"You asked for '{want}'… NOVA answered!",
-        "hook_ar": f"تحذير: دي مش حلقة عادية — دي طلب من مشاهد حر، ونوفا بتسمع!",
-        "hook_en": "Warning: not a normal episode — a free viewer asked, NOVA listens!",
+        "title_ar": f"إنتو طلبتوها: «{want}»… وجاوبناكم بأقوى فيديو!",
+        "title_en": f"You asked for '{want}'… We answered with the ultimate video!",
+        "hook_ar": f"تحذير: دي مش حلقة عادية — دي طلب من متابعينا الأوفياء!",
+        "hook_en": "Warning: not a normal episode — requested directly by our top viewers!",
         "facts_ar": [
             f"الطلب جه مباشرة من قناة المشاركة: «{want}».",
-            "نوفا بتقرأ كل الطلبات وبتختار الأكتر مطلبًا — صوتك مسموع بجد.",
-            "وإنت كمان حر… باب الطلبات مفتحت تحت أي فيديو وعلى الصفحة.",
+            "فريق CosmicTube يقرأ كل الطلبات ويختار الأقوى والأكثر طلباً.",
+            "وإنت كمان حر… باب الطلبات مفتوح تحت أي فيديو وعلى الصفحة.",
         ],
         "facts_en": [
-            f"The request came straight from our participation channel: '{want}'.",
-            "NOVA reads every request and picks the most wanted — your voice matters.",
+            f"The request came straight from our community: '{want}'.",
+            "CosmicTube reviews every viral idea — your voice matters.",
             "You're free too… the request door is open under every video.",
         ],
-        "tags": "طلب_مشاهد,نوفا_تسمع,XTreNDAW",
+        "tags": "طلب_مشاهد,CosmicTube,viral,shorts",
         "_issue": req["issue"],
     }
 
@@ -68,7 +68,7 @@ def answer_and_close(issue: int, video_url: str) -> None:
     try:
         _rq.post(f"{API}/repos/{_repo()}/issues/{issue}/comments",
                  json={"body": f"🎬 طلبك اتنفذ! الحلقة نزلت: {video_url}\n"
-                               "— نوفا 🖤 إنت حر، اطلب تاني في أي وقت."},
+                               "— فريق CosmicTube 🚀 اطلب تاني في أي وقت."},
                  headers=github_store._headers(tok), timeout=30)
         _rq.patch(f"{API}/repos/{_repo()}/issues/{issue}",
                   json={"state": "closed"},

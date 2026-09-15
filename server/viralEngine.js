@@ -13,6 +13,24 @@ export const VIRAL_CATEGORIES = [
 
 export const TOP_GLOBAL_TRENDS = [
   {
+    id: 'mrbeast_challenge',
+    title: 'آخر شخص يرفع يده عن جبل النقود يربح 250,000$',
+    titleEn: 'Last Person to Take Hand Off Cash Wins $250,000',
+    channelTitle: 'MrBeast Arena',
+    channelAvatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=120&auto=format&fit=crop&q=80',
+    views: 128500000,
+    likes: 9400000,
+    comments: 520000,
+    publishedDaysAgo: 2,
+    category: 'challenges',
+    thumbnail: '/content/vids/mrbeast_highlight.gif',
+    velocity: '42.8M مشاهدة / يوم',
+    viralScore: 100,
+    hookBreakdown: 'في الثانية الأولى: مقيد في النيران ورهان 250 ألف دولار كاش لا يصدقه عقل!',
+    tags: ['مستر بيست', 'mrbeast', 'تحدي النقود', 'beast games', '250k challenge', 'hand on cash', 'survival', 'shorts', 'viral'],
+    retentionSecret: 'مؤثرات صوتية هادرة (Sub-bass, Whoosh, Siren)، إيقاع 135 BPM، وساعة عد تنازلي متسارعة.'
+  },
+  {
     id: 'trend-01',
     title: 'عشت 7 أيام في غرفة بيضاء بالكامل بدون أي صوت أو بشر!',
     titleEn: 'I Survived 7 Days in a Completely White Silent Room!',

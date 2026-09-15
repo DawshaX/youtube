@@ -102,7 +102,7 @@ def _llm_topic() -> dict | None:
 
 
 def trend_topic(skip: set | None = None) -> dict | None:
-    """موضوع من الرادار اللحظي: نوفا بتركب التريند بروحها (بلا اختلاق وقائع —
+    """موضوع من الرادار اللحظي: القناة بتركب التريند بروحها (بلا اختلاق وقائع —
     كل "حقيقة" هنا رقم حقيقي من الرادار نفسه). بيعدّي المستهلك قبل كده."""
     from . import trend
 
@@ -130,14 +130,14 @@ def trend_topic(skip: set | None = None) -> dict | None:
             "facts_ar": [
                 f"أكتر من {t['traffic_raw']} بحث عليه في ساعات على جوجل.",
                 f"الإشارة التقطها الرادار من {srcs} مصدر مختلف في نفس اللحظة.",
-                "ونوفا شايفة كل حاجة… بس إحنا بنختارلك اللي يستاهل بس.",
+                "ورادار CosmicTube يرصد كل حركة لاختيار ما يستحق فقط.",
             ],
             "facts_en": [
                 f"Over {t['traffic_raw']} searches on Google in hours.",
                 f"Our radar caught it from {srcs} different sources at once.",
-                "NOVA sees everything… we only pick what's worth it.",
+                "CosmicTube radar catches every viral shift instantly.",
             ],
-            "tags": "ترند,رادار_نوفا,XTreNDAW",
+            "tags": "ترند,رادار_كوزميك,CosmicTube,viral",
             "_visual_queries": queries,
             "takeaway_ar": {
                 "aql": "الترند بيعدي… بس اللي بيفهم ليه انتشر بيستفيد.",
