@@ -652,4 +652,11 @@ if (fs.existsSync(DIST_DIR)) {
 // Start Server
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌌 Cosmic YouTube Engine running on http://0.0.0.0:${PORT}`);
+  // Start 30-minute AutoPilot automatically 24/7
+  try {
+    startAutoPilot(0.5);
+    console.log('🤖 AutoPilot 24/7 initialized: Scheduled every 30 minutes continuous publishing.');
+  } catch (err) {
+    console.error('Failed to init AutoPilot:', err.message);
+  }
 });

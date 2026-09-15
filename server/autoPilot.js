@@ -12,7 +12,7 @@ let autoPilotState = {
   continuousTurbo: false,
   lastRun: null,
   nextRun: null,
-  intervalHours: 6,
+  intervalHours: 0.5,
   turboDelaySeconds: 20,
   totalAutoPublished: 0,
   currentPublishingTitle: '',
@@ -106,14 +106,14 @@ export async function runAutoPilotCycle() {
   }
 }
 
-export function startAutoPilot(intervalHours = 6, continuousTurbo = false, turboDelaySeconds = 20) {
+export function startAutoPilot(intervalHours = 0.5, continuousTurbo = false, turboDelaySeconds = 20) {
   if (autoPilotInterval) clearInterval(autoPilotInterval);
   if (turboTimeout) clearTimeout(turboTimeout);
 
   autoPilotState.running = true;
   autoPilotState.continuousTurbo = Boolean(continuousTurbo);
   autoPilotState.turboDelaySeconds = Number(turboDelaySeconds) || 20;
-  autoPilotState.intervalHours = Number(intervalHours) || 6;
+  autoPilotState.intervalHours = Number(intervalHours) || 0.5;
 
   if (autoPilotState.continuousTurbo) {
     addAutoPilotLog(`🚀 تم تفعيل الوضع التوربيني المستمر (النشر المتواصل غير المنقطع: كل ما ينتهي فيديو يُنشر التالي فوراً بعد ${autoPilotState.turboDelaySeconds} ثانية).`);
@@ -121,7 +121,8 @@ export function startAutoPilot(intervalHours = 6, continuousTurbo = false, turbo
   } else {
     const ms = autoPilotState.intervalHours * 60 * 60 * 1000;
     autoPilotState.nextRun = new Date(Date.now() + ms).toISOString();
-    addAutoPilotLog(`تم تفعيل الطيار الآلي المستمر بنجاح (يعمل كل ${autoPilotState.intervalHours} ساعات تلقائياً).`);
+    const intervalMins = Math.round(autoPilotState.intervalHours * 60);
+    addAutoPilotLog(`⚡ تم تفعيل الطيار الآلي المستمر بنجاح (النشر التلقائي يعمل دورياً كل ${intervalMins} دقيقة 24/7).`);
     runAutoPilotCycle();
 
     autoPilotInterval = setInterval(() => {
