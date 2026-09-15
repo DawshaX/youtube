@@ -4,3 +4,4 @@ uploads/*
 dist
 .env
 .DS_Store
+data/config.json

@@ -150,6 +150,25 @@ app.get('/api/auth/callback', async (req, res) => {
   }
 });
 
+// 5b. Manual OAuth Code Exchange (Fallback for cloud preview proxies)
+app.post('/api/auth/exchange-code', async (req, res) => {
+  try {
+    let { code } = req.body;
+    if (!code || !code.trim()) {
+      return res.status(400).json({ success: false, error: 'كود التفويض مطلوب' });
+    }
+    code = code.trim();
+    if (code.includes('code=')) {
+      const match = code.match(/code=([^&]+)/);
+      if (match) code = decodeURIComponent(match[1]);
+    }
+    const result = await handleOAuthCallback(code);
+    res.json({ success: true, channel: result.channel });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // 6. Disconnect Channel
 app.post('/api/auth/disconnect', (req, res) => {
   disconnectChannel();

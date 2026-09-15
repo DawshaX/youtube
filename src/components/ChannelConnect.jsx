@@ -30,6 +30,10 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
   const [gitStatus, setGitStatus] = useState(null);
   const [syncingGit, setSyncingGit] = useState(false);
   const [gitSyncMsg, setGitSyncMsg] = useState('');
+  const [manualCode, setManualCode] = useState('');
+  const [exchangingCode, setExchangingCode] = useState(false);
+  const [showCodeInput, setShowCodeInput] = useState(false);
+  const [authUrl, setAuthUrl] = useState('');
 
   const fetchGitStatus = async () => {
     try {
@@ -143,12 +147,41 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
       const res = await fetch('/api/auth/url');
       const data = await res.json();
       if (data.success && data.url) {
-        window.location.href = data.url;
+        setAuthUrl(data.url);
+        setShowCodeInput(true);
+        window.open(data.url, '_blank');
       } else {
         alert(data.error || (isAr ? 'يرجى إدخال Client ID و Client Secret أولاً في النموذج أدناه أو استيراد ملف JSON.' : 'Please configure Client ID & Secret below first.'));
       }
     } catch (err) {
       alert(err.message || 'Error generating auth url');
+    }
+  };
+
+  const handleManualCodeSubmit = async (e) => {
+    e.preventDefault();
+    if (!manualCode.trim()) return;
+    setExchangingCode(true);
+    setMessage('');
+    try {
+      const res = await fetch('/api/auth/exchange-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: manualCode.trim() })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setMessage(isAr ? '🎉 مبروك! تم تفعيل وتفويض القناة رسمياً وربطها بنجاح مدى الحياة!' : 'Channel connected and authorized for lifetime!');
+        setShowCodeInput(false);
+        setManualCode('');
+        if (onChannelUpdated) onChannelUpdated();
+      } else {
+        alert(data.error || (isAr ? 'فشل تبادل الكود، تأكد من صحة الرابط أو الكود' : 'Invalid authorization code'));
+      }
+    } catch (err) {
+      alert(err.message || 'Error exchanging code');
+    } finally {
+      setExchangingCode(false);
     }
   };
 
@@ -562,6 +595,65 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
             <span>{isAr ? 'بدء تفويض القناة الآن (OAuth)' : 'Authorize Channel Now'}</span>
           </button>
         </div>
+
+        {/* Verification Helper Modal/Box */}
+        {showCodeInput && (
+          <div className="mt-4 p-5 rounded-2xl bg-slate-950 border-2 border-red-500/50 space-y-3 animate-fadeIn">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <h4 className="text-xs font-black text-white">
+                  {isAr ? 'تم فتح صفحة تسجيل الدخول بجوجل في نافذة جديدة' : 'Google Auth Opened in New Tab'}
+                </h4>
+              </div>
+              <button 
+                type="button" 
+                onClick={() => setShowCodeInput(false)}
+                className="text-xs text-slate-400 hover:text-white"
+              >
+                ✕
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              {isAr 
+                ? 'بعد تسجيل الدخول والموافقة على الصلاحيات في نافذة جوجل، إذا تم تحويلك لصفحة localhost انسخ الرابط كاملاً من شريط المتصفح (أو كود code=) والصقه هنا لتأكيد التفعيل فوراً:'
+                : 'After approving on Google, paste the redirected URL or authorization code here to complete connection:'}
+            </p>
+
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={manualCode}
+                onChange={(e) => setManualCode(e.target.value)}
+                placeholder="http://localhost:3000/api/auth/callback?code=4/0A..."
+                className="flex-1 px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-mono placeholder-slate-500 focus:outline-none focus:border-red-500"
+              />
+              <button
+                type="button"
+                onClick={handleManualCodeSubmit}
+                disabled={exchangingCode || !manualCode.trim()}
+                className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition disabled:opacity-50 flex items-center gap-1.5"
+              >
+                <span>{exchangingCode ? (isAr ? 'جاري التحقق...' : 'Verifying...') : (isAr ? 'تأكيد الربط' : 'Confirm')}</span>
+              </button>
+            </div>
+
+            {authUrl && (
+              <div className="pt-2 text-[11px] text-slate-400">
+                <span>{isAr ? 'إذا لم تفتح النافذة تلقائياً، ' : 'If tab did not open, '}</span>
+                <a 
+                  href={authUrl} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="text-red-400 hover:text-red-300 underline font-semibold"
+                >
+                  {isAr ? 'اضغط هنا لفتح صفحة تسجيل الدخول يدوياً' : 'click here to open login'}
+                </a>
+              </div>
+            )}
+          </div>
+        )}
 
       </form>
 
