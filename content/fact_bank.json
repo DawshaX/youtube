@@ -1,0 +1,68 @@
+[
+  {"theme": "الفضاء", "theme_en": "Space", "title_ar": "أسرار الكون", "title_en": "Secrets of the cosmos",
+   "scene_queries": ["deep space stars", "galaxy nebula", "astronaut spacewalk", "planet earth orbit"],
+   "tags": "فضاء, كون, علوم, داوسها",
+   "facts": [
+     {"ar": "الشمس تفقد 4 ملايين طن من كتلتها كل ثانية في صورة ضوء — ومع ذلك ستعيش مليارات السنين!", "en": "The sun converts 4 million tons of itself into light every second — and still lives for billions of years!"},
+     {"ar": "يوجد كوكب خارج مجموعتنا تتساقط فيه الأمواج من الجليد الساخن والياقوت السائل!", "en": "Some exoplanets rain hot ice and liquid ruby from their skies!"},
+     {"ar": "لو كان تاريخ الكون سنة كاملة، ظهر الإنسان في آخر 30 دقيقة فقط!", "en": "If the universe's history were one year, humans appeared in the last 30 minutes!"},
+     {"ar": "يوم على كوكب الزهرة أطول من سنته — يدور حول نفسه أبطأ من دورانه حول الشمس!", "en": "A day on Venus is longer than its year — it spins slower than it orbits!"},
+     {"ar": "المجرة أندروميدا تقترب منا 110 كم كل ثانية — ستنصهر ب مجرتنا بعد 4.5 مليار سنة!", "en": "Andromeda approaches us at 110 km per second — it will merge with our galaxy in 4.5 billion years!"},
+     {"ar": "صوت انفجار النجوم لا يُسمع في الفضاء لأنه لا هواء — لكن موجاته الحقيقية تنتشر عبر غاز المجرات!", "en": "Star explosions are silent in vacuum — yet their real pressure waves travel through galaxy gas!"}
+   ]},
+  {"theme": "جسم الإنسان", "theme_en": "Human body", "title_ar": "عجائب جسدك", "title_en": "Wonders of your body",
+   "scene_queries": ["human body scan", "heartbeat animation", "neurons firing", "dna helix"],
+   "tags": "جسم الإنسان, صحة, علوم, داوسها",
+   "facts": [
+     {"ar": "قلبك يضخ نحو 7500 لتر دم يوميًا — بدون أن تأمره ولا مرة!", "en": "Your heart pumps about 7,500 liters of blood daily — without a single order from you!"},
+     {"ar": "أعصابك تنقل الإشارات بسرعة حتى 430 كم/س — أسرع سيارات السباق!", "en": "Your nerves fire signals up to 430 km/h — faster than race cars!"},
+     {"ar": "معدتك تحيط نفسها بغشاء جديد كل 3 أيام — وإلا هضمتها أكلها!", "en": "Your stomach renews its lining every 3 days — or it would digest itself!"},
+     {"ar": "عظامك أقوى من الخرسانة — قطعة عظم بحجم كبريت تتحمل 9 أطنان!!", "en": "Your bones are stronger than concrete — a matchbox-sized piece bears 9 tons!"},
+     {"ar": "دماغك يستهلك 20% من طاقتك وهو 2% من وزنك — جهاز فاخر وجائع دائمًا!", "en": "Your brain uses 20% of your energy while being 2% of your weight!"},
+     {"ar": "جسمك ينتج 25 مليون خلية جديدة كل ثانية — مصنع لا يتوقف أبدًا!", "en": "Your body creates 25 million new cells every second — a factory that never stops!"}
+   ]},
+  {"theme": "الحيوان", "theme_en": "Animals", "title_ar": "أسرار الحيوان", "title_en": "Animal secrets",
+   "scene_queries": ["wild animals nature", "animal closeup eyes", "savanna wildlife", "ocean whale"],
+   "tags": "حيوانات, طبيعة, علوم, داوسها",
+   "facts": [
+     {"ar": "قلب الحوت الأزرق بحجم سيارة صغيرة وينبض 8-10 نبضات فقط في الدقيقة!", "en": "A blue whale's heart is the size of a small car and beats just 8-10 times a minute!"},
+     {"ar": "الأخطبوط لديه 9 أدمغة — دماغ مركزي وواحدة في كل ذراع!", "en": "An octopus has 9 brains — one central and one in each arm!"},
+     {"ar": "النمل لا يملك رئتين — يتنفس عبر ثقوب مجهرية في جسمه!", "en": "Ants have no lungs — they breathe through microscopic holes in their body!"},
+     {"ar": "البطريق يقدم حجرًا جميلًا لشريكته كعرض زواج — أنضج من بعض البشر!", "en": "A penguin offers his mate a beautiful pebble as a marriage proposal!"},
+     {"ar": "الحمار الوحشي جلده أسود بالكامل — خطوطه شعر فقط!", "en": "A zebra's skin is entirely black — its stripes are just hair!"},
+     {"ar": "سلحفاة جالاباجوس يمكن أن تعيش أكثر من 150 سنة — رأت 3 قرون تتبدل!", "en": "Galápagos tortoises live over 150 years — witnessing three changing centuries!"}
+   ]},
+  {"theme": "الاختراعات والتكنولوجيا", "theme_en": "Inventions & tech", "title_ar": "عجائب التكنولوجيا", "title_en": "Tech wonders",
+   "scene_queries": ["technology circuit", "robot arm factory", "futuristic city", "code screen glow"],
+   "tags": "تكنولوجيا, اختراعات, علوم, داوسها",
+   "facts": [
+     {"ar": "أول رسالة بريد إلكتروني في التاريخ كانت حروفًا عشوائية لأن المخترع لم يهتم بالمعنى!", "en": "The first email in history was random letters — the inventor didn't care about meaning!"},
+     {"ar": "أول كاميرا رقمية اخترعها مهندس كوداك عام 1975 — فرفضت الشركة فكرتها خوفًا على الفيلم!", "en": "The first digital camera was built at Kodak in 1975 — the company rejected it to protect film!"},
+     {"ar": "الهاتف الذي تحمله الآن أقوى من حواسيب أنزلت البشر على القمر بملايين المرات!", "en": "The phone in your pocket is millions of times more powerful than the computers that landed us on the Moon!"},
+     {"ar": "شبكة الإنترنت تعبر المحيطات كابلات تحت البحر إذا مددتها لتمتد إلى القمر 13 مرة!", "en": "Undersea internet cables, if stretched, would reach the Moon 13 times!"},
+     {"ar": "أول روبوت صناعي كان يزن 1.5 طن ويعمل بحقن المياه المضغوطة!", "en": "The first industrial robot weighed 1.5 tons and ran on hydraulic water pressure!"},
+     {"ar": "كلمة روبوت جاءت من مسرحية تشيكية عام 1920 معناها «العمل القسري»!", "en": "The word robot comes from a 1920 Czech play meaning forced labor!"}
+   ]},
+  {"theme": "التاريخ الإسلامي والعربي", "theme_en": "Islamic & Arab history", "title_ar": "مجد الحضارة العربية", "title_en": "Glory of Arab civilization",
+   "scene_queries": ["islamic architecture", "old arabic manuscripts", "ancient observatory", "historic library"],
+   "tags": "تاريخ إسلامي, حضارة, علوم, داوسها",
+   "facts": [
+     {"ar": "العالم ابن الهيثم وضع قواعد المنهج العلمي قبل 1000 سنة — كتب في البصريات ما درّس العالم قرونًا!", "en": "Ibn al-Haytham founded the scientific method 1,000 years ago — his optics taught the world for centuries!"},
+     {"ar": "الخوارزمي أعطى العالم كلمة «خوارزمية» (Algorithm) وأسس الجبر — الرياضيات تتكلم العربية!", "en": "Al-Khwarizmi gave the world the word Algorithm and founded algebra — math speaks Arabic!"},
+     {"ar": "بيت الحكمة في بغداد كان أضخم مركز بحثي في العالم — مترجموا العلوم كلها للعربية!", "en": "Baghdad's House of Wisdom was the world's largest research center — translating all science into Arabic!"},
+     {"ar": "الزهراوي اخترع أكثر من 200 أداة جراحية — بعضها يستخدم في غرف العمليات حتى اليوم!", "en": "Al-Zahrawi invented 200+ surgical instruments — some are used in operating rooms today!"},
+     {"ar": "الجامع الأزهر أُنشئ عام 970م وظل مؤسسة تعليمية عاملة لأكثر من ألف عام دون توقف!", "en": "Al-Azhar, founded in 970 CE, has taught continuously for over a thousand years!"},
+     {"ar": "الفاطميون بنوا أول جامعة للنساء في التاريخ الحديث — ابنة القائم بأمر الله رعت العلماء!", "en": "Fatimid rulers sponsored women scholars — princesses funded science a millennium ago!"}
+   ]},
+  {"theme": "النبات والغذاء", "theme_en": "Plants & food", "title_ar": "أسرار النبات", "title_en": "Plant secrets",
+   "scene_queries": ["green leaves macro", "garden vegetables", "forest sunlight", "farm field aerial"],
+   "tags": "نبات, طبيعة, صحة, داوسها",
+   "facts": [
+     {"ar": "معظم أكسجين الأرض يأتي من المحيط — العوالق النباتية تصنع 70% من كل نفس تلتقطه!", "en": "Most of Earth's oxygen comes from the ocean — plankton make 70% of every breath you take!"},
+     {"ar": "الموز المشترى من السوق كله نسخة واحدة وراثيًا — موزة كافنديش متماثلة حول العالم!", "en": "Every supermarket banana is a genetic clone — Cavendish bananas are identical worldwide!"},
+     {"ar": "العسل لا يفسد أبدًا — عُثر على عسل صالح للأكل في مقابر مصرية عمره 3000 سنة!", "en": "Honey never spoils — 3,000-year-old edible honey was found in Egyptian tombs!"},
+     {"ar": "الشوكولاتة كانت عملة في حضارة المايا — كنت تشتري بها الطعام!", "en": "Chocolate was currency for the Maya — you could buy food with cocoa beans!"},
+     {"ar": "الفلفل الحار لا يحرقك فعليًا — يخدع مستقبلات الحرارة في لسانك فقط!", "en": "Chili peppers don't actually burn you — they merely trick your heat receptors!"},
+     {"ar": "جذور شجرة واحدة قد تمتد أوسع من تاجها بعشرات الأمتار — مدينة خفية تحت الأرض!", "en": "A single tree's roots can spread far wider than its crown — a hidden underground city!"}
+   ]}
+]

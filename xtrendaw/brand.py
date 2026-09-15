@@ -1,0 +1,55 @@
+"""غلاف الحلقة — صورة 1080×1920 بنفس هوية المشاهد.
+
+المنصات (Shorts/Reels) بتاخد غلاف رأسي. بنطلعه من نفس الخلفية المولّدة
+عشان الهوية تفضل ثابتة، وبنضيف العنوان واسم المشروع.
+"""
+from __future__ import annotations
+
+from pathlib import Path
+
+from PIL import Image
+
+from . import settings, textrender
+
+W, H = settings.VIDEO["width"], settings.VIDEO["height"]
+
+
+def compose_cover(topic: dict, out_path: Path, seed: str = "") -> Path:
+    """غلاف رأسي سينمائي: خلفية مصورة حقيقية + العنوان بخط أميري بارز."""
+    from . import scenes
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    bg_tmp = out_path.with_suffix(".bg.png")
+    ok = scenes.load_real_asset("hook", bg_tmp)
+    if not ok:
+        bg_tmp = scenes.render_bg(bg_tmp, "hook", seed or topic["id"])
+    base = Image.open(bg_tmp).convert("RGB")
+
+    # العنوان في منتصف الصورة
+    title_layer = textrender.text_image(
+        topic["title_ar"], out_path.with_suffix(".t.png"),
+        canvas=(W, H), font_size=92, y_ratio=0.44, max_width_ratio=0.84,
+    )
+    base.paste(Image.open(title_layer), (0, 0), Image.open(title_layer))
+
+    # اللوجو فوق العنوان — قالب ثابت
+    if settings.LOGO.exists():
+        logo = scenes.load_logo(260)
+        base.paste(logo, ((W - 260) // 2, int(H * 0.16)), logo)
+
+    # اسم البراند + التاجلاين تحت
+    for txt, yr, fs, fill in [
+        (settings.BRAND["name"], 0.86, 60, "#ffd166"),
+        (settings.BRAND["tagline_ar"], 0.925, 40, "#ff8080"),
+    ]:
+        layer = textrender.text_image(
+            txt, out_path.with_suffix(".b.png"), canvas=(W, H),
+            font_size=fs, fill=fill, y_ratio=yr, max_width_ratio=0.8, stroke_width=4,
+        )
+        base.paste(Image.open(layer), (0, 0), Image.open(layer))
+
+    base.save(out_path, "PNG")
+    # Workspace lightweight: delete intermediate cover layers
+    for tmp in (".bg.png", ".t.png", ".b.png"):
+        out_path.with_suffix(tmp).unlink(missing_ok=True)
+    return out_path
