@@ -313,7 +313,64 @@ export function generateViralBlueprint(topicOrVideo, category = 'challenges') {
   };
 }
 
-// Extract viral tags based on topic
+// The Infinite Million-Ideas Matrix Generator
+export const IDEA_COMPONENTS = {
+  subjects: [
+    { ar: '100 شخص من 100 دولة مختلفة', en: '100 People from 100 Different Countries' },
+    { ar: '50 طفلاً ضد 50 بالغاً', en: '50 Kids vs 50 Adults' },
+    { ar: 'أقوى حارس أمن ضد أذكى لص في العالم', en: 'World\'s Best Security Guard vs Master Thief' },
+    { ar: 'بنيت أغلى ملجأ تحت الأرض بـ 1,000,000$', en: 'I Built a $1,000,000 Underground Bunker' },
+    { ar: 'عشت 100 ساعة في أبرد غرفة في العالم (-50°C)', en: 'I Survived 100 Hours in -50°C Coldest Room' },
+    { ar: 'ماذا لو اصطدم كويكب من الألماس الخالص بالأرض؟', en: 'What If a Pure Diamond Asteroid Hit Earth?' },
+    { ar: 'وضعت 50,000 لتر نيتروجين سائل في مسبح عملاق!', en: 'Dropping 50,000L Liquid Nitrogen in Giant Pool' },
+    { ar: 'تحديت أبطال العالم للهروب من أصعب لغز في 60 ثانية', en: 'World Champions Escape the Hardest Maze' },
+    { ar: 'اشتريت أغرب 10 أشياء محظورة على الإنترنت المظلم', en: 'I Bought 10 Most Bizarre Banned Mystery Boxes' },
+    { ar: 'آخر شخص يرفع يده عن جبل النقود يربح 250,000$', en: 'Last to Take Hand Off Cash Wins $250,000' },
+    { ar: 'حبست نفسي في سجن أمني خارق وحاولت الهروب!', en: 'I Escaped the World\'s Most Secure Maximum Prison' },
+    { ar: 'ماذا لو توقف الزمن لمدة 10 ثوانٍ لجميع البشر؟', en: 'What If Time Actually Stopped for 10 Seconds?' },
+    { ar: 'صنعت أقوى سيف ليزر حقيقي يقطع الحديد كالمعجون!', en: 'I Built a Real 4000°C Plasma Lightsaber' },
+    { ar: 'أغرب 7 خدع سحرية بصرية بدون أي كلمة واحدة', en: '7 Impossible Visual Magic Illusions (No Words)' },
+    { ar: 'تحدي بقاء 7 أيام على جزيرة مهجورة بدون أي طعام!', en: '7 Days Stranded on a Deserted Island with Nothing' }
+  ],
+  twists: [
+    { ar: 'والرابح يأخذ كل شيء نقداً!', en: 'Winner Takes Everything in Cash!' },
+    { ar: 'والنتيجة صدمت أكبر علماء الفيزياء!', en: 'And the Result Shocked Physicists!' },
+    { ar: 'النهاية غير متوقعة كلياً (لحظات تحبس الأنفاس)', en: 'The Ending Nobody Saw Coming!' },
+    { ar: 'بدون أي كلمة واحدة تفهمها كل شعوب الأرض!', en: '100% Visual Magic Any Human Understands' },
+    { ar: 'قبل أن ينفجر المؤقت التنازلي في آخر ثانية!', en: 'Before the Real Countdown Clock Hits Zero!' },
+    { ar: 'مع عقبات مستحيلة تتغير كل 10 دقائق!', en: 'With Impossible Rule Changes Every 10 Minutes' }
+  ],
+  niches: ['challenges', 'science', 'magic', 'experiments', 'shorts', 'curiosity']
+};
+
+export function generateInfiniteViralIdeas(count = 12, niche = 'all') {
+  const ideas = [];
+  const subjects = IDEA_COMPONENTS.subjects;
+  const twists = IDEA_COMPONENTS.twists;
+
+  for (let i = 0; i < count; i++) {
+    const sub = subjects[Math.floor(Math.random() * subjects.length)];
+    const twist = twists[Math.floor(Math.random() * twists.length)];
+    const chosenNiche = niche !== 'all' ? niche : IDEA_COMPONENTS.niches[Math.floor(Math.random() * IDEA_COMPONENTS.niches.length)];
+    const viralScore = Math.floor(94 + Math.random() * 6); // 94-99%
+    const estViews = `${(Math.random() * 40 + 15).toFixed(1)}M`;
+
+    ideas.push({
+      id: `infinite-${Date.now()}-${i}-${Math.random().toString(36).substr(2, 5)}`,
+      titleAr: `${sub.ar}.. ${twist.ar}`,
+      titleEn: `${sub.en}.. ${twist.en}`,
+      niche: chosenNiche,
+      viralScore,
+      predictedViews: estViews,
+      predictedCtr: `${(14.5 + Math.random() * 4).toFixed(1)}%`,
+      hook3s: `في أول ثانية، الكاميرا تكشف اللحظة الأخطر مع مؤقت تنازلي باللون الأحمر الصارخ وصوت صفارة إنذار توقف الأنفاس!`,
+      tags: [sub.ar.split(' ')[0], 'mrbeast', 'تحديات', 'viral', 'impossible', 'explore', '2026'],
+      thumbnailConcept: `وجه مصدوم بتعبير ذهول واقعي، إضاءة نيون قوية، والنص: مستحيل؟! / IMPOSSIBLE?!`
+    });
+  }
+
+  return ideas;
+}
 export function extractViralTags(keyword = '') {
   const clean = keyword.trim().toLowerCase();
   const defaultTags = [

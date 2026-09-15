@@ -10,7 +10,11 @@ import {
   Play, 
   Layers, 
   RefreshCw,
-  ExternalLink
+  ExternalLink,
+  Dice5,
+  Send,
+  Zap,
+  CheckCircle2
 } from 'lucide-react';
 import ViralDnaModal from './ViralDnaModal.jsx';
 
@@ -21,6 +25,13 @@ export default function TrendRadar({ onRemakeVideo, isAr }) {
   const [selectedRegion, setSelectedRegion] = useState('US');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedVideoForDna, setSelectedVideoForDna] = useState(null);
+
+  // Infinite Idea Vault State
+  const [viewMode, setViewMode] = useState('trends'); // 'trends' | 'vault'
+  const [infiniteIdeas, setInfiniteIdeas] = useState([]);
+  const [loadingIdeas, setLoadingIdeas] = useState(false);
+  const [publishingId, setPublishingId] = useState(null);
+  const [quickPublishSuccess, setQuickPublishSuccess] = useState('');
 
   const regions = [
     { code: 'US', labelAr: '🌍 كوكب الأرض (Global - US)', labelEn: '🌍 Global (US)' },
@@ -53,6 +64,47 @@ export default function TrendRadar({ onRemakeVideo, isAr }) {
     }
   };
 
+  const fetchInfiniteIdeas = async (cat = selectedCategory) => {
+    setLoadingIdeas(true);
+    try {
+      const res = await fetch(`/api/ideas/infinite?count=12&niche=${cat}`);
+      const data = await res.json();
+      setInfiniteIdeas(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error('Fetch ideas error:', err);
+    } finally {
+      setLoadingIdeas(false);
+    }
+  };
+
+  const handleQuickPublish = async (idea) => {
+    setPublishingId(idea.id);
+    setQuickPublishSuccess('');
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: idea.titleAr,
+          description: `شاهد كيف خضنا أشرس تجربة مع ${idea.titleAr}.\n\n#Viral #Trending #YouTube #Shorts`,
+          tags: idea.tags.join(','),
+          privacyStatus: 'public',
+          categoryId: '24',
+          isShort: false
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setQuickPublishSuccess(`✅ تم نشر "${idea.titleAr.slice(0, 30)}..." تلقائياً على قناتك!`);
+        setTimeout(() => setQuickPublishSuccess(''), 4000);
+      }
+    } catch (err) {
+      alert('خطأ أثناء النشر: ' + err.message);
+    } finally {
+      setPublishingId(null);
+    }
+  };
+
   const handleSearch = async (e) => {
     if (e) e.preventDefault();
     if (!searchQuery.trim()) {
@@ -74,6 +126,12 @@ export default function TrendRadar({ onRemakeVideo, isAr }) {
   useEffect(() => {
     fetchTrends(selectedRegion, selectedCategory);
   }, [selectedRegion, selectedCategory]);
+
+  useEffect(() => {
+    if (viewMode === 'vault' && infiniteIdeas.length === 0) {
+      fetchInfiniteIdeas(selectedCategory);
+    }
+  }, [viewMode]);
 
   return (
     <div className="space-y-8">
@@ -130,6 +188,57 @@ export default function TrendRadar({ onRemakeVideo, isAr }) {
         </div>
       </div>
 
+      {/* Quick Success Toast */}
+      {quickPublishSuccess && (
+        <div className="p-3.5 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-2 animate-fadeIn">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>{quickPublishSuccess}</span>
+        </div>
+      )}
+
+      {/* View Mode Switcher: Trends vs Infinite Vault */}
+      <div className="flex flex-wrap items-center justify-between gap-4 p-2 bg-slate-900/90 rounded-2xl border border-slate-800">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setViewMode('trends')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition ${
+              viewMode === 'trends'
+                ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800'
+            }`}
+          >
+            <Flame className="w-3.5 h-3.5" />
+            <span>{isAr ? '🔥 ترندات يوتيوب الحالية' : 'Live Global Trends'}</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setViewMode('vault');
+              if (infiniteIdeas.length === 0) fetchInfiniteIdeas(selectedCategory);
+            }}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition ${
+              viewMode === 'vault'
+                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>{isAr ? '💎 خزنة ملايين الأفكار الفيروسية' : 'Infinite Million Ideas Vault'}</span>
+          </button>
+        </div>
+
+        {viewMode === 'vault' && (
+          <button
+            onClick={() => fetchInfiniteIdeas(selectedCategory)}
+            disabled={loadingIdeas}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-600/30 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/40 text-xs font-bold transition disabled:opacity-50"
+          >
+            <Dice5 className={`w-4 h-4 ${loadingIdeas ? 'animate-spin' : ''}`} />
+            <span>{isAr ? '🎲 توليد 12 فكرة مليارية جديدة' : 'Shuffle 12 New Ideas'}</span>
+          </button>
+        )}
+      </div>
+
       {/* Filter Controls: Regions & Categories */}
       <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
         
@@ -179,8 +288,81 @@ export default function TrendRadar({ onRemakeVideo, isAr }) {
 
       </div>
 
-      {/* Videos Grid */}
-      {loading ? (
+      {/* Content Grid: Trends or Infinite Vault */}
+      {viewMode === 'vault' ? (
+        loadingIdeas ? (
+          <div className="py-20 text-center space-y-4">
+            <div className="w-12 h-12 mx-auto border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin"></div>
+            <p className="text-slate-400 font-semibold text-sm">
+              {isAr ? 'جاري استخراج وتوليد أفكار مليارية جديدة من مصفوفة الملايين...' : 'Generating billion-view ideas from the viral matrix...'}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {infiniteIdeas.map((idea) => (
+              <div
+                key={idea.id}
+                className="group relative flex flex-col justify-between p-5 bg-slate-900/90 rounded-2xl border border-slate-800 hover:border-purple-500/60 shadow-lg hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 space-y-4"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 text-[10px] font-black uppercase">
+                      {idea.niche} • {idea.viralScore}% {isAr ? 'فيروسي' : 'Viral'}
+                    </span>
+                    <span className="text-[10px] font-bold font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                      ~{idea.predictedViews} {isAr ? 'مشاهدة' : 'Views'}
+                    </span>
+                  </div>
+
+                  <h3 className="text-sm font-black text-white group-hover:text-purple-300 transition leading-snug">
+                    {idea.titleAr}
+                  </h3>
+                  <p className="text-xs text-slate-400 font-mono italic mt-1 line-clamp-1">
+                    {idea.titleEn}
+                  </p>
+
+                  {/* 3s Hook Box */}
+                  <div className="mt-3 p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+                    <span className="font-bold text-red-400 block text-[10px] uppercase mb-0.5">
+                      ⚡ {isAr ? 'سر الخطاف البصري الصاعق (0-3s):' : '0-3s Hook Secret:'}
+                    </span>
+                    {idea.hook3s}
+                  </div>
+
+                  {/* Tags */}
+                  <div className="mt-2.5 flex flex-wrap gap-1">
+                    {idea.tags.slice(0, 4).map((t, idx) => (
+                      <span key={idx} className="px-2 py-0.5 rounded text-[10px] bg-slate-800 text-slate-400">
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="pt-3 border-t border-slate-800/80 flex items-center gap-2">
+                  <button
+                    onClick={() => onRemakeVideo({ title: idea.titleAr })}
+                    className="flex-1 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition flex items-center justify-center gap-1.5"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+                    <span>{isAr ? 'صناعة السيناريو' : 'Full Script'}</span>
+                  </button>
+
+                  <button
+                    onClick={() => handleQuickPublish(idea)}
+                    disabled={publishingId === idea.id}
+                    className="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white text-xs font-bold shadow-md shadow-red-600/20 transition flex items-center justify-center gap-1.5 disabled:opacity-50"
+                  >
+                    <Send className={`w-3.5 h-3.5 ${publishingId === idea.id ? 'animate-bounce' : ''}`} />
+                    <span>{publishingId === idea.id ? (isAr ? 'جاري النشر...' : 'Publishing...') : (isAr ? 'نشر فوري للقناة' : 'Publish')}</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      ) : loading ? (
         <div className="py-20 text-center space-y-4">
           <div className="w-12 h-12 mx-auto border-4 border-red-500/20 border-t-red-500 rounded-full animate-spin"></div>
           <p className="text-slate-400 font-semibold text-sm">

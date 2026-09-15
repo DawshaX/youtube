@@ -151,7 +151,7 @@ export function disconnectChannel() {
 // Get YouTube Client (with OAuth or API key)
 export function getYouTubeClient() {
   const config = loadConfig();
-  if (config.tokens && config.clientId && config.clientSecret) {
+  if (config.tokens && (config.tokens.access_token || config.tokens.refresh_token) && config.clientId && config.clientSecret) {
     const oauth2Client = getOAuthClient();
     oauth2Client.setCredentials(config.tokens);
     return { client: google.youtube({ version: 'v3', auth: oauth2Client }), isOAuth: true };

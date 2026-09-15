@@ -18,7 +18,8 @@ import {
 import { 
   VIRAL_CATEGORIES, 
   generateViralBlueprint, 
-  extractViralTags 
+  extractViralTags,
+  generateInfiniteViralIdeas
 } from './viralEngine.js';
 import {
   getAutoPilotStatus,
@@ -242,6 +243,17 @@ app.post('/api/extract-tags', (req, res) => {
     }
     const tagsData = extractViralTags(keyword);
     res.json(tagsData);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 10b. Infinite Million-Ideas Vault
+app.get('/api/ideas/infinite', (req, res) => {
+  try {
+    const { count = 12, niche = 'all' } = req.query;
+    const ideas = generateInfiniteViralIdeas(Number(count), niche);
+    res.json(ideas);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
