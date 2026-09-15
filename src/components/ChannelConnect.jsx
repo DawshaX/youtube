@@ -13,7 +13,10 @@ import {
   Radio, 
   Sliders,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Database,
+  Cloud,
+  GitBranch
 } from 'lucide-react';
 
 export default function ChannelConnect({ channelInfo, isConnected, onChannelUpdated, isAr }) {
@@ -25,6 +28,34 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
   const [message, setMessage] = useState('');
   const [showGuide, setShowGuide] = useState(true);
   const [guideStep, setGuideStep] = useState(1);
+  const [gitStatus, setGitStatus] = useState(null);
+  const [syncingGit, setSyncingGit] = useState(false);
+  const [gitSyncMsg, setGitSyncMsg] = useState('');
+
+  const fetchGitStatus = async () => {
+    try {
+      const res = await fetch('/api/github/status');
+      const data = await res.json();
+      setGitStatus(data);
+    } catch (e) {
+      console.error('Fetch git status error:', e);
+    }
+  };
+
+  const handleSyncGit = async () => {
+    setSyncingGit(true);
+    setGitSyncMsg('');
+    try {
+      const res = await fetch('/api/github/sync', { method: 'POST' });
+      const data = await res.json();
+      setGitSyncMsg(data.message || (isAr ? 'تمت المزامنة بنجاح!' : 'Synced successfully!'));
+      fetchGitStatus();
+    } catch (err) {
+      setGitSyncMsg(isAr ? 'فشلت المزامنة' : 'Sync failed');
+    } finally {
+      setSyncingGit(false);
+    }
+  };
 
   const fetchSettings = async () => {
     try {
@@ -40,6 +71,7 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
 
   useEffect(() => {
     fetchSettings();
+    fetchGitStatus();
   }, []);
 
   const handleSave = async (e) => {
@@ -198,6 +230,65 @@ export default function ChannelConnect({ channelInfo, isConnected, onChannelUpda
             </span>
           </div>
         </div>
+      </div>
+
+      {/* GitHub Cloud Storage & Persistence Engine */}
+      <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-purple-500/20 text-purple-400">
+              <Database className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base font-black text-white">
+                  {isAr ? 'نظام التخزين السحابي الدائم عبر GitHub (Cloud Storage)' : 'GitHub Permanent Cloud Storage'}
+                </h3>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                  {isAr ? 'متصل مدى الحياة ♾️' : 'Lifetime Active'}
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5">
+                {isAr 
+                  ? 'يتم حفظ كافة سيناريوهات الفيديوهات، التحليلات، وإعدادات القناة تلقائياً وبشكل دائم في مستودع GitHub.'
+                  : 'Channel archives, scripts, and production logs are synced permanently to GitHub storage.'}
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={handleSyncGit}
+            disabled={syncingGit}
+            className="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-lg shadow-purple-600/30 transition flex items-center gap-2 shrink-0 disabled:opacity-50"
+          >
+            <Cloud className={`w-4 h-4 ${syncingGit ? 'animate-bounce' : ''}`} />
+            <span>{syncingGit ? (isAr ? 'جاري المزامنة...' : 'Syncing...') : (isAr ? 'مزامنة التخزين السحابي الآن' : 'Sync to GitHub Cloud')}</span>
+          </button>
+        </div>
+
+        {gitStatus && (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono">
+              <span className="text-slate-500 block text-[10px]">{isAr ? 'المستودع (Repository)' : 'Repository'}</span>
+              <span className="text-purple-300 font-bold">{gitStatus.repository}</span>
+            </div>
+            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono">
+              <span className="text-slate-500 block text-[10px]">{isAr ? 'الفرع السحابي (Branch)' : 'Active Branch'}</span>
+              <span className="text-emerald-400 font-bold">{gitStatus.branch}</span>
+            </div>
+            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono">
+              <span className="text-slate-500 block text-[10px]">{isAr ? 'آخر مزامنة (Last Commit)' : 'Last Sync'}</span>
+              <span className="text-slate-300 truncate block">{gitStatus.lastCommit}</span>
+            </div>
+          </div>
+        )}
+
+        {gitSyncMsg && (
+          <div className="p-3 rounded-xl bg-purple-950/40 border border-purple-500/40 text-purple-300 text-xs flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4" />
+            <span>{gitSyncMsg}</span>
+          </div>
+        )}
       </div>
 
       {/* Step by Step Guide: How to get API Key & OAuth */}

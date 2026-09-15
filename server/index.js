@@ -26,6 +26,10 @@ import {
   stopAutoPilot,
   runAutoPilotCycle
 } from './autoPilot.js';
+import {
+  getGitHubStatus,
+  syncToGitHub
+} from './githubSync.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -264,6 +268,21 @@ app.post('/api/autopilot/stop', (req, res) => {
 app.post('/api/autopilot/run-now', async (req, res) => {
   await runAutoPilotCycle();
   res.json({ success: true, status: getAutoPilotStatus() });
+});
+
+// 14. GitHub Cloud Storage & Sync Engine
+app.get('/api/github/status', async (req, res) => {
+  const status = await getGitHubStatus();
+  res.json(status);
+});
+
+app.post('/api/github/sync', async (req, res) => {
+  try {
+    const result = await syncToGitHub(req.body.message);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 // Serve frontend build in production
