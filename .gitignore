@@ -8,5 +8,6 @@ data/config.json
 content/vids/*.mp4
 __pycache__/
 *.pyc
+image-search/
 
 

@@ -13,8 +13,8 @@ from PIL import Image, ImageDraw, ImageFont, features
 
 from . import settings
 
-FONT_BOLD = settings.FONTS / "Tajawal-Bold.ttf"
-FONT_REG = settings.FONTS / "Tajawal-Regular.ttf"
+FONT_BOLD = settings.FONTS / "Amiri-Bold.ttf"
+FONT_REG = settings.FONTS / "Amiri-Regular.ttf"
 HAS_RAQM = bool(features.check("raqm"))
 
 # ثوابت راqm عشان الاتجاه واللغة

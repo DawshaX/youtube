@@ -24,8 +24,8 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,{font},{size},&H00FFFFFF,&H000000FF,&H00000000,&H96000000,-1,0,0,0,100,100,0,0,1,{outline},{shadow},2,{ml},{mr},{mv},1
-Style: CapEN,{font_en},{size_en},&H00B6FF00,&H000000FF,&H00000000,&H96000000,-1,0,0,0,100,100,0,0,1,3,1,2,{ml},{mr},{mv_en},1
+Style: Cap,{font},{size},&H0000FFFF,&H000000FF,&H00000000,&H96000000,-1,0,0,0,100,100,0,0,1,{outline},{shadow},2,{ml},{mr},{mv},1
+Style: CapEN,{font_en},{size_en},&H00FFFFFF,&H000000FF,&H00000000,&H96000000,-1,0,0,0,100,100,0,0,1,3,1,2,{ml},{mr},{mv_en},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -69,7 +69,7 @@ def _escape(text: str) -> str:
 
 
 def build_ass(plan: dict, out_path: Path, en_lines: list[str] | None = None,
-              font_name: str = "Tajawal", font_size: int = 68) -> tuple[Path, list[dict]]:
+              font_name: str = "Amiri", font_size: int = 74) -> tuple[Path, list[dict]]:
     """خطة الصوت → ملف ASS + قايمة الشرائح (للتقارير والاختبارات)."""
     out_path.parent.mkdir(parents=True, exist_ok=True)
 

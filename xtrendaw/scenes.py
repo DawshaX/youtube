@@ -495,35 +495,87 @@ def _brand_layer(out_path: Path) -> Path:
     return out_path
 
 
+VISUALS_DIR = settings.ASSETS / "visuals"
+SCENE_ASSETS = {
+    "hook": "challenge_room.jpg",
+    "fact1": "cash_mountain.jpg",
+    "fact2": "countdown_clock.jpg",
+    "fact3": "shocked_person.jpg",
+    "outro": "winner_confetti.jpg",
+}
+
+
+def load_real_asset(kind: str, out_path: Path) -> bool:
+    """تحميل مشهد فوتوغرافي وسينمائي حقيقي عالي الدقة وتجهيزه 1080×1920."""
+    if not VISUALS_DIR.exists():
+        return False
+    filename = SCENE_ASSETS.get(kind, "challenge_room.jpg")
+    src = VISUALS_DIR / filename
+    if not src.exists():
+        # Fallback to any image in visuals
+        vids = list(VISUALS_DIR.glob("*.jpg"))
+        if vids:
+            src = vids[0]
+        else:
+            return False
+    try:
+        img = Image.open(src).convert("RGB")
+        w, h = img.size
+        scale = max(W / w, H / h)
+        nw, nh = int(w * scale), int(h * scale)
+        img = img.resize((nw, nh), Image.LANCZOS)
+        left = (nw - W) // 2
+        top = (nh - H) // 2
+        img = img.crop((left, top, left + W, top + H))
+
+        # فينييت سينمائي فوق وتحت لضبط قراءة الخطوط
+        vig = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        d = ImageDraw.Draw(vig)
+        for y in range(int(H * 0.18)):
+            a = int(180 * (1 - y / (H * 0.18)) ** 1.5)
+            d.line([(0, y), (W, y)], fill=(0, 0, 0, a))
+        for y in range(int(H * 0.35)):
+            a = int(220 * (y / (H * 0.35)) ** 1.5)
+            d.line([(0, H - int(H * 0.35) + y), (W, H - int(H * 0.35) + y)], fill=(0, 0, 0, a))
+
+        img = Image.alpha_composite(img.convert("RGBA"), vig)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        img.convert("RGB").save(out_path, "PNG")
+        return True
+    except Exception:
+        return False
+
+
 def build_scene(kind: str, text: str, seed: str, workdir: Path,
                 subject: str = "", chip: str = "", real_query: str = "") -> dict:
-    """مشهد = قاعدة (حقيقي ← AI ← نيون احتياطي) + طبقات نص شفافة.
-
-    بيرجع {"base": Path, "overlays":[Path,...]} عشان الفيديو يركّبها.
-    """
+    """مشهد = قاعدة حقيقية مصورة + مؤثرات بصرية + نصوص متحركة."""
     workdir.mkdir(parents=True, exist_ok=True)
     rng = _seeded(seed)
     base = workdir / "base.png"
-    ok = (fetch_real_visual(real_query, base)
-          or fetch_library_visual(real_query, base)) if real_query else False
+
+    # الأولوية دائماً لمشهد حقيقي مصور بجودة سينمائية فائقة
+    ok = load_real_asset(kind, base)
+    if not ok:
+        ok = (fetch_real_visual(real_query, base)
+              or fetch_library_visual(real_query, base)) if real_query else False
     if not ok:
         prompt = _ai_prompt(kind, subject or text)
         ok = fetch_ai_visual(prompt, base, int(rng.integers(1, 10_000_000)))
     if not ok:
-        base = render_bg(base, kind, seed)  # وقوع آمن للنيون
+        base = render_bg(base, kind, seed)
 
     pal = PALETTES.get(kind, PALETTES["fact1"])
     st = STYLE_FONT.get("fact" if kind.startswith("fact") else kind, STYLE_FONT["fact"])
     overlays = []
     if chip:
         overlays.append(textrender.text_image(
-            chip, workdir / "chip.png", canvas=(W, H), font_size=56,
-            fill=pal["neon"], y_ratio=st["y"] - 0.17, max_width_ratio=0.8, stroke_width=4))
+            chip, workdir / "chip.png", canvas=(W, H), font_size=52,
+            fill="#FFD700", y_ratio=st["y"] - 0.18, max_width_ratio=0.85, stroke_width=4))
     overlays.append(textrender.text_image(
         text or settings.BRAND["name"], workdir / "txt.png", canvas=(W, H),
         font_size=st["size"], y_ratio=st["y"], max_width_ratio=st["max"],
-        fill="#f4fffb", stroke="#000000", stroke_width=6))
-    overlays.append(_brand_layer(workdir / "brand.png"))  # لوجو + تدرّج — قالب ثابت
+        fill="#FFFFFF", stroke="#000000", stroke_width=6))
+    overlays.append(_brand_layer(workdir / "brand.png"))
     return {"base": base, "overlays": overlays}
 
 

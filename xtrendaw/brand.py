@@ -15,14 +15,15 @@ W, H = settings.VIDEO["width"], settings.VIDEO["height"]
 
 
 def compose_cover(topic: dict, out_path: Path, seed: str = "") -> Path:
-    """غلاف رأسي: خلفية hook + العنوان في النص + اسم المشروع تحت."""
+    """غلاف رأسي سينمائي: خلفية مصورة حقيقية + العنوان بخط أميري بارز."""
     from . import scenes
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    bg_path = scenes.render_bg(
-        out_path.with_suffix(".bg.png"), "hook", seed or topic["id"]
-    )
-    base = Image.open(bg_path).convert("RGB")
+    bg_tmp = out_path.with_suffix(".bg.png")
+    ok = scenes.load_real_asset("hook", bg_tmp)
+    if not ok:
+        bg_tmp = scenes.render_bg(bg_tmp, "hook", seed or topic["id"])
+    base = Image.open(bg_tmp).convert("RGB")
 
     # العنوان في منتصف الصورة
     title_layer = textrender.text_image(
