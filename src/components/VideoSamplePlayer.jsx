@@ -14,102 +14,108 @@ import {
   CheckCircle2, 
   Smartphone, 
   Monitor,
-  Share2
+  Video,
+  Cpu,
+  RefreshCw,
+  Film,
+  Download,
+  FlameKindling
 } from 'lucide-react';
 
 export default function VideoSamplePlayer({ onPublishSample, isAr }) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(15);
-  const [isMuted, setIsMuted] = useState(false);
-  const [aspectRatio, setAspectRatio] = useState('16:9'); // '16:9' | '9:16'
-  const [selectedSampleIndex, setSelectedSampleIndex] = useState(0);
-  const [publishing, setPublishing] = useState(false);
+  const [producedVideos, setProducedVideos] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [availableTopics, setAvailableTopics] = useState([]);
+  const [selectedTopicId, setSelectedTopicId] = useState('ep1');
+
+  // Production State
+  const [producing, setProducing] = useState(false);
+  const [currentJob, setCurrentJob] = useState(null);
   const [publishMessage, setPublishMessage] = useState('');
+  const [publishing, setPublishing] = useState(false);
 
-  const samples = [
-    {
-      id: 'sample-1',
-      title: 'حبست 100 شخص في أغرب غرفة تحت الأرض.. الرابح يأخذ 500,000$!',
-      titleEn: 'I Trapped 100 People in an Underground Cube - Last to Leave Wins $500,000!',
-      category: 'challenges',
-      viewsEst: '48.5M',
-      ctr: '17.8%',
-      themeColor: '#ef4444',
-      bgGradient: 'from-red-950 via-slate-950 to-slate-900',
-      hookTextAr: 'في هذه اللحظة، 100 شخص داخل هذه الغرفة.. والرابح يأخذ نصف مليون دولار نقداً!',
-      hookTextEn: 'Right now, 100 people are inside this silent cube.. Winner takes $500,000 in cash!',
-      timeline: [
-        { start: 0, end: 3, text: '🚪 إغلاق الأبواب الحديدية وصدمة البداية' },
-        { start: 3, end: 8, text: '💰 استعراض جبل الأموال النقدية وسط الغرفة' },
-        { start: 8, end: 12, text: '⏱️ انطلاق ساعة العد التنازلي التنافسية' },
-        { start: 12, end: 15, text: '🚨 الصدمة الأولى: انقطاع الكهرباء المفاجئ!' }
-      ]
-    },
-    {
-      id: 'sample-2',
-      title: 'ماذا لو ابتلع ثقب أسود حجمه حبة رمل كوكب الأرض في 5 ثوانٍ؟',
-      titleEn: 'What If a Micro Black Hole Collided with Earth?',
-      category: 'science',
-      viewsEst: '34.2M',
-      ctr: '16.4%',
-      themeColor: '#8b5cf6',
-      bgGradient: 'from-purple-950 via-slate-950 to-blue-950',
-      hookTextAr: 'لو سقطت حبة الرمل هذه الآن، فستبتلع الغلاف الجوي بالكامل خلال 4 ثوانٍ!',
-      hookTextEn: 'If this grain of sand collides right now, it consumes our entire atmosphere in 4 seconds!',
-      timeline: [
-        { start: 0, end: 3, text: '🌌 سقوط حبة الرمل المشعة في الفضاء' },
-        { start: 3, end: 8, text: '💥 بدء انهيار الجاذبية وسحب الأجسام' },
-        { start: 8, end: 12, text: '⚛️ المحاكاة الكونية الفيزيائية ثلاثية الأبعاد' },
-        { start: 12, end: 15, text: '🌍 النتيجة الصادمة التي أذهلت علماء الفلك' }
-      ]
-    },
-    {
-      id: 'sample-3',
-      title: 'الخدعة البصرية المستحيلة التي حيرت 100 مليون شخص (بدون كلام)',
-      titleEn: 'The Impossible Optical Illusion That Fooled 100,000,000 People',
-      category: 'magic',
-      viewsEst: '89.4M',
-      ctr: '18.2%',
-      themeColor: '#f59e0b',
-      bgGradient: 'from-amber-950 via-slate-950 to-emerald-950',
-      hookTextAr: 'الكرة تتدحرج إلى أعلى الدرج ضد الجاذبية في أول ثانية بدون أي صوت!',
-      hookTextEn: 'The metal ball rolls UP the stairs defying physics in the first second!',
-      timeline: [
-        { start: 0, end: 3, text: '🌀 دوران الكرة السحرية عكس اتجاه الجاذبية' },
-        { start: 3, end: 8, text: '📐 تغيير زاوية الكاميرا لكشف الخدعة البصرية' },
-        { start: 8, end: 12, text: '🪄 الخدعة الثانية: اختفاء المكعب الخشبي' },
-        { start: 12, end: 15, text: '🔄 الحلقة اللانهائية الساحرة (Infinite Loop)' }
-      ]
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const fetchProducedVideos = async () => {
+    try {
+      const res = await fetch('/api/factory/videos');
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setProducedVideos(data);
+        if (data.length > 0 && !selectedVideo) {
+          setSelectedVideo(data[0]);
+        }
+      }
+    } catch (err) {
+      console.error('Fetch factory videos error:', err);
     }
-  ];
-
-  const currentSample = samples[selectedSampleIndex];
-
-  // Animation Timer
-  useEffect(() => {
-    let interval = null;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setCurrentTime((prev) => {
-          if (prev >= duration) {
-            setIsPlaying(false);
-            return 0;
-          }
-          return prev + 0.1;
-        });
-      }, 100);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, duration]);
-
-  const togglePlay = () => setIsPlaying(!isPlaying);
-  const restart = () => {
-    setCurrentTime(0);
-    setIsPlaying(true);
   };
 
-  const handlePublishThis = async () => {
+  const fetchTopics = async () => {
+    try {
+      const res = await fetch('/api/factory/topics');
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setAvailableTopics(data);
+      }
+    } catch (err) {
+      console.error('Fetch factory topics error:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducedVideos();
+    fetchTopics();
+  }, []);
+
+  const handleStartProduce = async () => {
+    setProducing(true);
+    setCurrentJob({ progress: 10, stage: 'جاري تشغيل مصنع المونتاج 2099...' });
+    setPublishMessage('');
+
+    try {
+      const res = await fetch('/api/factory/produce', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topicId: selectedTopicId })
+      });
+      const data = await res.json();
+      if (data.success && data.job) {
+        const jobId = data.job.jobId;
+        // Poll for progress
+        const poll = setInterval(async () => {
+          try {
+            const jRes = await fetch(`/api/factory/job/${jobId}`);
+            const jData = await jRes.json();
+            setCurrentJob(jData);
+
+            if (jData.status === 'completed') {
+              clearInterval(poll);
+              setProducing(false);
+              fetchProducedVideos();
+              if (jData.outputVideo) {
+                setSelectedVideo(jData.outputVideo);
+              }
+            } else if (jData.status === 'error') {
+              clearInterval(poll);
+              setProducing(false);
+              alert('حدث خطأ أثناء الإنتاج: ' + jData.error);
+            }
+          } catch (e) {
+            clearInterval(poll);
+            setProducing(false);
+          }
+        }, 2000);
+      }
+    } catch (err) {
+      setProducing(false);
+      alert('فشل تشغيل المصنع: ' + err.message);
+    }
+  };
+
+  const handlePublishToYouTube = async () => {
+    if (!selectedVideo) return;
     setPublishing(true);
     setPublishMessage('');
     try {
@@ -117,200 +123,212 @@ export default function VideoSamplePlayer({ onPublishSample, isAr }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          title: currentSample.title,
-          description: `${currentSample.hookTextAr}\n\n#Viral #Trending #MrBeast #CosmicTube`,
-          tags: ['viral', 'challenge', 'shorts', currentSample.category, 'youtube'],
+          title: selectedVideo.title || 'حلقة إنتاجية كوني 2099',
+          description: `شاهد أحدث إنتاجات استوديو 2099 بدقة 1080×1920 وبمؤثرات بصرية وصوتية متطورة.\n\n#Viral #Shorts #YouTube #2099 #XDAWNOVA`,
+          tags: 'shorts, viral, 2099, مونتاج, حقائق, علوم, فضاء',
           privacyStatus: 'public',
-          categoryId: '24',
-          isShort: aspectRatio === '9:16'
+          categoryId: '28',
+          isShort: true
         })
       });
       const data = await res.json();
       if (data.success) {
-        setPublishMessage(isAr ? '🎉 تم نشر هذا الفيديو بنجاح على قناتك الرسمية!' : 'Published video to channel successfully!');
+        setPublishMessage(isAr ? '🎉 تم رفع ونشر الفيديو الحقيقي على قناتك بنجاح!' : 'Published real video to YouTube channel!');
         if (onPublishSample) onPublishSample(data);
       }
-    } catch (e) {
-      alert('فشل النشر: ' + e.message);
+    } catch (err) {
+      alert('فشل النشر: ' + err.message);
     } finally {
       setPublishing(false);
     }
   };
 
-  const currentTimelineItem = currentSample?.timeline?.find(
-    (item) => currentTime >= item.start && currentTime <= item.end
-  );
-
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       
-      {/* Top Controls: Choose Sample */}
-      <div className="p-4 sm:p-6 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Studio Header Banner */}
+      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-red-950 via-slate-900 to-purple-950 border border-slate-800 shadow-2xl">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold uppercase mb-2">
-              <Play className="w-3.5 h-3.5 text-red-500" />
-              <span>{isAr ? 'معاينة عينات الفيديوهات الحية' : 'Live Video Sample Player'}</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/40 text-red-400 text-xs font-black uppercase mb-3">
+              <Cpu className="w-4 h-4 text-red-500 animate-pulse" />
+              <span>{isAr ? 'مصنع إنتاج ومونتاج الفيديوهات الكوني 2099 (Autonomous Video Factory)' : 'Cosmic 2099 Video Factory'}</span>
             </div>
-            <h3 className="text-lg sm:text-2xl font-black text-white">
-              {isAr ? 'شاهد كيف يبدو الفيديو رقم 1 في الواقع قبل النشر' : 'Experience the #1 Viral Video Format in Real-Time'}
-            </h3>
+            <h2 className="text-xl sm:text-3xl font-black text-white leading-tight">
+              {isAr ? 'مصنع حقيقي متكامل لتوليد ومونتاج ونشر فيديوهات MP4 احترافية' : 'Full Autonomous Video Synthesis & 2099 Montage Factory'}
+            </h2>
+            <p className="text-slate-300 text-xs sm:text-sm mt-2 max-w-2xl leading-relaxed">
+              {isAr 
+                ? 'مدمج ومطور من مستودعاتك (XTreNDAW و daousha): يكتب السيناريو، يولد الصوت والمؤثرات، يرسم المشاهد النيونية، يدمج كينيتيك كابشنز كاريوكي، ويجمع فيديو MP4 حقيقي بأبعاد 1080×1920 جاهز للرفع على يوتيوب!'
+                : 'Directly synthesizes H.264 1080x1920 MP4 clips with kinetic karaoke captions, brand neon masks, neural audio, and FFmpeg assembly.'}
+            </p>
           </div>
 
-          {/* Aspect Ratio Switcher */}
-          <div className="flex items-center gap-1.5 p-1 bg-slate-950 rounded-xl border border-slate-800 self-start sm:self-auto">
-            <button
-              onClick={() => setAspectRatio('16:9')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
-                aspectRatio === '16:9' ? 'bg-red-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
-              }`}
+          {/* Quick Produce Action Card */}
+          <div className="p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-3 shrink-0 lg:max-w-xs w-full">
+            <span className="text-xs font-bold text-slate-300 block">{isAr ? 'اختر الموضوع للإنتاج:' : 'Select Topic to Produce:'}</span>
+            <select
+              value={selectedTopicId}
+              onChange={(e) => setSelectedTopicId(e.target.value)}
+              className="w-full bg-slate-900 text-white text-xs font-bold p-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-red-500"
             >
-              <Monitor className="w-3.5 h-3.5" />
-              <span>16:9 أفقي</span>
-            </button>
+              {availableTopics.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.id}: {t.title_ar}
+                </option>
+              ))}
+            </select>
+
             <button
-              onClick={() => setAspectRatio('9:16')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
-                aspectRatio === '9:16' ? 'bg-red-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
-              }`}
+              onClick={handleStartProduce}
+              disabled={producing}
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 hover:from-red-500 hover:to-rose-500 text-white font-black text-xs shadow-lg shadow-red-600/30 transition flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              <Smartphone className="w-3.5 h-3.5" />
-              <span>9:16 Shorts</span>
+              <Sparkles className={`w-4 h-4 ${producing ? 'animate-spin' : ''}`} />
+              <span>{producing ? (isAr ? 'المصنع قيد التشغيل...' : 'Rendering 2099 Video...') : (isAr ? 'إنتاج حلقة MP4 جديدة الآن 🎬' : 'Produce New Video Now 🎬')}</span>
             </button>
           </div>
         </div>
 
-        {/* Sample Tabs */}
-        <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-800">
-          {samples.map((s, idx) => (
-            <button
-              key={s.id}
-              onClick={() => {
-                setSelectedSampleIndex(idx);
-                setCurrentTime(0);
-                setIsPlaying(false);
-              }}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 ${
-                selectedSampleIndex === idx
-                  ? 'bg-slate-800 text-white border-2 border-red-500/70 shadow-lg'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: s.themeColor }}></span>
-              <span className="truncate max-w-[200px]">{s.title}</span>
-            </button>
-          ))}
-        </div>
+        {/* Live Job Progress Bar */}
+        {producing && currentJob && (
+          <div className="mt-6 p-4 rounded-2xl bg-slate-950/80 border border-red-500/40 space-y-2 animate-fadeIn">
+            <div className="flex justify-between items-center text-xs font-bold text-white">
+              <span className="flex items-center gap-2">
+                <RefreshCw className="w-3.5 h-3.5 animate-spin text-red-500" />
+                <span>{currentJob.stage}</span>
+              </span>
+              <span className="font-mono text-amber-400">{currentJob.progress}%</span>
+            </div>
+            <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-red-600 via-rose-500 to-amber-400 transition-all duration-300"
+                style={{ width: `${currentJob.progress}%` }}
+              ></div>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Video Simulation Screen Container */}
-      <div className="flex justify-center">
-        <div 
-          className={`relative rounded-3xl overflow-hidden border-2 border-slate-700/80 shadow-2xl bg-black transition-all duration-500 w-full ${
-            aspectRatio === '9:16' ? 'max-w-sm aspect-[9/16]' : 'max-w-4xl aspect-video'
-          }`}
-        >
-          {/* Animated Background Motion */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${currentSample.bgGradient} opacity-90`}>
-            {/* Dynamic Animated Particles / Waves */}
-            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] animate-pulse"></div>
+      {/* Main Video Screen & Gallery Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        {/* Left 2 Columns: Video Player */}
+        <div className="lg:col-span-2 space-y-4">
+          <div className="p-4 sm:p-6 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
             
-            {/* Pulsing Light Glow */}
-            <div 
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl opacity-40 transition-all duration-700"
-              style={{ backgroundColor: currentSample.themeColor }}
-            ></div>
-          </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Video className="w-5 h-5 text-red-500" />
+                <h3 className="text-base font-black text-white">
+                  {selectedVideo?.title || 'معاينة الفيديو الناتج'}
+                </h3>
+              </div>
 
-          {/* Top Overlays: CTR & Viral Metrics */}
-          <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20 pointer-events-none">
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-red-500/40 text-[11px] font-black text-red-400 shadow-lg">
-              <Flame className="w-3.5 h-3.5 text-red-500 animate-bounce" />
-              <span>{currentSample.ctr} CTR • {currentSample.viewsEst} {isAr ? 'مشاهدة متوقعة' : 'Est. Views'}</span>
+              {selectedVideo?.sizeMB && (
+                <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                  {selectedVideo.sizeMB} MB • 1080×1920 (9:16)
+                </span>
+              )}
             </div>
 
-            <div className="px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-[11px] font-mono font-bold text-amber-300 border border-amber-500/30">
-              00:{currentTime < 10 ? `0${Math.floor(currentTime)}` : Math.floor(currentTime)}:00
+            {/* Real Video Player Container */}
+            <div className="relative aspect-[9/16] max-w-sm mx-auto rounded-3xl overflow-hidden bg-black border-2 border-slate-700 shadow-2xl flex items-center justify-center">
+              {selectedVideo?.url ? (
+                <video
+                  ref={videoRef}
+                  src={selectedVideo.url}
+                  controls
+                  autoPlay
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                ></video>
+              ) : (
+                <div className="text-center p-8 text-slate-500 space-y-2">
+                  <Video className="w-12 h-12 mx-auto text-slate-600" />
+                  <p className="text-xs">{isAr ? 'لا يوجد فيديو محدد حالياً' : 'No video selected'}</p>
+                </div>
+              )}
             </div>
-          </div>
 
-          {/* Middle Stage: The 3-Second Hook & Dynamic Subtitles */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
-            {/* Glowing Big Timer */}
-            <div className="text-4xl sm:text-6xl font-black font-mono tracking-wider text-white drop-shadow-[0_0_20px_rgba(239,68,68,0.8)] mb-4">
-              00:{String(Math.floor(currentTime)).padStart(2, '0')}.{Math.floor((currentTime % 1) * 10)}
+            {/* Action Bar */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-800">
+              {selectedVideo?.url && (
+                <a
+                  href={selectedVideo.url}
+                  download={selectedVideo.filename}
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition flex items-center justify-center gap-2"
+                >
+                  <Download className="w-4 h-4 text-blue-400" />
+                  <span>{isAr ? 'تحميل ملف MP4' : 'Download MP4'}</span>
+                </a>
+              )}
+
+              <button
+                onClick={handlePublishToYouTube}
+                disabled={publishing || !selectedVideo}
+                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-black text-xs shadow-lg shadow-red-600/30 transition flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                <Send className={`w-4 h-4 ${publishing ? 'animate-bounce' : ''}`} />
+                <span>{publishing ? (isAr ? 'جاري الرفع والنشر...' : 'Publishing...') : (isAr ? 'نشر هذا الفيديو الآن على YouTube' : 'Publish to YouTube')}</span>
+              </button>
             </div>
 
-            {/* Current Action Pill */}
-            {currentTimelineItem && (
-              <div className="px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-700 text-xs font-bold text-emerald-400 mb-4 shadow-lg animate-fadeIn">
-                {currentTimelineItem.text}
+            {publishMessage && (
+              <div className="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>{publishMessage}</span>
               </div>
             )}
 
-            {/* Kinetic Animated Subtitle (Just like MrBeast shorts) */}
-            <div className="max-w-xl mx-auto p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/10 shadow-2xl">
-              <div className="text-sm sm:text-xl font-black text-yellow-300 leading-snug drop-shadow-md">
-                "{currentSample?.hookTextAr || ''}"
-              </div>
-              <div className="text-xs sm:text-sm text-slate-300 font-mono italic mt-1.5">
-                "{currentSample?.hookTextEn || ''}"
-              </div>
-            </div>
           </div>
+        </div>
 
-          {/* Bottom Player Controls */}
-          <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black via-black/80 to-transparent z-20 space-y-3">
-            {/* Progress Bar */}
-            <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden cursor-pointer">
-              <div 
-                className="h-full bg-gradient-to-r from-red-600 via-rose-500 to-amber-400 transition-all duration-100"
-                style={{ width: `${(currentTime / duration) * 100}%` }}
-              ></div>
-            </div>
-
+        {/* Right 1 Column: Produced Videos Archive */}
+        <div className="space-y-4">
+          <div className="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={togglePlay}
-                  className="w-10 h-10 rounded-full bg-red-600 hover:bg-red-500 text-white flex items-center justify-center shadow-lg shadow-red-600/40 transition"
-                >
-                  {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
-                </button>
-
-                <button
-                  onClick={restart}
-                  className="p-2 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition"
-                  title="إعادة التشغيل"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                </button>
-
-                <span className="text-xs font-mono text-slate-400">
-                  {currentTime.toFixed(1)}s / {duration}s
-                </span>
+              <div className="flex items-center gap-2">
+                <Film className="w-5 h-5 text-purple-400" />
+                <h3 className="text-sm font-black text-white">
+                  {isAr ? 'مكتبة الفيديوهات المنتجة (MP4 Factory)' : 'Factory Output Gallery'}
+                </h3>
               </div>
+              <span className="text-xs font-mono text-slate-400">
+                {producedVideos.length} {isAr ? 'فيديو' : 'videos'}
+              </span>
+            </div>
 
-              {/* Instant Publish Button from inside the player */}
-              <button
-                onClick={handlePublishThis}
-                disabled={publishing}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white text-xs font-black shadow-lg shadow-red-600/30 transition flex items-center gap-1.5 disabled:opacity-50"
-              >
-                <Send className={`w-3.5 h-3.5 ${publishing ? 'animate-bounce' : ''}`} />
-                <span>{publishing ? (isAr ? 'جاري النشر...' : 'Publishing...') : (isAr ? 'نشر هذا الفيديو الآن للقناة' : 'Publish This Video')}</span>
-              </button>
+            <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
+              {producedVideos.map((v) => (
+                <div
+                  key={v.id}
+                  onClick={() => setSelectedVideo(v)}
+                  className={`p-3 rounded-2xl border transition cursor-pointer flex gap-3 items-center ${
+                    selectedVideo?.id === v.id
+                      ? 'bg-slate-800 border-red-500/70 shadow-md ring-1 ring-red-500/40'
+                      : 'bg-slate-950/70 border-slate-800 hover:border-slate-700'
+                  }`}
+                >
+                  <div className="w-16 aspect-[9/16] rounded-xl overflow-hidden bg-black border border-slate-800 flex items-center justify-center shrink-0">
+                    <Video className="w-6 h-6 text-red-500" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-xs font-bold text-white line-clamp-1">{v.title}</h4>
+                    <div className="text-[10px] text-slate-400 mt-1 flex items-center gap-2 font-mono">
+                      <span>{v.sizeMB} MB</span>
+                      <span>•</span>
+                      <span>{new Date(v.createdAt).toLocaleTimeString()}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
 
-      {publishMessage && (
-        <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-2 animate-fadeIn max-w-xl mx-auto">
-          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-          <span>{publishMessage}</span>
-        </div>
-      )}
+      </div>
 
     </div>
   );

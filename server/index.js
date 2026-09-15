@@ -31,6 +31,12 @@ import {
   getGitHubStatus,
   syncToGitHub
 } from './githubSync.js';
+import {
+  listProducedVideos,
+  listAvailableTopics,
+  startProduceJob,
+  getJobStatus
+} from './videoFactoryBridge.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,6 +68,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static uploads
 app.use('/uploads', express.static(UPLOADS_DIR));
+app.use('/content/vids', express.static(path.join(ROOT_DIR, 'content', 'vids')));
 
 // Configure multer for video & thumbnail uploads
 const storage = multer.diskStorage({
@@ -274,12 +281,16 @@ app.post('/api/upload', upload.fields([
     const videoFile = req.files?.['video']?.[0];
     const thumbnailFile = req.files?.['thumbnail']?.[0];
 
+    const parsedTags = Array.isArray(tags)
+      ? tags
+      : (typeof tags === 'string' ? tags.split(',').map(t => t.trim()).filter(Boolean) : []);
+
     const result = await publishVideo({
       videoFilePath: videoFile ? videoFile.path : null,
       thumbnailFilePath: thumbnailFile ? thumbnailFile.path : null,
       title: title.trim(),
       description: description || '',
-      tags: tags ? tags.split(',') : [],
+      tags: parsedTags,
       privacyStatus: privacyStatus || 'public',
       categoryId: categoryId || '24',
       isShort: isShort === 'true' || isShort === true
@@ -288,6 +299,44 @@ app.post('/api/upload', upload.fields([
     res.json(result);
   } catch (err) {
     console.error('Publish endpoint error:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 11b. Publish directly from Factory Library
+app.post('/api/publish-factory', express.json(), async (req, res) => {
+  try {
+    const { videoId, title, description, tags, privacyStatus, categoryId, isShort } = req.body;
+    if (!videoId) {
+      return res.status(400).json({ error: 'videoId is required' });
+    }
+
+    const videoFilePath = path.resolve('content/vids', `${videoId}.mp4`);
+    if (!fs.existsSync(videoFilePath)) {
+      return res.status(404).json({ error: `Video file ${videoId}.mp4 not found` });
+    }
+
+    const coverPath = path.resolve('content/vids', `${videoId}-cover.png`);
+    const thumbnailFilePath = fs.existsSync(coverPath) ? coverPath : null;
+
+    const parsedTags = Array.isArray(tags)
+      ? tags
+      : (typeof tags === 'string' ? tags.split(',').map(t => t.trim()).filter(Boolean) : []);
+
+    const result = await publishVideo({
+      videoFilePath,
+      thumbnailFilePath,
+      title: (title || `Cosmic Short #${videoId}`).trim(),
+      description: description || 'Generated autonomously with CosmicTube 2099 Engine.',
+      tags: parsedTags.length > 0 ? parsedTags : ['Shorts', 'CosmicTube', 'Viral', 'Science'],
+      privacyStatus: privacyStatus || 'public',
+      categoryId: categoryId || '28',
+      isShort: isShort !== false
+    });
+
+    res.json(result);
+  } catch (err) {
+    console.error('Publish factory error:', err);
     res.status(500).json({ success: false, error: err.message });
   }
 });
@@ -332,6 +381,31 @@ app.post('/api/github/sync', async (req, res) => {
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
+});
+
+// 15. Real Video Factory & 2099 Montage Engine
+app.get('/api/factory/videos', (req, res) => {
+  res.json(listProducedVideos());
+});
+
+app.get('/api/factory/topics', (req, res) => {
+  res.json(listAvailableTopics());
+});
+
+app.post('/api/factory/produce', async (req, res) => {
+  try {
+    const { topicId = 'ep1' } = req.body;
+    const job = await startProduceJob(topicId);
+    res.json({ success: true, job });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.get('/api/factory/job/:jobId', (req, res) => {
+  const job = getJobStatus(req.params.jobId);
+  if (!job) return res.status(404).json({ error: 'Job not found' });
+  res.json(job);
 });
 
 // Serve frontend build in production
