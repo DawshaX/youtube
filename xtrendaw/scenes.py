@@ -16,13 +16,13 @@ from . import settings, textrender
 
 W, H = settings.VIDEO["width"], settings.VIDEO["height"]
 
-# هوية 2099: فحمي + نيون (أخضر/سماوي/ماجنتا)
+# هوية 2099 وفورميلا الفيديوهات الفيروسية رقم 1 عالمياً: تباين عالي + نيون متوهج + عناصر بصرية خاطفة
 PALETTES = {
-    "hook":  {"bg": ("#0a0202", "#200606"), "neon": "#ff2a2a", "neon2": "#ff7a1a"},
-    "fact1": {"bg": ("#0a0202", "#1c0505"), "neon": "#ff3b3b", "neon2": "#ffb347"},
-    "fact2": {"bg": ("#080208", "#1c0610"), "neon": "#ff2a5e", "neon2": "#ff7a1a"},
-    "fact3": {"bg": ("#0a0302", "#200a04"), "neon": "#ff7a1a", "neon2": "#ff2a2a"},
-    "outro": {"bg": ("#0a0202", "#1a0a04"), "neon": "#ff3b3b", "neon2": "#ffd166"},
+    "hook":  {"bg": ("#180205", "#4a0812"), "neon": "#ff2247", "neon2": "#ffd000"},
+    "fact1": {"bg": ("#041026", "#0c2c5c"), "neon": "#00f0ff", "neon2": "#8a2be2"},
+    "fact2": {"bg": ("#18062b", "#3d0d69"), "neon": "#e000ff", "neon2": "#ff0055"},
+    "fact3": {"bg": ("#031c12", "#0a452a"), "neon": "#00ff99", "neon2": "#ffd700"},
+    "outro": {"bg": ("#210b02", "#541c03"), "neon": "#ff6600", "neon2": "#ffcc00"},
 }
 
 
@@ -111,6 +111,27 @@ def render_bg(out_path: Path, kind: str, seed: str) -> Path:
 
     # شبكة الأرضية
     _grid(draw, neon)
+
+    # خطوط طاقة وسرعة وسرعة انتشار راديال من المركز (Speed lines & Energy Bursts)
+    import math
+    cx, cy = W // 2, int(H * 0.32)
+    for ang in range(0, 360, 15):
+        rad = math.radians(ang)
+        r1 = int(rng.integers(180, 260))
+        r2 = int(rng.integers(int(W * 0.6), int(W * 0.95)))
+        x1 = int(cx + r1 * math.cos(rad))
+        y1 = int(cy + r1 * math.sin(rad))
+        x2 = int(cx + r2 * math.cos(rad))
+        y2 = int(cy + r2 * math.sin(rad))
+        draw.line([(x1, y1), (x2, y2)], fill=neon2 + (45,), width=2)
+
+    # دوائر تركيز الـ HUD الكونية / التنافسية
+    for r, w_line, alpha in [(120, 2, 80), (160, 4, 130), (170, 1, 180), (230, 2, 70)]:
+        draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=neon + (alpha,), width=w_line)
+
+    # شريط الخطر / التحدي العلوي (Top Hazard Stripe)
+    for bx in range(-40, W + 100, 70):
+        draw.polygon([(bx, 0), (bx + 35, 0), (bx + 15, 24), (bx - 20, 24)], fill=neon2 + (140,))
 
     # فينييت مريح
     vig = Image.new("L", (W, H), 0)

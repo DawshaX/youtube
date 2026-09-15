@@ -4,6 +4,7 @@ import util from 'util';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { TOP_GLOBAL_TRENDS, generateInfiniteViralIdeas } from './viralEngine.js';
 
 const execPromise = util.promisify(exec);
 const __filename = fileURLToPath(import.meta.url);
@@ -20,15 +21,97 @@ if (!fs.existsSync(VIDS_DIR)) {
 let activeJobs = {};
 
 export function listAvailableTopics() {
+  const topics = [];
+
+  // 1. Add top global viral radar trends
+  for (const tr of TOP_GLOBAL_TRENDS) {
+    topics.push({
+      id: tr.id,
+      angle: tr.title,
+      title_ar: tr.title,
+      title_en: tr.titleEn,
+      hook_ar: tr.hookBreakdown || `في الثانية الأولى، يحدث الحدث الصاعق الذي لا يصدقه عقل!`,
+      hook_en: `In the first second, the impossible spectacle begins!`,
+      category: tr.category,
+      facts_ar: [
+        `في الدقيقة الأولى: تصعيد التحدي ورفع الرهان لأقصى حد ممكن تحت مراقبة الكاميرات.`,
+        `المنعطف الأوسط: حدث غير متوقع كلياً يقلب الموازين ويصدم المشاهدين.`,
+        `اللحظة الحاسمة: النتيجة الصادمة التي كسرت الأرقام القياسية واجتاحت العالم.`
+      ],
+      facts_en: [
+        `Minute 1: Escalating the challenge stakes to maximum intensity.`,
+        `Mid-twist: Totally unexpected twist completely flips the table.`,
+        `The Climax: Shocking conclusion that broke world records.`
+      ],
+      outro_ar: 'اشترك الآن في القناة الكونية CosmicTube عشان تشوف التحديات القادمة!',
+      outro_en: 'Subscribe to CosmicTube for the next impossible viral challenge!',
+      tags: tr.tags ? tr.tags.join(',') : 'viral,mrbeast,challenges,trending',
+      thumbnail: tr.thumbnail,
+      viewsEst: `${(tr.views / 1000000).toFixed(1)}M`,
+      ctr: '17.8%',
+      viralScore: tr.viralScore,
+      themeColor: tr.category === 'challenges' ? '#ef4444' : tr.category === 'science' ? '#8b5cf6' : '#f59e0b',
+      bgGradient: tr.category === 'challenges' 
+        ? 'from-red-950 via-slate-950 to-slate-900' 
+        : tr.category === 'science' 
+        ? 'from-purple-950 via-slate-950 to-blue-950' 
+        : 'from-amber-950 via-slate-950 to-emerald-950'
+    });
+  }
+
+  // 2. Add infinite viral matrix ideas
+  const infiniteIdeas = generateInfiniteViralIdeas(10);
+  for (let i = 0; i < infiniteIdeas.length; i++) {
+    const inf = infiniteIdeas[i];
+    topics.push({
+      id: inf.id,
+      angle: inf.titleAr,
+      title_ar: inf.titleAr,
+      title_en: inf.titleEn,
+      hook_ar: inf.hook3s,
+      hook_en: 'In second zero, the countdown timer ticks down with heart-stopping sirens!',
+      category: inf.niche,
+      facts_ar: [
+        `المرحلة الأولى: اختبار القواعد المستحيلة تحت أعين الكاميرات بدقة متناهية.`,
+        `المرحلة الثانية: انهيار كل التوقعات ومفاجأة غير مسبوقة تصدم الجميع.`,
+        `الخاتمة: إعلان الفائز الصامد وجائزة التحدي الخيالية وسط احتفال أسطوري.`
+      ],
+      facts_en: [
+        `Stage 1: Testing impossible rules on camera under extreme pressure.`,
+        `Stage 2: Complete collapse of expectations with surprise.`,
+        `Climax: Final survivor crowned with historic prize.`
+      ],
+      outro_ar: 'اشترك بالقناة الكونية CosmicTube واكتب في التعليقات التحدي اللي تريده!',
+      outro_en: 'Subscribe to CosmicTube and comment your challenge idea!',
+      tags: inf.tags ? inf.tags.join(',') : 'viral,challenge,shorts',
+      thumbnail: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=600&auto=format&fit=crop&q=80',
+      viewsEst: inf.predictedViews,
+      ctr: inf.predictedCtr,
+      viralScore: inf.viralScore,
+      themeColor: inf.niche === 'challenges' ? '#ef4444' : inf.niche === 'science' ? '#8b5cf6' : '#10b981',
+      bgGradient: inf.niche === 'challenges'
+        ? 'from-red-950 via-slate-950 to-slate-900'
+        : inf.niche === 'science'
+        ? 'from-indigo-950 via-slate-950 to-cyan-950'
+        : 'from-emerald-950 via-slate-950 to-amber-950'
+    });
+  }
+
+  // 3. Fallback to existing topics if any
   try {
     if (fs.existsSync(TOPICS_PATH)) {
       const data = JSON.parse(fs.readFileSync(TOPICS_PATH, 'utf-8'));
-      return data;
+      for (const t of data) {
+        if (!topics.some(x => x.id === t.id)) {
+          topics.push(t);
+        }
+      }
     }
   } catch (err) {
-    console.error('Error reading topics:', err);
+    // ignore
   }
-  return [];
+
+  return topics;
 }
 
 export function listProducedVideos() {
@@ -65,15 +148,30 @@ export function listProducedVideos() {
   }
 }
 
-export async function startProduceJob(topicId = 'ep1') {
+export async function startProduceJob(topicInput = 'ep1') {
   const jobId = `job_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
   
+  let targetTopic = null;
+  const topics = listAvailableTopics();
+  if (typeof topicInput === 'string') {
+    targetTopic = topics.find(t => t.id === topicInput) || topics[0];
+  } else if (topicInput && typeof topicInput === 'object') {
+    targetTopic = topicInput;
+  } else {
+    targetTopic = topics[0];
+  }
+
+  const topicId = targetTopic.id || `topic_${Date.now()}`;
+  const topicJsonPath = `/tmp/target_topic_${jobId}.json`;
+  fs.writeFileSync(topicJsonPath, JSON.stringify(targetTopic, null, 2), 'utf-8');
+
   activeJobs[jobId] = {
     jobId,
     topicId,
+    title: targetTopic.title_ar || targetTopic.title || 'فيديو فيروسي',
     status: 'processing',
     progress: 10,
-    stage: 'جاري اختيار وفحص السيناريو الكوني 2099...',
+    stage: 'جاري اختيار وفحص السيناريو الكوني والفيروسي من الرادار ومصفوفة الملايير...',
     startedAt: new Date().toISOString(),
     outputVideo: null,
     error: null
@@ -83,21 +181,15 @@ export async function startProduceJob(topicId = 'ep1') {
   (async () => {
     try {
       activeJobs[jobId].progress = 25;
-      activeJobs[jobId].stage = 'توليد وهندسة السرد الصوتي والمؤثرات الصوتية...';
+      activeJobs[jobId].stage = 'توليد وهندسة السرد الصوتي والمؤثرات الصوتية والخطاف الصاعق...';
 
       const script = `
-from xtrendaw import content, produce
+from xtrendaw import produce
 from pathlib import Path
 import json
 
-topics = content.load_topics()
-target_topic = None
-for t in topics:
-    if t["id"] == "${topicId}":
-        target_topic = t
-        break
-if not target_topic:
-    target_topic = topics[0]
+with open('${topicJsonPath}', 'r', encoding='utf-8') as f:
+    target_topic = json.load(f)
 
 workdir = Path('/tmp/work_${jobId}')
 res = produce.produce_episode(target_topic, workdir)
@@ -105,7 +197,7 @@ print(json.dumps({"ok": True, "video": str(res["video"]), "episode": target_topi
 `;
 
       activeJobs[jobId].progress = 50;
-      activeJobs[jobId].stage = 'بناء وتوليد المشاهد النيونية 2099 وحبيبات الفضاء...';
+      activeJobs[jobId].stage = 'بناء المشاهد السينمائية النيونية ودوائر الـ HUD وحبيبات السرعة...';
 
       const pyProcess = spawn('python3', ['-c', script], {
         cwd: ROOT_DIR
@@ -129,6 +221,8 @@ print(json.dumps({"ok": True, "video": str(res["video"]), "episode": target_topi
 
       pyProcess.on('close', (code) => {
         clearInterval(interval);
+        try { fs.unlinkSync(topicJsonPath); } catch (_) {}
+
         if (code === 0) {
           try {
             const outPath = path.join(VIDS_DIR, `${topicId}.mp4`);
@@ -139,7 +233,8 @@ print(json.dumps({"ok": True, "video": str(res["video"]), "episode": target_topi
               id: topicId,
               filename: `${topicId}.mp4`,
               url: `/content/vids/${topicId}.mp4`,
-              filePath: outPath
+              filePath: outPath,
+              title: targetTopic.title_ar || targetTopic.title
             };
           } catch (e) {
             activeJobs[jobId].status = 'error';
