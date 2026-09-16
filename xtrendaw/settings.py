@@ -175,12 +175,13 @@ def has_pexels() -> bool:
     return bool(PEXELS_KEY)
 
 BRAND = {
-    "name": "COSMIC TUBE",
-    "tagline_ar": "القناة الكونية رقم 1 عالمياً",
-    "tagline_en": "THE #1 GLOBAL VIRAL CHANNEL",
-    "hashtags": "#MrBeast #Viral #Challenge #CosmicTube",
-    "outro_ar": "اشترك الآن في القناة الكونية CosmicTube عشان تشوف التحدي القادم المستحيل!",
-    "outro_en": "Subscribe to CosmicTube for the next impossible viral challenge!",
+    # هوية واحدة في كل المخرجات (قرار البريف): «دۅۄشے» — صفر برندات تانية
+    "name": "دۅۄشے",
+    "tagline_ar": "شورتس في أي نوع — عربي وأجنبي",
+    "tagline_en": "Daousha — shorts in every genre",
+    "hashtags": "#دۅۄشے #شورتس #ترند #Daousha",
+    "outro_ar": "انتو خير ونور. تابعوا دۅۄشے — الجاية أجنّ!",
+    "outro_en": "Follow Daousha — the next one is wilder!",
     "takeaway_ar": {
         "aql": "التحدي مش بس فلوس… التحدي قوة إرادة وصمود وخير للكل.",
         "qalb": "كل تحدي بينتهي بمساعدة الناس ونشر الخير في العالم.",

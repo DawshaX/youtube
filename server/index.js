@@ -689,7 +689,13 @@ if (fs.existsSync(DIST_DIR)) {
 // Start Server
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌌 Cosmic YouTube Engine running on http://0.0.0.0:${PORT}`);
-  // Start 30-minute AutoPilot automatically 24/7
+  // Start 30-minute AutoPilot automatically 24/7.
+  // XT_AUTOPILOT=0 يوقف الجدولة التلقائية عند الإقلاع (مثلاً فترة مراجعة
+  // الحلقة التجريبية قبل الموافقة على النشر) — الطيار يتشغّل يدويًا من الواجهة.
+  if ((process.env.XT_AUTOPILOT || '1').trim() === '0') {
+    console.log('🤖 AutoPilot auto-start disabled (XT_AUTOPILOT=0) — production/publishing stays on hold until started from the UI.');
+    return;
+  }
   try {
     startAutoPilot(0.5);
     console.log('🤖 AutoPilot 24/7 initialized: Scheduled every 30 minutes continuous publishing.');

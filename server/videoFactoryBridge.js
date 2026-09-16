@@ -1,17 +1,24 @@
 // Video Factory Bridge — Connects Node.js platform with Python 2099 Montage Engine
-import { exec, spawn } from 'child_process';
-import util from 'util';
+//
+// سياسة الكتالوج (بلا أي اختلاق): مواضيع الإنتاج بتيجي حصريًا من ملفات
+// الكتالوج الموجودة في المستودع:
+//   content/topics_daousha.json  — كتالوج الـ509 موضوع المعدّين (الأساس)
+//   content/topics.json          — الحلقات المؤلّفة يدويًا (احتياطي)
+// نُهِى عن هنا السكربت المكرر (نص facts_ar ثابت متطابق كان بيتركب على كل
+// موضوع) ومعاه مولد الأفكار العشوائية وأرقام المشاهدات المختلقة. الرادار
+// نفسه لسه معروض للعرض فقط عبر /api/trends — بس مايقدرش يقود الإنتاج
+// من غير سيناريو حقيقي مكتوب في الكتالوج.
+import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { TOP_GLOBAL_TRENDS, generateInfiniteViralIdeas } from './viralEngine.js';
 
-const execPromise = util.promisify(exec);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.join(__dirname, '..');
 const VIDS_DIR = path.join(ROOT_DIR, 'content', 'vids');
 const TOPICS_PATH = path.join(ROOT_DIR, 'content', 'topics.json');
+const DAOUSHA_PATH = path.join(ROOT_DIR, 'content', 'topics_daousha.json');
 
 // Ensure vids directory exists
 if (!fs.existsSync(VIDS_DIR)) {
@@ -20,110 +27,109 @@ if (!fs.existsSync(VIDS_DIR)) {
 
 let activeJobs = {};
 
+function readJsonSafe(file) {
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf-8'));
+  } catch (err) {
+    return null;
+  }
+}
+
+function scriptLineFacts(raw) {
+  const lines = Array.isArray(raw?.script?.lines_ar) ? raw.script.lines_ar : [];
+  return lines
+    .filter(l => l && typeof l.text === 'string' && String(l.seg || '').startsWith('fact'))
+    .map(l => l.text.trim())
+    .filter(Boolean);
+}
+
+// Normalizes one entry of topics_daousha.json into the platform topic shape,
+// using only the entry's own authored fields — never shared filler text.
+function normalizeDaoushaTopic(raw) {
+  const lines = Array.isArray(raw?.script?.lines_ar) ? raw.script.lines_ar : [];
+  const hook = String(
+    raw?.hook_ar || (lines.find(l => l && l.seg === 'hook') || {}).text || ''
+  ).trim();
+  const facts = Array.isArray(raw?.facts_ar) && raw.facts_ar.length
+    ? raw.facts_ar.map(f => String(f).trim()).filter(Boolean)
+    : scriptLineFacts(raw);
+  const done = ['published', 'produced'].includes(raw?.status);
+  const tags = Array.isArray(raw?.tags)
+    ? raw.tags.join(',')
+    : (typeof raw?.tags === 'string' ? raw.tags : '');
+  return {
+    id: raw?.id,
+    angle: raw?.angle || raw?.topic || '',
+    topic: raw?.topic || '',
+    title_ar: raw?.title_ar || raw?.topic || raw?.angle || raw?.id,
+    title_en: raw?.title_en || '',
+    hook_ar: hook,
+    hook_en: raw?.hook_en || '',
+    facts_ar: facts,
+    facts_en: Array.isArray(raw?.facts_en) ? raw.facts_en : [],
+    outro_ar: raw?.outro_ar || '',
+    outro_en: raw?.outro_en || '',
+    tags,
+    _visual_queries: Array.isArray(raw?.scene_queries) ? raw.scene_queries : [],
+    category: raw?.theme || 'science',
+    status: raw?.status || 'queued',
+    origin: raw?.origin || '',
+    catalog: 'daousha',
+    producible: !done && Boolean(hook && facts.length),
+    done
+  };
+}
+
+// الكتالوج الرئيسي: 509 موضوع من content/topics_daousha.json
+export function loadDaoushaTopics() {
+  const data = readJsonSafe(DAOUSHA_PATH);
+  if (!Array.isArray(data)) return [];
+  return data.map(normalizeDaoushaTopic).filter(t => t.id);
+}
+
 export function listAvailableTopics() {
   const topics = [];
 
-  // 1. Add top global viral radar trends
-  for (const tr of TOP_GLOBAL_TRENDS) {
-    topics.push({
-      id: tr.id,
-      angle: tr.title,
-      title_ar: tr.title,
-      title_en: tr.titleEn,
-      hook_ar: tr.hookBreakdown || `في الثانية الأولى، يحدث الحدث الصاعق الذي لا يصدقه عقل!`,
-      hook_en: `In the first second, the impossible spectacle begins!`,
-      category: tr.category,
-      facts_ar: [
-        `في الدقيقة الأولى: تصعيد التحدي ورفع الرهان لأقصى حد ممكن تحت مراقبة الكاميرات.`,
-        `المنعطف الأوسط: حدث غير متوقع كلياً يقلب الموازين ويصدم المشاهدين.`,
-        `اللحظة الحاسمة: النتيجة الصادمة التي كسرت الأرقام القياسية واجتاحت العالم.`
-      ],
-      facts_en: [
-        `Minute 1: Escalating the challenge stakes to maximum intensity.`,
-        `Mid-twist: Totally unexpected twist completely flips the table.`,
-        `The Climax: Shocking conclusion that broke world records.`
-      ],
-      outro_ar: 'اشترك الآن في القناة الكونية CosmicTube عشان تشوف التحديات القادمة!',
-      outro_en: 'Subscribe to CosmicTube for the next impossible viral challenge!',
-      tags: tr.tags ? tr.tags.join(',') : 'viral,mrbeast,challenges,trending',
-      thumbnail: tr.thumbnail,
-      viewsEst: `${(tr.views / 1000000).toFixed(1)}M`,
-      ctr: '17.8%',
-      viralScore: tr.viralScore,
-      themeColor: tr.category === 'challenges' ? '#ef4444' : tr.category === 'science' ? '#8b5cf6' : '#f59e0b',
-      bgGradient: tr.category === 'challenges' 
-        ? 'from-red-950 via-slate-950 to-slate-900' 
-        : tr.category === 'science' 
-        ? 'from-purple-950 via-slate-950 to-blue-950' 
-        : 'from-amber-950 via-slate-950 to-emerald-950'
-    });
+  // 1. الكتالوج الرئيسي — كل مواضيع دوّشة بسيناريوهاتها الحقيقية
+  for (const t of loadDaoushaTopics()) {
+    topics.push(t);
   }
 
-  // 2. Add infinite viral matrix ideas
-  const infiniteIdeas = generateInfiniteViralIdeas(10);
-  for (let i = 0; i < infiniteIdeas.length; i++) {
-    const inf = infiniteIdeas[i];
-    topics.push({
-      id: inf.id,
-      angle: inf.titleAr,
-      title_ar: inf.titleAr,
-      title_en: inf.titleEn,
-      hook_ar: inf.hook3s,
-      hook_en: 'In second zero, the countdown timer ticks down with heart-stopping sirens!',
-      category: inf.niche,
-      facts_ar: [
-        `المرحلة الأولى: اختبار القواعد المستحيلة تحت أعين الكاميرات بدقة متناهية.`,
-        `المرحلة الثانية: انهيار كل التوقعات ومفاجأة غير مسبوقة تصدم الجميع.`,
-        `الخاتمة: إعلان الفائز الصامد وجائزة التحدي الخيالية وسط احتفال أسطوري.`
-      ],
-      facts_en: [
-        `Stage 1: Testing impossible rules on camera under extreme pressure.`,
-        `Stage 2: Complete collapse of expectations with surprise.`,
-        `Climax: Final survivor crowned with historic prize.`
-      ],
-      outro_ar: 'اشترك بالقناة الكونية CosmicTube واكتب في التعليقات التحدي اللي تريده!',
-      outro_en: 'Subscribe to CosmicTube and comment your challenge idea!',
-      tags: inf.tags ? inf.tags.join(',') : 'viral,challenge,shorts',
-      thumbnail: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=600&auto=format&fit=crop&q=80',
-      viewsEst: inf.predictedViews,
-      ctr: inf.predictedCtr,
-      viralScore: inf.viralScore,
-      themeColor: inf.niche === 'challenges' ? '#ef4444' : inf.niche === 'science' ? '#8b5cf6' : '#10b981',
-      bgGradient: inf.niche === 'challenges'
-        ? 'from-red-950 via-slate-950 to-slate-900'
-        : inf.niche === 'science'
-        ? 'from-indigo-950 via-slate-950 to-cyan-950'
-        : 'from-emerald-950 via-slate-950 to-amber-950'
-    });
-  }
-
-  // 3. Fallback to existing topics if any
-  try {
-    if (fs.existsSync(TOPICS_PATH)) {
-      const data = JSON.parse(fs.readFileSync(TOPICS_PATH, 'utf-8'));
-      for (const t of data) {
-        if (!topics.some(x => x.id === t.id)) {
-          topics.push(t);
-        }
-      }
+  // 2. الحلقات المؤلّفة يدويًا (content/topics.json). عند تصادم نفس الـid
+  //    مع مدخل دوّشة، المؤلَّف يكسب: سجل الإنتاج والروابط المنشورة
+  //    متعلقة بالـid ده من تاريخ المستودع ده بالذات.
+  const authored = readJsonSafe(TOPICS_PATH);
+  if (Array.isArray(authored)) {
+    for (const t of authored) {
+      if (!t || !t.id) continue;
+      const idx = topics.findIndex(x => x.id === t.id);
+      const wrapped = {
+        ...t,
+        category: t.category || 'authored',
+        producible: Boolean(t.hook_ar && (t.facts_ar || []).length),
+        done: false
+      };
+      if (idx >= 0) topics[idx] = wrapped;
+      else topics.push(wrapped);
     }
-  } catch (err) {
-    // ignore
   }
 
   return topics;
 }
 
-// Deterministic production queue: authored episodes first, then the viral radar.
-// The "infinite ideas" generator is intentionally excluded — it returns a fresh
-// random id and fabricated metrics on every call, so nothing could ever be
-// deduplicated against it and no real episode could be tracked.
+// Deterministic production queue: only catalog topics carrying a real,
+// complete script (hook + facts) may drive production. Radar entries and
+// random "infinite ideas" are deliberately excluded — they carry no authored
+// script and fabricated metrics, so nothing real could ever be produced
+// from them.
 export function listProductionQueue() {
   return listAvailableTopics()
-    .filter(t => t.id && !String(t.id).startsWith('infinite-'))
+    .filter(t => t.id && t.producible && !String(t.id).startsWith('infinite-'))
     .map(t => ({
       ...t,
-      source: (t.id.startsWith('ep') || t.id.startsWith('auto-')) ? 'authored' : 'radar'
+      source: t.catalog === 'daousha'
+        ? 'daousha'
+        : ((t.id.startsWith('ep') || t.id.startsWith('auto-')) ? 'authored' : 'radar')
     }));
 }
 
@@ -163,18 +169,34 @@ export function listProducedVideos() {
 
 export async function startProduceJob(topicInput = 'ep1') {
   const jobId = `job_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-  
+
   let targetTopic = null;
   const topics = listAvailableTopics();
   if (typeof topicInput === 'string') {
-    targetTopic = topics.find(t => t.id === topicInput) || topics[0];
+    // No silent substitution: an explicitly requested id that is not in the
+    // catalog must fail loudly.
+    targetTopic = topics.find(t => t.id === topicInput) || null;
+    if (!targetTopic) {
+      throw new Error(`Topic not found in the catalog: ${topicInput}`);
+    }
   } else if (topicInput && typeof topicInput === 'object') {
     targetTopic = topicInput;
   } else {
-    targetTopic = topics[0];
+    // No explicit choice → first catalog topic with a complete authored script.
+    targetTopic = topics.find(t => t.producible) || null;
+    if (!targetTopic) {
+      throw new Error('The catalog holds no producible topic (hook + facts).');
+    }
   }
-
-  const topicId = targetTopic.id || `topic_${Date.now()}`;
+  if (!targetTopic.id) {
+    throw new Error('Selected topic has no id — refusing to render.');
+  }
+  if (targetTopic.producible === false) {
+    throw new Error(
+      `Topic ${targetTopic.id} has no authored script (hook + facts) in the catalog — refusing to render filler.`
+    );
+  }
+  const topicId = targetTopic.id;
   const topicJsonPath = `/tmp/target_topic_${jobId}.json`;
   fs.writeFileSync(topicJsonPath, JSON.stringify(targetTopic, null, 2), 'utf-8');
 
