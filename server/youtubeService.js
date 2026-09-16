@@ -325,6 +325,62 @@ export async function searchVideos(query = '', regionCode = 'US') {
 }
 
 // Upload Video (Live via YouTube Data API v3 or Smart Simulation)
+// Confirm that a video id really resolves on YouTube before we ever call it published.
+// Primary path: YouTube Data API v3 videos.list (works with OAuth or an API key).
+// Fallback path: the public oEmbed endpoint (no key needed, public videos only).
+export async function verifyYouTubeVideo(videoId, { client = null } = {}) {
+  const id = String(videoId || '').trim();
+  const url = `https://youtu.be/${id}`;
+  if (!/^[A-Za-z0-9_-]{11}$/.test(id)) {
+    return { verified: false, method: 'format', videoId: id, url, reason: 'Not a valid YouTube video id' };
+  }
+
+  const activeClient = client || getYouTubeClient().client;
+  if (activeClient) {
+    try {
+      const res = await activeClient.videos.list({ part: ['status', 'snippet'], id });
+      const item = res.data.items?.[0];
+      if (item) {
+        return {
+          verified: true,
+          method: 'youtube.videos.list',
+          videoId: id,
+          url,
+          title: item.snippet?.title || null,
+          uploadStatus: item.status?.uploadStatus || null,
+          privacyStatus: item.status?.privacyStatus || null,
+          checkedAt: new Date().toISOString()
+        };
+      }
+      return { verified: false, method: 'youtube.videos.list', videoId: id, url, reason: 'YouTube returned no video for this id' };
+    } catch (err) {
+      // fall through to oEmbed — an upload can succeed while a later read is throttled
+      console.warn('videos.list verification failed, trying oEmbed:', err.message);
+    }
+  }
+
+  try {
+    const oembed = `https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`;
+    const response = await fetch(oembed, { signal: AbortSignal.timeout(15000) });
+    if (response.ok) {
+      const data = await response.json();
+      return {
+        verified: true,
+        method: 'youtube.oembed',
+        videoId: id,
+        url,
+        title: data.title || null,
+        uploadStatus: null,
+        privacyStatus: 'public',
+        checkedAt: new Date().toISOString()
+      };
+    }
+    return { verified: false, method: 'youtube.oembed', videoId: id, url, reason: `oEmbed responded HTTP ${response.status}` };
+  } catch (err) {
+    return { verified: false, method: 'youtube.oembed', videoId: id, url, reason: `oEmbed unreachable: ${err.message}` };
+  }
+}
+
 export async function publishVideo({
   videoFilePath,
   thumbnailFilePath,
@@ -368,6 +424,7 @@ export async function publishVideo({
       if (!uploadedVideoId) throw new Error('YouTube returned no video ID');
       let thumbnailUploaded = false;
 
+
       // Upload thumbnail if provided
       if (thumbnailFilePath && fs.existsSync(thumbnailFilePath) && uploadedVideoId) {
         try {
@@ -383,6 +440,9 @@ export async function publishVideo({
         }
       }
 
+      // Verify the link really resolves before recording it as published.
+      const verification = await verifyYouTubeVideo(uploadedVideoId, { client });
+
       const videoRecord = {
         id: uploadedVideoId,
         title: formattedTitle,
@@ -390,15 +450,27 @@ export async function publishVideo({
         publishedAt: new Date().toISOString(),
         privacyStatus,
         url: `https://youtu.be/${uploadedVideoId}`,
-        thumbnailUrl: thumbnailFilePath ? `/uploads/${path.basename(thumbnailFilePath)}` : 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=600&auto=format&fit=crop&q=80',
+        thumbnailUrl: `https://i.ytimg.com/vi/${uploadedVideoId}/hqdefault.jpg`,
         liveUploaded: true,
+        verified: verification.verified,
+        verifiedBy: verification.verified ? verification.method : null,
+        verifiedAt: verification.verified ? verification.checkedAt : null,
+        uploadStatus: verification.uploadStatus || null,
+        verifyError: verification.verified ? null : (verification.reason || 'unverified'),
         channelTitle: config.channel?.title || 'قناتك الرسمية',
         views: 0,
         likes: 0
       };
 
       saveVideoRecord(videoRecord);
-      return { success: true, video: videoRecord, message: 'تم نشر الفيديو بنجاح على قناتك في يوتيوب!' };
+      return {
+        success: true,
+        video: videoRecord,
+        verification,
+        message: verification.verified
+          ? `تم نشر الفيديو والتحقق من رابطه على يوتيوب (${verification.method}).`
+          : `تم رفع الفيديو لكن تعذّر التحقق من رابطه: ${verification.reason}`
+      };
     } catch (uploadErr) {
       console.error('YouTube API upload failed:', uploadErr);
       throw new Error(`فشل الرفع عبر API يوتيوب: ${uploadErr.message}`);

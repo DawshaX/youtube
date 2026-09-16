@@ -114,6 +114,19 @@ export function listAvailableTopics() {
   return topics;
 }
 
+// Deterministic production queue: authored episodes first, then the viral radar.
+// The "infinite ideas" generator is intentionally excluded — it returns a fresh
+// random id and fabricated metrics on every call, so nothing could ever be
+// deduplicated against it and no real episode could be tracked.
+export function listProductionQueue() {
+  return listAvailableTopics()
+    .filter(t => t.id && !String(t.id).startsWith('infinite-'))
+    .map(t => ({
+      ...t,
+      source: (t.id.startsWith('ep') || t.id.startsWith('auto-')) ? 'authored' : 'radar'
+    }));
+}
+
 export function listProducedVideos() {
   try {
     if (!fs.existsSync(VIDS_DIR)) return [];
@@ -193,7 +206,19 @@ with open('${topicJsonPath}', 'r', encoding='utf-8') as f:
 
 workdir = Path('/tmp/work_${jobId}')
 res = produce.produce_episode(target_topic, workdir)
-print(json.dumps({"ok": True, "video": str(res["video"]), "episode": target_topic["id"], "title": target_topic.get("title_ar", "")}))
+plan = res.get("plan") or {}
+audio_sources = sorted({(it.get("timing_source") or "unknown") for it in plan.get("items", [])})
+report_path = workdir / "report.json"
+report = json.loads(report_path.read_text(encoding="utf-8")) if report_path.exists() else None
+print(json.dumps({
+    "ok": True,
+    "video": str(res["video"]),
+    "cover": str(res.get("cover") or ""),
+    "episode": target_topic["id"],
+    "title": target_topic.get("title_ar", ""),
+    "audio_sources": audio_sources,
+    "report": report
+}, ensure_ascii=False))
 `;
 
       activeJobs[jobId].progress = 50;
@@ -235,6 +260,39 @@ print(json.dumps({"ok": True, "video": str(res["video"]), "episode": target_topi
             if (!fs.existsSync(outPath) || fs.statSync(outPath).size === 0) {
               throw new Error('Renderer did not produce a nonempty MP4');
             }
+
+            // The renderer prints one JSON line with the real ffprobe report.
+            let renderReport = null;
+            let audioSources = [];
+            let coverPath = null;
+            const reportLine = stdout
+              .split('\n')
+              .map(l => l.trim())
+              .filter(l => l.startsWith('{'))
+              .pop();
+            if (reportLine) {
+              try {
+                const parsed = JSON.parse(reportLine);
+                renderReport = parsed.report || null;
+                audioSources = Array.isArray(parsed.audio_sources) ? parsed.audio_sources : [];
+                if (parsed.cover && fs.existsSync(parsed.cover)) coverPath = parsed.cover;
+              } catch (_) {
+                // keep going; the file checks below still apply
+              }
+            }
+            if (!coverPath) {
+              const fallbackCover = path.join(VIDS_DIR, `${topicId}-cover.png`);
+              if (fs.existsSync(fallbackCover)) coverPath = fallbackCover;
+            }
+
+            const validation = renderReport?.validate || null;
+            if (validation && validation.ok === false) {
+              const failed = Object.entries(validation.checks || {})
+                .filter(([, ok]) => !ok)
+                .map(([name]) => name);
+              throw new Error(`Rendered MP4 failed spec validation: ${failed.join(', ')}`);
+            }
+
             activeJobs[jobId].status = 'completed';
             activeJobs[jobId].progress = 100;
             activeJobs[jobId].stage = '✅ تم إنتاج حلقة الفيديو MP4 بنجاح وجاهزة للعرض والنشر!';
@@ -243,7 +301,11 @@ print(json.dumps({"ok": True, "video": str(res["video"]), "episode": target_topi
               filename: `${topicId}.mp4`,
               url: `/content/vids/${topicId}.mp4`,
               filePath: outPath,
-              title: targetTopic.title_ar || targetTopic.title
+              coverPath,
+              title: targetTopic.title_ar || targetTopic.title,
+              sizeBytes: fs.statSync(outPath).size,
+              audioSources,
+              report: renderReport
             };
           } catch (e) {
             activeJobs[jobId].status = 'error';

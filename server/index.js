@@ -13,6 +13,7 @@ import {
   getTrendingVideos,
   searchVideos,
   publishVideo,
+  verifyYouTubeVideo,
   loadSavedVideos
 } from './youtubeService.js';
 import { 
@@ -25,7 +26,10 @@ import {
   getAutoPilotStatus,
   startAutoPilot,
   stopAutoPilot,
-  runAutoPilotCycle
+  runAutoPilotCycle,
+  runScheduledCycle,
+  runProductionCycle,
+  loadProductionLog
 } from './autoPilot.js';
 import {
   getGitHubStatus,
@@ -343,9 +347,22 @@ app.post('/api/publish-factory', express.json(), async (req, res) => {
 });
 
 // 12. Get Channel Uploaded Videos
+// Only records that came back from a real videos.insert (and carry a real
+// YouTube id) are ever exposed, so the UI cannot display a fabricated link.
 app.get('/api/videos', (req, res) => {
-  const videos = loadSavedVideos();
+  const videos = loadSavedVideos().filter(
+    v => v.liveUploaded === true && /^[A-Za-z0-9_-]{11}$/.test(String(v.id || ''))
+  );
   res.json(videos);
+});
+
+// 12b. Verify a published link really resolves on YouTube
+app.get('/api/verify/:videoId', async (req, res) => {
+  try {
+    res.json(await verifyYouTubeVideo(req.params.videoId));
+  } catch (err) {
+    res.status(500).json({ verified: false, error: err.message });
+  }
 });
 
 // 13. Autonomous Auto-Pilot System
@@ -365,8 +382,28 @@ app.post('/api/autopilot/stop', (req, res) => {
 });
 
 app.post('/api/autopilot/run-now', async (req, res) => {
-  await runAutoPilotCycle();
-  res.json({ success: true, status: getAutoPilotStatus() });
+  try {
+    const result = await runScheduledCycle();
+    res.json({ success: true, result, status: getAutoPilotStatus() });
+  } catch (err) {
+    const code = /already running/.test(err.message) ? 409 : 500;
+    res.status(code).json({ success: false, error: err.message, status: getAutoPilotStatus() });
+  }
+});
+
+// 13b. Produce one episode from the radar without publishing it
+app.post('/api/autopilot/produce', async (req, res) => {
+  try {
+    const record = await runProductionCycle();
+    res.json({ success: true, record, status: getAutoPilotStatus() });
+  } catch (err) {
+    const code = /already running/.test(err.message) ? 409 : 500;
+    res.status(code).json({ success: false, error: err.message, status: getAutoPilotStatus() });
+  }
+});
+
+app.get('/api/production-log', (req, res) => {
+  res.json(loadProductionLog());
 });
 
 // 14. GitHub Cloud Storage & Sync Engine
