@@ -1,5 +1,27 @@
 [
   {
+    "topicId": "ep3",
+    "source": "authored",
+    "title": "مخك بيغسل نفسه وإنت نايم… الحقيقة مرعبة! #Shorts",
+    "producedAt": "2026-09-16T17:31:04.913Z",
+    "filePath": "content/vids/ep3.mp4",
+    "sizeBytes": 37055686,
+    "durationSeconds": 70.03,
+    "width": 1080,
+    "height": 1920,
+    "vcodec": "h264",
+    "acodec": "aac",
+    "audioSources": [
+      "sentence"
+    ],
+    "coverPath": "content/vids/ep3-cover.png",
+    "published": true,
+    "youtubeVideoId": "LSBjKCNC3Ms",
+    "youtubeUrl": "https://youtu.be/LSBjKCNC3Ms",
+    "verifiedBy": "youtube.videos.list",
+    "verifiedAt": "2026-09-16T17:31:04.912Z"
+  },
+  {
     "topicId": "ep2",
     "source": "authored",
     "title": "أغلى من الماس بمليون مرة… مادة تكلف تريليونات! #Shorts",
