@@ -5,12 +5,31 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 from pathlib import Path
 
 from . import captions, content, scenes, settings, tts, video
 
 CHIPS_AR = ["الحقيقة الأولى", "الحقيقة الثانية", "والحقيقة الثالثة"]
+
+# الإيقاع البصري: قطعة مشهد جديدة كل ~2 ثانية (كانت قطعة واحدة لكل مقطع
+# سردي ≈ 12 ثانية → شاشة ثابتة تقتل الاحتفاظ). يُضبط بـ XT_SCENE_CUT.
+SCENE_CUT = max(0.8, float(os.environ.get("XT_SCENE_CUT", "2.0")))
+
+
+def _cut_ranges(start: float, end: float, cut: float) -> list[tuple[float, float]]:
+    """يقسّم مدى زمني لقطع ~2 ثانية، والذيل القصير يندمج في القطعة الأخيرة."""
+    spans: list[tuple[float, float]] = []
+    t = start
+    min_tail = max(0.9, cut * 0.45)
+    while t < end - 1e-3:
+        nxt = min(t + cut, end)
+        if end - nxt < min_tail:
+            nxt = end
+        spans.append((round(t, 3), round(nxt, 3)))
+        t = nxt
+    return spans
 
 
 def produce_episode(topic: dict, workdir: Path) -> dict:
@@ -29,7 +48,9 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
     if total <= 0:
         raise RuntimeError("مدة الصوت صفر")
 
-    # 3) المشاهد — قاعدة AI قوية (Pollinations) أو نيون احتياطي + طبقات نص
+    # 3) المشاهد — لقطة حيّة متحركة (خزنة assets/footage المولّدة محليًا)
+    #    + طبقات نص، مقطوعة كل ~2 ثانية للحفاظ على الإيقاع الفيروسي
+    from . import footage as _footage
     from . import music as _music
     scene_list: list[dict] = []
     for i, item in enumerate(plan["items"]):
@@ -54,9 +75,26 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
         sc = scenes.build_scene(kind, text, seed=f"{topic['id']}:{i}",
                                 workdir=workdir / f"sc{i:02d}", subject=subject,
                                 chip=chip, real_query=real_q)
-        sc["start"] = item["start"]
-        sc["end"] = item["end"]
-        scene_list.append(sc)
+        # كل مقطع سردي يتقطع لقطع ~2 ثانية — وكل قطعة تاخد لقطة متحركة
+        # مختلفة (اللقطة السابقة مستبعدة عشان التنوع البصري بين القطع).
+        prev_clip: tuple[str, ...] = ()
+        cuts = _cut_ranges(item["start"], item["end"], SCENE_CUT)
+        for j, (s0, s1) in enumerate(cuts):
+            entry = dict(sc)
+            entry["start"] = s0
+            entry["end"] = s1
+            clip = _footage.vault_clip(kind, item["text"], s1 - s0,
+                                       workdir / f"sc{i:02d}" / f"cut{j:02d}",
+                                       seed=f"{topic['id']}:{i}:{j}",
+                                       exclude=prev_clip)
+            if clip is None:
+                clip = _footage.fetch_clip(real_q, s1 - s0,
+                                           workdir / f"sc{i:02d}" / f"cut{j:02d}",
+                                           seed=f"{topic['id']}:{i}:{j}")
+            if clip is not None:
+                entry["video"] = clip
+                prev_clip = (clip.name,)
+            scene_list.append(entry)
 
     # 3.5) موسيقى خلفية مولّدة (بلا حقوق)
     music_path = _music.make_music(plan["total_duration"], workdir / "music.wav")

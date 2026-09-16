@@ -31,6 +31,130 @@ MAX_LIB_MB = 40
 NASA = "https://images-api.nasa.gov"
 MAX_DL = 30 * 1024 * 1024
 
+# ─────────────────────────────────────────────────────────────
+# الخزنة المحلية — لقطات حركة مولّدة برمجيًا 100% داخل المصنع
+# (xtrendaw/generate_footage_vault.py) → ملك المشروع بالكامل،
+# بلا أي ترخيص خارجي مطلوب. دي الطبقة الافتراضية الوحيدة للقطات
+# الحيّة؛ المصادر الشبكية (تحت) مقفولة افتراضيًا ومش بتتفتح غير
+# بـ XT_NET_FOOTAGE=1 ولمّا كتالوج التراخيص يكون موثقًا.
+# ─────────────────────────────────────────────────────────────
+VAULT_DIR = settings.ASSETS / "footage"
+
+# كل لقطة: (الملف, أنواع المشاهد اللي تناسبها, كلمات مفتاحية عربية من النص)
+VAULT_INDEX: list[tuple[str, tuple[str, ...], tuple[str, ...]]] = [
+    ("01_fire_hook_motion.mp4", ("hook",),
+     ("نار", "نيران", "حريق", "لهب", "اشتعل", "يحترق", "حمم")),
+    ("02_cash_rain_motion.mp4", ("fact1", "cta"),
+     ("فلوس", "مال", "نقود", "دولار", "جائزة", "جوائز", "ثروة", "كاش",
+      "مليون", "مبلغ")),
+    ("03_blizzard_freeze_motion.mp4", ("fact2",),
+     ("تلج", "ثلج", "جليد", "برد", "تجمد", "صقيع", "متجمد")),
+    ("04_countdown_hud_motion.mp4", ("fact3",),
+     ("وقت", "ثانية", "ثواني", "عد تنازلي", "ساعة", "مهلة", "دقائق")),
+    ("05_confetti_winner_motion.mp4", ("outro", "cta"),
+     ("فوز", "فائز", "بطل", "انتصار", "احتفال", "كأس", "تويج")),
+    ("06_cash_struggle_close.mp4", ("fact1",),
+     ("صراع", "معاناة", "مجهود", "تعب", "صمود")),
+    ("07_space_warp_cosmic.mp4", ("takeaway", "fact2"),
+     ("فضاء", "كون", "نجوم", "مجرة", "كوكب", "مجرة", "سديم")),
+    ("08_neon_cyber_grid.mp4", ("fact3", "hook"),
+     ("تقنية", "رقمي", "شبكة", "مستقبل", "ذكاء", "روبوت")),
+    ("09_lightning_storm_danger.mp4", ("hook",),
+     ("برق", "رعد", "عاصفة", "صاعقة", "خطر", "تحذير")),
+    ("clip_space_4s.mp4", ("takeaway",),
+     ("فضاء", "كون", "نجم")),
+]
+
+_VAULT_PROBE: dict[str, float] = {}
+
+
+def vault_available() -> list[str]:
+    """الملفات الموجودة فعليًا في الخزنة."""
+    if not VAULT_DIR.exists():
+        return []
+    return sorted(p.name for p in VAULT_DIR.glob("*.mp4"))
+
+
+def _vault_duration(name: str) -> float:
+    if name not in _VAULT_PROBE:
+        _VAULT_PROBE[name] = _probe_dur(VAULT_DIR / name)
+    return _VAULT_PROBE[name]
+
+
+def pick_vault_clip(kind: str, text: str, seed: str,
+                    exclude: tuple[str, ...] = ()) -> str | None:
+    """اختيار deterministic للقطة الأنسب: نوع المشهد + كلمات النص.
+
+    التعادل في النقاط يتحسم بالـseed. واللقطة المستبعدة (المعروضة في
+    القطعة السابقة) بتفتح المجال لبديل غير مستخدم: أولًا لقطة قريبة في
+    الصلة (نوع/كلمات)، ثم أي لقطة ذات معنى — عشان القطع كل 2 ثانية
+    يبقى فيه تنوع بصري حقيقي بدل تكرار نفس اللقطة.
+    """
+    present = set(vault_available())
+    scored: list[tuple[int, str]] = []
+    base_kind = kind if (kind in ("hook", "outro", "takeaway", "cta")
+                         or kind.startswith("fact")) else "fact1"
+    for fname, kinds, keywords in VAULT_INDEX:
+        if fname not in present:
+            continue
+        score = 2 if base_kind in kinds else 0
+        score += sum(1 for k in keywords if k in (text or ""))
+        scored.append((score, fname))
+    if not scored:
+        return None
+
+    def pick(pool: list[str]) -> str:
+        idx = int(hashlib.sha256(seed.encode()).hexdigest()[:8], 16) % len(pool)
+        return pool[idx]
+
+    best = max(s for s, _ in scored)
+    top = [n for s, n in scored if s == best]
+    free_top = [n for n in top if n not in exclude]
+    if free_top:
+        return pick(free_top)
+    # اللقطة الأفضل هي نفسها المعروضة في القطعة السابقة → بديل غير مستخدم:
+    # أولًا بديل قريب في الصلة، ثم أي لقطة ذات معنى، ثم أي لقطة.
+    for tier in ((lambda s, n: n not in exclude and s > 0 and s >= best - 2),
+                 (lambda s, n: n not in exclude and s > 0),
+                 (lambda s, n: n not in exclude)):
+        alt = [n for s, n in scored if tier(s, n)]
+        if alt:
+            return pick(alt)
+    return pick(top)
+
+
+def prepare_vault_clip(fname: str, seconds: float, out: Path) -> Path | None:
+    """لقطة من الخزنة → قطعة بمدة مطلوبة: تكرار سلس + 1080×1920@30 بلا صوت."""
+    src = VAULT_DIR / fname
+    if not src.exists() or seconds <= 0:
+        return None
+    out.parent.mkdir(parents=True, exist_ok=True)
+    cmd = [ffmpeg(), "-y", "-stream_loop", "-1", "-i", str(src),
+           "-t", f"{seconds:.3f}",
+           "-vf", ("scale=1080:1920:force_original_aspect_ratio=increase,"
+                   "crop=1080:1920,fps=30,setsar=1"),
+           "-c:v", "libx264", "-preset", "veryfast", "-crf", "21",
+           "-pix_fmt", "yuv420p", "-an", str(out)]
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    if r.returncode != 0 or not out.exists() or out.stat().st_size < 20_000:
+        out.unlink(missing_ok=True)
+        return None
+    return out
+
+
+def vault_clip(kind: str, text: str, seconds: float, workdir: Path,
+               seed: str, exclude: tuple[str, ...] = ()) -> Path | None:
+    """الواجهة العامة: لقطة حيّة متحركة مطابقة للمعنى من الخزنة المحلية."""
+    fname = pick_vault_clip(kind, text, seed, exclude=exclude)
+    if not fname:
+        return None
+    return prepare_vault_clip(fname, seconds, workdir / fname)
+
+
+def net_footage_enabled() -> bool:
+    """المصادر الشبكية مقفولة افتراضيًا: مفيش وسائط من غير ترخيص موثق."""
+    return settings.get("XT_NET_FOOTAGE", "0") == "1"
+
 BAD_TITLES = ("this week", "announce", "briefing", "news", "podcast",
               "interview", "hosted", "narrated", "trailer", "webinar",
               "press", "recap", "episode")
@@ -192,7 +316,14 @@ def _nasa_candidates(query: str) -> list:
 
 def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
                source: str = "auto") -> Path | None:
-    """لقطة حيّة مطابقة للمعنى → mp4 مظبوط بلا نص محروق، أو None."""
+    """لقطة حيّة مطابقة للمعنى → mp4 مظبوط بلا نص محروق، أو None.
+
+    طبقة شبكية (ويكيميديا/أرشيف الإنترنت/NASA) — مقفولة افتراضيًا
+    بقاعدة الترخيص: مش بتشتغل غير لما يكون في كتالوج مصادر موثق
+    (docs/MEDIA_VAULT_SOURCES.md) وXT_NET_FOOTAGE=1.
+    """
+    if not net_footage_enabled():
+        return None
     LIB.mkdir(parents=True, exist_ok=True)
     workdir.mkdir(parents=True, exist_ok=True)
     key = hashlib.sha256(f"{source}:{query}".encode()).hexdigest()[:12]

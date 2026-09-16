@@ -75,11 +75,11 @@ def to_wav(src: Path, dst: Path, rate: int = 44100) -> Path:
 
 
 def _spread(sentence: str, start: float, end: float) -> list[dict]:
-    """يوزّع مدة جملة على كلماتها بوزن طول الكلمة.
+    """يوزّع مدة جملة على كلماتها بوزن طول الكلمة — مُقدِّر طوارئ فقط.
 
-    ده البديل الضروري لأن edge-tts 7.2.8 بيرجع SentenceBoundary فقط
-    (مقيس على ar-EG-SalmaNeural وar-SA-ZariyahNeural وen-US-JennyNeural) —
-    فأي كود بيعتمد على WordBoundary هياخد قايمة فاضية.
+    من 7.2.8 وإحنا بنطلب من الخدمة صراحةً boundary="WordBoundary"، فالطبيعي
+    إن التوقيتات تيجي كلمة-بكلمة من المصدر نفسه (توقيت حقيقي مش تخمين).
+    الدالة دي تبقى شبكة أمان نادرة: لو سطر معين رجع بلا أي حدود زمنية.
     """
     tokens = sentence.split()
     if not tokens:
@@ -111,11 +111,14 @@ async def _synth_line(text: str, voice: str, out_mp3: Path,
     sent_bounds: list[dict] = []
     out_mp3.parent.mkdir(parents=True, exist_ok=True)
 
+    # edge-tts 7.2.8 افتراضيًا boundary="SentenceBoundary" → صفر أحداث
+    # WordBoundary والكابتشنز بتتأخر. لازم نطلب الحدود الكلامية صراحةً.
     communicate = edge_tts.Communicate(
         text, voice,
         rate=rate or settings.VOICE_RATE,
         pitch=pitch or settings.VOICE_PITCH,
         volume=volume or "+0%",
+        boundary="WordBoundary",
     )
     with open(out_mp3, "wb") as audio:
         async for chunk in communicate.stream():
@@ -275,26 +278,46 @@ def _edge_ar(text: str, out_dir: Path, name: str, rate, pitch, voice) -> dict:
         if len(parts) > 1:
             wavs: list[Path] = []
             words: list[dict] = []
+            sources: list[str] = []
             cursor = 0.0
             gap = 0.14
             for i, sent in enumerate(parts):
                 rr, pp, vv = _sent_prosody(sent, rate)
                 mp3 = out_dir / f"{name}_s{i}.mp3"
-                asyncio.run(_synth_line(sent, voice, mp3, rate=rr, pitch=pp,
-                                        volume=vv))
+                # نتيجة _synth_line هي مصدر الحقيقة: توقيتات كلمة-بكلمة
+                # حقيقية من الخدمة — مش تخمين _spread على مدة الملف.
+                synth = asyncio.run(_synth_line(sent, voice, mp3, rate=rr,
+                                                pitch=pp, volume=vv))
                 d = probe_duration(mp3)
                 if d <= 0:
                     continue
                 w = to_wav(mp3, out_dir / f"{name}_s{i}.wav")
                 wavs.append(w)
-                words.extend(_spread(sent.strip(), cursor, cursor + d))
+                pw = synth.get("words") or []
+                if pw:
+                    words.extend({
+                        "word": x["word"],
+                        "start": round(min(x["start"], d) + cursor, 3),
+                        "end": round(min(x["end"], d) + cursor, 3),
+                    } for x in pw)
+                    sources.append(synth.get("source", "word"))
+                else:
+                    # طوارئ نادرة جدًا: السطر رجع بلا حدود → المُقدِّر المحلي
+                    words.extend(_spread(sent.strip(), cursor, cursor + d))
+                    sources.append("estimated")
                 cursor += d + gap
             if wavs:
                 final = out_dir / f"{name}.wav"
                 _concat_wavs(wavs, final, gap)
                 total = probe_duration(final)
+                if sources and all(s == "word" for s in sources):
+                    src = "word"
+                elif any(s == "word" for s in sources):
+                    src = "mixed"
+                else:
+                    src = "sentence"
                 return {"wav": final, "duration": total, "words": words,
-                        "timing_source": "sentence"}
+                        "timing_source": src}
 
     return _edge_single(text, out_dir, name, rate, pitch, voice)
 

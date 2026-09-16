@@ -65,11 +65,17 @@ def make_clip(scene: dict, seconds: float, out_mp4: Path) -> Path:
     rich = "vignette=PI/5,noise=alls=2:allf=t,unsharp=5:5:0.5"
     _fin = "" if scene.get("nofade_in") else "fade=t=in:st=0:d=0.24:"
     if scene.get("video"):
-        # قاعدة فيديو حيّ متحرك — مفيش zoompan، الحركة من اللقطة نفسها
+        # قاعدة فيديو حيّ متحرك — مفيش zoompan، الحركة من اللقطة نفسها.
+        # قطع ~2 ثانية → ومضات دخول/خروج أقصر وأخف عشان الإيقاع يفضل سريع.
+        dip_v = max(0.0, seconds - 0.14)
+        _fin_v = "" if scene.get("nofade_in") else "fade=t=in:st=0:d=0.12:"
         parts = [
-            f"[0:v]{grade},{rich},"
-            f"{_fin}color=0x0a0603,"
-            f"fade=t=out:st={dip_out:.2f}:d=0.20:color=black[base]"
+            f"[0:v]scale={V['width']}:{V['height']}:"
+            f"force_original_aspect_ratio=increase,"
+            f"crop={V['width']}:{V['height']},fps={V['fps']},setsar=1,"
+            f"{grade},{rich},"
+            f"{_fin_v}color=0x0a0603,"
+            f"fade=t=out:st={dip_v:.2f}:d=0.14:color=black[base]"
         ]
     else:
         # حركة مختلفة لكل مشهد: تقريب / إبعاد / بان يمين / بان شمال
@@ -116,6 +122,42 @@ def make_clip(scene: dict, seconds: float, out_mp4: Path) -> Path:
     return out_mp4
 
 
+def _enforce_size_budget(out_mp4: Path, workdir: Path) -> None:
+    """لو الملف جاوز سقف المنصة، أعموله ضغط موجّه بميزانية بايتات حقيقية.
+
+    المحتوى المتحرك (لقطات الخزنة) بيستهلك أضعاف الصور الثابتة عند نفس
+    الـCRF — فالسقف بيتفرض بتمريرين على معدل محسوب من المدة، مش بالحظ.
+    """
+    info = probe(out_mp4)
+    limit = V["max_bytes"]
+    if info["bytes"] <= limit or info["duration"] <= 0:
+        return
+    audio_bps = 160_000
+    overhead = 96_000  # حاوية + هوامش
+    video_bps = int((limit * 8) / info["duration"]) - audio_bps - overhead
+    video_bps = max(350_000, video_bps)
+    tmp = workdir / "fit_pass.mp4"
+    passlog = workdir / "fitpass"
+    common = [
+        "-c:v", V["vcodec"], "-b:v", str(video_bps),
+        "-maxrate", str(int(video_bps * 1.07)),
+        "-bufsize", str(int(video_bps * 2)),
+        "-pix_fmt", "yuv420p", "-r", str(V["fps"]),
+    ]
+    _run([ffmpeg(), "-y", "-i", str(out_mp4), *common,
+          "-pass", "1", "-passlogfile", str(passlog),
+          "-an", "-f", "null", str(workdir / "null.mp4")], "ضغط-موجة-1")
+    _run([ffmpeg(), "-y", "-i", str(out_mp4), *common,
+          "-pass", "2", "-passlogfile", str(passlog),
+          "-c:a", V["acodec"], "-b:a", "160k", "-ar", "44100",
+          "-movflags", "+faststart", str(tmp)], "ضغط-موجة-2")
+    if tmp.exists() and tmp.stat().st_size > 0:
+        tmp.replace(out_mp4)
+    for junk in workdir.glob("fitpass*"):
+        junk.unlink(missing_ok=True)
+    (workdir / "null.mp4").unlink(missing_ok=True)
+
+
 def assemble(plan: dict, scenes: list[dict], ass_path: Path, out_mp4: Path,
              workdir: Path, music: Path | None = None) -> Path:
     workdir.mkdir(parents=True, exist_ok=True)
@@ -160,6 +202,7 @@ def assemble(plan: dict, scenes: list[dict], ass_path: Path, out_mp4: Path,
 
     if not out_mp4.exists():
         raise RuntimeError("الملف النهائي ما اتعملش")
+    _enforce_size_budget(out_mp4, workdir)
     return out_mp4
 
 
