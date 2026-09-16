@@ -12,14 +12,6 @@ on:
         description: 'Topic id from content/topics_daousha.json or content/topics.json (default: next in queue)'
         required: false
         default: ''
-  # مشغّلات مؤقتة عشان الساندبوكس ما يقدرش يعمل dispatch بنفسه (مفيش actions:write):
-  # أول تعديل للملف ده على الرئيسي يشغّل الدورة مرة، وكرُون لمرة واحدة احتياطي.
-  # تتشال في الكوميت اللي بعده مباشرة.
-  push:
-    branches: [main]
-    paths: ['.github/workflows/pilot-render.yml']
-  schedule:
-    - cron: '10 23 16 9 *'
 
 permissions:
   contents: write   # عشان خطوة الأدلة تقدر تعمل كوميت بالخطة الحقيقية في المستودع
