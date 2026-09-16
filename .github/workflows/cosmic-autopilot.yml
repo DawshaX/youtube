@@ -13,9 +13,29 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 28
     steps:
+      # Scheduled runs fire on the default branch, so this always renders and
+      # publishes the code that is actually merged — not a stale PR branch.
       - uses: actions/checkout@v4
-        with:
-          ref: arena/01a0a6ed-youtube
+
+      # Fail in seconds instead of after a full toolchain install when the
+      # channel credentials are not configured.
+      - name: Check channel credentials
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: |
+          missing=""
+          [ -z "$YOUTUBE_CLIENT_ID" ] && missing="$missing YOUTUBE_CLIENT_ID"
+          [ -z "$YOUTUBE_CLIENT_SECRET" ] && missing="$missing YOUTUBE_CLIENT_SECRET"
+          [ -z "$YOUTUBE_REFRESH_TOKEN" ] && missing="$missing YOUTUBE_REFRESH_TOKEN"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing"
+            echo "Nothing was produced and nothing was published."
+            exit 1
+          fi
+          echo "Channel credentials present."
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -36,15 +56,30 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
         run: node scripts/run-autopilot.js
+      - name: Verify the published link resolves on YouTube
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: |
+          # run-autopilot.js removes data/config.json on exit, so rebuild it here
+          # purely to ask YouTube about the video that was just uploaded.
+          node -e "const fs=require('fs');fs.writeFileSync('data/config.json',JSON.stringify({apiKey:process.env.YOUTUBE_API_KEY||'',clientId:process.env.YOUTUBE_CLIENT_ID,clientSecret:process.env.YOUTUBE_CLIENT_SECRET,tokens:{refresh_token:process.env.YOUTUBE_REFRESH_TOKEN},connected:true,mode:'live'}))"
+          node scripts/verify-uploads.js
+          rm -f data/config.json
       - name: Persist confirmed upload history
         if: always()
         run: |
           git config user.name 'CosmicTube AutoPilot [Bot]'
           git config user.email 'bot@cosmictube.internal'
           git add data/saved_videos.json
+          if [ -f data/production_log.json ]; then
+            git add data/production_log.json
+          fi
           if ! git diff --staged --quiet; then
             git commit -m 'chore: record confirmed YouTube upload [skip ci]'
-            git push origin HEAD:arena/01a0a6ed-youtube
+            git push origin HEAD:${{ github.ref_name }}
           fi
       - name: Preserve upload history if pushing fails
         if: failure()

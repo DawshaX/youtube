@@ -3,9 +3,17 @@
 
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
 import { publishVideo } from './youtubeService.js';
-import { startProduceJob, getJobStatus } from './videoFactoryBridge.js';
+import { startProduceJob, getJobStatus, listProductionQueue } from './videoFactoryBridge.js';
 import { loadSavedVideos, getYouTubeClient } from './youtubeService.js';
+
+const ROOT_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+const PRODUCTION_LOG_PATH = path.join(ROOT_DIR, 'data', 'production_log.json');
+
+// Artifact paths are stored relative to the repo root so the log stays valid on
+// any machine (local sandbox, CI runner) instead of pinning one absolute path.
+const repoRel = abs => path.relative(ROOT_DIR, abs).split(path.sep).join('/');
 
 let cycleActive = false;
 
@@ -20,20 +28,105 @@ let autoPilotState = {
   intervalHours: 0.5,
   turboDelaySeconds: 20,
   totalAutoPublished: 0,
+  totalProduced: 0,
   currentPublishingTitle: '',
+  lastArtifact: null,
+  publishBlockedReason: null,
   logs: []
 };
 
-export function getAutoPilotStatus() {
-  return autoPilotState;
+export function loadProductionLog() {
+  try {
+    if (fs.existsSync(PRODUCTION_LOG_PATH)) {
+      return JSON.parse(fs.readFileSync(PRODUCTION_LOG_PATH, 'utf-8'));
+    }
+  } catch (err) {
+    console.error('Error reading production log:', err.message);
+  }
+  return [];
 }
 
-export function addAutoPilotLog(message) {
-  const timestamp = new Date().toLocaleTimeString();
-  const entry = `[${timestamp}] ${message}`;
-  autoPilotState.logs.unshift(entry);
-  if (autoPilotState.logs.length > 50) autoPilotState.logs.pop();
-  console.log(`🤖 [AutoPilot] ${entry}`);
+function appendProductionRecord(record) {
+  const list = loadProductionLog();
+  list.unshift(record);
+  fs.mkdirSync(path.dirname(PRODUCTION_LOG_PATH), { recursive: true });
+  fs.writeFileSync(PRODUCTION_LOG_PATH, JSON.stringify(list, null, 2), 'utf-8');
+  return record;
+}
+
+// Next queue entry that has neither been rendered nor published yet.
+export function pickNextProductionTopic() {
+  const published = loadSavedVideos().filter(v => v.liveUploaded);
+  const produced = loadProductionLog();
+  const queue = listProductionQueue();
+  return queue.find(topic => {
+    const title = topic.title_ar;
+    if (published.some(v => v.title === `${title} #Shorts` || v.title === title)) return false;
+    return !produced.some(p => p.topicId === topic.id);
+  }) || null;
+}
+
+async function renderTopic(topic) {
+  const job = await startProduceJob(topic);
+  const deadline = Date.now() + 20 * 60 * 1000;
+  let status = null;
+  while (Date.now() < deadline) {
+    status = getJobStatus(job.jobId);
+    if (status.status === 'error') throw new Error(status.error);
+    if (status.status === 'completed') break;
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+  if (status?.status !== 'completed') throw new Error('Video production timed out');
+  return status;
+}
+
+// Production half of the cycle: radar topic -> real MP4 on disk, nothing published.
+// Safe to run without any YouTube credentials, and it never invents a video link.
+export async function runProductionCycle() {
+  if (cycleActive) throw new Error('A publishing cycle is already running');
+  cycleActive = true;
+  autoPilotState.lastRun = new Date().toISOString();
+  try {
+    const topic = pickNextProductionTopic();
+    if (!topic) throw new Error('Topic queue exhausted. Add new original topics before producing again.');
+    autoPilotState.currentPublishingTitle = topic.title_ar;
+
+    const status = await renderTopic(topic);
+    const out = status.outputVideo;
+    const info = out.report?.validate?.info || {};
+    const record = appendProductionRecord({
+      topicId: topic.id,
+      source: topic.source || 'queue',
+      title: topic.title_ar,
+      producedAt: new Date().toISOString(),
+      filePath: repoRel(out.filePath),
+      sizeBytes: out.sizeBytes || null,
+      durationSeconds: info.duration || null,
+      width: info.width || null,
+      height: info.height || null,
+      vcodec: info.vcodec || null,
+      acodec: info.acodec || null,
+      audioSources: out.audioSources || [],
+      coverPath: out.coverPath ? repoRel(out.coverPath) : null,
+      published: false,
+      youtubeVideoId: null,
+      youtubeUrl: null
+    });
+
+    autoPilotState.totalProduced += 1;
+    autoPilotState.lastArtifact = record;
+    const audio = (record.audioSources || []).join('+') || 'unknown';
+    addAutoPilotLog(
+      `🎬 إنتاج من الرادار: «${record.title}» → ${record.filePath} ` +
+      `(${record.durationSeconds ?? '?'}s, ${record.width}x${record.height}, ${record.sizeBytes} بايت, صوت: ${audio}). لم يُنشر بعد.`
+    );
+    return record;
+  } catch (err) {
+    addAutoPilotLog(`❌ ${err.message}`);
+    throw err;
+  } finally {
+    cycleActive = false;
+  }
 }
 
 export async function runAutoPilotCycle() {
@@ -53,26 +146,50 @@ export async function runAutoPilotCycle() {
     const topic = topics.find(t => !published.some(v => v.title === `${t.title_ar} #Shorts` || v.title === t.title_ar));
     if (!topic) throw new Error('Topic queue exhausted. Add new original topics before publishing again.');
     autoPilotState.currentPublishingTitle = topic.title_ar;
-    const job = await startProduceJob(topic);
-    const deadline = Date.now() + 20 * 60 * 1000;
-    let status;
-    while (Date.now() < deadline) {
-      status = getJobStatus(job.jobId);
-      if (status.status === 'error') throw new Error(status.error);
-      if (status.status === 'completed') break;
-      await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const status = await renderTopic(topic);
+    const out = status.outputVideo;
+    const audioSources = out.audioSources || [];
+    if (audioSources.length && audioSources.every(s => s === 'fallback') && process.env.COSMIC_ALLOW_FALLBACK_AUDIO !== '1') {
+      throw new Error('Narration fell back to a synthetic tone (TTS unavailable). Refusing to publish it; set COSMIC_ALLOW_FALLBACK_AUDIO=1 to override.');
     }
-    if (status?.status !== 'completed') throw new Error('Video production timed out');
+
     const result = await publishVideo({
-      videoFilePath: status.outputVideo.filePath,
+      videoFilePath: out.filePath,
+      thumbnailFilePath: out.coverPath || null,
       title: topic.title_ar,
       description: [topic.hook_ar, ...(topic.facts_ar || []), topic.outro_ar].join('\n\n'),
       tags: (topic.tags || '').split(','),
       privacyStatus: 'public', categoryId: '28', isShort: true
     });
     if (!result.video?.liveUploaded) throw new Error('Live upload was not confirmed');
+    if (!result.video?.verified) throw new Error(`Upload was not verified on YouTube: ${result.video?.verifyError || 'unknown reason'}`);
+
+    appendProductionRecord({
+      topicId: topic.id,
+      source: 'authored',
+      title: result.video.title,
+      producedAt: new Date().toISOString(),
+      filePath: repoRel(out.filePath),
+      sizeBytes: out.sizeBytes || null,
+      durationSeconds: out.report?.validate?.info?.duration || null,
+      width: out.report?.validate?.info?.width || null,
+      height: out.report?.validate?.info?.height || null,
+      vcodec: out.report?.validate?.info?.vcodec || null,
+      acodec: out.report?.validate?.info?.acodec || null,
+      audioSources,
+      coverPath: out.coverPath ? repoRel(out.coverPath) : null,
+      published: true,
+      youtubeVideoId: result.video.id,
+      youtubeUrl: result.video.url,
+      verifiedBy: result.video.verifiedBy,
+      verifiedAt: result.video.verifiedAt
+    });
+
     autoPilotState.totalAutoPublished += 1;
-    addAutoPilotLog(`✅ رابط الفيديو الحقيقي: ${result.video.url}`);
+    autoPilotState.totalProduced += 1;
+    autoPilotState.publishBlockedReason = null;
+    addAutoPilotLog(`✅ رابط الفيديو الحقيقي: ${result.video.url} (مُتحقَّق عبر ${result.video.verifiedBy})`);
     return result;
   } catch (err) {
     addAutoPilotLog(`❌ ${err.message}`);
@@ -80,6 +197,34 @@ export async function runAutoPilotCycle() {
   } finally {
     cycleActive = false;
   }
+}
+
+// What the 30-minute scheduler actually runs: publish when the channel is linked,
+// otherwise keep producing from the radar and say plainly that publishing is blocked.
+export async function runScheduledCycle() {
+  const { client, isOAuth } = getYouTubeClient();
+  if (isOAuth && client) {
+    try {
+      return await runAutoPilotCycle();
+    } catch (err) {
+      autoPilotState.publishBlockedReason = err.message;
+      throw err;
+    }
+  }
+  autoPilotState.publishBlockedReason = 'YouTube OAuth is missing — production only, nothing published.';
+  return await runProductionCycle();
+}
+
+export function getAutoPilotStatus() {
+  return autoPilotState;
+}
+
+export function addAutoPilotLog(message) {
+  const timestamp = new Date().toLocaleTimeString();
+  const entry = `[${timestamp}] ${message}`;
+  autoPilotState.logs.unshift(entry);
+  if (autoPilotState.logs.length > 50) autoPilotState.logs.pop();
+  console.log(`🤖 [AutoPilot] ${entry}`);
 }
 
 export function startAutoPilot(intervalHours = 0.5, continuousTurbo = false, turboDelaySeconds = 20) {
@@ -93,16 +238,16 @@ export function startAutoPilot(intervalHours = 0.5, continuousTurbo = false, tur
 
   if (autoPilotState.continuousTurbo) {
     addAutoPilotLog(`🚀 تم تفعيل الوضع التوربيني المستمر (النشر المتواصل غير المنقطع: كل ما ينتهي فيديو يُنشر التالي فوراً بعد ${autoPilotState.turboDelaySeconds} ثانية).`);
-    runAutoPilotCycle().catch(() => {});
+    runScheduledCycle().catch(() => {});
   } else {
     const ms = autoPilotState.intervalHours * 60 * 60 * 1000;
     autoPilotState.nextRun = new Date(Date.now() + ms).toISOString();
     const intervalMins = Math.round(autoPilotState.intervalHours * 60);
     addAutoPilotLog(`⚡ تم تفعيل الطيار الآلي المستمر بنجاح (النشر التلقائي يعمل دورياً كل ${intervalMins} دقيقة 24/7).`);
-    runAutoPilotCycle().catch(() => {});
+    runScheduledCycle().catch(() => {});
 
     autoPilotInterval = setInterval(() => {
-      runAutoPilotCycle().catch(() => {});
+      runScheduledCycle().catch(() => {});
       autoPilotState.nextRun = new Date(Date.now() + ms).toISOString();
     }, ms);
   }

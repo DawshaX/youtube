@@ -89,3 +89,46 @@ npm start
 ```
 
 المنصة تعمل على العنوان: `http://localhost:3000`
+
+---
+
+## 🤖 الطيار الآلي: الإنتاج مقابل النشر (بعد PR #3)
+
+المنظومة تفصل بين مرحلتين، ولا تخلط بينهما أبداً:
+
+| المرحلة | تحتاج | النتيجة |
+| --- | --- | --- |
+| **الإنتاج من الرادار** | ffmpeg + اعتماديات بايثون فقط | ملف MP4 حقيقي على القرص + سجل في `data/production_log.json` بحقل `published: false` و`youtubeUrl: null` |
+| **النشر على يوتيوب** | `YOUTUBE_CLIENT_ID` + `YOUTUBE_CLIENT_SECRET` + `YOUTUBE_REFRESH_TOKEN` | `videos.insert` حقيقي، ثم **تحقق من الرابط** عبر `videos.list` (أو oEmbed كخيار بديل) قبل كتابة السجل |
+
+لا يوجد أي مسار في الكود يخترع رابط `youtu.be` أو رقم مشاهدات. أي محاولة نشر بدون OAuth ترمي خطأً ولا تكتب سجلاً.
+
+### الأوامر
+
+```bash
+# إنتاج حلقة واحدة من طابور الرادار (بدون نشر)
+node scripts/produce-from-radar.js
+node scripts/produce-from-radar.js --list      # حالة الطابور
+
+# التحقق من أن كل فيديو مسجَّل موجود فعلاً على يوتيوب
+node scripts/verify-uploads.js
+
+# الاختبارات
+node --test tests/publishing.test.js
+```
+
+### نقاط الـ API المضافة
+
+- `POST /api/autopilot/produce` — إنتاج حلقة واحدة من الرادار بدون نشر.
+- `GET  /api/production-log` — سجل الإنتاج الحقيقي (المسار، الحجم، المدة، الأبعاد، مصدر الصوت).
+- `GET  /api/verify/:videoId` — التحقق من رابط فيديو على يوتيوب.
+- `GET  /api/videos` — لا يعيد إلا السجلات المؤكَّدة (`liveUploaded: true` + معرّف يوتيوب صالح).
+
+### دور الـ 30 دقيقة
+
+- داخل المنصة: `startAutoPilot(0.5)` → كل 30 دقيقة دورة `runScheduledCycle()` (نشر إن كانت القناة مربوطة، وإلا إنتاج فقط مع تسجيل سبب تعطّل النشر).
+- على GitHub Actions: `cosmic-autopilot.yml` يعمل بـ `cron: '*/30 * * * *'` من الفرع الافتراضي، ويفشل فوراً برسالة واضحة إذا كانت الأسرار غير مضبوطة.
+
+> ⚠️ **الطابور محدود**: 7 مواضيع من الرادار + 11 حلقة مؤلَّفة في `content/topics.json`. عند نفادها تتوقف الدورة برسالة «Topic queue exhausted» ولا تعيد تدوير فيديوهات قديمة.
+>
+> ⚠️ **جودة الصوت**: إذا تعذّر الوصول إلى edge-tts/Piper يُسجَّل `audioSources: ["fallback"]` (نغمة بديلة)، ويرفض الطيار الآلي نشر هكذا حلقة ما لم يُضبط `COSMIC_ALLOW_FALLBACK_AUDIO=1`.

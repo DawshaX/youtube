@@ -1,0 +1,42 @@
+[
+  {
+    "topicId": "trend-01",
+    "source": "radar",
+    "title": "عشت 7 أيام في غرفة بيضاء بالكامل بدون أي صوت أو بشر!",
+    "producedAt": "2026-09-16T04:59:47.875Z",
+    "filePath": "content/vids/trend-01.mp4",
+    "sizeBytes": 29337487,
+    "durationSeconds": 48.73,
+    "width": 1080,
+    "height": 1920,
+    "vcodec": "h264",
+    "acodec": "aac",
+    "audioSources": [
+      "fallback"
+    ],
+    "coverPath": "content/vids/trend-01-cover.png",
+    "published": false,
+    "youtubeVideoId": null,
+    "youtubeUrl": null
+  },
+  {
+    "topicId": "mrbeast_challenge",
+    "source": "radar",
+    "title": "آخر شخص يرفع يده عن جبل النقود يربح 250,000$",
+    "producedAt": "2026-09-16T04:57:49.561Z",
+    "filePath": "content/vids/mrbeast_challenge.mp4",
+    "sizeBytes": 28666332,
+    "durationSeconds": 47.03,
+    "width": 1080,
+    "height": 1920,
+    "vcodec": "h264",
+    "acodec": "aac",
+    "audioSources": [
+      "fallback"
+    ],
+    "coverPath": "content/vids/mrbeast_challenge-cover.png",
+    "published": false,
+    "youtubeVideoId": null,
+    "youtubeUrl": null
+  }
+]
