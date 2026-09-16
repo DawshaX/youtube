@@ -1,0 +1,47 @@
+{
+  "episode": "ep11",
+  "title": "تحت قدميك إمبراطورية كاملة! 3 حقائق صادمة عن عالم النمل",
+  "total_duration": 80.22,
+  "scenes": 40,
+  "captions": 27,
+  "cover": "/home/runner/work/youtube/youtube/content/vids/ep11-cover.png",
+  "audio_sources": [
+    "edge-tts:word"
+  ],
+  "credits": [],
+  "footage_usage": {
+    "09_lightning_storm_danger.mp4": 2,
+    "08_neon_cyber_grid.mp4": 3,
+    "14_lava_embers_flow.mp4": 4,
+    "07_space_warp_cosmic.mp4": 3,
+    "02_cash_rain_motion.mp4": 2,
+    "03_blizzard_freeze_motion.mp4": 3,
+    "04_countdown_hud_motion.mp4": 2,
+    "13_green_energy_pulse.mp4": 3,
+    "11_desert_dunes_gold.mp4": 3,
+    "06_cash_struggle_close.mp4": 2,
+    "12_gold_treasure_rain.mp4": 2,
+    "10_ocean_deep_waves.mp4": 2,
+    "01_fire_hook_motion.mp4": 2,
+    "clip_space_4s.mp4": 2,
+    "05_confetti_winner_motion.mp4": 5
+  },
+  "validate": {
+    "info": {
+      "duration": 78.07,
+      "width": 1080,
+      "height": 1920,
+      "vcodec": "h264",
+      "acodec": "aac",
+      "bytes": 40889480
+    },
+    "checks": {
+      "الأبعاد 1080×1920": true,
+      "الترميز H.264": true,
+      "الصوت AAC": true,
+      "المدة ≤90s": true,
+      "الحجم ≤40MB": true
+    },
+    "ok": true
+  }
+}
