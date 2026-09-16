@@ -187,6 +187,175 @@ def generate_lava_embers(duration=5.0, filename="14_lava_embers_flow.mp4"):
     print("lava ok")
 
 
+def generate_city_nights(duration=5.0, filename="15_blue_city_nights.mp4"):
+    out = FOOTAGE_DIR / filename
+    proc = _pipe(out)
+    n = int(duration * FPS)
+    random.seed(15)
+    windows = []
+    for _ in range(420):
+        windows.append((random.randint(0, W - 14), random.randint(int(H * 0.35), H - 40),
+                        random.random() * 6.28, random.choice([(255, 214, 110), (120, 220, 255)])))
+    for f in range(n):
+        t = f / FPS
+        img = Image.new("RGBA", (W, H), (6, 10, 34, 255))
+        d = ImageDraw.Draw(img)
+        for k in range(9):
+            bw = 90 + (k * 53) % 130
+            bx = (k * 137) % (W - bw)
+            bh = int(H * (0.30 + 0.06 * ((k * 7) % 5)))
+            d.rectangle([bx, H - bh, bx + bw, H], fill=(10 + k * 2, 16 + k * 2, 44, 255))
+        for wx, wy, ph, col in windows:
+            if math.sin(t * 1.4 + ph) > -0.6:
+                d.rectangle([wx, wy, wx + 10, wy + 14], fill=col + (210,))
+        for _ in range(3):
+            cx = random.randint(0, W)
+            cy = random.randint(0, int(H * 0.3))
+            d.ellipse([cx, cy, cx + 3, cy + 3], fill=(255, 255, 255, 160))
+        proc.stdin.write(np.array(img).tobytes())
+    _finish(proc)
+    print("city ok")
+
+
+def generate_red_alert(duration=5.0, filename="16_red_alert_siren.mp4"):
+    out = FOOTAGE_DIR / filename
+    proc = _pipe(out)
+    n = int(duration * FPS)
+    for f in range(n):
+        t = f / FPS
+        pulse = 0.5 + 0.5 * math.sin(t * 5.0)
+        img = Image.new("RGBA", (W, H), (30, 2, 4, 255))
+        d = ImageDraw.Draw(img)
+        cx, cy = W // 2, H // 2
+        for r, a in [(560, 20), (430, 34), (300, int(40 + 70 * pulse)), (180, int(70 + 120 * pulse))]:
+            d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(255, 30, 30, a))
+        ang = t * 2.6
+        for delta, a in ((-0.5, 70), (0, 130), (0.5, 70)):
+            rad = ang + delta
+            d.polygon([(cx, cy),
+                       (cx + 900 * math.cos(rad - 0.16), cy + 900 * math.sin(rad - 0.16)),
+                       (cx + 900 * math.cos(rad + 0.16), cy + 900 * math.sin(rad + 0.16))],
+                      fill=(255, 60, 40, a))
+        d.ellipse([cx - 40, cy - 40, cx + 40, cy + 40], fill=(255, 90, 60, 255))
+        proc.stdin.write(np.array(img).tobytes())
+    _finish(proc)
+    print("alert ok")
+
+
+def generate_galaxy_swirl(duration=5.0, filename="17_purple_galaxy_swirl.mp4"):
+    out = FOOTAGE_DIR / filename
+    proc = _pipe(out)
+    n = int(duration * FPS)
+    random.seed(17)
+    stars = [(random.random() * W, random.random() * H, random.uniform(1, 3),
+              random.random() * 6.28) for _ in range(170)]
+    for f in range(n):
+        t = f / FPS
+        img = Image.new("RGBA", (W, H), (10, 4, 26, 255))
+        d = ImageDraw.Draw(img)
+        cx, cy = W // 2, int(H * 0.42)
+        for arm in range(3):
+            for k in range(60):
+                r = 30 + k * 9
+                ang = arm * 2.094 + k * 0.16 + t * 0.9
+                x = cx + r * math.cos(ang)
+                y = cy + r * math.sin(ang) * 0.62
+                a = max(0, 190 - k * 2)
+                d.ellipse([x - 3, y - 3, x + 3, y + 3], fill=(190, 120, 255, a))
+        for r, a in [(110, 120), (60, 220)]:
+            d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(255, 230, 255, a))
+        for sx, sy, ss, ph in stars:
+            al = int(90 + 120 * math.sin(t * 2 + ph))
+            d.ellipse([sx, sy, sx + ss, sy + ss], fill=(255, 255, 255, max(20, al)))
+        proc.stdin.write(np.array(img).tobytes())
+    _finish(proc)
+    print("galaxy ok")
+
+
+def generate_aurora_night(duration=5.0, filename="18_aurora_night_sky.mp4"):
+    out = FOOTAGE_DIR / filename
+    proc = _pipe(out)
+    n = int(duration * FPS)
+    random.seed(18)
+    stars = [(random.random() * W, random.random() * H * 0.8, random.uniform(1, 3)) for _ in range(120)]
+    for f in range(n):
+        t = f / FPS
+        img = Image.new("RGBA", (W, H), (2, 8, 18, 255))
+        d = ImageDraw.Draw(img)
+        for sx, sy, ss in stars:
+            d.ellipse([sx, sy, sx + ss, sy + ss], fill=(255, 255, 255, 170))
+        for band, (cr, cg, cb) in enumerate(((30, 255, 160), (80, 190, 255), (170, 120, 255))):
+            pts = []
+            for x in range(0, W + 24, 24):
+                y = int(H * (0.22 + band * 0.09)
+                        + 70 * math.sin(x / 190 + t * (1.4 + band * 0.4) + band * 2)
+                        + 30 * math.sin(x / 77 - t * 2 + band))
+                pts.append((x, y))
+            for x, y in list(reversed(pts)):
+                pts.append((x, y + 130 + band * 40))
+            d.polygon(pts, fill=(cr, cg, cb, 44))
+        base = int(H * 0.82)
+        pts = [(0, H)] + [(x, base + int(24 * math.sin(x / 210))) for x in range(0, W + 20, 20)] + [(W, H)]
+        d.polygon(pts, fill=(6, 14, 24, 255))
+        proc.stdin.write(np.array(img).tobytes())
+    _finish(proc)
+    print("aurora ok")
+
+
+def generate_bronze_gears(duration=5.0, filename="19_bronze_gears_machine.mp4"):
+    out = FOOTAGE_DIR / filename
+    proc = _pipe(out)
+    n = int(duration * FPS)
+
+    def gear(d, cx, cy, r_out, r_in, teeth, ang, col):
+        pts = []
+        steps = teeth * 2
+        for k in range(steps):
+            r = r_out if k % 2 == 0 else r_out * 0.78
+            a = ang + k * 6.283 / steps
+            pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
+        d.polygon(pts, fill=col)
+        d.ellipse([cx - r_in, cy - r_in, cx + r_in, cy + r_in], fill=(18, 10, 4, 255))
+
+    for f in range(n):
+        t = f / FPS
+        img = Image.new("RGBA", (W, H), (20, 12, 6, 255))
+        d = ImageDraw.Draw(img)
+        gear(d, int(W * 0.32), int(H * 0.30), 250, 70, 12, t * 0.9, (200, 130, 50, 255))
+        gear(d, int(W * 0.72), int(H * 0.52), 190, 54, 10, -t * 1.2, (170, 108, 44, 255))
+        gear(d, int(W * 0.38), int(H * 0.74), 150, 42, 9, t * 1.6, (226, 160, 70, 255))
+        for _ in range(24):
+            x = random.randint(0, W)
+            y = random.randint(0, H)
+            d.ellipse([x, y, x + 2, y + 2], fill=(255, 200, 120, 60))
+        proc.stdin.write(np.array(img).tobytes())
+    _finish(proc)
+    print("gears ok")
+
+
+def generate_white_reveal(duration=5.0, filename="20_white_light_reveal.mp4"):
+    out = FOOTAGE_DIR / filename
+    proc = _pipe(out)
+    n = int(duration * FPS)
+    for f in range(n):
+        t = f / FPS
+        img = Image.new("RGBA", (W, H), (8, 8, 12, 255))
+        d = ImageDraw.Draw(img)
+        cx, cy = W // 2, int(H * 0.42)
+        for ang in range(0, 360, 12):
+            rad = math.radians(ang) + t * 0.5
+            r1 = 140 + 30 * math.sin(t * 3 + ang)
+            r2 = r1 + 300 + 130 * math.sin(t * 1.6 + ang * 0.2)
+            d.line([(cx + r1 * math.cos(rad), cy + r1 * math.sin(rad)),
+                    (cx + r2 * math.cos(rad), cy + r2 * math.sin(rad))],
+                   fill=(235, 240, 255, 46), width=4)
+        for r, a in [(260, 40), (190, 70), (120, 130), (60, 250)]:
+            d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(245, 248, 255, a))
+        proc.stdin.write(np.array(img).tobytes())
+    _finish(proc)
+    print("reveal ok")
+
+
 if __name__ == "__main__":
     FOOTAGE_DIR.mkdir(parents=True, exist_ok=True)
     generate_ocean_waves()
@@ -194,4 +363,10 @@ if __name__ == "__main__":
     generate_gold_rain()
     generate_green_energy()
     generate_lava_embers()
-    print("5 NEW CLIPS DONE")
+    generate_city_nights()
+    generate_red_alert()
+    generate_galaxy_swirl()
+    generate_aurora_night()
+    generate_bronze_gears()
+    generate_white_reveal()
+    print("11 VAULT CLIPS DONE")

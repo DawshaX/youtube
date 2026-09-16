@@ -111,7 +111,7 @@ jobs:
             state/ar_voices.txt
           if-no-files-found: error
 
-      - name: Commit real evidence back to the repo
+      - name: Commit real evidence back to the repo (v2 — خزنة 21 لقطة)
         run: |
           git config user.name "daousha-factory"
           git config user.email "daousha-factory@users.noreply.github.com"

@@ -97,7 +97,7 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-09-16T22:45:57+00:00",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
    "sha256": "29e54f0a003c9207cdecfa174052a90e300b092d1c814dc319d9596e42cf9bd9"
   },
   {
@@ -107,7 +107,7 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-09-16T22:45:57+00:00",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
    "sha256": "0ba733e1be9134cc68aae916c706676dc0abc385c92e3b92984848a38f0eaeb3"
   },
   {
@@ -117,7 +117,7 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-09-16T22:45:57+00:00",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
    "sha256": "b7e704548e3fae373adb1a97e9324f90de77e15cbaba2e564f4e709cada8fe83"
   },
   {
@@ -127,7 +127,7 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-09-16T22:45:57+00:00",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
    "sha256": "72058cd00cc0c652758fd0e04d29776d20828581e92230d7de2e622b3ffcc3cf"
   },
   {
@@ -137,8 +137,68 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-09-16T22:45:57+00:00",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
    "sha256": "3fc7e2e0ef3399ed2c5e00fd0eedc5196f6c95637dc44c2059f92e2a1aa02cce"
+  },
+  {
+   "path": "assets/footage/15_blue_city_nights.mp4",
+   "source": "internal-generator (xtrendaw/extend_footage_vault.py)",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
+   "sha256": "d3d06836fa657901c1f4fa832b45b382619faefbb3258ab05e48b2dfbea7c657"
+  },
+  {
+   "path": "assets/footage/16_red_alert_siren.mp4",
+   "source": "internal-generator (xtrendaw/extend_footage_vault.py)",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
+   "sha256": "8e4d90dc01a00fabcee4c5161dee4b0ef410b2969ad26d909a61d15a974bd099"
+  },
+  {
+   "path": "assets/footage/17_purple_galaxy_swirl.mp4",
+   "source": "internal-generator (xtrendaw/extend_footage_vault.py)",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
+   "sha256": "cdbbb854be7d7383286106c200efd700b8ee3b1c5a9dfddf707af9705c2dd1eb"
+  },
+  {
+   "path": "assets/footage/18_aurora_night_sky.mp4",
+   "source": "internal-generator (xtrendaw/extend_footage_vault.py)",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
+   "sha256": "3c23ba98a9dbe4c954f2027f1e6c599fa63844acd97db9d511a0d9f90f96e6de"
+  },
+  {
+   "path": "assets/footage/19_bronze_gears_machine.mp4",
+   "source": "internal-generator (xtrendaw/extend_footage_vault.py)",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
+   "sha256": "739934466d605e6a1611dffa65618f2841498ccbff1567d6943eb8d1cfdbc0a6"
+  },
+  {
+   "path": "assets/footage/20_white_light_reveal.mp4",
+   "source": "internal-generator (xtrendaw/extend_footage_vault.py)",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-09-16T23:06:21+00:00",
+   "sha256": "4a00d431940b3cef894a01abd90ec22df60a4fa00a37dc83399353cd35109ba1"
   },
   {
    "path": "assets/footage/clip_space_4s.mp4",
