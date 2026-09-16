@@ -32,9 +32,9 @@ SEED_TOPICS: list[dict] = [
             "The iron in your blood only formed in a star's final explosive moments.",
             "So you're not just in the universe… you're literally made of it. Mic drop.",
         ],
-        "outro_ar": "انتو خير ونور من الله. تابع XTreNDAW — الجاية أجنّ!",
-        "outro_en": "You are goodness and light. Follow XTreNDAW — the next one is wilder!",
-        "tags": "حقائق,علوم,فضاء,XTreNDAW",
+        "outro_ar": "انتو خير ونور. تابعوا دۅۄشے — الجاية أجنّ!",
+        "outro_en": "You are goodness and light. Follow Daousha — the next one is wilder!",
+        "tags": "حقائق,علوم,فضاء,دۅۄشے",
     },
     {
         "id": "ep2",
@@ -53,9 +53,9 @@ SEED_TOPICS: list[dict] = [
             "Everything humanity ever made of it wouldn't fill a teaspoon.",
             "So it's the priciest thing in the universe… and nobody can touch it. The irony kills!",
         ],
-        "outro_ar": "انتو خير ونور من الله. تابع XTreNDAW — الجاية أجنّ!",
-        "outro_en": "You are goodness and light. Follow XTreNDAW — the next one is wilder!",
-        "tags": "حقائق,علوم,فيزياء,XTreNDAW",
+        "outro_ar": "انتو خير ونور. تابعوا دۅۄشے — الجاية أجنّ!",
+        "outro_en": "You are goodness and light. Follow Daousha — the next one is wilder!",
+        "tags": "حقائق,علوم,فيزياء,دۅۄشے",
     },
     {
         "id": "ep3",
@@ -74,9 +74,9 @@ SEED_TOPICS: list[dict] = [
             "That wash flushes out the toxic proteins linked to Alzheimer's.",
             "So sleep isn't laziness… it's free factory maintenance!",
         ],
-        "outro_ar": "انتو خير ونور من الله. تابع XTreNDAW — الجاية أجنّ!",
-        "outro_en": "You are goodness and light. Follow XTreNDAW — the next one is wilder!",
-        "tags": "حقائق,علوم,مخ,XTreNDAW",
+        "outro_ar": "انتو خير ونور. تابعوا دۅۄشے — الجاية أجنّ!",
+        "outro_en": "You are goodness and light. Follow Daousha — the next one is wilder!",
+        "tags": "حقائق,علوم,مخ,دۅۄشے",
     },
     {
         "id": "ep4",
@@ -95,7 +95,7 @@ SEED_TOPICS: list[dict] = [
             "Two-thirds of its neurons are in its arms — each arm thinks on its own.",
             "So a severed arm keeps working like a tiny brain. Creepy and cute!",
         ],
-        "tags": "حقائق,بحر,ذكاء,XTreNDAW",
+        "tags": "حقائق,بحر,ذكاء,دۅۄشے",
     },
     {
         "id": "ep5",
@@ -114,7 +114,7 @@ SEED_TOPICS: list[dict] = [
             "One hour near a black hole can equal years on Earth.",
             "So traveling to the future is theoretically possible… just no return ticket!",
         ],
-        "tags": "حقائق,فضاء,فيزياء,XTreNDAW",
+        "tags": "حقائق,فضاء,فيزياء,دۅۄشے",
     },
     {
         "id": "ep6",
@@ -133,7 +133,7 @@ SEED_TOPICS: list[dict] = [
             "Scientists found 3,000-year-old honey in Egyptian tombs, still edible.",
             "So the pharaohs stored food better than us — with fridges!",
         ],
-        "tags": "حقائق,تاريخ,طعام,XTreNDAW",
+        "tags": "حقائق,تاريخ,طعام,دۅۄشے",
     },
     {
         "id": "ep7",
@@ -152,7 +152,7 @@ SEED_TOPICS: list[dict] = [
             "So the sunlight reaching you now left the sun 8 minutes ago.",
             "So you're not seeing the sun now… you're seeing the past!",
         ],
-        "tags": "حقائق,فضاء,ضوء,XTreNDAW",
+        "tags": "حقائق,فضاء,ضوء,دۅۄشے",
     },
 ]
 
@@ -160,8 +160,9 @@ LABELS_AR = ["الحقيقة الأولى:", "الحقيقة الثانية:", "
 LABELS_EN = ["Fact one:", "Fact two:", "And fact three:"]
 
 # دعوة المشاركة الثابتة — المصنع بيكلم المشاهد كأنه قاعد جنبه، وبيسيبه حر
-CTA_AR = ("اشترك الآن في CosmicTube واكتب في التعليقات التحدي الخارق القادم اللي نفسك نخوضه!")
-CTA_EN = ("Subscribe to CosmicTube now and drop your craziest challenge ideas in the comments below!")
+# (هوية واحدة: دۅۄشے — قرار البريف، صفر برندات تانية في أي مخرج)
+CTA_AR = ("اشترك الآن في دۅۄشے واكتب في التعليقات الفيديو الجاي اللي نفسك تشوفه!")
+CTA_EN = ("Subscribe to Daousha now and drop the next video you want to see in the comments!")
 
 
 def _takeaway_text(topic: dict, lang: str) -> str:

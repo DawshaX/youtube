@@ -52,7 +52,10 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
     #    + طبقات نص، مقطوعة كل ~2 ثانية للحفاظ على الإيقاع الفيروسي
     from . import footage as _footage
     from . import music as _music
+    from . import vault as _vault
     scene_list: list[dict] = []
+    clip_usage: dict[str, int] = {}   # سقف استخدامين لكل لقطة في الحلقة
+    used_assets: list = []              # لسجل الاعتمادات في التقرير
     for i, item in enumerate(plan["items"]):
         kind = item["seg"] if item["seg"] in ("hook", "outro") else f"fact{(i % 3) + 1}"
         text = item["text"]
@@ -76,7 +79,7 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
                                 workdir=workdir / f"sc{i:02d}", subject=subject,
                                 chip=chip, real_query=real_q)
         # كل مقطع سردي يتقطع لقطع ~2 ثانية — وكل قطعة تاخد لقطة متحركة
-        # مختلفة (اللقطة السابقة مستبعدة عشان التنوع البصري بين القطع).
+        # مختلفة (اللقطة السابقة مستبعدة + سقف استخدامين لكل لقطة في الحلقة).
         prev_clip: tuple[str, ...] = ()
         cuts = _cut_ranges(item["start"], item["end"], SCENE_CUT)
         for j, (s0, s1) in enumerate(cuts):
@@ -86,7 +89,7 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
             clip = _footage.vault_clip(kind, item["text"], s1 - s0,
                                        workdir / f"sc{i:02d}" / f"cut{j:02d}",
                                        seed=f"{topic['id']}:{i}:{j}",
-                                       exclude=prev_clip)
+                                       exclude=prev_clip, used=clip_usage)
             if clip is None:
                 clip = _footage.fetch_clip(real_q, s1 - s0,
                                            workdir / f"sc{i:02d}" / f"cut{j:02d}",
@@ -94,6 +97,10 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
             if clip is not None:
                 entry["video"] = clip
                 prev_clip = (clip.name,)
+                origin = _footage.clip_origin(clip)
+                if origin is not None:
+                    clip_usage[origin.name] = clip_usage.get(origin.name, 0) + 1
+                    used_assets.append(origin)
             scene_list.append(entry)
 
     # 3.5) موسيقى خلفية مولّدة (بلا حقوق)
@@ -109,13 +116,20 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
     out.parent.mkdir(parents=True, exist_ok=True)
     video.assemble(plan, scene_list, ass_path, out, workdir / "build", music=music_path)
 
-    # 5.5) الغلاف — نفس هوية المشاهد
+    # 5.5) الغلاف — فريم حقيقي من الفيديو (لحظة الخطاف) + ≤3 كلمات
     from . import brand
     cover = settings.OUT / f"{topic['id']}-cover.png"
-    brand.compose_cover(topic, cover)
+    hook_start = plan["items"][0]["start"] if plan["items"] else 0.0
+    brand.compose_cover(topic, cover, seed=str(topic.get("id", "")),
+                        video=out, frame_at=hook_start + 0.4)
 
     # 6) التحقق من المواصفات
     report = video.validate(out)
+
+    # مصادر الصوت الفعلية (من خطة الـTTS نفسها — بلا ادعاء)
+    ts_used = sorted({str(it.get("timing_source") or "estimate")
+                      for it in plan["items"]})
+    audio_sources = [f"edge-tts:{t}" for t in ts_used]
 
     (workdir / "report.json").write_text(
         json.dumps(
@@ -126,6 +140,9 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
                 "scenes": len(scene_list),
                 "captions": len(chunks),
                 "cover": str(cover),
+                "audio_sources": audio_sources,
+                "credits": _vault.credits_for(used_assets),
+                "footage_usage": clip_usage,
                 "validate": {
                     "info": report["info"],
                     "checks": report["checks"],

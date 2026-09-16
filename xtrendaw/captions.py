@@ -33,7 +33,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 
 def chunk_words(words: list[dict], size: int = WORDS_PER_CHUNK) -> list[dict]:
-    """كلمات → مجموعات {text, start, end}، من غير فراغات ميتة بينها."""
+    """كلمات → مجموعات {text, start, end, words}، من غير فراغات ميتة بينها."""
     chunks: list[dict] = []
     for i in range(0, len(words), size):
         group = words[i:i + size]
@@ -43,6 +43,7 @@ def chunk_words(words: list[dict], size: int = WORDS_PER_CHUNK) -> list[dict]:
             "text": " ".join(g["word"] for g in group),
             "start": group[0]["start"],
             "end": group[-1]["end"],
+            "words": list(group),
         })
     for a, b in zip(chunks, chunks[1:]):
         if b["start"] > a["end"]:
@@ -51,6 +52,18 @@ def chunk_words(words: list[dict], size: int = WORDS_PER_CHUNK) -> list[dict]:
         if c["end"] - c["start"] < MIN_CHUNK_SEC:
             c["end"] = c["start"] + MIN_CHUNK_SEC
     return chunks
+
+
+def karaoke_text(words: list[dict]) -> str:
+    """نص ASS كاراوكي كلمة-بكلمة: {\k..} قبل كل كلمة من توقيتاتها الحقيقية.
+
+    \k مئة-ثانية: الكلمة تتلوّن تدريجيًا على مدى نطقها الفعلي من الخدمة.
+    """
+    parts: list[str] = []
+    for w in words:
+        cs = max(1, int(round((w["end"] - w["start"]) * 100)))
+        parts.append(f"{{\\k{cs}}}{_escape(w['word'])}")
+    return " ".join(parts)
 
 
 def _ass_time(seconds: float) -> str:
@@ -70,12 +83,21 @@ def _escape(text: str) -> str:
 
 def build_ass(plan: dict, out_path: Path, en_lines: list[str] | None = None,
               font_name: str = "Amiri", font_size: int = 74) -> tuple[Path, list[dict]]:
-    """خطة الصوت → ملف ASS + قايمة الشرائح (للتقارير والاختبارات)."""
+    """خطة الصوت → ملف ASS + قايمة الشرائح (للتقارير والاختبارات).
+
+    لو توقيتات المقطع كلمة-بكلمة من الخدمة (توقيت حقيقي) الكابتشن بيطلع
+    **كاراوكي** (\k لكل كلمة) — الكلمة تتلوّن مع نطقها بالظبط. غير كده
+    (مُقدِّر/طوارئ) شرائح عادية بتوقيتات المجموعة.
+    """
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     chunks: list[dict] = []
     for item in plan["items"]:
-        chunks.extend(chunk_words(item["words"]))
+        karaoke = item.get("timing_source") in ("word", "mixed") \
+            and bool(item["words"])
+        for c in chunk_words(item["words"]):
+            c["karaoke"] = karaoke
+            chunks.append(c)
     if not chunks:
         raise RuntimeError("مفيش كابتشنز — خطة الصوت فاضية")
 
@@ -94,9 +116,11 @@ def build_ass(plan: dict, out_path: Path, en_lines: list[str] | None = None,
     )
     lines = [header]
     for c in chunks:
+        text = karaoke_text(c["words"]) if c.get("karaoke") \
+            else _escape(c["text"])
         lines.append(
             f"Dialogue: 0,{_ass_time(c['start'])},{_ass_time(c['end'])},"
-            f"Cap,,0,0,0,,{_escape(c['text'])}\n"
+            f"Cap,,0,0,0,,{text}\n"
         )
 
     # سطر إنجليزي ثابت لكل مقطع — عشان العالم يقرا (مش بس يسمع عربي)

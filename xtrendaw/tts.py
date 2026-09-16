@@ -42,28 +42,6 @@ def probe_duration(path: Path) -> float:
     return int(h) * 3600 + int(mi) * 60 + float(s)
 
 
-def _concat_wavs(wavs: list[Path], out: Path, gap: float) -> Path:
-    import subprocess as _sp
-    import tempfile as _tf
-
-    list_f = out.with_suffix(".lst")
-    sil = out.with_suffix(".sil.wav")
-    _sp.run([ffmpeg(), "-y", "-f", "lavfi", "-i",
-             "anullsrc=r=44100:cl=stereo", "-t", f"{gap:.2f}",
-             "-c:a", "pcm_s16le", str(sil)], capture_output=True)
-    lines = []
-    for w in wavs:
-        lines.append(f"file '{w.resolve().as_posix()}'")
-        lines.append(f"file '{sil.resolve().as_posix()}'")
-    list_f.write_text("\n".join(lines), encoding="utf-8")
-    _sp.run([ffmpeg(), "-y", "-f", "concat", "-safe", "0", "-i", str(list_f),
-             "-ar", "44100", "-ac", "2", "-c:a", "pcm_s16le", str(out)],
-            capture_output=True, check=True)
-    for w in list(wavs) + [sil, list_f]:
-        w.unlink(missing_ok=True)
-    return out
-
-
 def to_wav(src: Path, dst: Path, rate: int = 44100) -> Path:
     """تحويل إلى WAV موحد — لازم قبل الدمج في الفيديو."""
     subprocess.run(
@@ -168,17 +146,6 @@ def normalize_for_speech(text: str) -> str:
     return _re.sub(r"\s+", " ", text).strip()
 
 
-def _sent_prosody(sent: str, base_rate: str) -> tuple[str, str, str]:
-    s = sent.strip()
-    if s.endswith("!") or "!" in s:
-        return base_rate or "-14%", "+0Hz", "+25%"   # الله أكبر! أعلى وأفخم
-    if s.endswith("؟") or "?" in s:
-        return "-8%", "+2Hz", "+0%"                 # استفهام أرق
-    if s.endswith("…"):
-        return "-10%", "-1Hz", "+0%"                # وقفة تأمل
-    return base_rate or "-6%", "-1Hz", "+0%"
-
-
 def _piper_model() -> Path | None:
     """نموذج Piper من ريليز noor-models — يتخزن في /tmp (خارج مساحة العمل)."""
     import requests as _rq
@@ -272,53 +239,13 @@ def synthesize_line(text: str, lang: str, out_dir: Path, name: str = "line",
 
 
 def _edge_ar(text: str, out_dir: Path, name: str, rate, pitch, voice) -> dict:
-    if True:
-        text = normalize_for_speech(text)
-        parts = [p for p in _re.split(r"(?<=[!؟…])", text) if p.strip()]
-        if len(parts) > 1:
-            wavs: list[Path] = []
-            words: list[dict] = []
-            sources: list[str] = []
-            cursor = 0.0
-            gap = 0.14
-            for i, sent in enumerate(parts):
-                rr, pp, vv = _sent_prosody(sent, rate)
-                mp3 = out_dir / f"{name}_s{i}.mp3"
-                # نتيجة _synth_line هي مصدر الحقيقة: توقيتات كلمة-بكلمة
-                # حقيقية من الخدمة — مش تخمين _spread على مدة الملف.
-                synth = asyncio.run(_synth_line(sent, voice, mp3, rate=rr,
-                                                pitch=pp, volume=vv))
-                d = probe_duration(mp3)
-                if d <= 0:
-                    continue
-                w = to_wav(mp3, out_dir / f"{name}_s{i}.wav")
-                wavs.append(w)
-                pw = synth.get("words") or []
-                if pw:
-                    words.extend({
-                        "word": x["word"],
-                        "start": round(min(x["start"], d) + cursor, 3),
-                        "end": round(min(x["end"], d) + cursor, 3),
-                    } for x in pw)
-                    sources.append(synth.get("source", "word"))
-                else:
-                    # طوارئ نادرة جدًا: السطر رجع بلا حدود → المُقدِّر المحلي
-                    words.extend(_spread(sent.strip(), cursor, cursor + d))
-                    sources.append("estimated")
-                cursor += d + gap
-            if wavs:
-                final = out_dir / f"{name}.wav"
-                _concat_wavs(wavs, final, gap)
-                total = probe_duration(final)
-                if sources and all(s == "word" for s in sources):
-                    src = "word"
-                elif any(s == "word" for s in sources):
-                    src = "mixed"
-                else:
-                    src = "sentence"
-                return {"wav": final, "duration": total, "words": words,
-                        "timing_source": src}
+    """السطر بيتولّد **مرة واحدة** — من غير تقطيع على علامات الترقيم.
 
+    التقطيع القديم (جملة-جملة بـ _sent_prosody + صمت 0.14 بينها) كان
+    بيدي تقطيع مسموع وانزلاق توقيتات متراكم. دلوقتي: استدعاء واحد
+    للخدمة، والتوقيتات كلمة-بكلمة من بثها مباشرة.
+    """
+    text = normalize_for_speech(text)
     return _edge_single(text, out_dir, name, rate, pitch, voice)
 
 

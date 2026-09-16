@@ -54,8 +54,24 @@ function appendProductionRecord(record) {
   return record;
 }
 
+// A workspace reset removes the rendered MP4s (they are gitignored) but not the
+// log, so dead UNPUBLISHED entries drop out before the queue is read.
+// Entries with `published: true` are historical record — they stay forever,
+// even when the artifact is gone from disk, so the committed log never loses
+// what actually went live on YouTube (saved_videos.json backs this up too).
+export function pruneProductionLog() {
+  const list = loadProductionLog();
+  const kept = list.filter(entry => entry.published === true
+    || (entry.filePath && fs.existsSync(path.join(ROOT_DIR, entry.filePath))));
+  if (kept.length !== list.length) {
+    fs.writeFileSync(PRODUCTION_LOG_PATH, JSON.stringify(kept, null, 2), 'utf-8');
+  }
+  return list.filter(entry => !kept.includes(entry));
+}
+
 // Next queue entry that has neither been rendered nor published yet.
 export function pickNextProductionTopic() {
+  pruneProductionLog();
   const published = loadSavedVideos().filter(v => v.liveUploaded);
   const produced = loadProductionLog();
   const queue = listProductionQueue();

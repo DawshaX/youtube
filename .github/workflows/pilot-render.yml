@@ -1,8 +1,9 @@
 name: Pilot Episode Render (review only — never publishes)
 
 # حلقة تجريبية للمراجعة قبل الموافقة على النشر.
-# - بلا أي أسرار: مايلمسش يوتيوب/فيسبوك/تيليجرام خالص.
-# - بيرفع ملف الفيديو + الغلاف + التقرير كـ artifact للمراجعة اليدوية.
+# - بلا أي أسرار: ما يلمسش يوتيوب/فيسبوك/تيليجرام خالص.
+# - بيرفع الفيديو + الغلاف + التقرير + الأدلة (plan.json · caps.ass ·
+#   قائمة الأصوات العربية) كـ artifacts للمراجعة اليدوية.
 # - النشر الحقيقي موقوف لحد ما صاحب القناة يشوف الحلقة ويوافق.
 on:
   workflow_dispatch:
@@ -37,12 +38,16 @@ jobs:
           sudo apt-get install -y ffmpeg espeak-ng fonts-dejavu-core
           python -m pip install pillow numpy requests edge-tts imageio-ffmpeg arabic-reshaper python-bidi
 
+      - name: Print available edge-tts Arabic voices
+        run: python scripts/list_ar_voices.py
+
       - name: Render the pilot episode
         env:
           PILOT_TOPIC_ID: ${{ inputs.topic_id }}
         run: |
           node - <<'EOF'
           import fs from 'node:fs';
+          import path from 'node:path';
           const { listProductionQueue, startProduceJob, getJobStatus } =
             await import('./server/videoFactoryBridge.js');
           const wanted = (process.env.PILOT_TOPIC_ID || '').trim();
@@ -62,13 +67,23 @@ jobs:
             if (st.status === 'error') throw new Error(st.error);
             if (st.status === 'completed') {
               const out = st.outputVideo;
+              fs.mkdirSync('data/pilot_evidence', { recursive: true });
+              fs.writeFileSync('data/pilot_report.json', JSON.stringify(out.report, null, 2));
+              // الأدلة: الخطة الصوتية الحقيقية + الكابتشنز الفعلية
+              const workdirs = fs.readdirSync('/tmp').filter(f => f.startsWith('work_job'));
+              for (const wd of workdirs) {
+                const plan = `/tmp/${wd}/tts/plan.json`;
+                const ass = `/tmp/${wd}/caps.ass`;
+                if (fs.existsSync(plan)) fs.copyFileSync(plan, 'data/pilot_evidence/plan.json');
+                if (fs.existsSync(ass)) fs.copyFileSync(ass, 'data/pilot_evidence/caps.ass');
+              }
               console.log(JSON.stringify({
                 video: out.filePath,
                 cover: out.coverPath,
                 audioSources: out.audioSources,
-                report: out.report
+                scenes: out.report?.scenes,
+                validate: out.report?.validate
               }, null, 2));
-              fs.writeFileSync('data/pilot_report.json', JSON.stringify(out.report, null, 2));
               process.exit(0);
             }
             await new Promise(r => setTimeout(r, 3000));
@@ -82,6 +97,8 @@ jobs:
           name: pilot-episode
           path: |
             content/vids/*.mp4
-            content/vids/*-cover.png
             data/pilot_report.json
+            data/pilot_evidence/plan.json
+            data/pilot_evidence/caps.ass
+            state/ar_voices.txt
           if-no-files-found: error

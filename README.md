@@ -85,7 +85,7 @@ npm install
 npm run build
 
 # تشغيل الخادم والمنصة
-npm start
+npm run dev
 ```
 
 المنصة تعمل على العنوان: `http://localhost:3000`
