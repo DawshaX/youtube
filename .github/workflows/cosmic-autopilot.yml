@@ -1,7 +1,11 @@
 name: CosmicTube Autonomous Auto-Pilot 24/7
+# النشر موقوف بموافقة صاحب القناة: الجدولة كل 30 دقيقة متعطلة لحد ما
+# الحلقة التجريبية تتراجع وتتوافق عليها. لحد اللحظة دي شغّل الدورة
+# يدويًا (workflow_dispatch) أو راجع الحلقة عبر pilot-render.yml.
+# لإعادة التشغيل الدائم بعد الموافقة: ارجع الـschedule اللي تحت.
 on:
-  schedule:
-    - cron: '*/30 * * * *'
+  # schedule:
+  #   - cron: '*/30 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
