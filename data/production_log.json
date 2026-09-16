@@ -1,5 +1,27 @@
 [
   {
+    "topicId": "ep1",
+    "source": "authored",
+    "title": "جسمك فيه نجوم حقيقية… والدليل هيصدمك! #Shorts",
+    "producedAt": "2026-09-16T10:59:04.325Z",
+    "filePath": "content/vids/ep1.mp4",
+    "sizeBytes": 37925018,
+    "durationSeconds": 68.8,
+    "width": 1080,
+    "height": 1920,
+    "vcodec": "h264",
+    "acodec": "aac",
+    "audioSources": [
+      "sentence"
+    ],
+    "coverPath": "content/vids/ep1-cover.png",
+    "published": true,
+    "youtubeVideoId": "Zh0XcHBQb0A",
+    "youtubeUrl": "https://youtu.be/Zh0XcHBQb0A",
+    "verifiedBy": "youtube.videos.list",
+    "verifiedAt": "2026-09-16T10:59:04.325Z"
+  },
+  {
     "topicId": "trend-01",
     "source": "radar",
     "title": "عشت 7 أيام في غرفة بيضاء بالكامل بدون أي صوت أو بشر!",
