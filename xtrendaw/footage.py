@@ -72,6 +72,20 @@ VAULT_INDEX: list[tuple[str, tuple[str, ...], tuple[str, ...]]] = [
      ("طاقة", "كهرباء", "نبض", "قوة", "حيوية", "بيئة", "أخضر", "شحن")),
     ("14_lava_embers_flow.mp4", ("hook", "fact2"),
      ("حمم", "بركان", "جمر", "لهب", "انفجار", "حرارة", "نيران")),
+    ("15_blue_city_nights.mp4", ("fact3", "takeaway"),
+     ("مدينة", "مدن", "شارع", "شوارع", "أضواء", "ليل", "زحام", "عاصمة",
+      "ناطحات")),
+    ("16_red_alert_siren.mp4", ("hook",),
+     ("إنذار", "خطر", "تحذير", "طوارئ", "كارثة", "فخ", "ممنوع")),
+    ("17_purple_galaxy_swirl.mp4", ("takeaway", "fact2"),
+     ("مجرة", "سديم", "درب التبانة", "ثقوب", "ثقب أسود")),
+    ("18_aurora_night_sky.mp4", ("fact2", "outro"),
+     ("سماء", "ليل", "شفق", "نجوم", "قطب", "قمر")),
+    ("19_bronze_gears_machine.mp4", ("fact1", "fact3"),
+     ("آلة", "تروس", "مصنع", "صناعة", "اختراع", "ميكانيكا", "محرك",
+      "ساعة")),
+    ("20_white_light_reveal.mp4", ("takeaway", "cta"),
+     ("كشف", "سر", "حقيقة", "نور", "إعلان", "اكتشاف", "ظهور")),
     ("clip_space_4s.mp4", ("takeaway",),
      ("فضاء", "كون", "نجم")),
 ]
@@ -126,17 +140,24 @@ def pick_vault_clip(kind: str, text: str, seed: str,
     def under_cap(n: str) -> bool:
         return used.get(n, 0) < max_uses
 
+    def pick_least_used(pool: list[str]) -> str:
+        # عند استنفاد السقف: نوزع على الأقل استخدامًا عشان ما تتكررش لقطة
+        # 5 مرات وزميلتها مرة — الاتزان أهم من الصلة هنا.
+        least = min(used.get(n, 0) for n in pool)
+        return pick([n for n in pool if used.get(n, 0) == least])
+
     best = max(s for s, _ in scored)
     for pool in (
         [n for s, n in scored if s == best and n not in exclude and under_cap(n)],
         [n for s, n in scored if s > 0 and n not in exclude and under_cap(n)],
         [n for s, n in scored if n not in exclude and under_cap(n)],
-        [n for s, n in scored if s == best and n not in exclude],
-        [n for s, n in scored if s == best],
     ):
         if pool:
             return pick(pool)
-    return pick([n for _, n in scored])
+    # السقف اتستنفد في الخزنة كلها → الأقل استخدامًا (مع استبعاد القطعة
+    # السابقة لو فيه بدائل)، مش الأقوى صلة اللي هيتحرق تكرارًا.
+    pool = [n for _, n in scored if n not in exclude] or [n for _, n in scored]
+    return pick_least_used(pool)
 
 
 def prepare_vault_clip(fname: str, seconds: float, out: Path) -> Path | None:
