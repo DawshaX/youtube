@@ -1,5 +1,27 @@
 [
   {
+    "topicId": "ep2",
+    "source": "authored",
+    "title": "أغلى من الماس بمليون مرة… مادة تكلف تريليونات! #Shorts",
+    "producedAt": "2026-09-16T12:45:49.918Z",
+    "filePath": "content/vids/ep2.mp4",
+    "sizeBytes": 39066064,
+    "durationSeconds": 71,
+    "width": 1080,
+    "height": 1920,
+    "vcodec": "h264",
+    "acodec": "aac",
+    "audioSources": [
+      "sentence"
+    ],
+    "coverPath": "content/vids/ep2-cover.png",
+    "published": true,
+    "youtubeVideoId": "RiirZA0Gc1w",
+    "youtubeUrl": "https://youtu.be/RiirZA0Gc1w",
+    "verifiedBy": "youtube.videos.list",
+    "verifiedAt": "2026-09-16T12:45:49.917Z"
+  },
+  {
     "topicId": "ep1",
     "source": "authored",
     "title": "جسمك فيه نجوم حقيقية… والدليل هيصدمك! #Shorts",
