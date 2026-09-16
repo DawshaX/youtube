@@ -22,7 +22,7 @@ on:
     - cron: '10 23 16 9 *'
 
 permissions:
-  contents: read
+  contents: write   # عشان خطوة الأدلة تقدر تعمل كوميت بالخطة الحقيقية في المستودع
 
 jobs:
   render-pilot:
@@ -110,3 +110,18 @@ jobs:
             data/pilot_evidence/caps.ass
             state/ar_voices.txt
           if-no-files-found: error
+
+      - name: Commit real evidence back to the repo
+        run: |
+          git config user.name "daousha-factory"
+          git config user.email "daousha-factory@users.noreply.github.com"
+          mkdir -p data/pilot_evidence
+          git add data/pilot_report.json data/pilot_evidence/plan.json \
+                  data/pilot_evidence/caps.ass
+          git add -f state/ar_voices.txt
+          if git diff --cached --quiet; then
+            echo "no evidence to commit"
+          else
+            git commit -m "evidence(pilot): plan.json + caps.ass + ar voices from the REAL Actions render"
+            git push origin HEAD:${GITHUB_REF_NAME:-main}
+          fi
