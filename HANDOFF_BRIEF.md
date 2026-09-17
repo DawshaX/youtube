@@ -34,7 +34,7 @@
 | 5 | قطع كل 2 ثانية | ✅ `XT_SCENE_CUT=2.0` + `target_cut=2.0` |
 | 6 | كاريوكي `{\k}` في `.ass` من توقيت الخدمة | ✅ `captions.build_ass` |
 | 7 | `vault/index.json` + حارس ترخيص + مولد اعتمادات | ✅ `xtrendaw/vault.py` |
-| 8 | رادار + محلل → `patterns.json` | ⏳ غير منفّذ (مخطط في `docs/FACTORY_BLUEPRINT.md`) |
+| 8 | رادار + محلل → `patterns.json` | ✅ الكود كامل (`radar.py` + `analyzer.py` + سير `radar-scan.yml`) — يشتغل فور وجود `YOUTUBE_API_KEY` |
 | 9 | قتل `facts_ar` + 509 موضوعًا من كتالوج «دۅۄشے» | ✅ منفّذ |
 | 10 | محرك أصوات متعدد (راوي + تفاعل) | ⏳ غير منفّذ |
 | 11 | بوابة جودة + فحص رفع خاص على يوتيوب | ✅ جزئيًا (`gate.py` — فحص الرفع الخاص يحتاج توكن صالح) |
@@ -71,8 +71,15 @@ node --test tests/publishing.test.js
 
 ## ما يلزم من المستخدم (لا يغني عنه شيء)
 
-1. إبطال توكنات الدردشة فورًا من إعدادات حسابه.
-2. تعطيل `cosmic-autopilot.yml` من واجهة GitHub (أو دمج الفرع) — كرون `main` ما زال ينشر.
+1. إبطال توكنات الدردشة السابقة فورًا من إعدادات حسابه.
+2. ~~تعطيل `cosmic-autopilot.yml`~~ ✅ تم بالدمج — الجدولة موقوفة على `main`.
 3. نشر تطبيق Google OAuth قبل ~2026-09-23 وإلا مات توكن النشر.
-4. اختيار صوت عربي من قائمة `ar_voices.txt` (artifact في تشغيل `pilot-render`).
-5. معاينة حلقة الباورت والموافقة الصريحة قبل أي نشر.
+4. اختيار صوت عربي من `state/ar_voices.txt` (32 صوتًا).
+5. معاينة حلقة الباولوت والموافقة الصريحة قبل أي نشر.
+6. المفاتيح في **Settings → Secrets → Actions** — الدليل الكامل بالروابط
+   والحدود المجانية في `docs/API_KEYS_SETUP.md`. اتضاف فعلًا:
+   `PIXABAY_API_KEY` · `PEXELS` · `YOUTUBE_API_KEY` · `NASA`/`NASA_API_KEY` ·
+   `GROQ_API_KEY` · `GEMINI_API_KEY` · `GNEWS_API_KEY` · `OPENVERSE` ·
+   `YOUTUBE_CLIENT_ID/SECRET/REFRESH_TOKEN` (النشر).
+   الباقي: `FREESOUND_API_KEY` (بعد تدوير السر المكشوف) و`CURRENTS_API_KEY`
+   و`UNSPLASH_ACCESS_KEY` (اختياريين). الكود بيقرأ الموجود تلقائيًا.
