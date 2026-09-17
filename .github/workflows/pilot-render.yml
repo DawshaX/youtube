@@ -6,6 +6,9 @@ name: Pilot Episode Render (review only — never publishes)
 #   قائمة الأصوات العربية) كـ artifacts للمراجعة اليدوية.
 # - النشر الحقيقي موقوف لحد ما صاحب القناة يشوف الحلقة ويوافق.
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       topic_id:
