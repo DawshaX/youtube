@@ -131,7 +131,7 @@ def _ffmpeg() -> str:
 
 # خوادم GitHub Actions (IP مركزي) ممكن يصدّها يوتيوب بالعميل الافتراضي —
 # نجرّب عملاء تباعين. الترتيب موثّق: default ← tv ← web_embedded ← mweb.
-_YT_CLIENTS = ("", "tv", "web_embedded", "mweb")
+_YT_CLIENTS = ("", "tv", "web_embedded", "mweb", "android", "ios")
 
 
 def download_video(video_id: str, outdir: Path) -> Path:

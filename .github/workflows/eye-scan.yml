@@ -52,11 +52,19 @@ jobs:
               if [ "$T" != "auto" ] && [ -z "$VID" ]; then VID="$T"; fi
               ;;
           esac
+          # كل مخرجات الخطأ تتحفظ في ملف تشخيص (أمان ضد أي انهيار)
+          mkdir -p data/eye/diagnostics
           if [ -n "$VID" ]; then
-            python -m xtrendaw.eye --video-id "$VID"
+            python -m xtrendaw.eye --video-id "$VID" 2>&1 | tee data/eye/diagnostics/run.log
+            EXIT=${PIPESTATUS[0]}
           else
             MAX="${{ github.event.inputs.max_videos || '2' }}"
-            python -m xtrendaw.eye --auto --max "$MAX"
+            python -m xtrendaw.eye --auto --max "$MAX" 2>&1 | tee data/eye/diagnostics/run.log
+            EXIT=${PIPESTATUS[0]}
+          fi
+          if [ "$EXIT" != "0" ]; then
+            echo "eye exited with code $EXIT" >> data/eye/diagnostics/run.log
+            exit 1
           fi
 
       - name: Upload evidence (report + real keyframes + produced topics)
@@ -79,7 +87,23 @@ jobs:
             [ -f "$d/report.json" ] && git add "$d/report.json"
             [ -d "$d/frames" ] && git add "$d/frames"
           done
+          # ملف التشخيص (لو فشل التشغيل) — بيتحفظ في الجيت عشان نقراه
+          if [ -d data/eye/diagnostics ]; then
+            git add data/eye/diagnostics 2>/dev/null || true
+          fi
           if ! git diff --staged --quiet; then
             git commit -m 'evidence(eye): watched reports + topics [skip ci]'
             git push origin HEAD:main
           fi
+          # ملخص التشغيل في الصفحة
+          {
+            echo "### Result of the Eye scan"
+            echo '```'
+            for f in data/eye/*/report.json; do
+              [ -f "$f" ] && echo "REPORT: $f"
+            done
+            for f in data/eye/diagnostics/*.txt; do
+              [ -f "$f" ] && { echo "ERROR FILE: $f"; cat "$f"; }
+            done
+            [ -f data/eye_topics.json ] && echo "TOPICS: $(cat data/eye_topics.json | head -c 400)"
+          } >> "$GITHUB_STEP_SUMMARY" || true
