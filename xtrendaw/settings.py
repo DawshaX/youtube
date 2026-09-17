@@ -38,6 +38,25 @@ def get_bool(key: str, default: bool = False) -> bool:
     return default if not v else v in ("1", "true", "yes", "on")
 
 # ─────────────────────────────────────────────────────────────
+# مفاتيح الخدمات — بتتقرا من البيئة فقط (محليًا .env · على GitHub: Secrets).
+# مفيش مفتاح بيتكتب في الكود ولا في أي ملف متتبع.
+# ─────────────────────────────────────────────────────────────
+PIXABAY_API_KEY = get("PIXABAY_API_KEY")  # فيديو + مؤثرات + موسيقى
+# بيكسلز وناسا لهما بديل بالأسماء المختصرة عشان نستوعب أي تسمية في الأسرار
+PEXELS_API_KEY = get("PEXELS_API_KEY") or get("PEXELS")  # فيديو احتياطي
+YOUTUBE_API_KEY = get("YOUTUBE_API_KEY")  # رادار الترند + المحلل (قراءة فقط)
+FREESOUND_API_KEY = get("FREESOUND_API_KEY")  # مؤثرات CC (CC0/CC-BY فقط)
+GROQ_API_KEY = get("GROQ_API_KEY")  # ذكاء الأفكار (طبقة 3)
+GEMINI_API_KEY = get("GEMINI_API_KEY")  # احتياطي الذكاء
+NASA_API_KEY = get("NASA_API_KEY") or get("NASA")  # APOD + كويكبات + صور المريخ
+CURRENTS_API_KEY = get("CURRENTS_API_KEY")  # أخبار لحظية (250/يوم مجانًا)
+GNEWS_API_KEY = get("GNEWS_API_KEY")  # مؤشر جوجل نيوز (100/يوم)
+UNSPLASH_ACCESS_KEY = get("UNSPLASH_ACCESS_KEY")  # صور تحريرية بإسناد
+# أوبنفيرس شغال بلا مفتاح بحدود منخفضة — المفتاح اختياري لحدود أعلى
+OPENVERSE_API_KEY = get("OPENVERSE_API_KEY") or get("OPENVERSE")
+# (سر RESTCOUNTRIES مش محتاجينه — restcountries.com شغال من غير مفتاح أصلًا)
+
+# ─────────────────────────────────────────────────────────────
 # مواصفات الفيديو — ثابتة لأن المنصات بتفرضها، مش تفضيل
 # ─────────────────────────────────────────────────────────────
 VIDEO = {
@@ -86,7 +105,7 @@ LLM = {
     "model": get("LLM_MODEL", "llama-3.3-70b-versatile"),
 }
 
-PEXELS_KEY = get("PEXELS_API_KEY")
+PEXELS_KEY = PEXELS_API_KEY
 
 YOUTUBE = {
     "client_id": get("YOUTUBE_CLIENT_ID"),

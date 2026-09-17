@@ -414,13 +414,73 @@ def _nasa_candidates(query: str) -> list:
         return []
 
 
+def _pixabay_candidates(query: str) -> list:
+    """Pixabay Videos API — رخصة Pixabay (بلا إسناد). محتاج `PIXABAY_API_KEY`."""
+    key = settings.PIXABAY_API_KEY
+    if not key or not query:
+        return []
+    try:
+        r = requests.get("https://pixabay.com/api/videos/",
+                         params={"key": key, "q": query, "per_page": 8,
+                                 "safesearch": "true"},
+                         headers=UA, timeout=25)
+        if not r.ok:
+            return []
+        out = []
+        for h in r.json().get("hits", []):
+            vids = h.get("videos") or {}
+            # medium ≈ 1280 بكسل — كفاية لـ1080 وأخف من large
+            f = vids.get("medium") or vids.get("small") or vids.get("tiny")
+            if not f or not f.get("url"):
+                continue
+            out.append({
+                "url": f["url"],
+                "_license": "Pixabay-License",
+                "_source": "pixabay",
+                "_title": f"Pixabay user {h.get('user', 'unknown')}",
+            })
+        return out
+    except Exception:
+        return []
+
+
+def _pexels_candidates(query: str) -> list:
+    """Pexels Videos API — رخصة Pexels (بلا إسناد). محتاج `PEXELS_API_KEY`."""
+    key = settings.PEXELS_API_KEY
+    if not key or not query:
+        return []
+    try:
+        r = requests.get("https://api.pexels.com/videos/search",
+                         params={"query": query, "per_page": 8, "size": "medium"},
+                         headers={**UA, "Authorization": key}, timeout=25)
+        if not r.ok:
+            return []
+        out = []
+        for v in r.json().get("videos", []):
+            files = sorted((f for f in v.get("video_files", [])
+                            if f.get("link") and (f.get("width") or 0) >= 640),
+                           key=lambda f: f.get("width") or 0)
+            if not files:
+                continue
+            out.append({
+                "url": files[0]["link"],
+                "_license": "Pexels-License",
+                "_source": "pexels",
+                "_title": f"Pexels video #{v.get('id', '?')}",
+            })
+        return out
+    except Exception:
+        return []
+
+
 def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
                source: str = "auto") -> Path | None:
     """لقطة حيّة مطابقة للمعنى → mp4 مظبوط بلا نص محروق، أو None.
 
-    طبقة شبكية (ويكيميديا/أرشيف الإنترنت/NASA) — مقفولة افتراضيًا
-    بقاعدة الترخيص: مش بتشتغل غير لما يكون في كتالوج مصادر موثق
+    طبقة شبكية (بيكساباي/بكسلز/ويكيميديا/أرشيف الإنترنت/NASA) — مقفولة
+    افتراضيًا بقاعدة الترخيص: مش بتشتغل غير لما يكون في كتالوج مصادر موثق
     (docs/MEDIA_VAULT_SOURCES.md) وXT_NET_FOOTAGE=1.
+    ترتيب السلسلة زي البلوبرنت: بيكساباي ← بكسلز ← كومنز ← الأرشيف ← ناسا.
     """
     if not net_footage_enabled():
         return None
@@ -431,6 +491,10 @@ def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
 
     if not cached.exists():
         cands: list = []
+        if source in ("auto", "pixabay"):
+            cands += _pixabay_candidates(query)
+        if source in ("auto", "pexels"):
+            cands += _pexels_candidates(query)
         if source in ("auto", "commons"):
             cands += _commons_candidates(query)
         if source in ("auto", "ia"):

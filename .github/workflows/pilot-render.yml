@@ -44,6 +44,19 @@ jobs:
       - name: Render the pilot episode
         env:
           PILOT_TOPIC_ID: ${{ inputs.topic_id }}
+          # اللقطات الحية من المصادر الشبكية المرخّصة (بيكساباي/بكسلز/كومنز/
+          # أرشيف الإنترنت/ناسا + أوبنفيرس للصور) — كل لقطة بتتسجل في
+          # vault/index.json بترخيصها قبل المونتاج. من غير المفاتيح المصنع
+          # بيرجع تلقائيًا للخزنة المولدة محليًا (مفيش فشل).
+          XT_NET_FOOTAGE: '1'
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PEXELS: ${{ secrets.PEXELS }}
+          OPENVERSE_API_KEY: ${{ secrets.OPENVERSE_API_KEY }}
+          OPENVERSE: ${{ secrets.OPENVERSE }}
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+          NASA: ${{ secrets.NASA }}
+          FREESOUND_API_KEY: ${{ secrets.FREESOUND_API_KEY }}
         run: |
           node - <<'EOF'
           import fs from 'node:fs';
