@@ -1,3 +1,3 @@
-radar-scan one-shot trigger — 2026-09-17
+radar-scan one-shot trigger — 2026-09-17T01:27Z (retry after API credential fix)
 هذا الملف مشغّل مؤقت: وجوده في كوميت مدموج على main يفجّر سير «رادار + محلل»
 مرة واحدة. يُحذف مع المشغّل المؤقت في سير المتابعة بعد نجاح التشغيل.
