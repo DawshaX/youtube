@@ -99,9 +99,13 @@ PIPER_DIR = Path(os.environ.get("XT_PIPER_DIR", "/tmp/noor-models"))
 # ─────────────────────────────────────────────────────────────
 # LLM مجاني (Groq) — اختياري، والمحرك شغال بدونه
 # ─────────────────────────────────────────────────────────────
+# الترتيب: LLM_API_* الصريحة أولًا، وإلا GROQ_API_KEY (النموذج الافتراضي
+# llama-3.3-70b-versatile هو نموذج Groq أصلاً — كان المفتاح مُضاف في
+# Secrets ومفيش سطر الكود بيقراه، فبقي المخ طافيًا بصمت).
+_GROQ = get("GROQ_API_KEY")
 LLM = {
-    "base": get("LLM_API_BASE"),
-    "key": get("LLM_API_KEY"),
+    "base": get("LLM_API_BASE") or (_GROQ and "https://api.groq.com/openai/v1") or "",
+    "key": get("LLM_API_KEY") or _GROQ,
     "model": get("LLM_MODEL", "llama-3.3-70b-versatile"),
 }
 

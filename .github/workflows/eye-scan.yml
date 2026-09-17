@@ -1,0 +1,73 @@
+name: Eye Scan (watch a real viral video — analyze, never publish)
+# العين: تنزيل فيديو ترند حقيقي → تسميات بتوقيتات حقيقية → مشاهد/ألوان/حركة/صوت
+# → وكيل LLM يحلل الـ DNA ويكتب إصدارنا الأصلي → طابور المصنع (data/eye_topics.json).
+# لا نشر إطلاقًا — مخرجات قابلة للتدقيق: report.json + frames + موضوع الطابور.
+on:
+  workflow_dispatch:
+    inputs:
+      video_id:
+        description: "YouTube video ID (اتركه فاضي = اختيار تلقائي من أعلى ترند الرادار)"
+        required: false
+      max_videos:
+        description: "كم فيديو نشوف في الوضع التلقائي (افتراضي 2)"
+        required: false
+permissions:
+  contents: write
+concurrency:
+  group: daousha-eye
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install requests pillow numpy imageio-ffmpeg yt-dlp
+
+      - name: Watch + analyze + write our version
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: |
+          if [ -n "${{ github.event.inputs.video_id }}" ]; then
+            python -m xtrendaw.eye --video-id "${{ github.event.inputs.video_id }}"
+          else
+            MAX="${{ github.event.inputs.max_videos || '2' }}"
+            python -m xtrendaw.eye --auto --max "$MAX"
+          fi
+
+      - name: Upload evidence (report + real keyframes + produced topics)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eye-evidence
+          path: |
+            data/eye/
+            data/eye_topics.json
+            data/eye_consumed.json
+
+      - name: Commit the eye queue (reports + frames only — never the mp4)
+        if: always()
+        run: |
+          git config user.name 'Daousha Eye [Bot]'
+          git config user.email 'eye@daousha.internal'
+          git add data/eye_topics.json data/eye_consumed.json 2>/dev/null || true
+          for d in data/eye/*/; do
+            [ -f "$d/report.json" ] && git add "$d/report.json"
+            [ -d "$d/frames" ] && git add "$d/frames"
+          done
+          if ! git diff --staged --quiet; then
+            git commit -m 'evidence(eye): watched reports + topics [skip ci]'
+            git push origin HEAD:main
+          fi

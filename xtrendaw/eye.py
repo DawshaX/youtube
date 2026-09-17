@@ -1,0 +1,640 @@
+"""العين — طبقة «شوف الفيديو» الحقيقية (1.5 في البلوبرنت).
+
+بتشوف فيديو الترند **الحقيقي** من أوله لآخره — قيس بنية وكتابة أصلية،
+بلا نسخ ولا بيانات متخيلة:
+
+  1) اقرأ   — تريلت التسميات التلقائية بتوقيتات حقيقية (لحظة بلحظة)
+  2) شوف     — مشاهد (ffmpeg scene-detect) + كي-فريم لكل مشهد +
+               ألوان مهيمنة/إضاءة/حركة لكل مشهد
+  3) اسمع    — طاقة الصوت (dB RMS) لكل ثانية
+  4) افهم    — وكيل LLM يحلل الـ DNA الفيروسي: الخطاف، البياتات، المنعطف،
+               الذروة، اللغة البصرية، الإيقاع، خدع الاحتفاظ
+  5) اكتب    — إصدارنا على نفس السياق: أسرع وأحسن، نص أصلي 100%
+               (نبرة القناة: الأخ الكبير، تحذير، هزار، ختام دافي)
+  6) ناقد    — مرور وكيل تاني: تقييم 0-100 وإعادة كتابة لو أقل من 75
+
+المخرجات (قابلة للتدقيق، متلتزمة في المستودع):
+  data/eye/<videoId>/report.json   — تقرير المشاهدة الكامل
+  data/eye/<videoId>/frames/*.jpg  — كي-فريمز حقيقية
+  data/eye_topics.json             — طابور المصنع (بينسحب من المخ والـ autopilot)
+  data/eye_consumed.json           — أرشيف اللي اتستهلك
+
+قاعدة صرامة: بلا شبكة أو بلا مفتاح LLM → فشل صريح برمز خروج،
+أبدًا بلا بيانات متخيلة. ملف الفيديو (video.mp4) ملف شغل —
+مفيش التزامه في الجيت (التقرير والـ frames بس).
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import shutil
+import subprocess
+import sys
+import time
+from collections import Counter
+from pathlib import Path
+
+from . import content, settings
+
+EYE_DIR = settings.ROOT / "data" / "eye"
+EYE_TOPICS_PATH = settings.ROOT / "data" / "eye_topics.json"
+EYE_CONSUMED_PATH = settings.ROOT / "data" / "eye_consumed.json"
+PATTERNS_PATH = settings.ROOT / "data" / "patterns.json"
+SNAPSHOT_PATH = settings.ROOT / "data" / "radar_snapshot.json"
+
+_UA = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "Accept-Language": "ar,en;q=0.8",
+}
+
+
+def _req():
+    """requests محمّل تحت الطلب — المودول يستورد أوفلاين (اختبارات بلا شبكة)."""
+    import requests
+    return requests
+
+# ═════════════════════════════════════════════════════════════
+# ١) اقرأ — التسميات التلقائية بتوقيتات حقيقية
+# ═════════════════════════════════════════════════════════════
+
+def _player_response(video_id: str) -> dict:
+    r = _req().get(f"https://www.youtube.com/watch?v={video_id}",
+                    headers=_UA, timeout=30)
+    r.raise_for_status()
+    m = re.search(r"ytInitialPlayerResponse\s*=\s*(\{.+?\})\s*;\s*(?:var\s|</script>)",
+                  r.text, re.S)
+    if not m:
+        m = re.search(r"ytInitialPlayerResponse\s*=\s*(\{.+?\})\s*;", r.text, re.S)
+    if not m:
+        raise RuntimeError("eye: ما قدرنا نشيل بيانات المشغل — الفيديو خاص أو مقفول إقليمي")
+    return json.loads(m.group(1))
+
+
+def parse_json3_captions(data: dict) -> list[dict]:
+    """تحليل json3 (مخرَج مسارات التسميات) → [{t, dur, text}] مرتب زمنيًا."""
+    out: list[dict] = []
+    for ev in data.get("events", []):
+        segs = ev.get("segs")
+        if not segs:
+            continue
+        text = "".join(s.get("utf8", "") for s in segs)
+        text = text.replace("\n", " ").strip()
+        if not text:
+            continue
+        out.append({
+            "t": round(ev.get("tStartMs", 0) / 1000.0, 3),
+            "dur": round(ev.get("dDurationMs", 0) / 1000.0, 3),
+            "text": text,
+        })
+    out.sort(key=lambda x: x["t"])
+    return out
+
+
+def fetch_captions(video_id: str) -> list[dict]:
+    """مقاطع التسميات بتوقيتاتها الحقيقية: [{t, dur, text}].
+
+    الأولوية: عربي (يدوي ثم تلقائي) ← إنجليزي ← أي متوفر.
+    لا مسارات تسميات → قائمة فاضية (التقرير يكمل بالمشاهدات البصرية
+    وبيُسجَّل caption_coverage: 0 صراحةً — بلا كلمات متخيلة).
+    """
+    player = _player_response(video_id)
+    tracks = (player.get("captions", {})
+              .get("playerCaptionsTracklistRenderer", {})
+              .get("captionTracks", []))
+    if not tracks:
+        return []
+
+    def score(t: dict) -> tuple:
+        name = (t.get("name") or {}).get("simpleText", "") or ""
+        is_asr = ("auto" in name.lower()) or ("تلقائي" in name)
+        lang = (t.get("languageCode") or "").split("-")[0]
+        return (0 if lang == "ar" else 1 if lang == "en" else 2, is_asr)
+
+    best = sorted(tracks, key=score)[0]
+    r = _req().get(best["baseUrl"] + "&fmt=json3", headers=_UA, timeout=30)
+    r.raise_for_status()
+    return parse_json3_captions(r.json())
+
+
+# ═════════════════════════════════════════════════════════════
+# ٢) شوف — الفيديو الحقيقي: مشاهد + كي-فريمز + ألوان + حركة
+# ═════════════════════════════════════════════════════════════
+
+def _ffmpeg() -> str:
+    found = shutil.which("ffmpeg")
+    if not found:
+        import imageio_ffmpeg
+        found = imageio_ffmpeg.get_ffmpeg_exe()
+    return found
+
+
+def download_video(video_id: str, outdir: Path) -> Path:
+    outdir.mkdir(parents=True, exist_ok=True)
+    out = outdir / "video.mp4"
+    cmd = [sys.executable, "-m", "yt_dlp",
+           "-f", "bv*[height<=720]+ba/b[height<=720]/b",
+           "--merge-output-format", "mp4",
+           "--no-playlist", "--max-filesize", "60M",
+           "-o", str(out),
+           f"https://www.youtube.com/watch?v={video_id}"]
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
+    if r.returncode != 0 or not out.exists():
+        raise RuntimeError("eye: فشل تنزيل الفيديو: " + (r.stderr or "")[-400:])
+    return out
+
+
+def probe_duration(video: Path) -> float:
+    r = subprocess.run([_ffmpeg(), "-i", str(video)], capture_output=True, text=True)
+    m = re.search(r"Duration:\s*(\d+):(\d+):(\d+\.?\d*)", r.stderr)
+    if not m:
+        raise RuntimeError("eye: ما قدرنا نقرأ مدة الفيديو")
+    return int(m.group(1)) * 3600 + int(m.group(2)) * 60 + float(m.group(3))
+
+
+def scene_boundaries(video: Path, threshold: float = 0.25) -> list[float]:
+    r = subprocess.run(
+        [_ffmpeg(), "-i", str(video),
+         "-vf", f"select='gt(scene,{threshold})',showinfo",
+         "-an", "-f", "null", "-"],
+        capture_output=True, text=True, timeout=300)
+    return sorted({round(float(m.group(1)), 2)
+                   for m in re.finditer(r"pts_time:\s*([\d.]+)", r.stderr)})
+
+
+def _keyframe(video: Path, t: float, dst: Path) -> bool:
+    subprocess.run(
+        [_ffmpeg(), "-y", "-ss", f"{t:.2f}", "-i", str(video),
+         "-frames:v", "1", "-vf", "scale=480:-2", str(dst)],
+        capture_output=True, timeout=120)
+    return dst.exists()
+
+
+def _frame_stats(jpg: Path, prev: Path | None) -> dict:
+    from PIL import Image
+
+    im = Image.open(jpg).convert("RGB")
+    w, h = im.size
+    pal = Counter(im.quantize(colors=4, method=Image.MEDIANCUT).getdata()).most_common(3)
+    colors = [f"#{r:02x}{g:02x}{b:02x}" for (r, g, b), _ in pal]
+    gray = im.convert("L")
+    brightness = round(sum(gray.getdata()) / max(1, w * h) / 255.0, 2)
+    motion = 0.0
+    if prev is not None and prev.exists():
+        a = gray.resize((32, 18)).getdata()
+        b = Image.open(prev).convert("L").resize((32, 18)).getdata()
+        motion = round(sum(abs(x - y) for x, y in zip(a, b)) / (32 * 18) / 255.0, 3)
+    return {"colors": colors, "brightness": brightness, "motion": motion}
+
+
+# ═════════════════════════════════════════════════════════════
+# ٣) اسمع — طاقة الصوت لكل ثانية
+# ═════════════════════════════════════════════════════════════
+
+def audio_energy_per_second(video: Path, step: float = 1.0) -> list[float]:
+    n = max(1, int(44100 * step))
+    r = subprocess.run(
+        [_ffmpeg(), "-i", str(video), "-vn",
+         "-af", f"asetnsamples=n={n},astats=metadata=1",
+         "-f", "null", "-"],
+        capture_output=True, text=True, timeout=300)
+    out: list[float] = []
+    for m in re.finditer(r"RMS level dB:\s*(-?inf|-?[\d.]+)", r.stderr):
+        v = m.group(1)
+        if v == "-inf":
+            out.append(0.0)
+            continue
+        db = float(v)
+        out.append(0.0 if db <= -60 else round(db, 1))
+    return out
+
+
+# ═════════════════════════════════════════════════════════════
+# المشاهدة الكاملة → تقرير قابل للتدقيق
+# ═════════════════════════════════════════════════════════════
+
+def watch(video_id: str, meta: dict | None = None) -> dict:
+    meta = meta or {}
+    outdir = EYE_DIR / video_id
+    outdir.mkdir(parents=True, exist_ok=True)
+    frames_dir = outdir / "frames"
+    frames_dir.mkdir(exist_ok=True)
+
+    print(f"[eye] {video_id}: تنزيل الفيديو الحقيقي…", flush=True)
+    video = download_video(video_id, outdir)
+    dur = probe_duration(video)
+
+    print("[eye] اقرأ: تسميات التوقيتات الحقيقية…", flush=True)
+    captions = fetch_captions(video_id)
+
+    print("[eye] شوف: مشاهد + كي-فريمز + ألوان + حركة…", flush=True)
+    bounds = ([0.0] + [b for b in scene_boundaries(video) if b < dur - 0.3]
+              + [dur])
+    kf: list[Path | None] = []
+    for i, t in enumerate(bounds):
+        p = frames_dir / f"scene{i:02d}.jpg"
+        kf.append(p if _keyframe(video, t, p) else None)
+
+    scenes = []
+    prev: Path | None = None
+    for i, t in enumerate(bounds[:-1]):
+        end = bounds[i + 1]
+        if kf[i] is not None:
+            stats = _frame_stats(kf[i], prev)
+            prev = kf[i]
+        else:
+            stats = {"colors": [], "brightness": 0.0, "motion": 0.0}
+        scenes.append({
+            "start": round(t, 2), "end": round(end, 2),
+            "keyframe": f"frames/scene{i:02d}.jpg" if kf[i] is not None else None,
+            **stats,
+        })
+
+    print("[eye] اسمع: طاقة الصوت لكل ثانية…", flush=True)
+    audio = audio_energy_per_second(video)
+
+    report = {
+        "videoId": video_id,
+        "url": f"https://youtu.be/{video_id}",
+        "watchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "durationSeconds": round(dur, 2),
+        "meta": {k: meta.get(k) for k in
+                 ("title", "channel", "region", "viewCount", "likeCount", "via")
+                 if meta.get(k) not in (None, "")},
+        "captions": captions,
+        "captionCoverage": round(sum(c["dur"] for c in captions) / dur, 2)
+        if dur else 0.0,
+        "scenes": scenes,
+        "audioRmsPerSec": audio,
+    }
+    report_path = outdir / "report.json"
+    report_path.write_text(json.dumps(report, ensure_ascii=False, indent=1),
+                           encoding="utf-8")
+    print(f"[eye] ✓ التقرير: {report_path.relative_to(settings.ROOT)} — "
+          f"{len(scenes)} مشهد، {len(captions)} مقطع تسمية، "
+          f"تغطية تسميات {report['captionCoverage']}", flush=True)
+    return report
+
+
+# ═════════════════════════════════════════════════════════════
+# هاضم مضغوط للوكيل (سياق LLM محدود — الأهم أولًا)
+# ═════════════════════════════════════════════════════════════
+
+def _bucket_captions(captions: list[dict], dur: float, bucket: float = 10.0) -> list[str]:
+    if not captions:
+        return ["(مفيش مسار تسميات — التحليل بالمشاهدات البصرية فقط)"]
+    lines = []
+    t0 = 0.0
+    while t0 < dur:
+        t1 = min(t0 + bucket, dur)
+        chunk = [c["text"] for c in captions if c["t"] < t1 and c["t"] + c["dur"] > t0]
+        if chunk:
+            lines.append(f"  {int(t0)}s-{int(t1)}s: " + " ".join(chunk)[:400])
+        t0 = t1
+    return lines
+
+
+def build_digest(report: dict) -> str:
+    m = report.get("meta", {})
+    L = [
+        f"الفيديو: {m.get('title', '?')}",
+        f"القناة: {m.get('channel', '?')} | المنطقة: {m.get('region', '?')}",
+        f"مشاهدات: {m.get('viewCount', '?')} | إعجابات: {m.get('likeCount', '?')}",
+        f"المدة: {report.get('durationSeconds')} ثانية",
+        "",
+        "=== خط التسميات الزمني (حقيقي من الفيديو) ===",
+    ]
+    L += _bucket_captions(report.get("captions", []), report.get("durationSeconds", 0.0))
+    L += ["", "=== المشاهد (الترتيب، الألوان، الإضاءة، الحركة) ==="]
+    for i, s in enumerate(report.get("scenes", [])):
+        mood = ("ساكن" if s["motion"] < 0.02
+                else "متوسط" if s["motion"] < 0.08 else "سريع")
+        L.append(f"  مشهد {i + 1} [{s['start']}-{s['end']}s]: ألوان "
+                 f"{','.join(s['colors'])} | إضاءة {s['brightness']} | {mood} "
+                 f"(حركة {s['motion']})")
+    a = report.get("audioRmsPerSec", [])
+    if a:
+        peak = max(range(len(a)), key=lambda i: a[i])
+        L += ["", f"=== الصوت: {len(a)} عينة (dB RMS/ث) | أعلى طاقة عند ~{peak} ثانية ==="]
+    return "\n".join(L)
+
+
+# ═════════════════════════════════════════════════════════════
+# الوكلاء — فهم ← كتابة ← نقد ← إصلاح
+# ═════════════════════════════════════════════════════════════
+
+def _llm(prompt: str, temperature: float = 0.7) -> str:
+    if not settings.has_llm():
+        raise RuntimeError(
+            "eye: مفيش LLM — ضيف GROQ_API_KEY (أو LLM_API_BASE/LLM_API_KEY) في أسرار المستودع")
+    r = _req().post(
+        f"{settings.LLM['base']}/chat/completions",
+        headers={"Authorization": f"Bearer {settings.LLM['key']}"},
+        json={"model": settings.LLM["model"], "temperature": temperature,
+              "messages": [{"role": "user", "content": prompt}]},
+        timeout=180)
+    r.raise_for_status()
+    return r.json()["choices"][0]["message"]["content"]
+
+
+def _llm_json(prompt: str, temperature: float = 0.7) -> dict:
+    text = _llm(prompt, temperature)
+    s, e = text.find("{"), text.rfind("}")
+    if s == -1 or e <= s:
+        raise RuntimeError("eye: رد الـ LLM ما فيهوش JSON: " + text[:200])
+    return json.loads(text[s:e + 1])
+
+
+DNA_PROMPT = """أنت محلل فيديوهات فيروسية بخبرة 15 سنة في الشورتس.
+دي تحتك «تقرير مشاهدة» حقيقي لفيديو تريند: خط التسميات الزمني (توقيتات حقيقية)،
+المشاهد (ألوان حقيقية، إضاءة، حركة)، طاقة الصوت.
+
+{digest}
+
+حلّل الـ DNA الفيروسي للفيديو وارجع JSON فقط (مفيش أي نص تاني) بهيكل:
+{{
+  "hook": {{"technique": "shock|question|warning|visual_curiosity|bold_claim",
+            "what_happens": "...", "why_it_works": "..."}},
+  "beats": [{{"time": "0:00-0:04", "what": "...",
+              "function": "hook|escalation|twist|payoff|cta",
+              "why_it_works": "..."}}],
+  "twist_or_payoff": "...",
+  "pacing": {{"estimated_cuts_per_minute": 0, "energy_curve": "..."}},
+  "visual_language": {{"dominant_colors": ["#..."], "shot_style": "...",
+                       "text_on_screen": true, "stickers_or_graphics": "..."}},
+  "audio_language": {{"voice_style": "...", "music_or_sfx": "...",
+                      "energy_notes": "..."}},
+  "retention_tricks": ["...", "..."],
+  "reusable_facts": ["حقائق موضوعية قابلة للتحقق (الحقائق بس، مش صياغات)"]
+}}
+"""
+
+WRITE_PROMPT = """أنت مدير المحتوى لقناة الشورتس العربية «دۅۄشے».
+نبرة القناة: أخ كبير محبوب — خطاف تحذير في أول 3 ثواني، هزار في الحقيقة التالتة،
+ختام دافي، عربي مصري محترم من غير مبالغة.
+
+دي الـ DNA الفيروسي للترند اللي اتحلل قدامك:
+{dna}
+
+تقرير المشاهدة الكامل لنفس الفيديو (سياق):
+{digest}
+
+أنماط العناوين عندنا (أرقام حقيقية من رادارنا):
+{title_patterns}
+
+اكتب إصدارنا من **نفس السياق** — أسرع وأحسن، وبنص **أصلي 100%**
+(صفر نسخ من تسمياتهم أو عناوينهم). ارجع JSON فقط:
+{{
+  "title_ar": "...", "title_en": "...",
+  "hook_ar": "... (يُقال في أقل من 3 ثوانٍ)", "hook_en": "...",
+  "facts_ar": ["...", "...", "..."], "facts_en": ["...", "...", "..."],
+  "takeaway_ar": {{"aql": "...", "qalb": "...", "rouh": "..."}},
+  "takeaway_en": {{"aql": "...", "qalb": "...", "rouh": "..."}},
+  "tags": "كلمة,كلمة,كلمة,كلمة",
+  "mood": "crazy|calm|warm|mysterious|serious",
+  "visual_plan": [{{"time": "0:00-0:03", "scene": "...", "style": "...",
+                    "colors": ["#..."]}}]
+}}
+قيود صارمة: الحقائق من reusable_facts + حقائق عامة مشهورة بس —
+مفيش أرقام مختلقة، ومفيش جملة منسوخة.
+"""
+
+CRITIQUE_PROMPT = """أنت ناقد فيديوهات صارم. قيّم الحلقة المقترحة (0-100)
+مقارنة بـ DNA الترند، وارجع JSON فقط:
+{{"score": 0, "strengths": ["..."], "weaknesses": ["..."], "verdict": "..."}}
+
+DNA الترند:
+{dna}
+
+اقتراحنا:
+{topic}
+"""
+
+REWRITE_PROMPT = """الناقد لقى الضعفانات دي في حلقتنا:
+{weaknesses}
+
+صلّحها وارجع JSON الحلقة الكامل بعد التصحيح (نفس الهيكل):
+{topic}
+"""
+
+
+def to_factory_topic(written: dict, report: dict, dna: dict) -> dict:
+    vid = report["videoId"]
+    m = report.get("meta", {})
+    t = {
+        "id": f"eye-{vid}",
+        "topic": m.get("title", vid),
+        "angle": str(dna.get("twist_or_payoff") or "ترند")[:90],
+        "origin": "eye",
+        "status": "scripted",
+        "title_ar": written.get("title_ar") or m.get("title") or "حلقة ترند",
+        "title_en": written.get("title_en") or "",
+        "hook_ar": written.get("hook_ar") or "",
+        "hook_en": written.get("hook_en") or "",
+        "facts_ar": (written.get("facts_ar") or [])[:3],
+        "facts_en": (written.get("facts_en") or [])[:3],
+        "takeaway_ar": written.get("takeaway_ar"),
+        "takeaway_en": written.get("takeaway_en"),
+        "tags": written.get("tags") or "ترند,حقائق,علوم,دۅۄشے",
+        "mood": written.get("mood") or "warm",
+        "_kind": "eye",
+        "_visual_plan": written.get("visual_plan") or [],
+        "_eye": {
+            "videoId": vid,
+            "url": report.get("url"),
+            "sourceTitle": m.get("title"),
+            "sourceChannel": m.get("channel"),
+            "sourceViews": m.get("viewCount"),
+            "dna": {
+                "hook": dna.get("hook"),
+                "pacing": dna.get("pacing"),
+                "retention_tricks": dna.get("retention_tricks"),
+            },
+        },
+    }
+    if not t["hook_ar"] or not t["facts_ar"]:
+        raise RuntimeError("eye: مخرجات الـ LLM ناقصة — مفيش خطاف أو حقائق")
+    return t
+
+
+# ═════════════════════════════════════════════════════════════
+# طابور المصنع
+# ═════════════════════════════════════════════════════════════
+
+def _read_json(path: Path, default):
+    if path.exists():
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return default
+
+
+def _write_all(queue: list, consumed: list) -> None:
+    for p, d in ((EYE_TOPICS_PATH, queue), (EYE_CONSUMED_PATH, consumed)):
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
+def save_topic(topic: dict) -> None:
+    q = _read_json(EYE_TOPICS_PATH, [])
+    if not isinstance(q, list):
+        q = []
+    q = [t for t in q if t.get("id") != topic.get("id")]
+    q.append(topic)
+    _write_all(q, _read_json(EYE_CONSUMED_PATH, []))
+
+
+def _seen_fps() -> set[str]:
+    from . import state
+    try:
+        return set(state.seen_fingerprints())
+    except Exception:
+        return set()
+
+
+def consume_queue(seen: set[str] | None = None) -> dict | None:
+    """أول موضوع فريد من طابور العين؛ ينسحب ويُؤرشف (قابل للتدقيق).
+
+    المواضيع اللي بصمتها متكررة (مشهودة قبل كده) بتنطّ على التاني اللي
+    بعدها — الطابور ما يقفشش بسبب مكرر.
+    """
+    q = _read_json(EYE_TOPICS_PATH, [])
+    consumed = _read_json(EYE_CONSUMED_PATH, [])
+    if not isinstance(q, list):
+        q = []
+    fps = (seen or set()) | _seen_fps()
+    for i, t in enumerate(q):
+        fp = content.fingerprint(t)
+        if fp in fps:
+            continue
+        q.pop(i)
+        t["_consumedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        consumed.append(t)
+        _write_all(q, consumed)
+        return t
+    return None
+
+
+# ═════════════════════════════════════════════════════════════
+# الحلقة الكاملة: شوف ← افهم ← اكتب ← ناقِد ← طابور
+# ═════════════════════════════════════════════════════════════
+
+def agent(video_id: str, meta: dict | None = None) -> dict:
+    report = watch(video_id, meta)
+    digest = build_digest(report)
+
+    print("[eye] افهم: وكيل الـ DNA يحلل…", flush=True)
+    dna = _llm_json(DNA_PROMPT.format(digest=digest[:12000]), temperature=0.3)
+
+    print("[eye] اكتب: إصدارنا من نفس السياق…", flush=True)
+    title_patterns = ""
+    if PATTERNS_PATH.exists():
+        try:
+            p = json.loads(PATTERNS_PATH.read_text(encoding="utf-8"))
+            title_patterns = json.dumps(p.get("titlePatterns", {}), ensure_ascii=False)
+        except Exception:
+            title_patterns = ""
+    written = _llm_json(
+        WRITE_PROMPT.format(
+            dna=json.dumps(dna, ensure_ascii=False)[:6000],
+            digest=digest[:6000],
+            title_patterns=title_patterns or "(مفيش)",
+        ), temperature=0.9)
+    topic = to_factory_topic(written, report, dna)
+
+    print("[eye] ناقد: تقييم صارم…", flush=True)
+    crit = _llm_json(
+        CRITIQUE_PROMPT.format(
+            dna=json.dumps(dna, ensure_ascii=False)[:4000],
+            topic=json.dumps(written, ensure_ascii=False)[:4000],
+        ), temperature=0.3)
+    topic["_critique"] = {
+        "score": crit.get("score"),
+        "weaknesses": crit.get("weaknesses", []),
+        "verdict": crit.get("verdict"),
+    }
+    try:
+        score = int(crit.get("score", 100))
+    except (TypeError, ValueError):
+        score = 100
+    if score < 75 and crit.get("weaknesses"):
+        print(f"[eye] التقييم {score}/100 — إعادة كتابة الأضعف…", flush=True)
+        fixed = _llm_json(
+            REWRITE_PROMPT.format(
+                weaknesses=json.dumps(crit["weaknesses"], ensure_ascii=False),
+                topic=json.dumps(written, ensure_ascii=False),
+            ), temperature=0.8)
+        topic = to_factory_topic(fixed, report, dna)
+        topic["_critique"] = {
+            "score": score, "rewritten": True,
+            "weaknesses": crit.get("weaknesses", []),
+        }
+
+    save_topic(topic)
+    print(f"[eye] ✓ الموضوع {topic['id']} في طابور المصنع: {topic['title_ar']}",
+          flush=True)
+    return topic
+
+
+# ═════════════════════════════════════════════════════════════
+# اختيار تلقائي من آخر مسح رادار
+# ═════════════════════════════════════════════════════════════
+
+def _dur_secs(d: str) -> int:
+    m = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", d or "")
+    if not m:
+        return 9999
+    h, mi, s = m.groups()
+    return int(h or 0) * 3600 + int(mi or 0) * 60 + int(s or 0)
+
+
+def auto_pick(max_n: int = 2) -> list[tuple[str, dict]]:
+    """أقوى مرشحي الترند من آخر مسح: قصير (≤60ث) و ≥2 مليون مشاهدة، مش متشاف قبل كده."""
+    if not SNAPSHOT_PATH.exists():
+        raise RuntimeError("eye: مفيش مسح رادار — شغّل سير الرادار الأول")
+    snap = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
+    done = {t.get("_eye", {}).get("videoId")
+            for t in _read_json(EYE_CONSUMED_PATH, [])}
+    done |= {t.get("_eye", {}).get("videoId")
+             for t in _read_json(EYE_TOPICS_PATH, [])}
+    cand = [v for v in snap.get("videos", [])
+            if _dur_secs(v.get("duration", "")) <= 60
+            and v.get("viewCount", 0) >= 2_000_000
+            and v.get("videoId") not in done]
+    cand.sort(key=lambda v: -v.get("viewCount", 0))
+    return [(v["videoId"], v) for v in cand[:max_n]]
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="العين — تشوف فيديو ترند وتكتب إصدارنا")
+    ap.add_argument("--video-id", help="معرّف فيديو يوتيوب محدد")
+    ap.add_argument("--auto", action="store_true",
+                    help="اختيار تلقائي من أعلى ترند الرادار")
+    ap.add_argument("--max", type=int, default=2, help="حد الأقصى في الوضع التلقائي")
+    args = ap.parse_args()
+
+    if args.video_id:
+        targets = [(args.video_id, {})]
+    elif args.auto:
+        targets = auto_pick(args.max)
+        if not targets:
+            print("eye: مفيش مرشح ترند جديد (كله اتشاف قبل كده أو تحت الحد)")
+            return 0
+    else:
+        ap.print_help()
+        return 2
+
+    ok = 0
+    for vid, meta in targets:
+        try:
+            agent(vid, meta)
+            ok += 1
+        except Exception as exc:
+            print(f"eye: فشل في {vid}: {exc}", file=sys.stderr)
+    print(f"eye: {ok}/{len(targets)} فيديو اتشاف وموضوعات اتكتبت")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
