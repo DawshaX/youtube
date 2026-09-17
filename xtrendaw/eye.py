@@ -129,19 +129,37 @@ def _ffmpeg() -> str:
     return found
 
 
+# خوادم GitHub Actions (IP مركزي) ممكن يصدّها يوتيوب بالعميل الافتراضي —
+# نجرّب عملاء تباعين. الترتيب موثّق: default ← tv ← web_embedded ← mweb.
+_YT_CLIENTS = ("", "tv", "web_embedded", "mweb")
+
+
 def download_video(video_id: str, outdir: Path) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
     out = outdir / "video.mp4"
-    cmd = [sys.executable, "-m", "yt_dlp",
-           "-f", "bv*[height<=720]+ba/b[height<=720]/b",
-           "--merge-output-format", "mp4",
-           "--no-playlist", "--max-filesize", "60M",
-           "-o", str(out),
-           f"https://www.youtube.com/watch?v={video_id}"]
-    r = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
-    if r.returncode != 0 or not out.exists():
-        raise RuntimeError("eye: فشل تنزيل الفيديو: " + (r.stderr or "")[-400:])
-    return out
+    last_err = ""
+    for client in _YT_CLIENTS:
+        cmd = [sys.executable, "-m", "yt_dlp",
+               "-f", "bv*[height<=720]+ba/b[height<=720]/b",
+               "--merge-output-format", "mp4",
+               "--no-playlist", "--max-filesize", "60M",
+               "--retries", "2", "--socket-timeout", "30",
+               "-o", str(out),
+               f"https://www.youtube.com/watch?v={video_id}"]
+        if client:
+            cmd += ["--extractor-args", f"youtube:player_client={client}"]
+        try:
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+        except subprocess.TimeoutExpired:
+            last_err = f"client={client or 'default'}: timeout"
+            continue
+        if r.returncode == 0 and out.exists():
+            if client:
+                print(f"[eye] ✓ النزّل نجح بعميل {client}", flush=True)
+            return out
+        last_err = f"client={client or 'default'}: " + (r.stderr or r.stdout or "")[-300:]
+        out.unlink(missing_ok=True)
+    raise RuntimeError("eye: فشل التنزيل بكل العملاء — " + last_err)
 
 
 def probe_duration(video: Path) -> float:
@@ -221,43 +239,59 @@ def watch(video_id: str, meta: dict | None = None) -> dict:
     frames_dir.mkdir(exist_ok=True)
 
     print(f"[eye] {video_id}: تنزيل الفيديو الحقيقي…", flush=True)
-    video = download_video(video_id, outdir)
-    dur = probe_duration(video)
+    try:
+        video = download_video(video_id, outdir)
+        dur = probe_duration(video)
+        media_ok = True
+    except Exception as exc:
+        # تدهور صريح: التحليل يكمل بالتسميات + البيانات، وبيتحط عليه
+        # mediaUnavailable: true — مفيش مشهد متخيل ولا لون من فراغ.
+        print(f"[eye] ⚠️ فشل تنزيل الفيديو: {exc}", flush=True)
+        print("[eye] أكمل بالتسميات + البيانات فقط (بدون تحليل بصري/صوتي)",
+              flush=True)
+        video = None
+        dur = 0.0
+        media_ok = False
 
     print("[eye] اقرأ: تسميات التوقيتات الحقيقية…", flush=True)
     captions = fetch_captions(video_id)
+    if not dur and captions:
+        dur = round(max(c["t"] + c["dur"] for c in captions), 2)
 
-    print("[eye] شوف: مشاهد + كي-فريمز + ألوان + حركة…", flush=True)
-    bounds = ([0.0] + [b for b in scene_boundaries(video) if b < dur - 0.3]
-              + [dur])
-    kf: list[Path | None] = []
-    for i, t in enumerate(bounds):
-        p = frames_dir / f"scene{i:02d}.jpg"
-        kf.append(p if _keyframe(video, t, p) else None)
+    scenes: list[dict] = []
+    audio: list[float] = []
+    if media_ok:
+        print("[eye] شوف: مشاهد + كي-فريمز + ألوان + حركة…", flush=True)
+        bounds = ([0.0] + [b for b in scene_boundaries(video) if b < dur - 0.3]
+                  + [dur])
+        kf: list[Path | None] = []
+        for i, t in enumerate(bounds):
+            p = frames_dir / f"scene{i:02d}.jpg"
+            kf.append(p if _keyframe(video, t, p) else None)
 
-    scenes = []
-    prev: Path | None = None
-    for i, t in enumerate(bounds[:-1]):
-        end = bounds[i + 1]
-        if kf[i] is not None:
-            stats = _frame_stats(kf[i], prev)
-            prev = kf[i]
-        else:
-            stats = {"colors": [], "brightness": 0.0, "motion": 0.0}
-        scenes.append({
-            "start": round(t, 2), "end": round(end, 2),
-            "keyframe": f"frames/scene{i:02d}.jpg" if kf[i] is not None else None,
-            **stats,
-        })
+        prev: Path | None = None
+        for i, t in enumerate(bounds[:-1]):
+            end = bounds[i + 1]
+            if kf[i] is not None:
+                stats = _frame_stats(kf[i], prev)
+                prev = kf[i]
+            else:
+                stats = {"colors": [], "brightness": 0.0, "motion": 0.0}
+            scenes.append({
+                "start": round(t, 2), "end": round(end, 2),
+                "keyframe": f"frames/scene{i:02d}.jpg" if kf[i] is not None else None,
+                **stats,
+            })
 
-    print("[eye] اسمع: طاقة الصوت لكل ثانية…", flush=True)
-    audio = audio_energy_per_second(video)
+        print("[eye] اسمع: طاقة الصوت لكل ثانية…", flush=True)
+        audio = audio_energy_per_second(video)
 
     report = {
         "videoId": video_id,
         "url": f"https://youtu.be/{video_id}",
         "watchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "durationSeconds": round(dur, 2),
+        "mediaUnavailable": not media_ok,
         "meta": {k: meta.get(k) for k in
                  ("title", "channel", "region", "viewCount", "likeCount", "via")
                  if meta.get(k) not in (None, "")},
@@ -306,6 +340,8 @@ def build_digest(report: dict) -> str:
     ]
     L += _bucket_captions(report.get("captions", []), report.get("durationSeconds", 0.0))
     L += ["", "=== المشاهد (الترتيب، الألوان، الإضاءة، الحركة) ==="]
+    if not report.get("scenes"):
+        L.append("  (الميديا غير متاحة في هذه المشاهدة — بلا تحليل بصري/صوتي)")
     for i, s in enumerate(report.get("scenes", [])):
         mood = ("ساكن" if s["motion"] < 0.02
                 else "متوسط" if s["motion"] < 0.08 else "سريع")
@@ -631,7 +667,17 @@ def main() -> int:
             agent(vid, meta)
             ok += 1
         except Exception as exc:
-            print(f"eye: فشل في {vid}: {exc}", file=sys.stderr)
+            err = f"eye: فشل في {vid}: {type(exc).__name__}: {exc}"
+            print(err, file=sys.stderr)
+            # ملف تشخيص يتحمّل في الـ artifact — السيرة ممكن تنقطع
+            try:
+                err_dir = EYE_DIR / "diagnostics"
+                err_dir.mkdir(parents=True, exist_ok=True)
+                (err_dir / f"error-{vid}.txt").write_text(
+                    err + "\n" + time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                    encoding="utf-8")
+            except Exception:
+                pass
     print(f"eye: {ok}/{len(targets)} فيديو اتشاف وموضوعات اتكتبت")
     return 0 if ok else 1
 
