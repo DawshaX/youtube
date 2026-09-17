@@ -35,6 +35,8 @@ import time
 from collections import Counter
 from pathlib import Path
 
+import os
+
 from . import content, settings
 
 EYE_DIR = settings.ROOT / "data" / "eye"
@@ -54,13 +56,50 @@ def _req():
     import requests
     return requests
 
+
+# كوكيز يوتيوب (نيتسكيب) — مطلوبة عشان خوادم Actions (IP مركزي) تقدر
+# تشوف الفيديو والتسميات. بتيجي من سر المستودع YOUTUBE_COOKIES_B64
+# (base64 لملف cookies.txt). بلاها: العين ممكن تقف على الفيديو كله.
+_COOKIES_FILE: Path | None = None
+
+
+def _load_cookies() -> tuple[str, Path | None]:
+    """(Header الكوكيز, مسار ملف الكوكيز أو None) من سر YOUTUBE_COOKIES_B64."""
+    global _COOKIES_FILE
+    b64 = os.environ.get("YOUTUBE_COOKIES_B64", "").strip()
+    if not b64:
+        return "", None
+    if _COOKIES_FILE is None:
+        import base64
+        p = Path("/tmp/daousha_yt_cookies.txt")
+        p.write_bytes(base64.b64decode(b64))
+        _COOKIES_FILE = p
+    pairs = []
+    for line in _COOKIES_FILE.read_text(encoding="utf-8", errors="ignore").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = line.split("\t")
+        if len(parts) >= 7:
+            pairs.append(f"{parts[5]}={parts[6]}")
+    return "; ".join(pairs), _COOKIES_FILE
+
+
+def _headers() -> dict:
+    h = dict(_UA)
+    cookie, _ = _load_cookies()
+    if cookie:
+        h["Cookie"] = cookie
+    return h
+
+
 # ═════════════════════════════════════════════════════════════
 # ١) اقرأ — التسميات التلقائية بتوقيتات حقيقية
 # ═════════════════════════════════════════════════════════════
 
 def _player_response(video_id: str) -> dict:
     r = _req().get(f"https://www.youtube.com/watch?v={video_id}",
-                    headers=_UA, timeout=30)
+                   headers=_headers(), timeout=30)
     r.raise_for_status()
     m = re.search(r"ytInitialPlayerResponse\s*=\s*(\{.+?\})\s*;\s*(?:var\s|</script>)",
                   r.text, re.S)
@@ -112,7 +151,7 @@ def fetch_captions(video_id: str) -> list[dict]:
         return (0 if lang == "ar" else 1 if lang == "en" else 2, is_asr)
 
     best = sorted(tracks, key=score)[0]
-    r = _req().get(best["baseUrl"] + "&fmt=json3", headers=_UA, timeout=30)
+    r = _req().get(best["baseUrl"] + "&fmt=json3", headers=_headers(), timeout=30)
     r.raise_for_status()
     return parse_json3_captions(r.json())
 
@@ -148,6 +187,9 @@ def download_video(video_id: str, outdir: Path) -> Path:
                f"https://www.youtube.com/watch?v={video_id}"]
         if client:
             cmd += ["--extractor-args", f"youtube:player_client={client}"]
+        _, cookies_file = _load_cookies()
+        if cookies_file is not None:
+            cmd += ["--cookies", str(cookies_file)]
         try:
             r = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
         except subprocess.TimeoutExpired:
@@ -359,18 +401,43 @@ def build_digest(report: dict) -> str:
 # الوكلاء — فهم ← كتابة ← نقد ← إصلاح
 # ═════════════════════════════════════════════════════════════
 
+_GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta/openai"
+_GEMINI_MODEL = "gemini-2.0-flash"
+
+
 def _llm(prompt: str, temperature: float = 0.7) -> str:
-    if not settings.has_llm():
+    """سلسلة مزوّدات: LLM الأساسي (Groq) ← Gemini ← فشل صريح برسالة حل."""
+    attempts = []
+    llm = settings.LLM
+    if llm["base"] and llm["key"]:
+        attempts.append((
+            f"{llm['base'].rstrip('/')}/chat/completions",
+            llm["key"], llm["model"], llm["base"].rstrip("/")[:32]))
+    gemini_key = settings.get("GEMINI_API_KEY")
+    if gemini_key:
+        attempts.append((f"{_GEMINI_BASE}/chat/completions",
+                         gemini_key, _GEMINI_MODEL, "gemini"))
+    if not attempts:
         raise RuntimeError(
-            "eye: مفيش LLM — ضيف GROQ_API_KEY (أو LLM_API_BASE/LLM_API_KEY) في أسرار المستودع")
-    r = _req().post(
-        f"{settings.LLM['base']}/chat/completions",
-        headers={"Authorization": f"Bearer {settings.LLM['key']}"},
-        json={"model": settings.LLM["model"], "temperature": temperature,
-              "messages": [{"role": "user", "content": prompt}]},
-        timeout=180)
-    r.raise_for_status()
-    return r.json()["choices"][0]["message"]["content"]
+            "eye: مفيش LLM — ضيف GROQ_API_KEY أو GEMINI_API_KEY "
+            "في Settings → Secrets → Actions على جيت هاب.")
+    last = ""
+    for url, key, model, who in attempts:
+        try:
+            r = _req().post(
+                url,
+                headers={"Authorization": f"Bearer {key}"},
+                json={"model": model, "temperature": temperature,
+                      "messages": [{"role": "user", "content": prompt}]},
+                timeout=180)
+            r.raise_for_status()
+            return r.json()["choices"][0]["message"]["content"]
+        except Exception as exc:
+            last = f"{who}: {type(exc).__name__} {exc}"
+            print(f"[eye] ⚠️ مزوّد {who} فشل — نجرب اللي بعده…", flush=True)
+    raise RuntimeError(
+        "eye: كل مزوّدي الـ LLM فشلوا — " + last + " — "
+        "افحص المفاتيح في Settings → Secrets → Actions (GROQ_API_KEY / GEMINI_API_KEY)")
 
 
 def _llm_json(prompt: str, temperature: float = 0.7) -> dict:
@@ -558,6 +625,12 @@ def consume_queue(seen: set[str] | None = None) -> dict | None:
 
 def agent(video_id: str, meta: dict | None = None) -> dict:
     report = watch(video_id, meta)
+    if not report["captions"] and not report["scenes"]:
+        raise RuntimeError(
+            "eye: الفيديو غير مرئي نهائيًا من هذا الـ IP (لا فيديو ولا تسميات) — "
+            "مفيش تحليل من غير مشاهدة حقيقية. الحل: سر YOUTUBE_COOKIES_B64 "
+            "(كوكيز متصفح حسابك) في Settings → Secrets → Actions، "
+            "أو self-hosted runner من شبكة منزلية.")
     digest = build_digest(report)
 
     print("[eye] افهم: وكيل الـ DNA يحلل…", flush=True)

@@ -103,8 +103,12 @@ PIPER_DIR = Path(os.environ.get("XT_PIPER_DIR", "/tmp/noor-models"))
 # llama-3.3-70b-versatile هو نموذج Groq أصلاً — كان المفتاح مُضاف في
 # Secrets ومفيش سطر الكود بيقراه، فبقي المخ طافيًا بصمت).
 _GROQ = get("GROQ_API_KEY")
+# rstrip("/") واجب: قيمة الـ secret قد تحمل slash زائد بآخرها
+# (https://api.groq.com/openai/v1/ + /chat/completions = 404 فعلي)
+_llm_base = (get("LLM_API_BASE")
+             or (_GROQ and "https://api.groq.com/openai/v1") or "").rstrip("/")
 LLM = {
-    "base": get("LLM_API_BASE") or (_GROQ and "https://api.groq.com/openai/v1") or "",
+    "base": _llm_base,
     "key": get("LLM_API_KEY") or _GROQ,
     "model": get("LLM_MODEL", "llama-3.3-70b-versatile"),
 }
