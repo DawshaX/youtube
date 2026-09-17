@@ -79,6 +79,24 @@ class TestAnalyzer(unittest.TestCase):
             finally:
                 analyzer.SNAPSHOT_PATH = old
 
+    def test_radar_uses_youtube_resource_paths(self):
+        from unittest.mock import patch
+        from xtrendaw import radar
+
+        calls = []
+
+        def fake_get(endpoint, **params):
+            calls.append(endpoint)
+            if endpoint == "search":
+                return {"items": [{"id": {"videoId": "x" * 11}}]}
+            return {"items": []}
+
+        with patch.object(radar, "_get", side_effect=fake_get):
+            radar._popular("EG")
+            radar._search("حقائق", "EG")
+
+        self.assertEqual(calls, ["videos", "search", "videos"])
+
 
 if __name__ == "__main__":
     unittest.main()
