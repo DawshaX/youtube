@@ -43,6 +43,7 @@ jobs:
           LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          YOUTUBE_COOKIES_B64: ${{ secrets.YOUTUBE_COOKIES_B64 }}
         run: |
           VID="${{ github.event.inputs.video_id }}"
           # تاج eye/<VIDEO_ID> (أو eye/auto)
