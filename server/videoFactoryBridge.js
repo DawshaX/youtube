@@ -21,6 +21,12 @@ const TOPICS_PATH = path.join(ROOT_DIR, 'content', 'topics.json');
 const DAOUSHA_PATH = path.join(ROOT_DIR, 'content', 'topics_daousha.json');
 const EYE_TOPICS_PATH = path.join(ROOT_DIR, 'data', 'eye_topics.json');
 
+import { emitEvent } from './bus.js';
+
+function emitJobError(jobId, topicId, error) {
+  try { emitEvent('produce:job-error', { jobId, topicId, error: String(error).slice(0, 300) }); } catch { /* البث ما يقطعش الإنتاج */ }
+}
+
 // Ensure vids directory exists
 if (!fs.existsSync(VIDS_DIR)) {
   fs.mkdirSync(VIDS_DIR, { recursive: true });
@@ -231,6 +237,12 @@ export async function startProduceJob(topicInput = 'ep1') {
     error: null
   };
 
+  emitEvent('produce:job-start', {
+    jobId, topicId,
+    title: targetTopic.title_ar || targetTopic.title || topicId,
+    source: targetTopic.catalog === 'eye' ? 'eye' : (targetTopic.catalog || 'catalog')
+  });
+
   // Run in background
   (async () => {
     try {
@@ -348,19 +360,28 @@ print(json.dumps({
               audioSources,
               report: renderReport
             };
+            try { emitEvent('produce:job-done', {
+              jobId, topicId,
+              title: targetTopic.title_ar || targetTopic.title,
+              video: `/content/vids/${topicId}.mp4`,
+              sizeBytes: fs.statSync(outPath).size
+            }); } catch { /* البث ما يقطعش الإنتاج */ }
           } catch (e) {
             activeJobs[jobId].status = 'error';
             activeJobs[jobId].error = e.message;
+            emitJobError(jobId, topicId, e.message);
           }
         } else {
           activeJobs[jobId].status = 'error';
           activeJobs[jobId].error = stderr || `Exit code ${code}`;
+          emitJobError(jobId, topicId, stderr || `Exit code ${code}`);
         }
       });
 
     } catch (err) {
       activeJobs[jobId].status = 'error';
       activeJobs[jobId].error = err.message;
+      emitJobError(jobId, topicId, err.message);
     }
   })();
 

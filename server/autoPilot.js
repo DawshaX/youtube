@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import { publishVideo } from './youtubeService.js';
 import { startProduceJob, getJobStatus, listProductionQueue } from './videoFactoryBridge.js';
 import { loadSavedVideos, getYouTubeClient } from './youtubeService.js';
+import { emitEvent } from './bus.js';
 
 const ROOT_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PRODUCTION_LOG_PATH = path.join(ROOT_DIR, 'data', 'production_log.json');
@@ -106,6 +107,7 @@ export async function runProductionCycle() {
     const topic = pickNextProductionTopic();
     if (!topic) throw new Error('Topic queue exhausted. Add new original topics before producing again.');
     autoPilotState.currentPublishingTitle = topic.title_ar;
+    emitEvent('cycle:produce-start', { topicId: topic.id, title: topic.title_ar, source: topic.source || 'queue' });
 
     const status = await renderTopic(topic);
     const out = status.outputVideo;
@@ -142,12 +144,19 @@ export async function runProductionCycle() {
     const audio = (record.audioSources || []).join('+') || 'unknown';
     autoPilotState.totalProduced += 1;
     autoPilotState.lastArtifact = record;
+    emitEvent('cycle:produce-done', {
+      topicId: record.topicId, title: record.title,
+      filePath: record.filePath, durationSeconds: record.durationSeconds,
+      width: record.width, height: record.height,
+      audioSources: record.audioSources, published: false,
+    });
     addAutoPilotLog(
       `🎬 إنتاج من الرادار: «${record.title}» → ${record.filePath} ` +
       `(${record.durationSeconds ?? '?'}s, ${record.width}x${record.height}, ${record.sizeBytes} بايت, صوت: ${audio}). لم يُنشر بعد.`
     );
     return record;
   } catch (err) {
+    emitEvent('cycle:error', { stage: 'produce', error: err.message });
     addAutoPilotLog(`❌ ${err.message}`);
     throw err;
   } finally {
@@ -215,9 +224,14 @@ export async function runAutoPilotCycle() {
     autoPilotState.totalAutoPublished += 1;
     autoPilotState.totalProduced += 1;
     autoPilotState.publishBlockedReason = null;
+    emitEvent('publish:done', {
+      videoId: result.video.id, url: result.video.url,
+      title: result.video.title, verifiedBy: result.video.verifiedBy,
+    });
     addAutoPilotLog(`✅ رابط الفيديو الحقيقي: ${result.video.url} (مُتحقَّق عبر ${result.video.verifiedBy})`);
     return result;
   } catch (err) {
+    emitEvent('cycle:error', { stage: 'publish', error: err.message });
     addAutoPilotLog(`❌ ${err.message}`);
     throw err;
   } finally {
@@ -229,6 +243,7 @@ export async function runAutoPilotCycle() {
 // otherwise keep producing from the radar and say plainly that publishing is blocked.
 export async function runScheduledCycle() {
   const { client, isOAuth } = getYouTubeClient();
+  emitEvent('cycle:scheduled', { mode: (isOAuth && client) ? 'publish' : 'produce-only' });
   if (isOAuth && client) {
     try {
       return await runAutoPilotCycle();

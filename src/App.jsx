@@ -8,6 +8,7 @@ import ChannelConnect from './components/ChannelConnect.jsx';
 import AutoPilot from './components/AutoPilot.jsx';
 import VideoSamplePlayer from './components/VideoSamplePlayer.jsx';
 import FootageVault from './components/FootageVault.jsx';
+import LiveFeed from './components/LiveFeed.jsx';
 import { 
   Flame, 
   Sparkles, 
@@ -115,6 +116,9 @@ export default function App() {
           </button>
         </div>
       )}
+
+      {/* بث المصنع المباشر — لحظي على WebSocket فوق كل الشاشات */}
+      <LiveFeed />
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
