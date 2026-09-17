@@ -39,7 +39,7 @@ def _get(endpoint: str, **params) -> dict:
 
 
 def _popular(region: str) -> list[dict]:
-    data = _get("videos.list", part="snippet,statistics,contentDetails",
+    data = _get("videos", part="snippet,statistics,contentDetails",
                 chart="mostPopular", regionCode=region, maxResults=25)
     return data.get("items", [])
 
@@ -47,14 +47,14 @@ def _popular(region: str) -> list[dict]:
 def _search(term: str, region: str) -> list[dict]:
     after = (dt.datetime.now(dt.timezone.utc)
              - dt.timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ")
-    data = _get("search.list", part="snippet", q=term, type="video",
+    data = _get("search", part="snippet", q=term, type="video",
                 order="viewCount", publishedAfter=after,
                 regionCode=region, maxResults=15)
     ids = [i["id"]["videoId"] for i in data.get("items", [])
            if i.get("id", {}).get("videoId")]
     if not ids:
         return []
-    data = _get("videos.list", part="snippet,statistics,contentDetails",
+    data = _get("videos", part="snippet,statistics,contentDetails",
                 id=",".join(ids), maxResults=50)
     return data.get("items", [])
 
