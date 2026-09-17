@@ -179,6 +179,15 @@ def generate(topics: list[dict], want: str = "auto") -> dict | None:
         if cand:
             return cand
 
+    # العين أولًا: موضوع كُتب بعد مشاهدة فيديو ترند حقيقي — أحدث وأسخن
+    # من أي مخزون ثابت. consume_queue ينسحب ويؤرشف، وينطّ على المكرر.
+    from . import eye as _eye
+    if want in ("auto", "trend", "eye"):
+        e = _eye.consume_queue(seen)
+        if e:
+            e["_kind"] = "eye"
+            return e
+
     if want in ("auto", "trend"):
         skip = seen | _state.seen_fingerprints()
         tr = _fresh(trend_topic(skip), "trend")

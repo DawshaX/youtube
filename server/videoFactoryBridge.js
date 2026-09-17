@@ -19,6 +19,7 @@ const ROOT_DIR = path.join(__dirname, '..');
 const VIDS_DIR = path.join(ROOT_DIR, 'content', 'vids');
 const TOPICS_PATH = path.join(ROOT_DIR, 'content', 'topics.json');
 const DAOUSHA_PATH = path.join(ROOT_DIR, 'content', 'topics_daousha.json');
+const EYE_TOPICS_PATH = path.join(ROOT_DIR, 'data', 'eye_topics.json');
 
 // Ensure vids directory exists
 if (!fs.existsSync(VIDS_DIR)) {
@@ -90,6 +91,22 @@ export function loadDaoushaTopics() {
 export function listAvailableTopics() {
   const topics = [];
 
+  // 0. مواضيع العين — الأحدث دائمًا: اتكتبت بعد مشاهدة فيديو ترند حقيقي
+  //    (تقرير مشاهد + DNA + سيناريو أصلي في data/eye_topics.json).
+  const eyeTopics = readJsonSafe(EYE_TOPICS_PATH);
+  if (Array.isArray(eyeTopics)) {
+    for (const t of eyeTopics) {
+      if (!t || !t.id) continue;
+      topics.push({
+        ...t,
+        category: 'eye',
+        catalog: 'eye',
+        producible: Boolean(t.hook_ar && (t.facts_ar || []).length),
+        done: false
+      });
+    }
+  }
+
   // 1. الكتالوج الرئيسي — كل مواضيع دوّشة بسيناريوهاتها الحقيقية
   for (const t of loadDaoushaTopics()) {
     topics.push(t);
@@ -129,7 +146,9 @@ export function listProductionQueue() {
       ...t,
       source: t.catalog === 'daousha'
         ? 'daousha'
-        : ((t.id.startsWith('ep') || t.id.startsWith('auto-')) ? 'authored' : 'radar')
+        : t.catalog === 'eye'
+          ? 'eye'
+          : ((t.id.startsWith('ep') || t.id.startsWith('auto-')) ? 'authored' : 'radar')
     }));
 }
 
