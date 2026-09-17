@@ -1,0 +1,10 @@
+[eye] OP3a2qzW5Yk: تنزيل الفيديو الحقيقي…
+[eye] ⚠️ فشل تنزيل الفيديو: eye: فشل التنزيل بكل العملاء — client=ios: from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+
+[eye] أكمل بالتسميات + البيانات فقط (بدون تحليل بصري/صوتي)
+[eye] اقرأ: تسميات التوقيتات الحقيقية…
+[eye] ✓ التقرير: data/eye/OP3a2qzW5Yk/report.json — 0 مشهد، 0 مقطع تسمية، تغطية تسميات 0.0
+[eye] افهم: وكيل الـ DNA يحلل…
+eye: فشل في OP3a2qzW5Yk: HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+eye: 0/1 فيديو اتشاف وموضوعات اتكتبت
+eye exited with code 1

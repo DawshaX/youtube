@@ -1,0 +1,2 @@
+eye: فشل في OP3a2qzW5Yk: HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
+2026-09-17T21:24:20Z
