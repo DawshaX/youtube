@@ -15,3 +15,4 @@ work/
 state/
 content/vids/*-cover.png
 data/eye/*/video.mp4
+data/events.jsonl

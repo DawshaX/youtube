@@ -44,6 +44,7 @@ import {
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const { attachWebSocket, emitEvent, readRecentEvents } = await import('./bus.js');
 const ROOT_DIR = path.join(__dirname, '..');
 const UPLOADS_DIR = path.join(ROOT_DIR, 'uploads');
 
@@ -686,9 +687,30 @@ if (fs.existsSync(DIST_DIR)) {
   });
 }
 
+// الأحداث الحية: آخر الأحداث من السجل + بث لحظي على /ws
+app.get('/api/events', (req, res) => {
+  res.json(readRecentEvents(100));
+});
+
 // Start Server
-app.listen(PORT, '0.0.0.0', () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌌 Cosmic YouTube Engine running on http://0.0.0.0:${PORT}`);
+  attachWebSocket(server);
+  console.log('📡 Live event bus attached: ws://…/ws (آخر الأحداث على /api/events)');
+  emitEvent('server:started', { port: PORT });
+
+  // طابور العين: لو في مواضيع اتكتبت من مشاهدة ترند حقيقي — نبّه الواجهة
+  try {
+    const eyeTopics = JSON.parse(
+      fs.readFileSync(path.join(__dirname, '..', 'data', 'eye_topics.json'), 'utf8'));
+    if (Array.isArray(eyeTopics) && eyeTopics.length) {
+      emitEvent('eye:queue', {
+        count: eyeTopics.length,
+        topics: eyeTopics.slice(0, 5).map(t => t.title_ar || t.id)
+      });
+    }
+  } catch { /* بلا طابور عين — طبيعي */ }
+
   // Start 30-minute AutoPilot automatically 24/7.
   // XT_AUTOPILOT=0 يوقف الجدولة التلقائية عند الإقلاع (مثلاً فترة مراجعة
   // الحلقة التجريبية قبل الموافقة على النشر) — الطيار يتشغّل يدويًا من الواجهة.
@@ -698,6 +720,7 @@ app.listen(PORT, '0.0.0.0', () => {
   }
   try {
     startAutoPilot(0.5);
+    emitEvent('autopilot:started', { intervalHours: 0.5 });
     console.log('🤖 AutoPilot 24/7 initialized: Scheduled every 30 minutes continuous publishing.');
   } catch (err) {
     console.error('Failed to init AutoPilot:', err.message);
