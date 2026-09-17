@@ -11,6 +11,10 @@ on:
       max_videos:
         description: "كم فيديو نشوف في الوضع التلقائي (افتراضي 2)"
         required: false
+  # تشغيل بتاج: eye/<VIDEO_ID> = شوف الفيديو ده · eye/auto = اختيار تلقائي
+  push:
+    tags:
+      - 'eye/*'
 permissions:
   contents: write
 concurrency:
@@ -40,8 +44,16 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
         run: |
-          if [ -n "${{ github.event.inputs.video_id }}" ]; then
-            python -m xtrendaw.eye --video-id "${{ github.event.inputs.video_id }}"
+          VID="${{ github.event.inputs.video_id }}"
+          # تاج eye/<VIDEO_ID> (أو eye/auto)
+          case "${GITHUB_REF:-}" in
+            refs/tags/eye/*)
+              T="${GITHUB_REF#refs/tags/eye/}"
+              if [ "$T" != "auto" ] && [ -z "$VID" ]; then VID="$T"; fi
+              ;;
+          esac
+          if [ -n "$VID" ]; then
+            python -m xtrendaw.eye --video-id "$VID"
           else
             MAX="${{ github.event.inputs.max_videos || '2' }}"
             python -m xtrendaw.eye --auto --max "$MAX"
