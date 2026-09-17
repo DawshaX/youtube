@@ -7,6 +7,12 @@ on:
   workflow_dispatch:
   # schedule:
   #   - cron: '0 */6 * * *'
+  # مؤقت (تشغيل لمرة واحدة): مشغل دفع محروس بملف الحارس — الدمج اللي فيه
+  # الملف يفجّر السير مرة واحدة، وسير المتابعة يشيل المشغل ده مع الملف.
+  # اللوب مستحيلة: كوميت نتائج الرادار (data/*) ما بيلمسش مسار الحارس.
+  push:
+    branches: [main]
+    paths: ['.factory-triggers/radar-scan.trigger']
 
 permissions:
   contents: write

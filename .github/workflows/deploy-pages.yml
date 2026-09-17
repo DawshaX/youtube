@@ -40,6 +40,10 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        with:
+          # لو موقع الباجز مش متعمل، السير بيعمله ويفعّله بنفسه
+          # (المصدر: GitHub Actions) بدل ما يفشل التشغيل.
+          enablement: true
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
