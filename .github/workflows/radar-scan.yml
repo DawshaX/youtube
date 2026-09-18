@@ -5,8 +5,8 @@ name: Radar + Analyzer (trend structure measurement — no copying)
 # الجدولة معطلة لحد ما صاحب القناة يفعّلها — شغّلها يدويًا من هنا.
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 */6 * * *'
+  schedule:
+    - cron: '7 */6 * * *'
 
 permissions:
   contents: write
@@ -23,7 +23,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install
-        run: python -m pip install requests
+        run: python -m pip install requests pillow numpy imageio-ffmpeg yt-dlp
 
       - name: Radar scan
         env:
@@ -33,11 +33,18 @@ jobs:
       - name: Analyze
         run: python -m xtrendaw.analyzer
 
+      - name: Eye مباشرة بعد الرادار
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_COOKIES_B64: ${{ secrets.YOUTUBE_COOKIES_B64 }}
+        run: python -m xtrendaw.eye --auto --max 2
+
       - name: Commit measurement results
         run: |
           git config user.name "daousha-factory"
           git config user.email "daousha-factory@users.noreply.github.com"
-          git add data/radar_snapshot.json data/patterns.json
+          git add data/radar_snapshot.json data/patterns.json data/eye_topics.json data/eye_consumed.json data/eye/*/report.json data/eye/*/frames 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "no changes"
           else

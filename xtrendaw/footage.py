@@ -205,8 +205,8 @@ def clip_origin(path: Path | None) -> Path | None:
 
 
 def net_footage_enabled() -> bool:
-    """المصادر الشبكية مقفولة افتراضيًا: مفيش وسائط من غير ترخيص موثق."""
-    return settings.get("XT_NET_FOOTAGE", "0") == "1"
+    """المصادر الشبكية مفعلة افتراضيًا؛ القيمة 0 هي مفتاح الإيقاف الصريح."""
+    return settings.get("XT_NET_FOOTAGE", "1") == "1"
 
 BAD_TITLES = ("this week", "announce", "briefing", "news", "podcast",
               "interview", "hosted", "narrated", "trailer", "webinar",
@@ -526,7 +526,9 @@ def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
             # سجل الترخيص إلزامي قبل ما اللقطة تتاح لأي رندر (بند 0/4)
             from . import vault
             lic = accepted.get("_license") or ""
-            if lic not in vault.ALLOWED_LICENSES:
+            # لا نساوي «مجاني للاستخدام» بـ CC: Pixabay/Pexels/NASA وCC-SA
+            # تُرفض هنا ما لم تُرجع الواجهة CC0 أو CC-BY صريحة.
+            if lic not in vault.ALLOWED_NETWORK_LICENSES:
                 cached.unlink(missing_ok=True)
             else:
                 attribution = lic.startswith("CC-BY")

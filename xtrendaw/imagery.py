@@ -213,10 +213,10 @@ def fetch_image_clip(query: str, seconds: float, workdir: Path, seed: str) -> Pa
         if not ok or _has_captions(tmp_clip):
             tmp_clip.unlink(missing_ok=True)
             return None
-        vault.register(tmp_clip, source=source, license=lic,
+        tmp_clip.rename(cached_clip)
+        vault.register(cached_clip, source=source, license=lic,
                        attribution_required=attribution,
                        credit_line=credit, url=url)
-        tmp_clip.rename(cached_clip)
 
     if not cached_clip.exists():
         return None
@@ -227,4 +227,30 @@ def fetch_image_clip(query: str, seconds: float, workdir: Path, seed: str) -> Pa
     off = int(hashlib.sha256(seed.encode()).hexdigest()[:6], 16) % room
     if not _prep(str(cached_clip), seconds, out, offset=off):
         return None
+    return out
+
+
+def fetch_pollinations_clip(query: str, seconds: float, workdir: Path,
+                            seed: str) -> Path | None:
+    """ملاذ AI المجاني المحدد: Pollinations، مع رفض النص المحروق."""
+    if not net_footage_enabled() or not query:
+        return None
+    from . import vault
+    from .scenes import fetch_ai_visual
+
+    workdir.mkdir(parents=True, exist_ok=True)
+    key = hashlib.sha256(f"pollinations:{query}:{seed}".encode()).hexdigest()[:12]
+    raw = workdir / f"pollinations_{key}.png"
+    numeric_seed = int(hashlib.sha256(seed.encode()).hexdigest()[:8], 16)
+    prompt = f"cinematic vertical documentary photograph, no words, no text, {query}"
+    if not fetch_ai_visual(prompt, raw, numeric_seed):
+        return None
+    out = workdir / f"pollinations_{key}.mp4"
+    if not _image_to_motion(raw, seconds, out, seed) or _has_captions(out):
+        out.unlink(missing_ok=True)
+        raw.unlink(missing_ok=True)
+        return None
+    vault.register(out, source="pollinations", license="Internal-Generated",
+                   attribution_required=False, url="https://pollinations.ai/")
+    raw.unlink(missing_ok=True)
     return out

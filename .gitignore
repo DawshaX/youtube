@@ -16,3 +16,10 @@ state/
 content/vids/*-cover.png
 data/eye/*/video.mp4
 data/events.jsonl
+secrets*
+cookies*
+**/secrets*
+**/cookies*
+doctor-report.json
+
+.venv/

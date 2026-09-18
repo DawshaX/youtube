@@ -26,9 +26,11 @@
 from __future__ import annotations
 
 import argparse
+import atexit
 import json
 import re
 import shutil
+import tempfile
 import subprocess
 import sys
 import time
@@ -71,9 +73,21 @@ def _load_cookies() -> tuple[str, Path | None]:
         return "", None
     if _COOKIES_FILE is None:
         import base64
-        p = Path("/tmp/daousha_yt_cookies.txt")
-        p.write_bytes(base64.b64decode(b64))
+        fd, name = tempfile.mkstemp(prefix="daousha-cookies-", suffix=".txt")
+        p = Path(name)
+        try:
+            os.fchmod(fd, 0o600)
+            with os.fdopen(fd, "wb") as f:
+                f.write(base64.b64decode(b64, validate=True))
+        except Exception as exc:
+            try:
+                os.close(fd)
+            except OSError:
+                pass
+            p.unlink(missing_ok=True)
+            raise RuntimeError("eye: سر الكوكيز ليس base64 صالحًا") from exc
         _COOKIES_FILE = p
+        atexit.register(lambda path=p: path.unlink(missing_ok=True))
     pairs = []
     for line in _COOKIES_FILE.read_text(encoding="utf-8", errors="ignore").splitlines():
         line = line.strip()

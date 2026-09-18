@@ -23,6 +23,10 @@ VAULT_DIR = settings.ROOT / "vault"
 INDEX_PATH = VAULT_DIR / "index.json"
 
 # التراخيص المسموح تمريرها للريندر (اللائحة في docs/MEDIA_VAULT_SOURCES.md)
+# الأصول الشبكية لا تمر إلا برخص المشاع الصريحة المطلوبة. التراخيص الأخرى
+# أدناه تخص أصولًا داخلية/خطوطًا قديمة فقط ولا تمنح الشبكة استثناءً.
+ALLOWED_NETWORK_LICENSES = {"CC0", "CC-BY-3.0", "CC-BY-4.0"}
+
 ALLOWED_LICENSES = {
     "CC0",
     "CC-BY-3.0",
