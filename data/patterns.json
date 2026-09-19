@@ -1,15 +1,15 @@
 {
- "analyzedAt": "2026-09-19T10:47:55+00:00",
- "snapshotAt": "2026-09-19T10:47:51+00:00",
- "videoCount": 233,
+ "analyzedAt": "2026-09-19T15:48:15+00:00",
+ "snapshotAt": "2026-09-19T15:48:11+00:00",
+ "videoCount": 231,
  "fastest": [
   {
    "videoId": "yLFRQaQT0qM",
    "region": "US",
    "via": "mostPopular",
    "categoryId": "20",
-   "velocityPerHour": 1262355,
-   "likeRatePer1k": 0.79,
+   "velocityPerHour": 1168667,
+   "likeRatePer1k": 0.8,
    "titleStructure": {
     "length": 49,
     "is_question": false,
@@ -23,8 +23,8 @@
    "region": "EG",
    "via": "search:تحدي",
    "categoryId": "24",
-   "velocityPerHour": 715343,
-   "likeRatePer1k": 3.01,
+   "velocityPerHour": 707507,
+   "likeRatePer1k": 2.98,
    "titleStructure": {
     "length": 68,
     "is_question": false,
@@ -38,10 +38,25 @@
    "region": "ID",
    "via": "mostPopular",
    "categoryId": "10",
-   "velocityPerHour": 403766,
-   "likeRatePer1k": 55.91,
+   "velocityPerHour": 385695,
+   "likeRatePer1k": 53.44,
    "titleStructure": {
     "length": 39,
+    "is_question": false,
+    "has_number": false,
+    "has_emoji": false,
+    "has_exclaim": false
+   }
+  },
+  {
+   "videoId": "vRjaGgDsWSo",
+   "region": "IN",
+   "via": "mostPopular",
+   "categoryId": "10",
+   "velocityPerHour": 363029,
+   "likeRatePer1k": 40.79,
+   "titleStructure": {
+    "length": 66,
     "is_question": false,
     "has_number": false,
     "has_emoji": false,
@@ -53,8 +68,8 @@
    "region": "IN",
    "via": "mostPopular",
    "categoryId": "1",
-   "velocityPerHour": 272053,
-   "likeRatePer1k": 4.08,
+   "velocityPerHour": 256650,
+   "likeRatePer1k": 4.1,
    "titleStructure": {
     "length": 88,
     "is_question": false,
@@ -64,42 +79,12 @@
    }
   },
   {
-   "videoId": "vRjaGgDsWSo",
-   "region": "AE",
-   "via": "mostPopular",
-   "categoryId": "10",
-   "velocityPerHour": 242672,
-   "likeRatePer1k": 80.39,
-   "titleStructure": {
-    "length": 66,
-    "is_question": false,
-    "has_number": false,
-    "has_emoji": false,
-    "has_exclaim": false
-   }
-  },
-  {
-   "videoId": "qaII7FKRg9s",
-   "region": "ID",
-   "via": "mostPopular",
-   "categoryId": "20",
-   "velocityPerHour": 216835,
-   "likeRatePer1k": 5.14,
-   "titleStructure": {
-    "length": 92,
-    "is_question": false,
-    "has_number": false,
-    "has_emoji": false,
-    "has_exclaim": false
-   }
-  },
-  {
    "videoId": "yBXJQ7eBmWw",
    "region": "IN",
    "via": "mostPopular",
    "categoryId": "10",
-   "velocityPerHour": 191657,
-   "likeRatePer1k": 29.01,
+   "velocityPerHour": 191069,
+   "likeRatePer1k": 27.79,
    "titleStructure": {
     "length": 77,
     "is_question": false,
@@ -113,7 +98,7 @@
    "region": "EG",
    "via": "search:تحدي",
    "categoryId": "24",
-   "velocityPerHour": 187558,
+   "velocityPerHour": 184112,
    "likeRatePer1k": 2.73,
    "titleStructure": {
     "length": 64,
@@ -124,12 +109,27 @@
    }
   },
   {
+   "videoId": "qaII7FKRg9s",
+   "region": "ID",
+   "via": "mostPopular",
+   "categoryId": "20",
+   "velocityPerHour": 144724,
+   "likeRatePer1k": 5.13,
+   "titleStructure": {
+    "length": 92,
+    "is_question": false,
+    "has_number": false,
+    "has_emoji": false,
+    "has_exclaim": false
+   }
+  },
+  {
    "videoId": "hgnVXBtuWe8",
    "region": "IN",
    "via": "mostPopular",
    "categoryId": "24",
-   "velocityPerHour": 137130,
-   "likeRatePer1k": 31.64,
+   "velocityPerHour": 133619,
+   "likeRatePer1k": 29.11,
    "titleStructure": {
     "length": 84,
     "is_question": false,
@@ -139,59 +139,14 @@
    }
   },
   {
-   "videoId": "pqM3qANMPMo",
+   "videoId": "vGOIVEE4GAU",
    "region": "US",
    "via": "mostPopular",
    "categoryId": "20",
-   "velocityPerHour": 120727,
-   "likeRatePer1k": 17.11,
+   "velocityPerHour": 109181,
+   "likeRatePer1k": 8.23,
    "titleStructure": {
-    "length": 33,
-    "is_question": false,
-    "has_number": true,
-    "has_emoji": true,
-    "has_exclaim": false
-   }
-  },
-  {
-   "videoId": "gMkuV5hh7-s",
-   "region": "US",
-   "via": "mostPopular",
-   "categoryId": "20",
-   "velocityPerHour": 105521,
-   "likeRatePer1k": 46.36,
-   "titleStructure": {
-    "length": 98,
-    "is_question": false,
-    "has_number": false,
-    "has_emoji": false,
-    "has_exclaim": false
-   }
-  },
-  {
-   "videoId": "zVux9HErnzE",
-   "region": "IN",
-   "via": "mostPopular",
-   "categoryId": "20",
-   "velocityPerHour": 99493,
-   "likeRatePer1k": 1.53,
-   "titleStructure": {
-    "length": 36,
-    "is_question": false,
-    "has_number": true,
-    "has_emoji": true,
-    "has_exclaim": false
-   }
-  },
-  {
-   "videoId": "hex0pvxJVtw",
-   "region": "EG",
-   "via": "search:تحدي",
-   "categoryId": "22",
-   "velocityPerHour": 96705,
-   "likeRatePer1k": 2.93,
-   "titleStructure": {
-    "length": 62,
+    "length": 95,
     "is_question": false,
     "has_number": false,
     "has_emoji": true,
@@ -203,7 +158,7 @@
    "region": "EG",
    "via": "search:تحدي",
    "categoryId": "22",
-   "velocityPerHour": 96159,
+   "velocityPerHour": 95007,
    "likeRatePer1k": 3.79,
    "titleStructure": {
     "length": 44,
@@ -214,14 +169,44 @@
    }
   },
   {
-   "videoId": "cCbiVWgEW1w",
-   "region": "IN",
-   "via": "mostPopular",
-   "categoryId": "10",
-   "velocityPerHour": 92632,
-   "likeRatePer1k": 18.4,
+   "videoId": "hex0pvxJVtw",
+   "region": "EG",
+   "via": "search:تحدي",
+   "categoryId": "22",
+   "velocityPerHour": 94818,
+   "likeRatePer1k": 2.93,
    "titleStructure": {
-    "length": 84,
+    "length": 62,
+    "is_question": false,
+    "has_number": false,
+    "has_emoji": true,
+    "has_exclaim": false
+   }
+  },
+  {
+   "videoId": "Ug7w1NXSfTI",
+   "region": "EG",
+   "via": "search:مقارنة",
+   "categoryId": "24",
+   "velocityPerHour": 93208,
+   "likeRatePer1k": 15.8,
+   "titleStructure": {
+    "length": 37,
+    "is_question": false,
+    "has_number": true,
+    "has_emoji": true,
+    "has_exclaim": false
+   }
+  },
+  {
+   "videoId": "gMkuV5hh7-s",
+   "region": "US",
+   "via": "mostPopular",
+   "categoryId": "20",
+   "velocityPerHour": 91759,
+   "likeRatePer1k": 44.62,
+   "titleStructure": {
+    "length": 98,
     "is_question": false,
     "has_number": false,
     "has_emoji": false,
@@ -233,8 +218,8 @@
    "region": "US",
    "via": "mostPopular",
    "categoryId": "24",
-   "velocityPerHour": 91885,
-   "likeRatePer1k": 4.83,
+   "velocityPerHour": 89654,
+   "likeRatePer1k": 4.2,
    "titleStructure": {
     "length": 33,
     "is_question": false,
@@ -244,12 +229,27 @@
    }
   },
   {
+   "videoId": "dn5_p5jaJn0",
+   "region": "IN",
+   "via": "mostPopular",
+   "categoryId": "20",
+   "velocityPerHour": 85615,
+   "likeRatePer1k": 28.02,
+   "titleStructure": {
+    "length": 60,
+    "is_question": false,
+    "has_number": true,
+    "has_emoji": false,
+    "has_exclaim": false
+   }
+  },
+  {
    "videoId": "X0ASrHeMuVE",
    "region": "US",
    "via": "mostPopular",
    "categoryId": "24",
-   "velocityPerHour": 89860,
-   "likeRatePer1k": 17.07,
+   "velocityPerHour": 84709,
+   "likeRatePer1k": 16.34,
    "titleStructure": {
     "length": 100,
     "is_question": false,
@@ -259,42 +259,12 @@
    }
   },
   {
-   "videoId": "SRVHCGU3ZGQ",
-   "region": "IN",
-   "via": "mostPopular",
-   "categoryId": "20",
-   "velocityPerHour": 88184,
-   "likeRatePer1k": 1.23,
-   "titleStructure": {
-    "length": 60,
-    "is_question": false,
-    "has_number": true,
-    "has_emoji": true,
-    "has_exclaim": false
-   }
-  },
-  {
-   "videoId": "dn5_p5jaJn0",
-   "region": "IN",
-   "via": "mostPopular",
-   "categoryId": "20",
-   "velocityPerHour": 86785,
-   "likeRatePer1k": 28.91,
-   "titleStructure": {
-    "length": 60,
-    "is_question": false,
-    "has_number": true,
-    "has_emoji": false,
-    "has_exclaim": false
-   }
-  },
-  {
    "videoId": "BiIp6TGW798",
    "region": "EG",
    "via": "search:تحدي",
    "categoryId": "22",
-   "velocityPerHour": 84144,
-   "likeRatePer1k": 32.96,
+   "velocityPerHour": 82674,
+   "likeRatePer1k": 33.21,
    "titleStructure": {
     "length": 84,
     "is_question": false,
@@ -304,14 +274,14 @@
    }
   },
   {
-   "videoId": "2-NkuLjtGNY",
-   "region": "US",
+   "videoId": "cCbiVWgEW1w",
+   "region": "IN",
    "via": "mostPopular",
    "categoryId": "10",
-   "velocityPerHour": 82186,
-   "likeRatePer1k": 34.03,
+   "velocityPerHour": 80613,
+   "likeRatePer1k": 18.1,
    "titleStructure": {
-    "length": 40,
+    "length": 84,
     "is_question": false,
     "has_number": false,
     "has_emoji": false,
@@ -319,14 +289,14 @@
    }
   },
   {
-   "videoId": "ITwSv9apsr8",
-   "region": "IN",
+   "videoId": "2-NkuLjtGNY",
+   "region": "US",
    "via": "mostPopular",
-   "categoryId": "20",
-   "velocityPerHour": 80439,
-   "likeRatePer1k": 1.68,
+   "categoryId": "10",
+   "velocityPerHour": 77618,
+   "likeRatePer1k": 33.15,
    "titleStructure": {
-    "length": 49,
+    "length": 40,
     "is_question": false,
     "has_number": false,
     "has_emoji": false,
@@ -338,10 +308,55 @@
    "region": "US",
    "via": "mostPopular",
    "categoryId": "20",
-   "velocityPerHour": 79634,
-   "likeRatePer1k": 36.97,
+   "velocityPerHour": 71056,
+   "likeRatePer1k": 35.73,
    "titleStructure": {
     "length": 32,
+    "is_question": false,
+    "has_number": false,
+    "has_emoji": false,
+    "has_exclaim": false
+   }
+  },
+  {
+   "videoId": "ITwSv9apsr8",
+   "region": "IN",
+   "via": "mostPopular",
+   "categoryId": "20",
+   "velocityPerHour": 69678,
+   "likeRatePer1k": 2.16,
+   "titleStructure": {
+    "length": 49,
+    "is_question": false,
+    "has_number": false,
+    "has_emoji": false,
+    "has_exclaim": false
+   }
+  },
+  {
+   "videoId": "pqM3qANMPMo",
+   "region": "US",
+   "via": "mostPopular",
+   "categoryId": "20",
+   "velocityPerHour": 68568,
+   "likeRatePer1k": 17.21,
+   "titleStructure": {
+    "length": 33,
+    "is_question": false,
+    "has_number": true,
+    "has_emoji": true,
+    "has_exclaim": false
+   }
+  },
+  {
+   "videoId": "qwaVhOZkAek",
+   "region": "US",
+   "via": "mostPopular",
+   "categoryId": "24",
+   "velocityPerHour": 66662,
+   "likeRatePer1k": 20.15,
+   "titleStructure": {
+    "length": 42,
     "is_question": false,
     "has_number": false,
     "has_emoji": false,
@@ -353,8 +368,8 @@
    "region": "US",
    "via": "mostPopular",
    "categoryId": "20",
-   "velocityPerHour": 74246,
-   "likeRatePer1k": 39.41,
+   "velocityPerHour": 66116,
+   "likeRatePer1k": 37.25,
    "titleStructure": {
     "length": 73,
     "is_question": false,
@@ -362,53 +377,34 @@
     "has_emoji": false,
     "has_exclaim": false
    }
-  },
-  {
-   "videoId": "yzYTijRCwXg",
-   "region": "AE",
-   "via": "mostPopular",
-   "categoryId": "17",
-   "velocityPerHour": 71551,
-   "likeRatePer1k": 12.4,
-   "titleStructure": {
-    "length": 39,
-    "is_question": false,
-    "has_number": false,
-    "has_emoji": true,
-    "has_exclaim": false
-   }
   }
  ],
  "categoryShare": {
   "20": {
-   "count": 65,
-   "share": 0.279
-  },
-  "22": {
-   "count": 53,
-   "share": 0.227
+   "count": 62,
+   "share": 0.268
   },
   "10": {
-   "count": 53,
-   "share": 0.227
+   "count": 54,
+   "share": 0.234
+  },
+  "22": {
+   "count": 52,
+   "share": 0.225
   },
   "24": {
-   "count": 30,
-   "share": 0.129
+   "count": 31,
+   "share": 0.134
   },
   "1": {
-   "count": 12,
-   "share": 0.052
+   "count": 13,
+   "share": 0.056
   },
   "27": {
    "count": 6,
    "share": 0.026
   },
   "15": {
-   "count": 3,
-   "share": 0.013
-  },
-  "25": {
    "count": 3,
    "share": 0.013
   },
@@ -424,16 +420,20 @@
    "count": 2,
    "share": 0.009
   },
+  "25": {
+   "count": 2,
+   "share": 0.009
+  },
   "17": {
    "count": 2,
    "share": 0.009
   }
  },
  "titlePatterns": {
-  "avgLength": 61.5,
-  "questionRate": 0.06,
-  "numberRate": 0.292,
-  "emojiRate": 0.309,
-  "exclaimRate": 0.219
+  "avgLength": 61.3,
+  "questionRate": 0.065,
+  "numberRate": 0.29,
+  "emojiRate": 0.32,
+  "exclaimRate": 0.234
  }
 }
