@@ -53,7 +53,12 @@ test('the production queue is finite and deduplicated by stable ids', () => {
   assert.equal(new Set(ids).size, ids.length, 'duplicate topic ids cannot be deduplicated');
   assert.ok(queue.every(topic => !String(topic.id).startsWith('infinite-')),
     'randomly generated infinite ideas must not drive production');
-  assert.ok(queue.every(topic => ['authored', 'daousha'].includes(topic.source)));
+  // المصادر المسموحة: كتالوج «دۅۄشے»، السكربتات المكتوبة، ومواضيع العين
+  // (العين بتكتب إصدارنا من فيديو ترند حقيقي) — والرادار كذلك.
+  // الدرس (2026-09-19): أول موضوع للعين دخّل الطابور، والاختبار كان حاطط
+  // مصدرين بس فوقع — الفلتر لازم يشمل كل مصدر شرعي، مش يتجاهله.
+  assert.ok(queue.every(topic => ['authored', 'daousha', 'eye', 'radar'].includes(topic.source)),
+    'مصدر غير معروف في الطابور: ' + JSON.stringify([...new Set(queue.map(t => t.source))]));
   const next = pickNextProductionTopic();
   assert.ok(next && queue.some(topic => topic.id === next.id));
 });
