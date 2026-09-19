@@ -21,5 +21,14 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_*.py' -v
           python tests/test_tts_word_timing.py
+      - name: فحص أسماء غير معرّفة (يمنع NameError في الإنتاج)
+        run: |
+          python -m pip install -q pyflakes
+          # الدرس: تعديل شال تعريف دالة، والاختبارات عدّت، والعين وقعت في الإنتاج.
+          if python -m pyflakes xtrendaw tests | grep -E "undefined name|redefinition"; then
+            echo "::error::فيه أسماء غير معرّفة — التزم بالإصلاح قبل الدمج"; exit 1
+          fi
+          echo "✓ مفيش أسماء غير معرّفة"
+
       - name: Node — النشر
         run: node --test tests/publishing.test.js

@@ -201,3 +201,29 @@ class LLMChainTests(unittest.TestCase):
             ok, detail = eye.llm_probe()
         self.assertTrue(ok)
         self.assertIn("openai/gpt-oss-120b", detail)
+
+
+class LLMJsonContractTests(unittest.TestCase):
+    """درس حقيقي: تعديل في eye.py شال تعريف `_llm_json` بالغلط، والاختبارات
+    عدّت (مكانوش بينادوا عليه) والعين وقعت في الإنتاج بـ NameError.
+    الاختبار ده بينادي المسار الفعلي اللي العين بتستخدمه."""
+
+    def test_llm_json_parses_the_model_reply(self):
+        fake = _FakeHTTP(live_models=["openai/gpt-oss-120b"], dead_models=[],
+                         answer='كلام قبل {"hook": "خطر"} وكلام بعد')
+        with mock.patch.object(eye, "_req", lambda: fake), \
+             mock.patch.dict(eye.settings.LLM, {"base": "https://api.groq.com/openai/v1",
+                                                "key": "k", "model": "openai/gpt-oss-120b"}), \
+             mock.patch.dict(os.environ, {"GEMINI_API_KEY": ""}, clear=False):
+            out = eye._llm_json("حلّل")
+        self.assertEqual(out, {"hook": "خطر"})
+
+    def test_llm_json_rejects_a_reply_without_json(self):
+        fake = _FakeHTTP(live_models=["openai/gpt-oss-120b"], dead_models=[],
+                         answer="مفيش JSON خالص")
+        with mock.patch.object(eye, "_req", lambda: fake), \
+             mock.patch.dict(eye.settings.LLM, {"base": "https://api.groq.com/openai/v1",
+                                                "key": "k", "model": "openai/gpt-oss-120b"}), \
+             mock.patch.dict(os.environ, {"GEMINI_API_KEY": ""}, clear=False):
+            with self.assertRaises(RuntimeError):
+                eye._llm_json("حلّل")

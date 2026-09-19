@@ -756,6 +756,9 @@ def llm_probe(provider: str | None = None) -> tuple[bool, str]:
                        "في Settings → Secrets → Actions")
     return False, "كل الموديلات فشلت — " + " | ".join(tried[:6])
 
+
+def _llm_json(prompt: str, temperature: float = 0.7) -> dict:
+    """نفس السلسلة، بس بيرجّع JSON (وكيل الـ DNA والناقد بيعتمدوا عليه)."""
     text = _llm(prompt, temperature)
     s, e = text.find("{"), text.rfind("}")
     if s == -1 or e <= s:
