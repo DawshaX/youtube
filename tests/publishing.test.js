@@ -4,7 +4,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { publishVideo, verifyYouTubeVideo } from '../server/youtubeService.js';
-import { runAutoPilotCycle, pickNextProductionTopic, loadProductionLog, pruneProductionLog } from '../server/autoPilot.js';
+import { runAutoPilotCycle, pickNextProductionTopic, loadProductionLog, pruneProductionLog,
+         uploadsInCurrentQuotaDay, dailyUploadCap, quotaDayKey } from '../server/autoPilot.js';
 import { listProductionQueue, listAvailableTopics } from '../server/videoFactoryBridge.js';
 import { summarizeVerification } from '../server/uploadVerification.js';
 
@@ -147,4 +148,29 @@ test('verification: a recorded upload removed long ago is stale, not a run failu
   ], { now, strictHours: 24 });
   assert.equal(bad.exitCode, 1, 'منشور جديد مش متأكد = فشل حقيقي');
   assert.equal(bad.failures.length, 1);
+});
+
+
+test('daily quota cap: counting uploads uses the YouTube (Pacific) day, not UTC', () => {
+  // 2026-09-19 05:00 UTC = 2026-09-18 22:00 في كاليفورنيا → يوم حصة مختلف
+  assert.equal(quotaDayKey('2026-09-19T05:00:00Z'), '2026-09-18');
+  assert.equal(quotaDayKey('2026-09-19T08:00:00Z'), '2026-09-19');
+  const now = new Date('2026-09-19T09:00:00Z');
+  const records = [
+    { id: 'a', publishedAt: '2026-09-19T08:10:00Z' },
+    { id: 'b', publishedAt: '2026-09-19T08:20:00Z' },
+    { id: 'old', publishedAt: '2026-09-18T22:00:00Z' }, // يوم الحصة السابق
+  ];
+  assert.equal(uploadsInCurrentQuotaDay(records, [], now), 2);
+  assert.equal(uploadsInCurrentQuotaDay([], [{ topicId: 't1', producedAt: '2026-09-19T08:30:00Z' }], now), 1);
+});
+
+test('daily quota cap: default is the YouTube upload quota ceiling and is overridable', () => {
+  const previous = process.env.XT_MAX_UPLOADS_PER_DAY;
+  delete process.env.XT_MAX_UPLOADS_PER_DAY;
+  assert.equal(dailyUploadCap(), 6, 'الحصة الافتراضية = 10000/1600 = 6 رفعات');
+  process.env.XT_MAX_UPLOADS_PER_DAY = '3';
+  assert.equal(dailyUploadCap(), 3);
+  if (previous === undefined) delete process.env.XT_MAX_UPLOADS_PER_DAY;
+  else process.env.XT_MAX_UPLOADS_PER_DAY = previous;
 });

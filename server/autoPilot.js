@@ -36,6 +36,42 @@ let autoPilotState = {
   logs: []
 };
 
+// ─────────────────────────────────────────────────────────────
+// سقف الحصة اليومية ليوتيوب
+// ─────────────────────────────────────────────────────────────
+// يوتيوب بيحسب الحصة من منتصف الليل بتوقيت المحيط الهادئ (PT)، والرفعة الواحدة
+// بتكلّف 1600 وحدة من أصل 10,000 يوميًا = **6 رفعات يوميًا كحد أقصى** بالحصة
+// الافتراضية. النشر الساعي معناه 24 محاولة في اليوم → بعد السادسة كل محاولة
+// هتفشل بـ quotaExceeded وتستهلك Actions بلا داعي. فبنعدّ ونوقف بهدوء (خروج
+// ناجح) ونكمّل تلقائيًا بعد تجديد الحصة.
+const QUOTA_TZ = 'America/Los_Angeles';
+const DEFAULT_DAILY_CAP = 6;
+
+export function quotaDayKey(value) {
+  const d = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(d.getTime())) return null;
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: QUOTA_TZ, year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(d);
+}
+
+export function uploadsInCurrentQuotaDay(records = [], log = [], now = new Date()) {
+  const today = quotaDayKey(now);
+  const seen = new Set();
+  for (const record of [...records, ...log]) {
+    if (!record || typeof record !== 'object') continue;
+    const stamp = record.publishedAt || record.uploadedAt || record.producedAt || record.verifiedAt;
+    if (!stamp || quotaDayKey(stamp) !== today) continue;
+    seen.add(record.id || record.videoId || record.topicId || String(stamp));
+  }
+  return seen.size;
+}
+
+export function dailyUploadCap() {
+  const raw = Number(process.env.XT_MAX_UPLOADS_PER_DAY ?? DEFAULT_DAILY_CAP);
+  return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : DEFAULT_DAILY_CAP;
+}
+
 export function loadProductionLog() {
   try {
     if (fs.existsSync(PRODUCTION_LOG_PATH)) {
@@ -169,6 +205,17 @@ export async function runAutoPilotCycle() {
   cycleActive = true;
   autoPilotState.lastRun = new Date().toISOString();
   try {
+    const cap = dailyUploadCap();
+    const usedToday = uploadsInCurrentQuotaDay(loadSavedVideos(), loadProductionLog());
+    if (usedToday >= cap) {
+      const message = `⏸️ سقف الحصة اليومية ليوتيوب وصل (${usedToday}/${cap} رفعة) — `
+        + 'بنحترم الحصة ونستنى تجديدها (منتصف الليل بتوقيت المحيط الهادئ) '
+        + 'وبعدها الدورة الساعية بتكمّل لوحدها. مفيش فشل ومفيش رفع مهدور.';
+      addAutoPilotLog(message);
+      console.log(message);
+      return { skipped: true, reason: 'daily_upload_cap', usedToday, cap };
+    }
+
     const { client, isOAuth } = getYouTubeClient();
     if (!isOAuth || !client) throw new Error('YouTube OAuth is missing. Configure client ID, client secret and refresh token.');
     const channels = await client.channels.list({ part: ['snippet'], mine: true });

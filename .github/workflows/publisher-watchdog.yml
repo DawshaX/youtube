@@ -1,0 +1,41 @@
+name: Publisher Watchdog — ضمان النشر الساعي
+# GitHub Actions بيأخّر أو بيسقّط التشغيلات المجدولة أحيانًا (حصل فعلًا: دورة
+# 02:23 UTC مجاتش خالص). الحارس ده بيشتغل بعد الدورة الأساسية بـ30 دقيقة:
+# لو مفيش دورة نشر بدأت في آخر 90 دقيقة → بيشغّلها بنفسه فورًا.
+# كده «الساعية» بقت مضمونة بمحاولتين كل ساعة (:23 الأساسية + :53 الحارس).
+on:
+  schedule:
+    - cron: '53 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: cosmictube-publisher-watchdog
+  cancel-in-progress: false
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: افحص آخر دورة نشر وشغّلها لو اتأخرت
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          WINDOW=5400   # 90 دقيقة
+          count=$(gh run list --repo "$GITHUB_REPOSITORY" \
+                    --workflow=cosmic-autopilot.yml --limit 40 \
+                    --json createdAt \
+                    --jq "[.[] | select((.createdAt | fromdateiso8601) > (now - $WINDOW))] | length")
+          echo "دورات النشر اللي بدأت في آخر 90 دقيقة: $count"
+          if [ "$count" -gt 0 ]; then
+            echo "✓ النشر الساعي شغال — مفيش تدخل مطلوب."
+            exit 0
+          fi
+          echo "⚠️ مفيش دورة نشر في آخر 90 دقيقة — بشغّل واحدة فورًا."
+          gh workflow run cosmic-autopilot.yml --repo "$GITHUB_REPOSITORY" --ref main
+          sleep 20
+          gh run list --repo "$GITHUB_REPOSITORY" \
+            --workflow=cosmic-autopilot.yml --limit 1 \
+            --json databaseId,status,createdAt \
+            --jq '.[0] | "شغّلت الدورة: \(.databaseId) — \(.status)"'

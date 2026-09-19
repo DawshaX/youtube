@@ -58,6 +58,9 @@ jobs:
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           XT_NET_FOOTAGE: '1'
           XT_SCENE_CUT: '2.0'
+          # سقف الحصة اليومية ليوتيوب (10000 وحدة ÷ 1600 للرفعة = 6).
+          # الدورة الزيادة بتتخطى النشر بهدوء وبتكمّل بعد تجديد الحصة.
+          XT_MAX_UPLOADS_PER_DAY: '6'
           PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
