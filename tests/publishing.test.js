@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { publishVideo, verifyYouTubeVideo } from '../server/youtubeService.js';
+import { publishVideo, verifyYouTubeVideo, isQuotaError, hasAltCredentials, getYouTubeClient } from '../server/youtubeService.js';
 import { runAutoPilotCycle, pickNextProductionTopic, loadProductionLog, pruneProductionLog,
          uploadsInCurrentQuotaDay, dailyUploadCap, quotaDayKey,
          normalizeTitle, titleAlreadyPublished } from '../server/autoPilot.js';
@@ -210,4 +210,16 @@ test('verification: a video that was verified then removed is reported, not a ru
   assert.equal(s.exitCode, 0, 'اللي اتشال بعد ما كان منشور ما يسقّطش الدورة');
   assert.equal(s.removed.length, 1);
   assert.equal(s.failures.length, 0);
+});
+
+
+test('quota handling: only real quota errors trigger the extra-credential fallback', () => {
+  assert.ok(isQuotaError({ message: 'The request cannot be completed because you have exceeded your quota.' }));
+  assert.ok(isQuotaError({ message: 'quotaExceeded' }));
+  assert.ok(!isQuotaError({ message: 'Invalid Credentials' }));
+  assert.ok(!isQuotaError({ message: 'video not found' }));
+  assert.ok(!isQuotaError(undefined));
+  // بدون أسرار المشروع التاني، النظام بيتعامل مع الحصة بالتخطي الهادئ العادي
+  assert.equal(typeof hasAltCredentials(), 'boolean');
+  assert.equal(getYouTubeClient('alt').isOAuth, hasAltCredentials());
 });

@@ -4,9 +4,9 @@
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import { publishVideo } from './youtubeService.js';
+import { publishVideo, isQuotaError } from './youtubeService.js';
 import { startProduceJob, getJobStatus, listProductionQueue } from './videoFactoryBridge.js';
-import { loadSavedVideos, getYouTubeClient } from './youtubeService.js';
+import { loadSavedVideos, getYouTubeClient, hasAltCredentials } from './youtubeService.js';
 import { emitEvent } from './bus.js';
 import { execSync } from 'node:child_process';
 
@@ -294,10 +294,15 @@ export async function runAutoPilotCycle() {
 
     const cap = dailyUploadCap();
     const usedToday = uploadsInCurrentQuotaDay(loadSavedVideos(), loadProductionLog());
-    if (usedToday >= cap) {
+    // الاعتماد الإضافي (مشروع جوجل تاني) بيدّي حصة يومية مستقلة:
+    // لو موجود، بنحسب السقف مضاعف والشغل مايتوقفش عند 6.
+    const altAvailable = hasAltCredentials();
+    const effectiveCap = altAvailable ? cap * 2 : cap;
+    if (usedToday >= effectiveCap) {
       const reset = quotaResetsAt(new Date());
-      const message = `⏸️ حصة يوتيوب اليومية خلصت (${usedToday}/${cap} رفعة = `
-        + `${usedToday * 1600}/10000 وحدة). الرفع بيتوقف لحد التجديد`
+      const message = `⏸️ حصة يوتيوب اليومية خلصت (${usedToday}/${effectiveCap} رفعة`
+        + (altAvailable ? ' — الاعتماد الإضافي مستخدم برضه' : '')
+        + ` = ${usedToday * 1600}/10000 وحدة). الرفع بيتوقف لحد التجديد`
         + (reset ? ` ${reset.toISOString()}` : ' عند منتصف ليل المحيط الهادئ')
         + ' — والحارس بيشغّل الدورة فورًا بعد التجديد.';
       addAutoPilotLog(message);
@@ -331,7 +336,7 @@ export async function runAutoPilotCycle() {
       return { skipped: true, reason: 'duplicate_title', title: topic.title_ar };
     }
 
-    const result = await publishVideo({
+    const publishArgs = {
       videoFilePath: out.filePath,
       thumbnailFilePath: out.coverPath || null,
       title: topic.title_ar,
@@ -345,7 +350,20 @@ export async function runAutoPilotCycle() {
       ].filter(Boolean).join('\n\n'),
       tags: [...new Set([...(topic.tags || '').split(','), 'دوشة', 'Shorts', 'اكسبلور', 'فيرال', 'ترند'].map(x => x.trim()).filter(Boolean))],
       privacyStatus: 'public', categoryId: '28', isShort: true
-    });
+    };
+    let result;
+    try {
+      result = await publishVideo(publishArgs);
+    } catch (error) {
+      // حصة المشروع الأول خلصت؟ نكمّل بالاعتماد التاني (مشروع جوجل تاني)
+      if (isQuotaError(error) && hasAltCredentials()) {
+        console.log('⏭️ حصة الاعتماد الأساسي خلصت — برفع بالاعتماد الإضافي…');
+        addAutoPilotLog('⏭️ حصة الاعتماد الأساسي خلصت — رفع بالاعتماد الإضافي.');
+        result = await publishVideo({ ...publishArgs, slot: 'alt' });
+      } else {
+        throw error;
+      }
+    }
     if (!result.video?.liveUploaded) throw new Error('Live upload was not confirmed');
     if (!result.video?.verified) throw new Error(`Upload was not verified on YouTube: ${result.video?.verifyError || 'unknown reason'}`);
 

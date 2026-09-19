@@ -13,6 +13,23 @@ fs.writeFileSync('data/config.json', JSON.stringify({
   tokens: { refresh_token: process.env.YOUTUBE_REFRESH_TOKEN },
   connected: true, mode: 'live'
 }), { mode: 0o600 });
+// مشروع جوجل تاني (اختياري): حصة يومية إضافية 10,000 وحدة
+const alt = {
+  clientId: process.env.YOUTUBE_CLIENT_ID_2,
+  clientSecret: process.env.YOUTUBE_CLIENT_SECRET_2,
+  refreshToken: process.env.YOUTUBE_REFRESH_TOKEN_2,
+};
+if (alt.clientId && alt.clientSecret && alt.refreshToken) {
+  fs.writeFileSync('data/config.alt.json', JSON.stringify({
+    apiKey: process.env.YOUTUBE_API_KEY || '',
+    clientId: alt.clientId,
+    clientSecret: alt.clientSecret,
+    tokens: { refresh_token: alt.refreshToken },
+    connected: true, mode: 'live'
+  }), { mode: 0o600 });
+  console.log('➕ اعتماد إضافي (مشروع تاني) متاح — الحصة هتتضاعف');
+}
+
 try {
   const { runAutoPilotCycle, refreshDataFromRemote } = await import('../server/autoPilot.js');
   // ناخد أحدث سجل نشر/طابور من الريموت قبل أي قرار — يمنع سباق النسخ القديمة
@@ -23,4 +40,5 @@ try {
   process.exitCode = 1;
 } finally {
   fs.rmSync('data/config.json', { force: true });
+  fs.rmSync('data/config.alt.json', { force: true });
 }

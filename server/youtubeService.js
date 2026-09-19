@@ -7,6 +7,9 @@ import { TOP_GLOBAL_TRENDS } from './viralEngine.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const CONFIG_PATH = path.join(__dirname, '../data/config.json');
+// مشروع Google Cloud تاني = حصة يومية مستقلة (10,000 وحدة لكل مشروع).
+// لو الأسرار `_2` موجودة، المصنع بيستخدمه لما حصة الأول تخلص.
+const ALT_CONFIG_PATH = path.join(__dirname, '../data/config.alt.json');
 const VIDEOS_PATH = path.join(__dirname, '../data/saved_videos.json');
 
 // Ensure data files exist
@@ -149,17 +152,40 @@ export function disconnectChannel() {
 }
 
 // Get YouTube Client (with OAuth or API key)
-export function getYouTubeClient() {
+export function loadAltConfig() {
+  try {
+    if (fs.existsSync(ALT_CONFIG_PATH)) {
+      return JSON.parse(fs.readFileSync(ALT_CONFIG_PATH, 'utf-8'));
+    }
+  } catch (err) {
+    console.error('Error reading alt config:', err.message);
+  }
+  return null;
+}
+
+export function hasAltCredentials() {
+  const alt = loadAltConfig();
+  return Boolean(alt?.clientId && alt?.clientSecret && alt?.tokens?.refresh_token);
+}
+
+export function getYouTubeClient(slot = 'primary') {
+  if (slot === 'alt') {
+    const alt = loadAltConfig();
+    if (!alt?.clientId || !alt?.clientSecret || !alt?.tokens?.refresh_token) return { client: null, isOAuth: false, slot };
+    const oauth2Client = new google.auth.OAuth2(alt.clientId, alt.clientSecret);
+    oauth2Client.setCredentials(alt.tokens);
+    return { client: google.youtube({ version: 'v3', auth: oauth2Client }), isOAuth: true, slot };
+  }
   const config = loadConfig();
   if (config.tokens && (config.tokens.access_token || config.tokens.refresh_token) && config.clientId && config.clientSecret) {
     const oauth2Client = getOAuthClient();
     oauth2Client.setCredentials(config.tokens);
-    return { client: google.youtube({ version: 'v3', auth: oauth2Client }), isOAuth: true };
+    return { client: google.youtube({ version: 'v3', auth: oauth2Client }), isOAuth: true, slot: 'primary' };
   }
   if (config.apiKey) {
-    return { client: google.youtube({ version: 'v3', auth: config.apiKey }), isOAuth: false };
+    return { client: google.youtube({ version: 'v3', auth: config.apiKey }), isOAuth: false, slot: 'primary' };
   }
-  return { client: null, isOAuth: false };
+  return { client: null, isOAuth: false, slot: 'primary' };
 }
 
 // Search & Trend Explorer
@@ -381,6 +407,11 @@ export async function verifyYouTubeVideo(videoId, { client = null } = {}) {
   }
 }
 
+export function isQuotaError(error) {
+  const text = `${error?.message || ''} ${JSON.stringify(error?.errors || error?.response?.data || '')}`;
+  return /quota/i.test(text);
+}
+
 export async function publishVideo({
   videoFilePath,
   thumbnailFilePath,
@@ -389,10 +420,11 @@ export async function publishVideo({
   tags = [],
   privacyStatus = 'public',
   categoryId = '24', // 24 = Entertainment, 28 = Science & Tech
-  isShort = false
+  isShort = false,
+  slot = 'primary'
 }) {
   const config = loadConfig();
-  const { client, isOAuth } = getYouTubeClient();
+  const { client, isOAuth } = getYouTubeClient(slot);
 
   // If OAuth is configured and connected, do real upload
   if (isOAuth && client && videoFilePath && fs.existsSync(videoFilePath)) {
