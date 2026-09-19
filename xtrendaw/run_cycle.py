@@ -243,6 +243,18 @@ def _yt_watchdog() -> None:
             state.pop_yt_recent(vid)
             _log(f"🏅 القارئ {item['reciter']} اتعتمد — 24 ساعة نظيفة على يوتيوب")
         elif blocked:
+            # ⚠️ الحذف التلقائي بقى مشروط بفحص الـAPI الرسمي + مفتاح صريح.
+            # (الحارس القديم مسح فيديوهات حقيقية بسبب 403 مؤقت من oEmbed.)
+            verdict = None
+            try:
+                verdict = _yt.check_blocked_api(vid)
+            except Exception:
+                verdict = None
+            if not _yt.should_autodelete(verdict):
+                _log(f"⚠️ فحص «{item.get('title', 'فيديو')}» رجّع blocked ({why}) "
+                     f"لكن فحص الـAPI الرسمي قال ({verdict}) — "
+                     f"الحذف متوقف للأمان والفيديو اتساب زي ما هو.")
+                continue
             _yt.delete(vid)
             state.pop_yt_recent(vid)
             rec = item.get("reciter") or ""

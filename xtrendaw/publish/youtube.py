@@ -5,6 +5,8 @@
 """
 from pathlib import Path
 
+import os
+
 import requests
 from .. import settings
 
@@ -52,6 +54,21 @@ def publish(video_path, title, caption, tags, cover=None):
         except Exception as e:
             print("THUMB-err:", str(e)[:80])
     return f"https://www.youtube.com/watch?v={vid}", None
+
+
+def autodelete_enabled() -> bool:
+    """هل الحذف التلقائي مسموح؟ لازم مطلب صريح بالبيئة — الافتراضي: لا."""
+    return os.environ.get("XT_ALLOW_YOUTUBE_AUTODELETE", "").strip() == "1"
+
+
+def should_autodelete(api_verdict: str | None) -> bool:
+    """قرار الحذف: لازم **فحص الـAPI الرسمي** يأكد الحظر + المفتاح مفتوح صراحة.
+
+    الدرس (2026-09-19): الحارس القديم كان بيحذف الفيديو لما oEmbed يرجّع 403
+    — و403 بتيجي كتير من rate-limit أو حماية مؤقتة أو شبكة، يعني فيديوهات
+    حقيقية اتمسحت من القناة غلط. oEmbed لوحده مش دليل أبدًا.
+    """
+    return autodelete_enabled() and api_verdict == "blocked"
 
 
 def check_blocked(video_id: str):
