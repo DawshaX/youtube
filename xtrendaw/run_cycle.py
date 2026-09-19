@@ -331,6 +331,11 @@ def _publish(topic, r: dict, urls: dict) -> None:
             else:
                 _log(f"📣 {name}: {url}")
                 if name == "youtube" and url and "watch?v=" in url:
+                    state.push_published({
+                        "id": url.split("watch?v=")[-1].split("&")[0],
+                        "title": title,
+                        "kind": topic.get("_din") or topic.get("_kind", ""),
+                        "ts": time.time()})
                     state.push_yt_recent({
                         "id": url.split("watch?v=")[-1].split("&")[0],
                         "title": title,
@@ -405,12 +410,30 @@ def _flush_yt_pending() -> None:
         _log(f"⚠ تفريغ الطابور اتخطى: {str(e)[:80]}")
 
 
+def _quota_blocked() -> bool:
+    """حارس كوتة يوتيوب: 10,000 وحدة/يوم ÷ 1,600 للرفعة = 6 رفعات.
+
+    بيعتمد على `state/published.json` (محفوظ على git) — يعني الدورة الجديدة
+    بتفتكر اللي اترفع قبلها، وما بتحاولش ترفع فوق السقف فتفشل.
+    """
+    cap = settings.DAILY_CAP
+    return cap > 0 and state.published_last_24h() >= cap
+
+
 def _promote_due(force: bool = False) -> None:
     """الإفراج عن أقدم حلقة من الـvault على القناة في مواعيد الذروة (القاهرة)."""
     from datetime import datetime
     from zoneinfo import ZoneInfo
 
     _flush_yt_pending()
+
+    # حارس الكوتة: يوتيوب = 10,000 وحدة/يوم والرفعة 1,600 → 6 رفعات.
+    # الحلقات الزيادة بتتخزن في الـvault وبتنزل أول ما الكوتة تفتح —
+    # صفر محاولات مهدورة وصفر أخطاء حصة في السير.
+    if _quota_blocked():
+        _log(f"⏸ حارس الكوتة: {state.published_last_24h()}/{settings.DAILY_CAP} "
+             "رفعة في آخر 24 ساعة — الحلقات بتتخزن في الـvault ومستنية الدور")
+        return
 
     hour = datetime.now(ZoneInfo("Africa/Cairo")).hour
     if not force and hour not in settings.PUBLISH_HOURS:

@@ -26,10 +26,10 @@ jobs:
           # يوم الحصة بتوقيت المحيط الهادئ (نفس حساب جوجل ليوتيوب)
           PT_DAY=$(TZ=America/Los_Angeles date +%F)
           last=$(gh run list --repo "$GITHUB_REPOSITORY" \
-                   --workflow=cosmic-autopilot.yml --limit 1 \
+                   --workflow=factory-publish.yml --limit 1 \
                    --json createdAt --jq '.[0].createdAt // empty')
           count=$(gh run list --repo "$GITHUB_REPOSITORY" \
-                    --workflow=cosmic-autopilot.yml --limit 40 \
+                    --workflow=factory-publish.yml --limit 40 \
                     --json createdAt \
                     --jq "[.[] | select((.createdAt | fromdateiso8601) > (now - $WINDOW))] | length")
           echo "دورات النشر في آخر 90 دقيقة: $count | يوم الحصة الحالي (PT): $PT_DAY | آخر دورة: $last"
@@ -50,9 +50,9 @@ jobs:
           else
             echo "⚠️ مفيش دورة نشر في آخر 90 دقيقة — بشغّل واحدة فورًا."
           fi
-          gh workflow run cosmic-autopilot.yml --repo "$GITHUB_REPOSITORY" --ref main
+          gh workflow run factory-publish.yml --repo "$GITHUB_REPOSITORY" --ref main
           sleep 20
           gh run list --repo "$GITHUB_REPOSITORY" \
-            --workflow=cosmic-autopilot.yml --limit 1 \
+            --workflow=factory-publish.yml --limit 1 \
             --json databaseId,status,createdAt \
             --jq '.[0] | "شغّلت الدورة: \(.databaseId) — \(.status)"'

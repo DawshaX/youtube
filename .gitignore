@@ -12,7 +12,19 @@ image-search/
 
 
 work/
-state/
+# ذاكرة المصنع لازم تفضل على git: من غيرها كل دورة سحابية تبدأ من الصفر
+# وتنشر نفس الحلقة تاني. الباقي (كاش/وسائط وسيطة) يفضل مهمل.
+state/*
+!state/ar_voices.txt
+!state/produced.json
+!state/ledger.json
+!state/last_publish.json
+!state/published.json
+!state/yt_recent.json
+!state/reciter_badlist.json
+!state/reciter_proven.json
+!state/last_cycle.json
+!state/latest_sheet.jpg
 content/vids/*-cover.png
 data/eye/*/video.mp4
 data/events.jsonl

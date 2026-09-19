@@ -122,6 +122,36 @@ def _wr(path, data) -> None:
                     encoding="utf-8")
 
 
+PUBLISHED_FILE = settings.STATE / "published.json"
+
+
+def published_log() -> list:
+    """سجل كل نشر ناجح — أساس حارس الكوتة اليومي."""
+    d = _rw(PUBLISHED_FILE, [])
+    return d if isinstance(d, list) else []
+
+
+def push_published(item: dict) -> None:
+    d = published_log()
+    d.append(item)
+    _wr(PUBLISHED_FILE, d[-500:])
+
+
+def published_last_24h(now: float | None = None) -> int:
+    """كام حلقة اتنشرت في آخر 24 ساعة (يوتيوب: 6 رفعات = 10,000 وحدة)."""
+    now = now or time.time()
+    n = 0
+    for x in published_log():
+        if not isinstance(x, dict):
+            continue
+        try:
+            if now - float(x.get("ts") or 0) < 86400:
+                n += 1
+        except (TypeError, ValueError):
+            continue
+    return n
+
+
 def reciter_badlist() -> list:
     return _rw(BADLIST_FILE, [])
 

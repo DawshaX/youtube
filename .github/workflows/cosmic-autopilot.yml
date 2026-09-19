@@ -1,8 +1,8 @@
-name: CosmicTube Autonomous Auto-Pilot 24/7
-# موافقة صاحب القناة مثبتة؛ النشر ساعي ويفشل بأمان قبل الرفع.
+name: "(قديم — للطوارئ فقط) CosmicTube Auto-Pilot (JS)"
+# ⛔ الجدولة اتشالت: النشر بقى من المصنع الجديد (factory-publish.yml →
+#    python -m xtrendaw.run_cycle). الوكيل القديم بيفضل متاح يدويًا للطوارئ فقط
+#    لأنه بيشتغل على كتالوج الموضوعات القديم (topics_daousha) مش محرك النور.
 on:
-  schedule:
-    - cron: '23 * * * *'
   workflow_dispatch:
 permissions:
   contents: write

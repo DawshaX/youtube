@@ -1,0 +1,200 @@
+name: 🏭 مصنع دۅۄشے — النشر الساعي (فوري أول ما الحلقة تجهز)
+
+# المصنع الجديد (xtrendaw) — مش الوكيل القديم:
+#   python -m xtrendaw.run_cycle --next
+# الدورة الواحدة بتعمل: تخطيط ذكي (بلا تكرار) → جمع ميديا حقيقية من كل
+# المفاتيح (بيكسلز/بيكساباي/ناسا/كومنز/أرشيف الإنترنت/أوبنفيرس/فري ساوند)
+# → صوت عربي بتوقيت كلمات → مونتاج 9:16 → بوابة جودة → تخزين في الـvault
+# → نشر فوري + طابور الكوتة.
+#
+# حماية الكوتة: يوتيوب 10,000 وحدة/يوم والرفعة 1,600 → 6 رفعات.
+# الرقم ده متحوط في `settings.DAILY_CAP` + `state/published.json` (على git)،
+# فالدورات الزيادة بتخزّن في الـvault وما بتحاولش ترفع — صفر أخطاء حصة.
+on:
+  schedule:
+    - cron: '11 * * * *'   # كل ساعة — حلقة واحدة
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'رندر بلا نشر (معاينة فقط)'
+        type: boolean
+        default: false
+      force:
+        description: 'تجاهل حماية الساعة الواحدة'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: daousha-factory-publish   # دورة واحدة في الوقت — مفيش تصادم
+  cancel-in-progress: false
+
+jobs:
+  cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install render + media dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng fonts-dejavu-core
+          python -m pip install --quiet pillow numpy requests edge-tts \
+            imageio-ffmpeg arabic-reshaper python-bidi
+
+      - name: سجّل حالة ما قبل الدورة (لحارس الكوتة والتقرير)
+        id: before
+        run: |
+          python - <<'EOF'
+          import json, pathlib
+          p = pathlib.Path("state/published.json")
+          try:
+              d = json.loads(p.read_text(encoding="utf-8")) if p.exists() else []
+          except Exception:
+              d = []
+          d = d if isinstance(d, list) else []
+          pathlib.Path("/tmp/published_before.json").write_text(json.dumps(d))
+          plan = pathlib.Path("state/produced.json")
+          try:
+              eps = json.loads(plan.read_text(encoding="utf-8")).get("episodes", {})
+          except Exception:
+              eps = {}
+          print(f"قبل الدورة: {len(d)} نشرة في آخر 24 ساعة · {len(eps)} حلقة في الذاكرة")
+          print(f"count={len(d)}" , file=open("/tmp/before_count.txt","w"))
+          EOF
+
+      - name: 🏭 دورة إنتاج ونشر كاملة (المصنع الجديد)
+        id: cycle
+        env:
+          # ── النشر ──────────────────────────────────────────────
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+          # ── الذكاء والرادار ────────────────────────────────────
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
+          CURRENTS_API_KEY: ${{ secrets.CURRENTS_API_KEY }}
+          # ── الميديا والمؤثرات (كل مزوّد بمفتاحه) ────────────────
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PEXELS: ${{ secrets.PEXELS }}
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+          NASA: ${{ secrets.NASA }}
+          OPENVERSE_API_KEY: ${{ secrets.OPENVERSE_API_KEY }}
+          OPENVERSE: ${{ secrets.OPENVERSE }}
+          FREESOUND_API_KEY: ${{ secrets.FREESOUND_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          # ── الـvault على GitHub (تخزين الحلقات) ─────────────────
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # ── مفاتيح المصنع ──────────────────────────────────────
+          XT_MODE: 'deen'                 # محرك النور (بلا موسيقى، تلاوة/ذكر/حديث)
+          XT_YT: '1'                      # نشر يوتيوب مفتوح
+          XT_NET_FOOTAGE: '1'             # لقطات حقيقية من المصادر الشبكية
+          XT_PUBLISH_HOURS: 'all'         # يفرج فورًا — مش مستني موعد ذروة
+          XT_DAILY_CAP: '6'               # سقف كوتة يوتيوب (10,000 ÷ 1,600)
+          XT_YT_QURAN: 'auto'             # قراء معتمدين فقط (حماية حقوق)
+          XT_SCENE_CUT: '2.0'
+        run: |
+          set -o pipefail
+          ARGS="--next"
+          [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --no-upload"
+          [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
+          echo "▶ python -m xtrendaw.run_cycle $ARGS"
+          python -m xtrendaw.run_cycle $ARGS 2>&1 | tee /tmp/cycle.log
+          RC=${PIPESTATUS[0]}
+          echo "rc=$RC"
+          # 42 = «لسه مفيش ساعة على آخر فيديو» (حماية مقصودة) — مش فشل
+          if [ "$RC" = "42" ]; then echo "⏳ الدورة دي راحة (حماية الساعة)"; exit 0; fi
+          exit $RC
+
+      - name: تقرير الدورة (state/last_cycle.json)
+        if: always()
+        run: |
+          python - <<'EOF'
+          import json, pathlib, time
+          def rd(p, d):
+              try:
+                  return json.loads(pathlib.Path(p).read_text(encoding="utf-8"))
+              except Exception:
+                  return d
+          before = rd("/tmp/published_before.json", [])
+          after = rd("state/published.json", [])
+          produced = rd("state/produced.json", {}).get("episodes", {})
+          log = pathlib.Path("/tmp/cycle.log")
+          tail = log.read_text(encoding="utf-8", errors="replace")[-4000:] if log.exists() else ""
+          rep = {
+              "at": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
+              "published_before": len(before) if isinstance(before, list) else 0,
+              "published_after": len(after) if isinstance(after, list) else 0,
+              "published_this_cycle": (len(after) - len(before))
+                  if isinstance(after, list) and isinstance(before, list) else None,
+              "episodes_in_memory": len(produced),
+              "last_lines": tail[-1500:],
+          }
+          pathlib.Path("state").mkdir(exist_ok=True)
+          pathlib.Path("state/last_cycle.json").write_text(
+              json.dumps(rep, ensure_ascii=False, indent=1), encoding="utf-8")
+          print(json.dumps({k: v for k, v in rep.items() if k != "last_lines"},
+                           ensure_ascii=False, indent=1))
+          EOF
+
+      - name: خزّن ذاكرة المصنع على git (من غيرها كل دورة بتبدأ من الصفر)
+        id: persist
+        if: always()
+        run: |
+          BRANCH="${GITHUB_REF_NAME:-main}"
+          git config user.name 'مصنع دۅۄشے [Bot]'
+          git config user.email 'factory@daousha.internal'
+          git add -f state/produced.json state/ledger.json state/published.json \
+                     state/last_publish.json state/yt_recent.json \
+                     state/reciter_proven.json state/reciter_badlist.json \
+                     state/last_cycle.json state/latest_sheet.jpg 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "مفيش تغيير في الذاكرة"
+            exit 0
+          fi
+          git commit -m "factory(state): ذاكرة المصنع بعد الدورة [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase --autostash origin "$BRANCH" >/dev/null 2>&1 || true
+            if git push origin "HEAD:$BRANCH"; then echo "✓ الذاكرة اتحفظت"; break; fi
+            echo "دفع محاولة $attempt فشلت — إعادة بعد 5 ثوانٍ…"
+            sleep 5
+          done
+
+      - name: ملخص الدورة + الدليل البصري
+        if: always()
+        run: |
+          {
+            echo "### 🏭 دورة المصنع"
+            echo '```'
+            [ -f state/last_cycle.json ] && cat state/last_cycle.json
+            echo '```'
+            echo "### آخر سطور اللوج"
+            echo '```'
+            tail -n 30 /tmp/cycle.log 2>/dev/null || echo "(مفيش لوج)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY" || true
+
+      - name: ارفع الدليل (ورقة الإطارات + تقرير الدورة)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: factory-cycle
+          path: |
+            state/latest_sheet.jpg
+            state/last_cycle.json
+            /tmp/cycle.log
+          if-no-files-found: ignore

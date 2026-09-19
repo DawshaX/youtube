@@ -26,7 +26,21 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           YOUTUBE_COOKIES_B64: ${{ secrets.YOUTUBE_COOKIES_B64 }}
-        run: python -m xtrendaw.doctor --json | tee doctor-report.json
+          # مزوّدو الميديا والمؤثرات — فحص حي لكل واحد لوحده
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PEXELS: ${{ secrets.PEXELS }}
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+          NASA: ${{ secrets.NASA }}
+          OPENVERSE_API_KEY: ${{ secrets.OPENVERSE_API_KEY }}
+          OPENVERSE: ${{ secrets.OPENVERSE }}
+          FREESOUND_API_KEY: ${{ secrets.FREESOUND_API_KEY }}
+          CURRENTS_API_KEY: ${{ secrets.CURRENTS_API_KEY }}
+          GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+        run: |
+          python -m pip install -q edge-tts
+          python -m xtrendaw.doctor --json | tee doctor-report.json
       - name: افتح أو حدّث بلاغ الصحة
         if: steps.doctor.outcome == 'failure'
         env:
