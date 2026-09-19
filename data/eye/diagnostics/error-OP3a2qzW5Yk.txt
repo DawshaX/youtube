@@ -1,2 +1,2 @@
-eye: فشل في OP3a2qzW5Yk: HTTPError: 404 Client Error: Not Found for url: https://api.groq.com/openai/v1/chat/completions
-2026-09-17T21:24:20Z
+eye: فشل في OP3a2qzW5Yk: RuntimeError: eye: كل مزوّدي الـ LLM فشلوا — gemini: HTTPError 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/openai/chat/completions — افحص المفاتيح في Settings → Secrets → Actions (GROQ_API_KEY / GEMINI_API_KEY)
+2026-09-19T01:27:28Z
