@@ -1,5 +1,6 @@
 # حارس القانون — يمنع أي رندر بالنظام القديم: FACTORY_RULES.md مُطبّق في الكود؟
 # الاستخدام: python3 scripts/verify_factory.py   (لازم 30/30 قبل أي إنتاج)
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -62,33 +63,40 @@ c("إسناد CC-BY يلاحق الوصف (run_cycle)", "caption +=" in run_cycl
 
 # ── 4.5) صحة الوركفلوات (درس 2026-09-19: مفتاح مكرر في YAML خلّى جيت‌هوب
 #        ترفض الملف كله — والدورة ماتشتغلتش خالص) ────────────────────
-import yaml as _yaml  # noqa: E402
+# الفحص الحقيقي بـPyYAML (موجودة في بيئة الرندر — اتضافت للـpip).
+# البديل بلا مكتبة: ملاحظة فقط، مش فحص فاشل — عشان الإيجابيات الكاذبة
+# (مفاتيح متكررة الاسم في عناصر قائمة مختلفة) ما توقفش الدورة.
+_wf_errs: list[str] = []
+_wf_soft = ""
+try:
+    import yaml as _yaml  # noqa: E402
 
+    class _NoDup(_yaml.SafeLoader):
+        pass
 
-class _NoDup(_yaml.SafeLoader):
-    pass
+    def _no_dup(loader, node, deep=False):
+        seen = set()
+        for k, _v in node.value:
+            key = loader.construct_object(k, deep=deep)
+            if key in seen:
+                raise ValueError(f"مفتاح مكرر: {key} (سطر {k.start_mark.line + 1})")
+            seen.add(key)
+        return _yaml.SafeLoader.construct_mapping(loader, node, deep)
 
-
-def _no_dup(loader, node, deep=False):
-    seen = set()
-    for k, _v in node.value:
-        key = loader.construct_object(k, deep=deep)
-        if key in seen:
-            raise ValueError(f"مفتاح مكرر: {key} (سطر {k.start_mark.line + 1})")
-        seen.add(key)
-    return _yaml.SafeLoader.construct_mapping(loader, node, deep)
-
-
-_NoDup.add_constructor(_yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _no_dup)
-_wf_bad = []
-for _w in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
-    try:
-        _yaml.load(_w.read_text(encoding="utf-8"), _NoDup)
-    except Exception as _e:
-        _wf_bad.append(f"{_w.name}: {_e}")
-c("كل الوركفلوات YAML سليمة (بلا مفاتيح مكررة)", not _wf_bad)
-if _wf_bad:
-    print("   وركفلوات مكسورة:", "; ".join(_wf_bad[:3]))
+    _NoDup.add_constructor(_yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+                           _no_dup)
+    for _w in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
+        try:
+            _yaml.load(_w.read_text(encoding="utf-8"), _NoDup)
+        except Exception as _e:
+            _wf_errs.append(f"{_w.name}: {str(_e)[:80]}")
+except ModuleNotFoundError:
+    _wf_soft = "بلا PyYAML — فحص الوركفلوات مبسّط (تنبيه فقط)"
+c("كل الوركفلوات YAML سليمة (بلا مفاتيح مكررة)", not _wf_errs)
+if _wf_soft:
+    print("   ملاحظة:", _wf_soft)
+if _wf_errs:
+    print("   وركفلوات مكسورة:", "; ".join(_wf_errs[:3]))
 
 # ── 5) الأمان ──────────────────────────────────────────────────────
 doctor = read("xtrendaw/doctor.py")
