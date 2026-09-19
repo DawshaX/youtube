@@ -850,5 +850,121 @@
   },
   "_consumedAt": "2026-09-19T20:38:05Z",
   "_skipReason": "already_produced"
+ },
+ {
+  "id": "eye-Ug7w1NXSfTI",
+  "topic": "Zelda Vs GTA 6: Water Comparison💀🤦‍♂️",
+  "angle": "الماء في GTA 6 يدمج عناصر الفيزياء المتفجرة مع ماء Zelda النقي، ما ينتج مشهدًا فوضويًا غير",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "مواجهة مائية بين زيلدا وجي‑تي‑أي ست ست 💀🤦‍♂️",
+  "title_en": "Zelda vs GTA Six: Water Showdown 💀🤦‍♂️",
+  "hook_ar": "اسمع يا حبة، شوف إيه اللي يحصل لما ميّة زيلدا تقابل فوضى جي‑تي‑أي!",
+  "hook_en": "Listen up, see what happens when Zelda’s water meets GTA chaos!",
+  "facts_ar": [
+   "زلدا بيعتمد على الميه لحل الألغاز داخل عوالمه الساحرة",
+   "جي‑تي‑أي ست ست متوقع يرفع مستوى فيزياء الميه عن النسخ اللي قبلها",
+   "المقارنات بين ألعاب مختلفة بتجذب متابعين من كل الأذواق"
+  ],
+  "facts_en": [
+   "Zelda uses water as a core element for puzzle solving",
+   "GTA Six is expected to upgrade water physics beyond its predecessors",
+   "Head‑to‑head comparisons of different games draw a wide audience"
+  ],
+  "takeaway_ar": {
+   "aql": "الخيال يخلط عوالم مختلفة ويولد مشاهد غير متوقعة",
+   "qalb": "ضحكة سريعة على الشاشة بتخلي التجربة أمتع",
+   "rouh": "المنافسة بين الألعاب تفتح لنا طاقة جديدة للاستكشاف"
+  },
+  "takeaway_en": {
+   "aql": "Imagination blends distinct worlds into surprising scenes",
+   "qalb": "A quick laugh makes the experience more enjoyable",
+   "rouh": "Game rivalries spark fresh energy for discovery"
+  },
+  "tags": "زيلدا,جي‑تي‑أي,مياه,مقارنة,فيديوهات",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "شاشة مقسومة نص نص، نص زيلدا بألوان خضراء وزرقاء، نص جي‑تي‑أي بأحمر وأسود، ومية تتسرب من الفاصل وتخلق توتر بصري",
+    "style": "تقسيم الشاشة مع تأثير تدفق مائي ديناميكي",
+    "colors": [
+     "#1E8A1C",
+     "#0A0A0A",
+     "#FF4500",
+     "#00BFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "لقطة هادئة لبركة زيلدا تعكس الشمس، تتبعها فجأة لقطة جي‑تي‑أي بموجات عنيفة وانفجارات مائية",
+    "style": "قفز سريع بين اللقطات مع صوت موج عالي",
+    "colors": [
+     "#1E8A1C",
+     "#FF4500"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "نص متحرك يكتب سؤال \"مين اللي هيفوز؟\" مع ضحكة خفيفة في الخلفية",
+    "style": "نص بخط جريء مع إيموجي وجه متنهد",
+    "colors": [
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "دمج المشهدين: مية زيلدا الصافية تتقابل مع مية جي‑تي‑أي المتقلبة، وتظهر إيموجي الجمجمة والوجه المتنهد",
+    "style": "تداخل بصري مع تأثير فوضوي للمياه",
+    "colors": [
+     "#00BFFF",
+     "#FF4500"
+    ]
+   },
+   {
+    "time": "0:15-0:17",
+    "scene": "دعوة للمتابعة بخط كبير يلمع وزر متوهج يطلب من المشاهدين الضغط على المتابعة",
+    "style": "CTA واضح مع إضاءة ساطعة",
+    "colors": [
+     "#FF4500"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "Ug7w1NXSfTI",
+   "url": "https://youtu.be/Ug7w1NXSfTI",
+   "sourceTitle": "Zelda Vs GTA 6: Water Comparison💀🤦‍♂️",
+   "sourceChannel": "Ramo Akh",
+   "sourceViews": 20044142,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "يظهر مشهد سريع يدمج لقطات من لعبة Zelda مع لقطات من GTA 6، حيث يتسرب الماء من أحد المشاهد بطريقة غير متوقعة ويظهر رمز الجمجمة 💀 مع تعبير 🤦‍♂️.",
+     "why_it_works": "التقاطع غير المتوقع بين عالَمين مختلفين يثير الدهشة ويجذب الانتباه فوراً، خاصةً مع الرموز التعبيرية التي توحي بالفكاهة والسخرية."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "صاعد سريع خلال الـ0-7 ثوانٍ، قمة عند 8-11 ثوانٍ، ثم انخفاض خفيف مع دفع CTA في النهاية."
+    },
+    "retention_tricks": [
+     "استخدام سؤال بصري غير معلن في الثواني الأولى.",
+     "تباين ألوان قوي بين الجزأين لتجذب العين.",
+     "إدخال إيموجيات تعبيرية لتوليد مشاعر فورية.",
+     "CTA واضح ومباشر في آخر 2 ثانية."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 85,
+   "weaknesses": [
+    "Hook phrasing is a bit informal and lacks the punchy, curiosity‑driven question that DNA uses (e.g., \"من يفوز؟\").",
+    "Audio strategy is missing: no mention of voice‑over style, music, or sound effects, which are crucial for energy curve.",
+    "The comedic element (quick laugh) is only hinted at in the text overlay, not reinforced by audio cues.",
+    "CTA placement at 0:15‑0:17 is fine, but the visual emphasis could be stronger (e.g., a flashing button or animated arrow)."
+   ],
+   "verdict": "The proposal captures the core DNA elements—visual hook, beat structure, color contrast, and emojis—but falls slightly short in audio execution and hook wording. With a sharper, question‑driven hook and a defined audio plan, it would align even more closely with the trend and likely achieve higher retention."
+  },
+  "_consumedAt": "2026-09-19T22:37:28Z"
  }
 ]
