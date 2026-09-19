@@ -365,5 +365,133 @@
    ],
    "verdict": "The proposal captures the core DNA elements—emotional hook, quick montage, triumphant twist, and CTA—but falls short on key engagement tactics such as the rhetorical question, heartbeat SFX, and a complete beat sequence. Strengthening these areas will elevate the video to match or surpass the DNA trend’s high retention performance."
   }
+ },
+ {
+  "id": "eye-Htya3n-N3gc",
+  "topic": "RUMI’S SPICY NOODLES MUKBANG CHALLENGE 🍜 #kpop #kpopdemonhunters",
+  "angle": "Rumi unexpectedly pulls out a hidden ice cream scoop at the end, cooling down the heat and",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي النودلز النارية مع رومي 🍜🔥",
+  "title_en": "Rumi’s Fiery Noodle Challenge 🔥🍜",
+  "hook_ar": "استنوا، هل أقدر أتحمل النار دي؟",
+  "hook_en": "Watch me brave the hottest noodles ever!",
+  "facts_ar": [
+   "الموكبنج أصله من كوريا الجنوبية، بيجمع بين الأكل المبهر وتفاعل مباشر مع المتابعين.",
+   "الكابسايسين هو المادة الفاعلة في الفلفل الحار، بيشتغل على مستقبلات الحرارة في الجسم.",
+   "تحديات النودلز الحارة عادةً بتستخدم فلفل سيتشوان أو زيت الفلفل لتقوية الإحساس بالحرارة."
+  ],
+  "facts_en": [
+   "Mukbang started in South Korea as a livestream where hosts eat large portions while chatting with viewers.",
+   "Capsaicin, the active component in chili peppers, binds to TRPV1 receptors to create a heat sensation.",
+   "Spicy noodle challenges often add Sichuan peppercorns or chili oil to boost the perceived heat."
+  ],
+  "takeaway_ar": {
+   "aql": "الحرارة العالية بتظهر قوة التحمل والتركيز.",
+   "qalb": "المشاركة في التحدي بتقوي الروابط بين المتابعين.",
+   "rouh": "تجربة الجرأة بتدفعنا نكسر حدودنا."
+  },
+  "takeaway_en": {
+   "aql": "Extreme spice tests mental stamina and focus.",
+   "qalb": "Sharing the challenge builds a lively community bond.",
+   "rouh": "Daring the heat inspires us to push personal limits."
+  },
+  "tags": "نودلز,حارة,تحدي,مكبانغ,كوري,متعة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة قريبة لبولة نودلز تبخر بخار، نص ساطع على الشاشة يطرح سؤال التحدي.",
+    "style": "تقريب سريع، إضاءة حمراء ساطعة لتسليط الانتباه.",
+    "colors": [
+     "#FF4500",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "رومي ياخذ أول قضمة، تعبير وجه مبالغ فيه، شريط قياس رد فعل يشتغل.",
+    "style": "قصات سريعة، موسيقى كيبوب تنبض مع كل قطرة.",
+    "colors": [
+     "#FF4500",
+     "#FFB300"
+    ]
+   },
+   {
+    "time": "0:08-0:12",
+    "scene": "مونتاج سريع لكلمات مستوى الحرارة مع أيقونات نارية.",
+    "style": "إيقاع بصري متزامن مع إيقاع الأغنية، تأثيرات صوتية حماسية.",
+    "colors": [
+     "#FF4500",
+     "#FFB300",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:13-0:16",
+    "scene": "توقف مفاجئ، رومي يلتقط أنفاسه، صوت ضحكة كوميدية، نص على الشاشة يقول \"استنوا لللحظة المفاجئة\".",
+    "style": "إيقاع بطيء لحظة، إضاءة خافتة ثم إضاءة ساطعة للانفجار اللاحق.",
+    "colors": [
+     "#FFB300",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:17-0:20",
+    "scene": "رومي ينهى البولة، يمسح دموعه، يعلن الانتصار، انفجار من الفتات الملون.",
+    "style": "قطة واسعة لتظهر الفتات، موسيقى مرتفعة، شعور انتصار.",
+    "colors": [
+     "#FF4500",
+     "#FFB300",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:21-0:24",
+    "scene": "دعوة المتابعة: نص متحرك يطلب الإعجاب والتعليق، زر اشتراك يلمع.",
+    "style": "إيقاع ثابت، ألوان جذابة لتوجيه الانتباه.",
+    "colors": [
+     "#FF4500",
+     "#FFB300"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "Htya3n-N3gc",
+   "url": "https://youtu.be/Htya3n-N3gc",
+   "sourceTitle": "RUMI’S SPICY NOODLES MUKBANG CHALLENGE 🍜 #kpop #kpopdemonhunters",
+   "sourceChannel": "Big Marvel",
+   "sourceViews": 50381575,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "Rumi opens a massive bowl of ultra‑spicy noodles, steam rising, and looks straight into the camera with a daring grin.",
+     "why_it_works": "Immediate visual stimulus and the promise of extreme reaction trigger curiosity and the fear‑of‑missing‑out (FOMO) in viewers."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "sharp rise in the first 10 seconds, brief dip at the twist, climax at payoff, quick drop to CTA"
+    },
+    "retention_tricks": [
+     "Immediate visual hook with steam and bold text",
+     "Rapid cut rhythm matching music beats",
+     "Micro‑cliffhanger pause before the surprise",
+     "Use of on‑screen emojis and graphics to reinforce emotions",
+     "Strong CTA placed right after the emotional high"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [
+    "Twist is vague; lacks a concrete, surprising payoff (e.g., the hidden ice‑cream scoop) that the DNA trend uses to create a memorable micro‑cliffhanger.",
+    "Audio description is minimal; no mention of voice style, comedic gasp SFX, or volume spikes that reinforce tension.",
+    "Missing explicit on‑screen emojis/stickers that the DNA trend leverages for emotional reinforcement.",
+    "Visual plan repeats colors and styles but doesn’t introduce any novel shot variation (e.g., handheld immediacy) to boost immersion.",
+    "The Arabic hook wording is less visually descriptive than the DNA example, potentially reducing instant visual stimulus."
+   ],
+   "verdict": "The proposal captures the core structure and energy of the DNA trend, but it falls short on the surprise twist and detailed audio/visual embellishments that make the original format stand out. Strengthening the payoff and enriching the sensory cues would push it closer to a top‑tier execution."
+  }
  }
 ]
