@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  actions: write   # للتسلسل: الدورة تشغّل اللي بعدها فورًا بعد نشر ناجح
 concurrency:
   group: cosmictube-channel-publisher
   cancel-in-progress: false
@@ -78,6 +79,7 @@ jobs:
           node -e "const fs=require('fs');fs.writeFileSync('data/config.json',JSON.stringify({apiKey:process.env.YOUTUBE_API_KEY||'',clientId:process.env.YOUTUBE_CLIENT_ID,clientSecret:process.env.YOUTUBE_CLIENT_SECRET,tokens:{refresh_token:process.env.YOUTUBE_REFRESH_TOKEN},connected:true,mode:'live'}),{mode:0o600})"
           node scripts/verify-uploads.js
       - name: Persist confirmed upload history
+        id: persist
         if: always()
         run: |
           BRANCH="${{ github.ref_name }}"
@@ -88,6 +90,7 @@ jobs:
             git add data/production_log.json
           fi
           if ! git diff --staged --quiet; then
+            echo "published=1" >> "$GITHUB_OUTPUT"
             git commit -m 'chore: record confirmed YouTube upload [skip ci]'
           # دفع آمن من سباق: بوتات كتير بتدفع على main (العين/البايلوت/المصنع/الوكيل).
           # الدرس (تشغيل 2026-09-19): pilot-render فشل كله لأن الدفع اترفض:
@@ -99,6 +102,17 @@ jobs:
             sleep 5
           done
           fi
+      # النشر المتسلسل الفوري: أول ما فيديو ينشر فعلًا، الدورة اللي بعدها تبدأ
+      # حالًا — مفيش انتظار للساعة. لو مفيش نشر (السقف اتستهلك أو فشل)، التسلسل
+      # بيوقف لوحده، والجدولة الساعية بتكمّل من بكرة.
+      - name: Chain the next cycle now (publish as soon as one is ready)
+        if: steps.persist.outputs.published == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "✓ نشر جديد اتسجل — بشغّل الدورة اللي بعدها فورًا."
+          gh workflow run cosmic-autopilot.yml --repo "$GITHUB_REPOSITORY" --ref main
+
       - name: Preserve upload history if pushing fails
         if: failure()
         uses: actions/upload-artifact@v4
