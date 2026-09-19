@@ -18,11 +18,23 @@
    "duration": 24.87,
    "at": "2026-09-19 04:59",
    "urls": {}
+  },
+  "eye-OL0QN17ceU4": {
+   "title": "تحدي الصبار بالصوت: صدمة ما تتوقعها 😱🌵",
+   "fingerprint": "d5719b1b5157b861",
+   "video": "/home/runner/work/youtube/youtube/content/vids/eye-OL0QN17ceU4.mp4",
+   "duration": 62.63,
+   "at": "2026-09-19 05:17",
+   "urls": {
+    "video": "https://github.com/DawshaX/youtube/releases/download/vault/q1789795056.mp4",
+    "cover": "https://github.com/DawshaX/youtube/releases/download/vault/q1789795056.png"
+   }
   }
  },
  "fingerprints": [
   "2b5024ac32d730fa",
-  "bbadec96800612b6"
+  "bbadec96800612b6",
+  "d5719b1b5157b861"
  ],
- "last_kind": "dua"
+ "last_kind": "eye"
 }
