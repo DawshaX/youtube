@@ -208,5 +208,5 @@ def _topic(kind: str, key: str, spec: dict, rec: int, n: int) -> dict:
         item = st[lname][spec["idx"] % len(st[lname])]
         title = f"{lab}: {item['text'][:42]}…"
     return {"id": f"noor-{kind}-{key}-r{rec}",
-            "title_ar": title, "tags": "نور,قرآن,دعوة,XDAWNOVA",
+            "title_ar": title, "tags": f"نور,قرآن,دعوة,{settings.BRAND_NAME}",
             "_din": kind, "_din_rec": rec, "_din_spec": spec, "_kind": kind}

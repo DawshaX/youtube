@@ -156,7 +156,7 @@ STYLE = {
 
 
 def _watermark(base: Image.Image, size: int = 150, alpha: int = 210) -> None:
-    """لوجو XDAW NOVA شفاف فوق-يمين — قالب ثابت لكل فيديو."""
+    """لوجو القناة شفاف فوق-يمين — قالب ثابت لكل فيديو."""
     logo_path = settings.LOGO
     if not logo_path.exists():
         return
@@ -352,7 +352,7 @@ def fetch_ai_visual(prompt: str, out_path: Path, seed: int) -> bool:
 
 
 def load_logo(size: int, alpha: int = 255) -> Image.Image:
-    """لوجو XDAW NOVA بمقاس معين والخلفية السوداء متحوّلة لشفافية."""
+    """لوجو القناة بمقاس معين والخلفية السوداء متحوّلة لشفافية."""
     logo = Image.open(settings.LOGO).convert("RGBA").resize((size, size), Image.LANCZOS)
     arr = np.array(logo)
     lum = arr[:, :, :3].max(axis=2).astype(np.float32)
@@ -471,7 +471,7 @@ def render_glint(out_path: Path) -> Path:
 
 
 def _brand_layer(out_path: Path) -> Path:
-    """طبقة شفافة ثابتة: لوجو XDAW NOVA فوق-يمين + تدرّج سينمائي فوق/تحت
+    """طبقة شفافة ثابتة: لوجو القناة فوق-يمين + تدرّج سينمائي فوق/تحت
     (يضبط قراءة الكابتشن ويخفي أي علامة مصدر صغيرة)."""
     layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     logo_path = settings.LOGO

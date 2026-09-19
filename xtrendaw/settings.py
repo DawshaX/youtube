@@ -78,6 +78,14 @@ VOICE_EN = get("XT_VOICE_EN", "en-US-JennyNeural")
 VOICE_RATE = get("XT_VOICE_RATE", "+8%")
 VOICE_PITCH = get("XT_VOICE_PITCH", "+12Hz")
 
+# ─────────────────────────────────────────────────────────────
+# الهوية — قاعدة المستودع: هوية واحدة في كل مخرجات (نص/غلاف/وصف).
+# كانت أسماء قديمة (XDAW NOVA / XTreNDAW / CosmicTube) بتظهر جوه الفيديوهات
+# والأوصاف على قناة اسمها مختلف — اتصلحت واتقفلت باختبار.
+# ─────────────────────────────────────────────────────────────
+BRAND_NAME = get("XT_BRAND", "")             # الاسم الظاهر (بيتملى من BRAND تحت)
+HANDLE = get("XT_HANDLE", "") or BRAND_NAME  # المُعرّف اللي بيتكتب في الخاتمة
+
 # مواعيد نشر الذروة (بتوقيت القاهرة) — المصنع يخزّن في أي ساعة ويفرج في الذروة.
 # كوتة يوتيوب الرسمية ≈ 6 عمليات رفع/يوم → ست ذروات القاهرة تكفل النشر اليومي كاملًا.
 _ph = get("XT_PUBLISH_HOURS", "all").strip()
@@ -222,4 +230,7 @@ BRAND = {
         "rouh": "You are stronger than you think. Stay ready for greatness.",
     },
 }
+BRAND_NAME = BRAND_NAME or BRAND["name"]
+HANDLE = HANDLE or BRAND_NAME
+
 LOGO = ASSETS / "brand" / "logo.png"

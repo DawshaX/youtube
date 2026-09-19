@@ -277,7 +277,7 @@ def _end_card(workdir: Path, fayda: str) -> dict:
     ov.append(textrender.text_image(fayda, d / "f.png", font_size=48,
                                     y_ratio=0.52, fill="#f7ecd7",
                                     stroke_width=4))
-    ov.append(textrender.text_image("انشر الخير — XDAW NOVA", d / "b.png",
+    ov.append(textrender.text_image(f"انشر الخير — {settings.BRAND_NAME}", d / "b.png",
                                     font_size=34, y_ratio=0.90,
                                     fill="#ffd166", stroke_width=3))
     return {"base": scenes.render_bg(d / "base.png", "outro", "noor-end"),
@@ -556,7 +556,7 @@ def produce_din(kind: str, workdir: Path, reciter_idx: int = 0,
                              "-ar", "44100", "-ac", "2", "-c:a", "pcm_s16le",
                              str(processed)], capture_output=True)
     else:
-        # الأدعية/الأحاديث/المعلومات: هوية XDAW — دفء ووضوح بلا تشويه
+        # الأدعية/الأحاديث/المعلومات: هوية القناة — دفء ووضوح بلا تشويه
         amb = workdir / "amb.wav"
         subprocess.run([ffmpeg(), "-y", "-f", "lavfi", "-i",
                         "anoisesrc=color=brown:amplitude=0.35",
@@ -591,7 +591,7 @@ def produce_din(kind: str, workdir: Path, reciter_idx: int = 0,
                                "end": off + 2.0, "frame": False})
             events.append({"style": "Calm", "start": off + 0.25,
                            "end": off + 2.0,
-                           "text": "سلامٌ على قلبك 🤍\\N@XTreNDAW"})
+                           "text": f"سلامٌ على قلبك 🤍\\N@{settings.HANDLE}"})
             off += 2.0
 
     ass = workdir / "din.ass"
@@ -628,7 +628,7 @@ def produce_din(kind: str, workdir: Path, reciter_idx: int = 0,
                    out, workdir, music=None)
     cover = settings.OUT / f"{ep_id}-cover.png"
     brand.compose_cover({"id": ep_id, "title_ar": title,
-                         "tags": "نور,قرآن,دعوة,XDAWNOVA"}, cover)
+                         "tags": f"نور,قرآن,دعوة,{settings.BRAND_NAME}"}, cover)
     return {"video": out, "cover": cover, "report": video.validate(out),
             "title": title, "id": ep_id, "reciter": reciter}
 

@@ -69,7 +69,7 @@ def _ensure_tag(tok: str, tag: str, name: str, body: str = "",
 
 def ensure_release(tok: str) -> int:
     """release القناة العامة (الحلقات المنشورة)."""
-    return _ensure_tag(tok, TAG, "XTreNDAW — الحلقات",
+    return _ensure_tag(tok, TAG, f"{settings.BRAND_NAME} — الحلقات",
                        "فيديوهات وأغلفة الحلقات (روابط عامة).", latest=True)
 
 

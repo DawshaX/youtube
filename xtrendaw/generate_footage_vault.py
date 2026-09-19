@@ -1,5 +1,5 @@
 """
-CosmicTube Stock Footage & B-Roll Vault Engine
+Factory Stock Footage & B-Roll Vault Engine
 Generates high-definition (1080x1920 @ 30fps) dynamic motion video clips
 for viral challenge & science production (MrBeast & Kurzgesagt tier).
 Includes dynamic on-demand generation for any query/theme.

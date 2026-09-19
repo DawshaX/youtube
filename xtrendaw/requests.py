@@ -10,6 +10,7 @@ import re
 import requests as _rq
 
 from . import github_store
+from . import settings
 
 API = "https://api.github.com"
 LABEL = "مشاهد"
@@ -47,15 +48,15 @@ def topic_from(req: dict) -> dict:
         "hook_en": "Warning: not a normal episode — requested directly by our top viewers!",
         "facts_ar": [
             f"الطلب جه مباشرة من قناة المشاركة: «{want}».",
-            "فريق CosmicTube يقرأ كل الطلبات ويختار الأقوى والأكثر طلباً.",
+            f"فريق {settings.BRAND_NAME} يقرأ كل الطلبات ويختار الأقوى والأكثر طلباً.",
             "وإنت كمان حر… باب الطلبات مفتوح تحت أي فيديو وعلى الصفحة.",
         ],
         "facts_en": [
             f"The request came straight from our community: '{want}'.",
-            "CosmicTube reviews every viral idea — your voice matters.",
+            "Our team reviews every viral idea — your voice matters.",
             "You're free too… the request door is open under every video.",
         ],
-        "tags": "طلب_مشاهد,CosmicTube,viral,shorts",
+        "tags": f"طلب_مشاهد,{settings.BRAND_NAME},viral,shorts",
         "_issue": req["issue"],
     }
 
@@ -68,7 +69,7 @@ def answer_and_close(issue: int, video_url: str) -> None:
     try:
         _rq.post(f"{API}/repos/{_repo()}/issues/{issue}/comments",
                  json={"body": f"🎬 طلبك اتنفذ! الحلقة نزلت: {video_url}\n"
-                               "— فريق CosmicTube 🚀 اطلب تاني في أي وقت."},
+                               f"— فريق {settings.BRAND_NAME} 🚀 اطلب تاني في أي وقت."},
                  headers=github_store._headers(tok), timeout=30)
         _rq.patch(f"{API}/repos/{_repo()}/issues/{issue}",
                   json={"state": "closed"},

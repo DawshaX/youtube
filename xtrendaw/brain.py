@@ -31,7 +31,7 @@ FALLBACK_POOL: list[dict] = [
             "A banana tree isn't a tree at all — it's the world's largest herb.",
             "So you're eating a giant berry from a massive herb. Enjoy!",
         ],
-        "tags": "حقائق,نبات,طعام,XTreNDAW",
+        "tags": f"حقائق,نبات,طعام,{settings.BRAND_NAME}",
     },
     {
         "angle": "المريخ أزرق",
@@ -49,7 +49,7 @@ FALLBACK_POOL: list[dict] = [
             "So at sunset you see a blue halo around the sun.",
             "So the red planet sets in blue… what a twist!",
         ],
-        "tags": "حقائق,فضاء,مريخ,XTreNDAW",
+        "tags": f"حقائق,فضاء,مريخ,{settings.BRAND_NAME}",
     },
     {
         "angle": "القلب بيض ضوء",
@@ -67,7 +67,7 @@ FALLBACK_POOL: list[dict] = [
             "It beats about 100,000 times a day without ever taking a break.",
             "So you own a 24/7 engine that never complains… learn from it!",
         ],
-        "tags": "حقائق,جسم,صحة,XTreNDAW",
+        "tags": f"حقائق,جسم,صحة,{settings.BRAND_NAME}",
     },
 ]
 
@@ -130,14 +130,14 @@ def trend_topic(skip: set | None = None) -> dict | None:
             "facts_ar": [
                 f"أكتر من {t['traffic_raw']} بحث عليه في ساعات على جوجل.",
                 f"الإشارة التقطها الرادار من {srcs} مصدر مختلف في نفس اللحظة.",
-                "ورادار CosmicTube يرصد كل حركة لاختيار ما يستحق فقط.",
+                f"ورادار {settings.BRAND_NAME} يرصد كل حركة لاختيار ما يستحق فقط.",
             ],
             "facts_en": [
                 f"Over {t['traffic_raw']} searches on Google in hours.",
                 f"Our radar caught it from {srcs} different sources at once.",
-                "CosmicTube radar catches every viral shift instantly.",
+                "Our factory radar catches every viral shift instantly.",
             ],
-            "tags": "ترند,رادار_كوزميك,CosmicTube,viral",
+            "tags": f"ترند,رادار,{settings.BRAND_NAME},viral",
             "_visual_queries": queries,
             "takeaway_ar": {
                 "aql": "الترند بيعدي… بس اللي بيفهم ليه انتشر بيستفيد.",
