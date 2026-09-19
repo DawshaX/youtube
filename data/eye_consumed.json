@@ -734,5 +734,121 @@
   },
   "_consumedAt": "2026-09-19T18:57:04Z",
   "_skipReason": "already_produced"
+ },
+ {
+  "id": "eye-JPbWXvyaCcw",
+  "topic": "Marshmallow #challenge",
+  "angle": "الهيكل ينهار عندما يُوضع المارشميلو، مما يكشف أن القاعدة الأساسية للتحدي هي أن المارشميلو ",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي المارشميلو: أبني برج من الحلوى!",
+  "title_en": "Marshmallow Challenge: Build a Sweet Tower!",
+  "hook_ar": "هل تجرّأ تبني برج من مارشميلو؟",
+  "hook_en": "Dare to build a marshmallow tower?",
+  "facts_ar": [
+   "تُستَخدم تحديات المارشميلو في الورش لتعليم التعاون والإبداع.",
+   "الهدف هو بناء أعلى هيكل ممكن بمواد محدودة وفي زمن قصير.",
+   "الفرق التي تتبع نهج تجريبي سريع غالبًا تتفوق على تلك التي تخطط بدقة."
+  ],
+  "facts_en": [
+   "Marshmallow challenges are used in workshops to teach collaboration and creativity.",
+   "The goal is to build the tallest structure possible using limited materials in a short time.",
+   "Teams that adopt a rapid‑experiment approach usually beat those that plan meticulously."
+  ],
+  "takeaway_ar": {
+   "aql": "الإبداع يبدأ من تجربة بسيطة",
+   "qalb": "العمل الجماعي يصنع القمم",
+   "rouh": "استمتع بالفشل وتعلّم منه"
+  },
+  "takeaway_en": {
+   "aql": "Creativity sparks from a simple experiment",
+   "qalb": "Teamwork builds the heights",
+   "rouh": "Enjoy the fall and learn from it"
+  },
+  "tags": "مارشميلو,تحدي,إبداع,بناء,متعة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة مقربة لقطعة مارشميلو ضخمة تُقذف في الهواء وتستقر على منصة غير متوقعة.",
+    "style": "حركة كاميرا ديناميكية، نص متحرك يطرح سؤال الحافز.",
+    "colors": [
+     "#FF6F61",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "عرض مجموعة أدوات بسيطة (عصيان، شريط لاصق، خيوط) مع إيقاع موسيقي متصاعد.",
+    "style": "قفزات سريعة، إضاءة ساطعة لتسليط الضوء على الأدوات.",
+    "colors": [
+     "#F7E967",
+     "#2C3E50"
+    ]
+   },
+   {
+    "time": "0:08-0:12",
+    "scene": "بناء الهيكل بسرعة عالية مع قطع سريعة تُظهر كل خطوة في ثوانٍ معدودة.",
+    "style": "تقطيع سريع (jump cuts)، نصوص سميكة توضح الخطوات.",
+    "colors": [
+     "#FF6F61",
+     "#F7E967"
+    ]
+   },
+   {
+    "time": "0:13-0:15",
+    "scene": "الهيكل ينهار فجأةً عند وضع المارشميلو على القمة، مع صدمة صوتية.",
+    "style": "إيقاف الموسيقى لحظة الانهيار، مؤثر صوتي للانقضاض.",
+    "colors": [
+     "#2C3E50",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:16-0:18",
+    "scene": "المبدئ يضحك ويحث المشاهد على تجربة التحدي، يظهر زر دعوة للمتابعة.",
+    "style": "قرب على الوجه، إيموجي مارشميلو متحرك، نص CTA واضح.",
+    "colors": [
+     "#FF6F61",
+     "#F7E967"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "JPbWXvyaCcw",
+   "url": "https://youtu.be/JPbWXvyaCcw",
+   "sourceTitle": "Marshmallow #challenge",
+   "sourceChannel": "Stoney Choi",
+   "sourceViews": 20322008,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "المبدئ يبدأ الفيديو بلقطة مقربة لقطعة مارشميلو ضخمة تُقذف في الهواء وتُسقط على منصة بناء غير متوقعة.",
+     "why_it_works": "اللقطة غير المتوقعة تثير الدهشة وتدفع المشاهد إلى الاستمرار لمعرفة ما سيحدث للمارشميلو."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "صاعد سريع في الثواني الأولى، قمة توتر عند بناء الهيكل، ثم انخفاض مفاجئ عند الانهيار، يليه ارتفاع خفيف مع الدعوة للمتابعة."
+    },
+    "retention_tricks": [
+     "طرح سؤال في أول 3 ثوانٍ.",
+     "استخدام قطع سريعة (jump cuts) للحفاظ على إيقاع عالي.",
+     "إدراج نص متحرك يوضح الخطوات دون الحاجة لسماع كل شيء.",
+     "إنهاء الفيديو بلقطة فكاهية (الانهيار) تخلق رغبة في مشاهدة المزيد."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 88,
+   "weaknesses": [
+    "Audio plan is not detailed; the DNA trend specifies a youthful, energetic voice and a specific music/sfx progression that is only implied here.",
+    "Timing of the twist (0:13‑0:15) is a second later than the DNA’s 0:12‑0:15 window, which could slightly affect the energy curve.",
+    "Heavy use of emojis and animated stickers may distract from the core message if not balanced carefully."
+   ],
+   "verdict": "The proposal aligns closely with the DNA trend and would likely perform well, but adding a concrete audio storyboard and fine‑tuning the twist timing would push it into the top tier."
+  },
+  "_consumedAt": "2026-09-19T20:38:05Z",
+  "_skipReason": "already_produced"
  }
 ]

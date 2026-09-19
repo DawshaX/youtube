@@ -1,5 +1,5 @@
 {
- "cycles": 11,
+ "cycles": 12,
  "renders": [
   {
    "at": "00:19",
@@ -33,6 +33,12 @@
    "video": "/home/runner/work/youtube/youtube/content/vids/eye-JPbWXvyaCcw.mp4",
    "ok": true,
    "sec": 470
+  },
+  {
+   "at": "20:37",
+   "video": "/home/runner/work/youtube/youtube/content/vids/auto-5276e3fda4.mp4",
+   "ok": true,
+   "sec": 390
   }
  ],
  "publish_attempts": [
@@ -85,6 +91,12 @@
    "topic": "eye-JPbWXvyaCcw",
    "ok": true,
    "why": "published"
+  },
+  {
+   "at": "20:37",
+   "topic": "auto-5276e3fda4",
+   "ok": false,
+   "why": "daily_cap 6/6"
   }
  ],
  "radar": [
@@ -140,6 +152,10 @@
   },
   {
    "at": "18:38",
+   "ok": true
+  },
+  {
+   "at": "20:37",
    "ok": true
   }
  ],
@@ -198,9 +214,14 @@
    "at": "18:38",
    "rc": 0,
    "note": "eye: 2/2 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "20:37",
+   "rc": 0,
+   "note": "eye: 1/2 فيديو اتشاف وموضوعات اتكتبت"
   }
  ],
- "last_cycle_at": "2026-09-19 18:38:16",
+ "last_cycle_at": "2026-09-19 20:37:27",
  "last_commit": "saved",
  "last_error": "2026-09-19 00:34:44",
  "dubs": [
@@ -209,6 +230,11 @@
    "lang": "en",
    "topic": "eye-JPbWXvyaCcw-en",
    "ok": true
+  },
+  {
+   "at": "20:37",
+   "ok": false,
+   "err": "KeyError"
   }
  ]
 }
