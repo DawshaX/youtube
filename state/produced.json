@@ -73,6 +73,17 @@
     "video": "https://github.com/DawshaX/youtube/releases/download/vault/q1789826418.mp4",
     "cover": "https://github.com/DawshaX/youtube/releases/download/vault/q1789826418.png"
    }
+  },
+  "eye-jgk0aOIEgog": {
+   "title": "تحدي اللغز المتقاطع: هالاند وشاكيرا يدمجوا الفن!",
+   "fingerprint": "503b8c906a90e703",
+   "video": "/home/runner/work/youtube/youtube/content/vids/eye-jgk0aOIEgog.mp4",
+   "duration": 61.07,
+   "at": "2026-09-19 16:16",
+   "urls": {
+    "video": "https://github.com/DawshaX/youtube/releases/download/vault/q1789834592.mp4",
+    "cover": "https://github.com/DawshaX/youtube/releases/download/vault/q1789834592.png"
+   }
   }
  },
  "fingerprints": [
@@ -82,7 +93,8 @@
   "231427cd75874f0b",
   "f47ded4f59fb49b4",
   "d50a0de0178b7677",
-  "b25661dd9da5b69e"
+  "b25661dd9da5b69e",
+  "503b8c906a90e703"
  ],
  "last_kind": "trend"
 }
