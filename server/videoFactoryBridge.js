@@ -358,6 +358,7 @@ print(json.dumps({
               title: targetTopic.title_ar || targetTopic.title,
               sizeBytes: fs.statSync(outPath).size,
               audioSources,
+              voice: renderReport?.voice || null,
               report: renderReport
             };
             try { emitEvent('produce:job-done', {

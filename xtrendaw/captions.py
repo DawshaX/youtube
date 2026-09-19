@@ -55,7 +55,7 @@ def chunk_words(words: list[dict], size: int = WORDS_PER_CHUNK) -> list[dict]:
 
 
 def karaoke_text(words: list[dict]) -> str:
-    """نص ASS كاراوكي كلمة-بكلمة: {\k..} قبل كل كلمة من توقيتاتها الحقيقية.
+    r"""نص ASS كاراوكي كلمة-بكلمة: {\k..} قبل كل كلمة من توقيتاتها الحقيقية.
 
     \k مئة-ثانية: الكلمة تتلوّن تدريجيًا على مدى نطقها الفعلي من الخدمة.
     """
@@ -83,7 +83,7 @@ def _escape(text: str) -> str:
 
 def build_ass(plan: dict, out_path: Path, en_lines: list[str] | None = None,
               font_name: str = "Amiri", font_size: int = 74) -> tuple[Path, list[dict]]:
-    """خطة الصوت → ملف ASS + قايمة الشرائح (للتقارير والاختبارات).
+    r"""خطة الصوت → ملف ASS + قايمة الشرائح (للتقارير والاختبارات).
 
     لو توقيتات المقطع كلمة-بكلمة من الخدمة (توقيت حقيقي) الكابتشن بيطلع
     **كاراوكي** (\k لكل كلمة) — الكلمة تتلوّن مع نطقها بالظبط. غير كده

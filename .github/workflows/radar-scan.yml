@@ -2,7 +2,8 @@ name: Radar + Analyzer (trend structure measurement — no copying)
 
 # يقيس بنية الترند فقط (بند 0/5): سرعة المشاهد، بنية العناوين، الفئات.
 # محتاج سر `YOUTUBE_API_KEY` (قراءة فقط) في أسرار المستودع.
-# الجدولة معطلة لحد ما صاحب القناة يفعّلها — شغّلها يدويًا من هنا.
+# الحلقة المغذية نفسها: رادار (كل 6 ساعات) ← عين (بتشوف أقوى ترند جديد
+# تلقائيًا) ← طابور المصنع. النشر يفضل معطل لموافقة صاحب القناة.
 on:
   workflow_dispatch:
   schedule:
@@ -50,4 +51,69 @@ jobs:
           else
             git commit -m "radar: مسح بنية الترند + الأنماط المستخرجة"
             git push origin HEAD:${GITHUB_REF_NAME:-main}
+          fi
+
+  # العين: بعد كل مسح رادار، تشوف أقوى ترند جديد (≤60ث، ≥2M، مش متشاف)
+  # وتكتب تقريرها + إصدارنا في الطابور. لا نشر إطلاقًا.
+  eye:
+    needs: scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install requests pillow numpy imageio-ffmpeg yt-dlp
+
+      - name: Eye auto-watch the strongest new trend
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          YOUTUBE_COOKIES_B64: ${{ secrets.YOUTUBE_COOKIES_B64 }}
+          RESTCOUNTRIES: ${{ secrets.RESTCOUNTRIES }}
+        run: |
+          mkdir -p data/eye/diagnostics
+          python -m xtrendaw.eye --auto --max 2 2>&1 | tee data/eye/diagnostics/run.log
+          EXIT=${PIPESTATUS[0]}
+          if [ "$EXIT" != "0" ]; then
+            echo "eye exited with code $EXIT" >> data/eye/diagnostics/run.log
+            exit 1
+          fi
+
+      - name: Upload eye evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eye-evidence
+          path: |
+            data/eye/
+            data/eye_topics.json
+            data/eye_consumed.json
+
+      - name: Commit eye reports (never the mp4)
+        if: always()
+        run: |
+          git config user.name 'Daousha Eye [Bot]'
+          git config user.email 'eye@daousha.internal'
+          git add data/eye_topics.json data/eye_consumed.json 2>/dev/null || true
+          for d in data/eye/*/; do
+            [ -f "$d/report.json" ] && git add "$d/report.json"
+            [ -d "$d/frames" ] && git add "$d/frames"
+          done
+          if [ -d data/eye/diagnostics ]; then
+            git add data/eye/diagnostics 2>/dev/null || true
+          fi
+          if ! git diff --staged --quiet; then
+            git commit -m 'evidence(eye): auto-watch after radar [skip ci]'
+            git push origin HEAD:main
           fi

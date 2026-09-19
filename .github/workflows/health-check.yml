@@ -1,0 +1,82 @@
+name: Health Check (فحص الحالة — كل المفاتيح والخدمات)
+# تقرير ساعة-ساعة: كل مفتاح وكل خدمة في data/health.json + ملخص في
+# صفحة التشغيل. لو في فشل: issue واحده "[health]" بتتحدث دائمًا بأحدث
+# الحالة (بلا spam — نفس الـ issue بيتعدل).
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: daousha-health
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install requests pillow numpy edge-tts imageio-ffmpeg yt-dlp
+
+      - name: Run the doctor
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          YOUTUBE_COOKIES_B64: ${{ secrets.YOUTUBE_COOKIES_B64 }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+          RESTCOUNTRIES: ${{ secrets.RESTCOUNTRIES }}
+          OPENVERSE_API_KEY: ${{ secrets.OPENVERSE_API_KEY }}
+          FREESOUND_API_KEY: ${{ secrets.FREESOUND_API_KEY }}
+          GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
+          CURRENTS_API_KEY: ${{ secrets.CURRENTS_API_KEY }}
+        run: |
+          python -m xtrendaw.doctor --md | tee data/health_summary.md
+          echo '## Health Check' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          python -m xtrendaw.doctor >> "$GITHUB_STEP_SUMMARY" 2>&1 || true
+
+      - name: Commit health report
+        if: always()
+        run: |
+          git config user.name 'Daousha Doctor [Bot]'
+          git config user.email 'doctor@daousha.internal'
+          git add data/health.json data/health_summary.md 2>/dev/null || true
+          if ! git diff --staged --quiet; then
+            git commit -m 'chore(health): status report [skip ci]'
+            git push origin HEAD:main
+          fi
+
+      - name: Keep one "[health]" issue updated
+        if: always()
+        run: |
+          FAILS=$(python3 -c "import json;print(json.load(open('data/health.json'))['fails'])" 2>/dev/null || echo '?')
+          BODY=$(cat data/health_summary.md 2>/dev/null || echo "(no report)")
+          EXISTING=$(gh api "repos/$GITHUB_REPOSITORY/issues?state=open&per_page=100" \
+            --jq '.[] | select(.title == "[health] نظام فحص الحالة") | .number' | head -1)
+          if [ -n "$EXISTING" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/$EXISTING" -f body="$BODY" >/dev/null
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues" \
+              -f title="[health] نظام فحص الحالة" -f body="$BODY" >/dev/null
+          fi
+          echo "Health fails: $FAILS (issue updated/created)"

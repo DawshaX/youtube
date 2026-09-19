@@ -151,6 +151,29 @@ def mark_media_used(key: str, source: str = "", episode: str = "") -> None:
     _wr(MEDIA_FILE, d)
 
 
+def media_summary_for(episode: str) -> dict:
+    """ملخص ميديا حلقة: {فيديو: N, صور: M, مخزون: K} — دليل قابل للتدقيق.
+
+    الدرس (شكوى المستخدم 2026-09-19): الفيديو كان بيطلع بصور مركبة/مخزون
+    قديم من غير ما حد ياخد باله. السطر ده بيفضح الحقيقة في لوج كل دورة.
+    """
+    video = images = static = other = 0
+    for key, rec in media_used().items():
+        if str((rec or {}).get("episode")) != str(episode):
+            continue
+        src = str((rec or {}).get("source") or "")
+        if src.startswith("video:"):
+            video += 1
+        elif src.startswith("image:"):
+            images += 1
+        elif src.startswith("vault:") or src == "internal":
+            static += 1
+        else:
+            other += 1
+    return {"video": video, "images": images, "static": static,
+            "other": other, "total": video + images + static + other}
+
+
 def media_used_by_source(source: str) -> int:
     return sum(1 for v in media_used().values()
                if (v or {}).get("source") == source)

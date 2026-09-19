@@ -124,6 +124,21 @@ def register(path: Path | str, source: str, license: str,
     return rec
 
 
+def sources_for(paths: list[Path | str]) -> dict:
+    """تلخيص مصادر الميديا المستخدمة في الحلقة: {المصدر: العدد}.
+
+    بيغذّي سطر الملخص في اللوج — دليل ظاهر إن الحلقة استخدمت ميديا حيّة
+    من الـAPIs مش صور مركبة/مخزون قديم.
+    """
+    index = load_index()
+    out: dict[str, int] = {}
+    for p in paths:
+        rec = index.get(_rel(p)) or {}
+        src = str(rec.get("source") or "unknown").lower()
+        out[src] = out.get(src, 0) + 1
+    return out
+
+
 def credits_for(paths: list[Path | str]) -> list[str]:
     """سطور الاعتماد لكل الأصول المستخدمة (اللي محتاجة ذكر بس)."""
     index = load_index()

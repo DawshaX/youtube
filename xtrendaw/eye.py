@@ -599,6 +599,17 @@ def build_digest(report: dict) -> str:
         "",
         "=== خط التسميات الزمني (حقيقي من الفيديو) ===",
     ]
+    # قسم «الفيديو في العالم»: بيانات حقيقية عن الدولة من الرادار (سياق الجمهور)
+    _meta = (report.get("meta") or {})
+    if _meta.get("region"):
+        try:
+            from . import world
+            _line = world.profile_line(world.country_info(_meta["region"]))
+            if _line:
+                L += ["=== الفيديو في العالم (بيانات حقيقية عن الدولة) ===",
+                      _line, ""]
+        except Exception:
+            pass
     L += _bucket_captions(report.get("captions", []), report.get("durationSeconds", 0.0))
     L += ["", "=== المشاهد (الترتيب، الألوان، الإضاءة، الحركة) ==="]
     if not report.get("scenes"):
@@ -824,7 +835,11 @@ WRITE_PROMPT = """أنت مدير المحتوى لقناة الشورتس ال�
 {title_patterns}
 
 اكتب إصدارنا من **نفس السياق** — أسرع وأحسن، وبنص **أصلي 100%**
-(صفر نسخ من تسمياتهم أو عناوينهم). ارجع JSON فقط:
+(صفر نسخ من تسمياتهم أو عناوينهم).
+قاعدة ذهبية: إحنا **بنقلّد فيديو الترند نفسه لحظة بلحظة** — نفس نوع
+المحتوى والإيقاع والمفاجأة (تحدي؟ قول تحدي ونشرّحه ويعيشه المشاهد.
+مفاجأة نهاية؟ اعملها مفاجأة حقيقية عندنا). إحنا بنعمل **فيديو زي فيديوهم**
+مش نشرة أخبار عنهم — الحلقة نفسها تعيش اللي عاشه المشاهد، أسرع وأقوى. ارجع JSON فقط:
 {{
   "title_ar": "...", "title_en": "...",
   "hook_ar": "... (يُقال في أقل من 3 ثوانٍ)", "hook_en": "...",
@@ -1074,6 +1089,20 @@ def _dur_secs(d: str) -> int:
     return int(h or 0) * 3600 + int(mi or 0) * 60 + int(s or 0)
 
 
+def _radar_meta(video_id: str) -> dict:
+    """بيانات الفيديو من آخر مسح رادار (المنطقة/العنوان/المشاهدات) — لو موجود."""
+    if not SNAPSHOT_PATH.exists():
+        return {}
+    try:
+        snap = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    v = (snap.get("videos") or {}).get(video_id) or {}
+    return {k: v.get(k) for k in
+            ("title", "channel", "region", "viewCount", "likeCount", "via")
+            if v.get(k) not in (None, "")}
+
+
 def auto_pick(max_n: int = 2) -> list[tuple[str, dict]]:
     """أقوى مرشحي الترند من آخر مسح: قصير (≤60ث) و ≥2 مليون مشاهدة، مش متشاف قبل كده."""
     if not SNAPSHOT_PATH.exists():
@@ -1100,7 +1129,7 @@ def main() -> int:
     args = ap.parse_args()
 
     if args.video_id:
-        targets = [(args.video_id, {})]
+        targets = [(args.video_id, _radar_meta(args.video_id))]
     elif args.auto:
         targets = auto_pick(args.max)
         if not targets:

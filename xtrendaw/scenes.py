@@ -267,7 +267,7 @@ def fetch_real_visual(query: str, out_path: Path) -> bool:
         _lib._mark_used(query, pick)
         try:
             from . import state as _st
-            _st.mark_media_used(pick, "commons", str(query)[:40])
+            _st.mark_media_used(pick, "image:commons", str(query)[:40])
         except Exception:
             pass
         url = pick
@@ -560,20 +560,38 @@ def load_real_asset(kind: str, out_path: Path) -> bool:
 
 
 def build_scene(kind: str, text: str, seed: str, workdir: Path,
-                subject: str = "", chip: str = "", real_query: str = "") -> dict:
-    """مشهد = قاعدة حقيقية مصورة + مؤثرات بصرية + نصوص متحركة."""
+                subject: str = "", chip: str = "", real_query: str = "",
+                fresh_base: Path | None = None) -> dict:
+    """مشهد = قاعدة حقيقية مصورة + مؤثرات بصرية + نصوص متحركة.
+
+    ترتيب الأسبقية (الأحدث دايمًا): قاعدة مولّدة خاصة بالحلقة (_fresh_pool)
+    ← مصادر حية من النت (ويكيميديا/أرشيف/NASA/Pixabay) ← صورة AI (Pollinations)
+    ← خزنة assets/visuals (ملاذ أخير) ← خلفية إجرائية.
+    """
     workdir.mkdir(parents=True, exist_ok=True)
     rng = _seeded(seed)
     base = workdir / "base.png"
 
-    # الأولوية دائماً لمشهد حقيقي مصور بجودة سينمائية فائقة
-    ok = load_real_asset(kind, base)
+    # 1) قاعدة الحلقة المولّدة خصيصًا — صور جديدة 100% لكل حلقة
+    ok = False
+    if fresh_base and Path(fresh_base).exists():
+        try:
+            Image.open(fresh_base).convert("RGB").save(base)
+            ok = True
+        except Exception:
+            ok = False
+    # 2) مصادر حية من النت — فيديو/صور واقعية من الـAPIs المجانية
     if not ok:
         ok = (fetch_real_visual(real_query, base)
               or fetch_library_visual(real_query, base)) if real_query else False
+    # 3) صورة AI مولّدة (Pollinations — مجاني بلا مفتاح)
     if not ok:
         prompt = _ai_prompt(kind, subject or text)
         ok = fetch_ai_visual(prompt, base, int(rng.integers(1, 10_000_000)))
+    # 4) الخزنة المحلية — ملاذ أخير فقط لو النت كله وقف
+    if not ok:
+        ok = load_real_asset(kind, base)
+    # 5) خلفية إجرائية — آخر الليستة
     if not ok:
         base = render_bg(base, kind, seed)
 

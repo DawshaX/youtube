@@ -56,18 +56,29 @@ def _mix_sfx_events(music: Path, events: list[tuple[float, Path]],
     return None
 
 
-def produce_episode(topic: dict, workdir: Path) -> dict:
+def produce_episode(topic: dict, workdir: Path, narration_lang: str = "ar",
+                    narration_voice: str | None = None) -> dict:
     """ينتج MP4 واحد ويعيد {video, plan, ass, captions, report}."""
     if workdir.exists():
         shutil.rmtree(workdir)
     workdir.mkdir(parents=True, exist_ok=True)
 
-    # 1) السيناريو (عربي للصوت + إنجليزي للقراءة/الـAI)
-    segs = content.compose_script(topic, "ar")
+    # 1) السيناريو (لغة التعليق + الإنجليزي للقراءة/الـAI)
+    segs = content.compose_script(topic, narration_lang)
     en_lines = content.english_lines(topic)
 
     # 2) الصوت + التوقيتات
-    plan = tts.synthesize_segments(segs, "ar", workdir / "tts")
+    # صوت الحلقة: دبلجة لغة مطلوبة ← صوتها الرسمي، وإلا مكتبة الأصوات العربية
+    # (حسب مزاج الموضوع + دوران بلا تكرار — حتمي حسب معرّف الموضوع)
+    from . import voice as _voice
+    if narration_voice is None and narration_lang != "ar":
+        from . import dub as _dub
+        narration_voice = _dub.voice_for(narration_lang)
+    if narration_voice is None:
+        narration_voice = topic.get("voice") or _voice.pick_voice(
+            topic.get("mood"), seed=topic.get("id"))
+    plan = tts.synthesize_segments(segs, narration_lang, workdir / "tts",
+                                   voice=narration_voice)
     total = plan["total_duration"]
     if total <= 0:
         raise RuntimeError("مدة الصوت صفر")
@@ -99,6 +110,7 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
                 subject = subject.split(":", 1)[1].strip()
         queries = topic.get("_visual_queries") or []
         real_q = queries[i % len(queries)] if queries else ""
+        fresh_pool = topic.get("_fresh_pool") or []
         sc = scenes.build_scene(kind, text, seed=f"{topic['id']}:{i}",
                                 workdir=workdir / f"sc{i:02d}", subject=subject,
                                 chip=chip, real_query=real_q)
@@ -110,9 +122,9 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
             entry = dict(sc)
             entry["start"] = s0
             entry["end"] = s1
-            # ترتيب الملاذات ثابت: شبكة حية ← خزنة محلية ← صورة AI
-            # (Pollinations) ← الخلفية الإجرائية الموجودة أصلًا في sc.
-            clip = _footage.fetch_clip(real_q or subject or text, s1 - s0,
+            # 1) لقطة حية من النت (بيكساباي ← بكسلز ← كومنز ← الأرشيف ← ناسا)
+            #    — دي الأساس الافتراضي؛ الخزنة المحلية احتياط أوفلاين فقط.
+            clip = _footage.fetch_clip(real_q, s1 - s0,
                                        workdir / f"sc{i:02d}" / f"cut{j:02d}",
                                        seed=f"{topic['id']}:{i}:{j}")
             if clip is None:
@@ -120,12 +132,12 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
                                            workdir / f"sc{i:02d}" / f"cut{j:02d}",
                                            seed=f"{topic['id']}:{i}:{j}",
                                            exclude=prev_clip, used=clip_usage)
+            # لو الفيديو الشبكي ما جاش: صورة مرخصة تتحول حركة (مش إطار ثابت)
             if clip is None:
                 from . import imagery
-                clip = imagery.fetch_pollinations_clip(
-                    real_q or subject or text, s1 - s0,
-                    workdir / f"sc{i:02d}" / f"cut{j:02d}",
-                    seed=f"{topic['id']}:{i}:{j}")
+                clip = imagery.fetch_image_clip(real_q or text, s1 - s0,
+                                                workdir / f"sc{i:02d}" / f"cut{j:02d}",
+                                                seed=f"{topic['id']}:{i}:{j}")
             if clip is not None:
                 entry["video"] = clip
                 prev_clip = (clip.name,)
@@ -196,7 +208,9 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
                 "captions": len(chunks),
                 "cover": str(cover),
                 "audio_sources": audio_sources,
+                "voice": narration_voice,
                 "credits": _vault.credits_for(used_assets) + sfx_credits,
+                "media_sources": _vault.sources_for(used_assets),
                 "footage_usage": clip_usage,
                 "validate": {
                     "info": report["info"],

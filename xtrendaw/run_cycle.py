@@ -153,6 +153,15 @@ def _produce(topic: dict, upload: bool = True) -> int:
             _log("📦 اتخزنت في الـvault — مستنية موعد الذروة")
         except Exception as e:  # فشل التخزين ما يوقفش الدورة
             _log(f"⚠ تخزين GitHub اتخطى: {str(e)[:120]}")
+    # ملخص الميديا: إثبات ظاهر إن الحلقة استخدمت مصادر حيّة مش مخزون قديم
+    try:
+        _srcs = state.media_summary_for(topic["id"])
+    except Exception:
+        _srcs = {}
+    if _srcs and _srcs.get("total"):
+        _log(f"🎬 ميديا الحلقة: فيديو حي={_srcs['video']} · "
+             f"صور متحركة={_srcs['images']} · مخزون={_srcs['static']}"
+             + (f" · ⚠️ فيه مخزون قديم!" if _srcs["static"] else " ✓"))
     state.mark_produced(topic, str(r["video"]), info["duration"], urls=urls)
     if topic.get("_ledger_key"):
         from . import planner

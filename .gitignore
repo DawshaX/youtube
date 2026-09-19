@@ -33,6 +33,7 @@ secrets*
 cookies*
 **/secrets*
 **/cookies*
+*.cookies
 doctor-report.json
 
 .venv/

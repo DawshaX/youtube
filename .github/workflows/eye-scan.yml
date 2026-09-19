@@ -39,11 +39,15 @@ jobs:
           # yt-dlp 2026 محتاج JS runtime للاستخراج الكامل (EJS) — deno هو الافتراضي المدعوم
           curl -fsSL https://deno.land/install.sh | DENO_INSTALL="$HOME/.deno" sh -s -- -y
           echo "$HOME/.deno/bin" >> "$GITHUB_PATH"
+          python -m pip install requests pillow numpy imageio-ffmpeg yt-dlp
 
       - name: Watch + analyze + write our version
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
           YOUTUBE_COOKIES_B64: ${{ secrets.YOUTUBE_COOKIES_B64 }}
         run: |
           VID="${{ github.event.inputs.video_id }}"
@@ -105,6 +109,7 @@ jobs:
             echo "دفع محاولة $attempt فشلت (الريموت اتغير) — إعادة محاولة بعد 5 ثوانٍ…"
             sleep 5
           done
+            git push origin HEAD:main
           fi
           # ملخص التشغيل في الصفحة
           {

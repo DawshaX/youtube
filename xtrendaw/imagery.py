@@ -213,7 +213,8 @@ def fetch_image_clip(query: str, seconds: float, workdir: Path, seed: str) -> Pa
         raw_path, lic, title, source, url, attribution = accepted
         try:
             from . import state as _st
-            _st.mark_media_used(url, source or "image", str(seed).split(":")[0])
+            _st.mark_media_used(url, f"image:{source or 'web'}",
+                                str(seed).split(":")[0])
         except Exception:
             pass
         credit = f"Image: {title} via {source}, {lic}" if attribution else ""

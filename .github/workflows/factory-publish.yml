@@ -24,12 +24,12 @@ on:
         type: boolean
         default: false
       mode:
-        description: 'خط الإنتاج: العين/ترند (مشاهدة فيديو مشهور وإنتاج نسختنا) · نور (قرآن/ذكر/حديث)'
+        description: 'خط الإنتاج: تلقائي (العين → ترند → معرفة، والمخ يقرر) أو نور (قرآن/ذكر/حديث)'
         type: choice
         options:
-          - old
+          - auto
           - deen
-        default: old
+        default: auto
 
 permissions:
   contents: write
@@ -56,6 +56,9 @@ jobs:
           sudo apt-get install -y ffmpeg espeak-ng fonts-dejavu-core
           python -m pip install --quiet pillow numpy requests edge-tts \
             imageio-ffmpeg arabic-reshaper python-bidi
+
+      - name: فحص حارس القانون (FACTORY_RULES) قبل أي إنتاج
+        run: python scripts/verify_factory.py
 
       - name: سجّل حالة ما قبل الدورة (لحارس الكوتة والتقرير)
         id: before
@@ -107,7 +110,14 @@ jobs:
           # ── الـvault على GitHub (تخزين الحلقات) ─────────────────
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ── مفاتيح المصنع ──────────────────────────────────────
-          XT_MODE: ${{ inputs.mode || 'old' }}    # العين/ترند افتراضيًا · نور بالتناوب
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          RESTCOUNTRIES_API_KEY: ${{ secrets.RESTCOUNTRIES_API_KEY }}
+          RESTCOUNTRIES: ${{ secrets.RESTCOUNTRIES }}
+          XT_MODE: ${{ inputs.mode == 'deen' && 'deen' || '' }}   # auto: المخ يقرر
           XT_STATIC_VAULT: '0'            # ممنوع استخدام صور التجربة الثابتة
           XT_YT: '1'                      # نشر يوتيوب مفتوح
           XT_NET_FOOTAGE: '1'             # لقطات حقيقية من المصادر الشبكية
@@ -117,15 +127,16 @@ jobs:
           XT_SCENE_CUT: '2.0'
         run: |
           set -o pipefail
-          ARGS="--next"
+          # حلقة المصنع الكاملة لدورة واحدة:
+          #   رادار → عين (تشوف فيديو ترند حقيقي كاملًا) → اختيار الحلقة
+          #   → ميديا حيّة من الـAPIs → صوت/دبلجة → مونتاج → بوابة جودة
+          #   → نشر + دبلجة لغات + حفظ الذاكرة.
+          ARGS="--once"
           [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --no-upload"
-          [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
-          echo "▶ python -m xtrendaw.run_cycle $ARGS"
-          python -m xtrendaw.run_cycle $ARGS 2>&1 | tee /tmp/cycle.log
+          echo "▶ python scripts/factory_loop.py $ARGS"
+          python scripts/factory_loop.py $ARGS 2>&1 | tee /tmp/cycle.log
           RC=${PIPESTATUS[0]}
           echo "rc=$RC"
-          # 42 = «لسه مفيش ساعة على آخر فيديو» (حماية مقصودة) — مش فشل
-          if [ "$RC" = "42" ]; then echo "⏳ الدورة دي راحة (حماية الساعة)"; exit 0; fi
           exit $RC
 
       - name: تقرير الدورة (state/last_cycle.json)

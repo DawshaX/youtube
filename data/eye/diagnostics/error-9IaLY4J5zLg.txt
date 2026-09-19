@@ -1,0 +1,2 @@
+eye: فشل في 9IaLY4J5zLg: SSLError: HTTPSConnectionPool(host='www.youtube.com', port=443): Max retries exceeded with url: /watch?v=9IaLY4J5zLg (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))
+2026-09-19T00:41:44Z

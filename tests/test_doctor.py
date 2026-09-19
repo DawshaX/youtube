@@ -12,10 +12,27 @@ from xtrendaw import doctor, eye, footage, vault
 
 class DoctorSafetyTests(unittest.TestCase):
     def test_missing_secrets_fail_closed(self):
+        """بلا أسرار: التقرير يفضح النقص (fail/warn) ولا يدّعي نجاحًا كاذبًا.
+
+        التقرير الجديد (2026-09-18) قائمة فحوص لكل خدمة بحالة من ثلاثة:
+        ok / warn (اختياري ناقص) / fail (مضبوط ومش شغال).
+        """
         with mock.patch.dict(os.environ, {}, clear=True):
             report = doctor.run()
-        self.assertEqual(set(report), set(doctor.REQUIRED))
-        self.assertTrue(all(not item["ok"] for item in report.values()))
+        self.assertIn("checks", report)
+        self.assertIn("all_ok", report)
+        self.assertTrue(report["checks"], "لازم يكون فيه فحوص")
+        names = {c["name"] for c in report["checks"]}
+        # الخدمات الإلزامية للحلقة: يوتيوب (رادار+نشر) وصوت حقيقي
+        self.assertTrue(any("YOUTUBE_API_KEY" in n for n in names), names)
+        self.assertTrue(any("edge-tts" in n for n in names), names)
+        for c in report["checks"]:
+            self.assertIn(c["status"], ("ok", "warn", "fail"))
+        # بلا أسرار: التقرير ما يقولش «كله تمام» — لازم يفضح النقص
+        self.assertFalse(report["all_ok"], "التقرير ادّعى الصحة بلا اعتمادات")
+        self.assertTrue(report["fails"] + report["warns"] > 0,
+                        "لازم فحص واحد على الأقل يفضح نقص الاعتمادات")
+        # والفحوص المحلية (ffmpeg/الحزم) مسموح تقول ok — دي مش محتاجة أسرار
 
     def test_eye_cookie_file_is_0600_and_cleanup_registered(self):
         old = eye._COOKIES_FILE

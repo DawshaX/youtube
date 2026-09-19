@@ -1,0 +1,185 @@
+{
+ "cycles": 10,
+ "renders": [
+  {
+   "at": "00:19",
+   "video": "/home/user/youtube/content/vids/eye2.mp4",
+   "ok": true,
+   "sec": 276
+  },
+  {
+   "at": "00:32",
+   "ok": false,
+   "err": "CalledProcessError: Command '['/usr/local/lib/python3.11/dist-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2', '-y', '-i', 'seg0.mp3', '-ar', '4410"
+  },
+  {
+   "at": "00:35",
+   "ok": false,
+   "note": "auto-a0b747dc2b: مستني مخزون صوت (أو السحابة بـedge-tts)"
+  },
+  {
+   "at": "00:37",
+   "video": "/home/user/youtube/content/vids/ep1.mp4",
+   "ok": true,
+   "sec": 268
+  },
+  {
+   "at": "00:41",
+   "ok": false,
+   "note": "مفيش موضوع متاح للرندر (انتظر مخزون صوت جديد أو السحابة)"
+  }
+ ],
+ "publish_attempts": [
+  {
+   "at": "00:19",
+   "ok": false,
+   "err": "AttributeError"
+  },
+  {
+   "at": "00:25",
+   "ok": false,
+   "why": "no_credentials"
+  },
+  {
+   "at": "00:25",
+   "ok": false,
+   "why": "no_credentials"
+  },
+  {
+   "at": "00:25",
+   "ok": false,
+   "why": "no_credentials"
+  },
+  {
+   "at": "00:32",
+   "topic": "eye2",
+   "ok": false,
+   "why": "no_credentials"
+  },
+  {
+   "at": "00:36",
+   "topic": "eye2",
+   "ok": false,
+   "why": "no_credentials"
+  },
+  {
+   "at": "00:36",
+   "topic": "eye2",
+   "ok": false,
+   "why": "no_credentials"
+  },
+  {
+   "at": "00:37",
+   "topic": "ep1",
+   "ok": false,
+   "why": "no_credentials"
+  }
+ ],
+ "radar": [
+  {
+   "at": "00:19",
+   "ok": false,
+   "err": "AttributeError"
+  },
+  {
+   "at": "00:25",
+   "ok": false,
+   "err": "AttributeError"
+  },
+  {
+   "at": "00:25",
+   "ok": false,
+   "err": "RuntimeError"
+  },
+  {
+   "at": "00:25",
+   "ok": false,
+   "err": "RuntimeError"
+  },
+  {
+   "at": "00:32",
+   "ok": false,
+   "err": "RuntimeError"
+  },
+  {
+   "at": "00:35",
+   "ok": false,
+   "err": "RuntimeError"
+  },
+  {
+   "at": "00:36",
+   "ok": false,
+   "err": "RuntimeError"
+  },
+  {
+   "at": "00:36",
+   "ok": false,
+   "err": "RuntimeError"
+  },
+  {
+   "at": "00:37",
+   "ok": false,
+   "err": "RuntimeError"
+  },
+  {
+   "at": "00:41",
+   "ok": false,
+   "err": "RuntimeError"
+  }
+ ],
+ "eye": [
+  {
+   "at": "00:19",
+   "rc": 1,
+   "note": "eye: 0/1 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "00:25",
+   "rc": 1,
+   "note": "eye: 0/1 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "00:25",
+   "rc": 1,
+   "note": "eye: 0/1 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "00:25",
+   "rc": 1,
+   "note": "eye: 0/1 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "00:32",
+   "rc": 1,
+   "note": "eye: 0/2 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "00:35",
+   "rc": 1,
+   "note": "eye: 0/2 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "00:36",
+   "rc": 1,
+   "note": "eye: 0/2 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "00:36",
+   "rc": 1,
+   "note": "eye: 0/2 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "00:37",
+   "rc": 1,
+   "note": "eye: 0/2 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "00:41",
+   "rc": 1,
+   "note": "eye: 0/2 فيديو اتشاف وموضوعات اتكتبت"
+  }
+ ],
+ "last_cycle_at": "2026-09-19 00:41:44",
+ "last_commit": "saved",
+ "last_error": "2026-09-19 00:34:44"
+}

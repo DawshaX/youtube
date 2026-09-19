@@ -211,12 +211,14 @@ def _local_fallback_audio(text: str, out_dir: Path, name: str) -> dict:
 
 
 def synthesize_line(text: str, lang: str, out_dir: Path, name: str = "line",
-                    rate: str | None = None, pitch: str | None = None) -> dict:
+                    rate: str | None = None, pitch: str | None = None,
+                    voice: str | None = None) -> dict:
     """سطر واحد → {wav, duration, words, timing_source}.
 
     للعربي: صوت نيورال طبيعي (edge) + نبرة جملة-بجملة، وPiper احتياطي محلي.
+    voice: صوت محدد (مكتبة الأصوات) — وإلا الافتراضي من الإعدادات.
     """
-    voice = settings.VOICE_EN if lang == "en" else settings.VOICE_AR
+    voice = voice or (settings.VOICE_EN if lang == "en" else settings.VOICE_AR)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     if lang == "ar" and settings.TTS_ENGINE == "piper":
@@ -302,10 +304,12 @@ def _prosody(seg: str, text: str, i: int) -> tuple[str, str, float]:
             f"{'+' if pitch >= 0 else ''}{pitch}Hz", gap)
 
 
-def synthesize_segments(segments: list[dict], lang: str, out_dir: Path) -> dict:
+def synthesize_segments(segments: list[dict], lang: str, out_dir: Path,
+                        voice: str | None = None) -> dict:
     """كل مقاطع الحلقة → ملف صوت واحد + توقيتات مطلقة لكل كلمة.
 
     segments: [{"seg": "hook"|"fact1"…, "text": "…"}]
+    voice: صوت الحلقة من مكتبة الأصوات (اختياري — افتراضي من الإعدادات)
     يعيد: {"wav", "total_duration", "items": [{seg, text, start, end, words}]}
     """
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -319,7 +323,7 @@ def synthesize_segments(segments: list[dict], lang: str, out_dir: Path) -> dict:
             continue
         rate, pitch, gap = _prosody(seg.get("seg", ""), text, i)
         r = synthesize_line(text, lang, out_dir, name=f"seg{i}",
-                            rate=rate, pitch=pitch)
+                            rate=rate, pitch=pitch, voice=voice)
         wavs.append(r["wav"])
         items.append({
             "seg": seg.get("seg", f"seg{i}"),
@@ -373,7 +377,8 @@ def synthesize_segments(segments: list[dict], lang: str, out_dir: Path) -> dict:
         capture_output=True, check=True,
     )
 
-    plan = {"wav": final_wav, "total_duration": offset, "items": items}
+    plan = {"wav": final_wav, "total_duration": offset, "items": items,
+            "voice": voice or (settings.VOICE_EN if lang == "en" else settings.VOICE_AR)}
     (out_dir / "plan.json").write_text(
         json.dumps(
             {k: (str(v) if isinstance(v, Path) else v) for k, v in plan.items()},

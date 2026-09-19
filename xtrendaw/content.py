@@ -216,7 +216,15 @@ def english_lines(topic: dict) -> list[str]:
 
 def make_caption(topic: dict) -> str:
     tags = " ".join(f"#{t.strip()}" for t in topic.get("tags", "").split(",") if t.strip())
-    return f"{topic['title_ar']}\n{topic.get('title_en','')}\n{tags}"
+    vibes = ["🔥", "🚀", "✨", "🌌", "💛"]
+    stamp = vibes[int(topic.get("id", "x").encode()[0]) % len(vibes)]
+    return (
+        f"{stamp} {topic['title_ar']} {stamp}\n"
+        f"{topic.get('title_en', '')}\n\n"
+        "❤️ لو عجبتك الحلقة: اشترك وفعّل الجرس 🔔 — الجاية أجنب!\n"
+        "💬 اكتب في التعليقات عايز إيه في الحلقة الجاية\n\n"
+        f"{tags} #دوشة #Shorts #اكسبلور #فيرال #ترند"
+    )
 
 
 def scene_queries(topic: dict) -> list[str]:

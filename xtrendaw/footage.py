@@ -502,6 +502,18 @@ def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
     key = hashlib.sha256(f"{source}:{query}".encode()).hexdigest()[:12]
     cached = LIB / f"{key}.mp4"
 
+    # ⚠️ الكاش لوحده بيخلّي نفس اللقطة تظهر في حلقة تانية (شكوى المستخدم:
+    # «نفس الصور في 4 فيديوهات»). فلازم نتأكد إن نسخة الكاش دي ما استُخدمتش
+    # قبل كده — لو استُخدمت، بنتجاهلها ونجيب لقطة جديدة من الشبكة.
+    try:
+        from . import state as _st
+        if cached.exists() and _st.media_seen(f"clipcache:{key}"):
+            print("[footage] ↺ الكاش ده استُخدم في حلقة قبل كده — "
+                  "بجيب لقطة جديدة", flush=True)
+            cached = workdir / f"clip_{key}.mp4"
+    except Exception:
+        pass
+
     if not cached.exists():
         cands: list = []
         if source in ("auto", "pixabay"):
@@ -568,8 +580,12 @@ def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
                 try:
                     from . import state as _state
                     _state.mark_media_used(
-                        accepted.get("url", ""), accepted.get("_source", "web"),
+                        accepted.get("url", ""),
+                        f"video:{accepted.get('_source', 'web')}",
                         str(seed).split(":")[0])
+                    _state.mark_media_used(f"clipcache:{key}",
+                                           f"video:{accepted.get('_source', 'web')}",
+                                           str(seed).split(":")[0])
                 except Exception:
                     pass
 

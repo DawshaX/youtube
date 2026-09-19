@@ -1,253 +1,452 @@
-"""فحص صحة حي للاعتمادات المطلوبة، بلا طباعة قيم الأسرار."""
+"""فحص الحالة (الدكتور) — كل المفاتيح والخدمات في تقرير واحد واضح.
+
+  python -m xtrendaw.doctor           # كل الفحوص (شبكية + محلية)
+  python -m xtrendaw.doctor --local   # المحلي بس (بلا نت)
+  python -m xtrendaw.doctor --json    # مخرَج JSON
+  python -m xtrendaw.doctor --md      # ملخص Markdown (للسير والإشعارات)
+  python -m xtrendaw.doctor --fail    # exit 1 لو في فشل (افتراضي 0)
+
+الحالات:
+  ok   ✅ شغال
+  warn ⚠️  غير مضبوط/اختياري (مش فشل — بس معلوم)
+  fail ❌ مضبوط بس مش شغال
+
+كل فحص مستقل: فشل واحد ما يوقفش الباقي. بلا نت: الفحوص الشبكية
+تقف وبتتحط ⚠️ بلا ادعاء. المخرج: data/health.json (قابل للتدقيق).
+"""
 from __future__ import annotations
+
 import argparse
+import datetime as dt
+import importlib.util
 import json
-import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
-import requests
+from . import settings
 
-from . import eye
+HEALTH_PATH = settings.ROOT / "data" / "health.json"
 
-REQUIRED = ("GROQ_API_KEY", "GEMINI_API_KEY", "YOUTUBE_API_KEY",
-            "YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET",
-            "YOUTUBE_REFRESH_TOKEN", "YOUTUBE_COOKIES_B64")
+_TIMEOUT = 20
 
 
-def _ok_http(method: str, url: str, **kwargs) -> tuple[bool, str]:
+def _http_get(url: str, **kw) -> tuple[int, str]:
+    import requests
     try:
-        r = requests.request(method, url, timeout=25, **kwargs)
-        return r.ok, f"HTTP {r.status_code}"
+        r = requests.get(url, timeout=_TIMEOUT, **kw)
+        return r.status_code, r.text[:300]
     except Exception as exc:
-        return False, type(exc).__name__
+        return -1, f"{type(exc).__name__}: {exc}"
 
 
-def _probe_pexels() -> tuple[bool, str]:
-    key = os.getenv("PEXELS_API_KEY") or os.getenv("PEXELS") or ""
+def _http_post(url: str, **kw) -> tuple[int, str]:
+    import requests
+    try:
+        r = requests.post(url, timeout=_TIMEOUT, **kw)
+        return r.status_code, r.text[:300]
+    except Exception as exc:
+        return -1, f"{type(exc).__name__}: {exc}"
+
+
+# ─────────────────────────────────────────────────────────────
+# الفحوص الشبكية (كل مفتاح: exists? and works?)
+# ─────────────────────────────────────────────────────────────
+
+def check_youtube_api_key() -> dict:
+    key = settings.get("YOUTUBE_API_KEY")
     if not key:
-        return False, "missing secret (PEXELS_API_KEY / PEXELS)"
-    return _ok_http("GET", "https://api.pexels.com/videos/search",
-                    params={"query": "nature", "per_page": 1},
-                    headers={"Authorization": key})
+        return {"name": "YOUTUBE_API_KEY (الرادار)", "status": "warn",
+                "detail": "غير مضبوط — الرادار مش هيشتغل"}
+    code, body = _http_get(
+        "https://www.googleapis.com/youtube/v3/videos",
+        params={"part": "snippet", "id": "2Vv-BfVoq4g", "key": key})
+    if code == 200 and '"items"' in body:
+        return {"name": "YOUTUBE_API_KEY (الرادار)", "status": "ok",
+                "detail": "شغال — استجابة حقيقية من يوتيوب"}
+    return {"name": "YOUTUBE_API_KEY (الرادار)", "status": "fail",
+            "detail": f"HTTP {code} — {body[:160]}"}
 
 
-def _probe_pixabay() -> tuple[bool, str]:
-    key = os.getenv("PIXABAY_API_KEY") or ""
+def check_groq() -> dict:
+    key = settings.get("GROQ_API_KEY")
     if not key:
-        return False, "missing secret (PIXABAY_API_KEY)"
-    return _ok_http("GET", "https://pixabay.com/api/videos/",
-                    params={"key": key, "q": "nature", "per_page": 3})
+        return {"name": "GROQ_API_KEY (مخ الذكاء 1)", "status": "warn",
+                "detail": "غير مضبوط"}
+    code, body = _http_get("https://api.groq.com/openai/v1/models",
+                           headers={"Authorization": f"Bearer {key}"})
+    if code == 200:
+        return {"name": "GROQ_API_KEY (مخ الذكاء 1)", "status": "ok",
+                "detail": "شغال — قائمة الموديلات اتجابت"}
+    return {"name": "GROQ_API_KEY (مخ الذكاء 1)", "status": "fail",
+            "detail": f"HTTP {code} — {body[:160]}"}
 
 
-def _probe_nasa() -> tuple[bool, str]:
-    key = os.getenv("NASA_API_KEY") or os.getenv("NASA") or "DEMO_KEY"
-    return _ok_http("GET", "https://api.nasa.gov/planetary/apod",
-                    params={"api_key": key})
+def check_gemini() -> dict:
+    key = settings.get("GEMINI_API_KEY")
+    if not key:
+        return {"name": "GEMINI_API_KEY (مخ الذكاء 2)", "status": "warn",
+                "detail": "غير مضبوط"}
+    code, body = _http_get(
+        "https://generativelanguage.googleapis.com/v1beta/models",
+        params={"key": key})
+    if code == 200:
+        return {"name": "GEMINI_API_KEY (مخ الذكاء 2)", "status": "ok",
+                "detail": "شغال — قائمة الموديلات اتجابت"}
+    return {"name": "GEMINI_API_KEY (مخ الذكاء 2)", "status": "fail",
+            "detail": f"HTTP {code} — {body[:160]}"}
 
 
-def _probe_commons() -> tuple[bool, str]:
-    # كومنز بترفض الطلبات بلا User-Agent وصفي (403) — والمصنع بيبعت واحد،
-    # فالفحص لازم يبعت نفس الهيدر عشان النتيجة تكون حقيقية.
-    return _ok_http("GET", "https://commons.wikimedia.org/w/api.php",
-                    params={"action": "query", "generator": "search",
-                            "gsrsearch": "filetype:video nature", "gsrlimit": 1,
-                            "format": "json"},
-                    headers={"User-Agent": "XDAW-NOVA-doctor/1.0 "
-                                           "(github.com/DawshaX/youtube)"})
+def check_custom_llm() -> dict:
+    base, key, model = settings.LLM["base"], settings.LLM["key"], settings.LLM["model"]
+    # لو ده نفسه Groq اتفحص فوق — نبت
+    if not base or (key and base.rstrip("/").endswith("api.groq.com/openai/v1")
+                    and key == settings.get("GROQ_API_KEY")):
+        return {"name": "LLM_API_* (مزوّد مخصص)", "status": "warn",
+                "detail": "غير مضبوط منفصلًا — بيستخدم Groq بدل مكانه"}
+    if not key:
+        return {"name": "LLM_API_* (مزوّد مخصص)", "status": "warn",
+                "detail": "غير مضبوط"}
+    code, body = _http_get(f"{base.rstrip('/')}/models",
+                           headers={"Authorization": f"Bearer {key}"})
+    if code == 200:
+        return {"name": f"LLM مخصص ({model})", "status": "ok", "detail": "شغال"}
+    return {"name": f"LLM مخصص ({model})", "status": "fail",
+            "detail": f"HTTP {code} — {body[:160]}"}
 
 
-def _probe_archive() -> tuple[bool, str]:
-    return _ok_http("GET", "https://archive.org/advancedsearch.php",
-                    params={"q": "nature", "fl[]": "identifier", "rows": 1,
-                            "output": "json"})
+def check_youtube_oauth() -> dict:
+    cid = settings.get("YOUTUBE_CLIENT_ID")
+    sec = settings.get("YOUTUBE_CLIENT_SECRET")
+    rtk = settings.get("YOUTUBE_REFRESH_TOKEN")
+    if not (cid and sec and rtk):
+        missing = [n for n, v in
+                   (("CLIENT_ID", cid), ("CLIENT_SECRET", sec),
+                    ("REFRESH_TOKEN", rtk)) if not v]
+        return {"name": "YouTube OAuth (النشر)", "status": "warn",
+                "detail": "غير مكتمل — ناقص: " + ", ".join(missing)}
+    code, body = _http_post(
+        "https://oauth2.googleapis.com/token",
+        data={"client_id": cid, "client_secret": sec,
+              "refresh_token": rtk, "grant_type": "refresh_token"})
+    try:
+        j = json.loads(body)
+    except Exception:
+        j = {}
+    if code == 200 and j.get("access_token"):
+        expires = j.get("expires_in", "?")
+        return {"name": "YouTube OAuth (النشر)", "status": "ok",
+                "detail": f"شغال — توكن اتجدد (صلاحية الجلسة {expires}ث)"}
+    err = j.get("error_description") or j.get("error") or body[:160]
+    return {"name": "YouTube OAuth (النشر)", "status": "fail",
+            "detail": f"فشل تجديد التوكن: {err}"}
 
 
-def _probe_openverse() -> tuple[bool, str]:
-    key = os.getenv("OPENVERSE_API_KEY") or os.getenv("OPENVERSE") or ""
-    params = {"q": "nature", "page_size": 1}
+def _simple_key_check(env_name: str, label: str, url: str,
+                      headers: dict | None = None,
+                      params: dict | None = None) -> dict:
+    key = settings.get(env_name)
+    if not key:
+        return {"name": label, "status": "warn", "detail": "غير مضبوط (اختياري)"}
+    code, body = _http_get(url, headers=headers or {}, params=params or {})
+    if code == 200:
+        return {"name": label, "status": "ok", "detail": "شغال — استجابة 200"}
+    return {"name": label, "status": "fail",
+            "detail": f"HTTP {code} — {body[:160]}"}
+
+
+def check_pixabay() -> dict:
+    return _simple_key_check(
+        "PIXABAY_API_KEY", "PIXABAY_API_KEY (لقطات فيديو)",
+        "https://pixabay.com/api/videos/",
+        params={"key": settings.get("PIXABAY_API_KEY"), "q": "cat", "per_page": "1"})
+
+
+def check_pexels() -> dict:
+    return _simple_key_check(
+        "PEXELS_API_KEY", "PEXELS_API_KEY (لقطات احتياطية)",
+        "https://api.pexels.com/videos/1",
+        headers={"Authorization": settings.get("PEXELS_API_KEY")})
+
+
+def check_nasa() -> dict:
+    key = settings.get("NASA_API_KEY") or "DEMO_KEY"
+    code, body = _http_get("https://api.nasa.gov/planetary/apod",
+                           params={"api_key": key})
+    if code == 200:
+        st = "ok" if settings.get("NASA_API_KEY") else "warn"
+        return {"name": "NASA_API_KEY (فضاء)", "status": st,
+                "detail": "شغال" + ("" if settings.get("NASA_API_KEY")
+                                   else " (بمفتاح تجريبي — اختياري)")}
+    return {"name": "NASA_API_KEY (فضاء)", "status": "fail",
+            "detail": f"HTTP {code} — {body[:160]}"}
+
+
+def check_restcountries() -> dict:
+    key = settings.get("RESTCOUNTRIES_API_KEY") or settings.get("RESTCOUNTRIES")
+    h = {"Authorization": key} if key else {}
+    code, body = _http_get("https://restcountries.com/v3.1/alpha/EG", headers=h)
+    if code == 200:
+        return {"name": "RESTCOUNTRIES (مكتبة العالم)", "status": "ok",
+                "detail": "شغال — بيانات مصر الحقيقية اتجابت" +
+                          (" (مفتاح مفعّل)" if key else " (بلا مفتاح)")}
+    return {"name": "RESTCOUNTRIES (مكتبة العالم)", "status": "fail",
+            "detail": f"HTTP {code} — {body[:160]}"}
+
+
+def check_openverse() -> dict:
+    h = {}
+    key = settings.get("OPENVERSE_API_KEY")
     if key:
-        params["client_id"] = key
-    ok, detail = _ok_http("GET", "https://api.openverse.org/v1/images/",
-                          params=params)
-    return ok, detail + ("" if key else " (بلا مفتاح — حدود منخفضة)")
+        h["Authorization"] = f"Token {key}"
+    code, body = _http_get("https://api.openverse.org/v1/images/",
+                           params={"page_size": "1"}, headers=h)
+    if code == 200:
+        return {"name": "OPENVERSE (صور/ميديا)", "status": "ok",
+                "detail": "شغال (المفتاح اختياري)" if not key else "شغال"}
+    return {"name": "OPENVERSE (صور/ميديا)", "status": "fail",
+            "detail": f"HTTP {code} — {body[:160]}"}
 
 
-def _probe_unsplash() -> tuple[bool, str]:
-    key = os.getenv("UNSPLASH_ACCESS_KEY") or ""
-    if not key:
-        return False, "missing secret (UNSPLASH_ACCESS_KEY) — اختياري"
-    return _ok_http("GET", "https://api.unsplash.com/photos",
-                    params={"per_page": 1},
-                    headers={"Authorization": f"Client-ID {key}"})
+def check_freesound() -> dict:
+    return _simple_key_check(
+        "FREESOUND_API_KEY", "FREESOUND_API_KEY (مؤثرات CC)",
+        "https://freesound.org/apiv2/search/",
+        params={"token": settings.get("FREESOUND_API_KEY"),
+                "q": "a", "fields": "id", "pageSize": "1"})
 
 
-def _probe_freesound() -> tuple[bool, str]:
-    key = os.getenv("FREESOUND_API_KEY") or ""
-    if not key:
-        return False, "missing secret (FREESOUND_API_KEY) — مؤثرات الصوت"
-    return _ok_http("GET", "https://freesound.org/apiv2/search/text/",
-                    params={"query": "whoosh", "fields": "id", "page_size": 1,
-                            "token": key})
+def check_gnews() -> dict:
+    return _simple_key_check(
+        "GNEWS_API_KEY", "GNEWS_API_KEY (أخبار)",
+        "https://gnews.io/api/v4/top-headlines",
+        params={"token": settings.get("GNEWS_API_KEY"), "max": "1",
+                "category": "technology", "lang": "en"})
 
 
-def _probe_currents() -> tuple[bool, str]:
-    key = os.getenv("CURRENTS_API_KEY") or ""
-    if not key:
-        return False, "missing secret (CURRENTS_API_KEY) — اختياري"
-    return _ok_http("GET", "https://api.currentsapi.services/v1/latest-news",
-                    params={"apiKey": key, "language": "ar"})
+def check_currents() -> dict:
+    return _simple_key_check(
+        "CURRENTS_API_KEY", "CURRENTS_API_KEY (أخبار لحظية)",
+        "https://api.currentsapi.services/v1/latest-news",
+        params={"apiKey": settings.get("CURRENTS_API_KEY")})
 
 
-def _probe_gnews() -> tuple[bool, str]:
-    key = os.getenv("GNEWS_API_KEY") or ""
-    if not key:
-        return False, "missing secret (GNEWS_API_KEY) — اختياري"
-    return _ok_http("GET", "https://gnews.io/api/v4/top-headlines",
-                    params={"token": key, "lang": "ar", "max": 1})
-
-
-def _probe_quran_text() -> tuple[bool, str]:
-    return _ok_http("GET", "https://api.alquran.cloud/v1/surah/108")
-
-
-def _probe_quran_audio() -> tuple[bool, str]:
-    return _ok_http("GET",
-                    "https://cdn.islamic.network/quran/audio/128/ar.husary/1.mp3",
-                    stream=True)
-
-
-def _probe_edge_tts() -> tuple[bool, str]:
+def check_youtube_cookies() -> dict:
+    """الكوكيز مش بتتجدد أوتوماتيك (تصميم أمان من جوجل) — فبنكشف موتها مبكرًا:
+    اختبار حقيقي: هل المشغل لسه بيقبل الجلسة؟ (yt-dlp --simulate، بلا تنزيل)"""
+    b64 = settings.get("YOUTUBE_COOKIES_B64")
+    if not b64:
+        return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "fail",
+                "detail": "غير مضبوط — العين مش هتشوف أي فيديو من خوادم Actions"}
     try:
-        import asyncio
-
-        import edge_tts
-        voices = asyncio.run(edge_tts.list_voices())
-        ar = [v for v in voices if str(v.get("Locale", "")).startswith("ar")]
-        return bool(ar), f"{len(ar)} صوت عربي متاح"
-    except Exception as exc:
-        return False, f"{type(exc).__name__}: {str(exc)[:80]}"
-
-
-# (الاسم، دالة الفحص، إلزامي؟) — الاختياري بيتسجل بصراحة ومش بيفشّل السير،
-# لأن النقص في مزوّد واحد معناه «بديل»، مش توقف المصنع.
-MEDIA_SOURCES: tuple[tuple[str, object, bool], ...] = (
-    ("PEXELS_API_KEY", _probe_pexels, True),
-    ("PIXABAY_API_KEY", _probe_pixabay, False),
-    ("NASA_API_KEY", _probe_nasa, False),
-    ("WIKIMEDIA_COMMONS", _probe_commons, False),
-    ("INTERNET_ARCHIVE", _probe_archive, False),
-    ("OPENVERSE", _probe_openverse, False),
-    ("UNSPLASH_ACCESS_KEY", _probe_unsplash, False),
-    ("FREESOUND_API_KEY", _probe_freesound, False),
-    ("CURRENTS_API_KEY", _probe_currents, False),
-    ("GNEWS_API_KEY", _probe_gnews, False),
-    ("QURAN_TEXT_API", _probe_quran_text, False),
-    ("QURAN_AUDIO_CDN", _probe_quran_audio, False),
-    ("EDGE_TTS", _probe_edge_tts, False),
-)
-
-
-def run_media_sources() -> dict[str, dict]:
-    """فحص حي لكل مزوّد ميديا/صوت/نص — «المفتاح موجود» مش دليل."""
-    out: dict[str, dict] = {}
-    for name, fn, required in MEDIA_SOURCES:
+        import base64
+        import sys as _sys
+        import tempfile
+        import os
+        fd, tmpname = tempfile.mkstemp(suffix=".txt", prefix="daousha_ck_")
+        p = Path(tmpname)
         try:
-            ok, detail = fn()
-        except Exception as exc:
-            ok, detail = False, f"{type(exc).__name__}: {str(exc)[:80]}"
-        out[name] = {"ok": bool(ok), "detail": detail, "required": required}
-    return out
-
-
-def run() -> dict[str, dict]:
-    result: dict[str, dict] = {}
-    for name in REQUIRED:
-        result[name] = {"ok": bool(os.getenv(name, "").strip()), "detail": "present"}
-        if not result[name]["ok"]:
-            result[name]["detail"] = "missing"
-
-    if result["GROQ_API_KEY"]["ok"]:
-        ok, detail = _ok_http("GET", "https://api.groq.com/openai/v1/models",
-                              headers={"Authorization": f"Bearer {os.environ['GROQ_API_KEY']}"})
-        result["GROQ_API_KEY"] = {"ok": ok, "detail": detail}
-    if result["GEMINI_API_KEY"]["ok"]:
-        ok, detail = _ok_http("GET", "https://generativelanguage.googleapis.com/v1beta/models",
-                              params={"key": os.environ["GEMINI_API_KEY"]})
-        result["GEMINI_API_KEY"] = {"ok": ok, "detail": detail}
-    if result["YOUTUBE_API_KEY"]["ok"]:
-        ok, detail = _ok_http("GET", "https://www.googleapis.com/youtube/v3/videos",
-                              params={"part": "id", "chart": "mostPopular", "maxResults": 1,
-                                      "key": os.environ["YOUTUBE_API_KEY"]})
-        result["YOUTUBE_API_KEY"] = {"ok": ok, "detail": detail}
-
-    oauth_names = ("YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET", "YOUTUBE_REFRESH_TOKEN")
-    if all(result[n]["ok"] for n in oauth_names):
-        ok, detail = _ok_http("POST", "https://oauth2.googleapis.com/token", data={
-            "client_id": os.environ["YOUTUBE_CLIENT_ID"],
-            "client_secret": os.environ["YOUTUBE_CLIENT_SECRET"],
-            "refresh_token": os.environ["YOUTUBE_REFRESH_TOKEN"],
-            "grant_type": "refresh_token"})
-        for n in oauth_names:
-            result[n] = {"ok": ok, "detail": detail}
-
-    if result["YOUTUBE_COOKIES_B64"]["ok"]:
-        result["YOUTUBE_COOKIES_B64"] = _cookie_probe()
-
-    # فحص حي لكل مزوّد لوحده: «المفتاح موجود» مش دليل — لازم الرد ييجي فعلًا
-    for name, provider in (("GROQ_API_KEY", "groq"), ("GEMINI_API_KEY", "gemini")):
-        if result[name]["ok"]:
-            ok, detail = eye.llm_probe(provider)
-            result[name] = {"ok": ok, "detail": detail}
-    return result
-
-
-def _cookie_probe() -> dict:
-    """يفحص سر الكوكيز **بنفس مُحمِّل العين** (اللي بيحوّل أي شكل لنيتسكيب).
-
-    الدرس: الفحص القديم كان بيكتب الـ base64 زي ما هو ويسأل yt-dlp، فيرجع
-    «does not look like a Netscape format» من غير ما يقول السبب الحقيقي
-    (السطر الواحد بصيغة أزواج). دلوقتي بنفك، بنحوّل، وبنوصف الشكل.
-    """
-    path: Path | None = None
-    try:
-        _, path = eye._load_cookies()
-        if path is None:
-            return {"ok": False,
-                    "detail": "السر مش قابل للقراءة ككوكيز (نيتسكيب/JSON/أزواج)"}
-        mode_ok = (path.stat().st_mode & 0o777) == 0o600
-        cmd = [sys.executable, "-m", "yt_dlp", "--cookies", str(path),
-               "--skip-download", "--playlist-items", "1", "--print", "id",
-               "https://www.youtube.com/watch?v=OP3a2qzW5Yk"]
-        p = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
-        if p.returncode == 0:
-            return {"ok": mode_ok,
-                    "detail": "yt-dlp authenticated probe (مصادقة شغالة)"
-                              + ("" if mode_ok else " — صلاحيات الملف مش 0600")}
-        err = (p.stderr or "").strip().splitlines()
-        hint = next((l for l in err if "ERROR" in l), err[-1] if err else "?")
-        return {"ok": False, "detail": "yt-dlp: " + hint[:120]}
+            with os.fdopen(fd, "wb") as f:
+                f.write(base64.b64decode(b64))
+            os.chmod(p, 0o600)   # ملف الجلسة سر — صلاحيات المالك فقط
+            r = subprocess.run(
+                [_sys.executable, "-m", "yt_dlp", "--simulate", "--no-playlist",
+                 "--socket-timeout", "20", "--retries", "1", "--ignore-errors",
+                 "--cookies", str(p),
+                 "https://www.youtube.com/watch?v=2Vv-BfVoq4g"],
+                capture_output=True, text=True, timeout=120)
+        finally:
+            p.unlink(missing_ok=True)   # تنظيف مضمون حتى لو الاختبار فشل
     except Exception as exc:
-        return {"ok": False, "detail": f"{type(exc).__name__}: {str(exc)[:100]}"}
-    finally:
-        if path:
-            path.unlink(missing_ok=True)
+        return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "fail",
+                "detail": f"فشل الاختبار: {type(exc).__name__}: {exc}"}
+    if r.returncode == 0:
+        return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "ok",
+                "detail": "شغالة — المشغل بيقبل الجلسة (اختبار حقيقي)"}
+    tail = (r.stderr or r.stdout or "").strip().splitlines()
+    last = tail[-1][:160] if tail else "بدون مخرجات"
+    return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "fail",
+            "detail": "الكوكيز ماتت/مرفوضة — أعد تصديرها (دقيقتين): " + last}
+
+
+def check_edge_tts() -> dict:
+    """edge-tts: اختبار وصول حقيقي بخيط صغير (الخدمة غير رسمية)."""
+    import asyncio
+    import edge_tts
+
+    async def _probe():
+        c = edge_tts.Communicate("اختبار", "ar-SA-HamedNeural")
+        async for _ in c.stream():
+            return True
+        return False
+
+    try:
+        ok = asyncio.run(asyncio.wait_for(_probe(), timeout=25))
+        return {"name": "edge-tts (صوت حقيقي)", "status": "ok" if ok else "fail",
+                "detail": "صوت حقيقي اتولّد (اختبار قصير)" if ok
+                else "فشل توليد الصوت"}
+    except Exception as exc:
+        return {"name": "edge-tts (صوت حقيقي)", "status": "fail",
+                "detail": f"{type(exc).__name__}: {exc} — لو من أوفلاين: طبيعي محليًا"}
+
+
+# ─────────────────────────────────────────────────────────────
+# الفحوص المحلية
+# ─────────────────────────────────────────────────────────────
+
+def check_ffmpeg() -> dict:
+    f = shutil.which("ffmpeg")
+    if not f:
+        try:
+            import imageio_ffmpeg
+            f = imageio_ffmpeg.get_ffmpeg_exe()
+        except Exception:
+            f = None
+    if f:
+        return {"name": "ffmpeg (المونتاج)", "status": "ok", "detail": f}
+    return {"name": "ffmpeg (المونتاج)", "status": "fail",
+            "detail": "ملوش — المونتاج مش هيشتغل"}
+
+
+def check_packages() -> dict:
+    needed = ["requests", "PIL", "numpy", "edge_tts"]
+    optional = ["yt_dlp", "imageio_ffmpeg"]
+    missing = [p for p in needed if importlib.util.find_spec(p) is None]
+    miss_opt = [p for p in optional if importlib.util.find_spec(p) is None]
+    detail = "كل الحزم الأساسية متاحة"
+    if miss_opt:
+        detail += f" · اختياري ناقص: {', '.join(miss_opt)}"
+    if missing:
+        return {"name": "حزم بايثون", "status": "fail",
+                "detail": "ناقصة: " + ", ".join(missing)}
+    return {"name": "حزم بايثون", "status": "ok", "detail": detail}
+
+
+def check_voice_library() -> dict:
+    from . import voice
+    v = voice.load_ar_voices()
+    f = settings.ROOT / "state" / "ar_voices.txt"
+    if not v:
+        return {"name": "مكتبة الأصوات", "status": "fail", "detail": "فارغة"}
+    return {"name": "مكتبة الأصوات", "status": "ok",
+            "detail": f"{len(v)} صوت عربي" + (" (ملف حقيقي)" if f.exists()
+                                             else " (قائمة الاحتياط)")}
+
+
+def check_data_integrity() -> dict:
+    problems = []
+    for rel in ("data/production_log.json", "data/eye_topics.json",
+                "vault/index.json"):
+        p = settings.ROOT / rel
+        if p.exists():
+            try:
+                json.loads(p.read_text(encoding="utf-8"))
+            except Exception:
+                problems.append(rel)
+    if problems:
+        return {"name": "سلامة ملفات البيانات", "status": "fail",
+                "detail": "JSON فاسد في: " + ", ".join(problems)}
+    return {"name": "سلامة ملفات البيانات", "status": "ok",
+            "detail": "كل الملفات القابلة للفحص سليمة"}
+
+
+NETWORK_CHECKS = [
+    check_youtube_api_key, check_youtube_cookies, check_groq, check_gemini,
+    check_custom_llm,
+    check_youtube_oauth, check_pixabay, check_pexels, check_nasa,
+    check_openverse, check_restcountries, check_freesound, check_gnews, check_currents,
+    check_edge_tts,
+]
+LOCAL_CHECKS = [
+    check_ffmpeg, check_packages, check_voice_library, check_data_integrity,
+]
+
+
+def run(local_only: bool = False) -> dict:
+    checks = [c() for c in LOCAL_CHECKS]
+    if not local_only:
+        checks += [c() for c in NETWORK_CHECKS]
+    else:
+        # نسمّي الفحوص المتخطاة بأسماء خدماتها مش بأسماء دوالها
+        skip_names = {
+            "check_youtube_api_key": "YOUTUBE_API_KEY (الرادار)",
+            "check_youtube_cookies": "YOUTUBE_COOKIES_B64 (كوكيز العين)",
+            "check_groq": "GROQ_API_KEY (مخ الذكاء 1)",
+            "check_gemini": "GEMINI_API_KEY (مخ الذكاء 2)",
+            "check_custom_llm": "LLM_API_* (مزوّد مخصص)",
+            "check_youtube_oauth": "YouTube OAuth (النشر)",
+            "check_pixabay": "PIXABAY_API_KEY (لقطات فيديو)",
+            "check_pexels": "PEXELS_API_KEY (لقطات احتياطية)",
+            "check_nasa": "NASA_API_KEY (فضاء)",
+            "check_openverse": "OPENVERSE (صور/ميديا)",
+            "check_restcountries": "RESTCOUNTRIES (مكتبة العالم)",
+            "check_freesound": "FREESOUND_API_KEY (مؤثرات CC)",
+            "check_gnews": "GNEWS_API_KEY (أخبار)",
+            "check_currents": "CURRENTS_API_KEY (أخبار لحظية)",
+            "check_edge_tts": "edge-tts (صوت حقيقي)",
+        }
+        checks += [{"name": skip_names.get(c.__name__, c.__name__),
+                    "status": "warn", "detail": "تم تخطيه (--local)"}
+                   for c in NETWORK_CHECKS]
+    fails = [c for c in checks if c["status"] == "fail"]
+    report = {
+        "checkedAt": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+        "runner": "local" if local_only else "actions-or-local",
+        "all_ok": not fails,
+        "fails": len(fails),
+        "warns": sum(1 for c in checks if c["status"] == "warn"),
+        "checks": checks,
+    }
+    HEALTH_PATH.parent.mkdir(parents=True, exist_ok=True)
+    HEALTH_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=1),
+                           encoding="utf-8")
+    return report
+
+
+_ICONS = {"ok": "✅", "warn": "⚠️", "fail": "❌"}
+
+
+def summary_md(report: dict) -> str:
+    L = [
+        f"## فحص الحالة — {report['checkedAt']}",
+        "",
+        f"**النتيجة: {'كل حاجة تمام ✅' if report['all_ok'] else 'في مشاكل ❌ (' + str(report['fails']) + ')'}** "
+        f"· تحذيرات: {report['warns']}",
+        "",
+        "| الخدمة | الحالة | تفاصيل |",
+        "|---|---|---|",
+    ]
+    for c in report["checks"]:
+        L.append(f"| {c['name']} | {_ICONS[c['status']]} {c['status']} | {c['detail']} |")
+    return "\n".join(L)
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--json", action="store_true")
+    ap = argparse.ArgumentParser(description="فحص حالة المفاتيح والخدمات")
+    ap.add_argument("--local", action="store_true", help="بلا فحوص شبكية")
+    ap.add_argument("--json", action="store_true", help="مخرَج JSON كامل")
+    ap.add_argument("--md", action="store_true", help="ملخص Markdown")
+    ap.add_argument("--fail", action="store_true", help="exit 1 لو في فشل")
     args = ap.parse_args()
-    report = run()
-    report.update(run_media_sources())
-    print(json.dumps(report, ensure_ascii=False, indent=2) if args.json else "\n".join(
-        f"{'✅' if v['ok'] else '❌'} {k}: {v['detail']}" for k, v in report.items()))
-    hard_fail = [k for k, v in report.items()
-                 if not v["ok"] and v.get("required", True)]
-    if hard_fail:
-        print("❌ إلزامي وقع: " + ", ".join(hard_fail), file=sys.stderr)
-    return 1 if hard_fail else 0
+
+    report = run(local_only=args.local)
+
+    if args.json:
+        print(json.dumps(report, ensure_ascii=False, indent=1))
+    elif args.md:
+        print(summary_md(report))
+    else:
+        print(f"🩺 فحص الحالة — {report['checkedAt']}")
+        for c in report["checks"]:
+            print(f"  {_ICONS[c['status']]} {c['name']}: {c['detail']}")
+        print(f"\nالنتيجة: {'كل حاجة تمام ✅' if report['all_ok'] else 'في فشل ❌ ' + str(report['fails'])} "
+              f"| تحذيرات: {report['warns']} | التقرير: data/health.json")
+
+    if args.fail and not report["all_ok"]:
+        return 1
+    return 0
+
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    sys.exit(main())
