@@ -10,24 +10,13 @@
   ],
   "credits": [],
   "footage_usage": {
-    "08_neon_cyber_grid.mp4": 2,
-    "14_lava_embers_flow.mp4": 2,
-    "09_lightning_storm_danger.mp4": 1,
-    "03_blizzard_freeze_motion.mp4": 2,
-    "10_ocean_deep_waves.mp4": 2,
-    "17_purple_galaxy_swirl.mp4": 2,
-    "04_countdown_hud_motion.mp4": 2,
-    "13_green_energy_pulse.mp4": 2,
-    "19_bronze_gears_machine.mp4": 2,
-    "11_desert_dunes_gold.mp4": 2,
-    "02_cash_rain_motion.mp4": 1,
-    "07_space_warp_cosmic.mp4": 2,
-    "18_aurora_night_sky.mp4": 2,
-    "15_blue_city_nights.mp4": 2,
-    "clip_space_4s.mp4": 2,
-    "20_white_light_reveal.mp4": 2,
-    "12_gold_treasure_rain.mp4": 1,
-    "05_confetti_winner_motion.mp4": 2
+    "clip_0a47aa257828.mp4": 3,
+    "clip_2a5d3e580cae.mp4": 4,
+    "clip_cfc23c67f063.mp4": 4,
+    "clip_b3d5fa81839f.mp4": 4,
+    "clip_3df658b1a8ad.mp4": 12,
+    "clip_b9789aa16a87.mp4": 3,
+    "clip_d7ca6a85054f.mp4": 3
   },
   "validate": {
     "info": {
@@ -36,7 +25,7 @@
       "height": 1920,
       "vcodec": "h264",
       "acodec": "aac",
-      "bytes": 40848903
+      "bytes": 40512120
     },
     "checks": {
       "الأبعاد 1080×1920": true,
