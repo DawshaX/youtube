@@ -56,15 +56,28 @@ export function quotaDayKey(value) {
 }
 
 export function uploadsInCurrentQuotaDay(records = [], log = [], now = new Date()) {
+  // ⚠️ مش بنجمع القايمتين: saved_videos وproduction_log بيوصفوا **نفس** الرفعات
+  // (بمعرّفات مختلفة: video id مقابل topicId) — فجمعهم بيعدّ الرفعة مرتين
+  // ويخلّي السقف يتفعّل بدري. الأولوية للسجل المؤكد (saved_videos).
   const today = quotaDayKey(now);
-  const seen = new Set();
-  for (const record of [...records, ...log]) {
+  const confirmed = new Set();
+  for (const record of records) {
     if (!record || typeof record !== 'object') continue;
-    const stamp = record.publishedAt || record.uploadedAt || record.producedAt || record.verifiedAt;
+    const stamp = record.publishedAt || record.uploadedAt || record.verifiedAt;
     if (!stamp || quotaDayKey(stamp) !== today) continue;
-    seen.add(record.id || record.videoId || record.topicId || String(stamp));
+    confirmed.add(record.id || record.videoId || String(stamp));
   }
-  return seen.size;
+  if (confirmed.size) return confirmed.size;
+
+  // مفيش سجل رفعات مؤكد لليوم ده → نرجع لسجل الإنتاج (المنشور فقط، مش المنتَج)
+  const produced = new Set();
+  for (const record of log) {
+    if (!record || typeof record !== 'object' || record.published === false) continue;
+    const stamp = record.producedAt || record.publishedAt;
+    if (!stamp || quotaDayKey(stamp) !== today) continue;
+    produced.add(record.videoId || record.topicId || record.filePath || String(stamp));
+  }
+  return produced.size;
 }
 
 export function dailyUploadCap() {

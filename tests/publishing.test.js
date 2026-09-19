@@ -163,6 +163,13 @@ test('daily quota cap: counting uploads uses the YouTube (Pacific) day, not UTC'
   ];
   assert.equal(uploadsInCurrentQuotaDay(records, [], now), 2);
   assert.equal(uploadsInCurrentQuotaDay([], [{ topicId: 't1', producedAt: '2026-09-19T08:30:00Z' }], now), 1);
+  // نفس الرفعة موجودة في القايمتين بمعرّفين → تتحسب مرة واحدة (بلاش تفعيل مبكر للسقف)
+  assert.equal(uploadsInCurrentQuotaDay(
+    [{ id: 'vid', publishedAt: '2026-09-19T08:10:00Z' }],
+    [{ topicId: 'eye-abc', producedAt: '2026-09-19T08:10:05Z' }], now), 1);
+  // إنتاج لم يُنشر مايتحسبش في الحصة
+  assert.equal(uploadsInCurrentQuotaDay([], [
+    { topicId: 't2', producedAt: '2026-09-19T08:40:00Z', published: false }], now), 0);
 });
 
 test('daily quota cap: default is the YouTube upload quota ceiling and is overridable', () => {
