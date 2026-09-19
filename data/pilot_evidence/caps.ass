@@ -12,32 +12,32 @@ Style: CapEN,Tajawal,45,&H00FFFFFF,&H000000FF,&H00000000,&H96000000,-1,0,0,0,100
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.10,0:00:03.76,Cap,,0,0,0,,{\k38}اسمعوا {\k57}الصبار {\k32}وهو {\k68}يطقطق {\k87}ومفاجأة
-Dialogue: 0,0:00:03.76,0:00:04.28,Cap,,0,0,0,,{\k52}جوا
-Dialogue: 0,0:00:05.57,0:00:08.61,Cap,,0,0,0,,{\k73}الحقيقة {\k48}الأولى {\k67}الصبار {\k37}غني {\k55}بمادة
-Dialogue: 0,0:00:08.61,0:00:11.71,Cap,,0,0,0,,{\k52}جلية {\k66}تُستخرج {\k67}لصناعة {\k50}منتجات {\k70}التجميل
-Dialogue: 0,0:00:12.95,0:00:15.59,Cap,,0,0,0,,{\k65}الحقيقة {\k58}الثانية {\k58}تقنية {\k10}ال {\k51}ASMR
-Dialogue: 0,0:00:15.59,0:00:18.00,Cap,,0,0,0,,{\k56}تعتمد {\k19}على {\k53}أصوات {\k53}ناعمة {\k53}لتفعيل
-Dialogue: 0,0:00:18.00,0:00:20.23,Cap,,0,0,0,,{\k66}استجابة {\k88}استرخائية {\k7}في {\k59}الدماغ
-Dialogue: 0,0:00:21.48,0:00:24.09,Cap,,0,0,0,,{\k74}والحقيقة {\k59}الثالثة {\k47}لحظة {\k51}الصدمة {\k7}في
-Dialogue: 0,0:00:24.09,0:00:26.47,Cap,,0,0,0,,{\k51}الثواني {\k34}الأولى {\k38}تعلي {\k76}متوسط {\k33}مدة
-Dialogue: 0,0:00:26.47,0:00:28.52,Cap,,0,0,0,,{\k78}المشاهدة {\k50}بشكل {\k75}ملحوظ
-Dialogue: 0,0:00:29.77,0:00:32.62,Cap,,0,0,0,,{\k75}وخلاصة {\k53}الليلة {\k18}في {\k45}تلات {\k71}لمسات
-Dialogue: 0,0:00:32.62,0:00:35.94,Cap,,0,0,0,,{\k79}لعقلك {\k62}الفضول {\k62}يخلينا {\k53}نجرب {\k48}أشياء
-Dialogue: 0,0:00:35.94,0:00:39.24,Cap,,0,0,0,,{\k61}جديدة {\k37}حتى {\k14}لو {\k61}شكلها {\k62}غريب
-Dialogue: 0,0:00:39.24,0:00:42.70,Cap,,0,0,0,,{\k85}لقلبك {\k59}اللحظة {\k81}المفاجئة {\k48}تخلق {\k45}إدمان
-Dialogue: 0,0:00:42.70,0:00:47.56,Cap,,0,0,0,,{\k79}مشاهدة {\k73}وإحساس {\k66}بالمتعة {\k94}ولروحك {\k59}استمتع
-Dialogue: 0,0:00:47.56,0:00:49.72,Cap,,0,0,0,,{\k55}بالهدوء {\k24}قبل {\k57}الصدمة {\k55}واكتشف {\k18}إن
-Dialogue: 0,0:00:49.72,0:00:52.03,Cap,,0,0,0,,{\k67}التجربة {\k50}ممكن {\k44}تكون {\k66}مدهشة
-Dialogue: 0,0:00:53.55,0:00:55.07,Cap,,0,0,0,,{\k46}اشترك {\k33}الآن {\k16}في {\k17}دۅۄشے {\k34}واكتب
-Dialogue: 0,0:00:55.07,0:00:56.96,Cap,,0,0,0,,{\k7}في {\k69}التعليقات {\k43}الفيديو {\k40}الجاي {\k24}اللي
-Dialogue: 0,0:00:56.96,0:00:57.86,Cap,,0,0,0,,{\k39}نفسك {\k50}تشوفه
-Dialogue: 0,0:00:59.16,0:01:02.78,Cap,,0,0,0,,{\k37}انتو {\k49}خير {\k60}ونور {\k60}تابعوا {\k38}دۅۄشے
-Dialogue: 0,0:01:02.78,0:01:03.85,Cap,,0,0,0,,{\k52}الجاية {\k53}أجنّ
-Dialogue: 0,0:00:00.00,0:00:05.09,CapEN,,0,0,0,,Listen to the cactus snap… and a surprise inside!
-Dialogue: 0,0:00:05.47,0:00:12.55,CapEN,,0,0,0,,Fact one: Cactus contains a gel used in cosmetic products.
-Dialogue: 0,0:00:12.85,0:00:21.08,CapEN,,0,0,0,,Fact two: ASMR relies on soft repetitive sounds to trigger a relaxing brain response.
-Dialogue: 0,0:00:21.38,0:00:29.37,CapEN,,0,0,0,,And fact three: A shocking moment in the first seconds boosts average watch time noticeably.
-Dialogue: 0,0:00:29.67,0:00:52.95,CapEN,,0,0,0,,And tonight's takeaway in three touches. For your mind: Curiosity pushes us to try odd things even when they look strange. For your heart: The surprise moment creates a binge feeling and pure fun. For your soul: Savor the calm before the shock and realize the experience can be amazing.
-Dialogue: 0,0:00:53.45,0:00:58.71,CapEN,,0,0,0,,Subscribe to Daousha now and drop the next video you want to see in the comments!
-Dialogue: 0,0:00:59.06,0:01:04.77,CapEN,,0,0,0,,Follow Daousha — the next one is wilder!
+Dialogue: 0,0:00:00.10,0:00:04.04,Cap,,0,0,0,,{\k39}اسمعوا {\k58}الصبار {\k31}وهو {\k77}يطقطق {\k100}ومفاجأة
+Dialogue: 0,0:00:04.04,0:00:04.62,Cap,,0,0,0,,{\k58}جوا
+Dialogue: 0,0:00:05.95,0:00:09.35,Cap,,0,0,0,,{\k82}الحقيقة {\k62}الأولى {\k67}الصبار {\k43}غني {\k56}بمادة
+Dialogue: 0,0:00:09.35,0:00:12.92,Cap,,0,0,0,,{\k67}جلية {\k75}تُستخرج {\k72}لصناعة {\k56}منتجات {\k82}التجميل
+Dialogue: 0,0:00:14.19,0:00:17.33,Cap,,0,0,0,,{\k78}الحقيقة {\k66}الثانية {\k63}تقنية {\k16}ال {\k62}ASMR
+Dialogue: 0,0:00:17.33,0:00:19.95,Cap,,0,0,0,,{\k63}تعتمد {\k20}على {\k58}أصوات {\k59}ناعمة {\k54}لتفعيل
+Dialogue: 0,0:00:19.95,0:00:22.36,Cap,,0,0,0,,{\k70}استجابة {\k94}استرخائية {\k7}في {\k67}الدماغ
+Dialogue: 0,0:00:23.66,0:00:26.54,Cap,,0,0,0,,{\k84}والحقيقة {\k71}الثالثة {\k49}لحظة {\k55}الصدمة {\k5}في
+Dialogue: 0,0:00:26.54,0:00:29.18,Cap,,0,0,0,,{\k49}الثواني {\k48}الأولى {\k42}تعلي {\k80}متوسط {\k38}مدة
+Dialogue: 0,0:00:29.18,0:00:31.39,Cap,,0,0,0,,{\k84}المشاهدة {\k52}بشكل {\k82}ملحوظ
+Dialogue: 0,0:00:32.70,0:00:35.80,Cap,,0,0,0,,{\k81}وخلاصة {\k56}الليلة {\k18}في {\k41}تلات {\k89}لمسات
+Dialogue: 0,0:00:35.80,0:00:39.41,Cap,,0,0,0,,{\k87}لعقلك {\k72}الفضول {\k64}يخلينا {\k58}نجرب {\k49}أشياء
+Dialogue: 0,0:00:39.41,0:00:43.25,Cap,,0,0,0,,{\k80}جديدة {\k46}حتى {\k18}لو {\k65}شكلها {\k76}غريب
+Dialogue: 0,0:00:43.25,0:00:46.91,Cap,,0,0,0,,{\k92}لقلبك {\k64}اللحظة {\k86}المفاجئة {\k47}تخلق {\k52}إدمان
+Dialogue: 0,0:00:46.91,0:00:52.32,Cap,,0,0,0,,{\k85}مشاهدة {\k81}وإحساس {\k77}بالمتعة {\k110}ولروحك {\k68}استمتع
+Dialogue: 0,0:00:52.32,0:00:54.83,Cap,,0,0,0,,{\k60}بالهدوء {\k27}قبل {\k64}الصدمة {\k68}واكتشف {\k26}إن
+Dialogue: 0,0:00:54.83,0:00:57.42,Cap,,0,0,0,,{\k72}التجربة {\k61}ممكن {\k46}تكون {\k76}مدهشة
+Dialogue: 0,0:00:58.98,0:01:00.74,Cap,,0,0,0,,{\k50}اشترك {\k40}الآن {\k17}في {\k22}دۅۄشے {\k42}واكتب
+Dialogue: 0,0:01:00.74,0:01:02.72,Cap,,0,0,0,,{\k6}في {\k69}التعليقات {\k43}الفيديو {\k42}الجاي {\k31}اللي
+Dialogue: 0,0:01:02.72,0:01:03.78,Cap,,0,0,0,,{\k46}نفسك {\k59}تشوفه
+Dialogue: 0,0:01:05.14,0:01:09.33,Cap,,0,0,0,,{\k42}انتو {\k49}خير {\k82}ونور {\k69}تابعوا {\k55}دۅۄشے
+Dialogue: 0,0:01:09.33,0:01:10.55,Cap,,0,0,0,,{\k56}الجاية {\k64}أجنّ
+Dialogue: 0,0:00:00.00,0:00:05.47,CapEN,,0,0,0,,Listen to the cactus snap… and a surprise inside!
+Dialogue: 0,0:00:05.85,0:00:13.79,CapEN,,0,0,0,,Fact one: Cactus contains a gel used in cosmetic products.
+Dialogue: 0,0:00:14.09,0:00:23.26,CapEN,,0,0,0,,Fact two: ASMR relies on soft repetitive sounds to trigger a relaxing brain response.
+Dialogue: 0,0:00:23.56,0:00:32.30,CapEN,,0,0,0,,And fact three: A shocking moment in the first seconds boosts average watch time noticeably.
+Dialogue: 0,0:00:32.60,0:00:58.38,CapEN,,0,0,0,,And tonight's takeaway in three touches. For your mind: Curiosity pushes us to try odd things even when they look strange. For your heart: The surprise moment creates a binge feeling and pure fun. For your soul: Savor the calm before the shock and realize the experience can be amazing.
+Dialogue: 0,0:00:58.88,0:01:04.69,CapEN,,0,0,0,,Subscribe to Daousha now and drop the next video you want to see in the comments!
+Dialogue: 0,0:01:05.04,0:01:11.50,CapEN,,0,0,0,,Follow Daousha — the next one is wilder!
