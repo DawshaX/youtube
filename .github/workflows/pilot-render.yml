@@ -126,6 +126,7 @@ jobs:
 
       - name: Commit real evidence back to the repo (v2 — خزنة 21 لقطة)
         run: |
+          BRANCH="${GITHUB_REF_NAME:-main}"
           git config user.name "daousha-factory"
           git config user.email "daousha-factory@users.noreply.github.com"
           mkdir -p data/pilot_evidence
@@ -136,5 +137,13 @@ jobs:
             echo "no evidence to commit"
           else
             git commit -m "evidence(pilot): plan.json + caps.ass + ar voices from the REAL Actions render"
-            git push origin HEAD:${GITHUB_REF_NAME:-main}
+          # دفع آمن من سباق: بوتات كتير بتدفع على main (العين/البايلوت/المصنع/الوكيل).
+          # الدرس (تشغيل 2026-09-19): pilot-render فشل كله لأن الدفع اترفض:
+          #   ! [rejected] HEAD -> main (fetch first)
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase --autostash origin "$BRANCH" >/dev/null 2>&1 || true
+            if git push origin "HEAD:$BRANCH"; then break; fi
+            echo "دفع محاولة $attempt فشلت (الريموت اتغير) — إعادة محاولة بعد 5 ثوانٍ…"
+            sleep 5
+          done
           fi

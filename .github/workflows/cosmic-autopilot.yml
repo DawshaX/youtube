@@ -77,6 +77,7 @@ jobs:
       - name: Persist confirmed upload history
         if: always()
         run: |
+          BRANCH="${{ github.ref_name }}"
           git config user.name 'CosmicTube AutoPilot [Bot]'
           git config user.email 'bot@cosmictube.internal'
           git add data/saved_videos.json
@@ -85,7 +86,15 @@ jobs:
           fi
           if ! git diff --staged --quiet; then
             git commit -m 'chore: record confirmed YouTube upload [skip ci]'
-            git push origin HEAD:${{ github.ref_name }}
+          # دفع آمن من سباق: بوتات كتير بتدفع على main (العين/البايلوت/المصنع/الوكيل).
+          # الدرس (تشغيل 2026-09-19): pilot-render فشل كله لأن الدفع اترفض:
+          #   ! [rejected] HEAD -> main (fetch first)
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase --autostash origin "$BRANCH" >/dev/null 2>&1 || true
+            if git push origin "HEAD:$BRANCH"; then break; fi
+            echo "دفع محاولة $attempt فشلت (الريموت اتغير) — إعادة محاولة بعد 5 ثوانٍ…"
+            sleep 5
+          done
           fi
       - name: Preserve upload history if pushing fails
         if: failure()

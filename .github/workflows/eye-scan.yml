@@ -82,6 +82,7 @@ jobs:
       - name: Commit the eye queue (reports + frames only — never the mp4)
         if: always()
         run: |
+          BRANCH=main
           git config user.name 'Daousha Eye [Bot]'
           git config user.email 'eye@daousha.internal'
           git add data/eye_topics.json data/eye_consumed.json 2>/dev/null || true
@@ -95,7 +96,15 @@ jobs:
           fi
           if ! git diff --staged --quiet; then
             git commit -m 'evidence(eye): watched reports + topics [skip ci]'
-            git push origin HEAD:main
+          # دفع آمن من سباق: بوتات كتير بتدفع على main (العين/البايلوت/المصنع/الوكيل).
+          # الدرس (تشغيل 2026-09-19): pilot-render فشل كله لأن الدفع اترفض:
+          #   ! [rejected] HEAD -> main (fetch first)
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase --autostash origin "$BRANCH" >/dev/null 2>&1 || true
+            if git push origin "HEAD:$BRANCH"; then break; fi
+            echo "دفع محاولة $attempt فشلت (الريموت اتغير) — إعادة محاولة بعد 5 ثوانٍ…"
+            sleep 5
+          done
           fi
           # ملخص التشغيل في الصفحة
           {
