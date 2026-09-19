@@ -1,5 +1,27 @@
 [
   {
+    "topicId": "eye-OL0QN17ceU4",
+    "source": "authored",
+    "title": "تحدي الصبار بالصوت: صدمة ما تتوقعها 😱🌵 #Shorts",
+    "producedAt": "2026-09-19T02:48:40.826Z",
+    "filePath": "content/vids/eye-OL0QN17ceU4.mp4",
+    "sizeBytes": 40881983,
+    "durationSeconds": 62.63,
+    "width": 1080,
+    "height": 1920,
+    "vcodec": "h264",
+    "acodec": "aac",
+    "audioSources": [
+      "word"
+    ],
+    "coverPath": "content/vids/eye-OL0QN17ceU4-cover.png",
+    "published": true,
+    "youtubeVideoId": "MGVIVX-Sa3U",
+    "youtubeUrl": "https://youtu.be/MGVIVX-Sa3U",
+    "verifiedBy": "youtube.videos.list",
+    "verifiedAt": "2026-09-19T02:48:40.826Z"
+  },
+  {
     "topicId": "ep4",
     "source": "authored",
     "title": "الأخطبوط عنده 3 قلوب و9 أدمغة… مش هزار! #Shorts",
@@ -86,45 +108,5 @@
     "youtubeUrl": "https://youtu.be/Zh0XcHBQb0A",
     "verifiedBy": "youtube.videos.list",
     "verifiedAt": "2026-09-16T10:59:04.325Z"
-  },
-  {
-    "topicId": "trend-01",
-    "source": "radar",
-    "title": "عشت 7 أيام في غرفة بيضاء بالكامل بدون أي صوت أو بشر!",
-    "producedAt": "2026-09-16T04:59:47.875Z",
-    "filePath": "content/vids/trend-01.mp4",
-    "sizeBytes": 29337487,
-    "durationSeconds": 48.73,
-    "width": 1080,
-    "height": 1920,
-    "vcodec": "h264",
-    "acodec": "aac",
-    "audioSources": [
-      "fallback"
-    ],
-    "coverPath": "content/vids/trend-01-cover.png",
-    "published": false,
-    "youtubeVideoId": null,
-    "youtubeUrl": null
-  },
-  {
-    "topicId": "mrbeast_challenge",
-    "source": "radar",
-    "title": "آخر شخص يرفع يده عن جبل النقود يربح 250,000$",
-    "producedAt": "2026-09-16T04:57:49.561Z",
-    "filePath": "content/vids/mrbeast_challenge.mp4",
-    "sizeBytes": 28666332,
-    "durationSeconds": 47.03,
-    "width": 1080,
-    "height": 1920,
-    "vcodec": "h264",
-    "acodec": "aac",
-    "audioSources": [
-      "fallback"
-    ],
-    "coverPath": "content/vids/mrbeast_challenge-cover.png",
-    "published": false,
-    "youtubeVideoId": null,
-    "youtubeUrl": null
   }
 ]
