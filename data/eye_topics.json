@@ -1,1 +1,231 @@
-[]
+[
+ {
+  "id": "eye-JPbWXvyaCcw",
+  "topic": "Marshmallow #challenge",
+  "angle": "الهيكل ينهار عندما يُوضع المارشميلو، مما يكشف أن القاعدة الأساسية للتحدي هي أن المارشميلو ",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي المارشميلو: أبني برج من الحلوى!",
+  "title_en": "Marshmallow Challenge: Build a Sweet Tower!",
+  "hook_ar": "هل تجرّأ تبني برج من مارشميلو؟",
+  "hook_en": "Dare to build a marshmallow tower?",
+  "facts_ar": [
+   "تُستَخدم تحديات المارشميلو في الورش لتعليم التعاون والإبداع.",
+   "الهدف هو بناء أعلى هيكل ممكن بمواد محدودة وفي زمن قصير.",
+   "الفرق التي تتبع نهج تجريبي سريع غالبًا تتفوق على تلك التي تخطط بدقة."
+  ],
+  "facts_en": [
+   "Marshmallow challenges are used in workshops to teach collaboration and creativity.",
+   "The goal is to build the tallest structure possible using limited materials in a short time.",
+   "Teams that adopt a rapid‑experiment approach usually beat those that plan meticulously."
+  ],
+  "takeaway_ar": {
+   "aql": "الإبداع يبدأ من تجربة بسيطة",
+   "qalb": "العمل الجماعي يصنع القمم",
+   "rouh": "استمتع بالفشل وتعلّم منه"
+  },
+  "takeaway_en": {
+   "aql": "Creativity sparks from a simple experiment",
+   "qalb": "Teamwork builds the heights",
+   "rouh": "Enjoy the fall and learn from it"
+  },
+  "tags": "مارشميلو,تحدي,إبداع,بناء,متعة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة مقربة لقطعة مارشميلو ضخمة تُقذف في الهواء وتستقر على منصة غير متوقعة.",
+    "style": "حركة كاميرا ديناميكية، نص متحرك يطرح سؤال الحافز.",
+    "colors": [
+     "#FF6F61",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "عرض مجموعة أدوات بسيطة (عصيان، شريط لاصق، خيوط) مع إيقاع موسيقي متصاعد.",
+    "style": "قفزات سريعة، إضاءة ساطعة لتسليط الضوء على الأدوات.",
+    "colors": [
+     "#F7E967",
+     "#2C3E50"
+    ]
+   },
+   {
+    "time": "0:08-0:12",
+    "scene": "بناء الهيكل بسرعة عالية مع قطع سريعة تُظهر كل خطوة في ثوانٍ معدودة.",
+    "style": "تقطيع سريع (jump cuts)، نصوص سميكة توضح الخطوات.",
+    "colors": [
+     "#FF6F61",
+     "#F7E967"
+    ]
+   },
+   {
+    "time": "0:13-0:15",
+    "scene": "الهيكل ينهار فجأةً عند وضع المارشميلو على القمة، مع صدمة صوتية.",
+    "style": "إيقاف الموسيقى لحظة الانهيار، مؤثر صوتي للانقضاض.",
+    "colors": [
+     "#2C3E50",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:16-0:18",
+    "scene": "المبدئ يضحك ويحث المشاهد على تجربة التحدي، يظهر زر دعوة للمتابعة.",
+    "style": "قرب على الوجه، إيموجي مارشميلو متحرك، نص CTA واضح.",
+    "colors": [
+     "#FF6F61",
+     "#F7E967"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "JPbWXvyaCcw",
+   "url": "https://youtu.be/JPbWXvyaCcw",
+   "sourceTitle": "Marshmallow #challenge",
+   "sourceChannel": "Stoney Choi",
+   "sourceViews": 20322008,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "المبدئ يبدأ الفيديو بلقطة مقربة لقطعة مارشميلو ضخمة تُقذف في الهواء وتُسقط على منصة بناء غير متوقعة.",
+     "why_it_works": "اللقطة غير المتوقعة تثير الدهشة وتدفع المشاهد إلى الاستمرار لمعرفة ما سيحدث للمارشميلو."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "صاعد سريع في الثواني الأولى، قمة توتر عند بناء الهيكل، ثم انخفاض مفاجئ عند الانهيار، يليه ارتفاع خفيف مع الدعوة للمتابعة."
+    },
+    "retention_tricks": [
+     "طرح سؤال في أول 3 ثوانٍ.",
+     "استخدام قطع سريعة (jump cuts) للحفاظ على إيقاع عالي.",
+     "إدراج نص متحرك يوضح الخطوات دون الحاجة لسماع كل شيء.",
+     "إنهاء الفيديو بلقطة فكاهية (الانهيار) تخلق رغبة في مشاهدة المزيد."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 88,
+   "weaknesses": [
+    "Audio plan is not detailed; the DNA trend specifies a youthful, energetic voice and a specific music/sfx progression that is only implied here.",
+    "Timing of the twist (0:13‑0:15) is a second later than the DNA’s 0:12‑0:15 window, which could slightly affect the energy curve.",
+    "Heavy use of emojis and animated stickers may distract from the core message if not balanced carefully."
+   ],
+   "verdict": "The proposal aligns closely with the DNA trend and would likely perform well, but adding a concrete audio storyboard and fine‑tuning the twist timing would push it into the top tier."
+  }
+ },
+ {
+  "id": "eye-Ug7w1NXSfTI",
+  "topic": "Zelda Vs GTA 6: Water Comparison💀🤦‍♂️",
+  "angle": "الماء في GTA 6 يدمج عناصر الفيزياء المتفجرة مع ماء Zelda النقي، ما ينتج مشهدًا فوضويًا غير",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "مواجهة مائية بين زيلدا وجي‑تي‑أي ست ست 💀🤦‍♂️",
+  "title_en": "Zelda vs GTA Six: Water Showdown 💀🤦‍♂️",
+  "hook_ar": "اسمع يا حبة، شوف إيه اللي يحصل لما ميّة زيلدا تقابل فوضى جي‑تي‑أي!",
+  "hook_en": "Listen up, see what happens when Zelda’s water meets GTA chaos!",
+  "facts_ar": [
+   "زلدا بيعتمد على الميه لحل الألغاز داخل عوالمه الساحرة",
+   "جي‑تي‑أي ست ست متوقع يرفع مستوى فيزياء الميه عن النسخ اللي قبلها",
+   "المقارنات بين ألعاب مختلفة بتجذب متابعين من كل الأذواق"
+  ],
+  "facts_en": [
+   "Zelda uses water as a core element for puzzle solving",
+   "GTA Six is expected to upgrade water physics beyond its predecessors",
+   "Head‑to‑head comparisons of different games draw a wide audience"
+  ],
+  "takeaway_ar": {
+   "aql": "الخيال يخلط عوالم مختلفة ويولد مشاهد غير متوقعة",
+   "qalb": "ضحكة سريعة على الشاشة بتخلي التجربة أمتع",
+   "rouh": "المنافسة بين الألعاب تفتح لنا طاقة جديدة للاستكشاف"
+  },
+  "takeaway_en": {
+   "aql": "Imagination blends distinct worlds into surprising scenes",
+   "qalb": "A quick laugh makes the experience more enjoyable",
+   "rouh": "Game rivalries spark fresh energy for discovery"
+  },
+  "tags": "زيلدا,جي‑تي‑أي,مياه,مقارنة,فيديوهات",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "شاشة مقسومة نص نص، نص زيلدا بألوان خضراء وزرقاء، نص جي‑تي‑أي بأحمر وأسود، ومية تتسرب من الفاصل وتخلق توتر بصري",
+    "style": "تقسيم الشاشة مع تأثير تدفق مائي ديناميكي",
+    "colors": [
+     "#1E8A1C",
+     "#0A0A0A",
+     "#FF4500",
+     "#00BFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "لقطة هادئة لبركة زيلدا تعكس الشمس، تتبعها فجأة لقطة جي‑تي‑أي بموجات عنيفة وانفجارات مائية",
+    "style": "قفز سريع بين اللقطات مع صوت موج عالي",
+    "colors": [
+     "#1E8A1C",
+     "#FF4500"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "نص متحرك يكتب سؤال \"مين اللي هيفوز؟\" مع ضحكة خفيفة في الخلفية",
+    "style": "نص بخط جريء مع إيموجي وجه متنهد",
+    "colors": [
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "دمج المشهدين: مية زيلدا الصافية تتقابل مع مية جي‑تي‑أي المتقلبة، وتظهر إيموجي الجمجمة والوجه المتنهد",
+    "style": "تداخل بصري مع تأثير فوضوي للمياه",
+    "colors": [
+     "#00BFFF",
+     "#FF4500"
+    ]
+   },
+   {
+    "time": "0:15-0:17",
+    "scene": "دعوة للمتابعة بخط كبير يلمع وزر متوهج يطلب من المشاهدين الضغط على المتابعة",
+    "style": "CTA واضح مع إضاءة ساطعة",
+    "colors": [
+     "#FF4500"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "Ug7w1NXSfTI",
+   "url": "https://youtu.be/Ug7w1NXSfTI",
+   "sourceTitle": "Zelda Vs GTA 6: Water Comparison💀🤦‍♂️",
+   "sourceChannel": "Ramo Akh",
+   "sourceViews": 20044142,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "يظهر مشهد سريع يدمج لقطات من لعبة Zelda مع لقطات من GTA 6، حيث يتسرب الماء من أحد المشاهد بطريقة غير متوقعة ويظهر رمز الجمجمة 💀 مع تعبير 🤦‍♂️.",
+     "why_it_works": "التقاطع غير المتوقع بين عالَمين مختلفين يثير الدهشة ويجذب الانتباه فوراً، خاصةً مع الرموز التعبيرية التي توحي بالفكاهة والسخرية."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "صاعد سريع خلال الـ0-7 ثوانٍ، قمة عند 8-11 ثوانٍ، ثم انخفاض خفيف مع دفع CTA في النهاية."
+    },
+    "retention_tricks": [
+     "استخدام سؤال بصري غير معلن في الثواني الأولى.",
+     "تباين ألوان قوي بين الجزأين لتجذب العين.",
+     "إدخال إيموجيات تعبيرية لتوليد مشاعر فورية.",
+     "CTA واضح ومباشر في آخر 2 ثانية."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 85,
+   "weaknesses": [
+    "Hook phrasing is a bit informal and lacks the punchy, curiosity‑driven question that DNA uses (e.g., \"من يفوز؟\").",
+    "Audio strategy is missing: no mention of voice‑over style, music, or sound effects, which are crucial for energy curve.",
+    "The comedic element (quick laugh) is only hinted at in the text overlay, not reinforced by audio cues.",
+    "CTA placement at 0:15‑0:17 is fine, but the visual emphasis could be stronger (e.g., a flashing button or animated arrow)."
+   ],
+   "verdict": "The proposal captures the core DNA elements—visual hook, beat structure, color contrast, and emojis—but falls slightly short in audio execution and hook wording. With a sharper, question‑driven hook and a defined audio plan, it would align even more closely with the trend and likely achieve higher retention."
+  }
+ }
+]
