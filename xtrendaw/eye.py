@@ -289,9 +289,43 @@ def fetch_captions(video_id: str) -> list[dict]:
         return (0 if lang == "ar" else 1 if lang == "en" else 2, is_asr)
 
     best = sorted(tracks, key=score)[0]
-    r = _req().get(best["baseUrl"] + "&fmt=json3", headers=_headers(), timeout=30)
-    r.raise_for_status()
-    return parse_json3_captions(r.json())
+    try:
+        r = _req().get(best["baseUrl"] + "&fmt=json3", headers=_headers(), timeout=30)
+        r.raise_for_status()
+        return parse_json3_captions(r.json())
+    except Exception as exc:
+        # مسار innertube بيرجّع صفحة HTML بدل JSON من IP الخوادم — بنسحب
+        # التسميات عبر yt-dlp بنفس الكوكيز والمحاكاة (نفس التوقيتات الحقيقية).
+        print(f"[eye] ⚠️ تسميات innertube فشلت ({type(exc).__name__}) — "
+              f"نجرب yt-dlp…", flush=True)
+        return _ytdlp_captions(video_id, best.get("languageCode") or "ar")
+
+
+def _ytdlp_captions(video_id: str, lang: str) -> list[dict]:
+    """احتياطي: --write-auto-subs بصيغة json3 ثم نفس الـ parser (صفر توقيتات مخترعة)."""
+    import tempfile
+    with tempfile.TemporaryDirectory(prefix="daousha-subs-") as td:
+        cmd = [sys.executable, "-m", "yt_dlp", "--skip-download",
+               "--write-subs", "--write-auto-subs",
+               "--sub-langs", f"{lang}.*,{lang},ar.*,en.*", "--sub-format", "json3",
+               "--no-playlist", "-o", f"{td}/sub",
+               f"https://www.youtube.com/watch?v={video_id}"]
+        cmd += _impersonate_args()
+        _, cookies_file = _load_cookies()
+        if cookies_file is not None:
+            cmd += ["--cookies", str(cookies_file)]
+        try:
+            subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+        except subprocess.TimeoutExpired:
+            return []
+        files = sorted(Path(td).glob("*.json3"))
+        if not files:
+            print("[eye] ⚠️ مفيش ملف تسميات من yt-dlp — التقرير يكمل بلا كلمات", flush=True)
+            return []
+        try:
+            return parse_json3_captions(json.loads(files[0].read_text(encoding="utf-8")))
+        except Exception:
+            return []
 
 
 # ═════════════════════════════════════════════════════════════
@@ -307,8 +341,34 @@ def _ffmpeg() -> str:
 
 
 # خوادم GitHub Actions (IP مركزي) ممكن يصدّها يوتيوب بالعميل الافتراضي —
-# نجرّب عملاء تباعين. الترتيب موثّق: default ← tv ← web_embedded ← mweb.
-_YT_CLIENTS = ("", "tv", "web_embedded", "mweb", "android", "ios")
+# نجرّب عملاء تباعين. الملاحظة الحقيقية (2026-09-19): مع وجود كوكيز،
+# يوتيوب بيرجّع صفحة مقلوبة والعملاء اللي «مش بتدعم كوكيز» (ios/android)
+# بيستنكفوا. فبنقدّم العملاء اللي بتدعم الكوكيز وWebKit:
+_YT_CLIENTS = ("", "web_safari", "tv", "web", "mweb", "web_embedded", "android", "ios")
+
+
+def _impersonate_args() -> list[str]:
+    """محاكاة بصمة متصفح حقيقي (curl_cffi) — الحل الموثّق لـ «are you not a bot»
+    و«only images are available» من IP الخوادم. لو المكتبة مش موجودة: بلا ضجيج.
+    """
+    try:
+        import curl_cffi  # noqa: F401
+    except Exception:
+        return []
+    return ["--impersonate", "chrome"]
+
+
+def _js_runtime_args() -> list[str]:
+    """yt-dlp 2026 محتاج JS runtime للاستخراج الكامل (EJS) — بلاها بيرجّع
+    «Only images are available» أو تنسيقات ناقصة. deno هو الافتراضي المدعوم.
+    """
+    deno = shutil.which("deno") or os.environ.get("DENO_BIN") or ""
+    if not deno:
+        for cand in (Path.home() / ".deno" / "bin" / "deno", Path("/tmp/deno/bin/deno")):
+            if cand.exists():
+                deno = str(cand)
+                break
+    return ["--js-runtimes", f"deno:{deno}"] if deno else []
 
 
 def download_video(video_id: str, outdir: Path) -> Path:
@@ -325,6 +385,7 @@ def download_video(video_id: str, outdir: Path) -> Path:
                f"https://www.youtube.com/watch?v={video_id}"]
         if client:
             cmd += ["--extractor-args", f"youtube:player_client={client}"]
+        cmd += _js_runtime_args() + _impersonate_args()
         _, cookies_file = _load_cookies()
         if cookies_file is not None:
             cmd += ["--cookies", str(cookies_file)]
@@ -337,7 +398,11 @@ def download_video(video_id: str, outdir: Path) -> Path:
             if client:
                 print(f"[eye] ✓ النزّل نجح بعميل {client}", flush=True)
             return out
-        last_err = f"client={client or 'default'}: " + (r.stderr or r.stdout or "")[-300:]
+        # تشخيص كامل (سطور yt-dlp المهمة) عشان الفشل يبان في الجيت من غير تخمين
+        lines = [l.strip() for l in (r.stderr or r.stdout or "").splitlines()
+                 if any(k in l for k in ("ERROR", "WARNING", "Sign in", "images",
+                                         "runtime", "cookies"))]
+        last_err = f"client={client or 'default'}: " + " ┃ ".join(lines[-4:])[:700]
         out.unlink(missing_ok=True)
     raise RuntimeError("eye: فشل التنزيل بكل العملاء — " + last_err)
 
@@ -668,13 +733,16 @@ def _llm(prompt: str, temperature: float = 0.7) -> str:
         "افحص المفاتيح في Settings → Secrets → Actions (GROQ_API_KEY / GEMINI_API_KEY)")
 
 
-def llm_probe() -> tuple[bool, str]:
+def llm_probe(provider: str | None = None) -> tuple[bool, str]:
     """فحص حي حقيقي للأنبوب (بيستخدمه الدكتور): بيسجّل **مين اللي رد فعلًا**.
 
     «المفتاح موجود» مش دليل — الدرس: المفاتيح كانت سليمة والموديلات ميتة.
+    provider = "groq" أو "gemini" لفحص مزوّد بعينه (كل مفتاح لوحده).
     """
     tried: list[str] = []
     for who, call in _attempts("اكتب كلمة واحدة بس: تمام", 0.0):
+        if provider and not who.split(":")[0].startswith(provider):
+            continue
         try:
             text = call()
         except Exception as exc:

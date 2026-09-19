@@ -58,11 +58,11 @@ def run() -> dict[str, dict]:
     if result["YOUTUBE_COOKIES_B64"]["ok"]:
         result["YOUTUBE_COOKIES_B64"] = _cookie_probe()
 
-    if result["GROQ_API_KEY"]["ok"] or result["GEMINI_API_KEY"]["ok"]:
-        ok, detail = eye.llm_probe()
-        for name in ("GROQ_API_KEY", "GEMINI_API_KEY"):
-            if result[name]["ok"]:
-                result[name] = {"ok": ok, "detail": detail}
+    # فحص حي لكل مزوّد لوحده: «المفتاح موجود» مش دليل — لازم الرد ييجي فعلًا
+    for name, provider in (("GROQ_API_KEY", "groq"), ("GEMINI_API_KEY", "gemini")):
+        if result[name]["ok"]:
+            ok, detail = eye.llm_probe(provider)
+            result[name] = {"ok": ok, "detail": detail}
     return result
 
 

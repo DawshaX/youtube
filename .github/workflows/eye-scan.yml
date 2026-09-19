@@ -35,7 +35,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg
-          python -m pip install requests pillow numpy imageio-ffmpeg yt-dlp
+          python -m pip install requests pillow numpy imageio-ffmpeg yt-dlp curl_cffi
+          # yt-dlp 2026 محتاج JS runtime للاستخراج الكامل (EJS) — deno هو الافتراضي المدعوم
+          curl -fsSL https://deno.land/install.sh | DENO_INSTALL="$HOME/.deno" sh -s -- -y
+          echo "$HOME/.deno/bin" >> "$GITHUB_PATH"
 
       - name: Watch + analyze + write our version
         env:
