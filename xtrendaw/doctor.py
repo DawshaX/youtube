@@ -1,15 +1,15 @@
 """فحص صحة حي للاعتمادات المطلوبة، بلا طباعة قيم الأسرار."""
 from __future__ import annotations
 import argparse
-import base64
 import json
 import os
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 import requests
+
+from . import eye
 
 REQUIRED = ("GROQ_API_KEY", "GEMINI_API_KEY", "YOUTUBE_API_KEY",
             "YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET",
@@ -56,27 +56,46 @@ def run() -> dict[str, dict]:
             result[n] = {"ok": ok, "detail": detail}
 
     if result["YOUTUBE_COOKIES_B64"]["ok"]:
-        path: Path | None = None
-        try:
-            fd, name = tempfile.mkstemp(prefix="doctor-cookies-", suffix=".txt")
-            path = Path(name)
-            os.fchmod(fd, 0o600)
-            with os.fdopen(fd, "wb") as f:
-                f.write(base64.b64decode(os.environ["YOUTUBE_COOKIES_B64"], validate=True))
-            mode_ok = (path.stat().st_mode & 0o777) == 0o600
-            cmd = [sys.executable, "-m", "yt_dlp", "--cookies", str(path),
-                   "--skip-download", "--playlist-items", "1", "--print", "id",
-                   "https://www.youtube.com/watch?v=OP3a2qzW5Yk"]
-            p = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
-            result["YOUTUBE_COOKIES_B64"] = {
-                "ok": mode_ok and p.returncode == 0,
-                "detail": "yt-dlp authenticated probe" if p.returncode == 0 else "yt-dlp probe failed"}
-        except Exception as exc:
-            result["YOUTUBE_COOKIES_B64"] = {"ok": False, "detail": type(exc).__name__}
-        finally:
-            if path:
-                path.unlink(missing_ok=True)
+        result["YOUTUBE_COOKIES_B64"] = _cookie_probe()
+
+    if result["GROQ_API_KEY"]["ok"] or result["GEMINI_API_KEY"]["ok"]:
+        ok, detail = eye.llm_probe()
+        for name in ("GROQ_API_KEY", "GEMINI_API_KEY"):
+            if result[name]["ok"]:
+                result[name] = {"ok": ok, "detail": detail}
     return result
+
+
+def _cookie_probe() -> dict:
+    """يفحص سر الكوكيز **بنفس مُحمِّل العين** (اللي بيحوّل أي شكل لنيتسكيب).
+
+    الدرس: الفحص القديم كان بيكتب الـ base64 زي ما هو ويسأل yt-dlp، فيرجع
+    «does not look like a Netscape format» من غير ما يقول السبب الحقيقي
+    (السطر الواحد بصيغة أزواج). دلوقتي بنفك، بنحوّل، وبنوصف الشكل.
+    """
+    path: Path | None = None
+    try:
+        _, path = eye._load_cookies()
+        if path is None:
+            return {"ok": False,
+                    "detail": "السر مش قابل للقراءة ككوكيز (نيتسكيب/JSON/أزواج)"}
+        mode_ok = (path.stat().st_mode & 0o777) == 0o600
+        cmd = [sys.executable, "-m", "yt_dlp", "--cookies", str(path),
+               "--skip-download", "--playlist-items", "1", "--print", "id",
+               "https://www.youtube.com/watch?v=OP3a2qzW5Yk"]
+        p = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
+        if p.returncode == 0:
+            return {"ok": mode_ok,
+                    "detail": "yt-dlp authenticated probe (مصادقة شغالة)"
+                              + ("" if mode_ok else " — صلاحيات الملف مش 0600")}
+        err = (p.stderr or "").strip().splitlines()
+        hint = next((l for l in err if "ERROR" in l), err[-1] if err else "?")
+        return {"ok": False, "detail": "yt-dlp: " + hint[:120]}
+    except Exception as exc:
+        return {"ok": False, "detail": f"{type(exc).__name__}: {str(exc)[:100]}"}
+    finally:
+        if path:
+            path.unlink(missing_ok=True)
 
 
 def main() -> int:

@@ -99,9 +99,11 @@ PIPER_DIR = Path(os.environ.get("XT_PIPER_DIR", "/tmp/noor-models"))
 # ─────────────────────────────────────────────────────────────
 # LLM مجاني (Groq) — اختياري، والمحرك شغال بدونه
 # ─────────────────────────────────────────────────────────────
-# الترتيب: LLM_API_* الصريحة أولًا، وإلا GROQ_API_KEY (النموذج الافتراضي
-# llama-3.3-70b-versatile هو نموذج Groq أصلاً — كان المفتاح مُضاف في
-# Secrets ومفيش سطر الكود بيقراه، فبقي المخ طافيًا بصمت).
+# الترتيب: LLM_API_* الصريحة أولًا، وإلا GROQ_API_KEY.
+# ⚠️ الدرس (2026-09-19): الاسم الافتراضي القديم (llama-3.3-70b-versatile)
+# اتشال من Groq وبقى 404 model_not_found، والمفتاح كان سليم — فالعين وقعت.
+# الافتراضي دلوقتي من الموديلات المتاحة فعلًا، والعين بتسأل /models وبتجرّب
+# سلسلة مرشّحين لو الاسم اتغيّر تاني.
 _GROQ = get("GROQ_API_KEY")
 # rstrip("/") واجب: قيمة الـ secret قد تحمل slash زائد بآخرها
 # (https://api.groq.com/openai/v1/ + /chat/completions = 404 فعلي)
@@ -110,7 +112,7 @@ _llm_base = (get("LLM_API_BASE")
 LLM = {
     "base": _llm_base,
     "key": get("LLM_API_KEY") or _GROQ,
-    "model": get("LLM_MODEL", "llama-3.3-70b-versatile"),
+    "model": get("LLM_MODEL", "openai/gpt-oss-120b"),
 }
 
 PEXELS_KEY = PEXELS_API_KEY

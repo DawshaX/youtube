@@ -59,44 +59,168 @@ def _req():
     return requests
 
 
-# كوكيز يوتيوب (نيتسكيب) — مطلوبة عشان خوادم Actions (IP مركزي) تقدر
-# تشوف الفيديو والتسميات. بتيجي من سر المستودع YOUTUBE_COOKIES_B64
-# (base64 لملف cookies.txt). بلاها: العين ممكن تقف على الفيديو كله.
+# كوكيز يوتيوب — مطلوبة عشان خوادم Actions (IP مركزي) تقدر تشوف الفيديو
+# والتسميات. بتيجي من سر المستودع YOUTUBE_COOKIES_B64.
+#
+# ⚠️ درس حقيقي (تشغيل 2026-09-19): السر كان base64 لسطر واحد فيه أزواج
+# `name=value; name=value` (شكل هيدر الكوكيز) — مش ملف نيتسكيب. الكود القديم
+# كان بيكتب اللي فكّه زي ما هو ويبعته لـ yt-dlp، فيرد:
+#   "does not look like a Netscape format cookies file"
+# وعشان صف واحد مفيهوش tabs، استخراج الكوكيز كان بيرجّع سلسلة فاضية —
+# يعني حتى طلبات requests كانت من غير كوكيز. الحل: نحوّل أي شكل معقول
+# (نيتسكيب / JSON / أزواج name=value / base64 مزدوج) لملف نيتسكيب صالح،
+# ونستخرج الأزواج منه للهيدر. أي شكل تاني: فشل صريح برسالة بتوصف البنية
+# (مفيش قيم في الرسالة أبدًا).
 _COOKIES_FILE: Path | None = None
+_COOKIE_NETSCAPE_HEADER = "# Netscape HTTP Cookie File"
+# كوكيز مصادقة جوجل لازم تتكتب على النطاقين (ده اللي بتوصي بيه yt-dlp نفسها)
+_GOOGLE_SCOPE = ".google.com"
+_DEFAULT_SCOPE = ".youtube.com"
+_YEAR_SECONDS = 31536000
+
+
+def _cookie_text(raw: str) -> str:
+    """يفك base64 (ولو مزدوج) ويرجّع النص — أو النص زي ما هو لو مش base64."""
+    import base64
+    out = raw.strip().strip("'\"").strip()
+    for _ in range(2):
+        probe = out.replace("\n", "").replace("\r", "")
+        if not probe or not re.fullmatch(r"[A-Za-z0-9+/=]+", probe) or len(probe) % 4:
+            break
+        try:
+            dec = base64.b64decode(probe, validate=False).decode("utf-8", "ignore")
+        except Exception:
+            break
+        if not dec.strip():
+            break
+        out = dec.strip()
+    # بعض الأدوات بتصدّر السطور كـ \n نصّية جوه سطر واحد
+    if "\n" in out.replace("\\n", ""):
+        pass
+    return out.replace("\\r\\n", "\n").replace("\\n", "\n") if "\\n" in out else out
+
+
+def _pair_cookies(text: str) -> list[tuple[str, str, str]]:
+    """يستخرج (name, value, domain) من أي نص — بلا خيال وبلا تعديل قيم."""
+    found: list[tuple[str, str, str]] = []
+    seen: set[str] = set()
+    for m in re.finditer(r"([A-Za-z0-9_\-\.]{1,64})=([^\s;,\"]*)", text):
+        name, value = m.group(1), m.group(2)
+        if name.lower() in ("path", "domain", "expires", "max-age", "samesite",
+                            "secure", "httponly", "expiry", "hostonly", "http_only"):
+            continue
+        if name in seen:
+            continue
+        seen.add(name)
+        found.append((name, value, ""))
+    return found
+
+
+def _parse_cookies(text: str) -> tuple[list[tuple[str, str, str]], str]:
+    """(قائمة (name, value, domain), وصف الشكل) — يقبل نيتسكيب وJSON وأزواج."""
+    lines = [l for l in text.replace("\r\n", "\n").replace("\r", "\n").splitlines() if l.strip()]
+    # ١) نيتسكيب: ٧ حقول مفصولة بـ tab
+    tabbed = [l for l in lines if len(l.split("\t")) >= 7]
+    if tabbed:
+        out = []
+        for line in tabbed:
+            f = line.split("\t")
+            domain = f[0]
+            for prefix in ("#HttpOnly_", "#HttpOnly"):
+                if domain.startswith(prefix):
+                    domain = domain[len(prefix):]
+            out.append((f[5].strip(), f[6].strip(), domain.strip()))
+        return out, f"netscape ({len(out)} كوكي)"
+    # ٢) JSON (تصدير إضافات المتصفح / DevTools)
+    stripped = text.lstrip()
+    if stripped[:1] in ("{", "["):
+        try:
+            data = json.loads(stripped)
+        except Exception:
+            data = None
+        if data is not None:
+            items = data.get("cookies") if isinstance(data, dict) else data
+            if isinstance(items, list):
+                out = []
+                for c in items:
+                    if isinstance(c, dict) and c.get("name"):
+                        out.append((str(c["name"]), str(c.get("value", "")),
+                                    str(c.get("domain", ""))))
+                if out:
+                    return out, f"json ({len(out)} كوكي)"
+    # ٣) أزواج name=value (شكل الهيدر: أ=b; ج=د)
+    pairs = _pair_cookies(text)
+    if pairs:
+        return pairs, f"pairs ({len(pairs)} كوكي)"
+    return [], f"unrecognized (حروف={len(text)} سطور={len(lines)})"
+
+
+def _to_netscape(pairs: list[tuple[str, str, str]]) -> str:
+    """يبني ملف نيتسكيب صالح من الأزواج (نطاق يوتيوب + جوجل لكوكيز المصادقة)."""
+    exp = int(time.time()) + _YEAR_SECONDS
+    lines = [_COOKIE_NETSCAPE_HEADER]
+    for name, value, domain in pairs:
+        scopes = [domain] if domain else [_DEFAULT_SCOPE]
+        if not domain or "google" in domain or name.startswith("__Secure") or \
+                name in ("SID", "HSID", "SSID", "APISID", "SAPISID", "LOGIN_INFO"):
+            scopes.append(_GOOGLE_SCOPE)
+        for scope in dict.fromkeys(scopes):
+            if not scope.startswith("."):
+                scope = "." + scope.lstrip(".")
+            lines.append("\t".join([scope, "TRUE", "/", "TRUE", str(exp), name, value]))
+    return "\n".join(lines) + "\n"
+
+
+def _write_cookies_file(content_text: str) -> Path:
+    """يكتب ملف الكوكيز بصلاحية 0600 ويسجّل مسحه عند الخروج."""
+    fd, name = tempfile.mkstemp(prefix="daousha-cookies-", suffix=".txt")
+    p = Path(name)
+    try:
+        os.fchmod(fd, 0o600)
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(content_text)
+    except Exception:
+        try:
+            os.close(fd)
+        except OSError:
+            pass
+        p.unlink(missing_ok=True)
+        raise
+    atexit.register(lambda path=p: path.unlink(missing_ok=True))
+    return p
 
 
 def _load_cookies() -> tuple[str, Path | None]:
-    """(Header الكوكيز, مسار ملف الكوكيز أو None) من سر YOUTUBE_COOKIES_B64."""
+    """(هيدر الكوكيز, مسار ملف نيتسكيب صالح أو None) من YOUTUBE_COOKIES_B64.
+
+    الحارس: مفيش كوكيز صالحة → (سلسلة فاضية, None)، والنداء بيتعامل مع ده
+    بإنه «مفيش مصادقة» مش انهيار — والفشل الحقيقي بيظهر في التحميل نفسه.
+    """
     global _COOKIES_FILE
-    b64 = os.environ.get("YOUTUBE_COOKIES_B64", "").strip()
-    if not b64:
+    raw = os.environ.get("YOUTUBE_COOKIES_B64", "").strip()
+    if not raw:
         return "", None
     if _COOKIES_FILE is None:
-        import base64
-        fd, name = tempfile.mkstemp(prefix="daousha-cookies-", suffix=".txt")
-        p = Path(name)
-        try:
-            os.fchmod(fd, 0o600)
-            with os.fdopen(fd, "wb") as f:
-                f.write(base64.b64decode(b64, validate=True))
-        except Exception as exc:
-            try:
-                os.close(fd)
-            except OSError:
-                pass
-            p.unlink(missing_ok=True)
-            raise RuntimeError("eye: سر الكوكيز ليس base64 صالحًا") from exc
-        _COOKIES_FILE = p
-        atexit.register(lambda path=p: path.unlink(missing_ok=True))
-    pairs = []
-    for line in _COOKIES_FILE.read_text(encoding="utf-8", errors="ignore").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#"):
-            continue
-        parts = line.split("\t")
-        if len(parts) >= 7:
-            pairs.append(f"{parts[5]}={parts[6]}")
-    return "; ".join(pairs), _COOKIES_FILE
+        text = _cookie_text(raw)
+        pairs, shape = _parse_cookies(text)
+        if not pairs:
+            print(f"[eye] ⚠️ سر الكوكيز مش مقروء — {shape} "
+                  f"(المتوقع: نيتسكيب أو JSON أو أزواج name=value)", flush=True)
+            return "", None
+        # نيتسكيب أصلي بيتكتب زي ما هو (بس برأس الملف لو ناقص)، وغير كده نبني واحد
+        if shape.startswith("netscape") and text.lstrip().startswith("#"):
+            payload = text if not text.startswith("\ufeff") else text.lstrip("\ufeff")
+        else:
+            payload = _to_netscape(pairs)
+        if not payload.lstrip().startswith(_COOKIE_NETSCAPE_HEADER):
+            payload = _COOKIE_NETSCAPE_HEADER + "\n" + payload
+        _COOKIES_FILE = _write_cookies_file(payload)
+        print(f"[eye] ✓ الكوكيز اتظبطت ({shape}) — المصادقة شغالة", flush=True)
+    pairs, _ = _parse_cookies(_COOKIES_FILE.read_text(encoding="utf-8", errors="ignore"))
+    seen: dict[str, str] = {}
+    for name, value, _ in pairs:
+        seen.setdefault(name, value)   # نفس الكوكي مكتوب على نطاقين — مرة واحدة في الهيدر
+    return "; ".join(f"{n}={v}" for n, v in seen.items()), _COOKIES_FILE
 
 
 def _headers() -> dict:
@@ -431,46 +555,139 @@ def build_digest(report: dict) -> str:
 # الوكلاء — فهم ← كتابة ← نقد ← إصلاح
 # ═════════════════════════════════════════════════════════════
 
-_GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta/openai"
-_GEMINI_MODEL = "gemini-2.0-flash"
+_GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta"
+# ⚠️ درس حقيقي (تشغيل 2026-09-19): الأسماء المثبّتة في الكود عاشت:
+#   Groq  `llama-3.3-70b-versatile` → 404 model_not_found
+#   Gemini `gemini-2.0-flash`       → 404 no longer available
+# والمفتاحين كانوا سليمين (doctor: HTTP 200) — يعني الفحص كان أعمى عن
+# حقيقة إن الأنبوب نفسه مقطوع. الحل: قوائم مرشّحين + سؤال الـ API عن
+# الموديلات المتاحة فعلًا، والموديل اللي يرد هو اللي يشتغل.
+_GROQ_BASE = "https://api.groq.com/openai/v1"
+_GROQ_MODELS = ("openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3.8-27b",
+                "groq/compound", "groq/compound-mini", "allam-2-7b")
+_GEMINI_MODELS = ("gemini-flash-latest", "gemini-2.5-flash", "gemini-3.5-flash",
+                  "gemini-3.6-flash", "gemini-2.5-pro")
+_NOT_CHAT = ("whisper", "guard", "orpheus", "tts", "embedding", "transcribe",
+             "image", "veo", "lyria", "robotics", "computer-use", "aqa", "aqa")
+
+
+def _live_models() -> list[str]:
+    """موديلات Groq المتاحة للمفتاح الحالي (فاضية لو السؤال نفسه فشل)."""
+    llm = settings.LLM
+    if not llm["key"]:
+        return []
+    try:
+        r = _req().get(f"{llm['base'].rstrip('/') or _GROQ_BASE}/models",
+                       headers={"Authorization": f"Bearer {llm['key']}"}, timeout=30)
+        if not r.ok:
+            return []
+        return [m.get("id", "") for m in r.json().get("data", []) if m.get("id")]
+    except Exception:
+        return []
+
+
+def _groq_chain() -> list[str]:
+    """ترتيب الموديلات: المطلوب صراحةً ← مرشّحينا المتاحون ← أي موديل شات متاح."""
+    llm = settings.LLM
+    configured = (llm["model"] or "").strip()
+    live = _live_models()
+    chain: list[str] = []
+    if configured and (not live or configured in live):
+        chain.append(configured)
+    chain += [m for m in _GROQ_MODELS if (not live or m in live) and m not in chain]
+    if live:
+        chain += [m for m in sorted(live)
+                  if m not in chain and not any(x in m.lower() for x in _NOT_CHAT)]
+    else:
+        chain += [m for m in _GROQ_MODELS if m not in chain]
+    return chain
+
+
+def _post_chat(url: str, key: str, model: str, prompt: str, temperature: float) -> str:
+    r = _req().post(url, headers={"Authorization": f"Bearer {key}"},
+                    json={"model": model, "temperature": temperature,
+                          "max_tokens": 2048,
+                          "messages": [{"role": "user", "content": prompt}]},
+                    timeout=180)
+    r.raise_for_status()
+    return r.json()["choices"][0]["message"]["content"]
+
+
+def _post_gemini_native(model: str, key: str, prompt: str, temperature: float) -> str:
+    """المسار الأصلي لجوجل — احتياطي لو مسار التوافق OpenAI رفض الموديل."""
+    r = _req().post(
+        f"{_GEMINI_BASE}/models/{model}:generateContent",
+        headers={"x-goog-api-key": key, "Content-Type": "application/json"},
+        json={"contents": [{"parts": [{"text": prompt}]}],
+              "generationConfig": {"temperature": temperature}},
+        timeout=180)
+    r.raise_for_status()
+    return r.json()["candidates"][0]["content"]["parts"][0]["text"]
+
+
+def _attempts(prompt: str, temperature: float):
+    """مولّد (اسم, دالة نداء) — Groq بكل مرشّحيه، وبعده Gemini بكل مرشّحيه."""
+    llm = settings.LLM
+    if llm["base"] and llm["key"]:
+        url = f"{llm['base'].rstrip('/')}/chat/completions"
+        for model in _groq_chain():
+            yield (f"groq:{model}",
+                   lambda m=model, u=url: _post_chat(u, llm["key"], m, prompt, temperature))
+    gemini_key = settings.get("GEMINI_API_KEY")
+    if gemini_key:
+        configured = (os.environ.get("GEMINI_MODEL") or "").strip()
+        chain = [m for m in ([configured] if configured else []) + list(_GEMINI_MODELS)]
+        for model in dict.fromkeys(chain):
+            yield (f"gemini:{model}",
+                   lambda m=model, k=gemini_key: _post_chat(
+                       f"{_GEMINI_BASE}/openai/chat/completions", k, m, prompt, temperature))
+            yield (f"gemini-native:{model}",
+                   lambda m=model, k=gemini_key: _post_gemini_native(m, k, prompt, temperature))
 
 
 def _llm(prompt: str, temperature: float = 0.7) -> str:
-    """سلسلة مزوّدات: LLM الأساسي (Groq) ← Gemini ← فشل صريح برسالة حل."""
-    attempts = []
-    llm = settings.LLM
-    if llm["base"] and llm["key"]:
-        attempts.append((
-            f"{llm['base'].rstrip('/')}/chat/completions",
-            llm["key"], llm["model"], llm["base"].rstrip("/")[:32]))
-    gemini_key = settings.get("GEMINI_API_KEY")
-    if gemini_key:
-        attempts.append((f"{_GEMINI_BASE}/chat/completions",
-                         gemini_key, _GEMINI_MODEL, "gemini"))
-    if not attempts:
+    """سلسلة مزوّدات وموديلات: أول واحد ينجح هو اللي يرد — وإلا فشل صريح برسالة حل."""
+    tried: list[str] = []
+    for who, call in _attempts(prompt, temperature):
+        try:
+            text = call()
+            if text and text.strip():
+                if tried:
+                    print(f"[eye] ✓ الرد من {who} بعد فشل: {', '.join(tried)}", flush=True)
+                return text
+            tried.append(f"{who}:رد فاضي")
+        except Exception as exc:
+            tried.append(f"{who}:{type(exc).__name__}")
+            print(f"[eye] ⚠️ {who} فشل — نجرب اللي بعده…", flush=True)
+    if not tried:
         raise RuntimeError(
             "eye: مفيش LLM — ضيف GROQ_API_KEY أو GEMINI_API_KEY "
             "في Settings → Secrets → Actions على جيت هاب.")
-    last = ""
-    for url, key, model, who in attempts:
-        try:
-            r = _req().post(
-                url,
-                headers={"Authorization": f"Bearer {key}"},
-                json={"model": model, "temperature": temperature,
-                      "messages": [{"role": "user", "content": prompt}]},
-                timeout=180)
-            r.raise_for_status()
-            return r.json()["choices"][0]["message"]["content"]
-        except Exception as exc:
-            last = f"{who}: {type(exc).__name__} {exc}"
-            print(f"[eye] ⚠️ مزوّد {who} فشل — نجرب اللي بعده…", flush=True)
     raise RuntimeError(
-        "eye: كل مزوّدي الـ LLM فشلوا — " + last + " — "
+        "eye: كل المزوّدين/الموديلات فشلوا — " + " | ".join(tried[:6]) + " — "
         "افحص المفاتيح في Settings → Secrets → Actions (GROQ_API_KEY / GEMINI_API_KEY)")
 
 
-def _llm_json(prompt: str, temperature: float = 0.7) -> dict:
+def llm_probe() -> tuple[bool, str]:
+    """فحص حي حقيقي للأنبوب (بيستخدمه الدكتور): بيسجّل **مين اللي رد فعلًا**.
+
+    «المفتاح موجود» مش دليل — الدرس: المفاتيح كانت سليمة والموديلات ميتة.
+    """
+    tried: list[str] = []
+    for who, call in _attempts("اكتب كلمة واحدة بس: تمام", 0.0):
+        try:
+            text = call()
+        except Exception as exc:
+            tried.append(f"{who}:{type(exc).__name__}")
+            continue
+        if text and text.strip():
+            return True, f"{who} → رد حقيقي ✓ {text.strip()[:20]}"
+        tried.append(f"{who}:رد فاضي")
+    if not tried:
+        return False, ("مفيش LLM — ضيف GROQ_API_KEY أو GEMINI_API_KEY "
+                       "في Settings → Secrets → Actions")
+    return False, "كل الموديلات فشلت — " + " | ".join(tried[:6])
+
     text = _llm(prompt, temperature)
     s, e = text.find("{"), text.rfind("}")
     if s == -1 or e <= s:
