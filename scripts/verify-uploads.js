@@ -6,10 +6,12 @@
 //      configured (data/config.json, or YOUTUBE_* secrets via run-autopilot.js).
 //   2. The public oEmbed endpoint otherwise (works for public videos, no key).
 // Nothing here is simulated: an id that cannot be confirmed is reported as
-// unverified and the script exits non-zero.
+// unverified. A **recent** unconfirmed upload fails the run; an old record whose
+// video was removed from YouTube is reported as stale (see uploadVerification.js).
 
 import fs from 'node:fs';
 import { verifyYouTubeVideo } from '../server/youtubeService.js';
+import { summarizeVerification } from '../server/uploadVerification.js';
 
 const records = JSON.parse(fs.readFileSync('data/saved_videos.json', 'utf-8'));
 
@@ -19,20 +21,32 @@ if (!Array.isArray(records) || records.length === 0) {
   process.exit(0);
 }
 
-let failures = 0;
+const results = [];
 for (const record of records) {
-  const result = await verifyYouTubeVideo(record.id);
-  if (result.verified) {
-    console.log(
-      `OK   ${record.id}  ${result.url}\n` +
-      `     method=${result.method} uploadStatus=${result.uploadStatus ?? 'n/a'} privacy=${result.privacyStatus ?? 'n/a'}\n` +
-      `     title="${result.title ?? record.title}"`
-    );
-  } else {
-    failures += 1;
-    console.log(`FAIL ${record.id}  ${result.url}  reason=${result.reason} (method=${result.method})`);
-  }
+  results.push(await verifyYouTubeVideo(record.id));
 }
 
-console.log(`\n${records.length - failures}/${records.length} recorded uploads verified against YouTube.`);
-if (failures > 0) process.exitCode = 1;
+const summary = summarizeVerification(records, results);
+
+for (const { record, result } of summary.verified) {
+  console.log(
+    `OK    ${record.id}  ${result.url}\n` +
+    `      method=${result.method} uploadStatus=${result.uploadStatus ?? 'n/a'} privacy=${result.privacyStatus ?? 'n/a'}\n` +
+    `      title="${result.title ?? record.title}"`
+  );
+}
+for (const { record, result } of summary.failures) {
+  console.log(`FAIL  ${record.id}  ${result.url}  reason=${result.reason} (method=${result.method})` +
+    `\n      منشور حديث لازم يتأكد — ده فشل حقيقي.`);
+}
+for (const { record, result } of summary.stale) {
+  console.log(`STALE ${record.id}  ${result.url}  reason=${result.reason}` +
+    `\n      سجل قديم: الفيديو مش موجود على يوتيوب (اتشال/اتمسح) — مش فشل نشر.)`);
+}
+
+console.log(
+  `\n${summary.verified.length}/${records.length} recorded uploads verified against YouTube` +
+  ` (نافذة الحداثة ${summary.strictHours} ساعة) — ` +
+  `حديث غير مؤكد: ${summary.failures.length}، سجل قديم مُزال: ${summary.stale.length}.`
+);
+process.exitCode = summary.exitCode;

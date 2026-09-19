@@ -6,6 +6,7 @@ import path from 'node:path';
 import { publishVideo, verifyYouTubeVideo } from '../server/youtubeService.js';
 import { runAutoPilotCycle, pickNextProductionTopic, loadProductionLog, pruneProductionLog } from '../server/autoPilot.js';
 import { listProductionQueue, listAvailableTopics } from '../server/videoFactoryBridge.js';
+import { summarizeVerification } from '../server/uploadVerification.js';
 
 // الاختبارات بتشغّل منطق الطابور الحقيقي (وبيعمل prune للوج) — عشان كده بنأمن
 // نسخة من `data/production_log.json` قبل أي اختبار وبنرجعها بعد ما يخلصوا،
@@ -122,4 +123,28 @@ test('the production log only claims artifacts that exist on disk', () => {
       assert.equal(entry.youtubeVideoId, null);
     }
   }
+});
+
+
+test('verification: a recorded upload removed long ago is stale, not a run failure', async () => {
+  const now = Date.parse('2026-09-19T03:00:00Z');
+  const records = [
+    { id: 'fresh', publishedAt: '2026-09-19T02:48:00Z' },
+    { id: 'ancient', publishedAt: '2026-09-10T02:00:00Z' },
+  ];
+  const results = [
+    { verified: true, url: 'https://youtu.be/fresh' },
+    { verified: false, url: 'https://youtu.be/ancient', reason: 'no video' },
+  ];
+  const summary = summarizeVerification(records, results, { now, strictHours: 24 });
+  assert.equal(summary.exitCode, 0, 'سجل قديم مُزال ما لازمش يفشّل دورة النشر');
+  assert.equal(summary.stale.length, 1);
+  assert.equal(summary.failures.length, 0);
+
+  const bad = summarizeVerification(records, [
+    { verified: false, url: 'https://youtu.be/fresh', reason: 'no video' },
+    { verified: false, url: 'https://youtu.be/ancient', reason: 'no video' },
+  ], { now, strictHours: 24 });
+  assert.equal(bad.exitCode, 1, 'منشور جديد مش متأكد = فشل حقيقي');
+  assert.equal(bad.failures.length, 1);
 });
