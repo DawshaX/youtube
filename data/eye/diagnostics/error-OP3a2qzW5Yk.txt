@@ -1,2 +1,2 @@
-eye: فشل في OP3a2qzW5Yk: NameError: name '_llm_json' is not defined
-2026-09-19T01:39:34Z
+eye: فشل في OP3a2qzW5Yk: RuntimeError: eye: السيناريو احتوى أرقامًا ليست من الرادار: 105, 120, 68, 7, 9
+2026-09-19T01:43:37Z
