@@ -99,14 +99,32 @@ def check_blocked(video_id: str):
 
 
 def delete(video_id: str) -> bool:
+    """حذف فيديو (محتاج توكن فيه صلاحية youtube.force-ssl).
+
+    الدرس (2026-09-19): أول محاولة رجعت فشل صامت — والسبب إن التوكن مفيهوش
+    صلاحية الحذف. فبقينا نرجّع سبب واضح في اللوج بدل «فشل» وخلاص.
+    """
     tok = _token()
     if not tok:
+        print("✗ الحذف: مفيش توكن")
         return False
     r = requests.delete(
         "https://www.googleapis.com/youtube/v3/videos",
         params={"id": video_id},
         headers={"Authorization": f"Bearer {tok}"}, timeout=30)
-    return r.status_code in (200, 204)
+    if r.status_code in (200, 204):
+        return True
+    why = ""
+    try:
+        err = (r.json().get("error") or {})
+        why = (err.get("errors") or [{}])[0].get("reason") or err.get("message", "")
+    except Exception:
+        pass
+    print(f"✗ الحذف فشل ({r.status_code}) {str(why)[:120]}")
+    if r.status_code in (401, 403) and "scope" in str(why).lower():
+        print("   السبب: التوكن ناقص صلاحية youtube.force-ssl — "
+              "محتاج تجديد موافقة OAuth بصلاحية الحذف")
+    return False
 
 
 def check_blocked_api(video_id: str):
