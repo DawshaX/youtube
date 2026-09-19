@@ -62,6 +62,17 @@
     "video": "https://github.com/DawshaX/youtube/releases/download/vault/q1789822550.mp4",
     "cover": "https://github.com/DawshaX/youtube/releases/download/vault/q1789822550.png"
    }
+  },
+  "auto-005": {
+   "title": "ليه الكل بيبحث عن «الاهلي» دلوقتي؟",
+   "fingerprint": "b25661dd9da5b69e",
+   "video": "/home/runner/work/youtube/youtube/content/vids/auto-005.mp4",
+   "duration": 59.83,
+   "at": "2026-09-19 14:00",
+   "urls": {
+    "video": "https://github.com/DawshaX/youtube/releases/download/vault/q1789826418.mp4",
+    "cover": "https://github.com/DawshaX/youtube/releases/download/vault/q1789826418.png"
+   }
   }
  },
  "fingerprints": [
@@ -70,7 +81,8 @@
   "d5719b1b5157b861",
   "231427cd75874f0b",
   "f47ded4f59fb49b4",
-  "d50a0de0178b7677"
+  "d50a0de0178b7677",
+  "b25661dd9da5b69e"
  ],
- "last_kind": "eye"
+ "last_kind": "trend"
 }
