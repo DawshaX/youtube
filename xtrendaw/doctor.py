@@ -48,10 +48,14 @@ def _probe_nasa() -> tuple[bool, str]:
 
 
 def _probe_commons() -> tuple[bool, str]:
+    # كومنز بترفض الطلبات بلا User-Agent وصفي (403) — والمصنع بيبعت واحد،
+    # فالفحص لازم يبعت نفس الهيدر عشان النتيجة تكون حقيقية.
     return _ok_http("GET", "https://commons.wikimedia.org/w/api.php",
                     params={"action": "query", "generator": "search",
                             "gsrsearch": "filetype:video nature", "gsrlimit": 1,
-                            "format": "json"})
+                            "format": "json"},
+                    headers={"User-Agent": "XDAW-NOVA-doctor/1.0 "
+                                           "(github.com/DawshaX/youtube)"})
 
 
 def _probe_archive() -> tuple[bool, str]:

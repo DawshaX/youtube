@@ -158,10 +158,14 @@ jobs:
           BRANCH="${GITHUB_REF_NAME:-main}"
           git config user.name 'مصنع دۅۄشے [Bot]'
           git config user.email 'factory@daousha.internal'
-          git add -f state/produced.json state/ledger.json state/published.json \
-                     state/last_publish.json state/yt_recent.json \
-                     state/reciter_proven.json state/reciter_badlist.json \
-                     state/last_cycle.json state/latest_sheet.jpg 2>/dev/null || true
+          # كل ملف لوحده ولو موجود: `git add` بيفشل ويسيب الفهرس فاضي
+          # لو حطينا مسار مش موجود معاهم (اتعلمت من دورة 04:47).
+          for f in state/produced.json state/ledger.json state/published.json \
+                   state/last_publish.json state/yt_recent.json \
+                   state/reciter_proven.json state/reciter_badlist.json \
+                   state/last_cycle.json state/latest_sheet.jpg; do
+            [ -f "$f" ] && git add -f "$f"
+          done
           if git diff --staged --quiet; then
             echo "مفيش تغيير في الذاكرة"
             exit 0
