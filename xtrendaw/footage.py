@@ -121,6 +121,15 @@ def pick_vault_clip(kind: str, text: str, seed: str,
     """
     used = used or {}
     present = set(vault_available())
+    # استبعاد أي لقطة ظهرت في حلقة سابقة (ذاكرة الوسائط المحفوظة على git)
+    try:
+        from . import state as _state
+        _seen = _state.media_used()
+        fresh = {n for n in present if f"vault:{n}" not in _seen}
+        if fresh:
+            present = fresh
+    except Exception:
+        pass
     scored: list[tuple[int, str]] = []
     base_kind = kind if (kind in ("hook", "outro", "takeaway", "cta")
                          or kind.startswith("fact")) else "fact1"
@@ -190,6 +199,10 @@ def vault_clip(kind: str, text: str, seconds: float, workdir: Path,
                seed: str, exclude: tuple[str, ...] = (),
                used: dict[str, int] | None = None) -> Path | None:
     """الواجهة العامة: لقطة متحركة مطابقة للمعنى من الخزنة المحلية المرخّصة."""
+    if not settings.ALLOW_STATIC_VAULT:
+        print("[footage] ⛔ المخزون الثابت (صور تجربة) مقفول — "
+              "بنكمل من المصادر الشبكية/المولّدة بس", flush=True)
+        return None
     fname = pick_vault_clip(kind, text, seed, exclude=exclude, used=used)
     if not fname:
         return None
@@ -503,9 +516,19 @@ def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
             cands += _nasa_candidates(query)
         raw = workdir / f"raw_{key}.bin"
         bad = _badlist()
+        # ذاكرة الوسائط: اللقطة اللي ظهرت في حلقة قبل كده مش بتتكرر
+        try:
+            from . import state as _state
+            _seen_media = _state.media_used()
+        except Exception:
+            _seen_media = {}
         accepted = None
         for c in cands:
             url = c.get("url", "")
+            if url in _seen_media:
+                print(f"[footage] ↺ استبعدت لقطة مستخدمة قبل كده "
+                      f"({c.get('_source', 'web')}) — بدور على غيرها", flush=True)
+                continue
             if url in bad or not _dl(url, raw):
                 continue
             dur = _probe_dur(raw)
@@ -542,6 +565,13 @@ def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
                 print(f"[footage] 🎞 مصدر شبكي: {accepted.get('_source', 'web')} "
                       f"· رخصة {lic} · {str(accepted.get('_title', ''))[:70]}",
                       flush=True)
+                try:
+                    from . import state as _state
+                    _state.mark_media_used(
+                        accepted.get("url", ""), accepted.get("_source", "web"),
+                        str(seed).split(":")[0])
+                except Exception:
+                    pass
 
     if not cached.exists():
         return None

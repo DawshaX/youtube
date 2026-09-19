@@ -97,6 +97,10 @@ CHANNEL_MODE = get("XT_MODE", "deen")
 # نشر يوتيوب (بيتوقف مؤقتًا لاختبار سلامة المطالبات — تيليجرام شغال دايمًا)
 PUBLISH_YOUTUBE = get("XT_YT", "1").strip() == "1"
 # الصوت: piper = عربي حرفي بمخارج صحيحة (مجاني بلا حد)، وedge بديل احتياطي
+# صور التجربة الثابتة (assets/visuals + assets/footage) — كانت للمعاينة الأولية،
+# وطلعت مكرّرة في 4 فيديوهات. في الإنتاج: مقفولة (XT_STATIC_VAULT=0) والمصنع
+# بيجيب ميديا جديدة من الـAPIs في كل حلقة.
+ALLOW_STATIC_VAULT = get_bool("XT_STATIC_VAULT", True)
 TTS_ENGINE = get("XT_TTS_ENGINE", "edge")  # نيورال طبيعي، piper احتياطي
 PIPER_RELEASE = "noor-models"
 # يوتيوب: حلقات التلاوة — off = ما تنزلش يوتيوب (تيليجرام تنزل عادي)

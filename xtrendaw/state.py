@@ -122,6 +122,40 @@ def _wr(path, data) -> None:
                     encoding="utf-8")
 
 
+MEDIA_FILE = settings.STATE / "media_used.json"
+
+
+def media_used() -> dict:
+    """كل أصل بصري/صوتي اتستخدم، بأي حلقة — ضد تكرار الوسائط بين الفيديوهات.
+
+    الدرس (2026-09-19): نفس الصور طلعت في 4 فيديوهات مختلفة لأن مفيش ذاكرة
+    وسائط بين الحلقات. الملف ده محفوظ على git، فالدورة الجديدة بتفتكر.
+    """
+    d = _rw(MEDIA_FILE, {})
+    return d if isinstance(d, dict) else {}
+
+
+def media_seen(key: str) -> bool:
+    return bool(key) and key in media_used()
+
+
+def mark_media_used(key: str, source: str = "", episode: str = "") -> None:
+    if not key:
+        return
+    d = media_used()
+    d[key] = {"source": source, "episode": episode,
+              "at": time.strftime("%Y-%m-%d %H:%M")}
+    if len(d) > 5000:   # احتفظ بالأحدث — الملف يفضل خفيف للأبد
+        d = dict(sorted(d.items(),
+                        key=lambda kv: str(kv[1].get("at", "")))[-5000:])
+    _wr(MEDIA_FILE, d)
+
+
+def media_used_by_source(source: str) -> int:
+    return sum(1 for v in media_used().values()
+               if (v or {}).get("source") == source)
+
+
 PUBLISHED_FILE = settings.STATE / "published.json"
 
 

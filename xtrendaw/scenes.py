@@ -250,12 +250,14 @@ def fetch_real_visual(query: str, out_path: Path) -> bool:
         if not cands:
             return False
         from . import library as _lib
+        from . import state as _st
         used = _lib._used(query)
+        _seen_media = _st.media_used()
         # ترتيب صلة البحث (مش الأكبر حجماً) — الكولاجات العملاقة كانت بتتصدر
         pick = None
         for c in cands:
             u = c.get("thumburl") or c.get("url")
-            if u and u not in used:
+            if u and u not in used and u not in _seen_media:
                 pick = u
                 break
         if not pick and cands:
@@ -263,6 +265,11 @@ def fetch_real_visual(query: str, out_path: Path) -> bool:
         if not pick:
             return False
         _lib._mark_used(query, pick)
+        try:
+            from . import state as _st
+            _st.mark_media_used(pick, "commons", str(query)[:40])
+        except Exception:
+            pass
         url = pick
         img_r = requests.get(url, headers=ua, timeout=60)
         if not img_r.ok or not img_r.content:
@@ -506,7 +513,13 @@ SCENE_ASSETS = {
 
 
 def load_real_asset(kind: str, out_path: Path) -> bool:
-    """تحميل مشهد فوتوغرافي وسينمائي حقيقي عالي الدقة وتجهيزه 1080×1920."""
+    """تحميل مشهد فوتوغرافي وسينمائي حقيقي عالي الدقة وتجهيزه 1080×1920.
+
+    ⛔ في الإنتاج (`XT_STATIC_VAULT=0`) دي مقفولة: الصور دي كانت صور تجربة
+    وظهرت مكرّرة في فيديوهات كتير — المصنع بيجيب ميديا جديدة من الـAPIs.
+    """
+    if not settings.ALLOW_STATIC_VAULT:
+        return False
     if not VISUALS_DIR.exists():
         return False
     filename = SCENE_ASSETS.get(kind, "challenge_room.jpg")

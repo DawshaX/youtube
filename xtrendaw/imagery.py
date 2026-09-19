@@ -175,9 +175,14 @@ def fetch_image_clip(query: str, seconds: float, workdir: Path, seed: str) -> Pa
         raw = workdir / f"img_{key}.bin"
         accepted = None
         # أ) كومنز
+        try:
+            from . import state as _st
+            _seen_media = _st.media_used()
+        except Exception:
+            _seen_media = {}
         for c in _commons_images(query):
             lic = _commons_license(c.get("extmeta", {}))
-            if lic not in vault.ALLOWED_LICENSES:
+            if lic not in vault.ALLOWED_LICENSES or c["url"] in _seen_media:
                 continue
             if not _dl(c["url"], raw):
                 continue
@@ -188,7 +193,7 @@ def fetch_image_clip(query: str, seconds: float, workdir: Path, seed: str) -> Pa
         if accepted is None:
             for c in _openverse_images(query):
                 lic, attribution = _OPENVERSE_LIC[c["license"]]
-                if lic not in vault.ALLOWED_LICENSES:
+                if lic not in vault.ALLOWED_LICENSES or c["url"] in _seen_media:
                     continue
                 if not _dl(c["url"], raw):
                     continue
@@ -206,6 +211,11 @@ def fetch_image_clip(query: str, seconds: float, workdir: Path, seed: str) -> Pa
             raw.unlink(missing_ok=True)
             return None
         raw_path, lic, title, source, url, attribution = accepted
+        try:
+            from . import state as _st
+            _st.mark_media_used(url, source or "image", str(seed).split(":")[0])
+        except Exception:
+            pass
         credit = f"Image: {title} via {source}, {lic}" if attribution else ""
         tmp_clip = workdir / f"motion_{key}.mp4"
         ok = _image_to_motion(raw_path, min(seconds + 1, 12), tmp_clip, seed)

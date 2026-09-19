@@ -1,6 +1,6 @@
 name: 🏭 مصنع دۅۄشے — النشر الساعي (فوري أول ما الحلقة تجهز)
 
-# المصنع الجديد (xtrendaw) — مش الوكيل القديم:
+# المصنع جديد (xtrendaw) — مش الوكيل القديم:
 #   python -m xtrendaw.run_cycle --next
 # الدورة الواحدة بتعمل: تخطيط ذكي (بلا تكرار) → جمع ميديا حقيقية من كل
 # المفاتيح (بيكسلز/بيكساباي/ناسا/كومنز/أرشيف الإنترنت/أوبنفيرس/فري ساوند)
@@ -24,12 +24,12 @@ on:
         type: boolean
         default: false
       mode:
-        description: 'خط الإنتاج: نور (قرآن/ذكر/حديث) · أو العين/ترند (مشاهدة فيديو حقيقي وإنتاج نسختنا بكل الوسائط)'
+        description: 'خط الإنتاج: العين/ترند (مشاهدة فيديو مشهور وإنتاج نسختنا) · نور (قرآن/ذكر/حديث)'
         type: choice
         options:
-          - deen
           - old
-        default: deen
+          - deen
+        default: old
 
 permissions:
   contents: write
@@ -107,7 +107,8 @@ jobs:
           # ── الـvault على GitHub (تخزين الحلقات) ─────────────────
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ── مفاتيح المصنع ──────────────────────────────────────
-          XT_MODE: ${{ inputs.mode || 'deen' }}   # الخط: نور أو العين/ترند
+          XT_MODE: ${{ inputs.mode || 'old' }}    # العين/ترند افتراضيًا · نور بالتناوب
+          XT_STATIC_VAULT: '0'            # ممنوع استخدام صور التجربة الثابتة
           XT_YT: '1'                      # نشر يوتيوب مفتوح
           XT_NET_FOOTAGE: '1'             # لقطات حقيقية من المصادر الشبكية
           XT_PUBLISH_HOURS: 'all'         # يفرج فورًا — مش مستني موعد ذروة
@@ -169,6 +170,7 @@ jobs:
           # لو حطينا مسار مش موجود معاهم (اتعلمت من دورة 04:47).
           for f in state/produced.json state/ledger.json state/published.json \
                    state/last_publish.json state/yt_recent.json \
+                   state/media_used.json \
                    state/reciter_proven.json state/reciter_badlist.json \
                    state/last_cycle.json state/latest_sheet.jpg; do
             [ -f "$f" ] && git add -f "$f"

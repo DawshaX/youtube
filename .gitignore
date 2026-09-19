@@ -20,6 +20,7 @@ state/*
 !state/ledger.json
 !state/last_publish.json
 !state/published.json
+!state/media_used.json
 !state/yt_recent.json
 !state/reciter_badlist.json
 !state/reciter_proven.json

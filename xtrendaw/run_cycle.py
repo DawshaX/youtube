@@ -556,6 +556,25 @@ def main() -> int:
             if not args.no_upload:
                 _promote_due()
             return rc
+        # 0) طابور العين أولًا: مواضيع اتكتبت بعد **مشاهدة فيديو ترند حقيقي**
+        #    كاملًا (تقارير المشاهدة + DNA في data/eye/). الأحدث دايمًا أولى.
+        if not args.want or args.want == "trend":
+            from . import eye as _eye
+
+            eye_topic = _eye.consume_queue()
+            if eye_topic:
+                _log(f"👁 من طابور العين (اتشوّف قبل كده كامل): "
+                     f"{eye_topic.get('title_ar', '')[:70]}")
+                eye_topic.setdefault("id", f"eye-{int(time.time())}")
+                eye_topic.setdefault("tags", "")
+                rc_eye = _produce(eye_topic, upload=not args.no_upload)
+                if rc_eye != 0:
+                    _log("✗ حلقة العين فشلت — برجع لطابور المصنع العادي")
+                else:
+                    if not args.no_upload:
+                        _promote_due()
+                    return rc_eye
+
         topics = content.load_topics()
         # التناوب: ساعة تريند / ساعة معرفة — عكس آخر نوع اتنشر
         want = args.want or ("know" if state.last_kind() == "trend" else "trend")
