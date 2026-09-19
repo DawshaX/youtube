@@ -60,6 +60,36 @@ c("فشل آمن: فحص اعتمادات قبل النشر",
 c("الوصف: دلع وهاشتاجات", "#اكسبلور" in content and "🔔" in content)
 c("إسناد CC-BY يلاحق الوصف (run_cycle)", "caption +=" in run_cycle and "credits" in run_cycle)
 
+# ── 4.5) صحة الوركفلوات (درس 2026-09-19: مفتاح مكرر في YAML خلّى جيت‌هوب
+#        ترفض الملف كله — والدورة ماتشتغلتش خالص) ────────────────────
+import yaml as _yaml  # noqa: E402
+
+
+class _NoDup(_yaml.SafeLoader):
+    pass
+
+
+def _no_dup(loader, node, deep=False):
+    seen = set()
+    for k, _v in node.value:
+        key = loader.construct_object(k, deep=deep)
+        if key in seen:
+            raise ValueError(f"مفتاح مكرر: {key} (سطر {k.start_mark.line + 1})")
+        seen.add(key)
+    return _yaml.SafeLoader.construct_mapping(loader, node, deep)
+
+
+_NoDup.add_constructor(_yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _no_dup)
+_wf_bad = []
+for _w in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
+    try:
+        _yaml.load(_w.read_text(encoding="utf-8"), _NoDup)
+    except Exception as _e:
+        _wf_bad.append(f"{_w.name}: {_e}")
+c("كل الوركفلوات YAML سليمة (بلا مفاتيح مكررة)", not _wf_bad)
+if _wf_bad:
+    print("   وركفلوات مكسورة:", "; ".join(_wf_bad[:3]))
+
 # ── 5) الأمان ──────────────────────────────────────────────────────
 doctor = read("xtrendaw/doctor.py")
 gitignore = read(".gitignore")

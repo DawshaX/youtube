@@ -110,8 +110,6 @@ jobs:
           # ── الـvault على GitHub (تخزين الحلقات) ─────────────────
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ── مفاتيح المصنع ──────────────────────────────────────
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
