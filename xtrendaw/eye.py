@@ -817,7 +817,10 @@ WRITE_PROMPT = """أنت مدير المحتوى لقناة الشورتس ال�
                     "colors": ["#..."]}}]
 }}
 قيود صارمة: الحقائق من reusable_facts + حقائق عامة مشهورة بس —
-مفيش أرقام مختلقة، ومفيش جملة منسوخة.
+مفيش جملة منسوخة.
+**ممنوع أي رقم في النص المكتوب** (عنوان/خطاف/حقائق/ختام) إلا لو الرقم مذكور
+حرفيًا في الرادار أو تقرير المشاهدة اللي فوق. لو مفيش أرقام موثقة، اكتب
+الكلام بلا أي أرقام خالص — ده مطلوب مش اختياري.
 """
 
 CRITIQUE_PROMPT = """أنت ناقد فيديوهات صارم. قيّم الحلقة المقترحة (0-100)
@@ -854,6 +857,28 @@ def _assert_radar_numbers(written: dict, report: dict) -> None:
     if claimed - allowed:
         raise RuntimeError("eye: السيناريو احتوى أرقامًا ليست من الرادار: "
                            + ", ".join(sorted(claimed - allowed)))
+
+
+def _writer_call(prompt: str, report: dict, dna: dict, note: str = "") -> tuple[dict, dict]:
+    """(السيناريو, الموضوع) — ومعاه إعادة محاولة تصحيحية **واحدة** لو الـ LLM
+    اخترع أرقامًا غير موثقة.
+
+    الدرس (تشغيل 2026-09-19): الفيديو مش متاح على IP الخوادم، فالموديل اخترع
+    أرقام (105 ثانية، 120…) وحارس «مفيش أرقام مخترعة» رفض السيناريو → كل الحلقة
+    فشلت. الصح: نطلب منه نسخة بلا أرقام — نحافظ على قاعدة النزاهة ونكمل الشغل.
+    """
+    written = _llm_json(prompt + ("\n\nتصحيح إلزامي: " + note if note else ""),
+                        temperature=0.7 if note else 0.9)
+    try:
+        return written, to_factory_topic(written, report, dna)
+    except RuntimeError as exc:
+        if note or "أرقامًا ليست من الرادار" not in str(exc):
+            raise
+        print(f"[eye] ⚠️ {exc} — إعادة كتابة واحدة بلا أرقام…", flush=True)
+        return _writer_call(
+            prompt, report, dna,
+            note="النسخة السابقة كتبت أرقامًا غير موثقة. اكتب نسخة جديدة "
+                 "**بلا أي رقم** في العنوان أو الخطاف أو الحقائق أو الختام.")
 
 
 def to_factory_topic(written: dict, report: dict, dna: dict) -> dict:
@@ -977,13 +1002,12 @@ def agent(video_id: str, meta: dict | None = None) -> dict:
             title_patterns = json.dumps(p.get("titlePatterns", {}), ensure_ascii=False)
         except Exception:
             title_patterns = ""
-    written = _llm_json(
+    written, topic = _writer_call(
         WRITE_PROMPT.format(
             dna=json.dumps(dna, ensure_ascii=False)[:6000],
             digest=digest[:6000],
             title_patterns=title_patterns or "(مفيش)",
-        ), temperature=0.9)
-    topic = to_factory_topic(written, report, dna)
+        ), report, dna)
 
     print("[eye] ناقد: تقييم صارم…", flush=True)
     crit = _llm_json(
@@ -1002,12 +1026,11 @@ def agent(video_id: str, meta: dict | None = None) -> dict:
         score = 100
     if score < 75 and crit.get("weaknesses"):
         print(f"[eye] التقييم {score}/100 — إعادة كتابة الأضعف…", flush=True)
-        fixed = _llm_json(
+        _fixed, topic = _writer_call(
             REWRITE_PROMPT.format(
                 weaknesses=json.dumps(crit["weaknesses"], ensure_ascii=False),
                 topic=json.dumps(written, ensure_ascii=False),
-            ), temperature=0.8)
-        topic = to_factory_topic(fixed, report, dna)
+            ), report, dna)
         topic["_critique"] = {
             "score": score, "rewritten": True,
             "weaknesses": crit.get("weaknesses", []),

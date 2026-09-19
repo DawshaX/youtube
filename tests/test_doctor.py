@@ -227,3 +227,47 @@ class LLMJsonContractTests(unittest.TestCase):
              mock.patch.dict(os.environ, {"GEMINI_API_KEY": ""}, clear=False):
             with self.assertRaises(RuntimeError):
                 eye._llm_json("حلّل")
+
+
+class WriterRetryTests(unittest.TestCase):
+    """التشغيل 2026-09-19: الموديل اخترع أرقامًا (مفيش ميديا من IP الخوادم)،
+    وحارس النزاهة رفض السيناريو → كل الحلقة فشلت. المطلوب: محاولة تصحيحية
+    واحدة تطلب نسخة بلا أرقام — بلا كسر قاعدة «مفيش أرقام مخترعة»."""
+
+    def test_invented_numbers_trigger_one_corrective_retry(self):
+        prompts = []
+
+        def fake_llm(prompt, temperature=0.7):
+            prompts.append(prompt)
+            return {"title_ar": "عنوان"}
+
+        results = [RuntimeError("eye: السيناريو احتوى أرقامًا ليست من الرادار: 105"), {}]
+
+        def fake_topic(written, report, dna):
+            item = results.pop(0)
+            if isinstance(item, Exception):
+                raise item
+            return item
+
+        with mock.patch.object(eye, "_llm_json", fake_llm), \
+             mock.patch.object(eye, "to_factory_topic", fake_topic):
+            written, topic = eye._writer_call("برومبت الكتابة", {}, {})
+        self.assertEqual(len(prompts), 2, "لازم محاولة تصحيحية واحدة بالظبط")
+        self.assertIn("بلا أي رقم", prompts[1])
+        self.assertEqual(topic, {})
+
+    def test_other_failures_are_not_retried(self):
+        calls = []
+
+        def fake_llm(prompt, temperature=0.7):
+            calls.append(prompt)
+            return {"title_ar": "عنوان"}
+
+        def fake_topic(written, report, dna):
+            raise RuntimeError("eye: مشكلة تانية خالص")
+
+        with mock.patch.object(eye, "_llm_json", fake_llm), \
+             mock.patch.object(eye, "to_factory_topic", fake_topic):
+            with self.assertRaises(RuntimeError):
+                eye._writer_call("برومبت", {}, {})
+        self.assertEqual(len(calls), 1)
