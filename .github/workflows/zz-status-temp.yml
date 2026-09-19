@@ -1,0 +1,35 @@
+name: STATUS (مؤقت — يُحذف)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci --silent
+      - name: حالة كل فيديو مسجل على يوتيوب
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: |
+          node - <<'EOF'
+          import fs from 'node:fs';
+          const key = process.env.YOUTUBE_API_KEY;
+          const records = JSON.parse(fs.readFileSync('data/saved_videos.json', 'utf-8'));
+          const ids = records.map(r => r.id);
+          console.log(`عدد السجلات: ${ids.length}`);
+          const url = `https://www.googleapis.com/youtube/v3/videos?part=status,snippet&id=${ids.join(',')}&key=${key}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          const found = new Map((data.items || []).map(i => [i.id, i]));
+          for (const r of records) {
+            const item = found.get(r.id);
+            const state = item
+              ? `${item.status.uploadStatus}/${item.status.privacyStatus}`
+              : '❌ مش موجود على يوتيوب (اتشال)';
+            console.log(`${r.id} | ${state} | ${(r.title || '').slice(0, 44)}`);
+          }
+          EOF

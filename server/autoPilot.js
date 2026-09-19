@@ -8,6 +8,7 @@ import { publishVideo } from './youtubeService.js';
 import { startProduceJob, getJobStatus, listProductionQueue } from './videoFactoryBridge.js';
 import { loadSavedVideos, getYouTubeClient } from './youtubeService.js';
 import { emitEvent } from './bus.js';
+import { execSync } from 'node:child_process';
 
 const ROOT_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PRODUCTION_LOG_PATH = path.join(ROOT_DIR, 'data', 'production_log.json');
@@ -35,6 +36,54 @@ let autoPilotState = {
   publishBlockedReason: null,
   logs: []
 };
+
+// ─────────────────────────────────────────────────────────────
+// حارس التكرار اللحظي (من الريموت، مش من نسخة الـcheckout)
+// ─────────────────────────────────────────────────────────────
+// الدرس (2026-09-19 03:46): دورتين اشتغلوا في نفس الوقت، وكل واحدة قرأت نسخة
+// الـcheckout بتاعتها (اللي مكنش فيها سجل التانية) → **نفس الموضوع اتنشر مرتين**
+// بنفس العنوان، ويوتيوب شال الاتنين بعدها. الحل: قبل أي رفع، نسأل الريموت
+// نفسه عن العناوين المنشورة فعلًا — النسخة اللي على origin/main هي المرجع.
+
+export function normalizeTitle(title) {
+  return String(title ?? '')
+    .replace(/\s*#Shorts\s*/gi, ' ')
+    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\uFE0F]/gu, '')
+    .replace(/[\s\u200f\u200e]+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
+export function titleAlreadyPublished(title, publishedTitles) {
+  const wanted = normalizeTitle(title);
+  if (!wanted) return false;
+  return [...publishedTitles].some(existing => normalizeTitle(existing) === wanted);
+}
+
+export function remotePublishedTitles() {
+  // أحدث قائمة منشورة من فرع main على الريموت — بتفشل بهدوء لو مفيش جيت/شبكة.
+  try {
+    execSync('git fetch --quiet origin main', { stdio: 'ignore', timeout: 60000 });
+    const raw = execSync('git show origin/main:data/saved_videos.json',
+                         { encoding: 'utf-8', timeout: 30000 });
+    return new Set(JSON.parse(raw).map(v => v?.title).filter(Boolean));
+  } catch {
+    return null;
+  }
+}
+
+export function refreshDataFromRemote() {
+  // يحدّث ملفات القرار من الريموت قبل اختيار الموضوع (بلا ما يلمس الكود).
+  try {
+    execSync('git fetch --quiet origin main', { stdio: 'ignore', timeout: 60000 });
+    execSync('git checkout origin/main -- data/production_log.json '
+             + 'data/saved_videos.json data/eye_topics.json',
+             { stdio: 'ignore', timeout: 30000 });
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 // ─────────────────────────────────────────────────────────────
 // سقف الحصة اليومية ليوتيوب
@@ -248,6 +297,16 @@ export async function runAutoPilotCycle() {
     }
     if (audioSources.length && audioSources.every(s => s === 'fallback') && process.env.COSMIC_ALLOW_FALLBACK_AUDIO !== '1') {
       throw new Error('Narration fell back to a synthetic tone (TTS unavailable). Refusing to publish it; set COSMIC_ALLOW_FALLBACK_AUDIO=1 to override.');
+    }
+
+    // ⚠️ حارس اللحظة الأخيرة: نسأل الريموت عن العناوين المنشورة فعلًا قبل الرفع
+    const remoteTitles = remotePublishedTitles();
+    if (remoteTitles && titleAlreadyPublished(topic.title_ar, remoteTitles)) {
+      const message = `⏭️ تخطّي «${topic.title_ar}» — نفس العنوان منشور بالفعل `
+        + '(دورة تانية سبقتنا). مفيش رفع مكرر.';
+      addAutoPilotLog(message);
+      console.log(message);
+      return { skipped: true, reason: 'duplicate_title', title: topic.title_ar };
     }
 
     const result = await publishVideo({

@@ -5,7 +5,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { publishVideo, verifyYouTubeVideo } from '../server/youtubeService.js';
 import { runAutoPilotCycle, pickNextProductionTopic, loadProductionLog, pruneProductionLog,
-         uploadsInCurrentQuotaDay, dailyUploadCap, quotaDayKey } from '../server/autoPilot.js';
+         uploadsInCurrentQuotaDay, dailyUploadCap, quotaDayKey,
+         normalizeTitle, titleAlreadyPublished } from '../server/autoPilot.js';
 import { listProductionQueue, listAvailableTopics } from '../server/videoFactoryBridge.js';
 import { summarizeVerification } from '../server/uploadVerification.js';
 
@@ -180,4 +181,21 @@ test('daily quota cap: default is the YouTube upload quota ceiling and is overri
   assert.equal(dailyUploadCap(), 3);
   if (previous === undefined) delete process.env.XT_MAX_UPLOADS_PER_DAY;
   else process.env.XT_MAX_UPLOADS_PER_DAY = previous;
+});
+
+
+test('duplicate guard: the same topic can never be published twice (race between cycles)', () => {
+  // اللي حصل فعلًا 03:46: دورتين قرأوا نسختين قديمتين → نفس الفيديو اتنشر مرتين
+  // بنفس العنوان، ويوتيوب شال الاتنين. الحارس ده بيمنع التكرار قبل الرفع.
+  const published = [
+    'تحت قدميك إمبراطورية كاملة! 3 حقائق صادمة عن عالم النمل #Shorts',
+    'قصة سارة: من الدموع إلى النجاح #Shorts',
+  ];
+  assert.ok(titleAlreadyPublished('تحت قدميك إمبراطورية كاملة! 3 حقائق صادمة عن عالم النمل #Shorts', published));
+  // نفس العنوان بدون #Shorts أو بمسافات مختلفة → لسه تكرار
+  assert.ok(titleAlreadyPublished('  تحت قدميك إمبراطورية كاملة! 3 حقائق صادمة عن عالم النمل  ', published));
+  assert.ok(!titleAlreadyPublished('٣ حقائق مذهلة عن الفضاء السحيق', published));
+  assert.equal(normalizeTitle('عنوان #Shorts'), 'عنوان');
+  assert.ok(!titleAlreadyPublished('', published), 'عنوان فاضي مايتحسبش تكرار');
+  assert.ok(!titleAlreadyPublished('أي حاجة', []));
 });

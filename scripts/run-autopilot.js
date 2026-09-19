@@ -14,7 +14,9 @@ fs.writeFileSync('data/config.json', JSON.stringify({
   connected: true, mode: 'live'
 }), { mode: 0o600 });
 try {
-  const { runAutoPilotCycle } = await import('../server/autoPilot.js');
+  const { runAutoPilotCycle, refreshDataFromRemote } = await import('../server/autoPilot.js');
+  // ناخد أحدث سجل نشر/طابور من الريموت قبل أي قرار — يمنع سباق النسخ القديمة
+  if (refreshDataFromRemote()) console.log('↻ ملفات القرار اتحدّثت من origin/main');
   await runAutoPilotCycle();
 } catch (error) {
   console.error(error.message);
