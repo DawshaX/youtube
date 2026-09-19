@@ -95,6 +95,14 @@
     "video": "https://github.com/DawshaX/youtube/releases/download/vault/q1789838626.mp4",
     "cover": "https://github.com/DawshaX/youtube/releases/download/vault/q1789838626.png"
    }
+  },
+  "eye-JPbWXvyaCcw": {
+   "title": "تحدي المارشميلو: شدّ، انفجار، وضحكة",
+   "fingerprint": "c00992fe3129006a",
+   "video": "/home/runner/work/youtube/youtube/content/vids/eye-JPbWXvyaCcw.mp4",
+   "duration": 65.8,
+   "at": "2026-09-19 18:03",
+   "urls": {}
   }
  },
  "fingerprints": [
@@ -106,7 +114,8 @@
   "d50a0de0178b7677",
   "b25661dd9da5b69e",
   "503b8c906a90e703",
-  "68cbe36ff2df72cf"
+  "68cbe36ff2df72cf",
+  "c00992fe3129006a"
  ],
  "last_kind": "trend"
 }
