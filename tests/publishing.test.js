@@ -199,3 +199,15 @@ test('duplicate guard: the same topic can never be published twice (race between
   assert.ok(!titleAlreadyPublished('', published), 'عنوان فاضي مايتحسبش تكرار');
   assert.ok(!titleAlreadyPublished('أي حاجة', []));
 });
+
+
+test('verification: a video that was verified then removed is reported, not a run failure', () => {
+  const now = Date.parse('2026-09-19T05:00:00Z');
+  const records = [{ id: 'was-live', verified: true, verifiedAt: '2026-09-19T02:50:00Z',
+                     publishedAt: '2026-09-19T02:48:00Z' }];
+  const results = [{ verified: false, url: 'https://youtu.be/was-live', reason: 'no video' }];
+  const s = summarizeVerification(records, results, { now, strictHours: 24 });
+  assert.equal(s.exitCode, 0, 'اللي اتشال بعد ما كان منشور ما يسقّطش الدورة');
+  assert.equal(s.removed.length, 1);
+  assert.equal(s.failures.length, 0);
+});

@@ -30,11 +30,19 @@ export function summarizeVerification(records, results, options = {}) {
   const verified = [];
   const failures = [];
   const stale = [];
+  const removed = [];
 
   records.forEach((record, index) => {
     const result = results[index] || {};
     if (result.verified) {
       verified.push({ record, result });
+      return;
+    }
+    // سجل كان **متحقَّق منه قبل كده** وبقى مش موجود = اتشال بعد النشر.
+    // ده مش فشل رفع — ده حدث على القناة نفسها.
+    const wasVerified = record?.verified === true || Boolean(record?.verifiedAt);
+    if (wasVerified) {
+      removed.push({ record, result });
       return;
     }
     const at = recordTime(record);
@@ -46,8 +54,10 @@ export function summarizeVerification(records, results, options = {}) {
     verified,
     failures,
     stale,
+    removed,
     strictHours,
-    // سجل قديم مش بيوقف النشر — بس بيتعرض. الفشل الحقيقي: منشور حديث مش متأكد.
+    // الفشل الحقيقي: رفعة **جديدة** اتقال إنها تمت ومتأكدتش أبدًا.
+    // اللي اتشال بعد التحقق أو السجل القديم = تقرير واضح بلا إسقاط الدورة.
     exitCode: failures.length > 0 ? 1 : 0,
   };
 }

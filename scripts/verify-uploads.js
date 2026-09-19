@@ -39,6 +39,10 @@ for (const { record, result } of summary.failures) {
   console.log(`FAIL  ${record.id}  ${result.url}  reason=${result.reason} (method=${result.method})` +
     `\n      منشور حديث لازم يتأكد — ده فشل حقيقي.`);
 }
+for (const { record, result } of summary.removed) {
+  console.log(`REMOVED ${record.id}  ${result.url}  reason=${result.reason}` +
+    `\n      اتشال بعد ما اتأكد إنه كان منشور (مش فشل رفع).`);
+}
 for (const { record, result } of summary.stale) {
   console.log(`STALE ${record.id}  ${result.url}  reason=${result.reason}` +
     `\n      سجل قديم: الفيديو مش موجود على يوتيوب (اتشال/اتمسح) — مش فشل نشر.)`);
@@ -47,6 +51,7 @@ for (const { record, result } of summary.stale) {
 console.log(
   `\n${summary.verified.length}/${records.length} recorded uploads verified against YouTube` +
   ` (نافذة الحداثة ${summary.strictHours} ساعة) — ` +
-  `حديث غير مؤكد: ${summary.failures.length}، سجل قديم مُزال: ${summary.stale.length}.`
+  `حديث غير مؤكد: ${summary.failures.length}، اتشال بعد التحقق: ${summary.removed.length}، `
+  + `سجل قديم مُزال: ${summary.stale.length}.`
 );
 process.exitCode = summary.exitCode;

@@ -267,6 +267,12 @@ export async function runAutoPilotCycle() {
   cycleActive = true;
   autoPilotState.lastRun = new Date().toISOString();
   try {
+    const { client, isOAuth } = getYouTubeClient();
+    if (!isOAuth || !client) throw new Error('YouTube OAuth is missing. Configure client ID, client secret and refresh token.');
+    const channels = await client.channels.list({ part: ['snippet'], mine: true });
+    if (!channels.data.items?.length) throw new Error('No YouTube channel found for this authorization');
+    addAutoPilotLog(`القناة المتصلة: ${channels.data.items[0].snippet.title}`);
+
     const cap = dailyUploadCap();
     const usedToday = uploadsInCurrentQuotaDay(loadSavedVideos(), loadProductionLog());
     if (usedToday >= cap) {
@@ -278,11 +284,6 @@ export async function runAutoPilotCycle() {
       return { skipped: true, reason: 'daily_upload_cap', usedToday, cap };
     }
 
-    const { client, isOAuth } = getYouTubeClient();
-    if (!isOAuth || !client) throw new Error('YouTube OAuth is missing. Configure client ID, client secret and refresh token.');
-    const channels = await client.channels.list({ part: ['snippet'], mine: true });
-    if (!channels.data.items?.length) throw new Error('No YouTube channel found for this authorization');
-    addAutoPilotLog(`القناة المتصلة: ${channels.data.items[0].snippet.title}`);
 
     // طابور المصنع نفسه يضع catalog=eye أولًا ثم الكتالوجات المؤلفة.
     const topic = pickNextProductionTopic();
