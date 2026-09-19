@@ -194,6 +194,39 @@ def push_published(item: dict) -> None:
     _wr(PUBLISHED_FILE, d[-500:])
 
 
+def _pt_day_start(now: float) -> float:
+    """بداية يوم يوتيوب (منتصف الليل بتوقيت المحيط الهادي).
+
+    الدرس (2026-09-19): كنا بنعدّ 24 ساعة متحركة، فالحارس بيقفل النشر
+    وإحنا لسه عندنا كوتة متبقية فعلًا — ويوتيوب بترجّع الحصة كل يوم
+    الساعة 12 بالليل PT (07:00 UTC في الصيف). العدّ الصحيح = من بداية يوم PT.
+    """
+    import datetime as _dt
+    try:
+        from zoneinfo import ZoneInfo
+        _tz = ZoneInfo("America/Los_Angeles")
+    except Exception:  # بلا tzdata: تقدير ثابت (UTC-7)
+        _tz = _dt.timezone(_dt.timedelta(hours=-7))
+    _pt = _dt.datetime.fromtimestamp(now, tz=_dt.timezone.utc).astimezone(_tz)
+    return _pt.replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
+
+
+def published_today_pt(now: float | None = None) -> int:
+    """كام رفعة على يوتيوب من بداية اليوم بتوقيت PT (عدّاد جوجل نفسه)."""
+    now = now or time.time()
+    start = _pt_day_start(now)
+    n = 0
+    for x in published_log():
+        if not isinstance(x, dict):
+            continue
+        try:
+            if float(x.get("ts") or 0) >= start:
+                n += 1
+        except (TypeError, ValueError):
+            continue
+    return n
+
+
 def published_last_24h(now: float | None = None) -> int:
     """كام حلقة اتنشرت في آخر 24 ساعة (يوتيوب: 6 رفعات = 10,000 وحدة)."""
     now = now or time.time()

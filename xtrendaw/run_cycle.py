@@ -340,6 +340,10 @@ def _publish(topic, r: dict, urls: dict) -> None:
             else:
                 url, err = mod.publish(video_url, title, caption, tags)
             if err:
+                if err.startswith("quota"):
+                    _log("⛔ كوتة يوتيوب خلصت فعلًا من جوجل (quotaExceeded) — "
+                         "الحلقة في الطابور وهتنزل أول ما اليوم يتجدد "
+                         "(07:00 UTC)")
                 _log(f"⚠ {name}: {err[:100]}")
                 if name == "youtube" and video_url:
                     state.push_yt_pending({"url": video_url, "title": title,
@@ -434,7 +438,8 @@ def _quota_blocked() -> bool:
     بتفتكر اللي اترفع قبلها، وما بتحاولش ترفع فوق السقف فتفشل.
     """
     cap = settings.DAILY_CAP
-    return cap > 0 and state.published_last_24h() >= cap
+    # عدّاد جوجل الحقيقي (يوم PT) — مش 24 ساعة متحركة (كان بيحجب نشر حلال)
+    return cap > 0 and state.published_today_pt() >= cap
 
 
 def _promote_due(force: bool = False) -> None:
@@ -448,8 +453,8 @@ def _promote_due(force: bool = False) -> None:
     # الحلقات الزيادة بتتخزن في الـvault وبتنزل أول ما الكوتة تفتح —
     # صفر محاولات مهدورة وصفر أخطاء حصة في السير.
     if _quota_blocked():
-        _log(f"⏸ حارس الكوتة: {state.published_last_24h()}/{settings.DAILY_CAP} "
-             "رفعة في آخر 24 ساعة — الحلقات بتتخزن في الـvault ومستنية الدور")
+        _log(f"⏸ حارس الكوتة: {state.published_today_pt()}/{settings.DAILY_CAP} "
+             "رفعة النهاردة (يوم يوتيوب بتوقيت PT) — الحلقات مستنية الدور")
         return
 
     hour = datetime.now(ZoneInfo("Africa/Cairo")).hour

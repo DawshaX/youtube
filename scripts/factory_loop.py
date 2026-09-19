@@ -214,11 +214,11 @@ def cycle_once() -> None:
     # فوق السقف: الحلقة تتحفظ في المخزون وترفع أول ما الكوتة تفتح —
     # صفر محاولات مهدورة وصفر أخطاء حصة.
     # ⚠️ في وضع "بلا نشر" (معاينة/فحص) بنوقف قبل أي رفع خالص.
-    if vid.exists() and not NO_PUBLISH and state.published_last_24h() >= (settings.DAILY_CAP or 999):
+    if vid.exists() and not NO_PUBLISH and state.published_today_pt() >= (settings.DAILY_CAP or 999):
         _log(s, "publish_attempts", {"at": now, "topic": topic["id"], "ok": False,
-                                     "why": f"daily_cap {state.published_last_24h()}/{settings.DAILY_CAP}"})
-        print(f"[factory] ⏸ حارس الكوتة: {state.published_last_24h()}/{settings.DAILY_CAP} "
-              "رفعة/24س — الفيديو اتحفظ ومستني الدور", flush=True)
+                                     "why": f"daily_cap {state.published_today_pt()}/{settings.DAILY_CAP}"})
+        print(f"[factory] ⏸ حارس الكوتة: {state.published_today_pt()}/{settings.DAILY_CAP} "
+              "رفعة النهاردة (يوم يوتيوب PT) — الفيديو اتحفظ ومستني الدور", flush=True)
     elif vid.exists() and not NO_PUBLISH:
         try:
             if not meta_p.exists():

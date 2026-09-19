@@ -35,6 +35,17 @@ def publish(video_path, title, caption, tags, cover=None):
                  "X-Upload-Content-Length": str(video_path.stat().st_size)},
         json=meta, timeout=60)
     if init.status_code != 200:
+        # فرّق بين «الحصة خلصت» و«رفض تاني» — الكوتة بتتفتح لوحدها،
+        # والفرق ده بيخلّي المصنع يهدى بدل ما يحاول ويحاول بلا فايدة.
+        try:
+            _why = (init.json().get("error", {}).get("errors") or [{}])[0]
+            _reason = str(_why.get("reason") or "")
+        except Exception:
+            _reason = ""
+        if init.status_code == 403 and "quota" in _reason.lower():
+            return None, "quota_exceeded"
+        if init.status_code in (401, 403) and "quota" not in _reason.lower():
+            return None, f"auth_{init.status_code}"
         return None, f"init_{init.status_code}"
     up = requests.put(init.headers["Location"],
                       headers={"Content-Length": str(video_path.stat().st_size)},
