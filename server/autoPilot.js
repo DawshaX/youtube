@@ -175,16 +175,17 @@ export async function runAutoPilotCycle() {
     if (!channels.data.items?.length) throw new Error('No YouTube channel found for this authorization');
     addAutoPilotLog(`القناة المتصلة: ${channels.data.items[0].snippet.title}`);
 
-    // Use a finite, authored queue, not unrelated trending titles or recycled MP4s.
-    const topics = JSON.parse(fs.readFileSync(path.resolve('content/topics.json'), 'utf8'));
-    const published = loadSavedVideos().filter(v => v.liveUploaded);
-    const topic = topics.find(t => !published.some(v => v.title === `${t.title_ar} #Shorts` || v.title === t.title_ar));
+    // طابور المصنع نفسه يضع catalog=eye أولًا ثم الكتالوجات المؤلفة.
+    const topic = pickNextProductionTopic();
     if (!topic) throw new Error('Topic queue exhausted. Add new original topics before publishing again.');
     autoPilotState.currentPublishingTitle = topic.title_ar;
 
     const status = await renderTopic(topic);
     const out = status.outputVideo;
     const audioSources = out.audioSources || [];
+    if (out.report?.validate?.ok !== true) {
+      throw new Error('فحص الجودة الإلزامي فشل؛ يُمنع النشر.');
+    }
     if (audioSources.length && audioSources.every(s => s === 'fallback') && process.env.COSMIC_ALLOW_FALLBACK_AUDIO !== '1') {
       throw new Error('Narration fell back to a synthetic tone (TTS unavailable). Refusing to publish it; set COSMIC_ALLOW_FALLBACK_AUDIO=1 to override.');
     }
@@ -193,8 +194,15 @@ export async function runAutoPilotCycle() {
       videoFilePath: out.filePath,
       thumbnailFilePath: out.coverPath || null,
       title: topic.title_ar,
-      description: [topic.hook_ar, ...(topic.facts_ar || []), topic.outro_ar].join('\n\n'),
-      tags: (topic.tags || '').split(','),
+      description: [
+        '🔥 ' + topic.hook_ar,
+        ...(topic.facts_ar || []).map(x => '✨ ' + x),
+        topic.outro_ar,
+        '💬 اشترك وقل لنا رأيك وشارك الفيديو مع أصحابك!',
+        ...(out.report?.credits || []),
+        '#دوشة #Shorts #اكسبلور #فيرال #ترند'
+      ].filter(Boolean).join('\n\n'),
+      tags: [...new Set([...(topic.tags || '').split(','), 'دوشة', 'Shorts', 'اكسبلور', 'فيرال', 'ترند'].map(x => x.trim()).filter(Boolean))],
       privacyStatus: 'public', categoryId: '28', isShort: true
     });
     if (!result.video?.liveUploaded) throw new Error('Live upload was not confirmed');

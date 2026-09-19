@@ -1,11 +1,8 @@
 name: CosmicTube Autonomous Auto-Pilot 24/7
-# النشر موقوف بموافقة صاحب القناة: الجدولة كل 30 دقيقة متعطلة لحد ما
-# الحلقة التجريبية تتراجع وتتوافق عليها. لحد اللحظة دي شغّل الدورة
-# يدويًا (workflow_dispatch) أو راجع الحلقة عبر pilot-render.yml.
-# لإعادة التشغيل الدائم بعد الموافقة: ارجع الـschedule اللي تحت.
+# موافقة صاحب القناة مثبتة؛ النشر ساعي ويفشل بأمان قبل الرفع.
 on:
-  # schedule:
-  #   - cron: '*/30 * * * *'
+  schedule:
+    - cron: '23 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -59,6 +56,11 @@ jobs:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          XT_NET_FOOTAGE: '1'
+          XT_SCENE_CUT: '2.0'
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
         run: node scripts/run-autopilot.js
       - name: Verify the published link resolves on YouTube
         env:
@@ -67,11 +69,11 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
         run: |
-          # run-autopilot.js removes data/config.json on exit, so rebuild it here
-          # purely to ask YouTube about the video that was just uploaded.
-          node -e "const fs=require('fs');fs.writeFileSync('data/config.json',JSON.stringify({apiKey:process.env.YOUTUBE_API_KEY||'',clientId:process.env.YOUTUBE_CLIENT_ID,clientSecret:process.env.YOUTUBE_CLIENT_SECRET,tokens:{refresh_token:process.env.YOUTUBE_REFRESH_TOKEN},connected:true,mode:'live'}))"
+          # ملف اعتماد مؤقت فقط، ويُمسح حتى لو فشل التحقق.
+          trap 'rm -f data/config.json' EXIT
+          umask 077
+          node -e "const fs=require('fs');fs.writeFileSync('data/config.json',JSON.stringify({apiKey:process.env.YOUTUBE_API_KEY||'',clientId:process.env.YOUTUBE_CLIENT_ID,clientSecret:process.env.YOUTUBE_CLIENT_SECRET,tokens:{refresh_token:process.env.YOUTUBE_REFRESH_TOKEN},connected:true,mode:'live'}),{mode:0o600})"
           node scripts/verify-uploads.js
-          rm -f data/config.json
       - name: Persist confirmed upload history
         if: always()
         run: |

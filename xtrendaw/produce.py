@@ -110,20 +110,22 @@ def produce_episode(topic: dict, workdir: Path) -> dict:
             entry = dict(sc)
             entry["start"] = s0
             entry["end"] = s1
-            clip = _footage.vault_clip(kind, item["text"], s1 - s0,
+            # ترتيب الملاذات ثابت: شبكة حية ← خزنة محلية ← صورة AI
+            # (Pollinations) ← الخلفية الإجرائية الموجودة أصلًا في sc.
+            clip = _footage.fetch_clip(real_q or subject or text, s1 - s0,
                                        workdir / f"sc{i:02d}" / f"cut{j:02d}",
-                                       seed=f"{topic['id']}:{i}:{j}",
-                                       exclude=prev_clip, used=clip_usage)
+                                       seed=f"{topic['id']}:{i}:{j}")
             if clip is None:
-                clip = _footage.fetch_clip(real_q, s1 - s0,
+                clip = _footage.vault_clip(kind, item["text"], s1 - s0,
                                            workdir / f"sc{i:02d}" / f"cut{j:02d}",
-                                           seed=f"{topic['id']}:{i}:{j}")
-            # لو الفيديو الشبكي ما جاش: صورة مرخصة تتحول حركة (مش إطار ثابت)
+                                           seed=f"{topic['id']}:{i}:{j}",
+                                           exclude=prev_clip, used=clip_usage)
             if clip is None:
                 from . import imagery
-                clip = imagery.fetch_image_clip(real_q or text, s1 - s0,
-                                                workdir / f"sc{i:02d}" / f"cut{j:02d}",
-                                                seed=f"{topic['id']}:{i}:{j}")
+                clip = imagery.fetch_pollinations_clip(
+                    real_q or subject or text, s1 - s0,
+                    workdir / f"sc{i:02d}" / f"cut{j:02d}",
+                    seed=f"{topic['id']}:{i}:{j}")
             if clip is not None:
                 entry["video"] = clip
                 prev_clip = (clip.name,)
