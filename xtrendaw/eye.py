@@ -287,8 +287,24 @@ def audio_energy_per_second(video: Path, step: float = 1.0) -> list[float]:
 # المشاهدة الكاملة → تقرير قابل للتدقيق
 # ═════════════════════════════════════════════════════════════
 
+def _public_metadata(video_id: str) -> dict:
+    """بيانات عامة حقيقية من oEmbed؛ لا أرقام ولا حقائق مُقدّرة."""
+    try:
+        r = _req().get("https://www.youtube.com/oembed", params={
+            "url": f"https://www.youtube.com/watch?v={video_id}", "format": "json"},
+            headers=_UA, timeout=20)
+        r.raise_for_status()
+        data = r.json()
+        return {"title": data.get("title"), "channel": data.get("author_name"),
+                "via": "youtube-oembed"}
+    except Exception:
+        return {}
+
+
 def watch(video_id: str, meta: dict | None = None) -> dict:
-    meta = meta or {}
+    # الرادار أفضل مصدر للأرقام. oEmbed يملأ العنوان والقناة فقط عند التشغيل
+    # بالتاج؛ لا نخمن المشاهدات أو أي رقم غير موجود.
+    meta = {**_public_metadata(video_id), **(meta or {})}
     outdir = EYE_DIR / video_id
     outdir.mkdir(parents=True, exist_ok=True)
     frames_dir = outdir / "frames"
@@ -535,7 +551,25 @@ REWRITE_PROMPT = """الناقد لقى الضعفانات دي في حلقتن�
 """
 
 
+def _assert_radar_numbers(written: dict, report: dict) -> None:
+    """أي رقم مكتوب يجب أن يكون قيمة موجودة حرفيًا في بيانات الرادار."""
+    text = json.dumps(written, ensure_ascii=False)
+    claimed = {re.sub(r"[,٬]", "", n) for n in re.findall(r"\d[\d,٬.]*", text)}
+    meta = report.get("meta", {})
+    allowed = {str(meta[k]) for k in ("viewCount", "likeCount")
+               if meta.get(k) not in (None, "")}
+    # أرقام JSON البنيوية/ألوان hex لا تُعد ادعاءات؛ حقول النص فقط عمليًا،
+    # لذا نستبعد أجزاء الألوان وأزمنة visual_plan قبل الفحص.
+    prose = " ".join(str(written.get(k, "")) for k in
+                     ("title_ar", "hook_ar", "facts_ar", "takeaway_ar"))
+    claimed = {re.sub(r"[,٬]", "", n) for n in re.findall(r"\d[\d,٬.]*", prose)}
+    if claimed - allowed:
+        raise RuntimeError("eye: السيناريو احتوى أرقامًا ليست من الرادار: "
+                           + ", ".join(sorted(claimed - allowed)))
+
+
 def to_factory_topic(written: dict, report: dict, dna: dict) -> dict:
+    _assert_radar_numbers(written, report)
     vid = report["videoId"]
     m = report.get("meta", {})
     t = {
@@ -639,12 +673,9 @@ def consume_queue(seen: set[str] | None = None) -> dict | None:
 
 def agent(video_id: str, meta: dict | None = None) -> dict:
     report = watch(video_id, meta)
-    if not report["captions"] and not report["scenes"]:
+    if not report["captions"] and not report["scenes"] and not report.get("meta"):
         raise RuntimeError(
-            "eye: الفيديو غير مرئي نهائيًا من هذا الـ IP (لا فيديو ولا تسميات) — "
-            "مفيش تحليل من غير مشاهدة حقيقية. الحل: سر YOUTUBE_COOKIES_B64 "
-            "(كوكيز متصفح حسابك) في Settings → Secrets → Actions، "
-            "أو self-hosted runner من شبكة منزلية.")
+            "eye: لا فيديو ولا تسميات ولا بيانات عامة حقيقية؛ نرفض اختلاق تحليل.")
     digest = build_digest(report)
 
     print("[eye] افهم: وكيل الـ DNA يحلل…", flush=True)
