@@ -170,3 +170,25 @@ class MediaFileIsolationTest(unittest.TestCase):
                 self.assertTrue(state.media_seen("http://x/1"))
             finally:
                 state.MEDIA_FILE = old
+
+
+class ProducedTopicGuardTest(unittest.TestCase):
+    """حلقة المارشميلو طلعت مرتين — الحارس: المعرّف مش العنوان."""
+
+    def test_produced_ids_reads_repo_state(self):
+        from xtrendaw import state
+        ids = state.produced_ids()
+        self.assertIsInstance(ids, set)
+        self.assertIn("eye-JPbWXvyaCcw", ids)   # اتعملت فعلًا على القناة
+
+    def test_brain_rejects_already_produced_id(self):
+        from xtrendaw import brain
+        cand = {"id": "eye-JPbWXvyaCcw", "title_ar": "عنوان جديد خالص",
+                "angle": "ترند", "facts_ar": ["حقيقة"]}
+        self.assertFalse(brain._candidate_is_fresh(cand))
+
+    def test_brain_accepts_new_id(self):
+        from xtrendaw import brain
+        cand = {"id": "eye-جديد-123", "title_ar": "موضوع جديد",
+                "angle": "ترند", "facts_ar": ["حقيقة"]}
+        self.assertTrue(brain._candidate_is_fresh(cand))

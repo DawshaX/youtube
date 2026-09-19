@@ -156,6 +156,16 @@ def trend_topic(skip: set | None = None) -> dict | None:
     return None
 
 
+def _candidate_is_fresh(cand: dict | None) -> bool:
+    """الحارس الموحّد: الموضوع ما اتعملش قبل كده (بالمعرّف أو البصمة)."""
+    from . import state as _state
+    if not cand:
+        return False
+    if str(cand.get("id") or "") in _state.produced_ids():
+        return False
+    return not _state.fingerprint_seen(cand)
+
+
 def generate(topics: list[dict], want: str = "auto") -> dict | None:
     """موضوع جديد مش مكرر بالبصمة، وإلا None.
 
@@ -167,7 +177,12 @@ def generate(topics: list[dict], want: str = "auto") -> dict | None:
 
     seen = {content.fingerprint(t) for t in topics}
 
+    _done_ids = _state.produced_ids()
+
     def _fresh(cand: dict | None, kind: str) -> dict | None:
+        # حارس مزدوج: البصمة + المعرّف (العنوان بيتغير فالبصمة بتخون)
+        if (cand and str(cand.get("id") or "") in _done_ids):
+            return None
         if cand and content.fingerprint(cand) not in seen \
                 and not _state.fingerprint_seen(cand):
             cand["_kind"] = kind

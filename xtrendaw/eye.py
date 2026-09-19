@@ -1003,8 +1003,21 @@ def consume_queue(seen: set[str] | None = None) -> dict | None:
     if not isinstance(q, list):
         q = []
     fps = (seen or set()) | _seen_fps()
+    try:
+        from . import state as _st
+        _done = _st.produced_ids()
+    except Exception:
+        _done = set()
     for i, t in enumerate(q):
         fp = content.fingerprint(t)
+        # اتعمل فعلًا؟ ينسحب للأرشيف (بس ما ينشرش) — يمنع تكرار الحلقة
+        if t.get("id") and str(t["id"]) in _done:
+            q.pop(i)
+            t["_consumedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+            t["_skipReason"] = "already_produced"
+            consumed.append(t)
+            _write_all(q, consumed)
+            return None
         if fp in fps:
             continue
         q.pop(i)

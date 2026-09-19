@@ -182,7 +182,8 @@ jobs:
                    state/published.json state/last_publish.json \
                    state/yt_recent.json state/media_used.json \
                    state/reciter_proven.json state/reciter_badlist.json \
-                   state/last_cycle.json state/latest_sheet.jpg; do
+                   state/last_cycle.json state/latest_sheet.jpg \
+                   data/eye_topics.json data/eye_consumed.json; do
             [ -f "$f" ] && git add -f "$f"
           done
           if git diff --staged --quiet; then

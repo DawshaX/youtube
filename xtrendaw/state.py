@@ -59,8 +59,13 @@ def mark_produced(topic: dict, video: str, duration: float, urls: dict | None = 
     _write(data)
 
 
-def produced_ids() -> list[str]:
-    return list(_read()["episodes"].keys())
+def produced_ids() -> set[str]:
+    """معرّفات الحلقات اللي اتعملت — set للفحص السريع (عضوية).
+
+    الدرس 2026-09-19: حلقة المارشميلو طلعت مرتين بعنوانين مختلفين لأن
+    الفحص كان بالبصمة والعنوان بيتولّد من جديد كل مرة.
+    """
+    return {str(k) for k in (_read().get("episodes") or {})}
 
 
 def last_kind() -> str:
