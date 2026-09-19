@@ -1,2 +1,2 @@
-eye: فشل في OL0QN17ceU4: RuntimeError: eye: كل مزوّدي الـ LLM فشلوا — gemini: HTTPError 404 Client Error: Not Found for url: https://generativelanguage.googleapis.com/v1beta/openai/chat/completions — افحص المفاتيح في Settings → Secrets → Actions (GROQ_API_KEY / GEMINI_API_KEY)
-2026-09-19T01:27:31Z
+eye: فشل في OL0QN17ceU4: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+2026-09-19T01:35:04Z
