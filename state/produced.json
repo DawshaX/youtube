@@ -1,0 +1,19 @@
+{
+ "episodes": {
+  "noor-dua-9-r0": {
+   "title": "دعاء: ربنا لا تُزغ قلوبنا بعد إذ هديتنا وهب لن…",
+   "fingerprint": "2b5024ac32d730fa",
+   "video": "/home/runner/work/youtube/youtube/content/vids/noor-dua-0.mp4",
+   "duration": 27.6,
+   "at": "2026-09-19 04:54",
+   "urls": {
+    "video": "https://github.com/DawshaX/youtube/releases/download/vault/q1789793651.mp4",
+    "cover": "https://github.com/DawshaX/youtube/releases/download/vault/q1789793651.png"
+   }
+  }
+ },
+ "fingerprints": [
+  "2b5024ac32d730fa"
+ ],
+ "last_kind": "dua"
+}
