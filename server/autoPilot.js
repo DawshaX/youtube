@@ -129,6 +129,25 @@ export function uploadsInCurrentQuotaDay(records = [], log = [], now = new Date(
   return produced.size;
 }
 
+export function quotaResetsAt(now = new Date()) {
+  // أول لحظة في يوم الحصة (PT) الجديد = وقت تجديد الحصة اليومية.
+  const today = quotaDayKey(now);
+  for (let minutes = 60; minutes <= 60 * 36; minutes += 30) {
+    const probe = new Date(now.getTime() + minutes * 60000);
+    if (quotaDayKey(probe) !== today) {
+      // نرجع لأقرب دقيقة معقولة قبل التغيير
+      let lo = new Date(now.getTime() + (minutes - 30) * 60000);
+      let hi = probe;
+      while (hi - lo > 60000) {
+        const mid = new Date((lo.getTime() + hi.getTime()) / 2);
+        if (quotaDayKey(mid) === today) lo = mid; else hi = mid;
+      }
+      return hi;
+    }
+  }
+  return null;
+}
+
 export function dailyUploadCap() {
   const raw = Number(process.env.XT_MAX_UPLOADS_PER_DAY ?? DEFAULT_DAILY_CAP);
   return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : DEFAULT_DAILY_CAP;
@@ -276,9 +295,11 @@ export async function runAutoPilotCycle() {
     const cap = dailyUploadCap();
     const usedToday = uploadsInCurrentQuotaDay(loadSavedVideos(), loadProductionLog());
     if (usedToday >= cap) {
-      const message = `⏸️ سقف الحصة اليومية ليوتيوب وصل (${usedToday}/${cap} رفعة) — `
-        + 'بنحترم الحصة ونستنى تجديدها (منتصف الليل بتوقيت المحيط الهادئ) '
-        + 'وبعدها الدورة الساعية بتكمّل لوحدها. مفيش فشل ومفيش رفع مهدور.';
+      const reset = quotaResetsAt(new Date());
+      const message = `⏸️ حصة يوتيوب اليومية خلصت (${usedToday}/${cap} رفعة = `
+        + `${usedToday * 1600}/10000 وحدة). الرفع بيتوقف لحد التجديد`
+        + (reset ? ` ${reset.toISOString()}` : ' عند منتصف ليل المحيط الهادئ')
+        + ' — والحارس بيشغّل الدورة فورًا بعد التجديد.';
       addAutoPilotLog(message);
       console.log(message);
       return { skipped: true, reason: 'daily_upload_cap', usedToday, cap };

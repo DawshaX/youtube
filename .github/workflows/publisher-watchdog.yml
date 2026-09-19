@@ -5,7 +5,7 @@ name: Publisher Watchdog — ضمان النشر الساعي
 # كده «الساعية» بقت مضمونة بمحاولتين كل ساعة (:23 الأساسية + :53 الحارس).
 on:
   schedule:
-    - cron: '53 * * * *'
+    - cron: '*/20 * * * *'
   workflow_dispatch:
 permissions:
   contents: read
@@ -18,21 +18,38 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: افحص آخر دورة نشر وشغّلها لو اتأخرت
+      - name: افحص آخر دورة نشر وشغّلها لو اتأخرت أو لو الحصة اتجدّدت
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           WINDOW=5400   # 90 دقيقة
+          # يوم الحصة بتوقيت المحيط الهادئ (نفس حساب جوجل ليوتيوب)
+          PT_DAY=$(TZ=America/Los_Angeles date +%F)
+          last=$(gh run list --repo "$GITHUB_REPOSITORY" \
+                   --workflow=cosmic-autopilot.yml --limit 1 \
+                   --json createdAt --jq '.[0].createdAt // empty')
           count=$(gh run list --repo "$GITHUB_REPOSITORY" \
                     --workflow=cosmic-autopilot.yml --limit 40 \
                     --json createdAt \
                     --jq "[.[] | select((.createdAt | fromdateiso8601) > (now - $WINDOW))] | length")
-          echo "دورات النشر اللي بدأت في آخر 90 دقيقة: $count"
-          if [ "$count" -gt 0 ]; then
-            echo "✓ النشر الساعي شغال — مفيش تدخل مطلوب."
+          echo "دورات النشر في آخر 90 دقيقة: $count | يوم الحصة الحالي (PT): $PT_DAY | آخر دورة: $last"
+
+          started_today=false
+          if [ -n "$last" ]; then
+            LAST_PT_DAY=$(TZ=America/Los_Angeles date -d "$last" +%F 2>/dev/null || echo "?")
+            [ "$LAST_PT_DAY" = "$PT_DAY" ] && started_today=true
+            echo "آخر دورة كانت في يوم الحصة: $LAST_PT_DAY"
+          fi
+
+          if [ "$count" -gt 0 ] && [ "$started_today" = "true" ]; then
+            echo "✓ النشر شغال والحصة اتجرّبت في يومها الحالي — مفيش تدخل مطلوب."
             exit 0
           fi
-          echo "⚠️ مفيش دورة نشر في آخر 90 دقيقة — بشغّل واحدة فورًا."
+          if [ "$count" -gt 0 ]; then
+            echo "🔄 الحصة اتجدّدت (يوم PT جديد) — بشغّل دورة فورًا للنشر بأسرع وقت."
+          else
+            echo "⚠️ مفيش دورة نشر في آخر 90 دقيقة — بشغّل واحدة فورًا."
+          fi
           gh workflow run cosmic-autopilot.yml --repo "$GITHUB_REPOSITORY" --ref main
           sleep 20
           gh run list --repo "$GITHUB_REPOSITORY" \
