@@ -23,6 +23,13 @@ on:
         description: 'تجاهل حماية الساعة الواحدة'
         type: boolean
         default: false
+      mode:
+        description: 'خط الإنتاج: نور (قرآن/ذكر/حديث) · أو العين/ترند (مشاهدة فيديو حقيقي وإنتاج نسختنا بكل الوسائط)'
+        type: choice
+        options:
+          - deen
+          - old
+        default: deen
 
 permissions:
   contents: write
@@ -100,7 +107,7 @@ jobs:
           # ── الـvault على GitHub (تخزين الحلقات) ─────────────────
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ── مفاتيح المصنع ──────────────────────────────────────
-          XT_MODE: 'deen'                 # محرك النور (بلا موسيقى، تلاوة/ذكر/حديث)
+          XT_MODE: ${{ inputs.mode || 'deen' }}   # الخط: نور أو العين/ترند
           XT_YT: '1'                      # نشر يوتيوب مفتوح
           XT_NET_FOOTAGE: '1'             # لقطات حقيقية من المصادر الشبكية
           XT_PUBLISH_HOURS: 'all'         # يفرج فورًا — مش مستني موعد ذروة

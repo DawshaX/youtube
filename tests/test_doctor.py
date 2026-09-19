@@ -84,12 +84,23 @@ class WorldPolicyTests(unittest.TestCase):
         with mock.patch.dict(os.environ, {}, clear=True):
             self.assertTrue(footage.net_footage_enabled())
 
-    def test_network_license_allowlist_is_strict(self):
-        self.assertEqual(vault.ALLOWED_NETWORK_LICENSES,
-                         {"CC0", "CC-BY-3.0", "CC-BY-4.0"})
-        for forbidden in ("CC-BY-SA-4.0", "Public-Domain", "Pixabay-License",
-                          "Pexels-License", "NASA-Media-Usage"):
+    def test_network_license_allowlist_matches_the_documented_ladder(self):
+        """اللائحة الشبكية = الموثّق في docs/MEDIA_VAULT_SOURCES.md بالحرف.
+
+        الدرس (2026-09-19): اللائحة كانت أضيق من التوثيق، والمصنع كان بينزّل
+        لقطات بيكسلز/بيكساباي/ناسا ويرميها ثم يرجع للمخزون الداخلي — يعني
+        مستخدم كان شايف «مخزون ثابت» بدل ميديا حيّة. المصادر الموثّقة 🟢
+        (بيكسلز/بيكساباي/ناسا/أرشيف عام) رخصتها تجارية بلا إسناد.
+        """
+        for green in ("Pexels-License", "Pixabay-License", "NASA-Media-Usage",
+                      "Public-Domain"):
+            self.assertIn(green, vault.ALLOWED_NETWORK_LICENSES, green)
+        # اللي بيفضل مرفوض: رخصة المنسوب/المملوكة/المشكوك فيها
+        for forbidden in ("CC-BY-SA-4.0", "All-Rights-Reserved",
+                          "YouTube-Standard", "Internal-Generated", ""):
             self.assertNotIn(forbidden, vault.ALLOWED_NETWORK_LICENSES)
+        # ومفيش رخصة بتعدي الشبكة وتفشل عند الرندر
+        self.assertFalse(vault.ALLOWED_NETWORK_LICENSES - vault.ALLOWED_LICENSES)
 
 
 if __name__ == "__main__":

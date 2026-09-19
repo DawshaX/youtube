@@ -144,7 +144,11 @@ def _produce(topic: dict, upload: bool = True) -> int:
                     "kind": topic.get("_kind", "know"),
                     "_din": topic.get("_din"),
                     "_din_spec": topic.get("_din_spec"),
-                    "_reciter": r.get("reciter")}
+                    "_reciter": r.get("reciter"),
+                    # اعتمادات الرخص (CC-BY/CC-BY-SA) تتنقل مع الحلقة عشان
+                    # تتحط في الوصف وقت النشر — مش تتوه مع مجلد العمل.
+                    "credits": [c for c in (r.get("report") or {}).get("credits", [])
+                                if c]}
             urls = github_store.upload_to_vault(r["video"], r["cover"], meta)
             _log("📦 اتخزنت في الـvault — مستنية موعد الذروة")
         except Exception as e:  # فشل التخزين ما يوقفش الدورة
@@ -294,6 +298,10 @@ def _publish(topic, r: dict, urls: dict) -> None:
             cov = None
     caption = (_din_caption(topic) if topic.get("_din")
                else content.make_caption(topic))
+    # سطور اعتماد الأصول اللي رخصتها تطلب إسناد (وعد `vault.credits_for`)
+    _credits = [c for c in (topic.get("_credits") or []) if str(c).strip()]
+    if _credits:
+        caption += "\n\n" + "\n".join(str(c)[:200] for c in _credits[:6])
     tags = [t.strip() for t in topic.get("tags", "").split(",") if t.strip()]
     for name, mod, ok in (
             ("youtube", _yt, settings.has_youtube() and settings.PUBLISH_YOUTUBE),
@@ -452,7 +460,8 @@ def _promote_due(force: bool = False) -> None:
                                           if meta.get("kind") in _kinds
                                           else None),
              "_din_spec": meta.get("_din_spec"),
-             "_reciter": meta.get("_reciter")}
+             "_reciter": meta.get("_reciter"),
+             "_credits": meta.get("credits") or []}
     _publish(topic, {"video": res["local_video"]}, res["urls"])
     if topic.get("_issue"):
         from . import requests as viewer_requests

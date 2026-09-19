@@ -539,6 +539,9 @@ def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
                 vault.register(cached, source=accepted.get("_source", "web"),
                                license=lic, attribution_required=attribution,
                                credit_line=credit, url=accepted.get("url", ""))
+                print(f"[footage] 🎞 مصدر شبكي: {accepted.get('_source', 'web')} "
+                      f"· رخصة {lic} · {str(accepted.get('_title', ''))[:70]}",
+                      flush=True)
 
     if not cached.exists():
         return None
