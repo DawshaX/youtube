@@ -151,6 +151,28 @@ def mark_media_used(key: str, source: str = "", episode: str = "") -> None:
     _wr(MEDIA_FILE, d)
 
 
+# سجل جوه-الحلقة: يمنع نفس الصورة/اللقطة تتكرر في مشهدين من نفس الفيديو
+# (شكوى المستخدم 2026-09-19: نفس الصورة ظهرت 4 مرات جوه حلقة واحدة).
+_EP_USED: dict[str, set] = {}
+
+
+def episode_mark(episode: str, key: str) -> None:
+    if not episode or not key:
+        return
+    _EP_USED.setdefault(str(episode), set()).add(str(key))
+    if len(_EP_USED) > 200:                     # حماية للذاكرة (بلا تسريب)
+        for k in list(_EP_USED)[:50]:
+            _EP_USED.pop(k, None)
+
+
+def episode_seen(episode: str, key: str) -> bool:
+    return bool(episode) and str(key) in _EP_USED.get(str(episode), set())
+
+
+def episode_clear(episode: str) -> None:
+    _EP_USED.pop(str(episode), None)
+
+
 def media_summary_for(episode: str) -> dict:
     """ملخص ميديا حلقة: {فيديو: N, صور: M, مخزون: K} — دليل قابل للتدقيق.
 

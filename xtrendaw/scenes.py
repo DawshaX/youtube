@@ -213,7 +213,7 @@ def _ai_prompt(kind: str, subject: str) -> str:
     return f"{subject}, {flavor}, {base_style}"
 
 
-def fetch_real_visual(query: str, out_path: Path) -> bool:
+def fetch_real_visual(query: str, out_path: Path, episode: str = "") -> bool:
     """مشهد حقيقي من Wikimedia Commons (ناس/أماكن/أحداث حقيقية، بلا مفتاح).
 
     بيختار صورة فوتوغرافية كافية الدقة ويقصّها cover لـ1080×1920.
@@ -229,7 +229,7 @@ def fetch_real_visual(query: str, out_path: Path) -> bool:
         r = requests.get(
             "https://commons.wikimedia.org/w/api.php",
             params={"action": "query", "generator": "search",
-                    "gsrsearch": query, "gsrnamespace": 6, "gsrlimit": 8,
+                    "gsrsearch": query, "gsrnamespace": 6, "gsrlimit": 30,
                     "prop": "imageinfo", "iiprop": "url|size|mime",
                     "iiurlwidth": 1080, "format": "json"},
             headers=ua, timeout=20,
@@ -254,20 +254,24 @@ def fetch_real_visual(query: str, out_path: Path) -> bool:
         used = _lib._used(query)
         _seen_media = _st.media_used()
         # ترتيب صلة البحث (مش الأكبر حجماً) — الكولاجات العملاقة كانت بتتصدر
+        # ⚠️ ملحوظة: ممنوع نرجع لصورة مستخدمة قبل كده (حتى لو الكاندس خلصت)
+        # — بنرجّع False والمصنع يجيب صورة جديدة من مصدر تاني. ده كان سبب
+        # «نفس الصورة 4 مرات» في حلقة واحدة.
         pick = None
         for c in cands:
             u = c.get("thumburl") or c.get("url")
-            if u and u not in used and u not in _seen_media:
+            if (u and u not in used and u not in _seen_media
+                    and not _st.episode_seen(episode, u)):
                 pick = u
                 break
-        if not pick and cands:
-            pick = cands[0].get("thumburl") or cands[0].get("url")
         if not pick:
             return False
         _lib._mark_used(query, pick)
         try:
             from . import state as _st
-            _st.mark_media_used(pick, "image:commons", str(query)[:40])
+            _st.mark_media_used(pick, "image:commons",
+                                episode or str(query)[:40])
+            _st.episode_mark(episode, pick)
         except Exception:
             pass
         url = pick
@@ -582,7 +586,8 @@ def build_scene(kind: str, text: str, seed: str, workdir: Path,
             ok = False
     # 2) مصادر حية من النت — فيديو/صور واقعية من الـAPIs المجانية
     if not ok:
-        ok = (fetch_real_visual(real_query, base)
+        _ep = str(seed).split(":")[0]
+        ok = (fetch_real_visual(real_query, base, episode=_ep)
               or fetch_library_visual(real_query, base)) if real_query else False
     # 3) صورة AI مولّدة (Pollinations — مجاني بلا مفتاح)
     if not ok:

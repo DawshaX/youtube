@@ -177,7 +177,8 @@ jobs:
           git config user.email 'factory@daousha.internal'
           # كل ملف لوحده ولو موجود: `git add` بيفشل ويسيب الفهرس فاضي
           # لو حطينا مسار مش موجود معاهم (اتعلمت من دورة 04:47).
-          for f in state/produced.json state/ledger.json state/published.json \
+          for f in data/factory_status.json state/yt_pending.json \
+         state/produced.json state/ledger.json state/published.json \
                    state/last_publish.json state/yt_recent.json \
                    state/media_used.json \
                    state/reciter_proven.json state/reciter_badlist.json \

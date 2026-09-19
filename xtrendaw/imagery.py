@@ -180,9 +180,11 @@ def fetch_image_clip(query: str, seconds: float, workdir: Path, seed: str) -> Pa
             _seen_media = _st.media_used()
         except Exception:
             _seen_media = {}
+        _ep = str(seed).split(":")[0]
         for c in _commons_images(query):
             lic = _commons_license(c.get("extmeta", {}))
-            if lic not in vault.ALLOWED_LICENSES or c["url"] in _seen_media:
+            if (lic not in vault.ALLOWED_LICENSES or c["url"] in _seen_media
+                    or _st.episode_seen(_ep, c["url"])):
                 continue
             if not _dl(c["url"], raw):
                 continue
@@ -215,6 +217,7 @@ def fetch_image_clip(query: str, seconds: float, workdir: Path, seed: str) -> Pa
             from . import state as _st
             _st.mark_media_used(url, f"image:{source or 'web'}",
                                 str(seed).split(":")[0])
+            _st.episode_mark(str(seed).split(":")[0], url)
         except Exception:
             pass
         credit = f"Image: {title} via {source}, {lic}" if attribution else ""

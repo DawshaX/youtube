@@ -205,6 +205,16 @@ def cycle_once() -> None:
                 state.mark_produced(topic, str(out.get("video")), rep.get("info", {}).get("duration", 0))
             _log(s, "renders", {"at": now, "video": str(out.get("video")),
                                 "ok": bool(rep.get("ok")), "sec": round(time.time() - t0)})
+            # دليل الميديا: فيديو حي/صور/مخزون — يبان في لوج كل دورة
+            try:
+                _ms = state.media_summary_for(topic["id"])
+                if _ms.get("total"):
+                    print(f"[factory] 🎬 ميديا {topic['id']}: فيديو حي="
+                          f"{_ms['video']} · صور={_ms['images']} · مخزون="
+                          f"{_ms['static']}"
+                          + (" ⚠️" if _ms["static"] else " ✓"), flush=True)
+            except Exception:
+                pass
         except Exception as exc:
             _log(s, "renders", {"at": now, "ok": False,
                                 "err": f"{type(exc).__name__}: {exc}"[:160]})

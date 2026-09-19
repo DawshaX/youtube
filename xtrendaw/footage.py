@@ -507,7 +507,9 @@ def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
     # قبل كده — لو استُخدمت، بنتجاهلها ونجيب لقطة جديدة من الشبكة.
     try:
         from . import state as _st
-        if cached.exists() and _st.media_seen(f"clipcache:{key}"):
+        _ep0 = str(seed).split(":")[0]
+        if cached.exists() and (_st.media_seen(f"clipcache:{key}")
+                                or _st.episode_seen(_ep0, f"clipcache:{key}")):
             print("[footage] ↺ الكاش ده استُخدم في حلقة قبل كده — "
                   "بجيب لقطة جديدة", flush=True)
             cached = workdir / f"clip_{key}.mp4"
@@ -591,6 +593,23 @@ def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
 
     if not cached.exists():
         return None
+
+    # ٣) سجّل الاستخدام دايمًا — جديد ولا جايب من الكاش.
+    # بق 2026-09-19: كان التسجيل جوّه فرع «التحميل الجديد» بس، فلما اللقطة
+    # تيجي من الكاش ما تتسجلش → الذاكرة تبقى ناقصة واللقطة ترجع تاني
+    # في حلقة جاية (ده بالظبط اللي رصده الرادار في حلقة المارشميلو).
+    try:
+        from . import state as _st
+        from . import vault as _v
+        _rec = _v.record_for(cached) or {}
+        _src = f"video:{_rec.get('source') or 'cache'}"
+        _ep = str(seed).split(":")[0]
+        if _rec.get("url"):
+            _st.mark_media_used(_rec["url"], _src, _ep)
+        _st.mark_media_used(f"clipcache:{key}", _src, _ep)
+    except Exception:
+        pass
+
     out = workdir / f"clip_{key}.mp4"
     dur = _probe_dur(cached)
     room = max(1, int(max(0, dur - seconds)))
