@@ -1,0 +1,136 @@
+[
+ {
+  "id": "eye-OL0QN17ceU4",
+  "topic": "تحدي أكل الصبار بالأصوات (ASMR)! صدمة النهاية غير متوقعة 😭🍍",
+  "angle": "اكتشاف شيء غير متوقع داخل الصبار (مثل فراشة حية أو قطعة فاكهة غير متوقعة) يخلق صدمة عاطفية",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي الصبار بالصوت: صدمة ما تتوقعها 😱🌵",
+  "title_en": "Cactus Crunch Challenge: Unexpected Shock 😱🌵",
+  "hook_ar": "اسمعوا الصبار وهو يطقطق… ومفاجأة جوا!",
+  "hook_en": "Listen to the cactus snap… and a surprise inside!",
+  "facts_ar": [
+   "الصبار غني بمادة جلية تُستخرج لصناعة منتجات التجميل.",
+   "تقنية الـ ASMR تعتمد على أصوات ناعمة لتفعيل استجابة استرخائية في الدماغ.",
+   "لحظة الصدمة في الثواني الأولى تعلي متوسط مدة المشاهدة بشكل ملحوظ."
+  ],
+  "facts_en": [
+   "Cactus contains a gel used in cosmetic products.",
+   "ASMR relies on soft repetitive sounds to trigger a relaxing brain response.",
+   "A shocking moment in the first seconds boosts average watch time noticeably."
+  ],
+  "takeaway_ar": {
+   "aql": "الفضول يخلينا نجرب أشياء جديدة حتى لو شكلها غريب.",
+   "qalb": "اللحظة المفاجئة تخلق إدمان مشاهدة وإحساس بالمتعة.",
+   "rouh": "استمتع بالهدوء قبل الصدمة واكتشف إن التجربة ممكن تكون مدهشة."
+  },
+  "takeaway_en": {
+   "aql": "Curiosity pushes us to try odd things even when they look strange.",
+   "qalb": "The surprise moment creates a binge feeling and pure fun.",
+   "rouh": "Savor the calm before the shock and realize the experience can be amazing."
+  },
+  "tags": "صبار,ASMR,تحدي,صدمة,مفاجأة",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة قريبة ليد تقطع الصبار مع صوت تقطيع واضح ومقرب.",
+    "style": "ماكرو مع تركيز على تفاصيل القشرة والعصارة.",
+    "colors": [
+     "#2E7D32",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "المُقدِّم يهمس سؤالاً عن تجربة الصبار قبل كده، مع إيموجي سؤال يظهر على الشاشة.",
+    "style": "قريب مع إضاءة ناعمة وخلفية خضراء فاتحة.",
+    "colors": [
+     "#A5D6A7",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "لقطة بطيئة للقطعة الأولى تُظهر القوام العصيري وصوت شفط خفيف.",
+    "style": "سلو موشن مع صوت مكبر للـ ASMR.",
+    "colors": [
+     "#2E7D32",
+     "#A5D6A7"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "المُقدِّم يبتسم ويصف الطعم بأنه غريب لكن لذيذ، مع نص متحرك أصفر.",
+    "style": "قريب مع إضاءة دافئة.",
+    "colors": [
+     "#FFFFFF",
+     "#FFEB3B"
+    ]
+   },
+   {
+    "time": "0:16-0:19",
+    "scene": "كاميرا تقترب من داخل الصبار وتكشف عن شيء لامع غير متوقع.",
+    "style": "انتقال سريع (jump cut) مع تركيز على اللمعان.",
+    "colors": [
+     "#2E7D32",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:20-0:23",
+    "scene": "المُقدِّم يلتقط العنصر المفاجئ (فراشة حية) ويظهر رد فعل صادم مع صرخة خفيفة.",
+    "style": "قريب مع مؤثر صوت صدمة قوي.",
+    "colors": [
+     "#A5D6A7",
+     "#FF5252"
+    ]
+   },
+   {
+    "time": "0:24-0:30",
+    "scene": "نص سريع يدعو المشاهدين للمتابعة حتى النهاية مع إيموجي صدمة، ثم ابتسامة ودودة ودعوة للاعجاب والاشتراك.",
+    "style": "إغلاق دافئ مع إضاءة خفيفة.",
+    "colors": [
+     "#FFFFFF",
+     "#FFEB3B"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "OL0QN17ceU4",
+   "url": "https://youtu.be/OL0QN17ceU4",
+   "sourceTitle": "تحدي أكل الصبار بالأصوات (ASMR)! صدمة النهاية غير متوقعة 😭🍍",
+   "sourceChannel": "عائلة وناسة",
+   "sourceViews": 11526717,
+   "dna": {
+    "hook": {
+     "technique": "shock",
+     "what_happens": "المتحدي يبدأ بصوت خفيف للـ ASMR وهو يقطع صبار طازج، ثم فجأة يلتقط المشهد لحظة صدمة عندما يكتشف شيئًا غير متوقع داخل الصبار.",
+     "why_it_works": "الصوت الهادئ يجذب المشاهدين الباحثين عن تجربة ASMR، والصدمة المفاجئة تخلق توترًا فوريًا يدفع المشاهدين للبقاء لمعرفة ما سيحدث."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "ارتفاع سريع في الطاقة خلال الـ 0-8 ثوانٍ (الصوت والقطع السريع)، استقرار خفيف 8-12 ثوانٍ (الـ ASMR)، ثم صدمة مفاجئة 12-20 ثوانٍ (الـ twist) تتبعها انخفاض تدريجي مع CTA في النهاية."
+    },
+    "retention_tricks": [
+     "استخدام صوت ASMR عالي الجودة لجذب فئة محددة من المشاهدين.",
+     "طرح سؤال في البداية لتفعيل الفضول الذهني.",
+     "إدخال عنصر غير متوقع (twist) قبل 20 ثانية لتقليل معدل التخلي.",
+     "نصوص سريعة وإيموجي لجذب الانتباه البصري."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 75,
+   "weaknesses": [
+    "The concept is almost a direct copy of the DNA template; originality is limited, which may reduce novelty for repeat viewers.",
+    "The twist, while unexpected, is somewhat predictable (a small living creature); a more unconventional find (e.g., a hidden gem or a tiny robot) could heighten shock.",
+    "Audio plan lacks detail on background music or sound layering; a subtle lo‑fi track could enhance the ASMR feel and keep viewers calm before the shock.",
+    "The episode is only 30 s long; while DNA’s 30‑s format works, adding a 5‑10 s teaser or a second twist could improve retention.",
+    "The visual plan does not mention camera movement or transitions beyond jump cuts, missing an opportunity to add dynamic energy."
+   ],
+   "verdict": "Solid execution that follows the DNA formula well, but it needs a stronger unique element and richer audio/visual details to stand out and maximize retention."
+  }
+ }
+]
