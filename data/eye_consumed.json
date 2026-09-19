@@ -966,5 +966,122 @@
    "verdict": "The proposal captures the core DNA elements—visual hook, beat structure, color contrast, and emojis—but falls slightly short in audio execution and hook wording. With a sharper, question‑driven hook and a defined audio plan, it would align even more closely with the trend and likely achieve higher retention."
   },
   "_consumedAt": "2026-09-19T22:37:28Z"
+ },
+ {
+  "id": "eye-EvdXAoJjHKQ",
+  "topic": "Drawing challenge using numbers 🧠🏆#shorts #drawing #challenge #shinchan",
+  "angle": "اكتشاف أن الرقم يتحول إلى شخصية شينشان الشهيرة داخل الرسم، ما يضيف عنصر ثقافة بوب محبب للج",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي الرسم بالأرقام – هل تستطيع تحويله لفن؟",
+  "title_en": "Number to Art Challenge – Can You Do It?",
+  "hook_ar": "بوم! شوف الرقم يتحول لسحر فني في ثوانٍ!",
+  "hook_en": "Boom! Watch a number turn into art in a flash!",
+  "facts_ar": [
+   "الأرقام يمكن تحويلها إلى أشكال فنية باستخدام تقنيات الرسم الرقمي",
+   "التحديات الفنية القصيرة تجذب المشاهدين وتزيد من معدلات المشاركة",
+   "الموسيقى الإيقاعية تعزز تركيز المشاهد وتضيف طاقة للفيديو"
+  ],
+  "facts_en": [
+   "Numbers can be turned into artistic shapes using digital drawing techniques",
+   "Short art challenges attract viewers and boost engagement rates",
+   "Rhythmic music sharpens viewer focus and adds energy to the clip"
+  ],
+  "takeaway_ar": {
+   "aql": "إبداعك يبدأ بفكرة بسيطة يمكن تحويلها إلى تحفة",
+   "qalb": "حافظ على شغفك وشارك إبداعك مع الأصحاب",
+   "rouh": "كل رسمة جديدة هي خطوة نحو اكتشاف ذاتك الفنية"
+  },
+  "takeaway_en": {
+   "aql": "Your creativity starts with a simple idea that can become a masterpiece",
+   "qalb": "Keep the passion alive and share your art with friends",
+   "rouh": "Every new drawing is a step toward discovering your artistic self"
+  },
+  "tags": "رسم,تحدي,فن,إبداع,شينشان",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "رقم كبير يلمع على خلفية ملونة، مع صوت بوم جذاب",
+    "style": "لقطة من أعلى، تركيز على الرقم مع إضاءة ساطعة",
+    "colors": [
+     "#FF5733",
+     "#FFD700"
+    ]
+   },
+   {
+    "time": "0:03-0:10",
+    "scene": "يد تمسك قلمًا رقميًا وتبدأ في رسم الخطوط بسرعة timelapse",
+    "style": "لقطة قريبة من اليد/القلم، انتقالات سريعة",
+    "colors": [
+     "#00BFFF",
+     "#FF5733"
+    ]
+   },
+   {
+    "time": "0:10-0:16",
+    "scene": "ظهور تفاصيل غير متوقعة داخل الرسم، شخصية شينشان تتسلل بين الأشكال",
+    "style": "إضافة إيموجي 🧠🏆، تأثيرات ضوئية مفاجئة",
+    "colors": [
+     "#FFD700",
+     "#00BFFF"
+    ]
+   },
+   {
+    "time": "0:16-0:20",
+    "scene": "عرض النتيجة النهائية للرسمة بإضاءة ساطعة وواضحة",
+    "style": "تحريك بطيء للكاميرا لتبرز التفاصيل",
+    "colors": [
+     "#FF5733",
+     "#FFD700",
+     "#00BFFF"
+    ]
+   },
+   {
+    "time": "0:20-0:24",
+    "scene": "نص متحرك «هل تستطيع فعلها؟» يدعو المتابعين للإعجاب والمتابعة",
+    "style": "خط ساطع مع إيموجي، موسيقى تتوقف لحظة الدعوة",
+    "colors": [
+     "#FF5733"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "EvdXAoJjHKQ",
+   "url": "https://youtu.be/EvdXAoJjHKQ",
+   "sourceTitle": "Drawing challenge using numbers 🧠🏆#shorts #drawing #challenge #shinchan",
+   "sourceChannel": "Tèo vui vẻ",
+   "sourceViews": 17003104,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "يظهر رقم كبير يتحول تدريجياً إلى رسمة معقدة في ثوانٍ معدودة",
+     "why_it_works": "يثير الفضول الفوري لأن المشاهد يتساءل كيف يمكن لرقم بسيط أن يتحول إلى فن، ما يجبره على الاستمرار في المشاهدة"
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 30,
+     "energy_curve": "صعود سريع في أول 5 ثوانٍ → استقرار متوسط خلال عملية الرسم → قمة طاقة عند المفاجأة → انخفاض خفيف مع دعوة CTA"
+    },
+    "retention_tricks": [
+     "الافتتاح بأرقام ضخمة وجذابة في أول 2 ثانية",
+     "استخدام تقنية timelapse لتسريع العملية الإبداعية",
+     "إدخال عنصر مفاجأة (شخصية شينشان) في منتصف الفيديو",
+     "نص متحرك يحث المشاهد على التفاعل في آخر الفيديو"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 88,
+   "weaknesses": [
+    "Hook duration is 0:00‑0:03 instead of the suggested 0:00‑0:04, slightly reducing initial impact.",
+    "Audio description is vague; lacks explicit mention of pen/brush SFX and the accelerating electronic track that should pause at the twist.",
+    "No explicit reference to the high cut rate (≈30 cuts/min) or rapid transitions that keep energy high.",
+    "CTA segment is 4 seconds long (0:20‑0:24) instead of the 3‑second slot in the DNA, risking a slight loss of momentum.",
+    "Mood is described as \"warm\" which may conflict with the high‑energy electronic vibe of the DNA trend."
+   ],
+   "verdict": "الاقتراح يلتزم بشكل كبير مع DNA الترند من حيث الفكرة، الهيكل البصري، والألوان، لكنه يحتاج إلى تحسينات دقيقة في الصوت، وتيرة القطعات، وتوقيت الافتتاح لضمان أقصى جذب للانتباه."
+  },
+  "_consumedAt": "2026-09-19T23:01:15Z"
  }
 ]
