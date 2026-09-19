@@ -33,7 +33,22 @@ class EpisodeRegistryTest(unittest.TestCase):
 
 
 class CommonsNoRepeatTest(unittest.TestCase):
-    """fetch_real_visual لازم يرفض إعادة استخدام صورة مستخدمة قبل كده."""
+    """fetch_real_visual لازم يرفض إعادة استخدام صورة مستخدمة قبل كده.
+
+    ⚠️ درس 2026-09-19: اختبار بيكتب في `state/media_used.json` الحقيقي = كارثة
+    (دخل في كوميت ومسح 48 سجل). فكل تست هنا بيعزل الملف في مجلد مؤقت.
+    """
+
+    def setUp(self):
+        from xtrendaw import state as _s
+        self._tmp = TemporaryDirectory()
+        self._old = _s.MEDIA_FILE
+        _s.MEDIA_FILE = Path(self._tmp.name) / "media_used.json"
+
+    def tearDown(self):
+        from xtrendaw import state as _s
+        _s.MEDIA_FILE = self._old
+        self._tmp.cleanup()
 
     def _iso(self):
         """اعزل مكتبة «المستخدم قبل كده» — وإلا التشغيل التاني بيفشل."""
@@ -129,3 +144,29 @@ def _png_bytes():
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class MediaFileIsolationTest(unittest.TestCase):
+    """حارس: الاختبارات ما تكتبش في ملف ذاكرة الميديا الحقيقي.
+
+    الدرس: اختبار دخل كوميت بـ`state/media_used.json` فيه سجل واحد بس
+    (48 → 1) — يعني الذاكرة رجعت لورا واللقطات بقت تتكرر.
+    """
+
+    def test_paths_are_patchable_and_default_is_repo_state(self):
+        from xtrendaw import state
+        self.assertTrue(str(state.MEDIA_FILE).endswith("media_used.json"))
+        self.assertIn("state", str(state.MEDIA_FILE))
+
+    def test_mark_media_used_writes_to_patched_file(self):
+        from xtrendaw import state
+        with TemporaryDirectory() as d:
+            tmp = Path(d) / "m.json"
+            old = state.MEDIA_FILE
+            try:
+                state.MEDIA_FILE = tmp
+                state.mark_media_used("http://x/1", "video:pixabay", "ep1")
+                self.assertIn("http://x/1", state.media_used())
+                self.assertTrue(state.media_seen("http://x/1"))
+            finally:
+                state.MEDIA_FILE = old
