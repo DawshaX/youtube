@@ -132,5 +132,238 @@
    ],
    "verdict": "Solid execution that follows the DNA formula well, but it needs a stronger unique element and richer audio/visual details to stand out and maximize retention."
   }
+ },
+ {
+  "id": "eye-OP3a2qzW5Yk",
+  "topic": "🏃 SPEED CHALLENGE: FOOTBALLERS VS DISCS! ⚽💿🏆",
+  "angle": "The footballer swaps the ball for a disc mid‑run and launches it, making the disc beat the",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "🏃 تحدي السرعة: لاعب كرة يجرّ disc ويكسب! ⚽💿",
+  "title_en": "🏃 Speed Showdown: Footballer vs Disc! ⚽💿",
+  "hook_ar": "إيه اللي بيجري أسرع، الكورة ولا الـ disc؟",
+  "hook_en": "Who’s quicker, the ball or the disc?",
+  "facts_ar": [
+   "محیط كرة القدم القياسي بيكون حوالى تسعة وستين إلى سبعين سنتيمتر.",
+   "قطر الفريسبي العادي بيقارب سبعة وعشرين سنتيمتر.",
+   "أعلى سرعة بشرية في السريع بتوصل لأكثر من عشرة أمتار في الثانية."
+  ],
+  "facts_en": [
+   "A standard soccer ball’s circumference is about sixty‑eight to seventy centimeters.",
+   "A common frisbee’s diameter is roughly twenty‑seven centimeters.",
+   "Top human sprint speed can exceed ten meters per second."
+  ],
+  "takeaway_ar": {
+   "aql": "السرعة مش بس في القوة، ده كمان في التفكير السريع.",
+   "qalb": "لما تشوف الحركة المفاجأة، هتحس بحماس لا يوصف.",
+   "rouh": "جرّب تبدل الأدوات، ويمكن تكتشف موهبة جديدة في نفسك."
+  },
+  "takeaway_en": {
+   "aql": "Speed isn’t only about power, it’s also about quick thinking.",
+   "qalb": "The surprise switch sparks an instant rush of excitement.",
+   "rouh": "Mixing tools can reveal a hidden talent you never imagined."
+  },
+  "tags": "تحدي,سرعة,كرة,ديسك,مقارنة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "شعار القناة يلمع مع نص جريء \"تحدي السرعة\"، ومقاطع سريعة للاعب وكومة من الـ discs تدور.",
+    "style": "قصات سريعة، إضاءة عالية، نص متحرك بخط سميك.",
+    "colors": [
+     "#1A1A1A",
+     "#E53935",
+     "#FFEB3B"
+    ],
+    "overlay": "Countdown timer (3‑2‑1) appears center-right."
+   },
+   {
+    "time": "0:03-0:07",
+    "scene": "مقابلة قصيرة لللاعب (voice‑over) يشرح التحدي، ثم ينتقل إلى لقطات منخفضة الزاوية (low‑angle) للكرة والـ disc.",
+    "style": "إضاءة ناعمة، حركات كاميرا بطيئة.",
+    "overlay": "Speedometer graphic shows 0 m/s."
+   },
+   {
+    "time": "0:07-0:12",
+    "scene": "اللاعب يبدأ الركض، مع انطباع بالتصوير المنخفض الزاوية وبـ slow‑motion جزئي، تُظهر تفاصيل التفاعل مع الكرة.",
+    "style": "Slow‑motion 2× speed، مقاطع مقطوعة بشكل متتابع.",
+    "overlay": "Text overlay: \"Ready?\"."
+   },
+   {
+    "time": "0:12-0:16",
+    "scene": "الـ disc يطير عبر الساحة، مع split‑screen: اليمين يبين الكرة، اليسار يبين الـ disc في نفس اللحظة.",
+    "style": "تقسيم الشاشة 50/50، حركات كابلات لتسليط الضوء على الفرق في السرعة.",
+    "overlay": "الـ disc يملك رقم 1، الكرة رقم 2."
+   },
+   {
+    "time": "0:16-0:20",
+    "scene": "اللاعب يصل إلى منتصف المسار، يتوقف لحظة، ثم يبدل الكرة بالـ disc في حركة سريعة.",
+    "style": "Low‑angle slow‑motion مع سرعة التصوير 4×، تحريك الكاميرا من اللاعب إلى الـ disc.",
+    "overlay": "تغيير اللون الأزرق للـ disc إلى الأحمر."
+   },
+   {
+    "time": "0:20-0:24",
+    "scene": "اللاعب يركض مع الـ disc، واللقطات تظهر سرعة الحركة مقارنة بالكرة من خلال split‑screen مجدد.",
+    "style": "موسيقى تصاعدية، مقاطع مقطوعة كل 0.5 ثانية.",
+    "overlay": "مؤشر السرعة يتحرك على الـ disc."
+   },
+   {
+    "time": "0:24-0:28",
+    "scene": "الـ disc يصل إلى خط النهاية، ثم يظهر اللاعب وهو يرفع اليدين في نصر، مع تأثيرات ضوئية.",
+    "style": "تأثيرات ضوء نيون، مقاطع قصير‑سريعة.",
+    "overlay": "نص: \"You won!\"."
+   },
+   {
+    "time": "0:28-0:30",
+    "scene": "نهاية الحلقة: CTA مع رابط للشراء أو الاشتراك، مع شعار القناة والـ disc.",
+    "style": "تسريع الفيديو، نغمة نهاية مشهودة.",
+    "overlay": "CTA: \"اشتري الآن\" مع زر CTA يفتح متجر."
+   }
+  ],
+  "_eye": {
+   "videoId": "OP3a2qzW5Yk",
+   "url": "https://youtu.be/OP3a2qzW5Yk",
+   "sourceTitle": "🏃 SPEED CHALLENGE: FOOTBALLERS VS DISCS! ⚽💿🏆",
+   "sourceChannel": "GadzhiSoccer",
+   "sourceViews": 39450934,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "A footballer sprints toward a line of spinning discs, then dramatically swaps the ball for a disc mid‑run.",
+     "why_it_works": "The sudden, unexpected switch between two familiar sports objects creates immediate intrigue and forces viewers to stay for the payoff."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "Starts high with rapid cuts, peaks at the split‑screen race, spikes at the mid‑run disc throw, then drops slightly into a concise CTA."
+    },
+    "retention_tricks": [
+     "Immediate visual hook with unexpected object swap",
+     "Countdown timer creates a ticking‑clock urgency",
+     "Split‑screen parallelism forces viewers to compare outcomes",
+     "Mid‑video skill reveal (disc throw) acts as a surprise twist"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 45,
+   "rewritten": true,
+   "weaknesses": [
+    "Only the first 3 seconds of the visual plan are described; the rest of the 30‑second beat structure is missing.",
+    "No low‑angle slow‑motion, split‑screen race, or mid‑run disc‑swap that form the core twist/payoff of the DNA trend.",
+    "Absence of a countdown timer, graphic overlays, and the final CTA that drive retention and conversion.",
+    "Audio details (voice‑over style, music, SFX) are not specified, leaving a gap in the overall energy curve.",
+    "Pacing metrics (cuts per minute, energy curve) and retention tricks beyond the initial hook are not addressed."
+   ]
+  }
+ },
+ {
+  "id": "eye-9IaLY4J5zLg",
+  "topic": "سارة في 2023 🥹🥺 #ghaith_marwan #سارة_عصام_الورع #جنى_الحفار #saraaalwari #ترند #غيث_مروان #تحدي",
+  "angle": "The video flips from a tearful, vulnerable opening to a triumphant reveal of Sara’s achiev",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "قصة سارة: من الدموع إلى النجاح",
+  "title_en": "Sara’s Journey: Tears to Triumph",
+  "hook_ar": "شوفوا سارة وهي بتبكي…",
+  "hook_en": "Watch Sara's tearful start.",
+  "facts_ar": [
+   "حقق الفيديو أكثر من 11513792 مشاهدة.",
+   "حصل على أكثر من 55720 إعجاب.",
+   "نُشر على قناة سارة الوراي من مصر."
+  ],
+  "facts_en": [
+   "The short has gathered over 11513792 views.",
+   "It earned more than 55720 likes.",
+   "Published on the Sara Alwari channel, region Egypt."
+  ],
+  "takeaway_ar": {
+   "aql": "النجاح يتطلب صبرًا وإصرارًا.",
+   "qalb": "الدعم الحقيقي يغيّر مسار الحياة.",
+   "rouh": "بالعزم نرتقي فوق الألم."
+  },
+  "takeaway_en": {
+   "aql": "Success demands patience and perseverance.",
+   "qalb": "Genuine support reshapes a life story.",
+   "rouh": "With determination we rise above pain."
+  },
+  "tags": "سارة,نجاح,تحول,قصة,إلهام",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة قريبة لعين سارة المبللة بالدموع مع نص غامق فوق الشاشة.",
+    "style": "إحساس عاطفي، إضاءة ناعمة، حركة ثابتة.",
+    "colors": [
+     "#F5C6A5",
+     "#FF6F61",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:10",
+    "scene": "مونتاج سريع للذكريات السابقة لسارة: المدرسة، العائلة، الأصدقاء بألوان باستيل هادئ.",
+    "style": "قطات سريعة، انتقالات ديناميكية، إيقاع موسيقي خفيف.",
+    "colors": [
+     "#F5C6A5",
+     "#FF6F61"
+    ]
+   },
+   {
+    "time": "0:16-0:22",
+    "scene": "سارة الآن مبتسمة تحمل شهادة أو جائزة، خلفية مضيئة مع رسومات قنّاعات.",
+    "style": "إضاءة ساطعة، استقرار الكاميرا، مؤثرات بصرية احتفالية.",
+    "colors": [
+     "#FF6F61",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:22-0:27",
+    "scene": "دعوة للمتابعة: نص متحرك مع سهم متجه، موسيقى ترتفع تدريجيًا.",
+    "style": "حركة نصية ديناميكية، إيقاع صوتي متصاعد، ألوان مشجعة.",
+    "colors": [
+     "#FF6F61"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "9IaLY4J5zLg",
+   "url": "https://youtu.be/9IaLY4J5zLg",
+   "sourceTitle": "سارة في 2023 🥹🥺 #ghaith_marwan #سارة_عصام_الورع #جنى_الحفار #saraaalwari #ترند #غيث_مروان #تحدي",
+   "sourceChannel": "sara alwari ",
+   "sourceViews": 11513792,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "The video opens with a close‑up of Sara’s teary eyes and a caption “سارة في 2023 🥹🥺”, instantly evoking empathy and curiosity about her story.",
+     "why_it_works": "Human brains are wired to notice strong facial emotions; the combination of tears and a relatable Arabic phrase creates an immediate emotional hook that stops scrolling."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "low‑high‑peak‑release (starts subdued, ramps up with fast cuts, peaks at the reveal, then gently releases into CTA)."
+    },
+    "retention_tricks": [
+     "Immediate emotional hook (tears + bold text).",
+     "Rhetorical question that forces mental engagement.",
+     "Fast‑paced montage to prevent boredom.",
+     "Contrast twist (sad → happy) for payoff.",
+     "Strong CTA before the 30‑second limit."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 75,
+   "weaknesses": [
+    "Missing a direct rhetorical question to force mental engagement (DNA uses \"هل تعرفين ما حدث لها في 2023؟\").",
+    "No heartbeat or subtle SFX to build suspense between the hook and the reveal.",
+    "No narrator voice or audio layering that mirrors the visual pacing (soft female narration + piano → heartbeat → upbeat synth).",
+    "Gap between 0:10‑0:16 with no beat or transition; the beat sequence is incomplete.",
+    "Limited use of on‑screen text/graphics; could add emojis, lower‑third captions, and animated arrows for stronger retention tricks.",
+    "Retention tricks list is absent; should explicitly mention emotional hook, question, fast montage, twist, CTA."
+   ],
+   "verdict": "The proposal captures the core DNA elements—emotional hook, quick montage, triumphant twist, and CTA—but falls short on key engagement tactics such as the rhetorical question, heartbeat SFX, and a complete beat sequence. Strengthening these areas will elevate the video to match or surpass the DNA trend’s high retention performance."
+  }
  }
 ]
