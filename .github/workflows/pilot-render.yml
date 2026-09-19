@@ -41,6 +41,11 @@ jobs:
           sudo apt-get install -y ffmpeg espeak-ng fonts-dejavu-core
           python -m pip install pillow numpy requests edge-tts imageio-ffmpeg arabic-reshaper python-bidi
 
+      # من غير السطر ده الرندر بيموت فورًا:
+      #   ERR_MODULE_NOT_FOUND: Cannot find package 'ws' imported from server/bus.js
+      # (الجهاز العصبي الجديد بيركّب ws، ومكانش فيه npm ci في السير ده)
+      - run: npm ci
+
       - name: Print available edge-tts Arabic voices
         run: python scripts/list_ar_voices.py
 

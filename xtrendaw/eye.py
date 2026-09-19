@@ -758,8 +758,28 @@ def llm_probe(provider: str | None = None) -> tuple[bool, str]:
 
 
 def _llm_json(prompt: str, temperature: float = 0.7) -> dict:
-    """نفس السلسلة، بس بيرجّع JSON (وكيل الـ DNA والناقد بيعتمدوا عليه)."""
+    """نفس السلسلة، بس بيرجّع JSON (وكيل الـ DNA والكاتب والناقد بيعتمدوا عليه).
+
+    الدرس (تشغيل 2026-09-19): موديل صغير رجّع JSON تالف (فاصلة ناقصة عند
+    char 4186) → الفيديو كله اتسقط. دلوقتي: محاولة إصلاح **واحدة** بطلب
+    صريح لإعادة الإرسال JSON سليم، وبعدها نرفع الخطأ بصراحة.
+    """
     text = _llm(prompt, temperature)
+    try:
+        return _json_from(text)
+    except Exception as exc:
+        print(f"[eye] ⚠️ JSON تالف من الموديل ({type(exc).__name__}) — "
+              f"إعادة إرسال واحدة…", flush=True)
+        retry = _llm(
+            prompt + "\n\nتصحيح إلزامي: الرد السابق كان JSON غير صالح "
+                     f"({type(exc).__name__}). أعد الإرسال: **JSON صالح فقط**، "
+                     "بلا أي نص قبله أو بعده، وبكل الأقواس والفوايص في مكانها.",
+            temperature=0.2)
+        return _json_from(retry)
+
+
+def _json_from(text: str) -> dict:
+    """يستخرج أول كائن JSON من النص (بلا نسخ ولا تخمين)."""
     s, e = text.find("{"), text.rfind("}")
     if s == -1 or e <= s:
         raise RuntimeError("eye: رد الـ LLM ما فيهوش JSON: " + text[:200])

@@ -271,3 +271,29 @@ class WriterRetryTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 eye._writer_call("برومبت", {}, {})
         self.assertEqual(len(calls), 1)
+
+
+class JsonRepairTests(unittest.TestCase):
+    """التشغيل 2026-09-19: رد الموديل كان JSON تالف (فاصلة ناقصة) والفيديو اتسقط."""
+
+    def _patch(self, replies):
+        seq = list(replies)
+
+        def fake_llm(prompt, temperature=0.7):
+            return seq.pop(0)
+
+        return mock.patch.object(eye, "_llm", fake_llm)
+
+    def test_broken_json_is_resent_once(self):
+        with self._patch(['{"a": 1 "b": 2}', '{"a": 1, "b": 2}']):
+            out = eye._llm_json("برومبت")
+        self.assertEqual(out, {"a": 1, "b": 2})
+
+    def test_still_broken_json_raises_after_one_retry(self):
+        with self._patch(['{"a": 1 "b": 2}', '{"a": 1 "b": 2}']):
+            with self.assertRaises(Exception):
+                eye._llm_json("برومبت")
+
+    def test_extra_prose_around_json_is_tolerated(self):
+        with self._patch(['تمام كده:\n{"a": 1}\nبالتوفيق']):
+            self.assertEqual(eye._llm_json("برومبت"), {"a": 1})
