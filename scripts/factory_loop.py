@@ -135,6 +135,19 @@ def _save_meta(topic: dict, credits: list[str]) -> Path:
     return p
 
 
+def _should_produce(published_today: int, vault: int, cap: int) -> bool:
+    """هل نستاهل نرندر حلقة جديدة دلوقتي؟
+
+    يوتيوب بيسقّفنا على 6 رفعات/يوم (10,000 وحدة ÷ 1,600). لو الكوتة قفلت
+    والمخزون مليان (≥ السقف اليومي) الرندر الجديد مش هيتنشر النهاردة —
+    فبنوفّر الحوسبة والتخزين ونستنى بكرة (بق حقيقي 2026-09-20: المخزون
+    بيتراكم أسرع من النشر فياكل سبيس على الفاضي).
+    """
+    if published_today < cap:
+        return True            # لسه فيه كوتة — رندر وانشر
+    return vault < cap         # الكوتة قفلت: رندر لحد ما نبني مخزون يوم واحد
+
+
 def _media_ok(topic: dict) -> bool:
     """هل الحلقة فيها ميديا حقيقية (لقطة فيديو حية أو صورة حقيقية)؟
 
@@ -218,6 +231,24 @@ def cycle_once() -> None:
                         "note": tail[-1][:120] if tail else ""})
     except Exception as exc:
         _log(s, "eye", {"at": now, "rc": -1, "err": type(exc).__name__})
+
+    # 2.5) رشّد الإنتاج: لو الكوتة قفلت والمخزون كفاية — ما نرندرش حلقة
+    # جديدة هتقعد في المخزون من غير ما تتنشر (توفير حوسبة وسبيس).
+    cap = settings.DAILY_CAP or 999
+    try:
+        _pt = state.published_today_pt()
+        _vc = github_store.vault_count()
+    except Exception:
+        _pt, _vc = 0, 0
+    if not _should_produce(_pt, _vc, cap):
+        print(f"[factory] ⏸ المخزون كفاية ({_vc} حلقة مستنية) والكوتة {_pt}/{cap} "
+              "— الدورة دي بلا رندر جديد", flush=True)
+        _log(s, "renders", {"at": now, "ok": False,
+                            "note": f"vault_ready {_vc} · published_today {_pt}/{cap}"})
+        _save_status(s)
+        print(f"[factory] cycle {s['cycles']} done @ {now} — انتظار (مخزون جاهز)",
+              flush=True)
+        return
 
     # 3) اختيار الحلقة: سحابة = المخ الكامل · محلي = اللي ليه مخزون صوت
     edge = _edge_tts_ok()

@@ -179,3 +179,29 @@ class PromoteUsesGuardTest(unittest.TestCase):
         from xtrendaw import github_store as g
         src = inspect.getsource(g.promote_next)
         self.assertIn("delete_asset(tok, a[\"id\"])", src)
+
+
+class ProductionThrottleTest(unittest.TestCase):
+    """رشّد الإنتاج: ما نرندرش أكتر من اللي يوتيوب يقدر ينشره.
+
+    بق حقيقي (2026-09-20): يوتيوب 6 رفعات/يوم، والمصنع بيسيب حلقة كل ساعة
+    → المخزون بيتضخم بلا داعي (40MB/حلقة) والسبيس بيتاكل.
+    """
+
+    def _f(self, pub, vault, cap=6):
+        from scripts import factory_loop
+        return factory_loop._should_produce(pub, vault, cap)
+
+    def test_quota_open_always_produces(self):
+        self.assertTrue(self._f(0, 0))
+        self.assertTrue(self._f(5, 99))       # لسه فيه كوتة → ننتج
+
+    def test_quota_closed_stops_when_vault_full(self):
+        self.assertFalse(self._f(6, 6))
+        self.assertFalse(self._f(6, 50))
+
+    def test_quota_closed_still_fills_vault(self):
+        self.assertTrue(self._f(6, 5))        # محتاجين نبني مخزون يوم واحد
+
+    def test_zero_cap_never_blocks(self):
+        self.assertTrue(self._f(0, 0, cap=999))

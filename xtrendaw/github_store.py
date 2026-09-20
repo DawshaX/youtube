@@ -263,6 +263,17 @@ def delete_asset(tok: str, asset_id: int) -> bool:
     return bool(r.ok or r.status_code == 404)
 
 
+def vault_count() -> int:
+    """كم حلقة مستنية في المخزون؟ (نداء خفيف واحد)"""
+    tok = _token()
+    if not tok:
+        return 0
+    try:
+        return len([e for e in _vault_entries(tok, _vault_id(tok))
+                    if e.get("name", "").endswith(".mp4")])
+    except Exception:
+        return 0
+
 def promote_next() -> dict | None:
     """يفرج أحسن حلقة من الـvault على القناة العامة ويرجع بياناتها.
 
