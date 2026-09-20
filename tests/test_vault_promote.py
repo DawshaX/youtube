@@ -119,3 +119,44 @@ class VaultGuardTest(unittest.TestCase):
         from xtrendaw import github_store as g
         e = [{"name": "q100.mp4", "meta": {"kind": "eye", "credits": []}}]
         self.assertEqual(g.pick_next(e)["name"], "q100.mp4")
+
+
+class MediaPublishGuardTest(unittest.TestCase):
+    """حلقة بلا لقطة حية ما تتنشرش — لا من المخزون ولا مباشرة.
+
+    بق حقيقي (2026-09-20): حلقة تقليد IShowSpeed (12 لقطة مكتوبة) اتنشرت
+    وهي كلها خلفيات مولّدة — المستخدم طلب «فيديو حي مش صور مركبة».
+    """
+
+    def _patch_media(self, summary):
+        from unittest import mock
+        from xtrendaw import state
+        return mock.patch.object(state, "media_summary_for", return_value=summary)
+
+    def test_replication_without_live_clip_blocked(self):
+        from scripts import factory_loop
+        with self._patch_media({"video": 0, "images": 7, "static": 0, "total": 7}):
+            self.assertFalse(factory_loop._media_ok({"id": "eye-x", "shots": [1, 2]}))
+
+    def test_replication_with_live_clip_allowed(self):
+        from scripts import factory_loop
+        with self._patch_media({"video": 60, "images": 7, "static": 0, "total": 67}):
+            self.assertTrue(factory_loop._media_ok({"id": "eye-x", "shots": [1, 2]}))
+
+    def test_trend_with_images_allowed(self):
+        from scripts import factory_loop
+        with self._patch_media({"video": 0, "images": 9, "static": 0, "total": 9}):
+            self.assertTrue(factory_loop._media_ok({"id": "auto-1", "facts_ar": ["أ"]}))
+
+    def test_all_generated_blocked(self):
+        from scripts import factory_loop
+        with self._patch_media({"video": 0, "images": 0, "static": 0, "total": 0}):
+            self.assertTrue(factory_loop._media_ok({"id": "auto-1"}))  # مفيش تسجيل = ما نوقفش
+        with self._patch_media({"video": 0, "images": 0, "static": 3, "total": 3}):
+            self.assertFalse(factory_loop._media_ok({"id": "auto-1"}))
+
+    def test_guard_used_in_publish_path(self):
+        import inspect
+        from scripts import factory_loop
+        src = inspect.getsource(factory_loop.cycle_once)
+        self.assertIn("_media_ok(topic)", src)

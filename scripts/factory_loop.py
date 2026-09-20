@@ -135,6 +135,26 @@ def _save_meta(topic: dict, credits: list[str]) -> Path:
     return p
 
 
+def _media_ok(topic: dict) -> bool:
+    """هل الحلقة فيها ميديا حقيقية (لقطة فيديو حية أو صورة حقيقية)؟
+
+    بق حقيقي (2026-09-20): حلقة تقليد اتخزنت واتنشرت وهي كلها خلفيات
+    مولّدة — صفر لقطة حية. القاعدة: تقليد/عين لازم لقطة فيديو حية،
+    وأي حلقة تانية لازم ميديا حقيقية (فيديو أو صورة) مش خلفيات بس.
+    """
+    from xtrendaw import state
+    try:
+        ms = state.media_summary_for(topic.get("id") or "")
+    except Exception:
+        return True                      # ما نوقفش النشر بسبب خطأ قياس
+    if not ms.get("total"):
+        return True                      # حلقة قديمة/مسار مش مسجّل
+    shots = topic.get("shots") or []
+    if shots or topic.get("_replication"):
+        return int(ms.get("video") or 0) > 0
+    return (int(ms.get("video") or 0) + int(ms.get("images") or 0)) > 0
+
+
 def _promote_from_vault() -> None:
     """ينزّل أقدم حلقة من المخزون على القناة (بوصف كامل) لو الكوتة مفتوحة.
 
@@ -317,6 +337,14 @@ def cycle_once() -> None:
                                      "why": f"daily_cap {state.published_today_pt()}/{settings.DAILY_CAP}"})
         print(f"[factory] ⏸ حارس الكوتة: {state.published_today_pt()}/{settings.DAILY_CAP} "
               "رفعة النهاردة (يوم يوتيوب PT) — الفيديو اتحفظ ومستني الدور", flush=True)
+    elif vid.exists() and not NO_PUBLISH and not _media_ok(topic):
+        # ⛔ حارس الميديا: حلقة بلا ولا لقطة حية (خلفيات مولّدة) ما تتنشرش —
+        # دي بالظبط الشكوى: «فيديو حي مش صور مركبة». بتتخزن في المخزون
+        # بحالة live_clips=0 والفخ بيشيلها لوحده.
+        _log(s, "publish_attempts", {"at": now, "topic": topic["id"], "ok": False,
+                                     "why": "no_live_media"})
+        print(f"[factory] ⛔ الحلقة {topic['id']} فيها صفر لقطة حية — "
+              "مش هتتنشر (خلفيات مولّدة)", flush=True)
     elif vid.exists() and not NO_PUBLISH:
         try:
             if not meta_p.exists():
