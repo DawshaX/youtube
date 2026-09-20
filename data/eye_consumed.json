@@ -1766,5 +1766,208 @@
    "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
   },
   "_consumedAt": "2026-09-20T13:45:31Z"
+ },
+ {
+  "id": "eye-Pnpr8GFSre0",
+  "topic": "SURPRISING YOUTUBERS WITH THEIR FAVORITE YOUTUBER 😭 #roblox #gaming #funny #trolling #challenge",
+  "angle": "The favorite YouTuber appears in‑game as a hidden NPC, causing the surprised creator to br",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "أقوى مفاجأة يوتيوبرز: لما ييجي المفضل في روبلوكس!",
+  "title_en": "Epic YouTuber Surprise in Roblox!",
+  "hook_ar": "إحنا جايين نفاجئك بأكبر صدمة",
+  "hook_en": "We're about to shock you big time",
+  "facts_ar": [
+   "في روبلوكس، بندخل الباب السري بسرعة",
+   "الممر الضيق يخلينا متحمسين أكتر",
+   "الباب يفتح فجأة، والسر بيظهر"
+  ],
+  "facts_en": [
+   "In Roblox we rush into the secret door",
+   "The narrow hallway makes us even more excited",
+   "The door bursts open, revealing the secret"
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "مفاجأة,روبلوكس,تحدي,ضحك,يوتيوبر",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 2.0,
+    "dur": 2.0,
+    "say_ar": "إحنا جايين نفاجئك بأكبر صدمة",
+    "say_en": "We're about to shock you big time",
+    "visual_query": "channel logo bold",
+    "visual_query2": "logo animation flash",
+    "sfx": "impact",
+    "on_screen": "فيديو صدمة"
+   },
+   {
+    "t0": 2.0,
+    "t1": 6.0,
+    "dur": 4.0,
+    "say_ar": "في روبلوكس، بندخل الباب السري بسرعة",
+    "say_en": "In Roblox we rush into the secret door",
+    "visual_query": "roblox avatar walking",
+    "visual_query2": "game character entering door",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 6.0,
+    "t1": 8.0,
+    "dur": 2.0,
+    "say_ar": "الممر الضيق يخلينا متحمسين أكتر",
+    "say_en": "The narrow hallway makes us even more excited",
+    "visual_query": "dark corridor game",
+    "visual_query2": "tight hallway Roblox",
+    "sfx": "footsteps",
+    "on_screen": ""
+   },
+   {
+    "t0": 8.0,
+    "t1": 12.0,
+    "dur": 4.0,
+    "say_ar": "الباب يفتح فجأة، والسر بيظهر",
+    "say_en": "The door bursts open, revealing the secret",
+    "visual_query": "door opening game",
+    "visual_query2": "secret door reveal",
+    "sfx": "impact|whoos",
+    "on_screen": "إفتح!"
+   },
+   {
+    "t0": 12.0,
+    "t1": 14.0,
+    "dur": 2.0,
+    "say_ar": "الكاميرا على يوتيوبر مشهور، عينه تتسع",
+    "say_en": "Camera on famous YouTuber, eyes wide open",
+    "visual_query": "youtuber reaction closeup",
+    "visual_query2": "surprised face cam",
+    "sfx": "gasp",
+    "on_screen": "مش مصدق!"
+   },
+   {
+    "t0": 14.0,
+    "t1": 18.0,
+    "dur": 4.0,
+    "say_ar": "الأفاتار يقترب، والقلوب بتدق أسرع",
+    "say_en": "Avatar approaches, hearts beating faster",
+    "visual_query": "game avatar approaching",
+    "visual_query2": "character near camera",
+    "sfx": "heartbeat",
+    "on_screen": ""
+   },
+   {
+    "t0": 18.0,
+    "t1": 20.0,
+    "dur": 2.0,
+    "say_ar": "فجأة يطلع اليوتيوبر المفضل قدامنا",
+    "say_en": "Suddenly the favorite YouTuber appears right ahead",
+    "visual_query": "favorite youtuber avatar",
+    "visual_query2": "npc surprise roblox",
+    "sfx": "pop|laugh",
+    "on_screen": "مفاجأة!"
+   },
+   {
+    "t0": 20.0,
+    "t1": 24.0,
+    "dur": 4.0,
+    "say_ar": "اليوتيوبر بيتنفس بصوت عالي، بيضحك ويبكي",
+    "say_en": "The YouTuber gasps, laughing and crying",
+    "visual_query": "youtuber laughing tears",
+    "visual_query2": "emotional reaction cam",
+    "sfx": "laugh",
+    "on_screen": "😂😂😂"
+   },
+   {
+    "t0": 24.0,
+    "t1": 26.0,
+    "dur": 2.0,
+    "say_ar": "ستيكرات وإيموجيات تملأ الشاشة",
+    "say_en": "Stickers and emojis flood the screen",
+    "visual_query": "emoji stickers overlay",
+    "visual_query2": "funny graphics pop",
+    "sfx": "pop",
+    "on_screen": "😂😂😂"
+   },
+   {
+    "t0": 26.0,
+    "t1": 30.0,
+    "dur": 4.0,
+    "say_ar": "ملخص سريع للضحك واللحظات المجنونة",
+    "say_en": "Fast recap of laughs and crazy moments",
+    "visual_query": "montage fast cuts",
+    "visual_query2": "quick highlight reel",
+    "sfx": "whoosh|beat",
+    "on_screen": ""
+   },
+   {
+    "t0": 30.0,
+    "t1": 32.0,
+    "dur": 2.0,
+    "say_ar": "إضغط لايك لو حبيت الفيديو",
+    "say_en": "Hit like if you loved it",
+    "visual_query": "like button graphic",
+    "visual_query2": "thumbs up icon",
+    "sfx": "click",
+    "on_screen": "اعمل لايك"
+   },
+   {
+    "t0": 32.0,
+    "t1": 35.0,
+    "dur": 3.0,
+    "say_ar": "اشترك دلوقتي لتشوف تحديات أكتر",
+    "say_en": "Subscribe now for more challenges",
+    "visual_query": "subscribe button animation",
+    "visual_query2": "subscribe graphic",
+    "sfx": "ding",
+    "on_screen": "اشترك"
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "Pnpr8GFSre0",
+   "url": "https://youtu.be/Pnpr8GFSre0",
+   "sourceTitle": "SURPRISING YOUTUBERS WITH THEIR FAVORITE YOUTUBER 😭 #roblox #gaming #funny #trolling #challenge",
+   "sourceChannel": "nobrainjames",
+   "sourceViews": 12790880,
+   "dna": {
+    "hook": {
+     "technique": "shock",
+     "what_happens": "The video opens with a sudden, over‑the‑top reaction of a popular YouTuber being surprised by their own favorite creator appearing in‑game.",
+     "why_it_works": "Immediate emotional shock grabs attention, triggers curiosity and the brain’s dopamine response, making viewers stay for the payoff."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 62,
+     "energy_curve": "rising‑fast → peak at 0:20 (surprise reveal) → slight dip → final spike at CTA"
+    },
+    "retention_tricks": [
+     "Hook within first 2 seconds (shock + bold claim)",
+     "Fast‑cut editing to create a sense of urgency",
+     "Emotional facial reaction to trigger empathy",
+     "Mid‑video surprise reveal that flips expectations",
+     "Strong CTA with visual and audio emphasis"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 58,
+   "weaknesses": [
+    "Pacing too slow – only ~20 cuts/min vs DNA’s 62 cuts/min, risking early drop‑off",
+    "Hook lacks immediate shock; first 2 s could be more dramatic",
+    "Missing split‑screen gameplay vs reaction cam, reducing visual contrast",
+    "No explicit music/sfx spikes (bass drop, laugh track) to heighten payoff",
+    "Energy curve flat; no clear rise to peak at reveal",
+    "Limited use of rapid jump‑cuts and montage that DNA relies on",
+    "No clear escalation beat before the surprise",
+    "CTA could be more visually and audibly emphasized"
+   ],
+   "verdict": "The concept aligns with DNA’s core elements (surprise, reaction, CTA) but falls short on pacing, visual contrast, and audio energy. Tighten the edit, add split‑screen, and amplify the shock hook to reach DNA‑level retention.",
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  },
+  "_consumedAt": "2026-09-20T15:00:09Z"
  }
 ]

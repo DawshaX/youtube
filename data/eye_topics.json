@@ -193,208 +193,6 @@
   }
  },
  {
-  "id": "eye-Pnpr8GFSre0",
-  "topic": "SURPRISING YOUTUBERS WITH THEIR FAVORITE YOUTUBER 😭 #roblox #gaming #funny #trolling #challenge",
-  "angle": "The favorite YouTuber appears in‑game as a hidden NPC, causing the surprised creator to br",
-  "origin": "eye",
-  "status": "scripted",
-  "title_ar": "أقوى مفاجأة يوتيوبرز: لما ييجي المفضل في روبلوكس!",
-  "title_en": "Epic YouTuber Surprise in Roblox!",
-  "hook_ar": "إحنا جايين نفاجئك بأكبر صدمة",
-  "hook_en": "We're about to shock you big time",
-  "facts_ar": [
-   "في روبلوكس، بندخل الباب السري بسرعة",
-   "الممر الضيق يخلينا متحمسين أكتر",
-   "الباب يفتح فجأة، والسر بيظهر"
-  ],
-  "facts_en": [
-   "In Roblox we rush into the secret door",
-   "The narrow hallway makes us even more excited",
-   "The door bursts open, revealing the secret"
-  ],
-  "takeaway_ar": null,
-  "takeaway_en": null,
-  "tags": "مفاجأة,روبلوكس,تحدي,ضحك,يوتيوبر",
-  "mood": "crazy",
-  "_kind": "eye",
-  "_visual_plan": [],
-  "shots": [
-   {
-    "t0": 0.0,
-    "t1": 2.0,
-    "dur": 2.0,
-    "say_ar": "إحنا جايين نفاجئك بأكبر صدمة",
-    "say_en": "We're about to shock you big time",
-    "visual_query": "channel logo bold",
-    "visual_query2": "logo animation flash",
-    "sfx": "impact",
-    "on_screen": "فيديو صدمة"
-   },
-   {
-    "t0": 2.0,
-    "t1": 6.0,
-    "dur": 4.0,
-    "say_ar": "في روبلوكس، بندخل الباب السري بسرعة",
-    "say_en": "In Roblox we rush into the secret door",
-    "visual_query": "roblox avatar walking",
-    "visual_query2": "game character entering door",
-    "sfx": "whoosh",
-    "on_screen": ""
-   },
-   {
-    "t0": 6.0,
-    "t1": 8.0,
-    "dur": 2.0,
-    "say_ar": "الممر الضيق يخلينا متحمسين أكتر",
-    "say_en": "The narrow hallway makes us even more excited",
-    "visual_query": "dark corridor game",
-    "visual_query2": "tight hallway Roblox",
-    "sfx": "footsteps",
-    "on_screen": ""
-   },
-   {
-    "t0": 8.0,
-    "t1": 12.0,
-    "dur": 4.0,
-    "say_ar": "الباب يفتح فجأة، والسر بيظهر",
-    "say_en": "The door bursts open, revealing the secret",
-    "visual_query": "door opening game",
-    "visual_query2": "secret door reveal",
-    "sfx": "impact|whoos",
-    "on_screen": "إفتح!"
-   },
-   {
-    "t0": 12.0,
-    "t1": 14.0,
-    "dur": 2.0,
-    "say_ar": "الكاميرا على يوتيوبر مشهور، عينه تتسع",
-    "say_en": "Camera on famous YouTuber, eyes wide open",
-    "visual_query": "youtuber reaction closeup",
-    "visual_query2": "surprised face cam",
-    "sfx": "gasp",
-    "on_screen": "مش مصدق!"
-   },
-   {
-    "t0": 14.0,
-    "t1": 18.0,
-    "dur": 4.0,
-    "say_ar": "الأفاتار يقترب، والقلوب بتدق أسرع",
-    "say_en": "Avatar approaches, hearts beating faster",
-    "visual_query": "game avatar approaching",
-    "visual_query2": "character near camera",
-    "sfx": "heartbeat",
-    "on_screen": ""
-   },
-   {
-    "t0": 18.0,
-    "t1": 20.0,
-    "dur": 2.0,
-    "say_ar": "فجأة يطلع اليوتيوبر المفضل قدامنا",
-    "say_en": "Suddenly the favorite YouTuber appears right ahead",
-    "visual_query": "favorite youtuber avatar",
-    "visual_query2": "npc surprise roblox",
-    "sfx": "pop|laugh",
-    "on_screen": "مفاجأة!"
-   },
-   {
-    "t0": 20.0,
-    "t1": 24.0,
-    "dur": 4.0,
-    "say_ar": "اليوتيوبر بيتنفس بصوت عالي، بيضحك ويبكي",
-    "say_en": "The YouTuber gasps, laughing and crying",
-    "visual_query": "youtuber laughing tears",
-    "visual_query2": "emotional reaction cam",
-    "sfx": "laugh",
-    "on_screen": "😂😂😂"
-   },
-   {
-    "t0": 24.0,
-    "t1": 26.0,
-    "dur": 2.0,
-    "say_ar": "ستيكرات وإيموجيات تملأ الشاشة",
-    "say_en": "Stickers and emojis flood the screen",
-    "visual_query": "emoji stickers overlay",
-    "visual_query2": "funny graphics pop",
-    "sfx": "pop",
-    "on_screen": "😂😂😂"
-   },
-   {
-    "t0": 26.0,
-    "t1": 30.0,
-    "dur": 4.0,
-    "say_ar": "ملخص سريع للضحك واللحظات المجنونة",
-    "say_en": "Fast recap of laughs and crazy moments",
-    "visual_query": "montage fast cuts",
-    "visual_query2": "quick highlight reel",
-    "sfx": "whoosh|beat",
-    "on_screen": ""
-   },
-   {
-    "t0": 30.0,
-    "t1": 32.0,
-    "dur": 2.0,
-    "say_ar": "إضغط لايك لو حبيت الفيديو",
-    "say_en": "Hit like if you loved it",
-    "visual_query": "like button graphic",
-    "visual_query2": "thumbs up icon",
-    "sfx": "click",
-    "on_screen": "اعمل لايك"
-   },
-   {
-    "t0": 32.0,
-    "t1": 35.0,
-    "dur": 3.0,
-    "say_ar": "اشترك دلوقتي لتشوف تحديات أكتر",
-    "say_en": "Subscribe now for more challenges",
-    "visual_query": "subscribe button animation",
-    "visual_query2": "subscribe graphic",
-    "sfx": "ding",
-    "on_screen": "اشترك"
-   }
-  ],
-  "_replication": true,
-  "_eye": {
-   "videoId": "Pnpr8GFSre0",
-   "url": "https://youtu.be/Pnpr8GFSre0",
-   "sourceTitle": "SURPRISING YOUTUBERS WITH THEIR FAVORITE YOUTUBER 😭 #roblox #gaming #funny #trolling #challenge",
-   "sourceChannel": "nobrainjames",
-   "sourceViews": 12790880,
-   "dna": {
-    "hook": {
-     "technique": "shock",
-     "what_happens": "The video opens with a sudden, over‑the‑top reaction of a popular YouTuber being surprised by their own favorite creator appearing in‑game.",
-     "why_it_works": "Immediate emotional shock grabs attention, triggers curiosity and the brain’s dopamine response, making viewers stay for the payoff."
-    },
-    "pacing": {
-     "estimated_cuts_per_minute": 62,
-     "energy_curve": "rising‑fast → peak at 0:20 (surprise reveal) → slight dip → final spike at CTA"
-    },
-    "retention_tricks": [
-     "Hook within first 2 seconds (shock + bold claim)",
-     "Fast‑cut editing to create a sense of urgency",
-     "Emotional facial reaction to trigger empathy",
-     "Mid‑video surprise reveal that flips expectations",
-     "Strong CTA with visual and audio emphasis"
-    ]
-   }
-  },
-  "_critique": {
-   "score": 58,
-   "weaknesses": [
-    "Pacing too slow – only ~20 cuts/min vs DNA’s 62 cuts/min, risking early drop‑off",
-    "Hook lacks immediate shock; first 2 s could be more dramatic",
-    "Missing split‑screen gameplay vs reaction cam, reducing visual contrast",
-    "No explicit music/sfx spikes (bass drop, laugh track) to heighten payoff",
-    "Energy curve flat; no clear rise to peak at reveal",
-    "Limited use of rapid jump‑cuts and montage that DNA relies on",
-    "No clear escalation beat before the surprise",
-    "CTA could be more visually and audibly emphasized"
-   ],
-   "verdict": "The concept aligns with DNA’s core elements (surprise, reaction, CTA) but falls short on pacing, visual contrast, and audio energy. Tighten the edit, add split‑screen, and amplify the shock hook to reach DNA‑level retention.",
-   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
-  }
- },
- {
   "id": "eye-1LRHjrLmLcQ",
   "topic": "أسرار عن فرس النهر القزم لم تسمع بها من قبل",
   "angle": "الفرس النهر القزم لا يسبح كثيرًا؛ يفضل المشي على اليابسة ويقضي معظم وقته في الغابة، وهو ما",
@@ -584,6 +382,125 @@
    "weaknesses": [],
    "verdict": null,
    "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  }
+ },
+ {
+  "id": "eye-qoCooz2-c4A",
+  "topic": "एक पत्थर से अपनी हाइट नापो 😱 #facts #knowledge #education #information #science #health #maths",
+  "angle": "The stone’s exact length (e.g., 10 cm) is used as a repeatable unit, turning a random obje",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "قيس طولك بحجر بسيط وتستغرب النتيجة!",
+  "title_en": "Measure Your Height With a Simple Stone!",
+  "hook_ar": "إنت مش هتصدق إزاي حجر بسيط يقدر يقيس طولك!",
+  "hook_en": "You won't believe a simple stone can measure your height!",
+  "facts_ar": [
+   "كرة الكريكيت قطرها حوالي سبعة سنتيمتر.",
+   "متوسط طول الإنسان البالغ حوالى مية وسبعين سنتيمتر.",
+   "ممكن تقرب طولك بإنك ترتب جسم معروف الطول فوق بعض وتعده."
+  ],
+  "facts_en": [
+   "A cricket ball is roughly seven centimeters in diameter.",
+   "The average adult human stands about one hundred seventy centimeters tall.",
+   "You can estimate height by stacking a known‑length object and counting the pieces."
+  ],
+  "takeaway_ar": {
+   "aql": "الابتكار بيظهر في أبسط الحاجات.",
+   "qalb": "حاجات بسيطة ممكن تفرحنا وتخلينا نفكر بطرق جديدة.",
+   "rouh": "جرّبوا التجربة وشوفوا طولكم، ومش هتندموا."
+  },
+  "takeaway_en": {
+   "aql": "Innovation hides in the simplest things.",
+   "qalb": "Simple tricks can delight us and spark fresh thinking.",
+   "rouh": "Give it a try, see your height, and enjoy the surprise."
+  },
+  "tags": "قيس,طول,حجر,تجربة,معلومة,هاك",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "يد تمسك حجر عادي، تكبير سريع، نص على الشاشة: \"قيس طولك بالـ…\"",
+    "style": "لقطة مقربة، إضاءة ساطعة، حركة كاميرا سريعة",
+    "colors": [
+     "#FFEB3B",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "المقدِّم يحط الحجر فوق رأسه، يجهز مسطرة جنب الحجر لتوضيح الطول المعروف",
+    "style": "زاوية من فوق الكتف، مقاطع سريعة، سهم يوضح العلاقة بين الحجر والمسافة",
+    "colors": [
+     "#2196F3",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "رسوم متحركة توضح معادلة: طول = طول الحجر × عدد الحجارة، مع عدّ حركات سريعة",
+    "style": "جرافيك بسانس‑سريف، تأثيرات بوب‑أب، إيقاع صوتي مع كل قطع",
+    "colors": [
+     "#FFEB3B",
+     "#2196F3"
+    ]
+   },
+   {
+    "time": "0:12-0:14",
+    "scene": "النتيجة النهائية تظهر بحجم كبير، المقدِّم يضحك ويشير للنتيجة مع ملصق \"تابعنا لمزيد من الحاجات الجنونية!\"",
+    "style": "لقطة واسعة، إضاءة دافئة، ستايكرز إيموجي 😱✅",
+    "colors": [
+     "#FFEB3B",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:15-0:17",
+    "scene": "CTA سريع: زر المتابعة يلمع، صوت نغمة خفيفة، النهاية مع خلفية هادئة",
+    "style": "تقطيع نهائي سريع، موسيقى إلكترونية خفيفة",
+    "colors": [
+     "#2196F3",
+     "#FFFFFF"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "qoCooz2-c4A",
+   "url": "https://youtu.be/qoCooz2-c4A",
+   "sourceTitle": "एक पत्थर से अपनी हाइट नापो 😱 #facts #knowledge #education #information #science #health #maths",
+   "sourceChannel": "Vedant Sir",
+   "sourceViews": 5387594,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "The video opens with a hand holding a common stone and a bold caption: \"Measure your height with THIS!\"",
+     "why_it_works": "The unexpected use of an everyday object creates immediate curiosity and a shock factor, prompting viewers to stay for the explanation."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 30,
+     "energy_curve": "High‑energy spike at start → slight dip during explanation → sharp rise at twist → peak at payoff → quick fade to CTA."
+    },
+    "retention_tricks": [
+     "Immediate visual curiosity hook",
+     "On‑screen text reinforcing spoken words",
+     "Simple, repeatable math hack (the twist)",
+     "Fast‑cut editing to maintain momentum",
+     "Clear CTA with visual sticker"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [
+    "Audio details are vague; no explicit voice style, music, or sound‑effect cues are defined, unlike the DNA template.",
+    "Pacing description lacks an explicit energy curve; the proposal assumes a steady flow but does not highlight the dip‑rise‑peak pattern.",
+    "CTA is present but not as visually emphasized (no dedicated sticker or flashing follow button as in the trend).",
+    "The visual plan repeats colors but does not mention the handheld feel or rapid zooms that give the trend its immediacy.",
+    "Retention tricks such as “on‑screen text reinforcing spoken words” are implied but not explicitly listed."
+   ],
+   "verdict": "The proposal captures the core DNA trend—hook, simple math hack, quick payoff, and bold visuals—very well, but it falls short on audio specification and nuanced pacing cues. With a few refinements to sound design and CTA emphasis, it would fully match the high‑performing DNA formula."
   }
  }
 ]
