@@ -143,6 +143,14 @@
    "duration": 51.9,
    "at": "2026-09-20 05:06",
    "urls": {}
+  },
+  "auto-ee6601fb45": {
+   "title": "ليه الكل بيبحث عن «ترتيب الدوري التركي» دلوقتي؟",
+   "fingerprint": "ee6601fb45df5fc9",
+   "video": "/home/runner/work/youtube/youtube/content/vids/auto-ee6601fb45.mp4",
+   "duration": 56.93,
+   "at": "2026-09-20 05:45",
+   "urls": {}
   }
  },
  "fingerprints": [
@@ -163,7 +171,8 @@
   "0c878ff8982d8483",
   "922feda5251e1409",
   "542de4e40a7464da",
-  "90035d6ff539f952"
+  "90035d6ff539f952",
+  "ee6601fb45df5fc9"
  ],
  "last_kind": "trend"
 }
