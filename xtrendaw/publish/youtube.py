@@ -36,10 +36,14 @@ def publish(video_path, title, caption, tags, cover=None,
     if publish_at:
         _status["privacyStatus"] = "private"
         _status["publishAt"] = publish_at
-    meta = {"snippet": {"title": title[:100], "description": caption[:4900],
-                        "tags": tags[:15], "categoryId": category,
-                        "defaultLanguage": "ar", "defaultAudioLanguage": "ar"},
-            "status": _status}
+    def _meta(status: dict) -> dict:
+        return {"snippet": {"title": title[:100], "description": caption[:4900],
+                            "tags": tags[:15], "categoryId": category,
+                            "defaultLanguage": "ar",
+                            "defaultAudioLanguage": "ar"},
+                "status": status}
+
+    meta = _meta(_status)
     init = requests.post(
         "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
         headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json",
@@ -54,6 +58,22 @@ def publish(video_path, title, caption, tags, cover=None,
             _reason = str(_why.get("reason") or "")
         except Exception:
             _reason = ""
+        # ⚠️ أمان: لو جوجل رفض الجدولة (publishAt) لأي سبب (إعدادات القناة مثلًا)
+        # بنرفع فورًا بدل ما نضيّع الحلقة — النشر المباشر مقبول دايمًا.
+        if publish_at and init.status_code == 400:
+            print("SCHEDULE-rejected → نشر فوري", flush=True)
+            init = requests.post(
+                "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
+                headers={"Authorization": f"Bearer {tok}",
+                         "Content-Type": "application/json",
+                         "X-Upload-Content-Type": "video/mp4",
+                         "X-Upload-Content-Length": str(video_path.stat().st_size)},
+                json=_meta({"privacyStatus": "public",
+                            "selfDeclaredMadeForKids": False,
+                            "containsSyntheticMedia": bool(synthetic)}),
+                timeout=60)
+            if init.status_code == 200:
+                publish_at = None
         if init.status_code == 403 and "quota" in _reason.lower():
             return None, "quota_exceeded"
         if init.status_code in (401, 403) and "quota" not in _reason.lower():
