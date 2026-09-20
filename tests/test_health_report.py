@@ -95,27 +95,38 @@ class TestCookieCheck(unittest.TestCase):
         self.assertEqual(c["status"], "fail")
         self.assertIn("غير مضبوط", c["detail"])
 
+    def _patch_eye(self, meta: dict, player: dict):
+        from xtrendaw import eye as _eye
+        return (mock.patch.object(_eye, "_public_metadata", return_value=meta),
+                mock.patch.object(_eye, "_player_response", return_value=player))
+
     def test_accepted_session_is_ok(self):
         with mock.patch.dict(os.environ, {"YOUTUBE_COOKIES_B64": self._b64}):
-            class FakeR:
-                returncode = 0
-                stderr = ""
-                stdout = ""
-            with mock.patch("subprocess.run", return_value=FakeR()):
+            m1, m2 = self._patch_eye({"title": "فيديو"}, {"storyboards": [1]})
+            with m1, m2:
                 c = doctor.check_youtube_cookies()
         self.assertEqual(c["status"], "ok")
-        self.assertIn("شغالة", c["detail"])
+        self.assertIn("الجلسة شغالة", c["detail"])
 
-    def test_rejected_session_is_fail_with_hint(self):
+    def test_dead_session_is_warn_not_fail(self):
+        """الكوكيز اتقرت بس جلسة المشغل ما رجعتش بيانات — تحذير مش فشل،
+        لأن مسار العين الأساسي (oEmbed/storyboard) لسه بيمشي."""
         with mock.patch.dict(os.environ, {"YOUTUBE_COOKIES_B64": self._b64}):
-            class FakeR:
-                returncode = 1
-                stderr = "Sign in to confirm you're not a bot"
-                stdout = ""
-            with mock.patch("subprocess.run", return_value=FakeR()):
+            m1, m2 = self._patch_eye({}, {})
+            with m1, m2:
+                c = doctor.check_youtube_cookies()
+        self.assertEqual(c["status"], "warn")
+        self.assertIn("ما رجعتش بيانات", c["detail"])
+
+    def test_cleanup_is_guaranteed(self):
+        """حتى لو الاختبار وقع، الملف المؤقت بيتشال (finally)."""
+        from xtrendaw import eye as _eye
+        with mock.patch.dict(os.environ, {"YOUTUBE_COOKIES_B64": self._b64}):
+            m1, m2 = self._patch_eye({}, {})
+            with m1, m2, mock.patch.object(_eye, "_load_cookies",
+                                           side_effect=RuntimeError("bag")):
                 c = doctor.check_youtube_cookies()
         self.assertEqual(c["status"], "fail")
-        self.assertIn("أعد تصديرها", c["detail"])
 
 
 if __name__ == "__main__":

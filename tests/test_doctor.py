@@ -357,3 +357,25 @@ class SecretMaskingTest(unittest.TestCase):
         from xtrendaw import doctor
         src = inspect.getsource(doctor._http_post)
         self.assertIn("4000", src)
+
+
+class CookieCheckPathTests(unittest.TestCase):
+    """فحص الكوكيز لازم يقيس مسار العين الحقيقي — مش تنزيل ميت.
+
+    بق حقيقي (2026-09-20): الفحص كان بيعمل yt-dlp --simulate، والتنزيل من
+    خوادم Actions ميت من أصله → صحة المصنع كانت حمراء كل ساعة على الفاضي.
+    """
+
+    def test_check_does_not_use_ytdlp_download(self):
+        import inspect
+        from xtrendaw import doctor
+        src = inspect.getsource(doctor.check_youtube_cookies)
+        self.assertNotIn("yt_dlp", src)
+        self.assertNotIn("--simulate", src)
+
+    def test_check_uses_eye_path(self):
+        import inspect
+        from xtrendaw import doctor
+        src = inspect.getsource(doctor.check_youtube_cookies)
+        self.assertIn("_eye", src)
+        self.assertIn("_public_metadata", src)

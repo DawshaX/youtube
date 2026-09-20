@@ -278,16 +278,20 @@ def check_currents() -> dict:
 
 
 def check_youtube_cookies() -> dict:
-    """الكوكيز مش بتتجدد أوتوماتيك (تصميم أمان من جوجل) — فبنكشف موتها مبكرًا:
-    اختبار حقيقي: هل المشغل لسه بيقبل الجلسة؟ (yt-dlp --simulate، بلا تنزيل)"""
+    """الكوكيز مش بتتجدد أوتوماتيك (تصميم أمان من جوجل) — بنكشف موتها مبكرًا.
+
+    بنجرّب **نفس** مسار العين الفعلي: قراءة الكوكيز بنفس التحويل +
+    بيانات الفيديو العامة + جلسة المشغل (مشاهد/كلام) — بلا أي تنزيل.
+    بق حقيقي (2026-09-20): الفحص كان بيختبر قدرة تنزيل الفيديو، وهي ميتة
+    من خوادم Actions أصلاً («The page needs to be reloaded») — فكان بيفشّل
+    الفحص كل ساعة على حاجة المصنع مش بيستخدمها.
+    """
     b64 = settings.get("YOUTUBE_COOKIES_B64")
     if not b64:
         return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "fail",
                 "detail": "غير مضبوط — العين مش هتشوف أي فيديو من خوادم Actions"}
-    # ⚠️ الدرس (2026-09-20): الفحص كان بيكتب المحتوى الخام ويجرّبه، فطلع
-    # «مش ملف نيتسكيب» — والصح إننا نجرّب **نفس** التحويل اللي العين بتعمله.
+    path = None
     try:
-        import sys as _sys
         from . import eye as _eye
         _hdr, path = _eye._load_cookies()
         if path is None:
@@ -295,27 +299,31 @@ def check_youtube_cookies() -> dict:
                     "status": "fail",
                     "detail": "المحتوى مش صالح — لازم Netscape أو JSON "
                               "مصدَّر من المتصفح (Cookie-Editor)"}
-        try:
-            r = subprocess.run(
-                [_sys.executable, "-m", "yt_dlp", "--simulate", "--no-playlist",
-                 "--socket-timeout", "20", "--retries", "1", "--ignore-errors",
-                 "--cookies", str(path),
-                 "https://www.youtube.com/watch?v=2Vv-BfVoq4g"],
-                capture_output=True, text=True, timeout=120)
-        finally:
-            path.unlink(missing_ok=True)   # تنظيف مضمون حتى لو الاختبار فشل
+        n_pairs = (_hdr.count(";") + 1) if _hdr else 0
+        # اختبار حقيقي لمسار العين (بلا تنزيل): بيانات + جلسة المشغل
+        info = _eye._public_metadata("2Vv-BfVoq4g") or {}
+        player = _eye._player_response("2Vv-BfVoq4g") or {}
+        sb = bool(player.get("storyboards") or
+                  (player.get("captions") or {}).get("playerCaptionsTracklistRenderer"))
+        if info.get("title") or player.get("playabilityStatus"):
+            return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "ok",
+                    "detail": f"الجلسة شغالة ({n_pairs} زوج كوكي) — مسار العين "
+                              f"(بيانات {'+ مشاهد/كلام' if sb else 'بس'}) بلا تنزيل"}
+        return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "warn",
+                "detail": f"الكوكيز اتقرت ({n_pairs} زوج) بس جلسة المشغل ما "
+                          "رجعتش بيانات — العين هتمشي ببيانات الـoEmbed"}
     except Exception as exc:
         return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "fail",
                 "detail": mask_secrets(
                     "الكوكيز ماتت/مرفوضة — أعد تصديرها (دقيقتين): "
                     f"{type(exc).__name__}: {exc}")}
-    if r.returncode == 0:
-        return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "ok",
-                "detail": "شغالة — العين بقت تشوف الفيديو كامل (اختبار حقيقي)"}
-    tail = (r.stderr or r.stdout or "").strip().splitlines()
-    last = mask_secrets(tail[-1][:160] if tail else "بدون مخرجات")
-    return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "fail",
-            "detail": "الكوكيز ماتت/مرفوضة — أعد تصديرها (دقيقتين): " + last}
+    finally:
+        # تنظيف مضمون للملف المؤقت (حتى لو الاختبار فشل في النص)
+        if path is not None:
+            try:
+                path.unlink(missing_ok=True)
+            except Exception:
+                pass
 
 
 def check_edge_tts() -> dict:
