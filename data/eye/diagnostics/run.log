@@ -1,14 +1,17 @@
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/home/runner/work/youtube/youtube/xtrendaw/eye.py", line 1670, in <module>
-    sys.exit(main())
-             ^^^^^^
-  File "/home/runner/work/youtube/youtube/xtrendaw/eye.py", line 1638, in main
-    targets = [(args.video_id, _radar_meta(args.video_id))]
-                               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/youtube/youtube/xtrendaw/eye.py", line 1606, in _radar_meta
-    v = (snap.get("videos") or {}).get(video_id) or {}
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'list' object has no attribute 'get'
-eye exited with code 1
+[eye] YZWmX1rrfvA: تنزيل الفيديو الحقيقي…
+[eye] ✓ الكوكيز اتظبطت (pairs (24 كوكي)) — المصادقة شغالة
+[eye] ⚠️ فشل تنزيل الفيديو: eye: فشل التنزيل بكل العملاء — client=ios: WARNING: [youtube] Skipping client "ios" since it does not support cookies ┃ WARNING: Only images are available for download. use --list-formats to see them ┃ ERROR: [youtube] YZWmX1rrfvA: Requested format is not available. Use --list-formats for a list of available formats
+[eye] أكمل بالتسميات + البيانات فقط (بدون تحليل بصري/صوتي)
+[eye] 👀 صور المشاهد: 18 صورة من 6 شيت (1000مللي/صورة، دقة 101×180)
+[eye] ⚠️ مفيش تسميات من المِرآت — التقليد بيروح على الوصف البصري بس
+[eye] 👁 شفت 18 مشهد بعيني (gemini-3.5-flash)
+[eye] ✓ شفت الفيديو بالكامل بلا تنزيل: 18 مشهد، 0 جملة، تغطية كلام 0.0
+[eye] افهم: وكيل الـ DNA يحلل…
+[eye] اكتب: إصدارنا من نفس السياق…
+[eye] ✓ الرد من groq:qwen/qwen3.8-27b بعد فشل: groq:openai/gpt-oss-120b:رد فاضي, groq:openai/gpt-oss-20b:رد فاضي
+[eye] 🎬 سكربت تقليد من 12 لقطة (نفس لقطات الأصل)
+[eye] ناقد: تقييم صارم…
+[eye] ⚠️ groq:openai/gpt-oss-120b فشل — نجرب اللي بعده…
+[eye] ✓ الرد من groq:openai/gpt-oss-20b بعد فشل: groq:openai/gpt-oss-120b:ConnectionError
+[eye] ✓ الموضوع eye-YZWmX1rrfvA في طابور المصنع: اللي جربته ده خلاني أقذف!
+eye: 1/1 فيديو اتشاف وموضوعات اتكتبت
