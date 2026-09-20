@@ -135,6 +135,14 @@
    "duration": 58.03,
    "at": "2026-09-20 01:15",
    "urls": {}
+  },
+  "eye-YZWmX1rrfvA": {
+   "title": "تحدي المشروبات المجنونة مع Speed",
+   "fingerprint": "90035d6ff539f952",
+   "video": "/home/runner/work/youtube/youtube/content/vids/eye-YZWmX1rrfvA.mp4",
+   "duration": 51.9,
+   "at": "2026-09-20 05:06",
+   "urls": {}
   }
  },
  "fingerprints": [
@@ -154,7 +162,8 @@
   "48d7f950fd00e4c6",
   "0c878ff8982d8483",
   "922feda5251e1409",
-  "542de4e40a7464da"
+  "542de4e40a7464da",
+  "90035d6ff539f952"
  ],
  "last_kind": "trend"
 }

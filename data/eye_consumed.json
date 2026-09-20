@@ -1381,5 +1381,189 @@
    "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
   },
   "_consumedAt": "2026-09-20T03:34:50Z"
+ },
+ {
+  "id": "eye-YZWmX1rrfvA",
+  "topic": "GUESS THE DRINK CHALLENGE",
+  "angle": "After several wrong guesses, Speed finally nails the last drink, and the video freezes on ",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي المشروبات المجنونة مع Speed",
+  "title_en": "Crazy Drink Guess Challenge!",
+  "hook_ar": "يلا يا جماعة، تحدي المشروبات!",
+  "hook_en": "Let's go, drink challenge!",
+  "facts_ar": [
+   "أول مشروب ييجي، شوف رد فعلي!",
+   "أظنها كوكاكولا، يا ريت!",
+   "خطأ! صوت البازر يطقطق!"
+  ],
+  "facts_en": [
+   "First drink arrives, watch my reaction!",
+   "I think it's cola, right!",
+   "Wrong! Buzzer sounds!"
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "تحدي,مشروبات,ضحك,سرعة,مفاجأة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 3.0,
+    "dur": 3.0,
+    "say_ar": "يلا يا جماعة، تحدي المشروبات!",
+    "say_en": "Let's go, drink challenge!",
+    "visual_query": "young man shouting",
+    "sfx": "whoosh",
+    "on_screen": "إختر المشروب!"
+   },
+   {
+    "t0": 3.0,
+    "t1": 9.0,
+    "dur": 6.0,
+    "say_ar": "أول مشروب ييجي، شوف رد فعلي!",
+    "say_en": "First drink arrives, watch my reaction!",
+    "visual_query": "drink being poured closeup",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 9.0,
+    "t1": 12.0,
+    "dur": 3.0,
+    "say_ar": "أظنها كوكاكولا، يا ريت!",
+    "say_en": "I think it's cola, right!",
+    "visual_query": "man guessing",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 12.0,
+    "t1": 18.0,
+    "dur": 6.0,
+    "say_ar": "خطأ! صوت البازر يطقطق!",
+    "say_en": "Wrong! Buzzer sounds!",
+    "visual_query": "buzzer graphic",
+    "sfx": "impact",
+    "on_screen": "خطأ!"
+   },
+   {
+    "t0": 18.0,
+    "t1": 21.0,
+    "dur": 3.0,
+    "say_ar": "المشروب التاني، ضحكة صريحة!",
+    "say_en": "Second drink, big laugh!",
+    "visual_query": "laughing reaction",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 21.0,
+    "t1": 27.0,
+    "dur": 6.0,
+    "say_ar": "أقول عصير مانجا؟ غلط!",
+    "say_en": "Mango juice? Nope!",
+    "visual_query": "wrong answer stamp",
+    "sfx": "impact",
+    "on_screen": "غلط!"
+   },
+   {
+    "t0": 27.0,
+    "t1": 30.0,
+    "dur": 3.0,
+    "say_ar": "تالت مشروب، واو، إقرف!",
+    "say_en": "Third drink, yuck!",
+    "visual_query": "disgusted face",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 30.0,
+    "t1": 36.0,
+    "dur": 6.0,
+    "say_ar": "أحزر شاي بارد؟ لا!",
+    "say_en": "Cold tea? No!",
+    "visual_query": "wrong stamp",
+    "sfx": "impact",
+    "on_screen": "غلط!"
+   },
+   {
+    "t0": 36.0,
+    "t1": 39.0,
+    "dur": 3.0,
+    "say_ar": "المشروب الرابع، عجبني بجد!",
+    "say_en": "Fourth drink, really liked it!",
+    "visual_query": "surprised reaction",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 39.0,
+    "t1": 45.0,
+    "dur": 6.0,
+    "say_ar": "أخيرًا صح! مشروب سري!",
+    "say_en": "Finally right! Secret drink!",
+    "visual_query": "slow motion shocked",
+    "sfx": "whoosh",
+    "on_screen": "صحيح!"
+   },
+   {
+    "t0": 45.0,
+    "t1": 48.0,
+    "dur": 3.0,
+    "say_ar": "الاشتراك دلوقتي، يلا شاركونا!",
+    "say_en": "Subscribe now, join us!",
+    "visual_query": "pointing subscribe button",
+    "sfx": "pop",
+    "on_screen": "اشترك"
+   },
+   {
+    "t0": 48.0,
+    "t1": 53.0,
+    "dur": 5.0,
+    "say_ar": "لحظات سريعة، إضحكوا معانا!",
+    "say_en": "Quick moments, laugh with us!",
+    "visual_query": "quick montage clips",
+    "sfx": "pop",
+    "on_screen": ""
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "YZWmX1rrfvA",
+   "url": "https://youtu.be/YZWmX1rrfvA",
+   "sourceTitle": "GUESS THE DRINK CHALLENGE",
+   "sourceChannel": "IShowSpeed",
+   "sourceViews": 13425330,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "IShowSpeed is blindfolded and forced to guess a series of mystery drinks while the camera zooms in on his frantic reactions.",
+     "why_it_works": "The immediate question creates curiosity, while Speed's unpredictable facial expressions promise humor and surprise, compelling viewers to stay for the answer."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 150,
+     "energy_curve": "sharp rise in the first 5 seconds (hook), steady high energy through rapid cuts, spike at the final reveal, quick dip into CTA."
+    },
+    "retention_tricks": [
+     "Immediate question hook",
+     "Fast cuts and visual punchlines every 2‑3 seconds",
+     "Unexpected wrong‑guess reveals with buzzer sound",
+     "Humorous facial reactions that encourage replay",
+     "Clear CTA that ties back to the high‑energy climax"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 70,
+   "weaknesses": [
+    "Lacks a curiosity‑driving question hook that instantly grabs attention, no blindfold element to add novelty, camera style not specified (missing handheld rapid cuts), overall cuts per minute far below the 150 cuts/min target, missing high‑energy trap beat and celebratory chime for the correct guess, buzzer sound effect is only an impact rather than a distinct buzzer, visual language (dominant colors, stickers) not fully leveraged, audio energy curve not mapped to beats, retention tricks such as rapid visual punchlines every 2‑3 seconds are underutilized"
+   ],
+   "verdict": "The episode captures the core structure of the DNA trend—quick hook, escalating guesses, comedic reactions, and a payoff—but falls short on the high‑energy pacing, question hook, and audio/visual flair that make the original format so engaging. Boosting cut frequency, adding a question hook, incorporating a blindfold, and tightening the audio cues would raise the score significantly.",
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  },
+  "_consumedAt": "2026-09-20T04:54:13Z"
  }
 ]

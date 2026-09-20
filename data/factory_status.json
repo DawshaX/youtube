@@ -1,5 +1,5 @@
 {
- "cycles": 16,
+ "cycles": 17,
  "renders": [
   {
    "at": "00:19",
@@ -63,6 +63,12 @@
    "video": "/home/runner/work/youtube/youtube/content/vids/eye-YZWmX1rrfvA.mp4",
    "ok": true,
    "sec": 848
+  },
+  {
+   "at": "04:39",
+   "video": "/home/runner/work/youtube/youtube/content/vids/eye-YZWmX1rrfvA.mp4",
+   "ok": true,
+   "sec": 746
   }
  ],
  "publish_attempts": [
@@ -145,6 +151,12 @@
    "topic": "eye-YZWmX1rrfvA",
    "ok": false,
    "why": "daily_cap 6/6"
+  },
+  {
+   "at": "04:39",
+   "topic": "eye-YZWmX1rrfvA",
+   "ok": false,
+   "why": "daily_cap 6/6"
   }
  ],
  "radar": [
@@ -220,6 +232,10 @@
   },
   {
    "at": "03:19",
+   "ok": true
+  },
+  {
+   "at": "04:39",
    "ok": true
   }
  ],
@@ -303,9 +319,14 @@
    "at": "03:19",
    "rc": -1,
    "err": "TimeoutExpired"
+  },
+  {
+   "at": "04:39",
+   "rc": -1,
+   "err": "TimeoutExpired"
   }
  ],
- "last_cycle_at": "2026-09-20 03:19:43",
+ "last_cycle_at": "2026-09-20 04:39:07",
  "last_commit": "saved",
  "last_error": "2026-09-19 00:34:44",
  "dubs": [
@@ -339,6 +360,12 @@
    "at": "03:19",
    "lang": "es",
    "topic": "eye-YZWmX1rrfvA-es",
+   "ok": true
+  },
+  {
+   "at": "04:39",
+   "lang": "fr",
+   "topic": "eye-YZWmX1rrfvA-fr",
    "ok": true
   }
  ]
