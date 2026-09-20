@@ -98,3 +98,52 @@ class ProduceUsesShotQueryTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class StoryboardWatchTest(unittest.TestCase):
+    """مسار المشاهدة بلا تنزيل: صور كل ثانية + كلام — ده اللي خلّى العين تشوف.
+
+    الدرس (2026-09-20): yt-dlp اترفض من IP الخوادم («Sign in to confirm
+    you're not a bot») فالعين كانت عمياء والمصنع بيرجع لنشرة أخبار.
+    """
+
+    VTT = """WEBVTT
+Kind: captions
+Language: ar
+
+00:00:00.120 --> 00:00:02.400
+اول حاجة بنشوفها
+
+00:00:02.400 --> 00:00:05.000
+<b>تاني حاجة</b> مهمة
+"""
+
+    def test_parse_vtt(self):
+        from xtrendaw.eye import parse_vtt
+        rows = parse_vtt(self.VTT)
+        self.assertEqual(len(rows), 2)
+        self.assertAlmostEqual(rows[0]["t"], 0.12, places=2)
+        self.assertEqual(rows[1]["text"], "تاني حاجة مهمة")   # الوسوم اتشالت
+        self.assertGreater(rows[0]["dur"], 1.0)
+
+    def test_storyboard_url_building(self):
+        import inspect
+        from xtrendaw import eye
+        src = inspect.getsource(eye.storyboard_frames)
+        self.assertIn("templateUrl", src)
+        self.assertIn("storyboardWidth", src)
+
+    def test_report_shape_matches_watch(self):
+        """التقرير البديل لازم يطابق اللي المصنع مستنيه (مشاهد/مدة/ميتا)."""
+        import inspect
+        from xtrendaw import eye
+        src = inspect.getsource(eye.watch_via_media)
+        for key in ('"scenes"', '"durationSeconds"', '"meta"', '"captions"'):
+            self.assertIn(key, src)
+        self.assertIn('"desc"', src)   # وصف بصري لكل مشهد
+
+    def test_watch_falls_back_to_media_path(self):
+        import inspect
+        from xtrendaw import eye
+        src = inspect.getsource(eye.watch)
+        self.assertIn("watch_via_media", src)

@@ -295,7 +295,9 @@ def check_youtube_cookies() -> dict:
             path.unlink(missing_ok=True)   # تنظيف مضمون حتى لو الاختبار فشل
     except Exception as exc:
         return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "fail",
-                "detail": mask_secrets(f"فشل الاختبار: {type(exc).__name__}: {exc}")}
+                "detail": mask_secrets(
+                    "الكوكيز ماتت/مرفوضة — أعد تصديرها (دقيقتين): "
+                    f"{type(exc).__name__}: {exc}")}
     if r.returncode == 0:
         return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "ok",
                 "detail": "شغالة — العين بقت تشوف الفيديو كامل (اختبار حقيقي)"}

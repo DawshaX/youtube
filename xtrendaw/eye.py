@@ -200,6 +200,9 @@ def _load_cookies() -> tuple[str, Path | None]:
     raw = os.environ.get("YOUTUBE_COOKIES_B64", "").strip()
     if not raw:
         return "", None
+    # ملف الكاش بيتحذف في نهاية العملية (atexit) أو بالتنظيف — فما نضمنهوش
+    if _COOKIES_FILE is not None and not Path(_COOKIES_FILE).exists():
+        _COOKIES_FILE = None
     if _COOKIES_FILE is None:
         text = _cookie_text(raw)
         pairs, shape = _parse_cookies(text)
@@ -407,6 +410,234 @@ def download_video(video_id: str, outdir: Path) -> Path:
     raise RuntimeError("eye: فشل التنزيل بكل العملاء — " + last_err)
 
 
+
+
+# ═════════════════════════════════════════════════════════════
+# مسار المشاهدة البديل: صور المشاهد (storyboards) + الكلام (captions)
+# ═════════════════════════════════════════════════════════════
+# الدرس (2026-09-20): التنزيل بـyt-dlp من IP الخوادم بقى مرفوض من يوتيوب
+# («Sign in to confirm you're not a bot») حتى مع كوكيز — والعين بقت «عمياء»،
+# فالمصنع بيرجع لنشرة أخبار بدل ما يقلّد الفيديو. الحل: يوتيوب نفسها بتبثّ
+# **صور كل ثانية** (storyboards) على i.ytimg.com، وقوائم التشغيل الرسمية
+# بتوفّر التسميات — يعني نقدر نشوف الفيديو كامل ونتكلم عن كل لحظة بلا تنزيل.
+
+_INVIDIOUS = ("https://invidious.f5.si", "https://invidious.nerdvpn.de",
+              "https://inv.tux.pizza", "https://invidious.jing.rocks",
+              "https://iv.ggtyler.dev", "https://invidious.materialio.us",
+              "https://yt.artemislena.eu", "https://invidious.privacyredirect.com")
+
+
+def invidious_info(video_id: str) -> dict | None:
+    """بيانات الفيديو + شيت صور المشاهد + التسميات من مِرآة Invidious."""
+    for base in _INVIDIOUS:
+        try:
+            r = _req().get(f"{base}/api/v1/videos/{video_id}",
+                           headers={"User-Agent": "Mozilla/5.0 (XTreNDAW)"},
+                           timeout=45)
+            if not r.ok:
+                continue
+            d = r.json()
+            if d.get("title") and (d.get("storyboards") or d.get("captions")):
+                d["_instance"] = base
+                return d
+        except Exception as exc:
+            print(f"[eye] ⚠️ مِرآة {base}: {type(exc).__name__}", flush=True)
+    return None
+
+
+def storyboard_frames(info: dict, video_id: str, outdir: Path,
+                      want: int = 14) -> list[tuple[float, Path]]:
+    """صور المشاهد من يوتيوب (كل ~0.5 ثانية) → قائمة (الزمن, مسار الصورة).
+
+    بنختار أعلى دقة متاحة، وبنحمّل الشيتات اللي تغطي الفيديو، وبنقصّ
+    عددًا موزّع بانتظام على المدة (want صورة) — نظرة كاملة مش عيّنة عشوائية.
+    """
+    import re as _re
+
+    from PIL import Image   # مستوردة هنا عشان الرندر ما يتقلش
+    sbs = info.get("storyboards") or []
+    if not sbs:
+        return []
+    best = max(sbs, key=lambda s: int(s.get("width") or 0) * int(s.get("height") or 0))
+    grid_w = int(best.get("storyboardWidth") or 10)
+    grid_h = int(best.get("storyboardHeight") or 10)
+    interval = float(best.get("interval") or 500) / 1000.0   # ثواني بين صورتين
+    tpl = _re.sub(r"^\s*//", "https://", str(best.get("templateUrl") or ""))
+    if not tpl or "$M" not in tpl and "M$M" not in tpl:
+        return []
+    dur = float(info.get("lengthSeconds") or 0) or 0.0
+    per_sheet = grid_w * grid_h
+    total_frames = max(1, int(dur / interval)) if dur and interval else per_sheet
+    sheets = max(1, min(int(best.get("count") or 1),
+                        (total_frames + per_sheet - 1) // per_sheet))
+    frames_dir = outdir / "frames"
+    frames_dir.mkdir(parents=True, exist_ok=True)
+    got: list[tuple[float, Path]] = []
+    step = max(1, total_frames // max(1, want))
+    for s in range(sheets):
+        url = tpl.replace("M$M", f"M{s}").replace("$M", f"M{s}")
+        try:
+            r = _req().get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=60)
+            if not r.ok:
+                continue
+            sheet = frames_dir / f"sheet{s}.jpg"
+            sheet.write_bytes(r.content)
+            img = Image.open(sheet)
+            cw, ch = img.width // grid_w, img.height // grid_h
+            for idx in range(per_sheet):
+                n = s * per_sheet + idx
+                if n > total_frames:
+                    break
+                if n % step:
+                    continue
+                t = round(n * interval, 2)
+                if dur and t > dur:
+                    break
+                x, y = (idx % grid_w) * cw, (idx // grid_w) * ch
+                dst = frames_dir / f"shot_{n:04d}.jpg"
+                img.crop((x, y, x + cw, y + ch)).save(dst, "JPEG", quality=88)
+                got.append((t, dst))
+        except Exception as exc:
+            print(f"[eye] ⚠️ شيت {s}: {type(exc).__name__}", flush=True)
+    print(f"[eye] 👀 صور المشاهد: {len(got)} صورة من {sheets} شيت "
+          f"({int(interval * 1000)}مللي/صورة، دقة {best.get('width')}×{best.get('height')})",
+          flush=True)
+    return got
+
+
+def invidious_captions(info: dict, video_id: str) -> list[dict]:
+    """التسميات النصية بتوقيتاتها (VTT) — كلام الفيديو الحقيقي.
+
+    ⚠️ مفيش ضمان إن المِرآة اللي جابت البيانات هي نفسها اللي بترجّع الكلام
+    (واحدة رجّعت 200 بـ0 بايت). فبندوّر على **كل** المِرآت لحد ما نلاقي نص.
+    """
+    caps = info.get("captions") or []
+    langs = [str(c.get("language_code") or "") for c in caps]
+    langs += ["ar", "en"]
+    bases = [info.get("_instance")] + list(_INVIDIOUS)
+    for base in dict.fromkeys([b for b in bases if b]):
+        for lang in dict.fromkeys([x for x in langs if x]):
+            for params in ({"lang": lang}, {"label": lang}):
+                try:
+                    r = _req().get(f"{base}/api/v1/captions/{video_id}",
+                                   params=params,
+                                   headers={"User-Agent": "Mozilla/5.0"},
+                                   timeout=45)
+                    body = r.text or ""
+                    if not r.ok or "-->" not in body:
+                        continue      # صفحة مزيفة/فاضية → المِرآة اللي بعدها
+                    rows = parse_vtt(body)
+                    if rows:
+                        print(f"[eye] 🗣 الكلام الحقيقي: {len(rows)} جملة "
+                              f"({lang} من {base.split('//')[-1]})", flush=True)
+                        return rows
+                except Exception:
+                    continue
+    print("[eye] ⚠️ مفيش تسميات من المِرآت — التقليد بيروح على الوصف البصري بس",
+          flush=True)
+    return []
+
+
+def parse_vtt(text: str) -> list[dict]:
+    """WebVTT → [{t, dur, text}] بنفس شكل تسميات يوتيوب عندنا."""
+    out: list[dict] = []
+    cur_t: float | None = None
+    buf: list[str] = []
+    stamp = re.compile(r"(\d+):(\d+):(\d+)[.,](\d+)\s*-->\s*(\d+):(\d+):(\d+)[.,](\d+)")
+
+    def _secs(h, m, s, ms):
+        return int(h) * 3600 + int(m) * 60 + int(s) + int(ms) / 1000.0
+
+    def _flush():
+        nonlocal cur_t, buf
+        if cur_t is not None and buf:
+            txt = " ".join(buf).strip()
+            txt = re.sub(r"<[^>]+>", "", txt)          # وسوم التوقيت/التلوين
+            txt = re.sub(r"\s+", " ", txt).strip()
+            if txt:
+                out.append({"t": round(cur_t, 2), "dur": 0.0, "text": txt})
+        cur_t, buf = None, []
+
+    for line in (text or "").splitlines():
+        line = line.strip()
+        m = stamp.match(line)
+        if m:
+            _flush()
+            cur_t = _secs(*m.groups()[:4])
+            continue
+        if not line or line.upper().startswith(("WEBVTT", "KIND:", "LANGUAGE:")):
+            continue
+        if cur_t is not None and not line.isdigit():
+            buf.append(line)
+    _flush()
+    # مدة كل مقطع = الفرق مع اللي بعده
+    for i, c in enumerate(out):
+        nxt = out[i + 1]["t"] if i + 1 < len(out) else c["t"] + 2.0
+        c["dur"] = round(max(0.4, nxt - c["t"]), 2)
+    return out
+
+
+def watch_via_media(video_id: str, meta: dict | None = None) -> dict | None:
+    """مشاهدة كاملة بلا تنزيل: صور كل لحظة + الكلام + وصف بصري بالذكاء.
+
+    بترجّع نفس شكل تقرير `watch()` عشان باقي المصنع ما يفرقش معاه.
+    """
+    info = invidious_info(video_id)
+    if not info:
+        return None
+    outdir = EYE_DIR / video_id
+    outdir.mkdir(parents=True, exist_ok=True)
+    dur = float(info.get("lengthSeconds") or 0)
+    frames = storyboard_frames(info, video_id, outdir)
+    captions = invidious_captions(info, video_id)
+    if not frames and not captions:
+        return None
+
+    # أوصاف بصرية: نظرة على الصور (بترتيبها الزمني) عبر الرؤية
+    descs: list[str] = []
+    if frames:
+        descs = _vision_call([f for _t, f in frames], VISION_PROMPT)
+
+    # كل صورة = مشهد قصير (نافذة زمنية)، وبنربطها بالكلام اللي اتقال فيها
+    scenes = []
+    for i, (t, path) in enumerate(frames):
+        t1 = frames[i + 1][0] if i + 1 < len(frames) else (dur or t + 3.0)
+        said = " ".join(c["text"] for c in captions
+                        if t - 0.6 <= c["t"] < t1 + 0.6).strip()
+        desc = descs[i] if i < len(descs) else ""
+        if said and not desc:
+            desc = f"(الكلام في اللحظة دي: {said[:120]})"
+        scenes.append({"start": round(t, 2), "end": round(max(t + 0.5, t1), 2),
+                       "desc": desc, "say_hint": said[:300],
+                       "keyframe": str(path.relative_to(outdir)).replace("\\", "/"),
+                       "colors": [], "brightness": 0.0, "motion": 0.0})
+    m = {**(meta or {})}
+    m.setdefault("title", info.get("title"))
+    m.setdefault("channel", info.get("author"))
+    m.setdefault("viewCount", info.get("viewCount"))
+    m.setdefault("region", info.get("region"))
+    report = {
+        "videoId": video_id,
+        "url": f"https://youtu.be/{video_id}",
+        "watchedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "durationSeconds": round(dur, 2),
+        "mediaUnavailable": False,
+        "watchedViaStoryboard": True,
+        "meta": {k: m.get(k) for k in ("title", "channel", "region", "viewCount",
+                                       "likeCount", "via") if m.get(k) not in (None, "")},
+        "captions": captions,
+        "captionCoverage": round(sum(c["dur"] for c in captions) / dur, 2) if dur else 0.0,
+        "scenes": scenes,
+        "audioRmsPerSec": [],
+    }
+    (outdir / "report.json").write_text(
+        json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"[eye] ✓ شفت الفيديو بالكامل بلا تنزيل: {len(scenes)} مشهد، "
+          f"{len(captions)} جملة، تغطية كلام {report['captionCoverage']}",
+          flush=True)
+    return report
+
+
 def probe_duration(video: Path) -> float:
     r = subprocess.run([_ffmpeg(), "-i", str(video)], capture_output=True, text=True)
     m = re.search(r"Duration:\s*(\d+):(\d+):(\d+\.?\d*)", r.stderr)
@@ -510,6 +741,14 @@ def watch(video_id: str, meta: dict | None = None) -> dict:
         print(f"[eye] ⚠️ فشل تنزيل الفيديو: {exc}", flush=True)
         print("[eye] أكمل بالتسميات + البيانات فقط (بدون تحليل بصري/صوتي)",
               flush=True)
+        # ① البديل: نشوف الفيديو بصوره وكلامه (storyboards + captions)
+        try:
+            alt = watch_via_media(video_id, meta)
+            if alt:
+                return alt
+        except Exception as exc2:
+            print(f"[eye] ⚠️ مسار المشاهدة بلا تنزيل: {type(exc2).__name__}",
+                  flush=True)
         video = None
         dur = 0.0
         media_ok = False
