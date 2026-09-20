@@ -292,9 +292,18 @@ def cycle_once() -> None:
     _quota_hold = state.published_today_pt() >= (settings.DAILY_CAP or 999)
     if vid.exists() and github_store.available():
         try:
+            # دليل الميديا بيتسجل مع الحلقة: لو الحلقة طلعت بصفر لقطة حية
+            # (خلفيات مولّدة بس) الفخ يعرف وما ينشّرهاش — والحلقة تتشال.
+            try:
+                _ms = state.media_summary_for(topic["id"])
+            except Exception:
+                _ms = {}
             _meta = {"id": topic["id"], "title_ar": topic.get("title_ar", ""),
                      "tags": topic.get("tags", ""), "kind": topic.get("_kind", "know"),
                      "shots": len(topic.get("shots") or []),
+                     "live_clips": int(_ms.get("video") or 0),
+                     "images_used": int(_ms.get("images") or 0),
+                     "static_used": int(_ms.get("static") or 0),
                      "_eye": topic.get("_eye"),
                      "credits": list((rep.get("credits") or []))}
             _urls = github_store.upload_to_vault(vid, out.get("cover"), _meta)

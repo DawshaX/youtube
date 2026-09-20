@@ -171,6 +171,96 @@ def _assets(tok: str, rel: int) -> list[dict]:
     return r.json() if r.ok else []
 
 
+def _is_replication(meta: dict) -> bool:
+    """حلقة تقليد ترند: شافها العين بالكامل (فيها لقطات) وأعاد تركيبها."""
+    meta = meta or {}
+    try:
+        shots = int(meta.get("shots") or 0)
+    except Exception:
+        shots = 0
+    return str(meta.get("kind") or "") == "eye" and shots > 0
+
+
+def pick_next(entries: list[dict]) -> dict | None:
+    """يختار الحلقة اللي تستحق النشر من مخزون مسجّل (بدون شبكة).
+
+    `entries`: [{name, meta}] — القواعد:
+      • حلقة مسجّل لها «live_clips: 0» = مفيش فيها ولا لقطة حية (خلفيات
+        مولّدة بس) ← ما تتنشرش أبدًا. (بق حقيقي 2026-09-20: حلقة تقليد
+        IShowSpeed طلعت كلها تدرّجات مولّدة واتخزنت.)
+      • حلقات التقليد (eye + shots) بتاخد الأولوية — دي اللي المستخدم طالبها.
+      • الباقي بالترتيب الزمني (الأقدم الأول) عشان مفيش حلقة تموت في المخزون.
+    """
+    alive = []
+    for e in entries:
+        meta = e.get("meta") or {}
+        if meta.get("live_clips") is not None:
+            try:
+                if int(meta.get("live_clips")) <= 0:
+                    continue          # ميتة: صفر لقطة حية
+            except Exception:
+                pass
+        elif _is_replication(meta):
+            # حلقة تقليد من غير إثبات لقطات حية = غير متحقّق منها ← ما تتنشرش.
+            # (بق حقيقي 2026-09-20: التقليد اللي طلع خلفيات مولّدة كان
+            #  `kind=eye` بـ12 لقطة وبدون أي لقطة حية.)
+            continue
+        alive.append(e)
+    if not alive:
+        return None
+    alive.sort(key=lambda e: (0 if _is_replication(e.get("meta") or {}) else 1,
+                              e.get("name", "")))
+    return alive[0]
+
+
+def dead_vault_assets(entries: list[dict]) -> list[dict]:
+    """أصول حلقات مسجّل لها صفر لقطة حية — تتشال من المخزون."""
+    out = []
+    for e in entries:
+        meta = e.get("meta") or {}
+        if meta.get("live_clips") is None:
+            continue
+        try:
+            if int(meta.get("live_clips")) <= 0:
+                out.append(e)
+        except Exception:
+            continue
+    return out
+
+
+def _vault_entries(tok: str, vid: int) -> list[dict]:
+    """كل حلقات المخزون مع الميتاداتا بتاعتها (json صغير جنب كل mp4)."""
+    assets = _assets(tok, vid)
+    metas: dict[str, dict] = {}
+    urls: dict[str, dict] = {}
+    for a in assets:
+        m = re.match(r"(q\d+)\.json$", a["name"])
+        if m:
+            try:
+                metas[m.group(1)] = requests.get(a["browser_download_url"],
+                                                 timeout=60).json()
+            except Exception:
+                metas[m.group(1)] = {}
+    for a in assets:
+        urls.setdefault(a["name"], a)
+    out = []
+    for a in sorted((a for a in assets if re.match(r"q\d+\.mp4$", a["name"])),
+                    key=lambda a: a["name"]):
+        key = a["name"][:-4]
+        out.append({"name": a["name"], "key": key, "asset": a,
+                    "meta": metas.get(key) or {},
+                    "cover": urls.get(key + ".png"),
+                    "meta_asset": urls.get(key + ".json")})
+    return out
+
+
+def delete_asset(tok: str, asset_id: int) -> bool:
+    """يشيل أصل من إصدار (تنضيف المخزون من حلقة ميتة)."""
+    r = requests.delete(f"{API}/repos/{_repo()}/releases/assets/{asset_id}",
+                        headers=_headers(tok), timeout=60)
+    return bool(r.ok or r.status_code == 404)
+
+
 def promote_next() -> dict | None:
     """يفرج أقدم حلقة من الـvault على القناة العامة ويرجع بياناتها."""
     tok = _token()
