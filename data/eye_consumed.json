@@ -1193,5 +1193,193 @@
    "verdict": "The proposal mirrors the DNA trend’s visual structure and branding very well, but it falls short on the hook’s shock value, the twist’s payoff, and the audio‑pacing details that give the trend its high‑energy retention. Strengthening those areas would push the score into the high 80s or low 90s."
   },
   "_consumedAt": "2026-09-20T01:07:00Z"
+ },
+ {
+  "id": "eye-YZWmX1rrfvA",
+  "topic": "GUESS THE DRINK CHALLENGE",
+  "angle": "The final drink is an intentionally disgusting flavor (e.g., hot sauce mixed with soda), c",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "اللي جربته ده خلاني أقذف!",
+  "title_en": "I Tasted THIS and Regret Everything!",
+  "hook_ar": "احزر المشروب الغامض بسرعة!",
+  "hook_en": "Guess the mystery drink fast!",
+  "facts_ar": [
+   "قاعدة واحدة: امسك الكوب وشربه.",
+   "بندلع عيوني مش عارف إيه ده.",
+   "خدته... طعمه غريب جداً يا جماعة."
+  ],
+  "facts_en": [
+   "One rule: grab the cup and drink.",
+   "Blindfolded, absolute chaos incoming.",
+   "Took a sip... weird taste honestly."
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "تحدي, مشروبات, رد فعل, دوش, ترند",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 3.0,
+    "dur": 3.0,
+    "say_ar": "احزر المشروب الغامض بسرعة!",
+    "say_en": "Guess the mystery drink fast!",
+    "visual_query": "man jumping shocked face",
+    "sfx": "whoosh",
+    "on_screen": "احزر المشروب!"
+   },
+   {
+    "t0": 3.0,
+    "t1": 9.0,
+    "dur": 6.0,
+    "say_ar": "قاعدة واحدة: امسك الكوب وشربه.",
+    "say_en": "One rule: grab the cup and drink.",
+    "visual_query": "hands grabbing glass table",
+    "sfx": "impact",
+    "on_screen": "القاعدة: اشرب"
+   },
+   {
+    "t0": 9.0,
+    "t1": 12.0,
+    "dur": 3.0,
+    "say_ar": "بندلع عيوني مش عارف إيه ده.",
+    "say_en": "Blindfolded, absolute chaos incoming.",
+    "visual_query": "hands tying blindfold eyes",
+    "sfx": "pop",
+    "on_screen": "عمى تام"
+   },
+   {
+    "t0": 12.0,
+    "t1": 18.0,
+    "dur": 6.0,
+    "say_ar": "خدته... طعمه غريب جداً يا جماعة.",
+    "say_en": "Took a sip... weird taste honestly.",
+    "visual_query": "closeup drinking from cup",
+    "sfx": "slurp",
+    "on_screen": ""
+   },
+   {
+    "t0": 18.0,
+    "t1": 21.0,
+    "dur": 3.0,
+    "say_ar": "لا استحيوا، ده مش طبيعي!",
+    "say_en": "No way, this is not normal!",
+    "visual_query": "man spitting drink disgusted",
+    "sfx": "spit",
+    "on_screen": "!"
+   },
+   {
+    "t0": 21.0,
+    "t1": 27.0,
+    "dur": 6.0,
+    "say_ar": "ليش حاططوا لي ده في الكوب؟",
+    "say_en": "Why did you put this in my cup?",
+    "visual_query": "man laughing confused face",
+    "sfx": "laugh",
+    "on_screen": ""
+   },
+   {
+    "t0": 27.0,
+    "t1": 30.0,
+    "dur": 3.0,
+    "say_ar": "الثاني أحسن، بس لسه مش عارف.",
+    "say_en": "Second one better, but still clueless.",
+    "visual_query": "man sipping soda happy",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 30.0,
+    "t1": 36.0,
+    "dur": 6.0,
+    "say_ar": "يا إلهي، ده حار نار حقيقية.",
+    "say_en": "Oh god, this is actual fire.",
+    "visual_query": "man holding hot drink face",
+    "sfx": "fire",
+    "on_screen": "🔥 حار"
+   },
+   {
+    "t0": 36.0,
+    "t1": 39.0,
+    "dur": 3.0,
+    "say_ar": "مفيش طعم ده، ده تربس!",
+    "say_en": "No flavor, this is pure trash!",
+    "visual_query": "man throwing cup away",
+    "sfx": "impact",
+    "on_screen": "🗑️"
+   },
+   {
+    "t0": 39.0,
+    "t1": 45.0,
+    "dur": 6.0,
+    "say_ar": "اللي جاي ده هيكسرني أكيد.",
+    "say_en": "This next one is gonna break me.",
+    "visual_query": "man nervous looking at cup",
+    "sfx": "tension",
+    "on_screen": ""
+   },
+   {
+    "t0": 45.0,
+    "t1": 48.0,
+    "dur": 3.0,
+    "say_ar": "ده مش مشروب، ده سم سائل!",
+    "say_en": "This isn't a drink, it's poison!",
+    "visual_query": "green liquid in glass",
+    "sfx": "disgust",
+    "on_screen": "☠️"
+   },
+   {
+    "t0": 48.0,
+    "t1": 53.0,
+    "dur": 5.0,
+    "say_ar": "قولي اسم المشروب اللي عايز تجربته!",
+    "say_en": "Tell me the drink you want next!",
+    "visual_query": "man pointing at camera",
+    "sfx": "ding",
+    "on_screen": "اكتب في الكومنتات"
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "YZWmX1rrfvA",
+   "url": "https://youtu.be/YZWmX1rrfvA",
+   "sourceTitle": "GUESS THE DRINK CHALLENGE",
+   "sourceChannel": "IShowSpeed",
+   "sourceViews": 13425330,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "Speed is blindfolded and forced to guess a series of mystery drinks while reacting wildly.",
+     "why_it_works": "The immediate question creates curiosity, while the promise of exaggerated reactions triggers viewers to stay for the payoff."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 140,
+     "energy_curve": "sharp rise in the first 5 seconds → steady high plateau during tasting → spike at the twist → slight dip with CTA"
+    },
+    "retention_tricks": [
+     "Immediate question hook",
+     "Rapid‑cut editing (≈2‑3 s per beat)",
+     "Micro‑cliffhangers after each drink",
+     "Exaggerated facial reactions with visual emojis",
+     "Direct CTA encouraging comments"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 68,
+   "weaknesses": [
+    "Pacing is too slow – only 12 beats in 53 s, far below the 140 cuts/minute DNA benchmark.",
+    "Lacks rapid jump‑cuts and micro‑cliffhangers after each drink, reducing the sense of urgency.",
+    "Visual language is minimal: few emojis, no on‑screen graphics, and limited text overlays.",
+    "Audio cues are under‑developed; no clear high‑energy voice‑over or dynamic sound‑effects.",
+    "The twist (poison) is predictable and not as shocking as the DNA example’s extreme flavor."
+   ],
+   "verdict": null,
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  },
+  "_consumedAt": "2026-09-20T03:34:50Z"
  }
 ]
