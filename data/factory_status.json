@@ -1,5 +1,5 @@
 {
- "cycles": 25,
+ "cycles": 26,
  "renders": [
   {
    "at": "00:19",
@@ -117,6 +117,11 @@
    "video": "/home/runner/work/youtube/youtube/content/vids/eye-qoCooz2-c4A.mp4",
    "ok": true,
    "sec": 425
+  },
+  {
+   "at": "17:05",
+   "ok": false,
+   "note": "vault_ready 6 · published_today 6/6"
   }
  ],
  "publish_attempts": [
@@ -359,6 +364,10 @@
   {
    "at": "16:53",
    "ok": true
+  },
+  {
+   "at": "17:05",
+   "ok": true
   }
  ],
  "eye": [
@@ -486,9 +495,14 @@
    "at": "16:53",
    "rc": 0,
    "note": "eye: 1/2 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "17:05",
+   "rc": 0,
+   "note": "eye: 1/2 فيديو اتشاف وموضوعات اتكتبت"
   }
  ],
- "last_cycle_at": "2026-09-20 16:53:49",
+ "last_cycle_at": "2026-09-20 17:05:21",
  "last_commit": "saved",
  "last_error": "2026-09-19 00:34:44",
  "dubs": [

@@ -304,5 +304,205 @@
    ],
    "verdict": "الاقتراح يلتزم بشكل جيد مع معظم عناصر الـDNA الترند، خاصةً في التسلسل البصري والقصصي، لكنه يحتاج إلى تعزيز الصدمة في البداية وتوضيح تفاصيل الصوت والرسوم المتحركة لضمان أقصى قدر من الاحتفاظ بالمشاهد."
   }
+ },
+ {
+  "id": "eye-FkUwwKyXg1o",
+  "topic": "3 Amazing Facts Of Toxic Movie | #shorts",
+  "angle": "The final fact reveals that the iconic toxic green slime in the movie was actually made fr",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "3 حقائق سُمية عن الأفلام هتخليك تصدم!",
+  "title_en": "3 Toxic Movie Facts That Will Shock You!",
+  "hook_ar": "إستعدوا 3 حقائق مدهشة عن أفلام السُم!",
+  "hook_en": "Get ready for 3 amazing toxic movie facts!",
+  "facts_ar": [
+   "أول حقيقة: اللون الأخضر مش طبيعي.",
+   "المصنع استخدم صبغة الطعام.",
+   "ثاني حقيقة: المشهد الخطير اتصور في يوم واحد."
+  ],
+  "facts_en": [
+   "Fact one: That green isn’t real.",
+   "They used food coloring.",
+   "Fact two: The dangerous scene shot in one day."
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "أفلام,سُم,حقائق,مذهلة,دۅۄشے",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 4.0,
+    "dur": 4.0,
+    "say_ar": "إستعدوا 3 حقائق مدهشة عن أفلام السُم!",
+    "say_en": "Get ready for 3 amazing toxic movie facts!",
+    "visual_query": "red warning sign flash",
+    "visual_query2": "closeup toxic green bottle",
+    "sfx": "impact",
+    "on_screen": "3 حقائق سُم"
+   },
+   {
+    "t0": 4.0,
+    "t1": 8.0,
+    "dur": 4.0,
+    "say_ar": "أول حقيقة: اللون الأخضر مش طبيعي.",
+    "say_en": "Fact one: That green isn’t real.",
+    "visual_query": "movie poster split screen",
+    "visual_query2": "behind the scenes makeup",
+    "sfx": "whoosh",
+    "on_screen": "حقيقة ١"
+   },
+   {
+    "t0": 8.0,
+    "t1": 12.0,
+    "dur": 4.0,
+    "say_ar": "المصنع استخدم صبغة الطعام.",
+    "say_en": "They used food coloring.",
+    "visual_query": "closeup food coloring bottle",
+    "visual_query2": "hand mixing slime",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 12.0,
+    "t1": 20.0,
+    "dur": 8.0,
+    "say_ar": "ثاني حقيقة: المشهد الخطير اتصور في يوم واحد.",
+    "say_en": "Fact two: The dangerous scene shot in one day.",
+    "visual_query": "fast camera crew",
+    "visual_query2": "clock ticking fast",
+    "sfx": "whoosh",
+    "on_screen": "حقيقة ٢"
+   },
+   {
+    "t0": 20.0,
+    "t1": 24.0,
+    "dur": 4.0,
+    "say_ar": "ثالث حقيقة: الانفجار كان مجرد كيمياء بسيطة.",
+    "say_en": "Fact three: The explosion was simple chemistry.",
+    "visual_query": "lab flask explosion",
+    "visual_query2": "slow motion blast",
+    "sfx": "impact",
+    "on_screen": "حقيقة ٣"
+   },
+   {
+    "t0": 24.0,
+    "t1": 28.0,
+    "dur": 4.0,
+    "say_ar": "المزيج كان من شراب الذرة وصبغة خضراء.",
+    "say_en": "Mix of corn syrup and green dye.",
+    "visual_query": "corn syrup pouring",
+    "visual_query2": "green slime bubbling",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 28.0,
+    "t1": 32.0,
+    "dur": 4.0,
+    "say_ar": "1‑2‑3… كلهم حقيقيين!",
+    "say_en": "1‑2‑3… all true!",
+    "visual_query": "check marks popping",
+    "visual_query2": "numbers flashing",
+    "sfx": "whoosh",
+    "on_screen": "1 2 3"
+   },
+   {
+    "t0": 32.0,
+    "t1": 40.0,
+    "dur": 8.0,
+    "say_ar": "لو عجبتك الحقائق اشترك دلوقتي!",
+    "say_en": "If you liked it, subscribe now!",
+    "visual_query": "bright subscribe button animation",
+    "visual_query2": "hand clicking button",
+    "sfx": "pop",
+    "on_screen": "اشترك"
+   },
+   {
+    "t0": 40.0,
+    "t1": 44.0,
+    "dur": 4.0,
+    "say_ar": "شوف الفيديوهات الجاية هنا.",
+    "say_en": "Watch next videos here.",
+    "visual_query": "grid of short thumbnails",
+    "visual_query2": "mouse cursor hovering",
+    "sfx": "",
+    "on_screen": ""
+   },
+   {
+    "t0": 44.0,
+    "t1": 48.0,
+    "dur": 4.0,
+    "say_ar": "مقاطع سريعة وممتعة تنتظرك.",
+    "say_en": "Quick fun clips await.",
+    "visual_query": "fast montage clips",
+    "visual_query2": "play icons",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 48.0,
+    "t1": 52.0,
+    "dur": 4.0,
+    "say_ar": "الموسيقى بتقوى وإحنا بنقول سلام.",
+    "say_en": "Music rises, we say goodbye.",
+    "visual_query": "audio waveform",
+    "visual_query2": "speaker pulsing",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 52.0,
+    "t1": 57.0,
+    "dur": 5.0,
+    "say_ar": "دۅۄشے – عالم المعرفة.",
+    "say_en": "Dooshé – World of knowledge.",
+    "visual_query": "channel logo animation",
+    "visual_query2": "glow effect",
+    "sfx": "pop",
+    "on_screen": "دۅۄشے"
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "FkUwwKyXg1o",
+   "url": "https://youtu.be/FkUwwKyXg1o",
+   "sourceTitle": "3 Amazing Facts Of Toxic Movie | #shorts",
+   "sourceChannel": "MR AMAZING ",
+   "sourceViews": 5501868,
+   "dna": {
+    "hook": {
+     "technique": "bold_claim",
+     "what_happens": "The narrator shouts “3 Amazing Facts About Toxic Movies You Won’t Believe!” while flashing a bright red warning sign.",
+     "why_it_works": "A bold, sensational claim creates immediate curiosity and triggers the brain’s fear‑of‑missing‑out (FOMO) response, compelling viewers to stay for the promised revelations."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "Starts with a sharp spike (hook), maintains high energy through rapid cuts and text animations, peaks at the third fact with a cinematic clip, then slightly tapers into a smooth CTA before a gentle fade‑out."
+    },
+    "retention_tricks": [
+     "Hook within the first 3 seconds",
+     "Rapid visual/text changes every 4‑6 seconds",
+     "Use of surprise (twist) in the final fact",
+     "Clear, bold CTA with animated button",
+     "End‑screen suggestions for binge‑watching"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 82,
+   "weaknesses": [
+    "Fact 2 lasts 8 s – too long for high‑energy Shorts",
+    "Audio description missing; voice and music cues not specified",
+    "Some on_screen fields empty – risk of silent moments",
+    "Kinetic typography not fully leveraged (few text animations)",
+    "Pacing uneven; energy curve may dip after fact 2",
+    "Tag list contains odd characters, may affect discoverability"
+   ],
+   "verdict": "The script captures the DNA framework well but needs tighter pacing, stronger audio cues, and more consistent on‑screen text/animation to match the high‑energy, rapid‑cut style that keeps viewers hooked.",
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  }
  }
 ]
