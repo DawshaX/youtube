@@ -1,5 +1,5 @@
 {
- "cycles": 30,
+ "cycles": 31,
  "renders": [
   {
    "at": "00:19",
@@ -140,6 +140,11 @@
   },
   {
    "at": "17:32",
+   "ok": false,
+   "note": "vault_ready 6 · published_today 6/6"
+  },
+  {
+   "at": "17:37",
    "ok": false,
    "note": "vault_ready 6 · published_today 6/6"
   }
@@ -404,6 +409,10 @@
   {
    "at": "17:32",
    "ok": true
+  },
+  {
+   "at": "17:37",
+   "ok": true
   }
  ],
  "eye": [
@@ -556,9 +565,14 @@
    "at": "17:32",
    "rc": 0,
    "note": "eye: 1/2 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "17:37",
+   "rc": 0,
+   "note": "eye: 1/2 فيديو اتشاف وموضوعات اتكتبت"
   }
  ],
- "last_cycle_at": "2026-09-20 17:32:57",
+ "last_cycle_at": "2026-09-20 17:37:29",
  "last_commit": "saved",
  "last_error": "2026-09-19 00:34:44",
  "dubs": [

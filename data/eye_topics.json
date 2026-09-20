@@ -979,5 +979,122 @@
    ],
    "verdict": "The proposal captures the visual and narrative skeleton of the DNA trend very well, but it falls short on the audio layer and the high‑impact shock hook that drive retention. Adding a dramatic voice‑over, bass‑heavy suspense music, and explicit emoji/sticker cues would bring it much closer to the original formula."
   }
+ },
+ {
+  "id": "eye-kZF651k3BDo",
+  "topic": "لا تقفز قبل أن تعرف هذه الحيلة! 😱#معلومات_عامة #shorts #اكسبلور #تحدي #ترند",
+  "angle": "الحيلة ليست ما يتوقعه المشاهد؛ بدلاً من خطر واضح، تُظهر أن الخطوة البسيطة (مثل تعديل وضعية",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "احذر الخطوة دي قبل ما تقفز!",
+  "title_en": "Don’t Jump Before This Trick!",
+  "hook_ar": "⚠️ هل انت جاهز تخسر توازن؟",
+  "hook_en": "⚠️ Ready to lose your balance?",
+  "facts_ar": [
+   "القوة الجاذبة للإنسان تتأثر بسرعة الحركة.",
+   "تغيير وضعية اليد يمكن أن يمنع السقوط المفاجئ.",
+   "التوازن بيتغير بسرعة مع أي حركة غير متوقعة."
+  ],
+  "facts_en": [
+   "Human attraction force changes with motion speed.",
+   "Altering hand posture can stop a sudden fall.",
+   "Balance shifts instantly when an unexpected movement occurs."
+  ],
+  "takeaway_ar": {
+   "aql": "غيّر وضعية يدك لتتحكم في الجاذبية.",
+   "qalb": "حسّ بالأمان لما تعرف إن خطوة بسيطة تنقذك.",
+   "rouh": "استمتع بالثقة وإنت بتتحدى نفسك."
+  },
+  "takeaway_en": {
+   "aql": "Adjust your hand position to master the pull.",
+   "qalb": "Feel safe knowing a tiny move can save you.",
+   "rouh": "Embrace confidence as you push your limits."
+  },
+  "tags": "حيلة,تحدي,توازن,نصيحة,مغامرة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "صوت مرتفع يطرح سؤال تحذيري مع نص كبير باللون الأحمر يلمع على الشاشة.",
+    "style": "إضاءة ساطعة، قفزة سريعة للكاميرا، زووم على وجه المتحدث.",
+    "colors": [
+     "#FF4C4C",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "لقطة واقعية لشخص يضغط زر ثم تتقلب الأشياء حوله.",
+    "style": "قَفْزات سريعة بين المشهدين، مؤثرات سريعة للهواء.",
+    "colors": [
+     "#FFD700",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "تغيير زاوية الكاميرا وإضاءة ساطعة مع صوت «بوم» يوضح النقطة الحاسمة.",
+    "style": "تأثير بوم بصوت قوي، نص متحرك يوضح الفخ.",
+    "colors": [
+     "#FF4C4C",
+     "#FFD700"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "الإفصاح عن النتيجة: اليد تتعدل وتمنع السقوط، مع نص ملون يوضح الحل.",
+    "style": "تكبير اليد، رسوم متحركة توضح القوة الجاذبة.",
+    "colors": [
+     "#FFFFFF",
+     "#FFD700"
+    ]
+   },
+   {
+    "time": "0:16-0:20",
+    "scene": "دعوة للمتابعة: أيقونة زر الاشتراك تتراقص، صوت حماسي يدعو للعمل.",
+    "style": "قلب الشاشة إلى لون أخضر خفيف، نص CTA يلمع.",
+    "colors": [
+     "#FFD700",
+     "#FF4C4C"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "kZF651k3BDo",
+   "url": "https://youtu.be/kZF651k3BDo",
+   "sourceTitle": "لا تقفز قبل أن تعرف هذه الحيلة! 😱#معلومات_عامة #shorts #اكسبلور #تحدي #ترند",
+   "sourceChannel": "MIND VAULT",
+   "sourceViews": 3856473,
+   "dna": {
+    "hook": {
+     "technique": "warning",
+     "what_happens": "العنوان يثير الخوف: \"لا تقفز قبل أن تعرف هذه الحيلة!\" مع إيموجي صرخة لتشويق المشاهد.",
+     "why_it_works": "يستغل خوف الفقدان (FOMO) والفضول الفطري، ما يدفع المشاهد للضغط فوراً لمعرفة ما هو الخطر المحتمل."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 30,
+     "energy_curve": "high_initial_spike → slight_dip → rapid_rise → peak_at_payoff → quick_fall_to_cta"
+    },
+    "retention_tricks": [
+     "استخدام سؤال تحذيري في أول 3 ثوانٍ.",
+     "تغيير إضاءة ولون الخلفية كل 2‑3 ثوانٍ لتجديد الانتباه.",
+     "إدراج صوت تأثير قوي قبل كل لقطة مفصلية."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 88,
+   "weaknesses": [
+    "Audio details are vague; the DNA specifies an urgent male voice, fast‑paced electronic beat, and specific impact SFX, which are not fully described.",
+    "Cut density (≈30 cuts/min) is not quantified, leaving uncertainty about pacing compliance.",
+    "CTA background turns green, a color not listed in the DNA palette, slightly breaking visual consistency.",
+    "Mood labeled “crazy” deviates from the DNA’s more urgent, caution‑driven tone.",
+    "Extra facts and takeaways, while useful, add content that isn’t directly tied to the core twist, risking dilution of focus."
+   ],
+   "verdict": "The proposal aligns closely with the DNA trend in hook, structure, visuals, and retention tactics. With minor refinements to audio cues, cut frequency, and color consistency, it would fully embody the DNA formula."
+  }
  }
 ]
