@@ -2322,5 +2322,199 @@
    "verdict": "قوي في البنية النصية والتوقيت، لكنه يحتاج لتحسين الدقة البصرية في لقطات الكشف (Twist/Payoff) ليعكس عمق DNA الترند الأصلي.",
    "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
   }
+ },
+ {
+  "id": "eye-G92WG-qwFvQ",
+  "topic": "Dive Comparison: GTA6 vs GTA5 vs RDR2",
+  "angle": "The final reveal shows that GTA6’s dive, despite hype, is actually the least immersive, wi",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "غوصات ألعاب: أي واحدة أقوى؟",
+  "title_en": "Game Dives: Which One Wins?",
+  "hook_ar": "مين هو أحسن غوص في الألعاب؟",
+  "hook_en": "Which game has the best dive?",
+  "facts_ar": [
+   "شوفوا GTA الجديد تحت الماء!",
+   "الجو الجديد يلمع فوق البحر",
+   "غوص GTA الجديد غير واقعي"
+  ],
+  "facts_en": [
+   "Check the new GTA underwater!",
+   "The new vibe glows above the sea",
+   "The new GTA dive feels unreal"
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "gaming,comparison,GTA,RDR,underwater",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 1.0,
+    "dur": 1.0,
+    "say_ar": "مين هو أحسن غوص في الألعاب؟",
+    "say_en": "Which game has the best dive?",
+    "visual_query": "diving game montage",
+    "visual_query2": "underwater city skyline",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 1.0,
+    "t1": 3.0,
+    "dur": 2.0,
+    "say_ar": "شوفوا GTA الجديد تحت الماء!",
+    "say_en": "Check the new GTA underwater!",
+    "visual_query": "GTA new ocean scene",
+    "visual_query2": "neon blue water",
+    "sfx": "whoosh",
+    "on_screen": "GTA"
+   },
+   {
+    "t0": 3.0,
+    "t1": 4.0,
+    "dur": 1.0,
+    "say_ar": "الجو الجديد يلمع فوق البحر",
+    "say_en": "The new vibe glows above the sea",
+    "visual_query": "neon glow water",
+    "visual_query2": "city neon reflection",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 4.0,
+    "t1": 6.0,
+    "dur": 2.0,
+    "say_ar": "غوص GTA الجديد غير واقعي",
+    "say_en": "The new GTA dive feels unreal",
+    "visual_query": "GTA new water depth",
+    "visual_query2": "floating car underwater",
+    "sfx": "impact",
+    "on_screen": "GTA"
+   },
+   {
+    "t0": 6.0,
+    "t1": 7.0,
+    "dur": 1.0,
+    "say_ar": "الموجات بتلعبك وتدهشك بكل تفاصيلها",
+    "say_en": "Waves play and amaze you in every detail",
+    "visual_query": "underwater waves",
+    "visual_query2": "player splash",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 7.0,
+    "t1": 9.0,
+    "dur": 2.0,
+    "say_ar": "تذكر GTA القديم تحت البحر؟",
+    "say_en": "Remember the old GTA underwater?",
+    "visual_query": "GTA old underwater",
+    "visual_query2": "classic car submerged",
+    "sfx": "whoosh",
+    "on_screen": "GTA"
+   },
+   {
+    "t0": 9.0,
+    "t1": 10.0,
+    "dur": 1.0,
+    "say_ar": "الضوء الدافئ ينعكس على الأسطح",
+    "say_en": "Warm light reflects on surfaces",
+    "visual_query": "warm orange water",
+    "visual_query2": "sunlight ripple",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 10.0,
+    "t1": 12.0,
+    "dur": 2.0,
+    "say_ar": "الأصوات الحقيقية تدفي الجو",
+    "say_en": "Realistic sounds warm the atmosphere",
+    "visual_query": "water sound FX",
+    "visual_query2": "submarine hum",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 12.0,
+    "t1": 13.0,
+    "dur": 1.0,
+    "say_ar": "RDR تحت الماء في الصحراء",
+    "say_en": "RDR underwater in the desert",
+    "visual_query": "RDR ocean",
+    "visual_query2": "cowboy boat submerged",
+    "sfx": "whoosh",
+    "on_screen": "RDR"
+   },
+   {
+    "t0": 13.0,
+    "t1": 15.0,
+    "dur": 2.0,
+    "say_ar": "الطبيعة حقيقية وتفاصيلها دقيقة",
+    "say_en": "Nature is real and its details are precise",
+    "visual_query": "earth tone water",
+    "visual_query2": "river bank reflection",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 15.0,
+    "t1": 16.0,
+    "dur": 1.0,
+    "say_ar": "الضوء الطبيعي يلمع فوق السطح",
+    "say_en": "Natural light shines above the surface",
+    "visual_query": "sunlit water",
+    "visual_query2": "copper reflection",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 16.0,
+    "t1": 18.0,
+    "dur": 2.0,
+    "say_ar": "النهائي: RDR يربح بكل تأكيد",
+    "say_en": "Final: RDR wins for sure",
+    "visual_query": "side by side comparison",
+    "visual_query2": "text overlay winner",
+    "sfx": "whoosh",
+    "on_screen": "RDR"
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "G92WG-qwFvQ",
+   "url": "https://youtu.be/G92WG-qwFvQ",
+   "sourceTitle": "Dive Comparison: GTA6 vs GTA5 vs RDR2",
+   "sourceChannel": "Comparaholic",
+   "sourceViews": 5344306,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "The video opens with a bold claim: \"Which game has the best dive?\" followed by a quick montage of each game’s underwater footage.",
+     "why_it_works": "The question instantly sparks curiosity and the promise of a definitive answer creates a strong hook that encourages viewers to stay for the comparison."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 12,
+     "energy_curve": "High at start → slight dip during middle beats → peak at payoff."
+    },
+    "retention_tricks": [
+     "Question hook that promises a definitive answer.",
+     "Rapid visual comparison to maintain interest."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 85,
+   "weaknesses": [
+    "الوصف البصري في اللقطة 12.0-13.0 ('RDR underwater in the desert') غير منطقي فيزيائياً وقد يبدو غريباً أو خاطئاً للمشاهد إذا لم يكن المقصود نهر/بحيرة في صحراء، مما قد يربك الرسالة.",
+    "نص الشاشة (On-screen text) في اللقطات الوسيطة (مثل 3.0-4.0 و 6.0-7.0) فارغ، بينما يوصي الـ DNA باستخدام نصوص جريئة (Bold text) لتعزيز القراءة السريعة والاحتفاظ بالمشاهد.",
+    "الوصف الصوتي (SFX) يعتمد بشكل كبير على 'Pop' و 'Whoosh' المتكررة، مما قد يقلل من الفخامة مقارنة بـ 'Splash' أو مؤثرات صوتية غامرة أكثر تنوعاً كما في الـ DNA."
+   ],
+   "verdict": "اقتراح قوي جداً يلتزم بـ 90% من هوية الترند المطلوبة. يحتاج فقط إلى تصحيح الوصف الجغرافي/الطبيعي للعبة RDR2 لضمان الواقعية، وإضافة نصوص شاشة جريئة في اللقطات الوسيطة لتعزيز الوضوح البصري.",
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  }
  }
 ]
