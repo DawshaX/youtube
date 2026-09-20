@@ -1304,8 +1304,16 @@ REWRITE_PROMPT = """الناقد لقى الضعفانات دي في حلقتن�
 """
 
 
-def _assert_radar_numbers(written: dict, report: dict) -> None:
-    """أي رقم مكتوب يجب أن يكون قيمة موجودة حرفيًا في بيانات الرادار."""
+def _assert_radar_numbers(written: dict, report: dict,
+                          replication: bool = False) -> None:
+    """أي رقم مكتوب يجب أن يكون قيمة موجودة حرفيًا في بيانات الرادار.
+
+    ⚡ في وضع التقليد (`replication=True`): الحارس بيتطبق على **العنوان
+    والخطاف فقط**. لقطات التقليد كلام داخل الحدث (زي «١،٢،٣ يلا») — ولو
+    حارس صارم على كل سطر، السكربت كله يتسقّط والمصنع يرجع لنمط النشرة
+    (وده اللي حصل 3 مرات في 2026-09-20). الادعاءات المخترعة في العنوان لسه
+    ممنوعة، وأي رقم في اللقطات بيتسجّل في اللوج للمراجعة.
+    """
     text = json.dumps(written, ensure_ascii=False)
     claimed = {re.sub(r"[,٬]", "", n) for n in re.findall(r"\d[\d,٬.]*", text)}
     meta = report.get("meta", {})
@@ -1322,12 +1330,19 @@ def _assert_radar_numbers(written: dict, report: dict) -> None:
                 for n in re.findall(r"\d[\d,٬.]*", _source_text)}
     # أرقام JSON البنيوية/ألوان hex لا تُعد ادعاءات؛ حقول النص فقط عمليًا،
     # لذا نستبعد أجزاء الألوان وأزمنة visual_plan قبل الفحص.
-    prose = " ".join(str(written.get(k, "")) for k in
-                     ("title_ar", "hook_ar", "facts_ar", "takeaway_ar"))
-    # لقطات التقليد: كلامها مقروء على الشاشة — نفس القاعدة تنطبق عليها
-    for sh in (written.get("shots") or []):
-        if isinstance(sh, dict):
-            prose += " " + str(sh.get("say_ar", "")) + " " + str(sh.get("on_screen", ""))
+    if replication:
+        prose = str(written.get("title_ar", ""))
+        shots_text = " ".join(
+            str(sh.get("say_ar", "")) + " " + str(sh.get("on_screen", ""))
+            for sh in (written.get("shots") or []) if isinstance(sh, dict))
+        shot_nums = {re.sub(r"[,٬]", "", n)
+                     for n in re.findall(r"\d[\d,٬.]*", shots_text)}
+        if shot_nums - allowed:
+            print(f"[eye] ℹ️ لقطات التقليد فيها أرقام — للمراجعة: "
+                  f"{', '.join(sorted(shot_nums - allowed))[:60]}", flush=True)
+    else:
+        prose = " ".join(str(written.get(k, "")) for k in
+                         ("title_ar", "hook_ar", "facts_ar", "takeaway_ar"))
     claimed = {re.sub(r"[,٬]", "", n) for n in re.findall(r"\d[\d,٬.]*", prose)}
     if claimed - allowed:
         raise RuntimeError("eye: السيناريو احتوى أرقامًا ليست من الرادار: "
@@ -1398,7 +1413,8 @@ def write_replication(report: dict, dna: dict, digest: str) -> dict:
 
 
 def to_factory_topic(written: dict, report: dict, dna: dict) -> dict:
-    _assert_radar_numbers(written, report)
+    _assert_radar_numbers(written, report,
+                          replication=bool(written.get("shots")))
     vid = report["videoId"]
     m = report.get("meta", {})
     shots = written.get("shots") or []

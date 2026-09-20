@@ -207,12 +207,12 @@ class SourceNumbersAllowedTest(unittest.TestCase):
             _assert_radar_numbers({"title_ar": "كسبت 777 جنيه في يوم"},
                                   self._report())
 
-    def test_shot_lines_are_checked(self):
+    def test_shot_lines_are_logged_but_not_fatal(self):
+        """سياسة التقليد: أرقام اللقطات تُسجَّل للمراجعة، والعنوان هو الحارس."""
         from xtrendaw.eye import _assert_radar_numbers
-        with self.assertRaises(RuntimeError):
-            _assert_radar_numbers({"title_ar": "عنوان",
-                                   "shots": [{"say_ar": "كسبت 9999 نقطة"}]},
-                                  self._report())
+        _assert_radar_numbers({"title_ar": "عنوان",
+                               "shots": [{"say_ar": "كسبت 9999 نقطة"}]},
+                              self._report(), replication=True)
 
 
 class TokenBudgetTest(unittest.TestCase):
@@ -229,3 +229,34 @@ class TokenBudgetTest(unittest.TestCase):
         from xtrendaw import eye
         sig = inspect.signature(eye._llm)
         self.assertIn("max_tokens", sig.parameters)
+
+
+class ReplicationNumberPolicyTest(unittest.TestCase):
+    """لقطات التقليد كلام داخل الحدث — الأرقام فيها مسموحة، العنوان لأ."""
+
+    def _report(self):
+        return {"durationSeconds": 20, "meta": {"title": "فيديو"},
+                "captions": [], "scenes": [{"start": 0, "end": 3,
+                                            "desc": "ولد بيعد على صوابعـه"}],
+                "audioRmsPerSec": []}
+
+    def test_counts_in_shot_lines_do_not_kill_replication(self):
+        from xtrendaw.eye import _assert_radar_numbers
+        _assert_radar_numbers({"title_ar": "تحدي العين المعصوبة",
+                               "shots": [{"say_ar": "1 2 3 يلا!"},
+                                         {"say_ar": "2 كوباية"}]},
+                              self._report(), replication=True)
+
+    def test_invented_number_in_title_still_blocked(self):
+        from xtrendaw.eye import _assert_radar_numbers
+        with self.assertRaises(RuntimeError):
+            _assert_radar_numbers({"title_ar": "خس 5000 جنيه",
+                                   "shots": [{"say_ar": "يلا"}]},
+                                  self._report(), replication=True)
+
+    def test_article_mode_still_strict(self):
+        from xtrendaw.eye import _assert_radar_numbers
+        with self.assertRaises(RuntimeError):
+            _assert_radar_numbers({"title_ar": "عنوان",
+                                   "facts_ar": ["3 حقائق"]},
+                                  self._report(), replication=False)
