@@ -135,6 +135,45 @@ def _save_meta(topic: dict, credits: list[str]) -> Path:
     return p
 
 
+def _promote_from_vault() -> None:
+    """ينزّل أقدم حلقة من المخزون على القناة (بوصف كامل) لو الكوتة مفتوحة.
+
+    لو النشر فشل (كوتة/صلاحية) بنرجّع الحلقة للمخزون تاني — صفر ضياع.
+    """
+    from xtrendaw import github_store, settings, state
+    from xtrendaw.publish import youtube as _yt
+
+    res = github_store.promote_next()
+    if not res:
+        return
+    meta = res.get("meta") or {}
+    video = res.get("local_video")
+    title = meta.get("title") or meta.get("title_ar") or res["id"]
+    caption = meta.get("caption") or ""
+    tags = meta.get("tags") or []
+    if isinstance(tags, str):
+        tags = [t.strip() for t in tags.split(",") if t.strip()]
+    credits = [c for c in (meta.get("credits") or []) if str(c).strip()]
+    if credits:
+        caption += "\n\n" + "\n".join(str(c)[:200] for c in credits[:6])
+    url, err = _yt.publish(video, title, caption, tags)
+    if err or not url:
+        print(f"[factory] ⚠ الفرجة فشلت ({err}) — الحلقة رجعت للمخزون", flush=True)
+        try:
+            github_store.upload_to_vault(video, None, meta)
+        except Exception:
+            pass
+        return
+    vid_id = url.split("watch?v=")[-1].split("&")[0] if "watch?v=" in url else ""
+    print(f"[factory] 📺 نزلت من المخزون على القناة: {url}", flush=True)
+    if vid_id:
+        state.push_published({"id": vid_id, "title": title,
+                              "kind": meta.get("kind", ""), "ts": time.time()})
+        state.push_yt_recent({"id": vid_id, "title": title, "reciter": "",
+                              "ts": time.time()})
+    state.set_last_kind(meta.get("kind", "know"))
+
+
 def cycle_once() -> None:
     from xtrendaw import github_store, produce, settings, state
     s = _load_status()
@@ -235,6 +274,17 @@ def cycle_once() -> None:
                 print("[factory] 📸 ورقة الإطارات اتصورت للحلقة دي", flush=True)
         except Exception as exc:
             print(f"[factory] ⚠ ورقة الإطارات: {type(exc).__name__}", flush=True)
+
+    # 📺 فرّج أقدم حلقة من المخزون (لو الكوتة متاحة) — الساعية مش بتتوهش
+    # بق حقيقي (2026-09-20): الحلقة اللي اتعملت والكوتة مقفولة كانت بتفضل
+    # في المخزون للأبد — مفيش حاجة بتفرّجها. دلوقتي كل دورة تفرّج أقدم حلقة
+    # مستنية قبل ما تنتج الجديدة.
+    try:
+        if not NO_PUBLISH and not state.published_today_pt() >= (settings.DAILY_CAP or 999):
+            _promote_from_vault()
+    except Exception as exc:
+        print(f"[factory] ⚠ الفرجة من المخزون: {type(exc).__name__}: "
+              f"{str(exc)[:90]}", flush=True)
 
     # 📦 خزّن في المخزون (vault) — الفيديو ما يضيعش لو الكوتة مقفولة
     # بق حقيقي (2026-09-20): الدورة أنتجت حلقة التقليد والكوتة كانت 6/6،
