@@ -624,5 +624,123 @@
    ],
    "verdict": "The proposal faithfully follows the DNA trend’s structural blueprint and visual language, delivering a solid, high‑energy short video concept. However, the lack of detailed audio planning and slightly vague takeaways prevent it from fully capitalizing on the trend’s retention hooks. With refined audio cues and sharper messaging, it could reach a top‑tier score."
   }
+ },
+ {
+  "id": "eye-mnCGVRpLRVU",
+  "topic": "انظر كيف أخرج هذه الخاتم العالق في ثوانٍ فقط! لن تصدق الطريقة! خاتم حيلة_ذكيةمعلومة #مذهل حيل نصائح",
+  "angle": "استخدام مادة بسيطة (صابون/زيت/ثلج) يغير الاحتكاك فجأةً، ما يجعل الخاتم يخرج بسهولة غير متو",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "خدعة سحرية لإزالة الخاتم العالق في ثوانٍ",
+  "title_en": "Magic Trick to Remove a Stuck Ring Instantly",
+  "hook_ar": "عايز تعرف إزاي تشيل الخاتم العالق في لحظات؟",
+  "hook_en": "Want to learn how to free a stuck ring instantly?",
+  "facts_ar": [
+   "الصابون يقلل الاحتكاك بين الخاتم والجلد",
+   "الزيت يخلق طبقة انزلاقية تساعد على السحب",
+   "الثلج يسبب انكماش مؤقت للجلد مما يسهل الإزالة"
+  ],
+  "facts_en": [
+   "Soap reduces friction between the ring and skin",
+   "Oil creates a slippery layer that aids sliding",
+   "Ice causes a temporary skin shrinkage that makes removal easier"
+  ],
+  "takeaway_ar": {
+   "aql": "الحلول البسيطة غالبًا بتكون أقوى",
+   "qalb": "مشاركة الحيلة مع أصحابك تضاعف الفائدة",
+   "rouh": "استمتع بذكاءك اليومي"
+  },
+  "takeaway_en": {
+   "aql": "Simple hacks often pack the biggest impact",
+   "qalb": "Sharing the trick with friends multiplies the benefit",
+   "rouh": "Enjoy your daily dose of cleverness"
+  },
+  "tags": "خاتم,حيلة,نصيحة,تجربة,يومي",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة قريبة لليد مع الخاتم العالق، نص على الشاشة يطرح السؤال",
+    "style": "قرب سريع مع تركيز على التفاصيل",
+    "colors": [
+     "#ff6f61",
+     "#ffffff"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "المقدّم يرفع يده بسرعة، مؤثر صوتي whoosh، نص يلمّح بـ \"طريقة ذكية\"",
+    "style": "حركة سريعة مع قفزة تحريرية",
+    "colors": [
+     "#ff6f61",
+     "#000000"
+    ]
+   },
+   {
+    "time": "0:08-0:12",
+    "scene": "تطبيق الصابون (أو الزيت أو الثلج) على الخاتم، اليد تدلك بخفة، نص توضيحي قصير",
+    "style": "لقطات مقربة مع انتقال قطع سريع",
+    "colors": [
+     "#ff6f61",
+     "#ffffff"
+    ]
+   },
+   {
+    "time": "0:13-0:16",
+    "scene": "الخاتم ينزل بسهولة، رد فعل الفرح، نص \"تم!\" وصوت ding",
+    "style": "قرب على النتيجة مع إضاءة مشرقة",
+    "colors": [
+     "#ff6f61",
+     "#000000"
+    ]
+   },
+   {
+    "time": "0:17-0:20",
+    "scene": "دعوة للمتابعة مع أيقونة المتابعة، نص تحفيزي للمتابعة",
+    "style": "نهاية دافئة مع تدرج لون هادئ",
+    "colors": [
+     "#ff6f61",
+     "#ffffff"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "mnCGVRpLRVU",
+   "url": "https://youtu.be/mnCGVRpLRVU",
+   "sourceTitle": "انظر كيف أخرج هذه الخاتم العالق في ثوانٍ فقط! لن تصدق الطريقة! خاتم حيلة_ذكيةمعلومة #مذهل حيل نصائح",
+   "sourceChannel": "دراما العرب",
+   "sourceViews": 4939323,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "المستخدم يُظهر خاتمًا عالقًا على إصبعه ويقول إنه سيخرجه في ثوانٍ فقط بطريقة لا تصدق",
+     "why_it_works": "يخلق فضولًا فوريًا ويستهدف مشكلة شائعة (خاتم عالق) مع وعد بحل سريع ومفاجئ"
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "صاعد سريع من الصفر إلى ذروة في 0:12 ثم انخفاض خفيف للCTA"
+    },
+    "retention_tricks": [
+     "سؤال جذاب في أول 3 ثوانٍ",
+     "استخدام نصوص سريعة لتأكيد الفكرة",
+     "مؤثرات صوتية مميزة عند كل خطوة",
+     "إظهار النتيجة النهائية بوضوح قبل CTA"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 85,
+   "weaknesses": [
+    "Audio details (voice style, music, SFX) are omitted, leaving a gap in the energy curve and retention tricks defined by the DNA trend.",
+    "The proposal lists three possible materials (soap, oil, ice) instead of focusing on a single twist, which may dilute the surprise factor and extend the runtime.",
+    "Additional “takeaway” sections (aql, qalb, rouh) are not part of the original DNA structure and could push the video beyond the 20‑second sweet spot.",
+    "Mood labeled as \"crazy\" may clash with the concise, upbeat tone prescribed (حماسي، سريع الإيقاع).",
+    "No mention of stickers/graphics or animated text styles that the DNA trend recommends for extra visual punch."
+   ],
+   "verdict": "The proposal aligns well with the core DNA framework in terms of hook, beat timing, and visual pacing, but it needs tighter scripting (focus on one material) and a defined audio plan to fully meet the trend's high‑energy, retention‑optimized formula."
+  }
  }
 ]
