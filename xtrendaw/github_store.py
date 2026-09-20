@@ -262,22 +262,37 @@ def delete_asset(tok: str, asset_id: int) -> bool:
 
 
 def promote_next() -> dict | None:
-    """يفرج أقدم حلقة من الـvault على القناة العامة ويرجع بياناتها."""
+    """يفرج أحسن حلقة من الـvault على القناة العامة ويرجع بياناتها.
+
+    بق حقيقي (2026-09-20): حلقة تقليد اتخزنت كلها خلفيات مولّدة (live_clips=0)
+    وكانت هتتنشر أول ما الكوتة تفتح. دلوقتي:
+      • أي حلقة مسجّل لها صفر لقطة حية تتشال من المخزون فورًا (مش تتنشر)
+      • الاختيار بـpick_next: تقليد متحقّق منه الأول، والباقي بالأقدم
+    """
     tok = _token()
     if not tok:
         return None
     vrel = _vault_id(tok)
     erel = ensure_release(tok)
-    vids = sorted((a for a in _assets(tok, vrel)
-                   if re.match(r"q\d+\.mp4$", a["name"])),
-                  key=lambda a: a["name"])
-    if not vids:
+    entries = _vault_entries(tok, vrel)
+    if not entries:
         return None
-    ts = vids[0]["name"][1:-4]
-    all_v = _assets(tok, vrel)
-    cover_a = next((a for a in all_v if a["name"] == f"q{ts}.png"), None)
-    meta_a = next((a for a in all_v if a["name"] == f"q{ts}.json"), None)
-    meta = {}
+    # 🗑 تنضيف: حلقات مسجّلة بصفر لقطات حية (خلفيات مولّدة) — مش بتنشر
+    for e in dead_vault_assets(entries):
+        n = 0
+        for a in (e.get("asset"), e.get("cover"), e.get("meta_asset")):
+            if a and delete_asset(tok, a["id"]):
+                n += 1
+        print(f"[vault] 🗑 شيلت حلقة بلا لقطة حية واحدة: {e.get('name')} "
+              f"({n} أصل)", flush=True)
+        entries = [x for x in entries if x.get("name") != e.get("name")]
+    chosen = pick_next(entries)
+    if not chosen:
+        return None
+    ts = chosen["key"][1:]
+    cover_a = chosen.get("cover")
+    meta_a = chosen.get("meta_asset")
+    meta = dict(chosen.get("meta") or {})
     tmp = Path(tempfile.mkdtemp())
 
     def _dl(asset: dict, dst: Path) -> None:
@@ -286,12 +301,12 @@ def promote_next() -> dict | None:
         dst.write_bytes(r.content)
 
     local_video = tmp / "video.mp4"
-    _dl(vids[0], local_video)
+    _dl(chosen["asset"], local_video)
     local_cover: Path | None = None
     if cover_a:
         local_cover = tmp / "cover.png"
         _dl(cover_a, local_cover)
-    if meta_a:
+    if meta_a and not meta:
         try:
             meta = json.loads(requests.get(meta_a["browser_download_url"],
                                            timeout=60).text)
@@ -306,9 +321,9 @@ def promote_next() -> dict | None:
     if local_cover:
         urls["cover"] = upload_file(tok, erel, local_cover, f"ep{n}-cover.png")
 
-    for a in (vids[0], cover_a, meta_a):
+    for a in (chosen.get("asset"), cover_a, meta_a):
         if a:
-            requests.delete(f"{API}/repos/{_repo()}/releases/assets/{a['id']}",
-                            headers=_headers(tok), timeout=30)
+            delete_asset(tok, a["id"])
     return {"id": f"ep{n}", "urls": urls, "meta": meta,
+            "source_key": chosen.get("key"),
             "local_video": local_video, "tmp": tmp}

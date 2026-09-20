@@ -160,3 +160,22 @@ class MediaPublishGuardTest(unittest.TestCase):
         from scripts import factory_loop
         src = inspect.getsource(factory_loop.cycle_once)
         self.assertIn("_media_ok(topic)", src)
+
+
+class PromoteUsesGuardTest(unittest.TestCase):
+    """promote_next لازم يمشي على الاختيار المحروس والتنضيف (مش أقدم ملف أعمى)."""
+
+    def test_promote_next_uses_pick_next(self):
+        import inspect
+        from xtrendaw import github_store as g
+        src = inspect.getsource(g.promote_next)
+        self.assertIn("_vault_entries(tok, vrel)", src)
+        self.assertIn("dead_vault_assets(entries)", src)
+        self.assertIn("pick_next(entries)", src)
+        self.assertNotIn("vids[0]", src)          # مفيش اختيار أعمى
+
+    def test_cleanup_deletes_all_three_assets(self):
+        import inspect
+        from xtrendaw import github_store as g
+        src = inspect.getsource(g.promote_next)
+        self.assertIn("delete_asset(tok, a[\"id\"])", src)
