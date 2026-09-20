@@ -1331,5 +1331,231 @@
    ],
    "verdict": "الاقتراح يُطابق معظم عناصر الـ DNA الترند ويُظهر تنفيذًا قويًا من حيث البنية البصرية والرسائل، لكن يحتاج إلى تحسينات في الجانب السمعي وتفاصيل الإيقاع لإكمال التجربة وجعلها أكثر جذبًا."
   }
+ },
+ {
+  "id": "eye-_SmZRX8Rzlc",
+  "topic": "Por esto no puedes ducharte con tu mujer.#supervivencia #sabiasque #curiosidades",
+  "angle": "The video flips the common assumption that showering together is harmless by revealing a h",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "لماذا لا يمكنك غسل نفسك مع زوجتك",
+  "title_en": "Why You Can't Shower with Your Wife",
+  "hook_ar": "هل تعرف السبب اللي بيمنعك من الغسل مع مرتك؟",
+  "hook_en": "Do you know the reason you can’t shower with your wife?",
+  "facts_ar": [
+   "الضباب اللي يخرج من الدوش السخن ممكن يهيج الجلد ويزيد حدة الأكزيما.",
+   "الاختلاف في ضغط المياه قد يخلّي أحد الزوجين ينزلق بسهولة داخل الدوش المشترك.",
+   "الماء السخن يوسع الأوعية الدموية، ويقلل ضغط الدم، ويعرّضك للدوار."
+  ],
+  "facts_en": [
+   "The steam that rises from a hot shower can irritate the skin and worsen eczema.",
+   "Differences in water pressure can make one partner slip more easily in a shared shower.",
+   "Hot water dilates blood vessels, lowers blood pressure, and can cause dizziness."
+  ],
+  "takeaway_ar": {
+   "aql": "التفكير في الأضرار السنية التي قد تتعرض لها عندما تتشارك الدوش مع مرتك.",
+   "qalb": "التذكير بأن الحب يجمعنا، لكن سلامتنا أهم.",
+   "rouh": "الاهتمام بالروحانية من خلال حماية جسدك وجسد شريكك."
+  },
+  "takeaway_en": {
+   "aql": "Understanding the skin risks of sharing a hot shower.",
+   "qalb": "Reminding that love unites us, but our safety matters most.",
+   "rouh": "Nurturing a spiritual mindset by protecting both your body and your partner's."
+  },
+  "tags": "غسل,زوج,معلومات,صحة,مفاجأة",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "قرب سريع على الزوجين وهوما على وشك الدخول إلى الدوش، قطرات الماء تتطاير.",
+    "style": "اللقطة السريعة مع نص عريض على الشاشة.",
+    "colors": [
+     "#00AEEF",
+     "#FFFFFF",
+     "#1A1A1A"
+    ]
+   },
+   {
+    "time": "0:03-0:07",
+    "scene": "نص على الشاشة يوضح الخرافة الشائعة حول الغسل المشترك.",
+    "style": "شريحة سريعة، صوت معلق متحمس.",
+    "colors": [
+     "#00AEEF",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:07-0:11",
+    "scene": "إظهار الحقيقة المفاجئة مع أمثلة مرئية للضباب والضغط المنخفض.",
+    "style": "قطع سريعة، رسوم متحركة للقطرات.",
+    "colors": [
+     "#00AEEF",
+     "#1A1A1A"
+    ]
+   },
+   {
+    "time": "0:11-0:14",
+    "scene": "دعوة للتفاعل: “أعجبك الكلام؟ لايك وشير مع حد يشتغل معاك!” مع زر الاشتراك المتوهج.",
+    "style": "تسليط الضوء على زر الاشتراك، موسيقى خفيفة.",
+    "colors": [
+     "#FFFFFF",
+     "#00AEEF"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "_SmZRX8Rzlc",
+   "url": "https://youtu.be/_SmZRX8Rzlc",
+   "sourceTitle": "Por esto no puedes ducharte con tu mujer.#supervivencia #sabiasque #curiosidades",
+   "sourceChannel": "Miguel ASSAL ",
+   "sourceViews": 3372879,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "The video opens with a rapid close‑up of a couple about to step into a shower, then a bold on‑screen text asks: \"¿Sabías que hay una razón por la que NO puedes ducharte con tu mujer?\"",
+     "why_it_works": "Poses an unexpected question that triggers curiosity and personal relevance, prompting viewers to stay for the answer."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 30,
+     "energy_curve": "sharp rise at start → slight dip during explanation → spike at twist → quick drop into CTA"
+    },
+    "retention_tricks": [
+     "Immediate curiosity‑driving question",
+     "Rapid visual cuts to maintain attention",
+     "On‑screen text reinforcing spoken points",
+     "Surprise fact that contradicts a common belief",
+     "Strong CTA delivered while emotional arousal is high"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [
+    "Pacing is noticeably slower – only 4 cuts in 14 seconds (≈17 cuts/min) versus DNA’s 30 cuts/min, risking viewer drop‑off.",
+    "Audio strategy is missing: no voice‑over style, music or SFX cues are specified, so the energy curve may not peak as intended.",
+    "No mention of animated stickers or graphic overlays (e.g., water splash icons) that DNA uses to enhance visual engagement.",
+    "The hook wording, while effective, is almost identical to DNA’s; the video could benefit from a more unique hook to stand out.",
+    "The plan lacks explicit timing for the CTA beyond the 0:11‑0:14 window, which may be too brief for viewers to act.",
+    "The “mood” is labeled “warm,” but DNA’s energy curve is sharp and urgent; the proposed mood may not match the desired high‑energy feel."
+   ],
+   "verdict": "The episode follows the DNA template well and covers most key elements, but it falls short in pacing, audio detail, and visual flair. Tightening the cuts, adding dynamic sound design, and injecting more distinctive graphics would elevate it to a truly high‑engagement format."
+  }
+ },
+ {
+  "id": "eye-X4Qch8tcpCs",
+  "topic": "Le cayó un químico y meses después...#emergencias #supervivencia #curiosidades",
+  "angle": "The chemical was a latent toxin that didn’t cause symptoms until months later, turning a s",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "كيمياء صامتة: عندما تأتي الضربة بعد أن تظنها انتهت",
+  "title_en": "Silent Chemical: When the Hit Comes After You Think It's Over",
+  "hook_ar": "شاهدي اللحظة: سطل كيمياء يسقط من الشاحنة ويضرب الأرض بجانبك... هل سيظهر الأثر الآن أم بعد أسابيع؟",
+  "hook_en": "Watch the moment: a chemical barrel drops from the truck and hits the ground next to you... will the effect show now or weeks later?",
+  "facts_ar": [
+   "بعض المواد الكيميائية لا تترك أثراً فورياً، بل تعمل كعدّة وقت لتسبب أعراضاً بعد أيام أو أسابيع.",
+   "الغسل بالماء الفوري قد يخفي الخطر إذا كانت السموم قد تسربت بالفعل تحت الجلد أو الرئة.",
+   "الطفح الجلدي والسعال المتأخران هما علامات إنذار حقيقيين بأن الجسم في حرب صامتة الآن."
+  ],
+  "facts_en": [
+   "Some chemicals leave no immediate trace but act as a time bomb, causing symptoms days or weeks later.",
+   "Immediate water rinsing may hide the danger if toxins have already penetrated the skin or lungs.",
+   "Delayed rash and cough are true warning signs that the body is in a silent war right now."
+  ],
+  "takeaway_ar": {
+   "aql": "لا تثق بالسلام الظاهري؛ الأعراض المتأخرة هي الوعد الحقيقي للخطر.",
+   "qalb": "الخوف من المشاهدين هو رادع، لكن الوعي بالمخاطر الجسدية هو درعك الحقيقي.",
+   "rouh": "قوتك ليست في تخفيك للألم، بل في استجابتك الواعية قبل أن يكون العلاج مستحيلاً."
+  },
+  "takeaway_en": {
+   "aql": "Don't trust apparent safety; delayed symptoms are the true promise of danger.",
+   "qalb": "Fear from onlookers is a deterrent, but awareness of physical risks is your real shield.",
+   "rouh": "Your strength isn't in hiding the pain, but in your conscious response before treatment becomes impossible."
+  },
+  "tags": "كيمياء,صحة,حوادث,توعية,خطر,أعراض متأخرة",
+  "mood": "urgent/high-energy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة واقعية أو متحركة (CGI) سريعة: سطل يسقط بقوة على الأرض وينفجر السائل، الكاميرا تهتز مع صوت اصطدام مسموع ومفاجئ.",
+    "style": "صحيود (Handheld) لإعطاء إحساس الواقعية والفوضى، قطع سريع (Jump Cut).",
+    "colors": [
+     "#FF0000",
+     "#000000"
+    ]
+   },
+   {
+    "time": "0:03-0:07",
+    "scene": "تجميد الزمن (Freeze Frame) على آثار السائل، ثم سهم أحمر ضخم يشير إلى منطقة عدم ملامسة الأيدي، مع مؤشر نصي: 'هل انتهت الخطر؟'.",
+    "style": "تأثير صوتي (Whosh)، موسيقى متوترة وتنبهية، إضاءة درامية تصفح الضوء على الخطر.",
+    "colors": [
+     "#FF4500",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:07-0:11",
+    "scene": "مونتاج سريع: شخص يبدو سليماً، ثم قفزة زمنية (Time Lapse) تظهر ظهور طفح أحمر مفاجئ وكحة حادة، مع مؤثر صوتي لضربة قلبية تسارع.",
+    "style": "إيقاع سريع، تأثيرات بصرية تركز على الألم المفاجئ، استكشاف التوتر الدرامي.",
+    "colors": [
+     "#990000",
+     "#EEEEEE"
+    ]
+   },
+   {
+    "time": "0:11-0:15",
+    "scene": "شاشة سوداء مع نص أبيض متلافاصل: 'السموم المخبأة لا تنتظر'، مع صوت هامس يحذر من أن الغسل الفوري قد يكون كاذباً.",
+    "style": "طباعة نصية ديناميكية، صوت خلفية داكن وعاجل، تركيز على المعلومات الحاسمة.",
+    "colors": [
+     "#000000",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:15-0:20",
+    "scene": "واجهة تفاعلية مباشرة: نص كبير يسأل: 'هل تعرضت لمادة وكشفت أعراضك بعد أسابيع؟ اكتب قصتك في التعليقات!' مع سهم يشير لزر التعليقات.",
+    "style": "ألوان حية وجذابة للخروج من التوتر، موسيقى تنتهي بنغمة تفاعلية إيجابية، دعوة واضحة للتفاعل (CTA).",
+    "colors": [
+     "#FFD700",
+     "#000000"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "X4Qch8tcpCs",
+   "url": "https://youtu.be/X4Qch8tcpCs",
+   "sourceTitle": "Le cayó un químico y meses después...#emergencias #supervivencia #curiosidades",
+   "sourceChannel": "Miguel ASSAL ",
+   "sourceViews": 3230903,
+   "dna": {
+    "hook": {
+     "technique": "shock",
+     "what_happens": "A person falls into a chemical spill and the video shows the immediate impact.",
+     "why_it_works": "The sudden, unexpected event grabs attention and creates a sense of danger."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 12,
+     "energy_curve": "High at start, dips slightly, spikes at twist, ends high."
+    },
+    "retention_tricks": [
+     "Cliffhanger about delayed symptoms",
+     "Prompting viewers to comment if they’ve experienced similar incidents"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 72,
+   "rewritten": true,
+   "weaknesses": [
+    "تعارض حاد في النبرة (Mood): الاقتراح يحدد المزاج كـ 'warm' (دافئ) والنهاية كـ 'مشجعة/وجوه مبتسمة'، بينما DNA الترند يعتمد على 'الصدمة' و'الخطر' و'الطاقة العالية'. هذا التناقض يفسد هوية الفيديو ويجعله يبدو كإعلان إعلاني رخيص بدلاً من محتوى درامي/توعوي قوي.",
+    "ضعف الـ Hook: الاقتراح يبدأ بـ 'تخيل نفسك' (خيال)، بينما الـ DNA يعتمد على 'حدث مفاجئ بصري' (شخص يسقط فعلياً). استخدام الخيال في أول 3 ثوانٍ يقلل من عامل الصدمة الفوري (Shock) الذي هو جوهر الترند.",
+    "غياب عنصر التفاعل التفاعلي (Retention Trick): الاقتراح يكتفي بـ CTA عام، بينما DNA يحدد تحديداً طلب التعليقات حول تجارب مشابهة، وهو عنصر حاسم لرفع الخوارزمية."
+   ]
+  }
  }
 ]
