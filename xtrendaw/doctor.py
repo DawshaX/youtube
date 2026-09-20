@@ -20,6 +20,7 @@ import argparse
 import datetime as dt
 import importlib.util
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -42,12 +43,45 @@ def _http_get(url: str, **kw) -> tuple[int, str]:
 
 
 def _http_post(url: str, **kw) -> tuple[int, str]:
+    """(الحالة, النص) — النص كامل 4000 حرف: الردود القصيرة كانت بتتقطع
+    (رد توكن جوجل أطول من 300 حرف) فيفشل تحليل JSON ويطلع «فشل تجديد» كاذب
+    — وأسوأ: التوكن نفسه كان بيتطبع في اللوج. الاتنين اتصلحوا."""
     import requests
     try:
         r = requests.post(url, timeout=_TIMEOUT, **kw)
-        return r.status_code, r.text[:300]
+        return r.status_code, r.text[:4000]
     except Exception as exc:
         return -1, f"{type(exc).__name__}: {exc}"
+
+
+def mask_secrets(text: str) -> str:
+    """يشيل أي سر من أي نص قبل ما يتكتب في اللوج/التقرير.
+
+    الدرس (2026-09-20): فحص OAuth طبع توكن وصول كامل في لوج Actions لأن
+    الرد اتنشر كنص خطأ. قاعدة صارمة: أي رد من خدمة مصادقة بيتفلتر قبل الطبع.
+    """
+    if not text:
+        return ""
+    s = str(text)
+    # توكنات جوجل
+    s = re.sub(r"ya29\.[A-Za-z0-9_\-\.]+", "ya29.●●●", s)
+    s = re.sub(r"1//[A-Za-z0-9_\-\.]{10,}", "1//●●●", s)
+    # JWT وأي base64 طويل
+    s = re.sub(r"eyJ[A-Za-z0-9_\-]{6,}\.[A-Za-z0-9_\-]{6,}\.[A-Za-z0-9_\-]{6,}",
+               "eyJ●●●", s)
+    s = re.sub(r"[A-Za-z0-9_\-]{40,}", "●●●", s)
+    # أي قيمة سرية معروفة بالحرف
+    try:
+        from . import settings as _st
+        for name in ("YOUTUBE_API_KEY", "YOUTUBE_CLIENT_SECRET",
+                     "YOUTUBE_REFRESH_TOKEN", "GEMINI_API_KEY", "GROQ_API_KEY",
+                     "PIXABAY_API_KEY", "PEXELS_API_KEY", "NASA_API_KEY"):
+            v = (_st.get(name) or "").strip()
+            if len(v) >= 8:
+                s = s.replace(v, "●●●")
+    except Exception:
+        pass
+    return s
 
 
 # ─────────────────────────────────────────────────────────────
@@ -160,7 +194,7 @@ def check_pixabay() -> dict:
     return _simple_key_check(
         "PIXABAY_API_KEY", "PIXABAY_API_KEY (لقطات فيديو)",
         "https://pixabay.com/api/videos/",
-        params={"key": settings.get("PIXABAY_API_KEY"), "q": "cat", "per_page": "1"})
+        params={"key": settings.get("PIXABAY_API_KEY"), "q": "cat", "per_page": "3"})
 
 
 def check_pexels() -> dict:
@@ -239,33 +273,34 @@ def check_youtube_cookies() -> dict:
     if not b64:
         return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "fail",
                 "detail": "غير مضبوط — العين مش هتشوف أي فيديو من خوادم Actions"}
+    # ⚠️ الدرس (2026-09-20): الفحص كان بيكتب المحتوى الخام ويجرّبه، فطلع
+    # «مش ملف نيتسكيب» — والصح إننا نجرّب **نفس** التحويل اللي العين بتعمله.
     try:
-        import base64
         import sys as _sys
-        import tempfile
-        import os
-        fd, tmpname = tempfile.mkstemp(suffix=".txt", prefix="daousha_ck_")
-        p = Path(tmpname)
+        from . import eye as _eye
+        _hdr, path = _eye._load_cookies()
+        if path is None:
+            return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)",
+                    "status": "fail",
+                    "detail": "المحتوى مش صالح — لازم Netscape أو JSON "
+                              "مصدَّر من المتصفح (Cookie-Editor)"}
         try:
-            with os.fdopen(fd, "wb") as f:
-                f.write(base64.b64decode(b64))
-            os.chmod(p, 0o600)   # ملف الجلسة سر — صلاحيات المالك فقط
             r = subprocess.run(
                 [_sys.executable, "-m", "yt_dlp", "--simulate", "--no-playlist",
                  "--socket-timeout", "20", "--retries", "1", "--ignore-errors",
-                 "--cookies", str(p),
+                 "--cookies", str(path),
                  "https://www.youtube.com/watch?v=2Vv-BfVoq4g"],
                 capture_output=True, text=True, timeout=120)
         finally:
-            p.unlink(missing_ok=True)   # تنظيف مضمون حتى لو الاختبار فشل
+            path.unlink(missing_ok=True)   # تنظيف مضمون حتى لو الاختبار فشل
     except Exception as exc:
         return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "fail",
-                "detail": f"فشل الاختبار: {type(exc).__name__}: {exc}"}
+                "detail": mask_secrets(f"فشل الاختبار: {type(exc).__name__}: {exc}")}
     if r.returncode == 0:
         return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "ok",
-                "detail": "شغالة — المشغل بيقبل الجلسة (اختبار حقيقي)"}
+                "detail": "شغالة — العين بقت تشوف الفيديو كامل (اختبار حقيقي)"}
     tail = (r.stderr or r.stdout or "").strip().splitlines()
-    last = tail[-1][:160] if tail else "بدون مخرجات"
+    last = mask_secrets(tail[-1][:160] if tail else "بدون مخرجات")
     return {"name": "YOUTUBE_COOKIES_B64 (كوكيز العين)", "status": "fail",
             "detail": "الكوكيز ماتت/مرفوضة — أعد تصديرها (دقيقتين): " + last}
 
@@ -363,6 +398,17 @@ LOCAL_CHECKS = [
 ]
 
 
+def _sanitize(checks: list[dict]) -> list[dict]:
+    """أي تفصيل بيتطبع — يعدّي على فلتر الأسرار. حماية عامة مش حالة بحالة."""
+    out = []
+    for c in checks:
+        c = dict(c)
+        if c.get("detail"):
+            c["detail"] = mask_secrets(str(c["detail"]))
+        out.append(c)
+    return out
+
+
 def run(local_only: bool = False) -> dict:
     checks = [c() for c in LOCAL_CHECKS]
     if not local_only:
@@ -389,6 +435,7 @@ def run(local_only: bool = False) -> dict:
         checks += [{"name": skip_names.get(c.__name__, c.__name__),
                     "status": "warn", "detail": "تم تخطيه (--local)"}
                    for c in NETWORK_CHECKS]
+    checks = _sanitize(checks)
     fails = [c for c in checks if c["status"] == "fail"]
     report = {
         "checkedAt": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),

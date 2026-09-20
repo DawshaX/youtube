@@ -325,3 +325,35 @@ class JsonRepairTests(unittest.TestCase):
     def test_extra_prose_around_json_is_tolerated(self):
         with self._patch(['تمام كده:\n{"a": 1}\nبالتوفيق']):
             self.assertEqual(eye._llm_json("برومبت"), {"a": 1})
+
+
+class SecretMaskingTest(unittest.TestCase):
+    """ممنوع أي سر يطلع في لوج أو تقرير (درس 2026-09-20).
+
+    فحص OAuth طبع توكن وصول كامل في لوج Actions لأن رد جوجل اتقطع عند 300
+    حرف ففشل تحليل JSON واتطبع كنص خطأ.
+    """
+
+    def test_google_access_token_is_masked(self):
+        from xtrendaw.doctor import mask_secrets
+        out = mask_secrets('{"access_token": "ya29.a0AdMD6Ej2ZFw7snSxNBl3GueNsiW-q1kcwN9ioqCpDs-x4PRbQUn3"}')
+        self.assertNotIn("ya29.a0AdMD6Ej2", out)
+        self.assertIn("ya29.●●●", out)
+
+    def test_refresh_token_and_api_keys_masked(self):
+        from xtrendaw.doctor import mask_secrets, settings
+        for name in ("GEMINI_API_KEY", "YOUTUBE_API_KEY"):
+            val = settings.get(name)
+            if val and len(val) >= 8:
+                self.assertNotIn(val, mask_secrets(f"failed with {val}"))
+
+    def test_long_opaque_strings_masked(self):
+        from xtrendaw.doctor import mask_secrets
+        self.assertNotIn("A" * 60, mask_secrets("token=" + "A" * 60))
+
+    def test_http_post_returns_long_body(self):
+        """300 حرف كانت بتقطع رد التوكن → فحص كاذب."""
+        import inspect
+        from xtrendaw import doctor
+        src = inspect.getsource(doctor._http_post)
+        self.assertIn("4000", src)
