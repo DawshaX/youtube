@@ -325,7 +325,7 @@ def synthesize_segments(segments: list[dict], lang: str, out_dir: Path,
         r = synthesize_line(text, lang, out_dir, name=f"seg{i}",
                             rate=rate, pitch=pitch, voice=voice)
         wavs.append(r["wav"])
-        items.append({
+        item = {
             "seg": seg.get("seg", f"seg{i}"),
             "text": text,
             "start": round(offset, 3),
@@ -336,7 +336,16 @@ def synthesize_segments(segments: list[dict], lang: str, out_dir: Path,
                  "end": round(w["end"] + offset, 3)}
                 for w in r["words"]
             ],
-        })
+        }
+        # ⚡ مفاتيح المخرج بتعدّي مع المقطع: بوصلة اللقطة (visual_query) ونص
+        # الشاشة والمؤثر. بق حقيقي (2026-09-20): الحلقة التقليد طلعت كلها
+        # خلفيات مولّدة لأن الاستعلام كان بيضيع هنا → «⚠ استعلام فاضي» →
+        # صفر لقطة حية. المفاتيح دي هي اللي بتجيب اللقطات من بيكساباي/بكسلز.
+        for _k in ("visual_query", "visual_query2", "on_screen", "sfx",
+                   "shot", "orig_dur"):
+            if seg.get(_k) not in (None, ""):
+                item[_k] = seg[_k]
+        items.append(item)
         offset += r["duration"]
         # وقفة درامية بين السطور (مش بعد الأخير)
         if i < len(segments) - 1:

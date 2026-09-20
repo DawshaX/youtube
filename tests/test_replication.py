@@ -294,3 +294,49 @@ class QueryChainTest(unittest.TestCase):
     def test_shots_prompt_asks_two_queries(self):
         from xtrendaw.eye import SHOTS_PROMPT
         self.assertIn("visual_query2", SHOTS_PROMPT)
+
+
+class SegmentMetadataPassthroughTest(unittest.TestCase):
+    """بوصلة اللقطة لازم تعيش من السيناريو لحد المونتاج.
+
+    بق حقيقي (2026-09-20): `synthesize_segments` كانت بتبني عنصر التوقيت
+    بمفاتيح ثابتة (seg/text/start/end/words) وتضيّع visual_query →
+    الاستعلام يطلع فاضي «⚠ بيكساباي: استعلام فاضي» → الحلقة كلها خلفيات
+    مولّدة. 12 لقطة تقليد = 12 استعلام ضايع.
+    """
+
+    def _items(self, segs):
+        from unittest import mock
+        from xtrendaw import tts
+        from pathlib import Path
+        fake = {"wav": Path("/tmp/fake.wav"), "duration": 1.5, "timing_source": "word",
+                "words": [{"word": "أ", "start": 0.0, "end": 0.3}]}
+        with mock.patch.object(tts, "synthesize_line", return_value=fake), \
+             mock.patch.object(tts, "ffmpeg", return_value="ffmpeg"), \
+             mock.patch.object(tts.subprocess, "run", return_value=None):
+            plan = tts.synthesize_segments(segs, "ar", __import__("pathlib").Path("/tmp/tts_meta"))
+        return plan["items"]
+
+    def test_visual_query_survives_timing(self):
+        items = self._items([{"seg": "hook", "text": "سطر",
+                              "visual_query": "glowing chameleon logo",
+                              "visual_query2": "chameleon icon zoom",
+                              "on_screen": "من هو المتقن؟", "sfx": "whoosh",
+                              "shot": 0}])
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0]["visual_query"], "glowing chameleon logo")
+        self.assertEqual(items[0]["visual_query2"], "chameleon icon zoom")
+        self.assertEqual(items[0]["on_screen"], "من هو المتقن؟")
+        self.assertEqual(items[0]["sfx"], "whoosh")
+        self.assertEqual(items[0]["shot"], 0)
+
+    def test_missing_keys_not_added(self):
+        items = self._items([{"seg": "hook", "text": "سطر"}])
+        self.assertNotIn("visual_query", items[0])
+        self.assertNotIn("on_screen", items[0])
+
+    def test_produce_reads_query_from_item(self):
+        import inspect
+        from xtrendaw import produce
+        src = inspect.getsource(produce.produce_episode)
+        self.assertIn('item.get("visual_query")', src)
