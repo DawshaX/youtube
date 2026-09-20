@@ -209,6 +209,16 @@
    "url": "",
    "fetched_at": "2026-09-16T22:37:34+00:00",
    "sha256": "1134aee6cce463dceaf65c57ae982aa1498e9149a5176be9d7095f97f7260d70"
+  },
+  {
+   "path": "state/videolib/375f71c149ed.mp4",
+   "source": "Wikimedia Commons",
+   "license": "CC-BY-3.0",
+   "attribution_required": true,
+   "credit_line": "Footage: File:Clouds over full moon at night (Free HD stock video).webm via Wikimedia Commons, CC-BY-3.0",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Clouds_over_full_moon_at_night_%28Free_HD_stock_video%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "fetched_at": "2026-09-20T19:44:02+00:00",
+   "sha256": "670f158a434e43c9367556fee77ee5eb30e08946de2855256e0f7cdfdd027585"
   }
  ]
 }

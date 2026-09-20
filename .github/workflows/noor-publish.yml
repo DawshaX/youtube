@@ -158,9 +158,27 @@ jobs:
           [ "$SLEEP" -lt 0 ] && SLEEP=0
           echo "⏱️ الدورة خدت $(( NOW - START ))ث — هستنى ${SLEEP}ث وأشغّل الجاية"
           sleep "$SLEEP"
-          gh workflow run noor-publish.yml --repo "$GITHUB_REPOSITORY" --ref main \
-            -f mode=cycle -f dry_run=false
-          echo "✓ الحلقة الجاية اتبعتت"
+          # ⚠️ حماية من مضاعفة السلسلة: لو دورة تانية اتشغلت في آخر 50 دقيقة
+          # (مثلًا cron + النبضة) ما نبعتش كمان — عشان السلاسل ما تتضاعفش
+          CUTOFF=$(date -u -d '50 minutes ago' +%Y-%m-%dT%H:%M:%SZ)
+          RECENT=$(gh run list --repo "$GITHUB_REPOSITORY" \
+            --workflow noor-publish.yml --limit 15 \
+            --json createdAt,databaseId \
+            --jq "[.[] | select(.createdAt > \"$CUTOFF\")] | length" 2>/dev/null || echo 1)
+          if [ "${RECENT:-1}" -gt 1 ]; then
+            echo "ℹ️ فيه دورة حديثة تانية (${RECENT}) — سلسلتها هتكمّل، مش هبعت غيرها"
+            exit 0
+          fi
+          for attempt in 1 2 3; do
+            if gh workflow run noor-publish.yml --repo "$GITHUB_REPOSITORY" \
+                 --ref main -f mode=cycle -f dry_run=false; then
+              echo "✓ الحلقة الجاية اتبعتت"; exit 0
+            fi
+            echo "محاولة الإرسال $attempt فشلت — إعادة بعد 10 ثوانٍ…"
+            sleep 10
+          done
+          echo "⚠️ مش قادر أبعت الدورة الجاية — cron هيكمّل"
+          exit 0
 
       - name: ملخص الحلقة
         if: always()

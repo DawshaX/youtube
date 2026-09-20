@@ -136,7 +136,7 @@ def short_once() -> int:
 
     if item["kind"] == "hadith":
         res = noor_build.build_hadith_short(item, work)
-        title = f"{item['hook']} | حديث صحيح"
+        title = f"{item['hook']} — حديث اليوم 📖"
         body = res["text"]
         src_line = f"📖 {res['book']} — حديث رقم {res['number']}"
     else:
@@ -146,7 +146,7 @@ def short_once() -> int:
                          "reciter": item.get("reciter", "husary"),
                          "scenes": item.get("scenes")}, work)
         short = (res["text"][:60] + "…") if len(res["text"]) > 60 else res["text"]
-        title = f"{item['hook']} ﴿{res['surah']}﴾"
+        title = f"{item['hook']} — آية وسكينة ﴿{res['surah']}﴾"
         body = res["text"]
         src_line = f"🎙️ تلاوة: {res['reciter']}"
 
@@ -158,7 +158,9 @@ def short_once() -> int:
         f"المصادر: نص القرآن والتفسير من alquran.cloud · التلاوة من "
         f"islamic.network (تُنسب للقارئ) · مشاهد برخص حرة (Pexels/Pixabay).\n"
         f"لا موسيقى في هذا الفيديو.\n\n"
-        f"#قرآن #تلاوة #إسلاميات #ذكر #shorts"
+        f"🤍 شاركها لو عجبتك — واكتب في تعليق: إيه اللي غيرت فيك الآية دي؟\n"
+        f"قناة «نور»: آية وسكينة كل ساعة، وحديث صحيح، وسورة كاملة كل يوم.\n\n"
+        f"#قرآن #تلاوة #إسلاميات #ذكر #shorts #حديث #تفسير"
     )
     url, err = _publish(res["video"], res.get("cover"), title[:95], desc, tags)
     status = "📺 اتنشر" if url else f"⏸ اتخزن ({err})"
@@ -179,6 +181,9 @@ def short_once() -> int:
     print(f"[noor] {status} — {url or vault_url}", flush=True)
     print(f"[noor] ⏱️ مدة {res.get('duration', 0):.1f}ث · ملف "
           f"{res['video'].stat().st_size/1e6:.1f}MB", flush=True)
+    if DRY:
+        print("[noor] 🧪 معاينة فقط — مفيش رفع ومفيش تخزين", flush=True)
+        return 0
     return 0 if (url or vault_url) else 1
 
 

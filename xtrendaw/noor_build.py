@@ -19,6 +19,7 @@ from pathlib import Path
 
 from . import settings
 from .noor_premium import (CACHE, FONT_Q, FONT_UI, FONT_UI_B, FPS, H, UA, W,
+                           FPS_LONG, PRESET_LONG,
                            ayah_tafsir, ayah_text, dur_of, grade_and_concat,
                            overlay, recitation, scene_clip)
 from .tts import ffmpeg, synthesize_line, to_wav
@@ -239,11 +240,12 @@ def build_long_surah(surah: int, workdir: Path, reciter: str = "husary",
                      extra: list[tuple[int, int]] | None = None) -> dict:
     """فيديو طويل لمحرّك ساعات المشاهدة: سورة كاملة (وأحيانًا أكتر من سورة).
 
-    الطريقة: كل آية = مقطع (خلفية من شريحتها + نصها + تلاوتها) — فتوقيت النص
-    مضبوط 100% لأن الصوت لكل آية لوحده، وبعدين بنلزق المقاطع كلها.
-
-    extra: [(سورة، حد آيات)] تُضاف بعد السورة الأولى — بنى بيها فيديو
-    ≥4 دقايق (أقل من كده يوتيوب يعتبره شورت ومش بيدخل في ساعات المشاهدة).
+    فكرة الأداء (بق حقيقي 2026-09-20): الطريقة القديمة كانت 40 ثانية لكل آية
+    (تنزيل لقطة + رندر لوحده) → 50 دقيقة للسورة. دلوقتي:
+      1) بنجيب التلاوة لكل آية الأول ونحسب الطول الكلي بالتوقيت الحقيقي.
+      2) بنبني **مسار خلفية واحد** من 6 لقطات (مش لقطة لكل آية).
+      3) كل آية = قصّة من المسار (seek سريع) + طبقة نص + صوتها.
+    فالرندر بيبقى دقايق بدل عشرات الدقايق.
     """
     from . import noor_premium as np
     workdir.mkdir(parents=True, exist_ok=True)
@@ -252,90 +254,99 @@ def build_long_surah(surah: int, workdir: Path, reciter: str = "husary",
                                        "mountains clouds sunrise",
                                        "ocean waves aerial",
                                        "green fields rain"]
-    segs: list[Path] = []
-    total = 0.0
-    srcs: list[str] = []
     names: list[str] = []
-    n_all = 0
+    # ── 1) الميتاداتا + التلاوة (مع تخطي أي آية مش متاحة)
+    plan: list[tuple[str, int, Path, float]] = []
     for part_i, (snum, nmax) in enumerate(parts):
         info = np._cached_json(f"{np.APIQ}/surah/{snum}/quran-uthmani",
                                f"surah-{snum}")["data"]
         ayahs = info["ayahs"][:nmax]
-        surah_name = info["name"]
-        names.append(surah_name)
-        # كارت اسم السورة
-        hp = overlay([f"سورة {surah_name}"], workdir / f"h{part_i}.png", size=100,
-                     y=0.46, max_lines=2, tag="﴿ تلاوة وتدبّر ﴾")
-        hd = 2.6
-        hclip, hsrc = scene_clip(scenes[part_i % len(scenes)], hd, workdir,
-                                 f"hdr{part_i}", part_i)
-        srcs.append(hsrc)
-        hseg = workdir / f"hg{part_i}.mp4"
-        r = subprocess.run([ffmpeg(), "-y", "-stream_loop", "-1", "-i", str(hclip),
-                            "-loop", "1", "-t", f"{hd}", "-i", str(hp),
-                            "-filter_complex",
-                            "[0:v]setsar=1[v0];[1:v]format=rgba,fade=t=in:st=0:d=0.5:alpha=1[ov];"
-                            "[v0][ov]overlay=0:0:format=auto,fade=t=out:st=1.9:d=0.7,"
-                            "format=yuv420p[v]", "-map", "[v]", "-t", f"{hd}",
-                            "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast",
-                            "-crf", "20", "-pix_fmt", "yuv420p", "-an", str(hseg)],
-                           capture_output=True, text=True)
-        if r.returncode:
-            raise RuntimeError("كارت السورة فشل")
-        wav_h = workdir / f"hw{part_i}.wav"
-        subprocess.run([ffmpeg(), "-y", "-f", "lavfi", "-i",
-                        f"anullsrc=r=44100:cl=stereo", "-t", f"{hd}", "-c:a",
-                        "aac", "-b:a", "160k", str(wav_h)], capture_output=True)
-        segs.append(hseg)          # بدون صوت (مقطع صامت)
-        total += hd
+        names.append(info["name"])
         for i, a in enumerate(ayahs):
-            num = int(a["number"])                      # الرقم العالمي
+            num = int(a["number"])                       # الرقم العالمي
             try:
-                rec = recitation(int(a["surah"]["number"]),
-                                 int(a["numberInSurah"]), reciter,
+                rec = recitation(int(snum), int(a["numberInSurah"]), reciter,
                                  workdir / f"a{part_i}_{i:03d}", globals_=[num])
-            except Exception as exc:                    # noqa: BLE001
+            except Exception as exc:                     # noqa: BLE001
                 print(f"[noor] ⚠ آية {num} مش متاحة ({type(exc).__name__}) — تخطي",
                       flush=True)
                 continue
             d = dur_of(rec)
             if d <= 0.3:
                 continue
-            hold = 0.5
-            clip, src = scene_clip(scenes[n_all % len(scenes)], d + hold + 0.4,
-                                   workdir / f"sc{n_all:03d}", f"long{surah}:{n_all}",
-                                   n_all)
-            srcs.append(src)
-            png = overlay([a["text"].strip()], workdir / f"t{part_i}_{i:03d}.png",
-                          size=92, y=0.47, halo=28, spacing=1.5, max_lines=4,
-                          tag=f"﴿ {surah_name} — {a['numberInSurah']} ﴾")
-            seg = workdir / f"g{part_i}_{i:03d}.mp4"
-            dur = d + hold
-            vf = ("[0:v]setsar=1[v0];[1:v]format=rgba,fade=t=in:st=0:d=0.32:alpha=1[ov];"
-                  "[v0][ov]overlay=0:0:format=auto,format=yuv420p[v]")
-            r = subprocess.run([ffmpeg(), "-y", "-stream_loop", "-1", "-i",
-                                str(clip), "-loop", "1", "-t", f"{dur:.3f}",
-                                "-i", str(png), "-filter_complex", vf, "-map",
-                                "[v]", "-t", f"{dur:.3f}", "-r", str(FPS),
-                                "-c:v", "libx264", "-preset", "veryfast", "-crf",
-                                "20", "-pix_fmt", "yuv420p", "-an", str(seg)],
-                               capture_output=True, text=True)
-            if r.returncode:
-                raise RuntimeError(f"آية {num} فشلت: " + (r.stderr or "")[-300:])
-            withaudio = workdir / f"wa{part_i}_{i:03d}.mp4"
-            subprocess.run([ffmpeg(), "-y", "-i", str(seg), "-i", str(rec),
-                            "-filter_complex",
-                            f"[1:a]adelay=0|0,apad,atrim=0:{dur:.2f},"
-                            "loudnorm=I=-16:TP=-1.5:LRA=9[a]", "-map", "0:v",
-                            "-map", "[a]", "-t", f"{dur:.2f}", "-c:v", "copy",
-                            "-c:a", "aac", "-b:a", "160k", "-movflags",
-                            "+faststart", str(withaudio)], capture_output=True)
-            if not withaudio.exists():
-                raise RuntimeError("دمج صوت آية فشل")
-            segs.append(withaudio)
-            total += dur
-            n_all += 1
-    # نلزق كل حاجة (المقاطع الصامتة صامتة فعلًا: بنولّد صوت فاضي ليها)
+            plan.append((a["text"].strip(), int(a["numberInSurah"]), rec, d))
+    if not plan:
+        raise RuntimeError("مفيش آيات اترندرت")
+
+    header = 2.6                                   # كارت اسم السورة
+    hold = 0.5
+    total = header + sum(d + hold for _t, _n, _r, d in plan)
+
+    # ── 2) مسار الخلفية: 6 لقطات متساوية الطول (مش لقطة لكل آية)
+    n_sc = 6
+    per = total / n_sc + 1.2
+    clips, srcs = [], []
+    for i in range(n_sc):
+        c, src = scene_clip(scenes[i % len(scenes)], per, workdir,
+                            f"longbg{surah}:{i}", i)
+        clips.append(c)
+        srcs.append(src)
+    bg = grade_and_concat(clips, workdir / "bg_long.mp4")
+    print(f"[noor] 🎞 خلفية الطويل جاهزة ({total:.0f}ث · {len(clips)} لقطة)",
+          flush=True)
+
+    segs: list[Path] = []
+    # كارت اسم السورة
+    hp = overlay([f"سورة {' و '.join(names)}"], workdir / "hdr.png", size=100,
+                 y=0.46, max_lines=2, tag="﴿ تلاوة وتدبّر ﴾")
+    hseg = workdir / "hg.mp4"
+    vf = ("[0:v]setsar=1[v0];[1:v]format=rgba,fade=t=in:st=0:d=0.5:alpha=1[ov];"
+          "[v0][ov]overlay=0:0:format=auto,fade=t=out:st=1.8:d=0.7,"
+          "format=yuv420p[v]")
+    r = subprocess.run([ffmpeg(), "-y", "-ss", "0", "-i", str(bg), "-loop", "1",
+                        "-t", f"{header}", "-i", str(hp), "-filter_complex", vf,
+                        "-map", "[v]", "-t", f"{header}", "-r", str(FPS_LONG),
+                        "-c:v", "libx264", "-preset", PRESET_LONG, "-crf", "21",
+                        "-pix_fmt", "yuv420p", "-an", str(hseg)],
+                       capture_output=True, text=True)
+    if r.returncode:
+        raise RuntimeError("كارت السورة فشل: " + (r.stderr or "")[-200:])
+    segs.append(hseg)
+
+    # ── 3) كل آية: قصّة من المسار + نص + صوتها
+    t_off = header
+    for k, (txt, num, rec, d) in enumerate(plan):
+        dur = d + hold
+        png = overlay([txt], workdir / f"t{k:03d}.png", size=92, y=0.47, halo=28,
+                      spacing=1.5, max_lines=4, tag=f"﴿ {num} ﴾")
+        seg = workdir / f"g{k:03d}.mp4"
+        vf2 = ("[0:v]setsar=1[v0];[1:v]format=rgba,fade=t=in:st=0:d=0.32:alpha=1[ov];"
+               "[v0][ov]overlay=0:0:format=auto,format=yuv420p[v]")
+        r = subprocess.run([ffmpeg(), "-y", "-ss", f"{t_off:.3f}", "-i", str(bg),
+                            "-loop", "1", "-t", f"{dur:.3f}", "-i", str(png),
+                            "-filter_complex", vf2, "-map", "[v]", "-t",
+                            f"{dur:.3f}", "-r", str(FPS), "-c:v", "libx264",
+                            "-preset", "veryfast", "-crf", "20", "-pix_fmt",
+                            "yuv420p", "-an", str(seg)], capture_output=True,
+                           text=True)
+        if r.returncode:
+            raise RuntimeError(f"آية {num} فشلت: " + (r.stderr or "")[-200:])
+        withaudio = workdir / f"wa{k:03d}.mp4"
+        subprocess.run([ffmpeg(), "-y", "-i", str(seg), "-i", str(rec),
+                        "-filter_complex",
+                        f"[1:a]adelay=0|0,apad,atrim=0:{dur:.2f},"
+                        "loudnorm=I=-16:TP=-1.5:LRA=9[a]", "-map", "0:v",
+                        "-map", "[a]", "-t", f"{dur:.2f}", "-c:v", "copy",
+                        "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart",
+                        str(withaudio)], capture_output=True)
+        if not withaudio.exists():
+            raise RuntimeError("دمج صوت آية فشل")
+        segs.append(withaudio)
+        t_off += dur
+        if k % 10 == 9:
+            print(f"[noor] … {k + 1}/{len(plan)} آية ({t_off / 60:.1f} دقيقة)",
+                  flush=True)
+
     fixed: list[Path] = []
     for s in segs:
         probe = subprocess.run([ffmpeg(), "-i", str(s)], capture_output=True,
@@ -349,19 +360,17 @@ def build_long_surah(surah: int, workdir: Path, reciter: str = "husary",
                         "-c:a", "aac", "-b:a", "160k", str(w)],
                        capture_output=True)
         fixed.append(w if w.exists() else s)
-    if not fixed:
-        raise RuntimeError("مفيش آيات اترندرت")
     lst = workdir / "all.txt"
     lst.write_text("".join(f"file '{s.resolve()}'\n" for s in fixed),
                    encoding="utf-8")
     out = workdir / "noor_long.mp4"
     r = subprocess.run([ffmpeg(), "-y", "-f", "concat", "-safe", "0", "-i",
-                        str(lst), "-c", "copy", str(out)],
-                       capture_output=True, text=True)
+                        str(lst), "-c", "copy", str(out)], capture_output=True,
+                       text=True)
     if r.returncode:
-        raise RuntimeError("دمج السورة فشل: " + (r.stderr or "")[-300:])
+        raise RuntimeError("دمج الفيديو الطويل فشل: " + (r.stderr or "")[-300:])
     cover = workdir / "cover.png"
     subprocess.run([ffmpeg(), "-y", "-ss", "3", "-i", str(out), "-frames:v", "1",
                     str(cover)], capture_output=True)
     return {"video": out, "cover": cover, "duration": total,
-            "surah": " و ".join(names), "ayahs": n_all, "sources": srcs}
+            "surah": " و ".join(names), "ayahs": len(plan), "sources": srcs}

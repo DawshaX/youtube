@@ -33,6 +33,8 @@ from . import settings
 from .tts import ffmpeg
 
 W, H, FPS = 1080, 1920, 30
+FPS_LONG = 25            # الفيديو الطويل: نص ثابت + حركة بطيئة → 25 إطار يكفي
+PRESET_LONG = "ultrafast"  # أسرع 3× من veryfast — والفرق مش ظاهر في النص الثابت
 CACHE = settings.STATE / "noor_cache"
 FONT_Q = settings.FONTS / "AmiriQuran-Regular.ttf"     # الخط القرآني (المصحف)
 FONT_DISPLAY = settings.FONTS / "Amiri-Bold.ttf"        # للعرض على الموبايل
@@ -106,6 +108,7 @@ def recitation(surah: int, ayah: int, reciter: str, workdir: Path,
     """تلاوة حقيقية لقارئ معتمد (آية أو نطاق) → WAV واحد."""
     slug, kbps, _name = RECITERS[reciter]
     CACHE.mkdir(parents=True, exist_ok=True)
+    workdir.mkdir(parents=True, exist_ok=True)   # المجلد لازم يكون موجود قبل ffmpeg
     if not globals_:
         a = ayah_text(surah, ayah)
         globals_ = a["globals"]
@@ -304,12 +307,11 @@ def _procedural_scene(seconds: float, out: Path, seed: int = 0) -> Path:
     c0, c1 = pal[seed % len(pal)]
     dur = max(2.0, seconds)
     # طبقة 1: تدرّج لوني متحرك (ffmpeg gradients) — ألوان ليلية هادية
-    vf = (f"gradients=s={int(W*1.2)}x{int(H*1.2)}:c0={c0}:c1={c1}:"
-          f"x0=200:y0=100:x1={int(W*1.1)}:y1={int(H*1.1)}:speed=0.006:"
+    vf = (f"gradients=s={int(W*1.08)}x{int(H*1.08)}:c0={c0}:c1={c1}:"
+          f"x0=200:y0=100:x1={int(W*1.05)}:y1={int(H*1.05)}:speed=0.008:"
           f"d={int(dur*FPS)}:r={FPS},"
           f"crop={W}:{H}:x='(in_w-out_w)*t/{dur:.1f}':y='(in_h-out_h)*0.5',"
-          "eq=brightness=0.04:saturation=1.15,"
-          "noise=alls=6:allf=t+u,vignette=PI/5,format=yuv420p")
+          "eq=brightness=0.04:saturation=1.15,vignette=PI/5,format=yuv420p")
     subprocess.run([ffmpeg(), "-y", "-f", "lavfi", "-i", vf, "-t", f"{dur:.2f}",
                     "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
                     "-pix_fmt", "yuv420p", str(out)], capture_output=True,
