@@ -100,7 +100,7 @@ def cmd_next(chat_id) -> None:
         send(chat_id, "⚙️ الأمر ده يتنفذ من الرنر — اكتبه في أي وقت وهيتنفذ في أقرب دورة (كل 5 دقايق).")
         return
     r = requests.post(
-        f"https://api.github.com/repos/{os.environ.get('GITHUB_REPOSITORY', 'DawshaX/XTreNDAW')}"
+        f"https://api.github.com/repos/{os.environ.get('GITHUB_REPOSITORY', 'DawshaX/youtube')}"
         "/actions/workflows/nova.yml/dispatches",
         headers={"Authorization": f"Bearer {gh}",
                  "Accept": "application/vnd.github+json"},

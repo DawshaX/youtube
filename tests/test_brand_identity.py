@@ -16,7 +16,8 @@ LEGACY = ("XDAWNOVA", "XTreNDAW", "XDAW NOVA", "CosmicTube")
 # استثناءات مقصودة: عناوين HTTP الداخلية (مش مخرجات للجمهور) والوثائق
 ALLOWED_LINES = (
     "User-Agent",                       # هيدر HTTP داخلي
-    "DawshaX/XTreNDAW",                 # اسم افتراضي للمستودع (مش مخرَج)
+    "DawshaX/XTreNDAW",                 # اسم قديم مسموح داخل الكود
+    "DawshaX/youtube",                  # اسم المستودع الرسمي (مش مخرَج)
     "releases/download/",               # روابط أصول داخلية
     "callback.html",                    # مسار OAuth الداخلي
 )

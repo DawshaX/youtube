@@ -27,7 +27,9 @@ UPLOADS = "https://uploads.github.com"
 
 
 def _repo() -> str:
-    return settings.get("GITHUB_REPOSITORY") or "DawshaX/XTreNDAW"
+    # المستودع الرسمي للمصنع الجديد (الافتراضي القديم كان اسم المستودع
+    # القديم → تشغيل محلي غلط كان بيكتب في المكان الغلط)
+    return settings.get("GITHUB_REPOSITORY") or "DawshaX/youtube"
 
 
 def _token() -> str:
