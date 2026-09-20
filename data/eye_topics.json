@@ -1,114 +1,5 @@
 [
  {
-  "id": "eye-yEyEnhc8WcY",
-  "topic": "ROBLOX GEARS IRL… 😱 #roblox #gaming #trolling #funny #memes #challenge",
-  "angle": "The gear, instead of destroying the set, releases a hidden stash of Roblox‑themed snacks, ",
-  "origin": "eye",
-  "status": "scripted",
-  "title_ar": "⚙️ عتلة روبلوكس العملاقة في البيت! 😱",
-  "title_en": "Giant Roblox Gear Goes Wild at Home!",
-  "hook_ar": "إنت مش هتصدق اللي حصل لحد ما شوفته!",
-  "hook_en": "You won’t believe what just crashed into my backyard!",
-  "facts_ar": [
-   "روبلكس منصة ألعاب يخلقها المستخدمون وتضم مئات الملايين من اللاعبين النشطين كل شهر.",
-   "التروس داخل روبلوكس تُستعمل في الصنع والقتال داخل اللعبة.",
-   "الفيديوهات القصيرة اللي مدتها أقل من نص دقيقة بتوصل نسبة إكمال أعلى على المنصات الاجتماعية."
-  ],
-  "facts_en": [
-   "Roblox is a user‑generated gaming platform with a massive monthly active community.",
-   "Gears in Roblox serve as crafting and combat items.",
-   "Short‑form videos under half a minute achieve higher completion rates on social platforms."
-  ],
-  "takeaway_ar": {
-   "aql": "الإبداع يخلّي فكرة بسيطة تتحول لتحدي حقيقي.",
-   "qalb": "ضحكة المفاجأة بتقربنا من بعض.",
-   "rouh": "جرّبوا تحدياتكم الخاصة وخليوا المتعة تكبر."
-  },
-  "takeaway_en": {
-   "aql": "Creativity turns a simple idea into a real‑world challenge.",
-   "qalb": "The surprise laugh brings us closer together.",
-   "rouh": "Try your own twists and let the fun grow."
-  },
-  "tags": "روبلكس,تحدي,مقالب,فيديوهات_قصيرة,متعة",
-  "mood": "crazy",
-  "_kind": "eye",
-  "_visual_plan": [
-   {
-    "time": "0:00-0:03",
-    "scene": "لقطة قريبة لعتلة روبلوكس العملاقة تدور بسرعة، إضاءة نيون ساطعة، وتعبير وجه المبدع المصدوم.",
-    "style": "قريب، قطع سريع، إضاءة عالية التباين.",
-    "colors": [
-     "#ff4d4d",
-     "#00ffcc",
-     "#ffffff"
-    ]
-   },
-   {
-    "time": "0:04-0:07",
-    "scene": "العتلة تسقط ببطء على مسار عقبة مصنوع من مكعبات LEGO، الكاميرا تتحرك ببطء لتبرز الدراما.",
-    "style": "حركة بطيئة، لقطات متتابعة، إضاءة خلفية نيون.",
-    "colors": [
-     "#ff4d4d",
-     "#00ffcc"
-    ]
-   },
-   {
-    "time": "0:08-0:11",
-    "scene": "العتلة تنطلق سلاسل من قنابل الفتات المتفجرة، صوت \"بووم!\" يرافق الانفجار مع رسومات روبلوكس متحركة كستيكرات رد فعل.",
-    "style": "قطع سريع، مؤثرات صوتية جليتشية، رسومات متحركة.",
-    "colors": [
-     "#ff4d4d",
-     "#ffffff"
-    ]
-   },
-   {
-    "time": "0:12-0:15",
-    "scene": "المبدع يوجه إصبعه للكاميرا، يكتب نص سريع على الشاشة: \"تقدروا تغلبوا ده؟\" مع أيقونة اشتراك متلألئة.",
-    "style": "لقطة مباشرة، نص متحرك، إضاءة خفيفة للتركيز على الدعوة.",
-    "colors": [
-     "#00ffcc",
-     "#ffffff"
-    ]
-   }
-  ],
-  "_eye": {
-   "videoId": "yEyEnhc8WcY",
-   "url": "https://youtu.be/yEyEnhc8WcY",
-   "sourceTitle": "ROBLOX GEARS IRL… 😱 #roblox #gaming #trolling #funny #memes #challenge",
-   "sourceChannel": "nobrainjames",
-   "sourceViews": 14888313,
-   "dna": {
-    "hook": {
-     "technique": "shock",
-     "what_happens": "The video opens with a real‑world giant Roblox gear spinning wildly in a backyard, accompanied by a startled scream.",
-     "why_it_works": "Immediate visual surprise combined with a familiar game element triggers curiosity and an adrenaline spike, forcing viewers to stay for the payoff."
-    },
-    "pacing": {
-     "estimated_cuts_per_minute": 120,
-     "energy_curve": "sharp rise in the first 3 seconds, plateau with comedic tension, spike at the confetti explosion, quick dip for CTA."
-    },
-    "retention_tricks": [
-     "Immediate visual shock in the first 2 seconds.",
-     "Rapid pacing with >2 cuts per second.",
-     "Use of familiar Roblox branding to attract niche audience.",
-     "Mid‑video twist that subverts expectations.",
-     "Clear CTA with on‑screen text and visual cue."
-    ]
-   }
-  },
-  "_critique": {
-   "score": 78,
-   "weaknesses": [
-    "Hook relies on a verbal promise (“You won’t believe…”) rather than an immediate visual shock and startled scream, reducing the initial adrenaline spike.",
-    "The twist deviates from the DNA’s snack‑reveal payoff; it uses confetti explosions only, missing the surprise reward element.",
-    "Audio plan is absent – no mention of energetic teenage voice, high‑tempo electronic music, or glitch SFX, which are key to the DNA’s energy curve.",
-    "Pacing metrics (cuts per second, energy curve) are not specified, making it unclear if the rapid‑cut rhythm (>2 cuts/sec) is achieved.",
-    "CTA wording (“تقدروا تغلبوا ده؟”) is less compelling than the DNA’s direct challenge (“Can you beat this?”) and may not drive the same level of engagement."
-   ],
-   "verdict": "The proposal mirrors the DNA trend’s visual structure and branding very well, but it falls short on the hook’s shock value, the twist’s payoff, and the audio‑pacing details that give the trend its high‑energy retention. Strengthening those areas would push the score into the high 80s or low 90s."
-  }
- },
- {
   "id": "eye-SqvtLWz9eDg",
   "topic": "Animal Fact Time! 🦑 #learn #animals #kids #shorts",
   "angle": "The squid’s three hearts are shown beating in sync with a dramatic drum hit, turning a sim",
@@ -222,6 +113,237 @@
     "The Arabic title is generic and does not capitalize on the surprise element promised by the hook."
    ],
    "verdict": "The proposal captures the visual DNA of the trend well and delivers a high‑energy short, but the opening hook and pacing of facts need tightening to maximize curiosity and retention."
+  }
+ },
+ {
+  "id": "eye-g8cRXvfHCcs",
+  "topic": "Mecha Chameleon Challenge: Team Sonic vs VERITY – Who Is the Master of Disguise? 🦎🔥 #shorts",
+  "angle": "The chameleon fuses both Sonic and VERITY into a new, ultra‑cool design, proving it out‑di",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي الكماميش المتقلب: سونيك ضد فيرِتي – من هو المايسترو المتنكر؟",
+  "title_en": "Chameleon Showdown: Sonic vs VERITY – Who’s the Master of Disguise?",
+  "hook_ar": "إوعى تفتح عينيك قبل ما تشوف المفاجأة!",
+  "hook_en": "Hold your breath before the twist lands!",
+  "facts_ar": [
+   "الكماميش يقدر يغيّر لون جلده عشان يختبئ أو يتواصل مع بيئته",
+   "سونيك القنفذ السريع من سيفا بيمثل أيقونة ألعاب الفيديو",
+   "فيرِتي شخصية مشهورة بقدرتها على التحول وتغيير الشكل"
+  ],
+  "facts_en": [
+   "Chameleons shift skin color for camouflage and communication",
+   "Sonic the Hedgehog is a legendary fast‑running video‑game hero",
+   "VERITY is known for shape‑shifting and mimic abilities"
+  ],
+  "takeaway_ar": {
+   "aql": "الابتكار يخليك دايمًا خطوة قدام",
+   "qalb": "الضحك مع التحديات بيقربنا من بعض",
+   "rouh": "المغامرة بتضيف للحياة طعم مختلف"
+  },
+  "takeaway_en": {
+   "aql": "Creativity keeps you one step ahead",
+   "qalb": "Laughing through challenges brings us closer",
+   "rouh": "Adventure adds a fresh flavor to life"
+  },
+  "tags": "تحدي,كماميش,سونيك,فيرِتي,شورتس,متعة",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "تكبير سريع على كماميش معدني يلمع، لون يلمع ويتحول بين سكين وفيرِتي، سؤال جريء يطير على الشاشة",
+    "style": "تقريب ديناميكي، فلاش ألوان عالي التباين، نص واضح على الشاشة",
+    "colors": [
+     "#00FF00",
+     "#FF4500"
+    ]
+   },
+   {
+    "time": "0:04-0:08",
+    "scene": "شاشة مقسومة: سونيك على اليسار، فيرِتي على اليمين، الكماميش ينسخ حركاتهم بسرعة",
+    "style": "تقسيم إبداعي، وميض سريع، إيقاع بصري ثابت",
+    "colors": [
+     "#1E90FF",
+     "#FF4500"
+    ]
+   },
+   {
+    "time": "0:09-0:12",
+    "scene": "تأثير تشويش يفضح الكماميش بشكل هجين جديد، طابع \"ماستر!\" يضرب الشاشة بجرأة",
+    "style": "تأثير تشويش بكسل، طباعة سميكة، صدمة بصرية",
+    "colors": [
+     "#00FF00",
+     "#1E90FF"
+    ]
+   },
+   {
+    "time": "0:13-0:15",
+    "scene": "نداء للمتابعين: \"اكتب لنا أحلى إخفاء شوفته\" مع أيقونة نار متلألئة وإعادة سريعة للتحول",
+    "style": "نص متحرك، إيموجي نار، تكرار قصير للتحويل",
+    "colors": [
+     "#FF4500"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "g8cRXvfHCcs",
+   "url": "https://youtu.be/g8cRXvfHCcs",
+   "sourceTitle": "Mecha Chameleon Challenge: Team Sonic vs VERITY – Who Is the Master of Disguise? 🦎🔥 #shorts",
+   "sourceChannel": "BH_Toon",
+   "sourceViews": 13825693,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "A bright, metallic chameleon morphs instantly between Sonic and VERITY skins while a bold text pops: \"Who is the Master of Disguise?\"",
+     "why_it_works": "Instant visual novelty paired with a direct question creates immediate curiosity and forces the viewer to stay for the answer."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "sharp rise (0‑4s) → steady high (4‑12s) → peak at twist (12s) → quick drop into CTA (12‑15s)"
+    },
+    "retention_tricks": [
+     "Immediate visual hook with bright color shift",
+     "Question posed in the first 2 seconds",
+     "Fast‑paced cuts to prevent boredom",
+     "Surprise hybrid reveal as a twist",
+     "Clear CTA encouraging comments before the video ends"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [
+    "Hook is delivered only as spoken text (“Hold your breath…”) rather than an immediate visual curiosity; it loses the instant visual novelty of the DNA hook.",
+    "No audio plan – missing narrator style, music, and sync cues that are essential for the high‑energy pacing.",
+    "Mood labeled “warm” conflicts with the high‑energy, neon‑glitch aesthetic of the DNA trend.",
+    "Added takeaways (aql, qalb, rouh) are unnecessary for a 15‑second short and dilute the focus on the core visual surprise.",
+    "Timing of the third beat shifts to 0:09‑0:12 (vs. 0:08‑0:12 in the DNA), slightly breaking the tight rhythm."
+   ],
+   "verdict": "The proposal captures the core visual DNA of the trend very well, but it falls short on audio execution, mood consistency, and brevity of messaging. Tightening the hook to be purely visual, adding a detailed audio strategy, and removing extraneous takeaways would push this closer to a perfect short."
+  }
+ },
+ {
+  "id": "eye-YZWmX1rrfvA",
+  "topic": "GUESS THE DRINK CHALLENGE",
+  "angle": "The drinks are deliberately mismatched with their appearances (e.g., a bright orange juice",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي مشروب مجهول",
+  "title_en": "Mystery Drink Challenge",
+  "hook_ar": "جاهز تخمن المشروب قبل ما أذوقه؟",
+  "hook_en": "Ready to guess the drink before I taste it?",
+  "facts_ar": [
+   "قناة IShowSpeed تحتل مكانة رائدة في عالم التحديات",
+   "التحديات التي تجذب الانتباه تعتمد على عنصر المفاجأة",
+   "التجارب الحسية تتأثر بالضوضاء واللمس أكثر من الطعم"
+  ],
+  "facts_en": [
+   "IShowSpeed’s channel is a leading name in the challenge genre",
+   "Eye‑catching challenges rely heavily on surprise",
+   "Sensory experiments are influenced more by sound and touch than by taste"
+  ],
+  "takeaway_ar": {
+   "aql": "المفاجآت تحفز عقلنا للبحث عن إجابات",
+   "qalb": "الضحك يحمس قلبنا ويخلي التجربة ممتعة",
+   "rouh": "التجارب المشتركة تقوي الروح الجماعية"
+  },
+  "takeaway_en": {
+   "aql": "Surprises spark our brain to seek answers",
+   "qalb": "Laughter warms our hearts and makes the experience enjoyable",
+   "rouh": "Shared experiences strengthen the group spirit"
+  },
+  "tags": "تحدي,مغامرة,مفاجأة,مشروبات,مغامرات,حماس",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "Speed يظهر مع عينيه ملقاة، يحمل مشروب مغطى، يرفع إيموجي سؤال",
+    "style": "صوت عالي، لقطات قريبة، ألوان حمراء وذهبية",
+    "colors": [
+     "#FF0000",
+     "#FFD700"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "مونتاج سريع لثلاثة مشروبات غامضة على خلفية إيقاعية، كل مشروب يلمع بوميض ساطع",
+    "style": "قطع سريعة 2‑3 ثوانٍ، حركة كاميرا ديناميكية، ألوان ساطعة",
+    "colors": [
+     "#00FF00",
+     "#FF00FF",
+     "#00FFFF"
+    ]
+   },
+   {
+    "time": "0:08-0:12",
+    "scene": "Speed يضع العدّاد الرقمي 5 ثوانٍ على الشاشة ويقول: \"هل تستطيع التخمين؟\"",
+    "style": "تأثير عدّاد متوهج، موسيقى تصاعدية، إضاءة خافتة",
+    "colors": [
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:13-0:18",
+    "scene": "يأخذ رشفة من المشروب، صوت شفاه مبلل (SFX) وتعبير وجه مفاجئ",
+    "style": "لقطة قريبة للوجه، إضاءة سريعة التغير لتظهر رد الفعل",
+    "colors": [
+     "#FFAA00"
+    ]
+   },
+   {
+    "time": "0:19-0:22",
+    "scene": "Reveal: المشروب يتحول إلى صودا حارة تغير لونها إلى الأحمر، Speed يضحك ويكشف المكوّن",
+    "style": "تأثير تحول سائل، موسيقى مفاجأة، إضاءة حمراء ساطعة",
+    "colors": [
+     "#FF0000"
+    ]
+   },
+   {
+    "time": "0:23-0:27",
+    "scene": "CTA: دعوة المتابعين الاشتراك، ترك تعليق بتخميناتهم للـ 5 مشروبات القادمة، وعرض عدّاد للـ 10 ثوانٍ للمتابعة",
+    "style": "نص متحرك، أيقونات تفاعل، موسيقى حماسية خفيفة",
+    "colors": [
+     "#00FF00"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "YZWmX1rrfvA",
+   "url": "https://youtu.be/YZWmX1rrfvA",
+   "sourceTitle": "GUESS THE DRINK CHALLENGE",
+   "sourceChannel": "IShowSpeed",
+   "sourceViews": 13473450,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "Speed appears blindfolded, holds a mysterious drink and asks the audience to guess what it is before he does.",
+     "why_it_works": "It creates immediate curiosity and invites viewers to participate mentally, triggering the brain's prediction reward loop."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "sharp rise at 0:00, spikes at each sip/reaction, brief dip during reveal, final surge at CTA"
+    },
+    "retention_tricks": [
+     "Opening question that forces viewers to guess",
+     "Rapid cuts to prevent boredom",
+     "Unexpected taste twists for surprise",
+     "On‑screen countdown creating urgency",
+     "End‑screen tease of a second round"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 50,
+   "rewritten": true,
+   "weaknesses": [
+    "Missing key beats: no montage of drinks, no sip/reaction, no reveal, no CTA, no twist or payoff.",
+    "Visual plan only covers the first 3 seconds; lacks pacing, cut density, and energy curve details.",
+    "No countdown timer or urgency element to boost retention.",
+    "Audio strategy (voice style, music, SFX) is absent, so the energy may not sustain.",
+    "Retention tricks such as teaser for next round or on‑screen countdown are not included.",
+    "Overall structure is incomplete, making it difficult to gauge viewer engagement throughout the video."
+   ]
   }
  }
 ]

@@ -1,5 +1,5 @@
 {
- "cycles": 14,
+ "cycles": 15,
  "renders": [
   {
    "at": "00:19",
@@ -51,6 +51,12 @@
    "video": "/home/runner/work/youtube/youtube/content/vids/eye-EvdXAoJjHKQ.mp4",
    "ok": true,
    "sec": 468
+  },
+  {
+   "at": "01:06",
+   "video": "/home/runner/work/youtube/youtube/content/vids/eye-yEyEnhc8WcY.mp4",
+   "ok": true,
+   "sec": 530
   }
  ],
  "publish_attempts": [
@@ -121,6 +127,12 @@
    "topic": "eye-EvdXAoJjHKQ",
    "ok": false,
    "why": "daily_cap 6/6"
+  },
+  {
+   "at": "01:06",
+   "topic": "eye-yEyEnhc8WcY",
+   "ok": false,
+   "why": "daily_cap 6/6"
   }
  ],
  "radar": [
@@ -188,6 +200,10 @@
   },
   {
    "at": "23:00",
+   "ok": true
+  },
+  {
+   "at": "01:06",
    "ok": true
   }
  ],
@@ -261,9 +277,14 @@
    "at": "23:00",
    "rc": 0,
    "note": "eye: 1/2 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "01:06",
+   "rc": 0,
+   "note": "eye: 2/2 فيديو اتشاف وموضوعات اتكتبت"
   }
  ],
- "last_cycle_at": "2026-09-19 23:00:45",
+ "last_cycle_at": "2026-09-20 01:06:30",
  "last_commit": "saved",
  "last_error": "2026-09-19 00:34:44",
  "dubs": [
@@ -285,6 +306,11 @@
   },
   {
    "at": "23:00",
+   "ok": false,
+   "err": "KeyError"
+  },
+  {
+   "at": "01:06",
    "ok": false,
    "err": "KeyError"
   }
