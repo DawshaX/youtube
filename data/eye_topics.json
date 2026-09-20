@@ -861,5 +861,123 @@
    ],
    "verdict": "الاقتراح يلتزم بشكل جيد بالهيكل الأساسي للـ DNA ويستغل معظم العناصر البصرية والنصية المطلوبة، لكن يحتاج إلى تعديل النغمة الموسيقية واللغوية وتوحيد المزاج مع التوتر المطلوب لضمان أقصى تأثير وجذب المشاهد."
   }
+ },
+ {
+  "id": "eye-OfK6MYXAPNA",
+  "topic": "Un taxista intentó estafarlos pero el karma le dio su merecido 😱 #sabiasque #curiosidades",
+  "angle": "El taxista es atrapado por la policía justo cuando está a punto de cobrar de más, demostra",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "السايق الماحس: لما الكرمة تلحقه",
+  "title_en": "When Karma Catches the Cheat Driver",
+  "hook_ar": "إوعى تِقع في الفخ، ده نصيبك!",
+  "hook_en": "Watch out, the scammer's plan backfires fast!",
+  "facts_ar": [
+   "بعض السواقين بيزوّدوا الأسعار للركاب الأجانب.",
+   "الكرمة فكرة بتقول إن كل فعل بجيب نتيجة.",
+   "الشرطة في مصر بتتدخل لو حد قدم شكوى ضد سائق بيستغل الفلوس."
+  ],
+  "facts_en": [
+   "Some drivers inflate fares for tourists.",
+   "Karma means every action returns a consequence.",
+   "Egyptian police can act on passenger complaints about fraudulent drivers."
+  ],
+  "takeaway_ar": {
+   "aql": "الاحتيال مش بيوصل بعيد",
+   "qalb": "الكرمة دايمًا بتدينا أمان",
+   "rouh": "خليك واعي ومتابع كل تفاصيل الرحلة"
+  },
+  "takeaway_en": {
+   "aql": "Scams never go far",
+   "qalb": "Karma always protects us",
+   "rouh": "Stay alert and watch every ride detail"
+  },
+  "tags": "تاكسي,كلمة,كاريزما,حكاية,مصر",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لوقطة سريعة للسايق وهو يرفع علامة “سعر منخفض” والركاب يدخلوا بحماس.",
+    "style": "cut سريع مع زوم ديناميكي وإحساس يدوي",
+    "colors": [
+     "#FF4C4C",
+     "#FFD700",
+     "#1A1A1A"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "قرب من وش السائق وهو يهمس بصفقة “خاصة” للركاب.",
+    "style": "قريب شديد مع إضاءة شاحبة ونص متحرك يبرز الكلام",
+    "colors": [
+     "#FF4C4C",
+     "#1A1A1A"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "موبايل يفتح على تطبيق يوري الفرق بين السعر المعلن والسعر الحقيقي.",
+    "style": "قَطع سريع للسكرين مع إيموجي تحذير وسعر متقابل",
+    "colors": [
+     "#FFD700",
+     "#1A1A1A"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "الإشعار يرن على موبايل السايق: “الشرطة في الطريق”.",
+    "style": "صوت تنبيه عالي، إضاءة سريعة على شاشة الموبايل، شارة شرطة متحركة",
+    "colors": [
+     "#FF4C4C",
+     "#1A1A1A"
+    ]
+   },
+   {
+    "time": "0:16-0:19",
+    "scene": "نهاية دافية مع نص متحرك يدعو المتابعين لعدم الوقوع في الفخوك.",
+    "style": "موسيقى هادئة بعد صمت فجائي، نص أبيض على خلفية حمراء",
+    "colors": [
+     "#FF4C4C"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "OfK6MYXAPNA",
+   "url": "https://youtu.be/OfK6MYXAPNA",
+   "sourceTitle": "Un taxista intentó estafarlos pero el karma le dio su merecido 😱 #sabiasque #curiosidades",
+   "sourceChannel": "Klanir",
+   "sourceViews": 3957783,
+   "dna": {
+    "hook": {
+     "technique": "shock",
+     "what_happens": "Un taxista intenta estafar a los pasajeros y de repente su propio plan se vuelve contra él.",
+     "why_it_works": "El choque inicial genera curiosidad inmediata y activa la respuesta emocional del espectador, obligándolo a quedarse para ver la consecuencia."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "rising‑fast‑peak‑quick‑drop‑spike‑steady"
+    },
+    "retention_tricks": [
+     "Hook visual de “oferta imposible” en los primeros 3 segundos",
+     "Uso de texto grande y emojis para reforzar la información clave",
+     "Corte inesperado al móvil que revela la estafa",
+     "Cliffhanger con notificación de la policía justo antes del final"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [
+    "Hook is framed as a warning rather than a true \"shock\" moment; it may not generate the immediate adrenaline spike the DNA trend relies on.",
+    "Audio specifications are missing – no voice‑over style, music, or sound‑effects are defined, which are crucial for the energy curve described in the DNA.",
+    "Retention tricks such as large emojis, animated price‑tags, or a cliff‑hanger pause before the CTA are not explicitly mentioned.",
+    "The mood tag \"crazy\" could clash with the dramatic, suspenseful tone of the original audio‑visual language.",
+    "No explicit mention of on‑screen text density or sticker usage, which are part of the DNA visual language."
+   ],
+   "verdict": "The proposal captures the visual and narrative skeleton of the DNA trend very well, but it falls short on the audio layer and the high‑impact shock hook that drive retention. Adding a dramatic voice‑over, bass‑heavy suspense music, and explicit emoji/sticker cues would bring it much closer to the original formula."
+  }
  }
 ]
