@@ -138,7 +138,11 @@ gitignore = read(".gitignore")
 # كوكيز العين: الملف بيتكتب بصلاحيات المالك فقط — fchmod على الواصف
 # (أأمن من chmod على المسار: بيمنع سباق الأسماء)
 c("كوكيز العين 0600", "fchmod(fd, 0o600)" in eye or "chmod(0o600)" in eye)
-c("كوكيز الدكتور 0600 + تنظيف مضمون", "chmod(p, 0o600)" in doctor and "finally:" in doctor)
+# الدكتور بقى يختبر **نفس** مسار إنتاج الفيديو (eye._load_cookies) — يعني
+# صلاحيات 0600 والتنظيف المضمون بقوا في مكان واحد محروس (eye).
+c("كوكيز الدكتور بيمشي على مسار الإنتاج + تنظيف مضمون",
+  "_load_cookies" in doctor and "finally:" in doctor
+  and "atexit.register" in eye and "fchmod(fd, 0o600)" in eye)
 # الأنماط عندنا أوسع من نص الباتش: secrets* / cookies* / **/cookies*
 c("gitignore: secrets و cookies",
   ("secrets" in gitignore and "cookies" in gitignore)
