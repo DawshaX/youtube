@@ -151,6 +151,14 @@
    "duration": 56.93,
    "at": "2026-09-20 05:45",
    "urls": {}
+  },
+  "auto-45376869d8": {
+   "title": "ليه الكل بيبحث عن «ufc» دلوقتي؟",
+   "fingerprint": "45376869d8a6e5ab",
+   "video": "/home/runner/work/youtube/youtube/content/vids/auto-45376869d8.mp4",
+   "duration": 65.1,
+   "at": "2026-09-20 06:36",
+   "urls": {}
   }
  },
  "fingerprints": [
@@ -172,7 +180,8 @@
   "922feda5251e1409",
   "542de4e40a7464da",
   "90035d6ff539f952",
-  "ee6601fb45df5fc9"
+  "ee6601fb45df5fc9",
+  "45376869d8a6e5ab"
  ],
  "last_kind": "trend"
 }
