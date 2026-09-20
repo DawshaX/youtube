@@ -23,6 +23,18 @@
    "err": "quota_guard",
    "at": "2026-09-20 20:00",
    "duration": 22.5
+  },
+  {
+   "id": "ayah-2-153",
+   "kind": "ayah",
+   "theme": "صبر",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1789934576/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1789934787.mp4",
+   "err": "quota_guard",
+   "at": "2026-09-20 20:06",
+   "duration": 26.1
   }
  ],
  "longs": [],
