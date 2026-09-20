@@ -1096,5 +1096,240 @@
    ],
    "verdict": "The proposal aligns closely with the DNA trend in hook, structure, visuals, and retention tactics. With minor refinements to audio cues, cut frequency, and color consistency, it would fully embody the DNA formula."
   }
+ },
+ {
+  "id": "eye-aUYplFPy_iI",
+  "topic": "IDL 2026 LA Series Trailer | Presented by @Honda Stage",
+  "angle": "The Honda Stage bike transforms into a glowing dance floor, turning the vehicle into the s",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "الرقص والسرعة يلتقوا في ساحة النيون مع هوندا ستيج",
+  "title_en": "When Dance Meets Speed on the Neon Stage with Honda Stage",
+  "hook_ar": "استنوا! مش بس رقص، شوفوا انفجار النيون اللي يلتقط الأنفاس",
+  "hook_en": "Hold on! It’s not just dance, watch the neon explosion that takes your breath away",
+  "facts_ar": [
+   "IDL معناها الرابطة الدولية للرقص",
+   "هوندا ستيج شريك التنقل الرسمي للبطولة",
+   "الإضاءة النيونية بتظهر في كل حملات IDL"
+  ],
+  "facts_en": [
+   "IDL stands for International Dance League",
+   "Honda Stage is the official mobility partner of the league",
+   "Neon lighting is a recurring visual motif in IDL promos"
+  ],
+  "takeaway_ar": {
+   "aql": "الابتكار بيظهر لما ندمج الحركة مع التكنولوجيا",
+   "qalb": "الرقص بيجمعنا على إيقاع واحد مهما كان الفرق بيننا",
+   "rouh": "خلّي روحك تتنفس بحرية وتجرّب الحماس الجديد"
+  },
+  "takeaway_en": {
+   "aql": "Innovation shines when motion meets tech",
+   "qalb": "Dance unites us on a single beat regardless of differences",
+   "rouh": "Let your spirit breathe free and feel the fresh rush"
+  },
+  "tags": "رقص,هوندا,نيوان,إيديال,مفاجأة",
+  "mood": "high-energy neon",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "انفجار سريع لأضواء النيون، رقصانين يلمعون بأحذية لامعة، وشعار هوندا يلمع فجأة",
+    "style": "قطع سريعة عالية السرعة مع إضاءة متضادة",
+    "colors": [
+     "#0FF0FF",
+     "#FF00FF",
+     "#000000"
+    ]
+   },
+   {
+    "time": "0:04-0:08",
+    "scene": "نص متحرك يعلن عن سلسلة لوس أنجلوس، يتزامن مع دفقة طبلة",
+    "style": "تايبوجرافي كينيتية بوميض إيقاعي",
+    "colors": [
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:08-0:12",
+    "scene": "عرض لحركات رقص مميزة: خطوات سريعة، دوران، وتكوين جماعي، كل لحظة بطيء حركة خفيف",
+    "style": "مزيج بين جومب‑كاتس وسلو موشن",
+    "colors": [
+     "#0FF0FF"
+    ]
+   },
+   {
+    "time": "0:12-0:16",
+    "scene": "مركبة هوندا ستيج تدخل المشهد، تترك خلفها خيوط نيون تتبع العجلات وتلتقي بالراقصين",
+    "style": "تلاعب بصري غير متوقع بين التقنية والإنسان",
+    "colors": [
+     "#FF00FF",
+     "#000000"
+    ]
+   },
+   {
+    "time": "0:16-0:20",
+    "scene": "نداء للمتابعة: \"عرض محدود حتى 12 ديسمبر، الرابط في البايو\" مع إيقاع ختامي هادئ",
+    "style": "نص واضح على خلفية نيون، مع أصوات تصفيق الجمهور",
+    "colors": [
+     "#FFFFFF",
+     "#0FF0FF"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "aUYplFPy_iI",
+   "url": "https://youtu.be/aUYplFPy_iI",
+   "sourceTitle": "IDL 2026 LA Series Trailer | Presented by @Honda Stage",
+   "sourceChannel": "IDL: international dance league",
+   "sourceViews": 3726774,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "A flash of neon-lit dancers appears in a dark warehouse, instantly cutting to a sleek Honda Stage bike revving beside them.",
+     "why_it_works": "The sudden contrast of high‑energy dance and a recognizable brand creates immediate intrigue and triggers the viewer's curiosity to stay."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 30,
+     "energy_curve": "sharp rise in the first 5 seconds, plateau with rhythmic beats, climax at the brand‑dance fusion, quick dip into CTA."
+    },
+    "retention_tricks": [
+     "Ultra‑fast opening cuts (<1 s) to lock attention",
+     "Kinetic text that appears exactly on beat",
+     "Brand‑dance fusion twist at the midpoint",
+     "Time‑sensitive CTA creating urgency"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 71,
+   "rewritten": true,
+   "weaknesses": [
+    "الـ hook يعتمد على النص فقط ولا يستخدم تقنية \"visual curiosity\" (لا يوجد مشهد بصري فوري يجذب الانتباه).",
+    "المزاج المحدد بـ \"warm\" يتعارض مع الطاقة الحادة والنيون الساطع في الـ DNA.",
+    "غياب واضح لتفاصيل الصوت: لا يُذكر نوع الموسيقى، مؤثرات الصوت، أو نمط الصوت (voice‑over/none).",
+    "لا توجد أرقام حول معدل القطعات في الدقيقة أو منحنى الطاقة، ما يجعل تقييم الإيقاع غير مكتمل.",
+    "عدم ذكر استراتيجيات الاحتفاظ (retention tricks) مثل توقيت النص على الإيقاع أو CTA مستند إلى FOMO بشكل صريح.",
+    "الـ CTA يفتقر إلى عنصر الوقت المحدد (مثلاً تاريخ محدد) الذي يعزز الإلحاح في الـ DNA."
+   ]
+  }
+ },
+ {
+  "id": "eye-aYDtME-_wSk",
+  "topic": "بعمرك حطيت تلفونك عالشاحن واكتشفت انه مايشحن😂❤️ #اكسبلور #تجارب #معلومات #شاحن #ضحك #سوريا",
+  "angle": "الكابل كان موصول بالمقابل العكسي أو الشاحن معطل، ما يجعل المشهد مضحكاً ويعطي حلًا بسيطًا.",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "لما تشبّك الشاحن وتلاقيه مش شغال 😂",
+  "title_en": "When the charger plugs in but refuses to charge 😂",
+  "hook_ar": "إنت شايف الشاحن يشتغل؟",
+  "hook_en": "Think your charger is working?",
+  "facts_ar": [
+   "الكابل غير موصول بشكل صحيح قد يمنع الشحن",
+   "الشواحن المكسورة أو غير المتوافقة قد لا تشحن الهاتف",
+   "تأكد إن الطرف في الاتجاه الصحيح قبل ما تستعجل"
+  ],
+  "facts_en": [
+   "A loosely connected cable can stop the charge",
+   "Broken or incompatible chargers often fail to power the phone",
+   "Make sure the plug is inserted the right way before panicking"
+  ],
+  "takeaway_ar": {
+   "aql": "التحقق من التوصيل أول خطوة",
+   "qalb": "مافيش داعي للقلق، الحل بسيط",
+   "rouh": "خدها ضحكة وتعلم حاجة جديدة"
+  },
+  "takeaway_en": {
+   "aql": "Check the connection first",
+   "qalb": "No need to panic, it’s a simple fix",
+   "rouh": "Turn it into a laugh and learn something new"
+  },
+  "tags": "شاحن, هاتف, تجربة, ضحك, نصيحة",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة سريعة للهاتف على الطاولة والشاحن موصول، إضاءة طبيعية هادئة",
+    "style": "قرب سريع على المشهد العام لتحديد السياق",
+    "colors": [
+     "#ffcc00",
+     "#1a1a1a",
+     "#ffffff"
+    ]
+   },
+   {
+    "time": "0:03-0:06",
+    "scene": "تكبير على أيقونة البطارية ثابتة أو بتنزل، مع صوت «بوز» كوميدي",
+    "style": "إبراز الفشل البصري وزيادة التوتر",
+    "colors": [
+     "#ffcc00",
+     "#1a1a1a"
+    ]
+   },
+   {
+    "time": "0:06-0:09",
+    "scene": "المُقدِّم سامي يرفع عينه للكاميرا ويضحك، نص متحرك «ما صار معاك؟»",
+    "style": "تفاعل شخصي مع المشاهد وإضافة سؤال بصري",
+    "colors": [
+     "#ffffff",
+     "#1a1a1a"
+    ]
+   },
+   {
+    "time": "0:09-0:12",
+    "scene": "لقطة سريعة للكابل وهو موصول بالمقابل العكسي أو معطّل، إيموجي ضاحك وسهم يشير للخطأ",
+    "style": "كشف السبب البسيط مع لمسة فكاهية",
+    "colors": [
+     "#ffcc00",
+     "#ffffff"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "نص متحرك يدعو المتابعة «تابعوا للمزيد من التجارب المضحكة!»، إشارة إلى زر المتابعة",
+    "style": "دعوة واضحة للتفاعل مع ختام دافي",
+    "colors": [
+     "#ffcc00",
+     "#1a1a1a"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "aYDtME-_wSk",
+   "url": "https://youtu.be/aYDtME-_wSk",
+   "sourceTitle": "بعمرك حطيت تلفونك عالشاحن واكتشفت انه مايشحن😂❤️ #اكسبلور #تجارب #معلومات #شاحن #ضحك #سوريا",
+   "sourceChannel": "Sami wasem | سامي وسيم",
+   "sourceViews": 3580125,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "المستخدم يربط هاتفه بالشاحن ويظهر أن الشاحن لا يشحن رغم توصيله، مع تعبيرات وجه مضحكة وصوت ضحك خلفي.",
+     "why_it_works": "يخلق فجأة غير متوقعة بين توقع الشحن السريع والنتيجة العكسية، ما يجذب الانتباه فوراً ويثير الفضول لمعرفة السبب."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "ارتفاع سريع في الطاقة خلال الـ0-3 ثوانٍ (hook)، استقرار متوسط للـ3-9 ثوانٍ (escalation & twist)، ثم قمة طاقة في الـ9-12 ثوانٍ (payoff) وتنخفض تدريجياً مع CTA."
+    },
+    "retention_tricks": [
+     "استخدام سؤال بصري «ما صار معاك؟» لتشجيع المشاهد على الاستمرار للبحث عن الجواب.",
+     "إدراج نص متحرك سريع يجذب العين ويزيد من الوقت المشاهد على الشاشة."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 85,
+   "weaknesses": [
+    "غياب تفاصيل الصوت: لا يُذكر نمط الصوت، الموسيقى أو مؤثرات الصوت (SFX) المطلوبة",
+    "عدم ذكر معدل القطعات المتوقعة (estimated_cuts_per_minute) أو منحنى الطاقة التفصيلي",
+    "العنوان قد يكون أقل إغراءً مقارنةً بالـ hook الأصلي الذي يخلق توتراً فوريًا",
+    "الـ twist/payoff غير موضح صراحةً في النص (مثلاً «الكابل موصول بالمقابل العكسي») وقد يحتاج لتأكيد بصري أقوى",
+    "قليل من الابتكار؛ الاقتراح يكرر كثيرًا ما هو موجود في الـ DNA دون إضافة عنصر جديد"
+   ],
+   "verdict": "الاقتراح يُطابق معظم عناصر الـ DNA الترند ويُظهر تنفيذًا قويًا من حيث البنية البصرية والرسائل، لكن يحتاج إلى تحسينات في الجانب السمعي وتفاصيل الإيقاع لإكمال التجربة وجعلها أكثر جذبًا."
+  }
  }
 ]
