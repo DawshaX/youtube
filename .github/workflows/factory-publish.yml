@@ -42,7 +42,8 @@ concurrency:
 jobs:
   cycle:
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    # الدورة + نوم النبضة (45 دقيقة كحد أقصى) — لازم أكبر من الاتنين مع بعض
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
 
@@ -197,6 +198,30 @@ jobs:
             echo "دفع محاولة $attempt فشلت — إعادة بعد 5 ثوانٍ…"
             sleep 5
           done
+
+      # ⏱️ نبضة الساعة: جدولة GitHub نفسها مش موثوقة على المستودعات العامة
+      # (بق حقيقي 2026-09-20: الدورة الساعية اتنفذت 06:12 و12:18 بس في يوم
+      #  كامل، والحارس نفسه اتأخر 4 ساعات). الحل: الدورة تشغّل اللي بعدها.
+      - name: ⏱️ نبضة الساعة — شغّل الدورة الجاية (نشر ساعي مضمون)
+        if: always() && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # كمّل ساعة كاملة من بداية الدورة (بس ما ننامش أكتر من 45 دقيقة)
+          START=$(date -d "${{ github.run_started_at }}" +%s)
+          NOW=$(date +%s)
+          SLEEP=$(( 3600 - (NOW - START) ))
+          [ "$SLEEP" -gt 2700 ] && SLEEP=2700
+          [ "$SLEEP" -lt 0 ] && SLEEP=0
+          echo "⏱️ الدورة خدت $(( NOW - START )) ثانية — هستنى ${SLEEP}ث وبعدين أشغّل الجاية"
+          sleep "$SLEEP"
+          if [ "$SLEEP" -ge 2700 ]; then
+            echo "⚠️ الدورة خدت أكتر من 45 دقيقة — الدورة الجاية فورًا"
+          fi
+          gh workflow run factory-publish.yml --repo "$GITHUB_REPOSITORY" --ref main \
+            -f dry_run=false -f force=false -f mode=auto
+          echo "✓ الدورة الجاية اتبعتت (الساعية مضمونة بلا جدولة)"
 
       - name: ملخص الدورة + الدليل البصري
         if: always()
