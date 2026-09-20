@@ -18,16 +18,28 @@ def _token():
         "grant_type": "refresh_token"}, timeout=30)
     return r.json().get("access_token") if r.ok else None
 
-def publish(video_path, title, caption, tags, cover=None):
+def publish(video_path, title, caption, tags, cover=None,
+            synthetic: bool = False, category: str = "27",
+            publish_at: str | None = None):
+    """يرفع الفيديو ويرجّع (رابط، خطأ).
+
+    synthetic: إفصاح إلزامي عن أي وسائط معدّلة/مولّدة (سياسة يوتيوب 2026).
+    publish_at: نشر مجدول (UTC ISO) — يخلي الفيديو Private لحد الموعد.
+    """
     if not settings.has_youtube():
         return None, "no_credentials"
     tok = _token()
     if not tok:
         return None, "refresh_failed"
+    _status = {"privacyStatus": "public", "selfDeclaredMadeForKids": False,
+               "containsSyntheticMedia": bool(synthetic)}
+    if publish_at:
+        _status["privacyStatus"] = "private"
+        _status["publishAt"] = publish_at
     meta = {"snippet": {"title": title[:100], "description": caption[:4900],
-                        "tags": tags[:15], "categoryId": "27",
+                        "tags": tags[:15], "categoryId": category,
                         "defaultLanguage": "ar", "defaultAudioLanguage": "ar"},
-            "status": {"privacyStatus": "public", "selfDeclaredMadeForKids": False}}
+            "status": _status}
     init = requests.post(
         "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
         headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json",

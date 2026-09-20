@@ -25,6 +25,10 @@ state/*
 !state/reciter_badlist.json
 !state/reciter_proven.json
 !state/last_cycle.json
+!state/noor_state.json
+!state/noor_pool.json
+state/noor_cache/hadith-*.json
+!state/noor_cache/h-*.json
 !state/latest_sheet.jpg
 content/vids/*-cover.png
 data/eye/*/video.mp4

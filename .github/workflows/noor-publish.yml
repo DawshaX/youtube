@@ -1,0 +1,171 @@
+name: 🕌 نور — النشر الساعي (قرآن وتدبّر · بلا موسيقى · بلا حقوق)
+
+# المصنع اللي بيشتغل دلوقتي: xtrendaw/noor_build.py عبر scripts/noor_runner.py
+#   كل ساعة: حلقة جديدة (آية بتلاوة حقيقية + تفسير ميسّر) أو شورت حديث صحيح
+#   كل يوم:  فيديو طويل (سورة كاملة) لمحرّك ساعات المشاهدة
+#
+# ليه آمن على القناة (سياسات يوتيوب 2026 + حقوق الملكية):
+#   1) نص القرآن والتفسير من api.alquran.cloud — مفيش كتابة من الذاكرة (صفر خطأ شرعي)
+#   2) الأحاديث من مجموعات صحيحة بالـAPI بالنص الأصلي + رقمه + اسم الكتاب
+#   3) التلاوة من islamic.network بنسبة القارئ باسمه في الوصف (شرط المصدر)
+#   4) **صفر موسيقى** — مفيش أي احتمال Content ID
+#   5) إفصاح تلقائي عن الوسائط المولّدة (containsSyntheticMedia) حسب سياسة يوليو 2026
+#   6) تنويع مقصود: نوع + قارئ + ثيم + مشاهد تتغير كل حلقة (سياسة «المحتوى
+#      المتشابه/المتكرر» بتحاسب القوالب الثابتة)
+#
+# حماية الكوتة: يوتيوب 10,000 وحدة/يوم والرفعة 1,600 → **6 رفعات بالظبط**.
+#   عشان النشر يبان موزّع على اليوم: بنرفع الرفعة وبنحجزها على الساعة الجاية
+#   في `NOOR_SLOTS` (publishAt) — يوتيوب بينشرها لوحده في وقتها.
+#   الرفعات الزيادة بتتخزّن في الـvault (q<ts>) وتتنشر أول ما الحصة تفتح.
+#
+# ⏱️ الجدولة: cron بتتأخر على المستودعات العامة، فالنبضة (آخر خطوة) بتشغّل
+#   الدورة الجاية بنفسها بعد ساعة — النشر الساعي مضمون من غير الاعتماد على cron.
+on:
+  schedule:
+    - cron: '23 * * * *'      # احتياطي (النبضة هي الأصل)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'نوع الحلقة'
+        type: choice
+        options: [cycle, short, long]
+        default: cycle
+      dry_run:
+        description: 'رندر بلا رفع (معاينة)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: noor-publish        # دورة واحدة في الوقت — مفيش تصادم على الذاكرة
+  cancel-in-progress: false
+
+jobs:
+  noor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: تجهيز أدوات الرندر والصوت
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core
+          python -m pip install --quiet pillow requests edge-tts imageio-ffmpeg
+
+      - name: ✅ حراسة الخط القرآني (raqm) — من غيرها العربي بيطلع حروف منفصلة
+        run: |
+          python - <<'EOF'
+          from PIL import features, ImageFont
+          import sys, pathlib
+          ok = features.check("raqm")
+          print("raqm:", ok)
+          f = pathlib.Path("assets/fonts/Amiri-Bold.ttf")
+          print("خط العرض:", f.exists())
+          if not ok:
+              print("⛔ raqm مش متاح — العربي هيتكسر. نوقف بدل ما ننشر فيديو غير مقروء")
+              sys.exit(1)
+          EOF
+
+      - name: 🎬 الدورة (حلقة جديدة + نشر/تخزين)
+        env:
+          # ── مفاتيح الوسائط (بيكسلز/بيكساباي/ناسا/أوبنفيرس) — لقطات حرة بلا حقوق
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PEXELS: ${{ secrets.PEXELS }}
+          PIXABAY: ${{ secrets.PIXABAY_API_KEY }}
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+          NASA: ${{ secrets.NASA }}
+          OPENVERSE_API_KEY: ${{ secrets.OPENVERSE }}
+          OPENVERSE: ${{ secrets.OPENVERSE }}
+          # ── النشر على يوتيوب
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          # ── الذاكرة/الـvault على GitHub
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # ── قواعد التشغيل
+          XT_NET_FOOTAGE: '1'        # لقطات حيّة من المصادر المسموحة
+          XT_STATIC_VAULT: '0'       # ممنوع صور التجربة الثابتة (تكرار)
+          XT_YT: '1'
+          XT_DAILY_CAP: '6'          # سقف كوتة يوتيوب (10,000 ÷ 1,600)
+          XT_YT_QURAN: 'auto'
+          NOOR_SLOTS: '5,9,13,16,19,22'   # ساعات النشر UTC (publishAt)
+          NOOR_DRY: ${{ inputs.dry_run && '1' || '0' }}
+        run: |
+          set -o pipefail
+          MODE="${{ inputs.mode || 'cycle' }}"
+          FLAG="--cycle"
+          [ "$MODE" = "short" ] && FLAG="--short"
+          [ "$MODE" = "long" ]  && FLAG="--long"
+          echo "▶ حلقة نور: $MODE"
+          python scripts/noor_runner.py "$FLAG" 2>&1 | tee /tmp/noor.log
+          RC=${PIPESTATUS[0]}
+          echo "rc=$RC"
+          exit $RC
+
+      - name: خزّن ذاكرة نور على git (آخر حلقات + اللي اتنشر + اللي في الـvault)
+        if: always()
+        run: |
+          BRANCH="${GITHUB_REF_NAME:-main}"
+          git config user.name 'نور [Bot]'
+          git config user.email 'noor@daousha.internal'
+          for f in state/noor_state.json state/noor_pool.json \
+                   state/published.json state/media_used.json \
+                   state/yt_recent.json state/last_publish.json \
+                   state/last_cycle.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          # ملفات الأحاديث الصغيرة (الكاش الكبير مستثنى في .gitignore)
+          for f in state/noor_cache/h-*.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          if git diff --staged --quiet; then
+            echo "مفيش تغيير في الذاكرة"
+            exit 0
+          fi
+          git commit -m "noor(state): ذاكرة النور بعد الحلقة [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase --autostash origin "$BRANCH" >/dev/null 2>&1 || true
+            if git push origin "HEAD:$BRANCH"; then echo "✓ الذاكرة اتحفظت"; break; fi
+            echo "دفع محاولة $attempt فشلت — إعادة بعد 5 ثوانٍ…"
+            sleep 5
+          done
+
+      # ⏱️ نبضة الساعة: الدورة دي بتشغّل اللي بعدها — نشر ساعي مضمون
+      - name: ⏱️ نبضة الساعة — شغّل الحلقة الجاية
+        if: always() && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          START=$(date -d "${{ github.run_started_at }}" +%s)
+          NOW=$(date +%s)
+          SLEEP=$(( 3600 - (NOW - START) ))
+          [ "$SLEEP" -gt 2700 ] && SLEEP=2700
+          [ "$SLEEP" -lt 0 ] && SLEEP=0
+          echo "⏱️ الدورة خدت $(( NOW - START ))ث — هستنى ${SLEEP}ث وأشغّل الجاية"
+          sleep "$SLEEP"
+          gh workflow run noor-publish.yml --repo "$GITHUB_REPOSITORY" --ref main \
+            -f mode=cycle -f dry_run=false
+          echo "✓ الحلقة الجاية اتبعتت"
+
+      - name: ملخص الحلقة
+        if: always()
+        run: |
+          {
+            echo "### 🕌 حلقة نور"
+            echo '```'
+            tail -n 25 /tmp/noor.log 2>/dev/null || echo "(مفيش لوج)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY" || true

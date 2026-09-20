@@ -34,7 +34,8 @@ from .tts import ffmpeg
 
 W, H, FPS = 1080, 1920, 30
 CACHE = settings.STATE / "noor_cache"
-FONT_Q = settings.FONTS / "AmiriQuran-Regular.ttf"     # الخط القرآني
+FONT_Q = settings.FONTS / "AmiriQuran-Regular.ttf"     # الخط القرآني (المصحف)
+FONT_DISPLAY = settings.FONTS / "Amiri-Bold.ttf"        # للعرض على الموبايل
 FONT_UI = settings.FONTS / "Tajawal-Regular.ttf"
 FONT_UI_B = settings.FONTS / "Tajawal-Bold.ttf"
 UA = {"User-Agent": "NoorShorts/1.0 (free Islamic shorts; educational)"}
@@ -169,51 +170,64 @@ def _shaped(line: str) -> str:
     return line if tr.HAS_RAQM else tr.shape_ar(line)
 
 
-def overlay(lines: list[str], out: Path, *, size: int = 74, y: float = 0.42,
+def overlay(lines: list[str], out: Path, *, size: int = 84, y: float = 0.42,
             color=(255, 253, 246, 255), font_path: Path | None = None,
-            halo: int = 26, max_w: int | None = None, spacing: float = 1.6,
-            tag: str = "") -> Path:
-    """نص عربي على شاشة شفافة: هالة ضوء خلف النص (تقرأ على أي خلفية).
+            halo: int = 30, max_w: int | None = None, spacing: float = 1.55,
+            tag: str = "", max_lines: int = 4, scrim_alpha: int = 170,
+            bold_halo: int = 215) -> Path:
+    """نص عربي واضح على أي خلفية — للشاشات الصغيرة (شورتس).
 
-    halo = هالة سوداء ناعمة حول الحروف — نفس أسلوب التايتلات السينمائية.
+    ثلاث طبقات عشان الوضوح (أهم سبب لعدم الفهم قبل كده):
+      1) scrim: تعتيم متدرّج واسع ورا منطقة النص (135 → 170).
+      2) هالة سوداء سميكة حوالين الحروف (halo + bold).
+      3) الحرف نفسه بأبيض دافي — أعلى تباين ممكن.
+    + auto-fit: لو النص طلع أكتر من max_lines سطر، الخط بيصغر لحد ما يظبط.
     """
     W_ = W if max_w is None else max_w
-    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     from . import textrender as _tr
     kw = {"layout_engine": ImageFont.Layout.RAQM} if _tr.HAS_RAQM else {}
-    font = ImageFont.truetype(str(font_path or FONT_Q), size, **kw)
     _dir = {"direction": "rtl", "language": "ar"} if _tr.HAS_RAQM else {}
-    wrapped: list[str] = []
-    for raw in lines:
-        wrapped += _lines(raw, font, W_)
-    line_h = int(size * spacing)
+    fp = str(font_path or FONT_DISPLAY)
+
+    # auto-fit: نجرّب الحجم، ولو الأسطر كتير نصغّره (بنجرّب لحد 12 مرة)
+    sz, wrapped = size, []
+    for _ in range(14):
+        font = ImageFont.truetype(fp, sz, **kw)
+        wrapped = []
+        for raw in lines:
+            wrapped += _lines(raw, font, W_ - 120)
+        if len(wrapped) <= max_lines or sz <= 46:
+            break
+        sz -= 6
+    line_h = int(sz * spacing)
     total = line_h * len(wrapped)
     y0 = int(H * y) - total // 2
-    # ── طبقة تعتيم متدرّجة (scrim) ورا النص: أي خلفية — فاتحة أو غامقة —
-    #    والتلاوة تفضل مقروءة. دي الفرق بين «نص واضح» و«نص مبحوح».
+
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    # 1) scrim متدرّج بعرض الشاشة بالكامل
     scrim = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     sd = ImageDraw.Draw(scrim)
-    pad = int(size * 1.6)
-    top = max(0, y0 - pad)
-    bot = min(H, y0 + total + pad)
+    pad = int(sz * 1.5)
+    top, bot = max(0, y0 - pad), min(H, y0 + total + pad)
     span = max(1, bot - top)
     for yy in range(top, bot):
         dtop = (yy - top) / span
-        # منحنى ناعم (جيب) من 0 → 1 → 0: بلا حَواف حادة = إحساس سينمائي
-        a = int(135 * (math.sin(math.pi * dtop) ** 1.15))
+        a = int(scrim_alpha * (math.sin(math.pi * dtop) ** 1.15))
         sd.line([(0, yy), (W, yy)], fill=(4, 6, 12, a))
     img = Image.alpha_composite(img, scrim)
-    # طبقة الهالة (ضباب + تمدّد) خلف النص
+    # 2) هالة سميكة (ضباب أسود) خلف كل سطر
     halo_img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     hd = ImageDraw.Draw(halo_img)
     yy = y0
     for ln in wrapped:
         tw = hd.textlength(_shaped(ln), font=font, **_dir)
         hd.text(((W - tw) // 2, yy), _shaped(ln), font=font,
-                fill=(0, 0, 0, 190), **_dir)
+                fill=(0, 0, 0, bold_halo),
+                stroke_width=max(2, sz // 22), stroke_fill=(0, 0, 0, bold_halo),
+                **_dir)
         yy += line_h
-    halo_img = halo_img.filter(ImageFilter.GaussianBlur(halo))
-    img = Image.alpha_composite(img, halo_img)
+    img = Image.alpha_composite(img, halo_img.filter(ImageFilter.GaussianBlur(halo)))
+    # 3) الحرف الأبيض فوق الكل
     d = ImageDraw.Draw(img)
     yy = y0
     for ln in wrapped:
@@ -221,10 +235,12 @@ def overlay(lines: list[str], out: Path, *, size: int = 74, y: float = 0.42,
         d.text(((W - tw) // 2, yy), _shaped(ln), font=font, fill=color, **_dir)
         yy += line_h
     if tag:
-        f2 = ImageFont.truetype(str(FONT_UI), 40, **kw)
+        f2 = ImageFont.truetype(str(FONT_UI_B), max(38, sz // 2), **kw)
         tw = d.textlength(_shaped(tag), font=f2, **_dir)
-        d.text(((W - tw) // 2, y0 + total + 42), _shaped(tag), font=f2,
-               fill=(255, 214, 140, 235), **_dir)
+        ty = y0 + total + int(sz * 0.55)   # مسافة أمان: ما يتلاصقش مع آخر سطر
+        d.text(((W - tw) // 2, ty), _shaped(tag), font=f2,
+               fill=(255, 214, 140, 240), stroke_width=2,
+               stroke_fill=(0, 0, 0, 200), **_dir)
     out.parent.mkdir(parents=True, exist_ok=True)
     img.save(out)
     return out
@@ -331,7 +347,7 @@ def render(spec: dict, workdir: Path) -> dict:
         t0 = reveal_t0 + (rec_d * (k - 1) / len(groups))
         t1 = reveal_t0 + (rec_d * k / len(groups))
         png = overlay([" ".join(" ".join(g) for g in groups[:k])],
-                      workdir / f"a{k}.png", size=76, y=0.40,
+                      workdir / f"a{k}.png", size=94, y=0.40, max_lines=4,
                       tag=("﴿ " + a["surah"] + " — " + str(a["number"]) + " ﴾")
                       if k == len(groups) else "")
         cues.append((t0, t1, png))
@@ -340,14 +356,14 @@ def render(spec: dict, workdir: Path) -> dict:
     mean_txt = re.sub(r"\s+", " ", mean_txt)
     if len(mean_txt) > 190:
         mean_txt = mean_txt[:187].rsplit(" ", 1)[0] + "…"
-    mp = overlay([mean_txt], workdir / "mean.png", size=58, y=0.46,
-                 color=(255, 250, 238, 255), font_path=FONT_UI,
-                 halo=22, spacing=1.65, tag="المعنى")
+    mp = overlay([mean_txt], workdir / "mean.png", size=76, y=0.46,
+                 color=(255, 250, 238, 255), font_path=FONT_UI_B,
+                 halo=26, spacing=1.6, max_lines=5, tag="المعنى")
     cues.append((lead + rec_d + gap, lead + rec_d + gap + meaning_d, mp))
     # خاتمة هادئة
-    op = overlay([spec.get("outro") or "لا تنسَ ذكر الله 🤍"],
-                 workdir / "outro.png", size=64, y=0.47,
-                 color=(255, 236, 200, 255), font_path=FONT_UI_B, halo=24,
+    op = overlay([spec.get("outro") or "لا تنسَ ذكر الله"],
+                 workdir / "outro.png", size=80, y=0.47, max_lines=2,
+                 color=(255, 236, 200, 255), font_path=FONT_UI_B, halo=26,
                  tag=spec.get("brand", ""))
     cues.append((lead + rec_d + gap + meaning_d, total, op))
 
