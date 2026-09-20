@@ -282,10 +282,32 @@ def scene_clip(query: str, seconds: float, workdir: Path, seed: str,
         ok = bool(scenes.fetch_real_visual(q, base))
     except Exception:
         ok = False
-    if not ok:
-        raise RuntimeError(f"مفيش مشهد لـ«{q}»")
-    return _still_clip(base, max(2.0, seconds), workdir / f"s{idx:02d}.mp4",
-                       zoom_in=(idx % 2 == 0)), "صورة متحركة"
+    if ok:
+        return _still_clip(base, max(2.0, seconds), workdir / f"s{idx:02d}.mp4",
+                           zoom_in=(idx % 2 == 0)), "صورة متحركة"
+    # أمان أخير: خلفية مولّدة بالكود — الرندر ما يفشلش أبدًا (ولا حقوق لحد)
+    print(f"[noor] ⚠ مفيش لقطة لـ«{q}» — خلفية مولّدة بالكود", flush=True)
+    return _procedural_scene(max(2.0, seconds), workdir / f"g{idx:02d}.mp4",
+                             idx), "خلفية مولّدة"
+
+
+
+def _procedural_scene(seconds: float, out: Path, seed: int = 0) -> Path:
+    """خلفية مولّدة محليًا (ffmpeg gradients) — أمان أخير لو الشبكة فشلت.
+
+    مش صورة لأي حد، ولا لقطة من أي مكتبة: مولّدة بالكود = **صفر خطر حقوق**،
+    ووضوح النص مضمون (خلفية غامقة هادئة). الغرض إن الحلقة الساعية ما تفشلش
+    أبدًا مهما حصل في الشبكة.
+    """
+    p = ["0x0b1026", "0x1b2a4a", "0x2a1f3d", "0x10262b", "0x1d1b3a"][seed % 5]
+    q = ["0x243b55", "0x3a2a55", "0x0f3a3a", "0x2b1b2b", "0x123044"][(seed + 2) % 5]
+    vf = (f"gradients=s={W}x{H}:c0={p}:c1={q}:speed=0.012:d={int(seconds*FPS)}:"
+          f"r={FPS},format=gray,format=yuv420p")
+    subprocess.run([ffmpeg(), "-y", "-f", "lavfi", "-i", vf, "-t",
+                    f"{seconds:.2f}", "-c:v", "libx264", "-preset", "veryfast",
+                    "-crf", "20", "-pix_fmt", "yuv420p", str(out)],
+                   capture_output=True, check=True)
+    return out
 
 
 def grade_and_concat(clips: list[Path], out: Path) -> Path:

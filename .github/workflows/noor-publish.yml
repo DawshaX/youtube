@@ -57,8 +57,10 @@ jobs:
       - name: تجهيز أدوات الرندر والصوت
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core
-          python -m pip install --quiet pillow requests edge-tts imageio-ffmpeg
+          sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core \
+            libraqm0
+          python -m pip install --quiet pillow requests numpy edge-tts \
+            imageio-ffmpeg arabic-reshaper python-bidi pymediainfo curl_cffi pynacl pyyaml
 
       - name: ✅ حراسة الخط القرآني (raqm) — من غيرها العربي بيطلع حروف منفصلة
         run: |

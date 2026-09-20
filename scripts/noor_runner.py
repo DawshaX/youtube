@@ -31,10 +31,14 @@ WORK = ROOT / "work" / "noor"
 STATE = ROOT / "state" / "noor_state.json"
 
 # قصص/سور للفيديو الطويل بالتبادل (السلامة: سور قصيرة معروفة)
+# (الاسم، السورة، الثيم، حد الآيات، إضافات [(سورة، حد)]) — الطويل لازم
+# يعدّي 3 دقايق عشان يوتيوب ما يعتبرهوش شورت (ساعات المشاهدة بتحسب للمونيتايزيشن)
 LONG_PLAN = [
-    ("الرحمن", 55, "رحمن", 40), ("الملك", 67, "ملك", 30),
-    ("الواقعة", 56, "واقعة", 40), ("الكهف", 18, "كهف", 20),
-    ("يس", 36, "يس", 30),
+    ("الرحمن", 55, "رحمن", 78, []),                     # ~5.5 دقيقة
+    ("الملك والقلم", 67, "ملك", 30, [(68, 52)]),        # إضافة ~6.5 دقيقة
+    ("يس", 36, "يس", 60, [(37, 20)]),
+    ("الواقعة", 56, "واقعة", 60, [(57, 29)]),
+    ("الرحمن والملك", 55, "رحمن", 40, [(67, 30)]),
 ]
 
 
@@ -180,13 +184,13 @@ def long_once() -> int:
     from xtrendaw import noor_build
     st = _load()
     idx = len(st.get("longs", [])) % len(LONG_PLAN)
-    name, surah, theme, maxa = LONG_PLAN[idx]
+    name, surah, theme, maxa, extra = LONG_PLAN[idx]
     work = WORK / f"long_{surah}_{int(time.time())}"
-    print(f"[noor] 🎥 فيديو طويل: سورة {name} ({maxa} آية)", flush=True)
+    print(f"[noor] 🎥 فيديو طويل: {name}", flush=True)
     reciters = ["husary", "minshawi", "shatri", "ghamdi"]
     rec = reciters[len(st.get("longs", [])) % len(reciters)]
     res = noor_build.build_long_surah(surah, work, reciter=rec, theme=theme,
-                                      max_ayahs=maxa)
+                                      max_ayahs=maxa, extra=extra)
     dur_min = res["duration"] / 60
     title = f"سورة {name} كاملة | تلاوة هادئة تريح القلب 🌙"
     if dur_min < 4:
