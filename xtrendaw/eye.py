@@ -1603,7 +1603,22 @@ def _radar_meta(video_id: str) -> dict:
         snap = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
     except Exception:
         return {}
-    v = (snap.get("videos") or {}).get(video_id) or {}
+    # شكل المسح بيتغير (قائمة ← قاموس ← قائمة) — بنتعامل مع الاتنين
+    # بق 2026-09-20: `snap["videos"]` بقت قائمة، والكود القديم كان بيفشل
+    # بـ AttributeError فالعين ما اشتغلتش خالص في التشغيل اليدوي.
+    raw = snap.get("videos") or []
+    v: dict = {}
+    if isinstance(raw, dict):
+        v = raw.get(video_id) or {}
+    else:
+        for row in raw:
+            if not isinstance(row, dict):
+                continue
+            if str(row.get("videoId") or row.get("id") or "") == video_id:
+                v = row
+                break
+    if not v:
+        return {}
     return {k: v.get(k) for k in
             ("title", "channel", "region", "viewCount", "likeCount", "via")
             if v.get(k) not in (None, "")}

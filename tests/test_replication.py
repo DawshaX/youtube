@@ -147,3 +147,35 @@ Language: ar
         from xtrendaw import eye
         src = inspect.getsource(eye.watch)
         self.assertIn("watch_via_media", src)
+
+
+class RadarMetaShapeTest(unittest.TestCase):
+    """شكل مسح الرادار بيتغير — العين لازم تصمد مع القائمة والقاموس.
+
+    بق حقيقي (2026-09-20): `snap["videos"]` بقت قائمة → AttributeError →
+    العين فشلت في التشغيل اليدوي بالكامل.
+    """
+
+    def _with_snapshot(self, payload):
+        import json, tempfile, unittest.mock as mock
+        from pathlib import Path
+        from xtrendaw import eye
+        tmp = Path(tempfile.mkdtemp()) / "snap.json"
+        tmp.write_text(json.dumps(payload), encoding="utf-8")
+        with mock.patch.object(eye, "SNAPSHOT_PATH", tmp):
+            return eye._radar_meta("ABC123")
+
+    def test_list_shape(self):
+        meta = self._with_snapshot({"videos": [
+            {"videoId": "ABC123", "title": "ترند", "channel": "قناة",
+             "viewCount": 5_000_000}]})
+        self.assertEqual(meta.get("title"), "ترند")
+        self.assertEqual(meta.get("viewCount"), 5_000_000)
+
+    def test_dict_shape(self):
+        meta = self._with_snapshot({"videos": {
+            "ABC123": {"title": "تاني", "channel": "ق"}}})
+        self.assertEqual(meta.get("title"), "تاني")
+
+    def test_unknown_video_is_empty(self):
+        self.assertEqual(self._with_snapshot({"videos": []}), {})
