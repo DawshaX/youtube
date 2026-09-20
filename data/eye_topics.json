@@ -1,1 +1,195 @@
-[]
+[
+ {
+  "id": "eye-g8cRXvfHCcs",
+  "topic": "Mecha Chameleon Challenge: Team Sonic vs VERITY – Who Is the Master of Disguise? 🦎🔥 #shorts",
+  "angle": "The Mecha doesn’t stay as either Sonic or VERITY – it fuses both, revealing a brand‑new hy",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "من هو سيد التمويه؟ تحدي الحرباء الميكانيكي",
+  "title_en": "Who is the Master of Disguise? Mecha Chameleon Challenge",
+  "hook_ar": "تحدي التمويه يبدأ بأيقونة الحرباء اللامعة",
+  "hook_en": "The disguise challenge kicks off with a glowing chameleon icon",
+  "facts_ar": [
+   "نقرب الكاميرا للمعركة داخل الساحة المتوهجة",
+   "ميكا سونيك الأزرق يطلق أشواك سرعة البرق",
+   "خطوط الطاقة تدور حوله وتزيد الحماس"
+  ],
+  "facts_en": [
+   "Camera zooms into the battle arena that glows bright",
+   "Blue Sonic mech fires lightning‑fast spikes",
+   "Energy lines swirl around, raising the hype"
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "تحدي,تمويه,ميكا,سونيك,فيرتي",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 4.0,
+    "dur": 4.0,
+    "say_ar": "تحدي التمويه يبدأ بأيقونة الحرباء اللامعة",
+    "say_en": "The disguise challenge kicks off with a glowing chameleon icon",
+    "visual_query": "glowing chameleon logo",
+    "visual_query2": "chameleon icon zoom",
+    "sfx": "whoosh",
+    "on_screen": "من هو المتقن؟"
+   },
+   {
+    "t0": 4.0,
+    "t1": 8.0,
+    "dur": 4.0,
+    "say_ar": "نقرب الكاميرا للمعركة داخل الساحة المتوهجة",
+    "say_en": "Camera zooms into the battle arena that glows bright",
+    "visual_query": "arena neon background",
+    "visual_query2": "bright arena closeup",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 8.0,
+    "t1": 16.0,
+    "dur": 8.0,
+    "say_ar": "ميكا سونيك الأزرق يطلق أشواك سرعة البرق",
+    "say_en": "Blue Sonic mech fires lightning‑fast spikes",
+    "visual_query": "blue mech spikes",
+    "visual_query2": "sonic robot fast",
+    "sfx": "impact",
+    "on_screen": "فريق سونيك"
+   },
+   {
+    "t0": 16.0,
+    "t1": 20.0,
+    "dur": 4.0,
+    "say_ar": "خطوط الطاقة تدور حوله وتزيد الحماس",
+    "say_en": "Energy lines swirl around, raising the hype",
+    "visual_query": "energy lines animation",
+    "visual_query2": "speed lines effect",
+    "sfx": "swoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 20.0,
+    "t1": 24.0,
+    "dur": 4.0,
+    "say_ar": "نقلب المشهد لفيرتي المظلم مع تشويش رقمي",
+    "say_en": "Switch to dark Verity with a digital glitch",
+    "visual_query": "purple glitch transition",
+    "visual_query2": "dark mech reveal",
+    "sfx": "glitch",
+    "on_screen": "فريق فيرتي"
+   },
+   {
+    "t0": 24.0,
+    "t1": 32.0,
+    "dur": 8.0,
+    "say_ar": "ميكا فيرتي بنفسجية تتلاعب بالضوء والظل",
+    "say_en": "Purple Verity mech plays with light and shadow",
+    "visual_query": "purple mech glowing",
+    "visual_query2": "verity robot closeup",
+    "sfx": "hum",
+    "on_screen": ""
+   },
+   {
+    "t0": 32.0,
+    "t1": 36.0,
+    "dur": 4.0,
+    "say_ar": "الروبوتين يتقابلوا في صراع سريع ومتوتر",
+    "say_en": "The two mechas clash in a rapid, tense duel",
+    "visual_query": "robots duel clash",
+    "visual_query2": "mecha battle fast",
+    "sfx": "clash",
+    "on_screen": ""
+   },
+   {
+    "t0": 36.0,
+    "t1": 40.0,
+    "dur": 4.0,
+    "say_ar": "الحرباء تتقلب، الألوان تتغير، الشكل يضبّ",
+    "say_en": "Chameleon flickers, colors shift, silhouette blurs",
+    "visual_query": "chameleon morph flicker",
+    "visual_query2": "color shift effect",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 40.0,
+    "t1": 48.0,
+    "dur": 8.0,
+    "say_ar": "يتشكل مخلط سونيك-فيرتي بلون أزرق بنفسجي",
+    "say_en": "A Sonic‑Verity hybrid forms in blue‑purple hue",
+    "visual_query": "hybrid mech fusion",
+    "visual_query2": "blue purple robot",
+    "sfx": "ding",
+    "on_screen": "مزيج جديد!"
+   },
+   {
+    "t0": 48.0,
+    "t1": 52.0,
+    "dur": 4.0,
+    "say_ar": "استفتاء سريع: من فاز في المعركة؟",
+    "say_en": "Quick poll: Who won the battle?",
+    "visual_query": "poll sticker question",
+    "visual_query2": "vote overlay text",
+    "sfx": "pop",
+    "on_screen": "صوتك يهمنا"
+   },
+   {
+    "t0": 52.0,
+    "t1": 56.0,
+    "dur": 4.0,
+    "say_ar": "اضغط لايك واشترك لتشوف تحديات أقوى",
+    "say_en": "Hit like and subscribe for even bigger challenges",
+    "visual_query": "like subscribe animation",
+    "visual_query2": "cta button pop",
+    "sfx": "pop",
+    "on_screen": "اعمل لايك"
+   },
+   {
+    "t0": 56.0,
+    "t1": 60.5,
+    "dur": 4.5,
+    "say_ar": "تابعنا للمزيد من التحولات المدهشة",
+    "say_en": "Follow us for more stunning transformations",
+    "visual_query": "subscribe prompt end",
+    "visual_query2": "follow us graphic",
+    "sfx": "ding",
+    "on_screen": "اشترك الآن"
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "g8cRXvfHCcs",
+   "url": "https://youtu.be/g8cRXvfHCcs",
+   "sourceTitle": "Mecha Chameleon Challenge: Team Sonic vs VERITY – Who Is the Master of Disguise? 🦎🔥 #shorts",
+   "sourceChannel": "BH_Toon",
+   "sourceViews": 13803097,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "A bright, fast‑moving Mecha Chameleon morphs between Team Sonic and VERITY in a split‑second, asking “Who is the master of disguise?”",
+     "why_it_works": "The sudden, colorful transformation triggers instant curiosity and the brain’s pattern‑recognition urge to figure out the answer."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "high‑low‑high‑peak‑slight‑drop (starts punchy, dips for the challenge, spikes at the reveal, then tapers into CTA)"
+    },
+    "retention_tricks": [
+     "Immediate visual hook with bright colors and motion",
+     "Familiar brand (Sonic) + mystery opponent (VERITY)",
+     "Fast‑cut editing to prevent boredom",
+     "Mid‑video twist (color‑shift disguise)",
+     "Interactive poll question at the end"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [],
+   "verdict": null,
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  }
+ }
+]
