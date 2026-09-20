@@ -1,8 +1,8 @@
 {
- "at": "2026-09-20 17:58 UTC",
- "published_before": 14,
+ "at": "2026-09-20 17:59 UTC",
+ "published_before": 0,
  "published_after": 14,
- "published_this_cycle": 0,
+ "published_this_cycle": 14,
  "episodes_in_memory": 21,
- "last_lines": "[factory] دورة واحدة (بلا حلقة دائمة)\nradar: search(اغرب) فشلت: 429 Client Error: Too Many Requests for url: https://www.googleapis.com/youtube/v3/search?part=snippet&q=%D8%A7%D8%BA%D8%B1%D8%A8&type=video&order=viewCount&publishedAfter=2026-08-21T17%3A53%3A25Z&regionCode=EG&maxResults=15&key=AIzaSyD8q5xjEqksnUeZxsPByOl__cpC4ZpfIZ4\nradar: search(مقارنة) فشلت: 429 Client Error: Too Many Requests for url: https://www.googleapis.com/youtube/v3/search?part=snippet&q=%D9%85%D9%82%D8%A7%D8%B1%D9%86%D8%A9&type=video&order=viewCount&publishedAfter=2026-08-21T17%3A53%3A25Z&regionCode=EG&maxResults=15&key=AIzaSyD8q5xjEqksnUeZxsPByOl__cpC4ZpfIZ4\n[factory] ⏸ المخزون كفاية (6 حلقة مستنية) والكوتة 6/6 — الدورة دي بلا رندر جديد\n[factory] cycle 34 done @ 17:53 — انتظار (مخزون جاهز)\n"
+ "last_lines": ""
 }
