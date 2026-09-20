@@ -1969,5 +1969,198 @@
    "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
   },
   "_consumedAt": "2026-09-20T15:00:09Z"
+ },
+ {
+  "id": "eye-1LRHjrLmLcQ",
+  "topic": "أسرار عن فرس النهر القزم لم تسمع بها من قبل",
+  "angle": "الفرس النهر القزم لا يسبح كثيرًا؛ يفضل المشي على اليابسة ويقضي معظم وقته في الغابة، وهو ما",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "الفرس النهر القزم: أسرار لم تسمعها أبداً!",
+  "title_en": "Mini Hippo Secrets You Never Knew!",
+  "hook_ar": "هل تعرف فرس النهر القزم الغامض؟",
+  "hook_en": "Do you know the mysterious mini hippo?",
+  "facts_ar": [
+   "حجمه أصغر من كلب متوسط، بين 75 و100 سم",
+   "الوزن يتراوح من 180 إلى 275 كغ",
+   "قارن القزم بالفرس النهر العادي على الشاشة"
+  ],
+  "facts_en": [
+   "Its size is smaller than a medium dog, 75‑100 cm.",
+   "It weighs between 180 and 275 kilograms.",
+   "Compare the mini hippo with the regular one."
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "فرس نهر,قزم,حقائق,حيوانات,معلومات",
+  "mood": "mysterious",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 3.0,
+    "dur": 3.0,
+    "say_ar": "هل تعرف فرس النهر القزم الغامض؟",
+    "say_en": "Do you know the mysterious mini hippo?",
+    "visual_query": "mini hippo closeup",
+    "visual_query2": "tiny hippo portrait",
+    "sfx": "whoosh",
+    "on_screen": "سؤال صادم"
+   },
+   {
+    "t0": 3.0,
+    "t1": 9.0,
+    "dur": 6.0,
+    "say_ar": "حجمه أصغر من كلب متوسط، بين 75 و100 سم",
+    "say_en": "Its size is smaller than a medium dog, 75‑100 cm.",
+    "visual_query": "dog size comparison",
+    "visual_query2": "hippo vs dog split",
+    "sfx": "pop",
+    "on_screen": "حجم صادم"
+   },
+   {
+    "t0": 9.0,
+    "t1": 12.0,
+    "dur": 3.0,
+    "say_ar": "الوزن يتراوح من 180 إلى 275 كغ",
+    "say_en": "It weighs between 180 and 275 kilograms.",
+    "visual_query": "scale weight graphic",
+    "visual_query2": "hippo weight chart",
+    "sfx": "impact",
+    "on_screen": "وزن"
+   },
+   {
+    "t0": 12.0,
+    "t1": 18.0,
+    "dur": 6.0,
+    "say_ar": "قارن القزم بالفرس النهر العادي على الشاشة",
+    "say_en": "Compare the mini hippo with the regular one.",
+    "visual_query": "split screen hippo",
+    "visual_query2": "regular hippo side",
+    "sfx": "whoosh",
+    "on_screen": "مقارنة"
+   },
+   {
+    "t0": 18.0,
+    "t1": 21.0,
+    "dur": 3.0,
+    "say_ar": "القزم يفضل الغابات الكثيفة على الماء",
+    "say_en": "It prefers dense forests over water.",
+    "visual_query": "forest hippo walking",
+    "visual_query2": "hippo in jungle",
+    "sfx": "pop",
+    "on_screen": "سلوك غريب"
+   },
+   {
+    "t0": 21.0,
+    "t1": 27.0,
+    "dur": 6.0,
+    "say_ar": "يعيش بعيداً عن الأنهار، يمشي على البر",
+    "say_en": "It lives away from rivers, walking on land.",
+    "visual_query": "hippo walking land",
+    "visual_query2": "hippo forest trail",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 27.0,
+    "t1": 30.0,
+    "dur": 3.0,
+    "say_ar": "عمره في البرية يصل إلى خمس وخمسين سنة",
+    "say_en": "Its lifespan in the wild reaches fifty‑five years.",
+    "visual_query": "age timeline graphic",
+    "visual_query2": "hippo aging chart",
+    "sfx": "impact",
+    "on_screen": "عمر مذهل"
+   },
+   {
+    "t0": 30.0,
+    "t1": 36.0,
+    "dur": 6.0,
+    "say_ar": "إحصائية صادمة: خمس وخمسين سنة فقط!",
+    "say_en": "Shocking stat: only fifty‑five years!",
+    "visual_query": "number pop up",
+    "visual_query2": "timer countdown",
+    "sfx": "pop",
+    "on_screen": "55 سنة"
+   },
+   {
+    "t0": 36.0,
+    "t1": 39.0,
+    "dur": 3.0,
+    "say_ar": "لو عجبك الفيديو، اعمل لايك وشير",
+    "say_en": "If you liked it, hit like and share.",
+    "visual_query": "thumbs up icon",
+    "visual_query2": "share button click",
+    "sfx": "whoosh",
+    "on_screen": "اعمل لايك"
+   },
+   {
+    "t0": 39.0,
+    "t1": 45.0,
+    "dur": 6.0,
+    "say_ar": "تابعنا للمزيد من الأسرار المدهشة",
+    "say_en": "Follow us for more amazing secrets.",
+    "visual_query": "follow button animation",
+    "visual_query2": "channel logo",
+    "sfx": "pop",
+    "on_screen": "تابعنا"
+   },
+   {
+    "t0": 45.0,
+    "t1": 48.0,
+    "dur": 3.0,
+    "say_ar": "القناة تقدم محتوى علمي ممتع كل يوم",
+    "say_en": "Channel brings fun science daily.",
+    "visual_query": "daily upload calendar",
+    "visual_query2": "science icons",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 48.0,
+    "t1": 52.0,
+    "dur": 4.0,
+    "say_ar": "اشترك الآن ولا تفوت أي فيديو جديد",
+    "say_en": "Subscribe now and never miss a new video.",
+    "visual_query": "subscribe button",
+    "visual_query2": "notification bell",
+    "sfx": "whoosh",
+    "on_screen": "اشترك"
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "1LRHjrLmLcQ",
+   "url": "https://youtu.be/1LRHjrLmLcQ",
+   "sourceTitle": "أسرار عن فرس النهر القزم لم تسمع بها من قبل",
+   "sourceChannel": "قـضمــة",
+   "sourceViews": 6951890,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "يُطرح سؤال صادم: \"هل تعلم أن هناك فرس نهر قزم لا يعرفه أحد؟\" مع صورة مقربة لكائن غريب يلفت الانتباه.",
+     "why_it_works": "يثير الفضول الفوري ويستهدف عدم المعرفة، ما يدفع المشاهد للبقاء لمعرفة الإجابة."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 23,
+     "energy_curve": "صاعد سريع في الثواني الأولى (0-12)، استقرار متوسط مع معلومات متتالية (12-30)، قمة توترية عند الكشف عن الفكرة المفاجئة (30-42)، انخفاض تدريجي مع CTA (42-52)."
+    },
+    "retention_tricks": [
+     "سؤال افتتاحي يخلق فجوة معرفية",
+     "استخدام نصوص متحركة لتأكيد المعلومات",
+     "تغيّر الألوان والرسوم البيانية كل 2-3 ثوانٍ",
+     "إدراج رقم أو إحصائية صادمة في منتصف الفيديو"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [],
+   "verdict": null,
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  },
+  "_consumedAt": "2026-09-20T15:58:33Z"
  }
 ]
