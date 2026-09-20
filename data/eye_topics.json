@@ -193,122 +193,116 @@
   }
  },
  {
-  "id": "eye-qoCooz2-c4A",
-  "topic": "एक पत्थर से अपनी हाइट नापो 😱 #facts #knowledge #education #information #science #health #maths",
-  "angle": "The stone’s exact length (e.g., 10 cm) is used as a repeatable unit, turning a random obje",
+  "id": "eye-_Mn3uBdG9DY",
+  "topic": "Ella tenía miedo de ir a la escuela y pasó ESTO 😱 #sabiasque #curiosidades",
+  "angle": "الحدث غير المتوقع (سقوط كتاب أو ظهور شخصية كرتونية) يغيّر مشاعر الفتاة من الخوف إلى الفرح،",
   "origin": "eye",
   "status": "scripted",
-  "title_ar": "قيس طولك بحجر بسيط وتستغرب النتيجة!",
-  "title_en": "Measure Your Height With a Simple Stone!",
-  "hook_ar": "إنت مش هتصدق إزاي حجر بسيط يقدر يقيس طولك!",
-  "hook_en": "You won't believe a simple stone can measure your height!",
+  "title_ar": "اللي خفت من المدرسة ولقت الحل المفاجئ",
+  "title_en": "She Was Scared of School Until This Unexpected Twist",
+  "hook_ar": "إوعى تفتكر إن الخوف بيستمر في المدرسة!",
+  "hook_en": "Don’t think the fear will stay in school!",
   "facts_ar": [
-   "كرة الكريكيت قطرها حوالي سبعة سنتيمتر.",
-   "متوسط طول الإنسان البالغ حوالى مية وسبعين سنتيمتر.",
-   "ممكن تقرب طولك بإنك ترتب جسم معروف الطول فوق بعض وتعده."
+   "الخوف من المدرسة يُعرف باضطراب القلق المدرسي.",
+   "الضحك يساعد على تقليل مستويات التوتر.",
+   "الموسيقى ذات الإيقاع السريع تزيد من انتباه المشاهد."
   ],
   "facts_en": [
-   "A cricket ball is roughly seven centimeters in diameter.",
-   "The average adult human stands about one hundred seventy centimeters tall.",
-   "You can estimate height by stacking a known‑length object and counting the pieces."
+   "Fear of school is known as school‑related anxiety.",
+   "Laughter helps lower stress levels.",
+   "Fast‑paced music boosts viewer attention."
   ],
   "takeaway_ar": {
-   "aql": "الابتكار بيظهر في أبسط الحاجات.",
-   "qalb": "حاجات بسيطة ممكن تفرحنا وتخلينا نفكر بطرق جديدة.",
-   "rouh": "جرّبوا التجربة وشوفوا طولكم، ومش هتندموا."
+   "aql": "الخوف يتحول بفعل بسيط",
+   "qalb": "الضحك يفتح باب الشجاعة",
+   "rouh": "المواجهة تقوي الروح"
   },
   "takeaway_en": {
-   "aql": "Innovation hides in the simplest things.",
-   "qalb": "Simple tricks can delight us and spark fresh thinking.",
-   "rouh": "Give it a try, see your height, and enjoy the surprise."
+   "aql": "Fear can shift with a simple act",
+   "qalb": "Laughter unlocks bravery",
+   "rouh": "Facing it strengthens the spirit"
   },
-  "tags": "قيس,طول,حجر,تجربة,معلومة,هاك",
-  "mood": "crazy",
+  "tags": "مدرسة,خوف,ضحك,تحفيز,قصة",
+  "mood": "warm",
   "_kind": "eye",
   "_visual_plan": [
    {
     "time": "0:00-0:03",
-    "scene": "يد تمسك حجر عادي، تكبير سريع، نص على الشاشة: \"قيس طولك بالـ…\"",
-    "style": "لقطة مقربة، إضاءة ساطعة، حركة كاميرا سريعة",
+    "scene": "الفتاة تقف في باب البيت ترتجف وتهمس بخوفها من المدرسة",
+    "style": "لقطة قريبة، إضاءة خافتة، نص متحرك تحذيري",
     "colors": [
-     "#FFEB3B",
-     "#FFFFFF"
+     "#FF6B6B"
     ]
    },
    {
-    "time": "0:04-0:07",
-    "scene": "المقدِّم يحط الحجر فوق رأسه، يجهز مسطرة جنب الحجر لتوضيح الطول المعروف",
-    "style": "زاوية من فوق الكتف، مقاطع سريعة، سهم يوضح العلاقة بين الحجر والمسافة",
+    "time": "0:03-0:07",
+    "scene": "نظرة سريعة للمدرسة من الخارج مع سؤال متنقل على الشاشة",
+    "style": "قفزة سريعة، نص متحرك بنبرة سؤال",
     "colors": [
-     "#2196F3",
-     "#FFFFFF"
+     "#FFE66D"
     ]
    },
    {
-    "time": "0:08-0:11",
-    "scene": "رسوم متحركة توضح معادلة: طول = طول الحجر × عدد الحجارة، مع عدّ حركات سريعة",
-    "style": "جرافيك بسانس‑سريف، تأثيرات بوب‑أب، إيقاع صوتي مع كل قطع",
+    "time": "0:07-0:11",
+    "scene": "الفتاة تدخل الصف فجأة يطيح كتاب ضخم أو تظهر شخصية كرتونية مضحكة",
+    "style": "قفزة سريعة، صوت سقوط أو ضحكة كرتونية، إضاءة ساطعة",
     "colors": [
-     "#FFEB3B",
-     "#2196F3"
+     "#4ECDC4"
     ]
    },
    {
-    "time": "0:12-0:14",
-    "scene": "النتيجة النهائية تظهر بحجم كبير، المقدِّم يضحك ويشير للنتيجة مع ملصق \"تابعنا لمزيد من الحاجات الجنونية!\"",
-    "style": "لقطة واسعة، إضاءة دافئة، ستايكرز إيموجي 😱✅",
+    "time": "0:11-0:14",
+    "scene": "الفتاة تضحك وتقول إنها ما عادت تخاف، يظهر هاشتاغ متحرك",
+    "style": "لقطة وسطية، إضاءة دافئة، نص بستايل كرتوني",
     "colors": [
-     "#FFEB3B",
-     "#FFFFFF"
+     "#FF6B6B",
+     "#FFE66D"
     ]
    },
    {
-    "time": "0:15-0:17",
-    "scene": "CTA سريع: زر المتابعة يلمع، صوت نغمة خفيفة، النهاية مع خلفية هادئة",
-    "style": "تقطيع نهائي سريع، موسيقى إلكترونية خفيفة",
+    "time": "0:14-0:17",
+    "scene": "دعوة المتابعة بأيقونة وشعار القناة، نغمة CTA واضحة",
+    "style": "إطار نصي جذاب، إيقاع موسيقي خفيف مبهج",
     "colors": [
-     "#2196F3",
-     "#FFFFFF"
+     "#4ECDC4"
     ]
    }
   ],
   "shots": [],
   "_replication": false,
   "_eye": {
-   "videoId": "qoCooz2-c4A",
-   "url": "https://youtu.be/qoCooz2-c4A",
-   "sourceTitle": "एक पत्थर से अपनी हाइट नापो 😱 #facts #knowledge #education #information #science #health #maths",
-   "sourceChannel": "Vedant Sir",
-   "sourceViews": 5387594,
+   "videoId": "_Mn3uBdG9DY",
+   "url": "https://youtu.be/_Mn3uBdG9DY",
+   "sourceTitle": "Ella tenía miedo de ir a la escuela y pasó ESTO 😱 #sabiasque #curiosidades",
+   "sourceChannel": "Klanir",
+   "sourceViews": 5524511,
    "dna": {
     "hook": {
-     "technique": "visual_curiosity",
-     "what_happens": "The video opens with a hand holding a common stone and a bold caption: \"Measure your height with THIS!\"",
-     "why_it_works": "The unexpected use of an everyday object creates immediate curiosity and a shock factor, prompting viewers to stay for the explanation."
+     "technique": "shock",
+     "what_happens": "تظهر الطفلة وهي ترتجف وتقول إنها تخاف من الذهاب إلى المدرسة، ثم يُفاجئ المشاهد بحدث غير متوقع يغير مشاعرها.",
+     "why_it_works": "الصدمة الفورية تُثير القلق وتدفع المشاهد للبقاء لمعرفة ما سيحدث بعد ذلك."
     },
     "pacing": {
-     "estimated_cuts_per_minute": 30,
-     "energy_curve": "High‑energy spike at start → slight dip during explanation → sharp rise at twist → peak at payoff → quick fade to CTA."
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "ارتفاع سريع في الطاقة خلال الـ0-4 ثوانٍ (صوت توتر)، استقرار متوسط 4-12 ثانية (قصة)، قمة طاقة عند المفاجأة (8-12 ثانية)، ثم انخفاض تدريجي مع CTA."
     },
     "retention_tricks": [
-     "Immediate visual curiosity hook",
-     "On‑screen text reinforcing spoken words",
-     "Simple, repeatable math hack (the twist)",
-     "Fast‑cut editing to maintain momentum",
-     "Clear CTA with visual sticker"
+     "استخدام سؤال صريح في النص لجذب الفضول.",
+     "تقديم مفاجأة غير متوقعة قبل 12 ثانية لتجديد الانتباه.",
+     "إدراج نصوص وإيموجي سريعة لتقوية الفهم البصري."
     ]
    }
   },
   "_critique": {
-   "score": 78,
+   "score": 85,
    "weaknesses": [
-    "Audio details are vague; no explicit voice style, music, or sound‑effect cues are defined, unlike the DNA template.",
-    "Pacing description lacks an explicit energy curve; the proposal assumes a steady flow but does not highlight the dip‑rise‑peak pattern.",
-    "CTA is present but not as visually emphasized (no dedicated sticker or flashing follow button as in the trend).",
-    "The visual plan repeats colors but does not mention the handheld feel or rapid zooms that give the trend its immediacy.",
-    "Retention tricks such as “on‑screen text reinforcing spoken words” are implied but not explicitly listed."
+    "الهوك لا يستخدم صدمة قوية بل تحذير بسيط؛ قد لا يخلق القلق الفوري المطلوب.",
+    "غياب تفاصيل واضحة عن الصوت (نبرة درامية ثم مرحة) والموسيقى، وهو عنصر أساسي في الـDNA.",
+    "عدم ذكر استخدام الإيموجي أو النصوص المتحركة بشكل صريح، مما يقلل من قوة حيل الاحتفاظ.",
+    "المزاج المحدد \"warm\" قد يتعارض مع الطاقة المتصاعدة المطلوبة في الصدمة الأولية.",
+    "المدة الإجمالية 17 ثانية بدلاً من 18؛ قد يحتاج إلى تعديل طفيف لتوزيع الطاقة وفقًا لمنحنى الطاقة الموصوف."
    ],
-   "verdict": "The proposal captures the core DNA trend—hook, simple math hack, quick payoff, and bold visuals—very well, but it falls short on audio specification and nuanced pacing cues. With a few refinements to sound design and CTA emphasis, it would fully match the high‑performing DNA formula."
+   "verdict": "الاقتراح يلتزم بشكل جيد مع معظم عناصر الـDNA الترند، خاصةً في التسلسل البصري والقصصي، لكنه يحتاج إلى تعزيز الصدمة في البداية وتوضيح تفاصيل الصوت والرسوم المتحركة لضمان أقصى قدر من الاحتفاظ بالمشاهد."
   }
  }
 ]

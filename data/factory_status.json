@@ -1,5 +1,5 @@
 {
- "cycles": 24,
+ "cycles": 25,
  "renders": [
   {
    "at": "00:19",
@@ -111,6 +111,12 @@
    "video": "/home/runner/work/youtube/youtube/content/vids/eye-1LRHjrLmLcQ.mp4",
    "ok": true,
    "sec": 1528
+  },
+  {
+   "at": "16:53",
+   "video": "/home/runner/work/youtube/youtube/content/vids/eye-qoCooz2-c4A.mp4",
+   "ok": true,
+   "sec": 425
   }
  ],
  "publish_attempts": [
@@ -235,6 +241,12 @@
    "topic": "eye-1LRHjrLmLcQ",
    "ok": false,
    "why": "daily_cap 6/6"
+  },
+  {
+   "at": "16:53",
+   "topic": "eye-qoCooz2-c4A",
+   "ok": false,
+   "why": "daily_cap 6/6"
   }
  ],
  "radar": [
@@ -342,6 +354,10 @@
   },
   {
    "at": "15:55",
+   "ok": true
+  },
+  {
+   "at": "16:53",
    "ok": true
   }
  ],
@@ -465,9 +481,14 @@
    "at": "15:55",
    "rc": 1,
    "note": "eye: 0/2 فيديو اتشاف وموضوعات اتكتبت"
+  },
+  {
+   "at": "16:53",
+   "rc": 0,
+   "note": "eye: 1/2 فيديو اتشاف وموضوعات اتكتبت"
   }
  ],
- "last_cycle_at": "2026-09-20 15:55:11",
+ "last_cycle_at": "2026-09-20 16:53:49",
  "last_commit": "saved",
  "last_error": "2026-09-19 00:34:44",
  "dubs": [
@@ -547,6 +568,11 @@
    "lang": "de",
    "topic": "eye-1LRHjrLmLcQ-de",
    "ok": true
+  },
+  {
+   "at": "16:53",
+   "ok": false,
+   "err": "KeyError"
   }
  ]
 }

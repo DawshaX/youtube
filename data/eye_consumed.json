@@ -2162,5 +2162,125 @@
    "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
   },
   "_consumedAt": "2026-09-20T15:58:33Z"
+ },
+ {
+  "id": "eye-qoCooz2-c4A",
+  "topic": "एक पत्थर से अपनी हाइट नापो 😱 #facts #knowledge #education #information #science #health #maths",
+  "angle": "The stone’s exact length (e.g., 10 cm) is used as a repeatable unit, turning a random obje",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "قيس طولك بحجر بسيط وتستغرب النتيجة!",
+  "title_en": "Measure Your Height With a Simple Stone!",
+  "hook_ar": "إنت مش هتصدق إزاي حجر بسيط يقدر يقيس طولك!",
+  "hook_en": "You won't believe a simple stone can measure your height!",
+  "facts_ar": [
+   "كرة الكريكيت قطرها حوالي سبعة سنتيمتر.",
+   "متوسط طول الإنسان البالغ حوالى مية وسبعين سنتيمتر.",
+   "ممكن تقرب طولك بإنك ترتب جسم معروف الطول فوق بعض وتعده."
+  ],
+  "facts_en": [
+   "A cricket ball is roughly seven centimeters in diameter.",
+   "The average adult human stands about one hundred seventy centimeters tall.",
+   "You can estimate height by stacking a known‑length object and counting the pieces."
+  ],
+  "takeaway_ar": {
+   "aql": "الابتكار بيظهر في أبسط الحاجات.",
+   "qalb": "حاجات بسيطة ممكن تفرحنا وتخلينا نفكر بطرق جديدة.",
+   "rouh": "جرّبوا التجربة وشوفوا طولكم، ومش هتندموا."
+  },
+  "takeaway_en": {
+   "aql": "Innovation hides in the simplest things.",
+   "qalb": "Simple tricks can delight us and spark fresh thinking.",
+   "rouh": "Give it a try, see your height, and enjoy the surprise."
+  },
+  "tags": "قيس,طول,حجر,تجربة,معلومة,هاك",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "يد تمسك حجر عادي، تكبير سريع، نص على الشاشة: \"قيس طولك بالـ…\"",
+    "style": "لقطة مقربة، إضاءة ساطعة، حركة كاميرا سريعة",
+    "colors": [
+     "#FFEB3B",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "المقدِّم يحط الحجر فوق رأسه، يجهز مسطرة جنب الحجر لتوضيح الطول المعروف",
+    "style": "زاوية من فوق الكتف، مقاطع سريعة، سهم يوضح العلاقة بين الحجر والمسافة",
+    "colors": [
+     "#2196F3",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "رسوم متحركة توضح معادلة: طول = طول الحجر × عدد الحجارة، مع عدّ حركات سريعة",
+    "style": "جرافيك بسانس‑سريف، تأثيرات بوب‑أب، إيقاع صوتي مع كل قطع",
+    "colors": [
+     "#FFEB3B",
+     "#2196F3"
+    ]
+   },
+   {
+    "time": "0:12-0:14",
+    "scene": "النتيجة النهائية تظهر بحجم كبير، المقدِّم يضحك ويشير للنتيجة مع ملصق \"تابعنا لمزيد من الحاجات الجنونية!\"",
+    "style": "لقطة واسعة، إضاءة دافئة، ستايكرز إيموجي 😱✅",
+    "colors": [
+     "#FFEB3B",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:15-0:17",
+    "scene": "CTA سريع: زر المتابعة يلمع، صوت نغمة خفيفة، النهاية مع خلفية هادئة",
+    "style": "تقطيع نهائي سريع، موسيقى إلكترونية خفيفة",
+    "colors": [
+     "#2196F3",
+     "#FFFFFF"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "qoCooz2-c4A",
+   "url": "https://youtu.be/qoCooz2-c4A",
+   "sourceTitle": "एक पत्थर से अपनी हाइट नापो 😱 #facts #knowledge #education #information #science #health #maths",
+   "sourceChannel": "Vedant Sir",
+   "sourceViews": 5387594,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "The video opens with a hand holding a common stone and a bold caption: \"Measure your height with THIS!\"",
+     "why_it_works": "The unexpected use of an everyday object creates immediate curiosity and a shock factor, prompting viewers to stay for the explanation."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 30,
+     "energy_curve": "High‑energy spike at start → slight dip during explanation → sharp rise at twist → peak at payoff → quick fade to CTA."
+    },
+    "retention_tricks": [
+     "Immediate visual curiosity hook",
+     "On‑screen text reinforcing spoken words",
+     "Simple, repeatable math hack (the twist)",
+     "Fast‑cut editing to maintain momentum",
+     "Clear CTA with visual sticker"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [
+    "Audio details are vague; no explicit voice style, music, or sound‑effect cues are defined, unlike the DNA template.",
+    "Pacing description lacks an explicit energy curve; the proposal assumes a steady flow but does not highlight the dip‑rise‑peak pattern.",
+    "CTA is present but not as visually emphasized (no dedicated sticker or flashing follow button as in the trend).",
+    "The visual plan repeats colors but does not mention the handheld feel or rapid zooms that give the trend its immediacy.",
+    "Retention tricks such as “on‑screen text reinforcing spoken words” are implied but not explicitly listed."
+   ],
+   "verdict": "The proposal captures the core DNA trend—hook, simple math hack, quick payoff, and bold visuals—very well, but it falls short on audio specification and nuanced pacing cues. With a few refinements to sound design and CTA emphasis, it would fully match the high‑performing DNA formula."
+  },
+  "_consumedAt": "2026-09-20T16:57:24Z"
  }
 ]
