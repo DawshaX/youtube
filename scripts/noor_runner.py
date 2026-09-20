@@ -113,12 +113,15 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
 
 
 def _vault(video, cover, meta) -> str:
+    """يخزّن الحلقة في الخزّان (لو فيه مكان) — وتتنشر أول ما الحصة تفتح."""
     try:
-        from xtrendaw import github_store
-        urls = github_store.upload_to_vault(video, cover, meta)
-        return urls.get("video", "")
+        from xtrendaw import noor_vault
+        if not noor_vault.can_push():
+            return ""
+        return noor_vault.push(video, cover, meta) or ""
     except Exception as exc:                      # noqa: BLE001
-        return f"vault_err:{type(exc).__name__}"
+        print(f"[vault] ✗ تخزين فشل: {type(exc).__name__}", flush=True)
+        return ""
 
 
 def short_once() -> int:
@@ -226,18 +229,82 @@ def long_once() -> int:
     return 0
 
 
+def _publish_spare() -> int:
+    """يرفع أقدم حلقة من الخزّان على يوتيوب (مفيش رندر = أسرع وأرخص)."""
+    from xtrendaw import noor_vault, settings, state
+    if DRY:
+        return 1
+    cap = settings.DAILY_CAP or 6
+    if state.published_today_pt() >= cap:
+        return 1
+    got = noor_vault.take_oldest(WORK / "spare")
+    if not got:
+        return 1
+    meta = got["meta"] or {}
+    title = str(meta.get("title") or "قرآن وتدبّر")
+    print(f"[noor] 📤 رفع حلقة من الخزّان: {title[:60]}", flush=True)
+    st = _load()
+    at = _next_slot(st.get("slots", []))
+    from xtrendaw.publish import youtube as yt
+    url, err = yt.publish(got["video"], title[:95],
+                          str(meta.get("caption") or ""),
+                          [x for x in str(meta.get("tags") or "").split(",") if x],
+                          cover=got["cover"], synthetic=bool(meta.get("synthetic")),
+                          category="27", publish_at=at)
+    if not url:
+        print(f"[noor] ⏸ الرفع من الخزّان فشل ({err}) — الحلقة رجعت مكانها",
+              flush=True)
+        return 1
+    vid = url.split("watch?v=")[-1].split("&")[0]
+    state.push_published({"id": vid, "title": title, "kind": "noor",
+                          "ts": time.time()})
+    if at:
+        st.setdefault("slots", []).append(at[:13])
+        _save(st)
+    noor_vault.drop(got["entry"])
+    st.setdefault("shorts", []).append({
+        "id": "vault:" + str(got["entry"].get("name")), "kind": "vault",
+        "video": "", "url": url, "at": time.strftime("%Y-%m-%d %H:%M",
+                                                     time.gmtime())})
+    _save(st)
+    print(f"[noor] 📺 اتنشر من الخزّان — {url}", flush=True)
+    return 0
+
+
 def cycle() -> int:
-    """دورة: فيديو طويل مرة كل يوم + شورت كل ساعة."""
-    from xtrendaw import settings, state
+    """دورة الساعة: ارفع من الخزّان لو الحصة مفتوحة، وإلا ارندر/خزّن.
+
+    الترتيب ده مقصود: الحلقة الجاهزة بتترفع فورًا (صفر وقت رندر)، والرندر
+    بيشتغل بس لما يكون فيه فرصة نشر حقيقية أو مكان في الخزّان.
+    """
+    from xtrendaw import noor_vault, settings, state
     st = _load()
     today = time.strftime("%Y-%m-%d", time.gmtime())
     did_long = any(str(l.get("at", "")).startswith(today)
                    for l in st.get("longs", []))
     cap = settings.DAILY_CAP or 6
     left = cap - state.published_today_pt()
-    if not did_long and left > 0:
-        print(f"[noor] فيديو اليوم الطويل (فاضل {left} رفعة من الكوتة)", flush=True)
-        return long_once()
+    if left > 0:
+        try:
+            n = noor_vault.count()
+        except Exception:
+            n = 0
+        if n > 0:
+            if _publish_spare() == 0:
+                return 0
+            print("[noor] الخزّان مش نافع دلوقتي — رندر جديد", flush=True)
+        if not did_long:
+            print(f"[noor] فيديو اليوم الطويل (فاضل {left} رفعة)", flush=True)
+            return long_once()
+        return short_once()
+    # الحصة مقفولة: ننتج للخزّان (لو فيه مكان) ونستريح لو مليان
+    try:
+        if not noor_vault.can_push():
+            print("[noor] ⏸ الحصة مقفولة والخزّان مليان — الدورة الجاية أحسن",
+                  flush=True)
+            return 0
+    except Exception:
+        pass
     return short_once()
 
 

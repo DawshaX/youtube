@@ -293,20 +293,27 @@ def scene_clip(query: str, seconds: float, workdir: Path, seed: str,
 
 
 def _procedural_scene(seconds: float, out: Path, seed: int = 0) -> Path:
-    """خلفية مولّدة محليًا (ffmpeg gradients) — أمان أخير لو الشبكة فشلت.
+    """خلفية مولّدة محليًا (ffmpeg) — أمان أخير لو الشبكة فشلت.
 
-    مش صورة لأي حد، ولا لقطة من أي مكتبة: مولّدة بالكود = **صفر خطر حقوق**،
-    ووضوح النص مضمون (خلفية غامقة هادئة). الغرض إن الحلقة الساعية ما تفشلش
-    أبدًا مهما حصل في الشبكة.
+    مش صورة لحد ولا لقطة من مكتبة: مولّدة بالكود = **صفر خطر حقوق**، وغامقة
+    هادية عشان النص يبان. بتتحرّك ببطء (زوم + حبيبات) فتبان حيّة مش ساكنة.
     """
-    p = ["0x0b1026", "0x1b2a4a", "0x2a1f3d", "0x10262b", "0x1d1b3a"][seed % 5]
-    q = ["0x243b55", "0x3a2a55", "0x0f3a3a", "0x2b1b2b", "0x123044"][(seed + 2) % 5]
-    vf = (f"gradients=s={W}x{H}:c0={p}:c1={q}:speed=0.012:d={int(seconds*FPS)}:"
-          f"r={FPS},format=gray,format=yuv420p")
-    subprocess.run([ffmpeg(), "-y", "-f", "lavfi", "-i", vf, "-t",
-                    f"{seconds:.2f}", "-c:v", "libx264", "-preset", "veryfast",
-                    "-crf", "20", "-pix_fmt", "yuv420p", str(out)],
-                   capture_output=True, check=True)
+    pal = [("0x101a33", "0x2b1d4a"), ("0x0d2233", "0x1d3b4a"),
+           ("0x1a1230", "0x3a2352"), ("0x0a1f2b", "0x24405a"),
+           ("0x141026", "0x2d1f45")]
+    c0, c1 = pal[seed % len(pal)]
+    dur = max(2.0, seconds)
+    # طبقة 1: تدرّج لوني متحرك (ffmpeg gradients) — ألوان ليلية هادية
+    vf = (f"gradients=s={int(W*1.2)}x{int(H*1.2)}:c0={c0}:c1={c1}:"
+          f"x0=200:y0=100:x1={int(W*1.1)}:y1={int(H*1.1)}:speed=0.006:"
+          f"d={int(dur*FPS)}:r={FPS},"
+          f"crop={W}:{H}:x='(in_w-out_w)*t/{dur:.1f}':y='(in_h-out_h)*0.5',"
+          "eq=brightness=0.04:saturation=1.15,"
+          "noise=alls=6:allf=t+u,vignette=PI/5,format=yuv420p")
+    subprocess.run([ffmpeg(), "-y", "-f", "lavfi", "-i", vf, "-t", f"{dur:.2f}",
+                    "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+                    "-pix_fmt", "yuv420p", str(out)], capture_output=True,
+                   check=True)
     return out
 
 
