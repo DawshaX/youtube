@@ -11,6 +11,18 @@
    "err": "dry_run",
    "at": "2026-09-20 19:30",
    "duration": 30.5
+  },
+  {
+   "id": "ayah-94-5",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1789934283/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1789934406.mp4",
+   "err": "quota_guard",
+   "at": "2026-09-20 20:00",
+   "duration": 22.5
   }
  ],
  "longs": [],
