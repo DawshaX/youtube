@@ -1,5 +1,5 @@
 {
- "cycles": 19,
+ "cycles": 20,
  "renders": [
   {
    "at": "00:19",
@@ -81,6 +81,12 @@
    "video": "/home/runner/work/youtube/youtube/content/vids/auto-45376869d8.mp4",
    "ok": true,
    "sec": 484
+  },
+  {
+   "at": "09:51",
+   "video": "/home/runner/work/youtube/youtube/content/vids/auto-a15df06703.mp4",
+   "ok": true,
+   "sec": 505
   }
  ],
  "publish_attempts": [
@@ -175,6 +181,12 @@
    "topic": "auto-45376869d8",
    "ok": false,
    "why": "daily_cap 6/6"
+  },
+  {
+   "at": "09:51",
+   "topic": "auto-a15df06703",
+   "ok": true,
+   "why": "published"
   }
  ],
  "radar": [
@@ -262,6 +274,10 @@
   },
   {
    "at": "06:13",
+   "ok": true
+  },
+  {
+   "at": "09:51",
    "ok": true
   }
  ],
@@ -360,9 +376,14 @@
    "at": "06:13",
    "rc": -1,
    "err": "TimeoutExpired"
+  },
+  {
+   "at": "09:51",
+   "rc": -1,
+   "err": "TimeoutExpired"
   }
  ],
- "last_cycle_at": "2026-09-20 06:13:16",
+ "last_cycle_at": "2026-09-20 09:51:55",
  "last_commit": "saved",
  "last_error": "2026-09-19 00:34:44",
  "dubs": [
@@ -411,6 +432,11 @@
   },
   {
    "at": "06:13",
+   "ok": false,
+   "err": "KeyError"
+  },
+  {
+   "at": "09:51",
    "ok": false,
    "err": "KeyError"
   }

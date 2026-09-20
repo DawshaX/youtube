@@ -159,6 +159,14 @@
    "duration": 65.1,
    "at": "2026-09-20 06:36",
    "urls": {}
+  },
+  "auto-a15df06703": {
+   "title": "ليه الكل بيبحث عن «outlook» دلوقتي؟",
+   "fingerprint": "a15df067031a5830",
+   "video": "/home/runner/work/youtube/youtube/content/vids/auto-a15df06703.mp4",
+   "duration": 65.2,
+   "at": "2026-09-20 10:15",
+   "urls": {}
   }
  },
  "fingerprints": [
@@ -181,7 +189,8 @@
   "542de4e40a7464da",
   "90035d6ff539f952",
   "ee6601fb45df5fc9",
-  "45376869d8a6e5ab"
+  "45376869d8a6e5ab",
+  "a15df067031a5830"
  ],
- "last_kind": "trend"
+ "last_kind": "eye"
 }
