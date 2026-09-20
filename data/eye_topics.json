@@ -1,1 +1,122 @@
-[]
+[
+ {
+  "id": "eye-YZWmX1rrfvA",
+  "topic": "GUESS THE DRINK CHALLENGE",
+  "angle": "The last drink is an extremely spicy or foul‑tasting beverage, causing Speed to react with",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي العين المعصوبة: خمن المشروب قبل ما تشربه!",
+  "title_en": "Blindfolded Sip Challenge – Can You Guess the Drink?",
+  "hook_ar": "إيه رأيك تخمن المشروب وإنت معصوب؟",
+  "hook_en": "Guess the drink while blindfolded—ready?",
+  "facts_ar": [
+   "قناة دۅۄشے بتقدملك تجربة طعم سريعة وممتعة.",
+   "مدة الفيديو أقل من دقيقة.",
+   "عدد المشاهدات بالملايين."
+  ],
+  "facts_en": [
+   "Doshé channel delivers a fast, fun taste experiment.",
+   "The clip runs under a minute.",
+   "Views are measured in millions."
+  ],
+  "takeaway_ar": {
+   "aql": "العقل بيحب الألغاز اللي تحرك الحواس.",
+   "qalb": "القلب يضحك على ردود الفعل الصريحة.",
+   "rouh": "الروح تستمتع بالمفاجآت اللي تفاجئ التوقعات."
+  },
+  "takeaway_en": {
+   "aql": "The mind loves puzzles that engage the senses.",
+   "qalb": "The heart laughs at raw, honest reactions.",
+   "rouh": "The spirit thrives on twists that outsmart expectations."
+  },
+  "tags": "تحدي,مشروب,عين_معصوبة,ضحك,مفاجأة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "المقدِّم يصرخ عنوان التحدي بحدة، مع ظهور نص كبير متوهج على الشاشة.",
+    "style": "لقطة يدويّة قريبة، إضاءة ساطعة، نص كينيتك يطير.",
+    "colors": [
+     "#FF0000",
+     "#00FF00"
+    ]
+   },
+   {
+    "time": "0:04-0:12",
+    "scene": "شرح سريعة للقواعد، وضع العُصابة على العينين، صب أول مشروب في كوب شفاف.",
+    "style": "لقطة واسعة للطاولة، ثم تقطيعات سريعة لليدين والعصابة.",
+    "colors": [
+     "#00FF00",
+     "#0000FF"
+    ]
+   },
+   {
+    "time": "0:12-0:30",
+    "scene": "سلسلة من تذوق المشروبات، كل مرة رد فعل سريع (ضحكة، عبّاءة، صدمة).",
+    "style": "قفزات تحريرية سريعة، إيموجي يطفو فوق كل رد فعل.",
+    "colors": [
+     "#FF0000",
+     "#00FF00",
+     "#0000FF"
+    ]
+   },
+   {
+    "time": "0:30-0:45",
+    "scene": "المفاجأة: مشروب حار أو بطعم غريب جداً، رد فعل مبالغ فيه مع أصوات تأثيرية.",
+    "style": "قريب للوجه، إضاءة ساطعة، مؤثر صوتي صاخب.",
+    "colors": [
+     "#FF0000"
+    ]
+   },
+   {
+    "time": "0:45-0:53",
+    "scene": "الكشف عن اسم المشروب، ضحكة ختامية، ظهور أيقونات الاشتراك والإعجاب بتأثير فلاش.",
+    "style": "لقطة ثابتة للوجه مع تجميد، نص متوهج يلمع.",
+    "colors": [
+     "#00FF00",
+     "#0000FF"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "YZWmX1rrfvA",
+   "url": "https://youtu.be/YZWmX1rrfvA",
+   "sourceTitle": "GUESS THE DRINK CHALLENGE",
+   "sourceChannel": "IShowSpeed",
+   "sourceViews": 13425330,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "Speed is blindfolded and forced to guess the identity of mysterious drinks by taste alone.",
+     "why_it_works": "A direct question creates immediate curiosity and promises surprise, compelling viewers to stay for the answer."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 34,
+     "energy_curve": "Steady high energy from start, micro‑spikes at each taste reaction, a peak at the twist, slight dip for the reveal, then a final surge with the CTA."
+    },
+    "retention_tricks": [
+     "Immediate question‑based hook",
+     "Fast‑cut editing rhythm",
+     "Repeated reaction beats",
+     "Unexpected twist at 30‑second mark",
+     "On‑screen emojis and kinetic text",
+     "Clear CTA before the video ends"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 85,
+   "weaknesses": [
+    "Audio plan is missing – no specification of voice style, music track, or reaction SFX, which are key to the DNA’s energy curve.",
+    "Retention tricks are not listed explicitly; the proposal relies on implied tactics rather than naming them.",
+    "Hook wording is less punchy than the original (no shouting or bold on‑screen graphic mentioned).",
+    "Cut rate and pacing details (e.g., ~34 cuts/min) are not quantified, risking a slower rhythm.",
+    "No mention of the “steady high‑energy” audio mix that rises and falls with each beat."
+   ],
+   "verdict": "The proposal mirrors the DNA trend’s structure and visual identity very well, delivering a solid blindfold‑taste‑test concept. However, it falls short on audio execution and explicit retention strategies, which are essential for maintaining the high‑energy flow of the original. With those gaps filled, the episode could easily score in the 90s."
+  }
+ }
+]
