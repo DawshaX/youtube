@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import hashlib
+import time
 import re
 import subprocess
 from pathlib import Path
@@ -501,8 +502,21 @@ def _pexels_candidates(query: str) -> list:
         return []
 
 
-def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
+def fetch_clip(query: str | list[str], seconds: float, workdir: Path, seed: str,
                source: str = "auto") -> Path | None:
+    """يجيب لقطة حية للاستعلام (أو أول استعلام ينجح من قائمة استعلامات).
+
+    بق حقيقي (2026-09-20): كل لقطة سردية بتتقطع لعدة قطع 2 ثانية بنفس
+    الاستعلام — فأول قطعة تاخد اللقطة، والباقي ما يلاقيش حاجة جديدة (كل
+    المرشحين اتسجّلوا «مستعملين») فيرجع خلفية مولّدة. الحل: سلسلة
+    استعلامات (زاوية أساسية + بديلة).
+    """
+    if isinstance(query, (list, tuple)):
+        for q in [x for x in query if str(x).strip()]:
+            got = fetch_clip(str(q), seconds, workdir, seed, source=source)
+            if got is not None:
+                return got
+        return None
     """لقطة حيّة مطابقة للمعنى → mp4 مظبوط بلا نص محروق، أو None.
 
     طبقة شبكية (بيكساباي/بكسلز/ويكيميديا/أرشيف الإنترنت/NASA) — مقفولة
@@ -652,7 +666,12 @@ def _mark_bad(url: str) -> None:
 
 
 def _trim_cache() -> None:
-    files = sorted(LIB.glob("*.mp4"), key=lambda p: p.stat().st_size)
+    # ما نمسحش أي ملف اتكتب في آخر دقيقة (لقطة اتقبلت للتوّ) — ده كان بيحذف
+    # اللقطة الجديدة نفسها لأنها أصغر ملفات الكاش.
+    now = time.time()
+    files = [p for p in LIB.glob("*.mp4")
+             if now - p.stat().st_mtime > 60]
+    files.sort(key=lambda p: p.stat().st_size)
     total = sum(p.stat().st_size for p in files)
     while total > MAX_LIB_MB * 1024 * 1024 and files:
         p = files.pop(0)

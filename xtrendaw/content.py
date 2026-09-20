@@ -199,8 +199,9 @@ def compose_script(topic: dict, lang: str = "ar") -> list[dict]:
             if not line:
                 continue
             seg = "hook" if i == 0 else f"shot{i}"
-            segs.append({"seg": seg, "text": line,
-                         "shot": i, "visual_query": sh.get("visual_query", ""),
+            segs.append({"seg": seg, "text": line, "shot": i,
+                         "visual_query": sh.get("visual_query", ""),
+                         "visual_query2": sh.get("visual_query2", ""),
                          "sfx": sh.get("sfx", ""),
                          "on_screen": sh.get("on_screen", ""),
                          "orig_dur": sh.get("dur")})

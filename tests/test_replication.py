@@ -260,3 +260,37 @@ class ReplicationNumberPolicyTest(unittest.TestCase):
             _assert_radar_numbers({"title_ar": "عنوان",
                                    "facts_ar": ["3 حقائق"]},
                                   self._report(), replication=False)
+
+
+class QueryChainTest(unittest.TestCase):
+    """سلسلة استعلامات لكل لقطة: زاوية أساسية + بديلة.
+
+    بق حقيقي (2026-09-20): الحلقة طلعت كلها خلفيات مولّدة لأن كل قطع 2 ثانية
+    لنفس اللقطة السردية استخدم **نفس الاستعلام** — أول قطعة تاخد اللقطة،
+    والباقي يفشل (كل المرشحين مسجّلين «مستعملين») → مفيش لقطة.
+    """
+
+    def test_fetch_clip_accepts_query_list(self):
+        import inspect
+        from xtrendaw import footage
+        sig = inspect.signature(footage.fetch_clip)
+        self.assertIn("query", sig.parameters)
+        src = inspect.getsource(footage.fetch_clip)
+        self.assertIn("isinstance(query, (list, tuple))", src)
+
+    def test_trim_skips_fresh_files(self):
+        import inspect
+        from xtrendaw import footage
+        src = inspect.getsource(footage._trim_cache)
+        self.assertIn("st_mtime", src)   # ما يمسحش لقطة اتقبلت للتوّ
+
+    def test_produce_passes_chain(self):
+        import inspect
+        from xtrendaw import produce
+        src = inspect.getsource(produce.produce_episode)
+        self.assertIn("real_q_chain", src)
+        self.assertIn("visual_query2", src)
+
+    def test_shots_prompt_asks_two_queries(self):
+        from xtrendaw.eye import SHOTS_PROMPT
+        self.assertIn("visual_query2", SHOTS_PROMPT)

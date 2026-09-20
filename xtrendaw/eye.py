@@ -1216,7 +1216,9 @@ SHOTS_PROMPT = """أنت مخرج شورتس عربي محترف لقناة «د
   "mood": "crazy|calm|warm|mysterious|serious",
   "shots": [
     {{"say_ar": "سطر اللقطة", "say_en": "English line",
-      "visual_query": "english stock query", "sfx": "whoosh|impact|pop|",
+      "visual_query": "english stock query",
+      "visual_query2": "different english angle for the same moment",
+      "sfx": "whoosh|impact|pop|",
       "on_screen": "نص قصير جدًا على الشاشة أو فراغ"}}
   ]
 }}
@@ -1404,6 +1406,7 @@ def write_replication(report: dict, dna: dict, digest: str) -> dict:
             "say_ar": str(row.get("say_ar") or "").strip()[:220],
             "say_en": str(row.get("say_en") or "").strip()[:220],
             "visual_query": str(row.get("visual_query") or "").strip()[:80],
+            "visual_query2": str(row.get("visual_query2") or "").strip()[:80],
             "sfx": str(row.get("sfx") or "").strip()[:12],
             "on_screen": str(row.get("on_screen") or "").strip()[:60],
         })

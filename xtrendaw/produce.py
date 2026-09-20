@@ -118,6 +118,12 @@ def produce_episode(topic: dict, workdir: Path, narration_lang: str = "ar",
         # ⚡ في التقليد: استعلام اللقطة نفسها (نفس اللي ظاهر في الأصل في اللحظة دي)
         real_q = (str(item.get("visual_query") or "").strip()
                   or (queries[i % len(queries)] if queries else ""))
+        # سلسلة استعلامات: الزاوية الأساسية ثم البديلة — عشان كل ثانية تاخد
+        # لقطة حقيقية جديدة بدل ما ترجع لخلفية مولّدة
+        real_q_chain = [q for q in (real_q,
+                                    str(item.get("visual_query2") or "").strip(),
+                                    real_q.split()[0] if real_q else "")
+                        if q]
         fresh_pool = topic.get("_fresh_pool") or []
         sc = scenes.build_scene(kind, text, seed=f"{topic['id']}:{i}",
                                 workdir=workdir / f"sc{i:02d}", subject=subject,
@@ -132,7 +138,7 @@ def produce_episode(topic: dict, workdir: Path, narration_lang: str = "ar",
             entry["end"] = s1
             # 1) لقطة حية من النت (بيكساباي ← بكسلز ← كومنز ← الأرشيف ← ناسا)
             #    — دي الأساس الافتراضي؛ الخزنة المحلية احتياط أوفلاين فقط.
-            clip = _footage.fetch_clip(real_q, s1 - s0,
+            clip = _footage.fetch_clip(real_q_chain or real_q, s1 - s0,
                                        workdir / f"sc{i:02d}" / f"cut{j:02d}",
                                        seed=f"{topic['id']}:{i}:{j}")
             if clip is None:
