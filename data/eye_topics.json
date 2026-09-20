@@ -742,5 +742,124 @@
    ],
    "verdict": "The proposal aligns well with the core DNA framework in terms of hook, beat timing, and visual pacing, but it needs tighter scripting (focus on one material) and a defined audio plan to fully meet the trend's high‑energy, retention‑optimized formula."
   }
+ },
+ {
+  "id": "eye-Erj9fxYjGcw",
+  "topic": "No te fies aunque parezcan piscinas.#supervivencia #sabiasque #curiosidades",
+  "angle": "الكشف عن أن الماء الهادئ يخفي فجوة عميقة أو حافة هشة قد تؤدي إلى السقوط، مع إظهار شخص يبتع",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "لا تقترب من البرك الهادئة!",
+  "title_en": "Don’t Trust Calm Ponds!",
+  "hook_ar": "لا تثقوا بما يبدو كبركة",
+  "hook_en": "Don’t trust what looks like a pond",
+  "facts_ar": [
+   "بعض البرك الطبيعية هي حفر غمر يمكن أن تبتلع أي شخص يقترب",
+   "المياه الساكنة قد تخفي تيارات قوية أو حواف غير مستقرة",
+   "العمق الحقيقي للبرك لا يمكن تقديره بالنظر فقط إلى السطح"
+  ],
+  "facts_en": [
+   "Certain natural pools are sinkholes that can swallow anyone who gets close",
+   "Still water can hide strong currents or fragile edges",
+   "The true depth of a pond cannot be judged by its surface alone"
+  ],
+  "takeaway_ar": {
+   "aql": "افحص العمق قبل ما تغطس",
+   "qalb": "المظهر الهادئ ما يضمن السلامة",
+   "rouh": "الطبيعة تخبي مفاجآت، فكن دائمًا متيقّظ"
+  },
+  "takeaway_en": {
+   "aql": "Check depth before you dive",
+   "qalb": "A calm look doesn’t guarantee safety",
+   "rouh": "Nature hides surprises, stay alert"
+  },
+  "tags": "برك,حفر غمر,سلامة,نصائح,طبيعة",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة واسعة لبركة زرقاء صافية مع انعكاس الشمس، نص تحذيري يظهر فجأة",
+    "style": "موسيقى إلكترونية خفيفة، قطع سريع، نص متحرك",
+    "colors": [
+     "#00AEEF",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "قرب سريع على قاع مظلم يظهر حطام وشظايا، سهم متحرك يوضح العمق المخفي",
+    "style": "إضاءة منخفضة، زوايا منخفضة، تأثير طقطقة ماء",
+    "colors": [
+     "#0066CC",
+     "#FF0000"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "المُقدّم يشرح بصوت حاد أن البركة في الحقيقة حفرة غمر، مع رمز تحذير يلمع",
+    "style": "توقيت سريع، نص توضيحي على الشاشة، صوت صدمة خفيف",
+    "colors": [
+     "#00AEEF",
+     "#FF0000"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "شخص يقترب ثم يتراجع بخوف، ماء يرش فجأة مع تأثير صدمة صوتية",
+    "style": "قطعة سريعة، إيموجي مفاجأة يطير، موسيقى تتصاعد ثم تنخفض",
+    "colors": [
+     "#0066CC",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:16-0:18",
+    "scene": "دعوة للمتابعة بنص “تابعنا لمزيد من حقائق البقاء” وأيقونة المتابعة تتألق",
+    "style": "موسيقى هادئة، نص ساطع، حركة خفيفة للرموز",
+    "colors": [
+     "#00AEEF",
+     "#FF0000"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "Erj9fxYjGcw",
+   "url": "https://youtu.be/Erj9fxYjGcw",
+   "sourceTitle": "No te fies aunque parezcan piscinas.#supervivencia #sabiasque #curiosidades",
+   "sourceChannel": "Miguel ASSAL ",
+   "sourceViews": 4195561,
+   "dna": {
+    "hook": {
+     "technique": "warning",
+     "what_happens": "المُقدِّم يفتح المشهد على ما يبدو بحيرة صافية أو بركة جميلة ثم يصرّح: \"لا تثقوا بما يبدو كأنه بركة\".",
+     "why_it_works": "يخلق توترًا فوريًا ويستفز الفضول لأن المشاهد يتساءل ما هو الخطر المخفي."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "صاعد سريعاً من 0 إلى 80% خلال الثواني الأولى، ثم قمة توتر عند 70%، ثم انخفاض تدريجي إلى 30% مع CTA."
+    },
+    "retention_tricks": [
+     "تحذير مبكر يخلق توترًا فوريًا",
+     "استخدام سؤال ضمن العنوان \"No te fies...\"",
+     "تغيّر سريع في المشهد يكشف الخطر",
+     "إضافة صوت صدمة وتأثير بصري عند الكشف",
+     "دعوة CTA مباشرة بعد الذروة"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [
+    "المزاج المحدد \"warm\" يتعارض مع النبرة التوترية والملحة التي يفرضها الـ DNA (يفقد بعض حدة التشويق).",
+    "لم يتم توضيح نمط الصوت (voice style) بدقة؛ الـ DNA يطلب نبرة إسبانية حادة، بينما الاقتراح يذكر فقط \"صوت حاد\" دون تحديد اللغة أو النبرة.",
+    "غياب تفاصيل الموسيقى والمؤثرات الصوتية (SFX) بشكل صريح؛ الـ DNA يحدد موسيقى إلكترونية توترية وصوت طقطقة ماء.",
+    "عدم تضمين سؤال جذاب في العنوان أو الوصف (مثل \"No te fies...\") كأحد حيل الاحتفاظ.",
+    "السرعة المتوقعة للقطع (45 قطع/دقيقة) لم تُذكر صراحةً في الخطة، ما قد يؤدي إلى عدم توافق الإيقاع مع النموذج."
+   ],
+   "verdict": "الاقتراح يلتزم بشكل جيد بالهيكل الأساسي للـ DNA ويستغل معظم العناصر البصرية والنصية المطلوبة، لكن يحتاج إلى تعديل النغمة الموسيقية واللغوية وتوحيد المزاج مع التوتر المطلوب لضمان أقصى تأثير وجذب المشاهد."
+  }
  }
 ]
