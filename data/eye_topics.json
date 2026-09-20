@@ -504,5 +504,125 @@
    "verdict": "The script captures the DNA framework well but needs tighter pacing, stronger audio cues, and more consistent on‑screen text/animation to match the high‑energy, rapid‑cut style that keeps viewers hooked.",
    "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
   }
+ },
+ {
+  "id": "eye-FaMgFJHLelE",
+  "topic": "¿Caminas así por casa?.#supervivencia #sabiasque #curiosidades",
+  "angle": "The “secret” walking technique is revealed to be simply rolling the foot from heel to toe,",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "إزاي تمشي بسلام وتوفر طاقة في البيت",
+  "title_en": "How to Walk Quietly and Save Energy at Home",
+  "hook_ar": "تمشي كده في البيت؟",
+  "hook_en": "Do you walk like that at home?",
+  "facts_ar": [
+   "المشي بنقلة من الكعب لأطراف الأصابع يقلل الصدمات على المفاصل.",
+   "الخطوة الهادية بتقلل فرص إن حد يلاحظك.",
+   "تحكمك في وضعية القدم بيخلي المشي أأمن وأريح."
+  ],
+  "facts_en": [
+   "Rolling the foot from heel to toe lessens joint impact.",
+   "Walking silently lowers the chance of being noticed.",
+   "Proper foot placement makes walking safer and more comfortable."
+  ],
+  "takeaway_ar": {
+   "aql": "الخطوة الصح بتغير جسمك.",
+   "qalb": "هتحس بالراحة وانت ماشي.",
+   "rouh": "هتعيش هدوء داخل البيت."
+  },
+  "takeaway_en": {
+   "aql": "The right step reshapes your body.",
+   "qalb": "You’ll feel comfort with each stride.",
+   "rouh": "You’ll enjoy peace inside your home."
+  },
+  "tags": "مشية,نصائح,صحة,بيت,حركة",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "قرب سريع على أقدام شخص بيمشي بطريقة متعثرة، مع إضاءة ساطعة وإطار سريع.",
+    "style": "لقطات يدوية سريعة، تقطيع سريع، إيقاع عالي.",
+    "colors": [
+     "#FF6F61",
+     "#2A9D8F"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "مونتاج سريع لثلاث أخطاء شائعة في المشي: الانزلاق، الخطوات الصاخبة، استهلاك الطاقة غير الضروري.",
+    "style": "لقطات متقاربة مع تأثيرات صوتية للخطوات، نص متحرك يوضح كل مشكلة.",
+    "colors": [
+     "#F4A261",
+     "#2A9D8F"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "كشف مفاجئ لتقنية بسيطة: نقل الوزن من الكعب إلى الأصابع بسلاسة.",
+    "style": "تقريب بطيء لتوضيح حركة القدم، سهم متحرك يوضح الاتجاه.",
+    "colors": [
+     "#FF6F61",
+     "#F4A261"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "مقارنة قبل وبعد: مشية صاخبة مقابل مشية هادئة وسلسة، مع إظهار الفرق في الضوضاء والحركة.",
+    "style": "شاشة مقسمة، سلو موشن للخطوات، مؤثر صوتي لتقليل الضوضاء.",
+    "colors": [
+     "#2A9D8F",
+     "#FF6F61"
+    ]
+   },
+   {
+    "time": "0:16-0:18",
+    "scene": "دعوة للتجربة وتعليق المشاهدين، زر اشتراك يطير على الشاشة.",
+    "style": "نص متوهج، إيموجي أقدام، موسيقى ترتفع مع ظهور الدعوة.",
+    "colors": [
+     "#F4A261",
+     "#2A9D8F"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "FaMgFJHLelE",
+   "url": "https://youtu.be/FaMgFJHLelE",
+   "sourceTitle": "¿Caminas así por casa?.#supervivencia #sabiasque #curiosidades",
+   "sourceChannel": "Miguel ASSAL ",
+   "sourceViews": 5268647,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "The video opens with a bold, spoken question: \"¿Caminas así por casa?\" while showing a person walking in an exaggerated, clumsy way.",
+     "why_it_works": "A direct question creates immediate curiosity and forces the viewer to self‑identify, prompting them to stay for the answer."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 30,
+     "energy_curve": "high‑low‑high‑peak‑slight‑fade (starts with a spike, dips during explanation, rises sharply at the demonstration, peaks at payoff, then gently fades into CTA)"
+    },
+    "retention_tricks": [
+     "Immediate question hook",
+     "Fast‑paced cuts (≈2‑3 seconds per beat)",
+     "Relatable everyday problem",
+     "Surprise ‘secret’ tip",
+     "Before/after visual proof",
+     "Strong CTA with on‑screen graphics"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 85,
+   "weaknesses": [
+    "Audio details (voice style, music, SFX) are not specified, leaving a gap in the sensory execution compared to the DNA guideline.",
+    "The “twist” is described but not emphasized as a surprising secret; it could be framed more dramatically to boost curiosity.",
+    "Takeaway statements are abstract (e.g., “الخطوة الصح بتغير جسمك”) and may not translate into a clear, actionable message for viewers.",
+    "The proposal does not mention text‑on‑screen timing or sticker usage beyond generic emojis, missing an opportunity for the recommended on‑screen graphics.",
+    "No explicit mention of pacing metrics (cuts per minute) or energy curve, which are key for maintaining retention in short‑form content."
+   ],
+   "verdict": "The proposal faithfully follows the DNA trend’s structural blueprint and visual language, delivering a solid, high‑energy short video concept. However, the lack of detailed audio planning and slightly vague takeaways prevent it from fully capitalizing on the trend’s retention hooks. With refined audio cues and sharper messaging, it could reach a top‑tier score."
+  }
  }
 ]
