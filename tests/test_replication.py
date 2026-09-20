@@ -44,7 +44,10 @@ class ReplicationScriptTest(unittest.TestCase):
     def test_each_segment_carries_its_own_visual_query(self):
         segs = content.compose_script(SHOTS_TOPIC, "ar")
         queries = [s.get("visual_query") for s in segs if s.get("visual_query")]
-        self.assertEqual(queries, [sh["visual_query"] for sh in SHOTS_TOPIC["shots"]])
+        # قطع التقليد نفسها (CTA/الختام بقى لهم بوصلاتهم — تست مستقل)
+        shot_segs = [s for s in segs if s["seg"] not in ("cta", "outro")]
+        self.assertEqual([s.get("visual_query") for s in shot_segs],
+                         [sh["visual_query"] for sh in SHOTS_TOPIC["shots"]])
         self.assertEqual(len(set(queries)), len(queries))  # مش استعلام واحد مكرر
 
     def test_english_lines_match_shots(self):
@@ -340,3 +343,35 @@ class SegmentMetadataPassthroughTest(unittest.TestCase):
         from xtrendaw import produce
         src = inspect.getsource(produce.produce_episode)
         self.assertIn('item.get("visual_query")', src)
+
+
+class TailSegmentsQueryTest(unittest.TestCase):
+    """آخر الحلقة (CTA + الختام) ما يبقاش خلفيات مولّدة.
+
+    بق حقيقي (2026-09-20): في دورة 13:29 كل اللقطات الحية جابت 60 لقطة حية،
+    بس آخر 6 قطع (CTA/ختام) طلعت «⚠ استعلام فاضي» → خلفيات مولّدة.
+    """
+
+    def _topic(self):
+        return {"id": "eye-test1", "title_ar": "تجربة", "tags": "تحدي",
+                "mood": "fun",
+                "shots": [{"t0": 0, "t1": 3, "dur": 3, "say_ar": "سطر أول",
+                           "visual_query": "squid closeup",
+                           "visual_query2": "squid swimming"}]}
+
+    def test_cta_and_outro_have_queries(self):
+        from xtrendaw import content
+        segs = content.compose_script(self._topic(), "ar")
+        tail = {s["seg"]: s for s in segs}
+        for name in ("cta", "outro"):
+            self.assertIn(name, tail)
+            self.assertTrue(tail[name].get("visual_query"), f"{name} بلا بوصلة لقطة")
+            self.assertTrue(tail[name].get("visual_query2"))
+
+    def test_tail_queries_are_english(self):
+        """بيكساباي/بكسلز بالإنجليزي — الاستعلامات العربية بترجع صفر."""
+        from xtrendaw import content
+        segs = content.compose_script(self._topic(), "ar")
+        for s in segs:
+            if s["seg"] in ("cta", "outro"):
+                self.assertTrue(all(ord(c) < 128 for c in s["visual_query"]))

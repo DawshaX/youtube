@@ -207,9 +207,18 @@ def compose_script(topic: dict, lang: str = "ar") -> list[dict]:
                          "orig_dur": sh.get("dur")})
         if segs:
             outro = settings.BRAND["outro_en" if lang == "en" else "outro_ar"]
+            # 🎞 CTA والختام برضه بلقطات حية: بق حقيقي (2026-09-20) — كانوا
+            # بيتعملوا بخلفيات مولّدة (~12 ثانية في آخر كل حلقة تقليد).
+            _k = sum(ord(c) for c in str(topic.get("id") or "")) % 3
+            _cta = ["subscribe button animation", "call to action graphic",
+                    "like share subscribe neon"]
+            _out = ["emoji bounce", "confetti celebration",
+                    "thank you wave animation"]
             segs.append({"seg": "cta",
-                         "text": (CTA_EN if lang == "en" else CTA_AR).strip()})
-            segs.append({"seg": "outro", "text": outro.strip()})
+                         "text": (CTA_EN if lang == "en" else CTA_AR).strip(),
+                         "visual_query": _cta[_k], "visual_query2": _cta[(_k + 1) % 3]})
+            segs.append({"seg": "outro", "text": outro.strip(),
+                         "visual_query": _out[_k], "visual_query2": _out[(_k + 1) % 3]})
             return segs
     labels = LABELS_EN if lang == "en" else LABELS_AR
     hook = topic.get(f"hook_{lang}") or topic.get("hook_ar", "")
