@@ -1796,5 +1796,201 @@
     "Does not emphasize a dramatic reveal or payoff"
    ]
   }
+ },
+ {
+  "id": "eye-gloIck2KC-A",
+  "topic": "لماذا تتجمع الأسماك عند ثقوب الجليد؟ 😳",
+  "angle": "Fish gather at ice holes not only to breathe but also to feed on insects and escape predat",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "السبب المذهل لتجمع الأسماك عند ثقب الجليد!",
+  "title_en": "The Astonishing Reason Fish Gather at Ice Holes!",
+  "hook_ar": "ليه الأسماك بتتجمع عند ثقوب الجليد؟",
+  "hook_en": "Why do fish gather at ice holes?",
+  "facts_ar": [
+   "أشاهدوا حركة الأسماك المتقطعة.",
+   "نزلوا من فوق، يشتبكوا في ثقب الجليد.",
+   "تتجسد لحظة الغطس، الموجة بتقلب."
+  ],
+  "facts_en": [
+   "Watch the swift fish movement.",
+   "They dive and clash into the ice hole.",
+   "The dive unfolds, waves swirling."
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "أسماك,جليد,طبيعة,مغامرات,فيديو",
+  "mood": "mysterious",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 3.0,
+    "dur": 3.0,
+    "say_ar": "ليه الأسماك بتتجمع عند ثقوب الجليد؟",
+    "say_en": "Why do fish gather at ice holes?",
+    "visual_query": "fish swimming closeup water",
+    "visual_query2": "fish swimming near ice",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 3.0,
+    "t1": 6.0,
+    "dur": 3.0,
+    "say_ar": "أشاهدوا حركة الأسماك المتقطعة.",
+    "say_en": "Watch the swift fish movement.",
+    "visual_query": "fast fish swimming",
+    "visual_query2": "quick fish movement",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 6.0,
+    "t1": 9.0,
+    "dur": 3.0,
+    "say_ar": "نزلوا من فوق، يشتبكوا في ثقب الجليد.",
+    "say_en": "They dive and clash into the ice hole.",
+    "visual_query": "fish entering ice hole",
+    "visual_query2": "fish diving into crack",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 9.0,
+    "t1": 15.0,
+    "dur": 6.0,
+    "say_ar": "تتجسد لحظة الغطس، الموجة بتقلب.",
+    "say_en": "The dive unfolds, waves swirling.",
+    "visual_query": "closeup fish entering hole",
+    "visual_query2": "water splash fish",
+    "sfx": "water splash",
+    "on_screen": ""
+   },
+   {
+    "t0": 15.0,
+    "t1": 18.0,
+    "dur": 3.0,
+    "say_ar": "بالتنفس، الهواء يملأ فموهم.",
+    "say_en": "Breathing in, air fills their mouths.",
+    "visual_query": "fish breathing air",
+    "visual_query2": "fish surface air",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 18.0,
+    "t1": 21.0,
+    "dur": 3.0,
+    "say_ar": "السبب؟ السمك يحتاج أكسجين، الجليد بيوفره.",
+    "say_en": "Because fish need oxygen, the ice provides it.",
+    "visual_query": "fish oxygen bubble",
+    "visual_query2": "fish near ice bubble",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 21.0,
+    "t1": 24.0,
+    "dur": 3.0,
+    "say_ar": "والأهم، الفريكة بتقع في الثقب، يا جماعة!",
+    "say_en": "Plus, insects drop into the hole—yum!",
+    "visual_query": "fish eating insects",
+    "visual_query2": "insects falling into water",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 24.0,
+    "t1": 30.0,
+    "dur": 6.0,
+    "say_ar": "لو ظهر مطاردة، بيهربوا من الجليد بسرعة!",
+    "say_en": "When a predator appears, they flee the ice fast!",
+    "visual_query": "fish escaping predator",
+    "visual_query2": "predator chase fish",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 30.0,
+    "t1": 33.0,
+    "dur": 3.0,
+    "say_ar": "شوفوا ده كله، من الصيد للفرار!",
+    "say_en": "See it all—hunting, hiding, escaping!",
+    "visual_query": "fast fish montage",
+    "visual_query2": "multiple fish action",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 33.0,
+    "t1": 36.0,
+    "dur": 3.0,
+    "say_ar": "كل لحظة فيها حركة، كأنها رقصة مائية!",
+    "say_en": "Every moment bursts—like a water dance!",
+    "visual_query": "fish dancing",
+    "visual_query2": "fish swimming pattern",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 36.0,
+    "t1": 39.0,
+    "dur": 3.0,
+    "say_ar": "ما فيش حاجة كده غير الطبيعة اللي بتحركنا!",
+    "say_en": "Nature moves us—unbelievable!",
+    "visual_query": "fish schooling",
+    "visual_query2": "schooling fish",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 39.0,
+    "t1": 44.0,
+    "dur": 5.0,
+    "say_ar": "لو عجبك الفيديو، دوس لايك وشير، اشترك!",
+    "say_en": "Like, share, subscribe—join the adventure!",
+    "visual_query": "subscribe button animation",
+    "visual_query2": "like share icons",
+    "sfx": "pop",
+    "on_screen": "لايك / شير / اشترك"
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "gloIck2KC-A",
+   "url": "https://youtu.be/gloIck2KC-A",
+   "sourceTitle": "لماذا تتجمع الأسماك عند ثقوب الجليد؟ 😳",
+   "sourceChannel": "مغامرات واكتشاف",
+   "sourceViews": 3065668,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "The video opens with a close‑up of a fish swimming toward a hole in the ice, followed by the narrator asking, \"لماذا تتجمع الأسماك عند ثقوب الجليد؟\"",
+     "why_it_works": "The question sparks curiosity and taps into the viewer’s desire to understand a surprising natural phenomenon."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 11,
+     "energy_curve": "High at start → slight dip during explanation → peak during twist moments → steady rise toward CTA."
+    },
+    "retention_tricks": [
+     "Question hook that triggers curiosity",
+     "Fast cuts and slow‑motion reveals to maintain visual interest"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 62,
+   "weaknesses": [
+    "غياب تام لعنصر المفاجأة (Twist) البصري؛ الشرح يأتي بشكل خطي ومباشر دون كسر التوقعات.",
+    "نص الشرح (Say_ar) ضعيف لغوياً وغير طبيعي (مثلاً: 'يشتبكوا في ثقب الجليد' و 'الفريكة') مما يضر بالمصداقية.",
+    "غياب الرسوم المتحركة أو النصوص على الشاشة (On-screen text) التي كانت جزءاً أساسياً من لغة DNA البصرية.",
+    "الموسيقى الخلفية غير محددة، مما قد يجعل الإيقاع الصوتي مسطحاً مقارنة بـ 'upbeat tropical' في الأصل.",
+    "المقاطع البصرية (Visual queries) عامة جداً وقد لا تعكس الدقة العلمية المطلوبة (مثل 'fish dancing')."
+   ],
+   "verdict": "الفيديو يحقق البنية الأساسية للترند من حيث الإيقاع والمحتوى، لكنه يفشل في تحقيق العمق البصري والجودة اللغوية. النص يحتاج لمراجعة شاملة ليكون طبيعياً وجذاباً، وإضافة عناصر بصرية توضيحية (Graphics) لرفع مستوى الاحترافية.",
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  }
  }
 ]
