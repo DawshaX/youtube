@@ -136,7 +136,7 @@ def _save_meta(topic: dict, credits: list[str]) -> Path:
 
 
 def cycle_once() -> None:
-    from xtrendaw import produce, settings, state
+    from xtrendaw import github_store, produce, settings, state
     s = _load_status()
     s["cycles"] = s.get("cycles", 0) + 1
     s["last_cycle_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -224,6 +224,35 @@ def cycle_once() -> None:
     # فوق السقف: الحلقة تتحفظ في المخزون وترفع أول ما الكوتة تفتح —
     # صفر محاولات مهدورة وصفر أخطاء حصة.
     # ⚠️ في وضع "بلا نشر" (معاينة/فحص) بنوقف قبل أي رفع خالص.
+    # 📸 ورقة إطارات الحلقة — دليل بصري حقيقي في state/latest_sheet.jpg
+    # (كانت بتتولد في run_cycle بس، فالأرتيفاكت بتاع الدورة كان بيطلع ورقة
+    #  قديمة — يعني الدليل اللي بنشوفه مش بتاع الفيديو الجديد.)
+    if vid.exists():
+        try:
+            from xtrendaw import sheetshot
+            if sheetshot.shoot(vid, topic.get("_kind", "know"),
+                               topic.get("title_ar", "")):
+                print("[factory] 📸 ورقة الإطارات اتصورت للحلقة دي", flush=True)
+        except Exception as exc:
+            print(f"[factory] ⚠ ورقة الإطارات: {type(exc).__name__}", flush=True)
+
+    # 📦 خزّن في المخزون (vault) — الفيديو ما يضيعش لو الكوتة مقفولة
+    # بق حقيقي (2026-09-20): الدورة أنتجت حلقة التقليد والكوتة كانت 6/6،
+    # فالفيديو راح مع الـrunner ومات — يعني شغل ضاع بالكامل.
+    _quota_hold = state.published_today_pt() >= (settings.DAILY_CAP or 999)
+    if vid.exists() and github_store.available():
+        try:
+            _meta = {"id": topic["id"], "title_ar": topic.get("title_ar", ""),
+                     "tags": topic.get("tags", ""), "kind": topic.get("_kind", "know"),
+                     "shots": len(topic.get("shots") or []),
+                     "_eye": topic.get("_eye"),
+                     "credits": list((rep.get("credits") or []))}
+            _urls = github_store.upload_to_vault(vid, out.get("cover"), _meta)
+            print(f"[factory] 📦 الحلقة في المخزون: {_urls.get('video', '')[:70]}",
+                  flush=True)
+        except Exception as exc:
+            print(f"[factory] ⚠ تخزين المخزون: {str(exc)[:110]}", flush=True)
+
     if vid.exists() and not NO_PUBLISH and state.published_today_pt() >= (settings.DAILY_CAP or 999):
         _log(s, "publish_attempts", {"at": now, "topic": topic["id"], "ok": False,
                                      "why": f"daily_cap {state.published_today_pt()}/{settings.DAILY_CAP}"})
