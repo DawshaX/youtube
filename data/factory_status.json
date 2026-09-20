@@ -1,5 +1,5 @@
 {
- "cycles": 35,
+ "cycles": 36,
  "renders": [
   {
    "at": "00:19",
@@ -165,6 +165,11 @@
   },
   {
    "at": "18:00",
+   "ok": false,
+   "note": "vault_ready 6 · published_today 6/6"
+  },
+  {
+   "at": "18:16",
    "ok": false,
    "note": "vault_ready 6 · published_today 6/6"
   }
@@ -449,6 +454,10 @@
   {
    "at": "18:00",
    "ok": true
+  },
+  {
+   "at": "18:16",
+   "ok": true
   }
  ],
  "eye": [
@@ -626,9 +635,14 @@
    "at": "18:00",
    "rc": -1,
    "err": "TimeoutExpired"
+  },
+  {
+   "at": "18:16",
+   "rc": 0,
+   "note": "eye: 2/2 فيديو اتشاف وموضوعات اتكتبت"
   }
  ],
- "last_cycle_at": "2026-09-20 18:00:33",
+ "last_cycle_at": "2026-09-20 18:16:54",
  "last_commit": "saved",
  "last_error": "2026-09-19 00:34:44",
  "dubs": [

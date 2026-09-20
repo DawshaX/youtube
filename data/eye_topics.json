@@ -1992,5 +1992,335 @@
    "verdict": "الفيديو يحقق البنية الأساسية للترند من حيث الإيقاع والمحتوى، لكنه يفشل في تحقيق العمق البصري والجودة اللغوية. النص يحتاج لمراجعة شاملة ليكون طبيعياً وجذاباً، وإضافة عناصر بصرية توضيحية (Graphics) لرفع مستوى الاحترافية.",
    "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
   }
+ },
+ {
+  "id": "eye-y30N5hbtJ9o",
+  "topic": "ليه الجيش الهندي بيفحص شكل قدمك؟ 😳🪖 #حقائق #معلومات #هل_تعلم",
+  "angle": "السبب الحقيقي: الفحص يُستخدم لتحديد مشاكل صحية مثل تشوهات القدم أو أمراض السكري التي قد تؤ",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "السر المخبأ: فحص القدم في الجيش الهندي!",
+  "title_en": "The Hidden Secret: Foot Check in the Indian Army!",
+  "hook_ar": "ليه الجيش الهندي بيشوف شكل قدمك؟",
+  "hook_en": "Why does the Indian Army check your foot shape?",
+  "facts_ar": [
+   "😳🪖 يخلّيك متشوق كده",
+   "جنود هنديين يضعوا أقدامهم على الجهاز",
+   "جهاز فحص القدم يضغط على الأصابع"
+  ],
+  "facts_en": [
+   "😳🪖 Make you curious",
+   "Indian soldiers place their feet on the device",
+   "Foot scan device presses on toes"
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "جيش هندى, فحص القدم, معلومات, حقائق, جندي",
+  "mood": "mysterious",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 1.0,
+    "dur": 1.0,
+    "say_ar": "ليه الجيش الهندي بيشوف شكل قدمك؟",
+    "say_en": "Why does the Indian Army check your foot shape?",
+    "visual_query": "Indian soldiers foot scan",
+    "visual_query2": "army medical exam closeup",
+    "sfx": "whoosh",
+    "on_screen": "ليش الجيش الهندي بيشوف شكل قدمك؟"
+   },
+   {
+    "t0": 1.0,
+    "t1": 2.0,
+    "dur": 1.0,
+    "say_ar": "😳🪖 يخلّيك متشوق كده",
+    "say_en": "😳🪖 Make you curious",
+    "visual_query": "emojis reaction",
+    "visual_query2": "hand emoji closeup",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 2.0,
+    "t1": 4.0,
+    "dur": 2.0,
+    "say_ar": "جنود هنديين يضعوا أقدامهم على الجهاز",
+    "say_en": "Indian soldiers place their feet on the device",
+    "visual_query": "Indian soldiers foot placement",
+    "visual_query2": "military foot test",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 4.0,
+    "t1": 5.0,
+    "dur": 1.0,
+    "say_ar": "جهاز فحص القدم يضغط على الأصابع",
+    "say_en": "Foot scan device presses on toes",
+    "visual_query": "foot scan device",
+    "visual_query2": "toe pressure test",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 5.0,
+    "t1": 7.0,
+    "dur": 2.0,
+    "say_ar": "السبب: كشف أمراض القدم",
+    "say_en": "Reason: Detect foot diseases",
+    "visual_query": "medical foot disease",
+    "visual_query2": "foot health check",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 7.0,
+    "t1": 8.0,
+    "dur": 1.0,
+    "say_ar": "أطباء يراجعون النتائج بسرعة",
+    "say_en": "Doctors review results quickly",
+    "visual_query": "doctor reviewing test results",
+    "visual_query2": "medical staff closeup",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 8.0,
+    "t1": 9.0,
+    "dur": 1.0,
+    "say_ar": "نتيجة: جاهز أو غير جاهز",
+    "say_en": "Result: Ready or Not",
+    "visual_query": "test result indicator",
+    "visual_query2": "green red light",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 9.0,
+    "t1": 11.0,
+    "dur": 2.0,
+    "say_ar": "جندي يخطو بثقة على الدرب",
+    "say_en": "Soldier strides confidently on the path",
+    "visual_query": "soldier walking confidently",
+    "visual_query2": "military march",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 11.0,
+    "t1": 12.0,
+    "dur": 1.0,
+    "say_ar": "أمراض السكري تؤثر على الأداء",
+    "say_en": "Diabetes can affect performance",
+    "visual_query": "diabetes foot health",
+    "visual_query2": "medical info overlay",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 12.0,
+    "t1": 14.0,
+    "dur": 2.0,
+    "say_ar": "فحص القدم يضمن قوة الجندي",
+    "say_en": "Foot check ensures soldier strength",
+    "visual_query": "soldier strength test",
+    "visual_query2": "foot health military",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 14.0,
+    "t1": 15.0,
+    "dur": 1.0,
+    "say_ar": "لو عجبك، اعمل لايك وشير",
+    "say_en": "If you liked, like and share",
+    "visual_query": "like share icon",
+    "visual_query2": "social media CTA",
+    "sfx": "pop",
+    "on_screen": "اعمل لايك وشير"
+   },
+   {
+    "t0": 15.0,
+    "t1": 16.5,
+    "dur": 1.5,
+    "say_ar": "تابعنا للمزيد من الحقائق",
+    "say_en": "Follow for more facts",
+    "visual_query": "subscribe button",
+    "visual_query2": "channel outro",
+    "sfx": "whoosh",
+    "on_screen": ""
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "y30N5hbtJ9o",
+   "url": "https://youtu.be/y30N5hbtJ9o",
+   "sourceTitle": "ليه الجيش الهندي بيفحص شكل قدمك؟ 😳🪖 #حقائق #معلومات #هل_تعلم",
+   "sourceChannel": "E3rafha",
+   "sourceViews": 2896144,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "يُطرح سؤال صادم: \"ليه الجيش الهندي بيفحص شكل قدمك؟\" مع إيموجي 😳🪖",
+     "why_it_works": "السؤال يثير الفضول الفوري ويستهدف الفئة التي تحب الحقائق الغريبة، بينما الإيموجي يضيف طابعًا بصريًا جذابًا يوقف التمرير."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "صاعد سريع خلال الـ0-4 ثوانٍ (hook)، استقرار خفيف 4-8، صعود خفيف 8-12 (توضيح)، قمة عالية 12-15 (payoff)، انخفاض سريع للCTA."
+    },
+    "retention_tricks": [
+     "سؤال صادم في أول 2 ثانية",
+     "استخدام إيموجي وعناوين نصية جذابة",
+     "تقديم معلومة غير متوقعة (فحص القدم)",
+     "تسريع الإيقاع البصري مع قطع سريعة",
+     "دعوة CTA قبل انتهاء الفيديو"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 62,
+   "weaknesses": [
+    "الخطأ الفادح في الشوت الثاني (1.0-2.0 ثانية): السكربت يطلب من الراوي أن يقول '😳🪖 يخلّيك متشوق كده'، وهذا كلام ميتاميتا (Meta-commentary) غير مقبول في فيديو حقائق، مما يكسر الغرور ويقلل المصداقية بشكل كبير.",
+    "ضعف الإيقاع البصري (Pacing): DNA الترند يتطلب 45 قطع في الدقيقة (أي كل 1.3 ثانية تقريباً)، بينما المقترح يحتوي على شوتات مدتها 2 ثانية متتالية (2-4، 5-7، 9-11، 12-14)، مما يجعل الفيديو بطيئاً وممللاً مقارنة بالترند السريع.",
+    "غياب النص على الشاشة (Text on Screen): DNA الترند يعتمد بشكل كبير على النصوص المتحركة والجذابة، لكن المقترح يترك حقل on_screen فارغاً في معظم الشوتات، مما يفقد الفيديو عنصره البصري الجذاب الرئيسي.",
+    "ضعف الـ Twist: الشوت الذي يفترض أن يكون 'القلب' أو المعلومة غير المتوقعة (5-7 ثوانٍ) يكتفي بعبارة عامة 'كشف أمراض القدم' دون ذكر التفاصيل الدقيقة (مثل تشوهات العظام أو تأثير السكري على المشي لمسافات طويلة) التي تجعل المعلومة قيّمة ومفاجئة.",
+    "الاعتماد على مؤثرات صوتية مكررة (pop, whoosh) دون تنوع أو تدرج في الطاقة الصوتية كما هو مطلوب في DNA."
+   ],
+   "verdict": "مرفوض بسبب خطأ السكربت الفادح (تحدث الراوي عن المشاعر بدلاً من تقديم المعلومة) وبطء الإيقاع البصري الذي يخالف طبيعة الترند السريع. يجب إعادة كتابة السكربت ليكون مباشراً ومعلوماتياً، وتقسيم الشوتات الطويلة إلى قطع أسرع، وإضافة نصوص جذابة على الشاشة.",
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  }
+ },
+ {
+  "id": "eye-bn85WzJ7MQg",
+  "topic": "بعمرك سمعت صوت التلفزيون بعد ماطفيته😂❤️ #اكسبلور #تجارب #معلومات #تلفزيون #ضحك #سوريا",
+  "angle": "الصوت ليس من عطل بل هو تفريغ طبيعي للمكثفات داخل التلفاز أو إشارات راديوية خفيفة تستمر بعد",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "صوت غامض بعد إطفاء التلفزيون!",
+  "title_en": "Mysterious TV Sound After Turn Off!",
+  "hook_ar": "سمعت صوت التلفزيون بعد ما طفيته؟",
+  "hook_en": "Did you hear the TV sound after turning it off?",
+  "facts_ar": [
+   "هقرب الكاميرا ونشوف السبب",
+   "الضوضاء بقت أقوى من البعيد",
+   "الصوت هو تفريغ المكثفات في التلفاز"
+  ],
+  "facts_en": [
+   "I'll pull the camera closer to find the cause",
+   "The noise is getting louder",
+   "It's capacitor discharge in the TV"
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "TV,صوت,تجربة,تقنية,قناة,فيديو,تجربة يومية",
+  "mood": "mysterious",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 2.0,
+    "dur": 2.0,
+    "say_ar": "سمعت صوت التلفزيون بعد ما طفيته؟",
+    "say_en": "Did you hear the TV sound after turning it off?",
+    "visual_query": "black smart TV on white table",
+    "visual_query2": "close up black TV screen",
+    "sfx": "static hiss",
+    "on_screen": ""
+   },
+   {
+    "t0": 2.0,
+    "t1": 4.0,
+    "dur": 2.0,
+    "say_ar": "هقرب الكاميرا ونشوف السبب",
+    "say_en": "I'll pull the camera closer to find the cause",
+    "visual_query": "hand approaching TV screen",
+    "visual_query2": "camera close up on TV",
+    "sfx": "click",
+    "on_screen": ""
+   },
+   {
+    "t0": 4.0,
+    "t1": 6.0,
+    "dur": 2.0,
+    "say_ar": "الضوضاء بقت أقوى من البعيد",
+    "say_en": "The noise is getting louder",
+    "visual_query": "close up TV panel interior",
+    "visual_query2": "TV power button close up",
+    "sfx": "static hiss",
+    "on_screen": ""
+   },
+   {
+    "t0": 6.0,
+    "t1": 8.0,
+    "dur": 2.0,
+    "say_ar": "الصوت هو تفريغ المكثفات في التلفاز",
+    "say_en": "It's capacitor discharge in the TV",
+    "visual_query": "TV circuit board close up",
+    "visual_query2": "capacitor close up",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 8.0,
+    "t1": 10.0,
+    "dur": 2.0,
+    "say_ar": "لو عجبك الفيديو اضغط لايك وشترك",
+    "say_en": "If you liked it, hit like and subscribe",
+    "visual_query": "thumbs up icon",
+    "visual_query2": "subscribe button",
+    "sfx": "impact",
+    "on_screen": "❤️"
+   },
+   {
+    "t0": 10.0,
+    "t1": 12.0,
+    "dur": 2.0,
+    "say_ar": "تابعنا لمزيد من التجارب اليومية",
+    "say_en": "Follow us for more daily experiments",
+    "visual_query": "closing screen with channel logo",
+    "visual_query2": "channel outro animation",
+    "sfx": "fade out",
+    "on_screen": "تابعنا"
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "bn85WzJ7MQg",
+   "url": "https://youtu.be/bn85WzJ7MQg",
+   "sourceTitle": "بعمرك سمعت صوت التلفزيون بعد ماطفيته😂❤️ #اكسبلور #تجارب #معلومات #تلفزيون #ضحك #سوريا",
+   "sourceChannel": "Sami wasem | سامي وسيم",
+   "sourceViews": 2834755,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "المُقدِّم يسأل: \"سمعت صوت التلفزيون بعد ما طفيته؟\" ويُظهر لقطات لتلفاز يبدو أنه مُغلق لكن يُسمع صوت غريب.",
+     "why_it_works": "السؤال يثير فضول المشاهد فوراً ويستهدف تجربة يومية مشتركة، ما يدفع المشاهد للبقاء لمعرفة السبب."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 6,
+     "energy_curve": "low → medium (question) → medium‑high (close‑up reveal) → high (explanation) → medium (cta) → low (outro)"
+    },
+    "retention_tricks": [
+     "سؤال يثير الفضول في الثواني الأولى",
+     "استخدام صوت غير متوقع لتوليد توتر سمعي",
+     "قريب سريع للوحة الداخلية لتقديم عنصر بصري جديد",
+     "إعطاء إجابة علمية مبسطة تُشبع الفضول",
+     "دعوة CTA مباشرة بعد لحظة الإشباع"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 72,
+   "weaknesses": [
+    "غياب عنصر المفاجأة البصرية (Twist) في اللقطة الثالثة؛ الاقتراح يكتفي بـ 'close up TV panel' بينما DNA يتطلب عرض مكوّنات داخلية غير متوقعة لإثارة الفضول.",
+    "اللقطة الثانية (2-4 ثوانٍ) ضعيفة بصرياً؛ 'hand approaching' أقل تأثيراً من 'camera zoom' المذكور في DNA، مما قد يفقد المشاهد التركيز.",
+    "غياب الرسوم التوضيحية (Graphics) مثل الأسهم أو النصوص التوضيحية التي تعزز الفهم العلمي في لحظة الكشف (Payoff)."
+   ],
+   "verdict": "قوي في البنية النصية والتوقيت، لكنه يحتاج لتحسين الدقة البصرية في لقطات الكشف (Twist/Payoff) ليعكس عمق DNA الترند الأصلي.",
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  }
  }
 ]
