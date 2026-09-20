@@ -68,6 +68,9 @@ jobs:
 
       - name: Keep one "[health]" issue updated
         if: always()
+        env:
+          # gh CLI في Actions محتاج GH_TOKEN صريح (بدونه: exit 4)
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           FAILS=$(python3 -c "import json;print(json.load(open('data/health.json'))['fails'])" 2>/dev/null || echo '?')
           BODY=$(cat data/health_summary.md 2>/dev/null || echo "(no report)")
