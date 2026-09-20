@@ -265,7 +265,7 @@ class WriterRetryTests(unittest.TestCase):
     def test_invented_numbers_trigger_one_corrective_retry(self):
         prompts = []
 
-        def fake_llm(prompt, temperature=0.7):
+        def fake_llm(prompt, temperature=0.7, max_tokens=2048):
             prompts.append(prompt)
             return {"title_ar": "عنوان"}
 
@@ -287,7 +287,7 @@ class WriterRetryTests(unittest.TestCase):
     def test_other_failures_are_not_retried(self):
         calls = []
 
-        def fake_llm(prompt, temperature=0.7):
+        def fake_llm(prompt, temperature=0.7, max_tokens=2048):
             calls.append(prompt)
             return {"title_ar": "عنوان"}
 
@@ -307,7 +307,7 @@ class JsonRepairTests(unittest.TestCase):
     def _patch(self, replies):
         seq = list(replies)
 
-        def fake_llm(prompt, temperature=0.7):
+        def fake_llm(prompt, temperature=0.7, max_tokens=2048):
             return seq.pop(0)
 
         return mock.patch.object(eye, "_llm", fake_llm)

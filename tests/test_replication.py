@@ -179,3 +179,53 @@ class RadarMetaShapeTest(unittest.TestCase):
 
     def test_unknown_video_is_empty(self):
         self.assertEqual(self._with_snapshot({"videos": []}), {})
+
+
+class SourceNumbersAllowedTest(unittest.TestCase):
+    """أرقام الفيديو الأصلي مباحة في التقليد — إحنا بننقل كلامه مش بنخترع.
+
+    بق حقيقي (2026-09-20): المخرج كتب «5» (من كلام الفيديو الأصلي) فالحارس
+    رفض السكربت كله → العين رجعت لنمط نشرة الأخبار. ده كان بيضرب التقليد.
+    """
+
+    def _report(self):
+        return {"durationSeconds": 40,
+                "meta": {"title": "تحدي 5 خطوات", "viewCount": 9_000_000},
+                "captions": [{"t": 1, "dur": 2, "text": "تلات محاولات"}],
+                "scenes": [{"start": 0, "end": 4, "desc": "ولد بياكل",
+                            "say_hint": "الخطوة 5"}],
+                "audioRmsPerSec": []}
+
+    def test_source_number_passes(self):
+        from xtrendaw.eye import _assert_radar_numbers
+        _assert_radar_numbers({"title_ar": "تحدي 5 خطوات",
+                               "facts_ar": ["تلات محاولات"]}, self._report())
+
+    def test_invented_number_still_blocked(self):
+        from xtrendaw.eye import _assert_radar_numbers
+        with self.assertRaises(RuntimeError):
+            _assert_radar_numbers({"title_ar": "كسبت 777 جنيه في يوم"},
+                                  self._report())
+
+    def test_shot_lines_are_checked(self):
+        from xtrendaw.eye import _assert_radar_numbers
+        with self.assertRaises(RuntimeError):
+            _assert_radar_numbers({"title_ar": "عنوان",
+                                   "shots": [{"say_ar": "كسبت 9999 نقطة"}]},
+                                  self._report())
+
+
+class TokenBudgetTest(unittest.TestCase):
+    """سكربت اللقطات محتاج توكنات أكبر — 2048 كانت بتقطع JSON."""
+
+    def test_shots_call_uses_big_budget(self):
+        import inspect
+        from xtrendaw import eye
+        src = inspect.getsource(eye.write_replication)
+        self.assertIn("max_tokens=8000", src)
+
+    def test_llm_signature_accepts_max_tokens(self):
+        import inspect
+        from xtrendaw import eye
+        sig = inspect.signature(eye._llm)
+        self.assertIn("max_tokens", sig.parameters)

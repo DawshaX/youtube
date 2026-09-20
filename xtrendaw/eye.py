@@ -931,36 +931,43 @@ def _groq_chain() -> list[str]:
     return chain
 
 
-def _post_chat(url: str, key: str, model: str, prompt: str, temperature: float) -> str:
+def _post_chat(url: str, key: str, model: str, prompt: str, temperature: float,
+               max_tokens: int = 2048) -> str:
+    """نداء دردشة. `max_tokens` قابل للزيادة: سكربت التقليد (12–24 لقطة JSON)
+    كان بيتقطع عند 2048 → JSON تالف → العين تفشل.
+    """
     r = _req().post(url, headers={"Authorization": f"Bearer {key}"},
                     json={"model": model, "temperature": temperature,
-                          "max_tokens": 2048,
+                          "max_tokens": max_tokens,
                           "messages": [{"role": "user", "content": prompt}]},
-                    timeout=180)
+                    timeout=300)
     r.raise_for_status()
     return r.json()["choices"][0]["message"]["content"]
 
 
-def _post_gemini_native(model: str, key: str, prompt: str, temperature: float) -> str:
+def _post_gemini_native(model: str, key: str, prompt: str, temperature: float,
+                        max_tokens: int = 2048) -> str:
     """المسار الأصلي لجوجل — احتياطي لو مسار التوافق OpenAI رفض الموديل."""
     r = _req().post(
         f"{_GEMINI_BASE}/models/{model}:generateContent",
         headers={"x-goog-api-key": key, "Content-Type": "application/json"},
         json={"contents": [{"parts": [{"text": prompt}]}],
-              "generationConfig": {"temperature": temperature}},
+              "generationConfig": {"temperature": temperature,
+                                   "maxOutputTokens": max_tokens}},
         timeout=180)
     r.raise_for_status()
     return r.json()["candidates"][0]["content"]["parts"][0]["text"]
 
 
-def _attempts(prompt: str, temperature: float):
+def _attempts(prompt: str, temperature: float, max_tokens: int = 2048):
     """مولّد (اسم, دالة نداء) — Groq بكل مرشّحيه، وبعده Gemini بكل مرشّحيه."""
     llm = settings.LLM
     if llm["base"] and llm["key"]:
         url = f"{llm['base'].rstrip('/')}/chat/completions"
         for model in _groq_chain():
             yield (f"groq:{model}",
-                   lambda m=model, u=url: _post_chat(u, llm["key"], m, prompt, temperature))
+                   lambda m=model, u=url: _post_chat(u, llm["key"], m, prompt,
+                                                     temperature, max_tokens))
     gemini_key = settings.get("GEMINI_API_KEY")
     if gemini_key:
         configured = (os.environ.get("GEMINI_MODEL") or "").strip()
@@ -968,15 +975,17 @@ def _attempts(prompt: str, temperature: float):
         for model in dict.fromkeys(chain):
             yield (f"gemini:{model}",
                    lambda m=model, k=gemini_key: _post_chat(
-                       f"{_GEMINI_BASE}/openai/chat/completions", k, m, prompt, temperature))
+                       f"{_GEMINI_BASE}/openai/chat/completions", k, m, prompt,
+                       temperature, max_tokens))
             yield (f"gemini-native:{model}",
-                   lambda m=model, k=gemini_key: _post_gemini_native(m, k, prompt, temperature))
+                   lambda m=model, k=gemini_key: _post_gemini_native(
+                       m, k, prompt, temperature, max_tokens))
 
 
-def _llm(prompt: str, temperature: float = 0.7) -> str:
+def _llm(prompt: str, temperature: float = 0.7, max_tokens: int = 2048) -> str:
     """سلسلة مزوّدات وموديلات: أول واحد ينجح هو اللي يرد — وإلا فشل صريح برسالة حل."""
     tried: list[str] = []
-    for who, call in _attempts(prompt, temperature):
+    for who, call in _attempts(prompt, temperature, max_tokens):
         try:
             text = call()
             if text and text.strip():
@@ -1020,14 +1029,14 @@ def llm_probe(provider: str | None = None) -> tuple[bool, str]:
     return False, "كل الموديلات فشلت — " + " | ".join(tried[:6])
 
 
-def _llm_json(prompt: str, temperature: float = 0.7) -> dict:
+def _llm_json(prompt: str, temperature: float = 0.7, max_tokens: int = 2048) -> dict:
     """نفس السلسلة، بس بيرجّع JSON (وكيل الـ DNA والكاتب والناقد بيعتمدوا عليه).
 
     الدرس (تشغيل 2026-09-19): موديل صغير رجّع JSON تالف (فاصلة ناقصة عند
     char 4186) → الفيديو كله اتسقط. دلوقتي: محاولة إصلاح **واحدة** بطلب
     صريح لإعادة الإرسال JSON سليم، وبعدها نرفع الخطأ بصراحة.
     """
-    text = _llm(prompt, temperature)
+    text = _llm(prompt, temperature, max_tokens)
     try:
         return _json_from(text)
     except Exception as exc:
@@ -1037,7 +1046,7 @@ def _llm_json(prompt: str, temperature: float = 0.7) -> dict:
             prompt + "\n\nتصحيح إلزامي: الرد السابق كان JSON غير صالح "
                      f"({type(exc).__name__}). أعد الإرسال: **JSON صالح فقط**، "
                      "بلا أي نص قبله أو بعده، وبكل الأقواس والفوايص في مكانها.",
-            temperature=0.2)
+            temperature=0.2, max_tokens=max_tokens)
         return _json_from(retry)
 
 
@@ -1302,6 +1311,15 @@ def _assert_radar_numbers(written: dict, report: dict) -> None:
     meta = report.get("meta", {})
     allowed = {str(meta[k]) for k in ("viewCount", "likeCount")
                if meta.get(k) not in (None, "")}
+    # ⚡ في التقليد: أي رقم **اتقال في الفيديو الأصلي** مسموح — إحنا بننقل نفس
+    # الكلام مش بنخترع. (كان بيرفض أرقام المصدر نفسه فيسقّط التقليد كله.)
+    _source_text = " ".join(
+        [str(meta.get("title") or "")]
+        + [str(c.get("text") or "") for c in (report.get("captions") or [])]
+        + [str(s.get("desc") or "") + " " + str(s.get("say_hint") or "")
+           for s in (report.get("scenes") or [])])
+    allowed |= {re.sub(r"[,٬]", "", n)
+                for n in re.findall(r"\d[\d,٬.]*", _source_text)}
     # أرقام JSON البنيوية/ألوان hex لا تُعد ادعاءات؛ حقول النص فقط عمليًا،
     # لذا نستبعد أجزاء الألوان وأزمنة visual_plan قبل الفحص.
     prose = " ".join(str(written.get(k, "")) for k in
@@ -1357,7 +1375,8 @@ def write_replication(report: dict, dna: dict, digest: str) -> dict:
     shot_table = "\n".join(table[:20])
     written = _llm_json(SHOTS_PROMPT.format(
         digest=(digest[:4000] + "\n\n=== خط اللقطات الحقيقي ===\n" + shot_table),
-        dna=json.dumps(dna, ensure_ascii=False)[:3000]), temperature=0.8)
+        dna=json.dumps(dna, ensure_ascii=False)[:3000]), temperature=0.8,
+        max_tokens=8000)
     rows = written.get("shots") or []
     if not isinstance(rows, list) or len(rows) < 2:
         raise RuntimeError("eye: مخرج التقليد ما رجّعش لقطات كفاية")
@@ -1519,7 +1538,8 @@ def agent(video_id: str, meta: dict | None = None) -> dict:
     digest = build_digest(report)
 
     print("[eye] افهم: وكيل الـ DNA يحلل…", flush=True)
-    dna = _llm_json(DNA_PROMPT.format(digest=digest[:12000]), temperature=0.3)
+    dna = _llm_json(DNA_PROMPT.format(digest=digest[:12000]), temperature=0.3,
+                    max_tokens=6000)
 
     print("[eye] اكتب: إصدارنا من نفس السياق…", flush=True)
     title_patterns = ""
