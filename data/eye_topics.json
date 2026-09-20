@@ -1557,5 +1557,244 @@
     "غياب عنصر التفاعل التفاعلي (Retention Trick): الاقتراح يكتفي بـ CTA عام، بينما DNA يحدد تحديداً طلب التعليقات حول تجارب مشابهة، وهو عنصر حاسم لرفع الخوارزمية."
    ]
   }
+ },
+ {
+  "id": "eye-3r1aBzTo5-k",
+  "topic": "خدعة الاستسلام للجندي😨#اكسبلور #معلومات #معلومات_عامة #حقائق #موسوعة_غينيس",
+  "angle": "الكشف أن الجندي كان يحمل دمية أو قناعًا مزيفًا، ما يوضح أن ما بدا كاستسلام حقيقي هو مجرد خ",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "خدعة بصرية هتخليك تتأكد إنك مش لوحدك!",
+  "title_en": "A visual trick that will make you sure you're not alone!",
+  "hook_ar": "وقف! دي مش معارك حقيقية!",
+  "hook_en": "Stop! These aren't real battles!",
+  "facts_ar": [
+   "رفع اليد في ساحة المعركة هو الإشارة الكلاسيكية للإستسلام.",
+   "تستخدم الجيوش الدمى أو الأقنعة الشفافة في التدريبات لتقليل المخاطر.",
+   "التلاعب البصري يمكن أن يخلق أوهام قوية في الفيديوهات القصيرة."
+  ],
+  "facts_en": [
+   "Raising a hand in battle is the classic signal for surrender.",
+   "Armies use dummies or transparent masks in training to reduce risks.",
+   "Visual manipulation can create strong illusions in short videos."
+  ],
+  "takeaway_ar": "يعني إيه أصلاً؟",
+  "takeaway_en": "What does it mean originally?",
+  "tags": "خدع_بصرية, معلومات, حقائق, اكسبلور",
+  "mood": "غامض",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "00:00-00:03",
+    "scene": "جندي يرفع يده بسرعة وخلفية غامضة مع صوت صدمة قوية.",
+    "style": "لقطة سريعة وزاوية منخفضة",
+    "colors": [
+     "#ff0000",
+     "#ffffff"
+    ]
+   },
+   {
+    "time": "00:03-00:06",
+    "scene": "تغيير زاوية الكاميرا لكشف الدمية أو القناع الشفاف.",
+    "style": "لقطة قريبة وزاوية مرتفعة",
+    "colors": [
+     "#1a1a1a",
+     "#ffd700"
+    ]
+   },
+   {
+    "time": "00:06-00:09",
+    "scene": "النص العربي: 'يعني إيه أصلاً؟' والنص الإنجليزي: 'What does it mean originally?'",
+    "style": "خط عريض ولون مشرق",
+    "colors": [
+     "#ffd700",
+     "#ffffff"
+    ]
+   },
+   {
+    "time": "00:09-00:12",
+    "scene": "تغيير زاوية الكاميرا لكشف الحقيقة.",
+    "style": "لقطة واسعة وزاوية مرتفعة",
+    "colors": [
+     "#1a1a1a",
+     "#ff0000"
+    ]
+   },
+   {
+    "time": "00:12-00:15",
+    "scene": "النص العربي: 'يعني إيه أصلاً؟' والنص الإنجليزي: 'What does it mean originally?'",
+    "style": "خط عريض ولون مشرق",
+    "colors": [
+     "#ffd700",
+     "#ffffff"
+    ]
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "3r1aBzTo5-k",
+   "url": "https://youtu.be/3r1aBzTo5-k",
+   "sourceTitle": "خدعة الاستسلام للجندي😨#اكسبلور #معلومات #معلومات_عامة #حقائق #موسوعة_غينيس",
+   "sourceChannel": "عبيدي - Aubedy",
+   "sourceViews": 3420649,
+   "dna": {
+    "hook": {
+     "technique": "shock",
+     "what_happens": "يظهر جندي يرفع يده كأنه يستسلم، ثم ينقلب المشهد فجأة إلى خدعة غير متوقعة تكشف أن الجندي كان يضع قناعًا مزيفًا.",
+     "why_it_works": "الصدمة البصرية تُجذب الانتباه فورًا وتُثير الفضول لمعرفة ما سيحدث بعد ذلك."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 30,
+     "energy_curve": "ارتفاع سريع في الطاقة خلال الثواني الأولى (0-4)، استقرار متوسط (4-8)، قمة توتر مع النص والسؤال (8-12)، انخفاض تدريجي مع الدعوة للمتابعة (12-15)."
+    },
+    "retention_tricks": [
+     "استخدام صدمة بصرية في الثواني الأولى.",
+     "طرح سؤال مباشر على الشاشة لتشجيع المشاهد على التفكير.",
+     "إدراج عنصر غير متوقع (دمية/قناع) لتغيير توقعات المشاهد."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 72,
+   "rewritten": true,
+   "weaknesses": [
+    "الـ hook هو عبارة عن نص وليس مشهد بصري صادم، ما يقلل من الانطباع الأولي.",
+    "التحول إلى السلو موشن في الثانية 3-7 يبطئ الطاقة بدلاً من الحفاظ على ارتفاعها كما في الـ DNA trend.",
+    "الموسيقى في الفاصل الثاني هادئة، ما يفتقر إلى التوتر المطلوب للحفاظ على الانتباه.",
+    "عدد القطع في الدقيقة أقل من الـ DNA trend (30 قطع)، ما قد يسبب انخفاضًا في معدل الاحتفاظ بالمشاهدين.",
+    "الـ hook لا يطرح سؤالًا مباشرًا أو عنصرًا مفاجئًا في اللحظة الأولى، مما يقلل من فاعلية Retention Triggers."
+   ]
+  }
+ },
+ {
+  "id": "eye-AovPk0PUQzM",
+  "topic": "لن تصدق أين وجدنا بيت السلحفاهفي النهاية! 😱🏠",
+  "angle": "The turtle house is not a random find but a well‑preserved, limestone‑cut structure locate",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "ما الذي وجده فريقنا في نهاية الصحراء؟ 😱🏠",
+  "title_en": "What Did Our Team Find at the Desert's Edge? 😱🏠",
+  "hook_ar": "تخيلوا عالماً مخفيًا بين صخور الجيزة – اكتشاف غير متوقع ينتظركم!",
+  "hook_en": "Picture a hidden world tucked within Giza’s cliffs – an unexpected discovery awaits you!",
+  "facts_ar": [
+   "الموقع: صخور الجيزة القديمة",
+   "اكتشفه فريق محلي للتنقيب",
+   "يعمل كملجأ طبيعي لسلاحف المنطقة"
+  ],
+  "facts_en": [
+   "Location: ancient cliffs of Giza",
+   "Discovered by a local archaeological crew",
+   "Serves as a natural shelter for local turtles"
+  ],
+  "takeaway_ar": {
+   "aql": "تاريخ يكتب في الحجارة",
+   "qalb": "روح الحياة تتجسد في بيوت السلاحف",
+   "rouh": "اكتشاف يمنحك إحساسًا بالتواصل مع الطبيعة"
+  },
+  "takeaway_en": {
+   "aql": "History carved into stone",
+   "qalb": "Life’s spirit lives in turtle homes",
+   "rouh": "Discovery connects you to nature"
+  },
+  "tags": "اكتشاف,سياحة,تاريخ,مغامرة,الجيزة",
+  "mood": "mysterious",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "Beat 1 – Hook: عنوان مبهر مع شريط زمني سريع، صورة للصحراء والجبال",
+    "style": "تسليط الضوء على الحافة، شريحة سريعة، حركات كاميرا حركية",
+    "colors": [
+     "#8B4513",
+     "#FFD700"
+    ],
+    "sound": "موسيقى حماسية مع إيقاع متزايد، صوت رياح خفيفة",
+    "retention": "سؤال: هل تستطيعون تخمين ما ينتظرنا؟"
+   },
+   {
+    "time": "0:03-0:07",
+    "scene": "Beat 2 – Escalation: فريق التنقيب يقترب من الصخور، يتحركون بين الظلال",
+    "style": "لقطات سريعة، كاميرا ثابتة ثم حركة بطيئة على الأيدي التي تستكشف الصخور",
+    "colors": [
+     "#A0522D",
+     "#B8860B"
+    ],
+    "sound": "صوت خطوات، رنين خفيف للكلاب، موسيقى متزايدة بالتوتر",
+    "retention": "تلميح: هناك علامات قديمة لا يمكن للعين العادية رؤيتها."
+   },
+   {
+    "time": "0:07-0:11",
+    "scene": "Beat 3 – Twist: كشف نفق مغطى بالحصى، ووجود رسومات قديمة على الجدار",
+    "style": "تغيير اللون إلى درجات أكثر برودة، مقطع سريع للضوء يلمس الرسومات",
+    "colors": [
+     "#708090",
+     "#2F4F4F"
+    ],
+    "sound": "موسيقى حنينية، صوت رنين الحجر، تردد منخفض للضوء",
+    "retention": "سؤال: ما الذي تخبرنا به هذه الرسومات عن الحضارة؟"
+   },
+   {
+    "time": "0:11-0:15",
+    "scene": "Beat 4 – Payoff: اكتشاف بيوت السلاحف مع أطباق أثرية، صور قريبة للتركيب",
+    "style": "لقطات مقربة، ضوء حار يبرز التفاصيل، حركة الكاميرا بطيئة",
+    "colors": [
+     "#DEB887",
+     "#FFD700"
+    ],
+    "sound": "موسيقى حماسية، صوت طيور، ضوضاء خفيفة للجو",
+    "retention": "تلميح: هل هذه الأطباق تحمل رسائل من الماضي؟"
+   },
+   {
+    "time": "0:15-0:18",
+    "scene": "Beat 5 – CTA & Cliffhanger: دعوة للاشتراك وتفعيل الجرس مع لمحة سريعة لمشهد غامض",
+    "style": "لقطة ثابتة على شعار القناة، نص CTA واضح، إضاءة خافتة على المشهد الغامض",
+    "colors": [
+     "#000000",
+     "#FFFFFF"
+    ],
+    "sound": "موسيقى ختامية، صوت تفعيل الجرس، صوت خفيف للفضول",
+    "retention": "سؤال نهاية: ما الذي ينتظرنا في الجزء القادم؟"
+   }
+  ],
+  "shots": [],
+  "_replication": false,
+  "_eye": {
+   "videoId": "AovPk0PUQzM",
+   "url": "https://youtu.be/AovPk0PUQzM",
+   "sourceTitle": "لن تصدق أين وجدنا بيت السلحفاهفي النهاية! 😱🏠",
+   "sourceChannel": "IronFoot",
+   "sourceViews": 3356565,
+   "dna": {
+    "hook": {
+     "technique": "bold_claim",
+     "what_happens": "The video opens with a dramatic claim: \"لن تصدق أين وجدنا بيت السلحفاه في النهاية! 😱🏠\"",
+     "why_it_works": "It immediately sparks curiosity and shock, promising a surprising reveal that compels viewers to keep watching."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 12,
+     "energy_curve": "Starts high, dips slightly during the search montage, peaks at the reveal, then stabilizes during the payoff."
+    },
+    "retention_tricks": [
+     "Cliffhanger at 0:04-0:08",
+     "Question in the hook: \"Where did we find the turtle house?\"",
+     "Fast pacing and frequent cuts",
+     "Emojis and on‑screen text to reinforce key moments",
+     "CTA at the end to encourage engagement"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 48,
+   "rewritten": true,
+   "weaknesses": [
+    "Hook lacks a bold, shocking claim that instantly grabs attention",
+    "Missing structured beats (escalation, twist, payoff, CTA)",
+    "Visual plan only contains one scene; no fast cuts or dynamic camera work",
+    "No clear retention tricks or cliffhangers",
+    "Energy curve likely flat; no music or sound design cues",
+    "Does not emphasize a dramatic reveal or payoff"
+   ]
+  }
  }
 ]
