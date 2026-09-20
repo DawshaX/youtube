@@ -1,0 +1,5 @@
+eye: فشل في YZWmX1rrfvA: RuntimeError: eye: رد الـ LLM ما فيهوش JSON: {
+  "title_ar": "تحدي شرب المشروبات المجهولة! هل تستطيع تمييزها؟",
+  "title_en": "Blindfold Drink Challenge! Can You Guess Them?",
+  "hook_ar": "إيه يا جماعة، أنا معزول عيني، وجبتلكم خمس مشروبات، مين 
+2026-09-20T04:12:18Z
