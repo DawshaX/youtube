@@ -431,6 +431,8 @@ def _pixabay_candidates(query: str) -> list:
     """Pixabay Videos API — رخصة Pixabay (بلا إسناد). محتاج `PIXABAY_API_KEY`."""
     key = settings.PIXABAY_API_KEY
     if not key or not query:
+        print(f"[footage] ⚠ بيكساباي: {'مفيش مفتاح' if not key else 'استعلام فاضي'}",
+              flush=True)
         return []
     try:
         r = requests.get("https://pixabay.com/api/videos/",
@@ -438,6 +440,8 @@ def _pixabay_candidates(query: str) -> list:
                                  "safesearch": "true"},
                          headers=UA, timeout=25)
         if not r.ok:
+            print(f"[footage] ⚠ بيكساباي HTTP {r.status_code}: "
+                  f"{r.text[:120]}", flush=True)
             return []
         out = []
         for h in r.json().get("hits", []):
@@ -452,8 +456,12 @@ def _pixabay_candidates(query: str) -> list:
                 "_source": "pixabay",
                 "_title": f"Pixabay user {h.get('user', 'unknown')}",
             })
+        print(f"[footage] 🔎 بيكساباي «{query[:30]}» → {len(out)} لقطة",
+              flush=True)
         return out
-    except Exception:
+    except Exception as exc:
+        print(f"[footage] ⚠ بيكساباي: {type(exc).__name__}: {str(exc)[:90]}",
+              flush=True)
         return []
 
 
@@ -461,12 +469,16 @@ def _pexels_candidates(query: str) -> list:
     """Pexels Videos API — رخصة Pexels (بلا إسناد). محتاج `PEXELS_API_KEY`."""
     key = settings.PEXELS_API_KEY
     if not key or not query:
+        print(f"[footage] ⚠ بكسلز: {'مفيش مفتاح' if not key else 'استعلام فاضي'}",
+              flush=True)
         return []
     try:
         r = requests.get("https://api.pexels.com/videos/search",
-                         params={"query": query, "per_page": 8, "size": "medium"},
+                         params={"query": query, "per_page": 10},
                          headers={**UA, "Authorization": key}, timeout=25)
         if not r.ok:
+            print(f"[footage] ⚠ بكسلز HTTP {r.status_code}: "
+                  f"{r.text[:120]}", flush=True)
             return []
         out = []
         for v in r.json().get("videos", []):
@@ -481,8 +493,11 @@ def _pexels_candidates(query: str) -> list:
                 "_source": "pexels",
                 "_title": f"Pexels video #{v.get('id', '?')}",
             })
+        print(f"[footage] 🔎 بكسلز «{query[:30]}» → {len(out)} لقطة", flush=True)
         return out
-    except Exception:
+    except Exception as exc:
+        print(f"[footage] ⚠ بكسلز: {type(exc).__name__}: {str(exc)[:90]}",
+              flush=True)
         return []
 
 
@@ -592,6 +607,9 @@ def fetch_clip(query: str, seconds: float, workdir: Path, seed: str,
                     pass
 
     if not cached.exists():
+        # تشخيص صريح: الفيديو كله طلع خلفيات مولّدة قبل كده لأن الفشل كان صامت
+        print(f"[footage] ✗ مفيش لقطة لـ«{query[:34]}» ({source}) — "
+              "هنكمل بمسار آخر", flush=True)
         return None
 
     # ٣) سجّل الاستخدام دايمًا — جديد ولا جايب من الكاش.
