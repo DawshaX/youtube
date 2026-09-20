@@ -1482,7 +1482,12 @@ def consume_queue(seen: set[str] | None = None) -> dict | None:
         _done = _st.produced_ids()
     except Exception:
         _done = set()
-    for i, t in enumerate(q):
+    # ⚡ الأولوية لمواضيع التقليد (اللي فيها لقطات حقيقية من الفيديو الأصلي)
+    order = sorted(range(len(q)),
+                   key=lambda i: (0 if (q[i].get("shots") or
+                                        q[i].get("_replication")) else 1, i))
+    for i in order:
+        t = q[i]
         fp = content.fingerprint(t)
         # اتعمل فعلًا؟ ينسحب للأرشيف (بس ما ينشرش) — يمنع تكرار الحلقة
         if t.get("id") and str(t["id"]) in _done:
