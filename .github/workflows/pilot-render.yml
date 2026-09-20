@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       topic_id:
-        description: 'Topic id from content/topics_daousha.json or content/topics.json (default: next in queue)'
+        description: 'معرّف الموضوع من content/topics.json (أو أول موضوع في الطابور)'
         required: false
         default: ''
 

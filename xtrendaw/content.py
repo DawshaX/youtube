@@ -185,7 +185,31 @@ def fingerprint(topic: dict) -> str:
 
 
 def compose_script(topic: dict, lang: str = "ar") -> list[dict]:
-    """موضوع → مقاطع مرتبة hook/fact1..3/cta/outro بلغة محددة."""
+    """موضوع → مقاطع مرتبة.
+
+    🔁 لو الموضوع فيه `shots` (تقليد لحظة-بلحظة من فيديو ترند): كل لقطة =
+    مقطع واحد بنفس ترتيب وإيقاع الأصل — **صفر لافتات** («الحقيقة الأولى»…)
+    لأن ده كان بيخلّي الحلقة نشرة أخبار بدل ما تكون الفيديو نفسه.
+    """
+    shots = topic.get("shots") or []
+    if shots:
+        segs = []
+        for i, sh in enumerate(shots):
+            line = (sh.get(f"say_{lang}") or sh.get("say_ar") or "").strip()
+            if not line:
+                continue
+            seg = "hook" if i == 0 else f"shot{i}"
+            segs.append({"seg": seg, "text": line,
+                         "shot": i, "visual_query": sh.get("visual_query", ""),
+                         "sfx": sh.get("sfx", ""),
+                         "on_screen": sh.get("on_screen", ""),
+                         "orig_dur": sh.get("dur")})
+        if segs:
+            outro = settings.BRAND["outro_en" if lang == "en" else "outro_ar"]
+            segs.append({"seg": "cta",
+                         "text": (CTA_EN if lang == "en" else CTA_AR).strip()})
+            segs.append({"seg": "outro", "text": outro.strip()})
+            return segs
     labels = LABELS_EN if lang == "en" else LABELS_AR
     hook = topic.get(f"hook_{lang}") or topic.get("hook_ar", "")
     facts = topic.get(f"facts_{lang}") or topic.get("facts_ar") or []

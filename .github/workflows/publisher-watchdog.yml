@@ -22,7 +22,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          WINDOW=5400   # 90 دقيقة
+          WINDOW=3000   # 50 دقيقة — عشان الدورة الساعية ما تتأخرش ساعة زيادة
           # يوم الحصة بتوقيت المحيط الهادئ (نفس حساب جوجل ليوتيوب)
           PT_DAY=$(TZ=America/Los_Angeles date +%F)
           last=$(gh run list --repo "$GITHUB_REPOSITORY" \
@@ -48,7 +48,7 @@ jobs:
           if [ "$count" -gt 0 ]; then
             echo "🔄 الحصة اتجدّدت (يوم PT جديد) — بشغّل دورة فورًا للنشر بأسرع وقت."
           else
-            echo "⚠️ مفيش دورة نشر في آخر 90 دقيقة — بشغّل واحدة فورًا."
+            echo "⚠️ مفيش دورة نشر في آخر 50 دقيقة — بشغّل واحدة فورًا (الساعية مضمونة)."
           fi
           gh workflow run factory-publish.yml --repo "$GITHUB_REPOSITORY" --ref main
           sleep 20

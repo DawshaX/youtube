@@ -91,13 +91,19 @@ def produce_episode(topic: dict, workdir: Path, narration_lang: str = "ar",
     scene_list: list[dict] = []
     clip_usage: dict[str, int] = {}   # سقف استخدامين لكل لقطة في الحلقة
     used_assets: list = []              # لسجل الاعتمادات في التقرير
+    shots = topic.get("shots") or []
+    replication = bool(shots)
     for i, item in enumerate(plan["items"]):
         kind = item["seg"] if item["seg"] in ("hook", "outro") else f"fact{(i % 3) + 1}"
         text = item["text"]
         if ":" in text:
             text = text.split(":", 1)[1].strip()
         chip = ""
-        if kind.startswith("fact") and 1 <= i <= 3:
+        if replication:
+            # في التقليد مفيش لافتات («الحقيقة الأولى») — حلقة، مش عرض شرائح.
+            # بس نص الشاشة من الأصل لو المخرج كتبه.
+            chip = str(item.get("on_screen") or "")[:28]
+        elif kind.startswith("fact") and 1 <= i <= 3:
             chip = CHIPS_AR[i - 1]
         elif item["seg"] == "takeaway":
             chip = "سر التحدي الكوني"
@@ -109,7 +115,9 @@ def produce_episode(topic: dict, workdir: Path, narration_lang: str = "ar",
             if ":" in subject:
                 subject = subject.split(":", 1)[1].strip()
         queries = topic.get("_visual_queries") or []
-        real_q = queries[i % len(queries)] if queries else ""
+        # ⚡ في التقليد: استعلام اللقطة نفسها (نفس اللي ظاهر في الأصل في اللحظة دي)
+        real_q = (str(item.get("visual_query") or "").strip()
+                  or (queries[i % len(queries)] if queries else ""))
         fresh_pool = topic.get("_fresh_pool") or []
         sc = scenes.build_scene(kind, text, seed=f"{topic['id']}:{i}",
                                 workdir=workdir / f"sc{i:02d}", subject=subject,

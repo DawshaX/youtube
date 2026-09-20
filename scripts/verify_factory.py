@@ -55,9 +55,43 @@ content = read("xtrendaw/content.py")
 c("نشر ساعي مفعّل (المصنع الجديد كل ساعة)",
   "cron:" in factory_wf and "* * * *" in factory_wf
   and "xtrendaw.run_cycle" in factory_wf)
-c("الوكيل القديم يدوي فقط (مفيش جدولة مزدوجة)", "cron:" not in auto_wf)
-c("فشل آمن: فحص اعتمادات قبل النشر",
-  "Check channel credentials" in auto_wf or "credentials" in factory_wf)
+# المصنع القديم اتشال بالكامل (أمر صاحب القناة 2026-09-19) — صفر رجعة
+_legacy = [p for p in ("server/autoPilot.js", "server/youtubeService.js",
+                       "server/viralEngine.js", "server/videoFactoryBridge.js",
+                       "scripts/run-autopilot.js", "scripts/produce-from-radar.js",
+                       "content/topics_daousha.json",
+                       ".github/workflows/cosmic-autopilot.yml",
+                       ".github/workflows/publish-watchdog.yml")
+           if (ROOT / p).exists()]
+c("المصنع القديم ميّت بالكامل (مفيش ملف من بتاعه فاضل)", not _legacy)
+if _legacy:
+    print("   فاضل من القديم:", ", ".join(_legacy[:4]))
+_yt = read("xtrendaw/publish/youtube.py")
+c("فشل آمن: مفيش اعتمادات = مفيش نشر (بلا انهيار)",
+  "no_credentials" in _yt and "refresh_failed" in _yt)
+c("الوركفلو بيوصل أسرار النشر للمصنع (OAuth كامل)",
+  "YOUTUBE_REFRESH_TOKEN" in factory_wf and "YOUTUBE_CLIENT_ID" in factory_wf)
+
+# ⚡ محرك التقليد لحظة-بلحظة (العين بتشوف → سكربت لقطات → رندر بنفس الترتيب)
+_eye = read("xtrendaw/eye.py")
+_prod = read("xtrendaw/produce.py")
+c("العين بتشوف كل مشهد بعينها (رؤية فعلية مش تخمين)",
+  "_vision_call" in _eye and "VISION_PROMPT" in _eye)
+c("سكربت تقليد: مخرج بيكتب لقطة لكل لقطة في الأصل",
+  "write_replication" in _eye and "SHOTS_PROMPT" in _eye)
+c("المونتاج بيلتزم باستعلام اللقطة (تقليد مش كلام)",
+  'item.get("visual_query")' in _prod and "replication" in _prod)
+# اللافتات القديمة ممنوعة جوه فرع التقليد تحديدًا
+_repl_block = ""
+if "if replication:" in _prod:
+    _repl_lines = [ln for ln in
+                   _prod.split("if replication:")[1].splitlines()[:8]
+                   if not ln.strip().startswith("#")]
+    _repl_block = "\n".join(_repl_lines)
+c("صفر لافتات نشرة أخبار في التقليد",
+  bool(_repl_block) and "الحقيقة" not in _repl_block)
+c("حلقة التقليد ترفض لافتات الاختصار (لا شرائح فارغة)",
+  "on_screen" in _repl_block)
 c("الوصف: دلع وهاشتاجات", "#اكسبلور" in content and "🔔" in content)
 c("إسناد CC-BY يلاحق الوصف (run_cycle)", "caption +=" in run_cycle and "credits" in run_cycle)
 

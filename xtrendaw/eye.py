@@ -547,6 +547,19 @@ def watch(video_id: str, meta: dict | None = None) -> dict:
         print("[eye] اسمع: طاقة الصوت لكل ثانية…", flush=True)
         audio = audio_energy_per_second(video)
 
+        # شوف بعينك: وصف بصري لكل مشهد (Gemini vision) — أساس التقليد
+        kf_paths = [frames_dir / s["keyframe"].split("/")[-1]
+                    for s in scenes if s.get("keyframe")]
+        # سقف 14 صورة (سرعة + تكلفة) — نظرة متباعدة على الفيديو كله
+        if len(kf_paths) > 14:
+            step = len(kf_paths) / 14
+            kf_paths = [kf_paths[int(i * step)] for i in range(14)]
+        descs = _vision_call(kf_paths, VISION_PROMPT)
+        if descs:
+            for i, sc in enumerate(scenes):
+                if i < len(descs):
+                    sc["desc"] = descs[i]
+
     report = {
         "videoId": video_id,
         "url": f"https://youtu.be/{video_id}",
@@ -797,6 +810,172 @@ def _json_from(text: str) -> dict:
     return json.loads(text[s:e + 1])
 
 
+
+
+# ═════════════════════════════════════════════════════════════
+# العين اللي بتشوف: وصف بصري حقيقي لكل مشهد (مش تخمين من نص)
+# ═════════════════════════════════════════════════════════════
+
+def _vision_call(frames: list[Path], prompt: str) -> list[str]:
+    """صور الكي-فريم → وصف لكل صورة (Gemini vision).
+
+    ليه؟ طلب صاحب القناة (2026-09-19): «يشوفو كامل ويكتبو بالتفصيل الممل
+    والمشاهد» — يعني التقليد لازم يبني على اللي **ظاهر** في كل لحظة، مش على
+    نص التسميات بس. لو مفيش رؤية متاحة نرجّع قائمة فاضية (تدهور صريح).
+    """
+    import base64
+
+    gemini_key = settings.get("GEMINI_API_KEY")
+    if not gemini_key or not frames:
+        return []
+    parts: list[dict] = [{"text": prompt}]
+    for f in frames:
+        try:
+            b64 = base64.b64encode(Path(f).read_bytes()).decode()
+        except Exception:
+            continue
+        parts.append({"inline_data": {"mime_type": "image/jpeg", "data": b64}})
+    if len(parts) == 1:
+        return []
+    configured = (os.environ.get("GEMINI_VISION_MODEL") or "").strip()
+    chain = [m for m in ([configured] if configured else [])
+             + ["gemini-2.5-flash", "gemini-flash-latest"]
+             + list(_GEMINI_MODELS)]
+    for model in dict.fromkeys(chain):
+        try:
+            r = _req().post(
+                f"{_GEMINI_BASE}/models/{model}:generateContent",
+                headers={"x-goog-api-key": gemini_key,
+                         "Content-Type": "application/json"},
+                json={"contents": [{"parts": parts}],
+                      "generationConfig": {"temperature": 0.2}},
+                timeout=240)
+            if not r.ok:
+                continue
+            data = r.json()
+            text = (data.get("candidates") or [{}])[0].get("content", {})
+            txt = "".join(p.get("text", "") for p in text.get("parts") or [])
+            rows = _json_from(txt).get("frames")
+            if isinstance(rows, list):
+                print(f"[eye] 👁 شفت {len(rows)} مشهد بعيني ({model})",
+                      flush=True)
+                return [str(x)[:300] for x in rows]
+        except Exception as exc:
+            print(f"[eye] ⚠️ رؤية {model}: {type(exc).__name__}", flush=True)
+    print("[eye] ⚠️ مفيش رؤية متاحة — التحليل بالمشاهدات والصوت والتسميات",
+          flush=True)
+    return []
+
+
+VISION_PROMPT = """دي كي-فريمز فيديو شورتس فيروسي، بالترتيب الزمني.
+اوصف **كل** صورة وصف صارم ومفصّل جدًا بالعربي — كإني مش شايف حاجة:
+- مين/إيه اللي في الصورة (أشخاص، عددهم، أعمارهم تقريبًا، هدومهم، تعبيراتهم)
+- المكان (جوه/بره، بيت/شارع/مطبخ/ملعب…)، الإضاءة، الألوان الطالبة
+- الحركة والحدث اللي بيحصل في اللحظة دي (بيجري، بيصرخ، بيقع، بياكل…)
+- أي نص/ستيكر/إيموجي مكتوب على الشاشة (حرفيًا)
+- الكاميرا (قريبة/واسعة) والإيقاع (سريع/هادي)
+
+ارجع JSON فقط بالشكل ده، بنفس عدد الصور وبالترتيب:
+{"frames": ["وصف الصورة 1", "وصف الصورة 2", "..."]}
+"""
+
+
+def _shot_buckets(report: dict, target: int = 12) -> list[dict]:
+    """خط اللقطات: مشاهد الفيديو مدموجة لتقريبًا `target` لقطة متكافئة.
+
+    كل لقطة = {t0, t1, dur, desc (وصف بصري), say (الكلام اللي اتقال), rms}.
+    الأساس: مشاهد الكشف الحقيقي؛ لو قليلة/كثيرة بنعيد التقسيم بزمن متساوٍ.
+    """
+    dur = float(report.get("durationSeconds") or 0.0)
+    scenes = [s for s in (report.get("scenes") or []) if s.get("end", 0) > s.get("start", 0)]
+    caps = report.get("captions") or []
+    audio = report.get("audioRmsPerSec") or []
+
+    # لو عدد المشاهد مش مناسب، قسّم الزمن بالتساوي (3 ثواني للقطة = إيقاع شورتس)
+    if dur > 0 and (len(scenes) < 3 or len(scenes) > target + 6):
+        src = list(scenes)
+
+        def _desc_at(t: float) -> str:
+            for s in src:                     # وصف المشهد اللي اللحظة دي جواه
+                if float(s.get("start", 0)) <= t < float(s.get("end", 0)):
+                    return str(s.get("desc") or "")
+            return ""
+
+        step = max(2.0, dur / max(1, min(target, 12)))
+        scenes = []
+        t0 = 0.0
+        while t0 < dur - 0.2:
+            t1 = min(dur, t0 + step)
+            scenes.append({"start": round(t0, 2), "end": round(t1, 2),
+                           "desc": _desc_at(t0 + (t1 - t0) / 2)})
+            t0 = t1
+    # ادمج الزيادة في أقرب جوار
+    if len(scenes) > target:
+        keep = max(1, target)
+        chunk = len(scenes) / keep
+        merged = []
+        for i in range(keep):
+            group = scenes[int(i * chunk):int((i + 1) * chunk)]
+            if group:
+                merged.append({"start": group[0]["start"], "end": group[-1]["end"]})
+        scenes = merged
+
+    out = []
+    for s in scenes:
+        t0, t1 = float(s.get("start") or 0), float(s.get("end") or 0)
+        said = " ".join(c["text"] for c in caps
+                        if c.get("t", 0) >= t0 - 0.3
+                        and c.get("t", 0) < t1 + 0.3).strip()
+        seg = audio[int(t0):max(int(t0) + 1, int(t1))] or [0.0]
+        out.append({"t0": round(t0, 2), "t1": round(t1, 2),
+                    "dur": round(max(0.4, t1 - t0), 2),
+                    "desc": (s.get("desc") or "").strip(),
+                    "say": said[:400],
+                    # أعلى طاقة في اللقطة (مش المتوسط) — اللحظات الصاخبة تبان
+                    "rms": round(max(seg), 3)})
+    return out
+
+
+SHOTS_PROMPT = """أنت مخرج شورتس عربي محترف لقناة «دۅۄشے» (قناة عالمية، مش نشرة أخبار).
+
+قدامك **خط اللقطات الحقيقي** لفيديو ترند فيروسي: لكل لحظة — وصف اللي ظاهر
+على الشاشة + الكلام اللي اتقال + قوة الصوت.
+
+{digest}
+
+دي الـ DNA الفيروسي المستخرج:
+{dna}
+
+**مهمتك: إعادة إنتاج نفس الفيديو لحظة بلحظة — نسخة أقوى.**
+قواعد غير قابلة للتفاوض:
+1. **نفس عدد اللقطات** ونفس الترتيب ونفس الإيقاع. اللقطة رقم N في فيديونا =
+   اللقطة رقم N عندهم في الحدث والوظيفة (نفس المشهد، نفس المفاجأة).
+2. **إحنا بنعمل الفيديو، مش بنتكلم عنه.** الكلام لازم يكون داخل الحدث
+   («شوف إيدي… بترجف!») مش وصف أو تعليق («الفيديو بيوريك…») أو «الحقيقة الأولى…».
+3. **صفر أرقام** إلا لو الرقم مذكور في الجدول فوق حرفيًا.
+4. كل لقطة سطر **واحد قصير** بالعربي المصري (٤–١٢ كلمة) يُقرأ بسرعة الفيديو.
+5. `visual_query`: ٢–٤ كلمات **إنجليزية** تصف اللقطة الحقيقية اللي هنصوّرها من
+   مكتبات الفيديو (بيكساباي/بيكسلز) — مثال: "boy running fast street"،
+   "hands clapping closeup"، "dog jumping water".
+6. لو الأصل فيه تحدي/اختبار/رد فعل → إحنا بنعمل نفس التحدي ونفس رد الفعل.
+7. لو الأصل فيه ستيكر/نص على الشاشة → `on_screen` يحمل نفس المعنى بعربيتنا.
+
+ارجع JSON فقط:
+{{
+  "title_ar": "عنوان قوي للفيديو بنبرة القناة (مش وصف!)",
+  "title_en": "...",
+  "tags": "كلمة,كلمة,كلمة,كلمة,كلمة",
+  "mood": "crazy|calm|warm|mysterious|serious",
+  "shots": [
+    {{"say_ar": "سطر اللقطة", "say_en": "English line",
+      "visual_query": "english stock query", "sfx": "whoosh|impact|pop|",
+      "on_screen": "نص قصير جدًا على الشاشة أو فراغ"}}
+  ]
+}}
+عدد اللقطات في `shots` لازم يساوي عدد اللقطات في الجدول (لا أقل ولا أكثر).
+"""
+
+
 DNA_PROMPT = """أنت محلل فيديوهات فيروسية بخبرة 15 سنة في الشورتس.
 دي تحتك «تقرير مشاهدة» حقيقي لفيديو تريند: خط التسميات الزمني (توقيتات حقيقية)،
 المشاهد (ألوان حقيقية، إضاءة، حركة)، طاقة الصوت.
@@ -888,6 +1067,10 @@ def _assert_radar_numbers(written: dict, report: dict) -> None:
     # لذا نستبعد أجزاء الألوان وأزمنة visual_plan قبل الفحص.
     prose = " ".join(str(written.get(k, "")) for k in
                      ("title_ar", "hook_ar", "facts_ar", "takeaway_ar"))
+    # لقطات التقليد: كلامها مقروء على الشاشة — نفس القاعدة تنطبق عليها
+    for sh in (written.get("shots") or []):
+        if isinstance(sh, dict):
+            prose += " " + str(sh.get("say_ar", "")) + " " + str(sh.get("on_screen", ""))
     claimed = {re.sub(r"[,٬]", "", n) for n in re.findall(r"\d[\d,٬.]*", prose)}
     if claimed - allowed:
         raise RuntimeError("eye: السيناريو احتوى أرقامًا ليست من الرادار: "
@@ -916,10 +1099,59 @@ def _writer_call(prompt: str, report: dict, dna: dict, note: str = "") -> tuple[
                  "**بلا أي رقم** في العنوان أو الخطاف أو الحقائق أو الختام.")
 
 
+def write_replication(report: dict, dna: dict, digest: str) -> dict:
+    """سكربت لحظة-بلحظة: خط اللقطات الحقيقي → نسختنا (مخرج شورتس).
+
+    ده قلب مصنع التقليد: الناتج `shots` بعدد لقطات الأصل بالظبط، وكل لقطة
+    ليه سطر مقروء + استعلام لقطة حقيقية + مؤثر صوتي.
+    """
+    shots = _shot_buckets(report)
+    if not shots:
+        raise RuntimeError("eye: مفيش لقطات — الفيديو مفيهوش مشاهد ولا مدة")
+    table = []
+    for i, s in enumerate(shots, 1):
+        table.append(
+            f"لقطة {i} | {s['t0']:.1f}s–{s['t1']:.1f}s ({s['dur']:.1f}ث) "
+            f"| صوت {s['rms']}"
+            + (f"\n   👁 اللي ظاهر: {s['desc']}" if s.get("desc") else "")
+            + (f"\n   🗣 اللي اتقال: {s['say']}" if s.get("say") else ""))
+    shot_table = "\n".join(table[:20])
+    written = _llm_json(SHOTS_PROMPT.format(
+        digest=(digest[:4000] + "\n\n=== خط اللقطات الحقيقي ===\n" + shot_table),
+        dna=json.dumps(dna, ensure_ascii=False)[:3000]), temperature=0.8)
+    rows = written.get("shots") or []
+    if not isinstance(rows, list) or len(rows) < 2:
+        raise RuntimeError("eye: مخرج التقليد ما رجّعش لقطات كفاية")
+    # نثبّت التوقيتات الحقيقية من الأصل على كل لقطة
+    fixed = []
+    for i, row in enumerate(rows):
+        src = shots[min(i, len(shots) - 1)]
+        fixed.append({
+            "t0": src["t0"], "t1": src["t1"], "dur": src["dur"],
+            "say_ar": str(row.get("say_ar") or "").strip()[:220],
+            "say_en": str(row.get("say_en") or "").strip()[:220],
+            "visual_query": str(row.get("visual_query") or "").strip()[:80],
+            "sfx": str(row.get("sfx") or "").strip()[:12],
+            "on_screen": str(row.get("on_screen") or "").strip()[:60],
+        })
+    fixed = [f for f in fixed if f["say_ar"]]
+    written["shots"] = fixed
+    return written
+
+
 def to_factory_topic(written: dict, report: dict, dna: dict) -> dict:
     _assert_radar_numbers(written, report)
     vid = report["videoId"]
     m = report.get("meta", {})
+    shots = written.get("shots") or []
+    # التقليد لحظة-بلحظة: السطور بتيجي من اللقطات (مفيش «الحقيقة الأولى»)
+    if shots:
+        written = dict(written)
+        written.setdefault("hook_ar", shots[0].get("say_ar", ""))
+        written.setdefault("hook_en", shots[0].get("say_en", ""))
+        if not written.get("facts_ar"):
+            written["facts_ar"] = [s.get("say_ar", "") for s in shots[1:4]]
+            written["facts_en"] = [s.get("say_en", "") for s in shots[1:4]]
     t = {
         "id": f"eye-{vid}",
         "topic": m.get("title", vid),
@@ -938,6 +1170,9 @@ def to_factory_topic(written: dict, report: dict, dna: dict) -> dict:
         "mood": written.get("mood") or "warm",
         "_kind": "eye",
         "_visual_plan": written.get("visual_plan") or [],
+        # ⚡ محرك التقليد: لقطات لحظة-بلحظة من الفيديو الأصلي
+        "shots": shots,
+        "_replication": bool(shots),
         "_eye": {
             "videoId": vid,
             "url": report.get("url"),
@@ -1050,12 +1285,24 @@ def agent(video_id: str, meta: dict | None = None) -> dict:
             title_patterns = json.dumps(p.get("titlePatterns", {}), ensure_ascii=False)
         except Exception:
             title_patterns = ""
-    written, topic = _writer_call(
-        WRITE_PROMPT.format(
-            dna=json.dumps(dna, ensure_ascii=False)[:6000],
-            digest=digest[:6000],
-            title_patterns=title_patterns or "(مفيش)",
-        ), report, dna)
+    # ① محرك التقليد (لحظة-بلحظة) — الأساس. لو فشل لأي سبب (مفيش مشاهد/موديل)
+    #    بنرجع لمسار «المقال» القديم عشان المصنع ما يقفشش أبدًا.
+    topic = None
+    try:
+        written = write_replication(report, dna, digest)
+        topic = to_factory_topic(written, report, dna)
+        print(f"[eye] 🎬 سكربت تقليد من {len(topic['shots'])} لقطة "
+              f"(نفس لقطات الأصل)", flush=True)
+    except Exception as exc:
+        print(f"[eye] ⚠️ محرك التقليد وقع ({type(exc).__name__}: "
+              f"{str(exc)[:100]}) — مسار الاحتياط", flush=True)
+    if topic is None:
+        written, topic = _writer_call(
+            WRITE_PROMPT.format(
+                dna=json.dumps(dna, ensure_ascii=False)[:6000],
+                digest=digest[:6000],
+                title_patterns=title_patterns or "(مفيش)",
+            ), report, dna)
 
     print("[eye] ناقد: تقييم صارم…", flush=True)
     crit = _llm_json(
@@ -1071,6 +1318,13 @@ def agent(video_id: str, meta: dict | None = None) -> dict:
     try:
         score = int(crit.get("score", 100))
     except (TypeError, ValueError):
+        score = 100
+    # التقليد ما بيمشيش على مسار «أعد كتابة الحقائق» — لقطاته هي السكربت
+    if topic.get("shots"):
+        topic["_critique"] = {"score": crit.get("score"),
+                              "weaknesses": crit.get("weaknesses", []),
+                              "verdict": crit.get("verdict"),
+                              "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"}
         score = 100
     if score < 75 and crit.get("weaknesses"):
         print(f"[eye] التقييم {score}/100 — إعادة كتابة الأضعف…", flush=True)
