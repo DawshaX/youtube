@@ -2,85 +2,152 @@
  {
   "id": "eye-YZWmX1rrfvA",
   "topic": "GUESS THE DRINK CHALLENGE",
-  "angle": "The last drink is an extremely spicy or foul‑tasting beverage, causing Speed to react with",
+  "angle": "After several wrong guesses, Speed finally nails the last drink, and the video freezes on ",
   "origin": "eye",
   "status": "scripted",
-  "title_ar": "تحدي العين المعصوبة: خمن المشروب قبل ما تشربه!",
-  "title_en": "Blindfolded Sip Challenge – Can You Guess the Drink?",
-  "hook_ar": "إيه رأيك تخمن المشروب وإنت معصوب؟",
-  "hook_en": "Guess the drink while blindfolded—ready?",
+  "title_ar": "تحدي المشروبات المجنونة مع Speed",
+  "title_en": "Crazy Drink Guess Challenge!",
+  "hook_ar": "يلا يا جماعة، تحدي المشروبات!",
+  "hook_en": "Let's go, drink challenge!",
   "facts_ar": [
-   "قناة دۅۄشے بتقدملك تجربة طعم سريعة وممتعة.",
-   "مدة الفيديو أقل من دقيقة.",
-   "عدد المشاهدات بالملايين."
+   "أول مشروب ييجي، شوف رد فعلي!",
+   "أظنها كوكاكولا، يا ريت!",
+   "خطأ! صوت البازر يطقطق!"
   ],
   "facts_en": [
-   "Doshé channel delivers a fast, fun taste experiment.",
-   "The clip runs under a minute.",
-   "Views are measured in millions."
+   "First drink arrives, watch my reaction!",
+   "I think it's cola, right!",
+   "Wrong! Buzzer sounds!"
   ],
-  "takeaway_ar": {
-   "aql": "العقل بيحب الألغاز اللي تحرك الحواس.",
-   "qalb": "القلب يضحك على ردود الفعل الصريحة.",
-   "rouh": "الروح تستمتع بالمفاجآت اللي تفاجئ التوقعات."
-  },
-  "takeaway_en": {
-   "aql": "The mind loves puzzles that engage the senses.",
-   "qalb": "The heart laughs at raw, honest reactions.",
-   "rouh": "The spirit thrives on twists that outsmart expectations."
-  },
-  "tags": "تحدي,مشروب,عين_معصوبة,ضحك,مفاجأة",
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "تحدي,مشروبات,ضحك,سرعة,مفاجأة",
   "mood": "crazy",
   "_kind": "eye",
-  "_visual_plan": [
+  "_visual_plan": [],
+  "shots": [
    {
-    "time": "0:00-0:03",
-    "scene": "المقدِّم يصرخ عنوان التحدي بحدة، مع ظهور نص كبير متوهج على الشاشة.",
-    "style": "لقطة يدويّة قريبة، إضاءة ساطعة، نص كينيتك يطير.",
-    "colors": [
-     "#FF0000",
-     "#00FF00"
-    ]
+    "t0": 0.0,
+    "t1": 3.0,
+    "dur": 3.0,
+    "say_ar": "يلا يا جماعة، تحدي المشروبات!",
+    "say_en": "Let's go, drink challenge!",
+    "visual_query": "young man shouting",
+    "sfx": "whoosh",
+    "on_screen": "إختر المشروب!"
    },
    {
-    "time": "0:04-0:12",
-    "scene": "شرح سريعة للقواعد، وضع العُصابة على العينين، صب أول مشروب في كوب شفاف.",
-    "style": "لقطة واسعة للطاولة، ثم تقطيعات سريعة لليدين والعصابة.",
-    "colors": [
-     "#00FF00",
-     "#0000FF"
-    ]
+    "t0": 3.0,
+    "t1": 9.0,
+    "dur": 6.0,
+    "say_ar": "أول مشروب ييجي، شوف رد فعلي!",
+    "say_en": "First drink arrives, watch my reaction!",
+    "visual_query": "drink being poured closeup",
+    "sfx": "pop",
+    "on_screen": ""
    },
    {
-    "time": "0:12-0:30",
-    "scene": "سلسلة من تذوق المشروبات، كل مرة رد فعل سريع (ضحكة، عبّاءة، صدمة).",
-    "style": "قفزات تحريرية سريعة، إيموجي يطفو فوق كل رد فعل.",
-    "colors": [
-     "#FF0000",
-     "#00FF00",
-     "#0000FF"
-    ]
+    "t0": 9.0,
+    "t1": 12.0,
+    "dur": 3.0,
+    "say_ar": "أظنها كوكاكولا، يا ريت!",
+    "say_en": "I think it's cola, right!",
+    "visual_query": "man guessing",
+    "sfx": "impact",
+    "on_screen": ""
    },
    {
-    "time": "0:30-0:45",
-    "scene": "المفاجأة: مشروب حار أو بطعم غريب جداً، رد فعل مبالغ فيه مع أصوات تأثيرية.",
-    "style": "قريب للوجه، إضاءة ساطعة، مؤثر صوتي صاخب.",
-    "colors": [
-     "#FF0000"
-    ]
+    "t0": 12.0,
+    "t1": 18.0,
+    "dur": 6.0,
+    "say_ar": "خطأ! صوت البازر يطقطق!",
+    "say_en": "Wrong! Buzzer sounds!",
+    "visual_query": "buzzer graphic",
+    "sfx": "impact",
+    "on_screen": "خطأ!"
    },
    {
-    "time": "0:45-0:53",
-    "scene": "الكشف عن اسم المشروب، ضحكة ختامية، ظهور أيقونات الاشتراك والإعجاب بتأثير فلاش.",
-    "style": "لقطة ثابتة للوجه مع تجميد، نص متوهج يلمع.",
-    "colors": [
-     "#00FF00",
-     "#0000FF"
-    ]
+    "t0": 18.0,
+    "t1": 21.0,
+    "dur": 3.0,
+    "say_ar": "المشروب التاني، ضحكة صريحة!",
+    "say_en": "Second drink, big laugh!",
+    "visual_query": "laughing reaction",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 21.0,
+    "t1": 27.0,
+    "dur": 6.0,
+    "say_ar": "أقول عصير مانجا؟ غلط!",
+    "say_en": "Mango juice? Nope!",
+    "visual_query": "wrong answer stamp",
+    "sfx": "impact",
+    "on_screen": "غلط!"
+   },
+   {
+    "t0": 27.0,
+    "t1": 30.0,
+    "dur": 3.0,
+    "say_ar": "تالت مشروب، واو، إقرف!",
+    "say_en": "Third drink, yuck!",
+    "visual_query": "disgusted face",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 30.0,
+    "t1": 36.0,
+    "dur": 6.0,
+    "say_ar": "أحزر شاي بارد؟ لا!",
+    "say_en": "Cold tea? No!",
+    "visual_query": "wrong stamp",
+    "sfx": "impact",
+    "on_screen": "غلط!"
+   },
+   {
+    "t0": 36.0,
+    "t1": 39.0,
+    "dur": 3.0,
+    "say_ar": "المشروب الرابع، عجبني بجد!",
+    "say_en": "Fourth drink, really liked it!",
+    "visual_query": "surprised reaction",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 39.0,
+    "t1": 45.0,
+    "dur": 6.0,
+    "say_ar": "أخيرًا صح! مشروب سري!",
+    "say_en": "Finally right! Secret drink!",
+    "visual_query": "slow motion shocked",
+    "sfx": "whoosh",
+    "on_screen": "صحيح!"
+   },
+   {
+    "t0": 45.0,
+    "t1": 48.0,
+    "dur": 3.0,
+    "say_ar": "الاشتراك دلوقتي، يلا شاركونا!",
+    "say_en": "Subscribe now, join us!",
+    "visual_query": "pointing subscribe button",
+    "sfx": "pop",
+    "on_screen": "اشترك"
+   },
+   {
+    "t0": 48.0,
+    "t1": 53.0,
+    "dur": 5.0,
+    "say_ar": "لحظات سريعة، إضحكوا معانا!",
+    "say_en": "Quick moments, laugh with us!",
+    "visual_query": "quick montage clips",
+    "sfx": "pop",
+    "on_screen": ""
    }
   ],
-  "shots": [],
-  "_replication": false,
+  "_replication": true,
   "_eye": {
    "videoId": "YZWmX1rrfvA",
    "url": "https://youtu.be/YZWmX1rrfvA",
@@ -90,33 +157,29 @@
    "dna": {
     "hook": {
      "technique": "question",
-     "what_happens": "Speed is blindfolded and forced to guess the identity of mysterious drinks by taste alone.",
-     "why_it_works": "A direct question creates immediate curiosity and promises surprise, compelling viewers to stay for the answer."
+     "what_happens": "IShowSpeed is blindfolded and forced to guess a series of mystery drinks while the camera zooms in on his frantic reactions.",
+     "why_it_works": "The immediate question creates curiosity, while Speed's unpredictable facial expressions promise humor and surprise, compelling viewers to stay for the answer."
     },
     "pacing": {
-     "estimated_cuts_per_minute": 34,
-     "energy_curve": "Steady high energy from start, micro‑spikes at each taste reaction, a peak at the twist, slight dip for the reveal, then a final surge with the CTA."
+     "estimated_cuts_per_minute": 150,
+     "energy_curve": "sharp rise in the first 5 seconds (hook), steady high energy through rapid cuts, spike at the final reveal, quick dip into CTA."
     },
     "retention_tricks": [
-     "Immediate question‑based hook",
-     "Fast‑cut editing rhythm",
-     "Repeated reaction beats",
-     "Unexpected twist at 30‑second mark",
-     "On‑screen emojis and kinetic text",
-     "Clear CTA before the video ends"
+     "Immediate question hook",
+     "Fast cuts and visual punchlines every 2‑3 seconds",
+     "Unexpected wrong‑guess reveals with buzzer sound",
+     "Humorous facial reactions that encourage replay",
+     "Clear CTA that ties back to the high‑energy climax"
     ]
    }
   },
   "_critique": {
-   "score": 85,
+   "score": 70,
    "weaknesses": [
-    "Audio plan is missing – no specification of voice style, music track, or reaction SFX, which are key to the DNA’s energy curve.",
-    "Retention tricks are not listed explicitly; the proposal relies on implied tactics rather than naming them.",
-    "Hook wording is less punchy than the original (no shouting or bold on‑screen graphic mentioned).",
-    "Cut rate and pacing details (e.g., ~34 cuts/min) are not quantified, risking a slower rhythm.",
-    "No mention of the “steady high‑energy” audio mix that rises and falls with each beat."
+    "Lacks a curiosity‑driving question hook that instantly grabs attention, no blindfold element to add novelty, camera style not specified (missing handheld rapid cuts), overall cuts per minute far below the 150 cuts/min target, missing high‑energy trap beat and celebratory chime for the correct guess, buzzer sound effect is only an impact rather than a distinct buzzer, visual language (dominant colors, stickers) not fully leveraged, audio energy curve not mapped to beats, retention tricks such as rapid visual punchlines every 2‑3 seconds are underutilized"
    ],
-   "verdict": "The proposal mirrors the DNA trend’s structure and visual identity very well, delivering a solid blindfold‑taste‑test concept. However, it falls short on audio execution and explicit retention strategies, which are essential for maintaining the high‑energy flow of the original. With those gaps filled, the episode could easily score in the 90s."
+   "verdict": "The episode captures the core structure of the DNA trend—quick hook, escalating guesses, comedic reactions, and a payoff—but falls short on the high‑energy pacing, question hook, and audio/visual flair that make the original format so engaging. Boosting cut frequency, adding a question hook, incorporating a blindfold, and tightening the audio cues would raise the score significantly.",
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
   }
  }
 ]
