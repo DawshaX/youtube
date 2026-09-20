@@ -1,0 +1,104 @@
+{
+ "checkedAt": "2026-09-20T02:44:22+00:00",
+ "runner": "local",
+ "all_ok": true,
+ "fails": 0,
+ "warns": 15,
+ "checks": [
+  {
+   "name": "ffmpeg (المونتاج)",
+   "status": "ok",
+   "detail": "/usr/local/lib/python3.13/site-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2"
+  },
+  {
+   "name": "حزم بايثون",
+   "status": "ok",
+   "detail": "كل الحزم الأساسية متاحة"
+  },
+  {
+   "name": "مكتبة الأصوات",
+   "status": "ok",
+   "detail": "32 صوت عربي (ملف حقيقي)"
+  },
+  {
+   "name": "سلامة ملفات البيانات",
+   "status": "ok",
+   "detail": "كل الملفات القابلة للفحص سليمة"
+  },
+  {
+   "name": "YOUTUBE_API_KEY (الرادار)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "YOUTUBE_COOKIES_B64 (كوكيز العين)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "GROQ_API_KEY (مخ الذكاء 1)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "GEMINI_API_KEY (مخ الذكاء 2)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "LLM_API_* (مزوّد مخصص)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "YouTube OAuth (النشر)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "PIXABAY_API_KEY (لقطات فيديو)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "PEXELS_API_KEY (لقطات احتياطية)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "NASA_API_KEY (فضاء)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "OPENVERSE (صور/ميديا)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "RESTCOUNTRIES (مكتبة العالم)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "FREESOUND_API_KEY (مؤثرات CC)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "GNEWS_API_KEY (أخبار)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "CURRENTS_API_KEY (أخبار لحظية)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  },
+  {
+   "name": "edge-tts (صوت حقيقي)",
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
+  }
+ ]
+}

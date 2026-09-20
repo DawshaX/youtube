@@ -198,18 +198,22 @@ def check_pixabay() -> dict:
 
 
 def check_pexels() -> dict:
+    key = settings.PEXELS_API_KEY          # بيدوّر على PEXELS_API_KEY أو PEXELS
+    if not key:
+        return {"name": "PEXELS (لقطات احتياطية)", "status": "warn",
+                "detail": "غير مضبوط — لقطات بكسلز بتزيد تنوّع الفيديو (اختياري)"}
     return _simple_key_check(
-        "PEXELS_API_KEY", "PEXELS_API_KEY (لقطات احتياطية)",
+        "PEXELS_API_KEY", "PEXELS (لقطات احتياطية)",
         "https://api.pexels.com/videos/1",
-        headers={"Authorization": settings.get("PEXELS_API_KEY")})
+        headers={"Authorization": key})
 
 
 def check_nasa() -> dict:
-    key = settings.get("NASA_API_KEY") or "DEMO_KEY"
+    key = settings.NASA_API_KEY or "DEMO_KEY"
     code, body = _http_get("https://api.nasa.gov/planetary/apod",
                            params={"api_key": key})
     if code == 200:
-        st = "ok" if settings.get("NASA_API_KEY") else "warn"
+        st = "ok" if settings.NASA_API_KEY else "warn"
         return {"name": "NASA_API_KEY (فضاء)", "status": st,
                 "detail": "شغال" + ("" if settings.get("NASA_API_KEY")
                                    else " (بمفتاح تجريبي — اختياري)")}
@@ -241,6 +245,13 @@ def check_openverse() -> dict:
                 "detail": "شغال (المفتاح اختياري)" if not key else "شغال"}
     return {"name": "OPENVERSE (صور/ميديا)", "status": "fail",
             "detail": f"HTTP {code} — {body[:160]}"}
+
+
+def _alias_note() -> str:
+    """ملاحظة الأسماء البديلة: نفس المفتاح بأسماء مختلفة في الأسرار."""
+    have = [n for n in ("PEXELS", "NASA", "OPENVERSE", "RESTCOUNTRIES")
+            if settings.get(n)]
+    return (" · الأسماء البديلة المضبوطة: " + ", ".join(have)) if have else ""
 
 
 def check_freesound() -> dict:
