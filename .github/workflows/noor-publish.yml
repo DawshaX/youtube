@@ -62,6 +62,9 @@ jobs:
           python -m pip install --quiet pillow requests numpy edge-tts \
             imageio-ffmpeg arabic-reshaper python-bidi pymediainfo curl_cffi pynacl pyyaml
 
+      - name: ⏱️ عَلّم بداية الدورة
+        run: echo "JOB_START=$(date +%s)" >> "$GITHUB_ENV"
+
       - name: ✅ حراسة الخط القرآني (raqm) — من غيرها العربي بيطلع حروف منفصلة
         run: |
           python - <<'EOF'
@@ -151,7 +154,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          START=$(date -d "${{ github.run_started_at }}" +%s)
+          START="${JOB_START:-$(date +%s)}"      # بداية الدورة الحقيقية
           NOW=$(date +%s)
           SLEEP=$(( 3600 - (NOW - START) ))
           [ "$SLEEP" -gt 2700 ] && SLEEP=2700
