@@ -1,5 +1,5 @@
 {
- "cycles": 21,
+ "cycles": 22,
  "renders": [
   {
    "at": "00:19",
@@ -93,6 +93,12 @@
    "video": "/home/runner/work/youtube/youtube/content/vids/eye-g8cRXvfHCcs.mp4",
    "ok": true,
    "sec": 649
+  },
+  {
+   "at": "13:30",
+   "video": "/home/runner/work/youtube/youtube/content/vids/eye-SqvtLWz9eDg.mp4",
+   "ok": true,
+   "sec": 583
   }
  ],
  "publish_attempts": [
@@ -199,6 +205,12 @@
    "topic": "eye-g8cRXvfHCcs",
    "ok": true,
    "why": "published"
+  },
+  {
+   "at": "13:30",
+   "topic": "eye-SqvtLWz9eDg",
+   "ok": true,
+   "why": "published"
   }
  ],
  "radar": [
@@ -294,6 +306,10 @@
   },
   {
    "at": "12:47",
+   "ok": true
+  },
+  {
+   "at": "13:30",
    "ok": true
   }
  ],
@@ -402,9 +418,14 @@
    "at": "12:47",
    "rc": -1,
    "err": "TimeoutExpired"
+  },
+  {
+   "at": "13:30",
+   "rc": 0,
+   "note": "eye: 2/2 فيديو اتشاف وموضوعات اتكتبت"
   }
  ],
- "last_cycle_at": "2026-09-20 12:47:21",
+ "last_cycle_at": "2026-09-20 13:30:34",
  "last_commit": "saved",
  "last_error": "2026-09-19 00:34:44",
  "dubs": [
@@ -465,6 +486,12 @@
    "at": "12:47",
    "lang": "en",
    "topic": "eye-g8cRXvfHCcs-en",
+   "ok": true
+  },
+  {
+   "at": "13:30",
+   "lang": "hi",
+   "topic": "eye-SqvtLWz9eDg-hi",
    "ok": true
   }
  ]

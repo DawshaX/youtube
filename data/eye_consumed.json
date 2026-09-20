@@ -1,1569 +1,1770 @@
 [
-  {
-    "id": "eye-OL0QN17ceU4",
-    "topic": "تحدي أكل الصبار بالأصوات (ASMR)! صدمة النهاية غير متوقعة 😭🍍",
-    "angle": "اكتشاف شيء غير متوقع داخل الصبار (مثل فراشة حية أو قطعة فاكهة غير متوقعة) يخلق صدمة عاطفية",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "تحدي الصبار بالصوت: صدمة ما تتوقعها 😱🌵",
-    "title_en": "Cactus Crunch Challenge: Unexpected Shock 😱🌵",
-    "hook_ar": "اسمعوا الصبار وهو يطقطق… ومفاجأة جوا!",
-    "hook_en": "Listen to the cactus snap… and a surprise inside!",
-    "facts_ar": [
-      "الصبار غني بمادة جلية تُستخرج لصناعة منتجات التجميل.",
-      "تقنية الـ ASMR تعتمد على أصوات ناعمة لتفعيل استجابة استرخائية في الدماغ.",
-      "لحظة الصدمة في الثواني الأولى تعلي متوسط مدة المشاهدة بشكل ملحوظ."
-    ],
-    "facts_en": [
-      "Cactus contains a gel used in cosmetic products.",
-      "ASMR relies on soft repetitive sounds to trigger a relaxing brain response.",
-      "A shocking moment in the first seconds boosts average watch time noticeably."
-    ],
-    "takeaway_ar": {
-      "aql": "الفضول يخلينا نجرب أشياء جديدة حتى لو شكلها غريب.",
-      "qalb": "اللحظة المفاجئة تخلق إدمان مشاهدة وإحساس بالمتعة.",
-      "rouh": "استمتع بالهدوء قبل الصدمة واكتشف إن التجربة ممكن تكون مدهشة."
-    },
-    "takeaway_en": {
-      "aql": "Curiosity pushes us to try odd things even when they look strange.",
-      "qalb": "The surprise moment creates a binge feeling and pure fun.",
-      "rouh": "Savor the calm before the shock and realize the experience can be amazing."
-    },
-    "tags": "صبار,ASMR,تحدي,صدمة,مفاجأة",
-    "mood": "warm",
-    "_kind": "eye",
-    "_visual_plan": [
-      {
-        "time": "0:00-0:03",
-        "scene": "لقطة قريبة ليد تقطع الصبار مع صوت تقطيع واضح ومقرب.",
-        "style": "ماكرو مع تركيز على تفاصيل القشرة والعصارة.",
-        "colors": [
-          "#2E7D32",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:04-0:07",
-        "scene": "المُقدِّم يهمس سؤالاً عن تجربة الصبار قبل كده، مع إيموجي سؤال يظهر على الشاشة.",
-        "style": "قريب مع إضاءة ناعمة وخلفية خضراء فاتحة.",
-        "colors": [
-          "#A5D6A7",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:08-0:11",
-        "scene": "لقطة بطيئة للقطعة الأولى تُظهر القوام العصيري وصوت شفط خفيف.",
-        "style": "سلو موشن مع صوت مكبر للـ ASMR.",
-        "colors": [
-          "#2E7D32",
-          "#A5D6A7"
-        ]
-      },
-      {
-        "time": "0:12-0:15",
-        "scene": "المُقدِّم يبتسم ويصف الطعم بأنه غريب لكن لذيذ، مع نص متحرك أصفر.",
-        "style": "قريب مع إضاءة دافئة.",
-        "colors": [
-          "#FFFFFF",
-          "#FFEB3B"
-        ]
-      },
-      {
-        "time": "0:16-0:19",
-        "scene": "كاميرا تقترب من داخل الصبار وتكشف عن شيء لامع غير متوقع.",
-        "style": "انتقال سريع (jump cut) مع تركيز على اللمعان.",
-        "colors": [
-          "#2E7D32",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:20-0:23",
-        "scene": "المُقدِّم يلتقط العنصر المفاجئ (فراشة حية) ويظهر رد فعل صادم مع صرخة خفيفة.",
-        "style": "قريب مع مؤثر صوت صدمة قوي.",
-        "colors": [
-          "#A5D6A7",
-          "#FF5252"
-        ]
-      },
-      {
-        "time": "0:24-0:30",
-        "scene": "نص سريع يدعو المشاهدين للمتابعة حتى النهاية مع إيموجي صدمة، ثم ابتسامة ودودة ودعوة للاعجاب والاشتراك.",
-        "style": "إغلاق دافئ مع إضاءة خفيفة.",
-        "colors": [
-          "#FFFFFF",
-          "#FFEB3B"
-        ]
-      }
-    ],
-    "_eye": {
-      "videoId": "OL0QN17ceU4",
-      "url": "https://youtu.be/OL0QN17ceU4",
-      "sourceTitle": "تحدي أكل الصبار بالأصوات (ASMR)! صدمة النهاية غير متوقعة 😭🍍",
-      "sourceChannel": "عائلة وناسة",
-      "sourceViews": 11526717,
-      "dna": {
-        "hook": {
-          "technique": "shock",
-          "what_happens": "المتحدي يبدأ بصوت خفيف للـ ASMR وهو يقطع صبار طازج، ثم فجأة يلتقط المشهد لحظة صدمة عندما يكتشف شيئًا غير متوقع داخل الصبار.",
-          "why_it_works": "الصوت الهادئ يجذب المشاهدين الباحثين عن تجربة ASMR، والصدمة المفاجئة تخلق توترًا فوريًا يدفع المشاهدين للبقاء لمعرفة ما سيحدث."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 45,
-          "energy_curve": "ارتفاع سريع في الطاقة خلال الـ 0-8 ثوانٍ (الصوت والقطع السريع)، استقرار خفيف 8-12 ثوانٍ (الـ ASMR)، ثم صدمة مفاجئة 12-20 ثوانٍ (الـ twist) تتبعها انخفاض تدريجي مع CTA في النهاية."
-        },
-        "retention_tricks": [
-          "استخدام صوت ASMR عالي الجودة لجذب فئة محددة من المشاهدين.",
-          "طرح سؤال في البداية لتفعيل الفضول الذهني.",
-          "إدخال عنصر غير متوقع (twist) قبل 20 ثانية لتقليل معدل التخلي.",
-          "نصوص سريعة وإيموجي لجذب الانتباه البصري."
-        ]
-      }
-    },
-    "_critique": {
-      "score": 75,
-      "weaknesses": [
-        "The concept is almost a direct copy of the DNA template; originality is limited, which may reduce novelty for repeat viewers.",
-        "The twist, while unexpected, is somewhat predictable (a small living creature); a more unconventional find (e.g., a hidden gem or a tiny robot) could heighten shock.",
-        "Audio plan lacks detail on background music or sound layering; a subtle lo‑fi track could enhance the ASMR feel and keep viewers calm before the shock.",
-        "The episode is only 30 s long; while DNA’s 30‑s format works, adding a 5‑10 s teaser or a second twist could improve retention.",
-        "The visual plan does not mention camera movement or transitions beyond jump cuts, missing an opportunity to add dynamic energy."
-      ],
-      "verdict": "Solid execution that follows the DNA formula well, but it needs a stronger unique element and richer audio/visual details to stand out and maximize retention."
-    },
-    "_consumedAt": "2026-09-19T18:57:04Z",
-    "_skipReason": "already_produced"
+ {
+  "id": "eye-OL0QN17ceU4",
+  "topic": "تحدي أكل الصبار بالأصوات (ASMR)! صدمة النهاية غير متوقعة 😭🍍",
+  "angle": "اكتشاف شيء غير متوقع داخل الصبار (مثل فراشة حية أو قطعة فاكهة غير متوقعة) يخلق صدمة عاطفية",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي الصبار بالصوت: صدمة ما تتوقعها 😱🌵",
+  "title_en": "Cactus Crunch Challenge: Unexpected Shock 😱🌵",
+  "hook_ar": "اسمعوا الصبار وهو يطقطق… ومفاجأة جوا!",
+  "hook_en": "Listen to the cactus snap… and a surprise inside!",
+  "facts_ar": [
+   "الصبار غني بمادة جلية تُستخرج لصناعة منتجات التجميل.",
+   "تقنية الـ ASMR تعتمد على أصوات ناعمة لتفعيل استجابة استرخائية في الدماغ.",
+   "لحظة الصدمة في الثواني الأولى تعلي متوسط مدة المشاهدة بشكل ملحوظ."
+  ],
+  "facts_en": [
+   "Cactus contains a gel used in cosmetic products.",
+   "ASMR relies on soft repetitive sounds to trigger a relaxing brain response.",
+   "A shocking moment in the first seconds boosts average watch time noticeably."
+  ],
+  "takeaway_ar": {
+   "aql": "الفضول يخلينا نجرب أشياء جديدة حتى لو شكلها غريب.",
+   "qalb": "اللحظة المفاجئة تخلق إدمان مشاهدة وإحساس بالمتعة.",
+   "rouh": "استمتع بالهدوء قبل الصدمة واكتشف إن التجربة ممكن تكون مدهشة."
   },
-  {
-    "id": "eye-OP3a2qzW5Yk",
-    "topic": "🏃 SPEED CHALLENGE: FOOTBALLERS VS DISCS! ⚽💿🏆",
-    "angle": "The footballer swaps the ball for a disc mid‑run and launches it, making the disc beat the",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "🏃 تحدي السرعة: لاعب كرة يجرّ disc ويكسب! ⚽💿",
-    "title_en": "🏃 Speed Showdown: Footballer vs Disc! ⚽💿",
-    "hook_ar": "إيه اللي بيجري أسرع، الكورة ولا الـ disc؟",
-    "hook_en": "Who’s quicker, the ball or the disc?",
-    "facts_ar": [
-      "محیط كرة القدم القياسي بيكون حوالى تسعة وستين إلى سبعين سنتيمتر.",
-      "قطر الفريسبي العادي بيقارب سبعة وعشرين سنتيمتر.",
-      "أعلى سرعة بشرية في السريع بتوصل لأكثر من عشرة أمتار في الثانية."
-    ],
-    "facts_en": [
-      "A standard soccer ball’s circumference is about sixty‑eight to seventy centimeters.",
-      "A common frisbee’s diameter is roughly twenty‑seven centimeters.",
-      "Top human sprint speed can exceed ten meters per second."
-    ],
-    "takeaway_ar": {
-      "aql": "السرعة مش بس في القوة، ده كمان في التفكير السريع.",
-      "qalb": "لما تشوف الحركة المفاجأة، هتحس بحماس لا يوصف.",
-      "rouh": "جرّب تبدل الأدوات، ويمكن تكتشف موهبة جديدة في نفسك."
-    },
-    "takeaway_en": {
-      "aql": "Speed isn’t only about power, it’s also about quick thinking.",
-      "qalb": "The surprise switch sparks an instant rush of excitement.",
-      "rouh": "Mixing tools can reveal a hidden talent you never imagined."
-    },
-    "tags": "تحدي,سرعة,كرة,ديسك,مقارنة",
-    "mood": "crazy",
-    "_kind": "eye",
-    "_visual_plan": [
-      {
-        "time": "0:00-0:03",
-        "scene": "شعار القناة يلمع مع نص جريء \"تحدي السرعة\"، ومقاطع سريعة للاعب وكومة من الـ discs تدور.",
-        "style": "قصات سريعة، إضاءة عالية، نص متحرك بخط سميك.",
-        "colors": [
-          "#1A1A1A",
-          "#E53935",
-          "#FFEB3B"
-        ],
-        "overlay": "Countdown timer (3‑2‑1) appears center-right."
-      },
-      {
-        "time": "0:03-0:07",
-        "scene": "مقابلة قصيرة لللاعب (voice‑over) يشرح التحدي، ثم ينتقل إلى لقطات منخفضة الزاوية (low‑angle) للكرة والـ disc.",
-        "style": "إضاءة ناعمة، حركات كاميرا بطيئة.",
-        "overlay": "Speedometer graphic shows 0 m/s."
-      },
-      {
-        "time": "0:07-0:12",
-        "scene": "اللاعب يبدأ الركض، مع انطباع بالتصوير المنخفض الزاوية وبـ slow‑motion جزئي، تُظهر تفاصيل التفاعل مع الكرة.",
-        "style": "Slow‑motion 2× speed، مقاطع مقطوعة بشكل متتابع.",
-        "overlay": "Text overlay: \"Ready?\"."
-      },
-      {
-        "time": "0:12-0:16",
-        "scene": "الـ disc يطير عبر الساحة، مع split‑screen: اليمين يبين الكرة، اليسار يبين الـ disc في نفس اللحظة.",
-        "style": "تقسيم الشاشة 50/50، حركات كابلات لتسليط الضوء على الفرق في السرعة.",
-        "overlay": "الـ disc يملك رقم 1، الكرة رقم 2."
-      },
-      {
-        "time": "0:16-0:20",
-        "scene": "اللاعب يصل إلى منتصف المسار، يتوقف لحظة، ثم يبدل الكرة بالـ disc في حركة سريعة.",
-        "style": "Low‑angle slow‑motion مع سرعة التصوير 4×، تحريك الكاميرا من اللاعب إلى الـ disc.",
-        "overlay": "تغيير اللون الأزرق للـ disc إلى الأحمر."
-      },
-      {
-        "time": "0:20-0:24",
-        "scene": "اللاعب يركض مع الـ disc، واللقطات تظهر سرعة الحركة مقارنة بالكرة من خلال split‑screen مجدد.",
-        "style": "موسيقى تصاعدية، مقاطع مقطوعة كل 0.5 ثانية.",
-        "overlay": "مؤشر السرعة يتحرك على الـ disc."
-      },
-      {
-        "time": "0:24-0:28",
-        "scene": "الـ disc يصل إلى خط النهاية، ثم يظهر اللاعب وهو يرفع اليدين في نصر، مع تأثيرات ضوئية.",
-        "style": "تأثيرات ضوء نيون، مقاطع قصير‑سريعة.",
-        "overlay": "نص: \"You won!\"."
-      },
-      {
-        "time": "0:28-0:30",
-        "scene": "نهاية الحلقة: CTA مع رابط للشراء أو الاشتراك، مع شعار القناة والـ disc.",
-        "style": "تسريع الفيديو، نغمة نهاية مشهودة.",
-        "overlay": "CTA: \"اشتري الآن\" مع زر CTA يفتح متجر."
-      }
-    ],
-    "_eye": {
-      "videoId": "OP3a2qzW5Yk",
-      "url": "https://youtu.be/OP3a2qzW5Yk",
-      "sourceTitle": "🏃 SPEED CHALLENGE: FOOTBALLERS VS DISCS! ⚽💿🏆",
-      "sourceChannel": "GadzhiSoccer",
-      "sourceViews": 39450934,
-      "dna": {
-        "hook": {
-          "technique": "visual_curiosity",
-          "what_happens": "A footballer sprints toward a line of spinning discs, then dramatically swaps the ball for a disc mid‑run.",
-          "why_it_works": "The sudden, unexpected switch between two familiar sports objects creates immediate intrigue and forces viewers to stay for the payoff."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 120,
-          "energy_curve": "Starts high with rapid cuts, peaks at the split‑screen race, spikes at the mid‑run disc throw, then drops slightly into a concise CTA."
-        },
-        "retention_tricks": [
-          "Immediate visual hook with unexpected object swap",
-          "Countdown timer creates a ticking‑clock urgency",
-          "Split‑screen parallelism forces viewers to compare outcomes",
-          "Mid‑video skill reveal (disc throw) acts as a surprise twist"
-        ]
-      }
-    },
-    "_critique": {
-      "score": 45,
-      "rewritten": true,
-      "weaknesses": [
-        "Only the first 3 seconds of the visual plan are described; the rest of the 30‑second beat structure is missing.",
-        "No low‑angle slow‑motion, split‑screen race, or mid‑run disc‑swap that form the core twist/payoff of the DNA trend.",
-        "Absence of a countdown timer, graphic overlays, and the final CTA that drive retention and conversion.",
-        "Audio details (voice‑over style, music, SFX) are not specified, leaving a gap in the overall energy curve.",
-        "Pacing metrics (cuts per minute, energy curve) and retention tricks beyond the initial hook are not addressed."
-      ]
-    },
-    "_consumedAt": "2026-09-19T18:57:04Z",
-    "_skipReason": "already_produced"
+  "takeaway_en": {
+   "aql": "Curiosity pushes us to try odd things even when they look strange.",
+   "qalb": "The surprise moment creates a binge feeling and pure fun.",
+   "rouh": "Savor the calm before the shock and realize the experience can be amazing."
   },
-  {
-    "id": "eye-9IaLY4J5zLg",
-    "topic": "سارة في 2023 🥹🥺 #ghaith_marwan #سارة_عصام_الورع #جنى_الحفار #saraaalwari #ترند #غيث_مروان #تحدي",
-    "angle": "The video flips from a tearful, vulnerable opening to a triumphant reveal of Sara’s achiev",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "قصة سارة: من الدموع إلى النجاح",
-    "title_en": "Sara’s Journey: Tears to Triumph",
-    "hook_ar": "شوفوا سارة وهي بتبكي…",
-    "hook_en": "Watch Sara's tearful start.",
-    "facts_ar": [
-      "حقق الفيديو أكثر من 11513792 مشاهدة.",
-      "حصل على أكثر من 55720 إعجاب.",
-      "نُشر على قناة سارة الوراي من مصر."
-    ],
-    "facts_en": [
-      "The short has gathered over 11513792 views.",
-      "It earned more than 55720 likes.",
-      "Published on the Sara Alwari channel, region Egypt."
-    ],
-    "takeaway_ar": {
-      "aql": "النجاح يتطلب صبرًا وإصرارًا.",
-      "qalb": "الدعم الحقيقي يغيّر مسار الحياة.",
-      "rouh": "بالعزم نرتقي فوق الألم."
+  "tags": "صبار,ASMR,تحدي,صدمة,مفاجأة",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة قريبة ليد تقطع الصبار مع صوت تقطيع واضح ومقرب.",
+    "style": "ماكرو مع تركيز على تفاصيل القشرة والعصارة.",
+    "colors": [
+     "#2E7D32",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "المُقدِّم يهمس سؤالاً عن تجربة الصبار قبل كده، مع إيموجي سؤال يظهر على الشاشة.",
+    "style": "قريب مع إضاءة ناعمة وخلفية خضراء فاتحة.",
+    "colors": [
+     "#A5D6A7",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "لقطة بطيئة للقطعة الأولى تُظهر القوام العصيري وصوت شفط خفيف.",
+    "style": "سلو موشن مع صوت مكبر للـ ASMR.",
+    "colors": [
+     "#2E7D32",
+     "#A5D6A7"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "المُقدِّم يبتسم ويصف الطعم بأنه غريب لكن لذيذ، مع نص متحرك أصفر.",
+    "style": "قريب مع إضاءة دافئة.",
+    "colors": [
+     "#FFFFFF",
+     "#FFEB3B"
+    ]
+   },
+   {
+    "time": "0:16-0:19",
+    "scene": "كاميرا تقترب من داخل الصبار وتكشف عن شيء لامع غير متوقع.",
+    "style": "انتقال سريع (jump cut) مع تركيز على اللمعان.",
+    "colors": [
+     "#2E7D32",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:20-0:23",
+    "scene": "المُقدِّم يلتقط العنصر المفاجئ (فراشة حية) ويظهر رد فعل صادم مع صرخة خفيفة.",
+    "style": "قريب مع مؤثر صوت صدمة قوي.",
+    "colors": [
+     "#A5D6A7",
+     "#FF5252"
+    ]
+   },
+   {
+    "time": "0:24-0:30",
+    "scene": "نص سريع يدعو المشاهدين للمتابعة حتى النهاية مع إيموجي صدمة، ثم ابتسامة ودودة ودعوة للاعجاب والاشتراك.",
+    "style": "إغلاق دافئ مع إضاءة خفيفة.",
+    "colors": [
+     "#FFFFFF",
+     "#FFEB3B"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "OL0QN17ceU4",
+   "url": "https://youtu.be/OL0QN17ceU4",
+   "sourceTitle": "تحدي أكل الصبار بالأصوات (ASMR)! صدمة النهاية غير متوقعة 😭🍍",
+   "sourceChannel": "عائلة وناسة",
+   "sourceViews": 11526717,
+   "dna": {
+    "hook": {
+     "technique": "shock",
+     "what_happens": "المتحدي يبدأ بصوت خفيف للـ ASMR وهو يقطع صبار طازج، ثم فجأة يلتقط المشهد لحظة صدمة عندما يكتشف شيئًا غير متوقع داخل الصبار.",
+     "why_it_works": "الصوت الهادئ يجذب المشاهدين الباحثين عن تجربة ASMR، والصدمة المفاجئة تخلق توترًا فوريًا يدفع المشاهدين للبقاء لمعرفة ما سيحدث."
     },
-    "takeaway_en": {
-      "aql": "Success demands patience and perseverance.",
-      "qalb": "Genuine support reshapes a life story.",
-      "rouh": "With determination we rise above pain."
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "ارتفاع سريع في الطاقة خلال الـ 0-8 ثوانٍ (الصوت والقطع السريع)، استقرار خفيف 8-12 ثوانٍ (الـ ASMR)، ثم صدمة مفاجئة 12-20 ثوانٍ (الـ twist) تتبعها انخفاض تدريجي مع CTA في النهاية."
     },
-    "tags": "سارة,نجاح,تحول,قصة,إلهام",
-    "mood": "warm",
-    "_kind": "eye",
-    "_visual_plan": [
-      {
-        "time": "0:00-0:03",
-        "scene": "لقطة قريبة لعين سارة المبللة بالدموع مع نص غامق فوق الشاشة.",
-        "style": "إحساس عاطفي، إضاءة ناعمة، حركة ثابتة.",
-        "colors": [
-          "#F5C6A5",
-          "#FF6F61",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:04-0:10",
-        "scene": "مونتاج سريع للذكريات السابقة لسارة: المدرسة، العائلة، الأصدقاء بألوان باستيل هادئ.",
-        "style": "قطات سريعة، انتقالات ديناميكية، إيقاع موسيقي خفيف.",
-        "colors": [
-          "#F5C6A5",
-          "#FF6F61"
-        ]
-      },
-      {
-        "time": "0:16-0:22",
-        "scene": "سارة الآن مبتسمة تحمل شهادة أو جائزة، خلفية مضيئة مع رسومات قنّاعات.",
-        "style": "إضاءة ساطعة، استقرار الكاميرا، مؤثرات بصرية احتفالية.",
-        "colors": [
-          "#FF6F61",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:22-0:27",
-        "scene": "دعوة للمتابعة: نص متحرك مع سهم متجه، موسيقى ترتفع تدريجيًا.",
-        "style": "حركة نصية ديناميكية، إيقاع صوتي متصاعد، ألوان مشجعة.",
-        "colors": [
-          "#FF6F61"
-        ]
-      }
-    ],
-    "_eye": {
-      "videoId": "9IaLY4J5zLg",
-      "url": "https://youtu.be/9IaLY4J5zLg",
-      "sourceTitle": "سارة في 2023 🥹🥺 #ghaith_marwan #سارة_عصام_الورع #جنى_الحفار #saraaalwari #ترند #غيث_مروان #تحدي",
-      "sourceChannel": "sara alwari ",
-      "sourceViews": 11513792,
-      "dna": {
-        "hook": {
-          "technique": "visual_curiosity",
-          "what_happens": "The video opens with a close‑up of Sara’s teary eyes and a caption “سارة في 2023 🥹🥺”, instantly evoking empathy and curiosity about her story.",
-          "why_it_works": "Human brains are wired to notice strong facial emotions; the combination of tears and a relatable Arabic phrase creates an immediate emotional hook that stops scrolling."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 45,
-          "energy_curve": "low‑high‑peak‑release (starts subdued, ramps up with fast cuts, peaks at the reveal, then gently releases into CTA)."
-        },
-        "retention_tricks": [
-          "Immediate emotional hook (tears + bold text).",
-          "Rhetorical question that forces mental engagement.",
-          "Fast‑paced montage to prevent boredom.",
-          "Contrast twist (sad → happy) for payoff.",
-          "Strong CTA before the 30‑second limit."
-        ]
-      }
-    },
-    "_critique": {
-      "score": 75,
-      "weaknesses": [
-        "Missing a direct rhetorical question to force mental engagement (DNA uses \"هل تعرفين ما حدث لها في 2023؟\").",
-        "No heartbeat or subtle SFX to build suspense between the hook and the reveal.",
-        "No narrator voice or audio layering that mirrors the visual pacing (soft female narration + piano → heartbeat → upbeat synth).",
-        "Gap between 0:10‑0:16 with no beat or transition; the beat sequence is incomplete.",
-        "Limited use of on‑screen text/graphics; could add emojis, lower‑third captions, and animated arrows for stronger retention tricks.",
-        "Retention tricks list is absent; should explicitly mention emotional hook, question, fast montage, twist, CTA."
-      ],
-      "verdict": "The proposal captures the core DNA elements—emotional hook, quick montage, triumphant twist, and CTA—but falls short on key engagement tactics such as the rhetorical question, heartbeat SFX, and a complete beat sequence. Strengthening these areas will elevate the video to match or surpass the DNA trend’s high retention performance."
-    },
-    "_consumedAt": "2026-09-19T18:57:04Z",
-    "_skipReason": "already_produced"
+    "retention_tricks": [
+     "استخدام صوت ASMR عالي الجودة لجذب فئة محددة من المشاهدين.",
+     "طرح سؤال في البداية لتفعيل الفضول الذهني.",
+     "إدخال عنصر غير متوقع (twist) قبل 20 ثانية لتقليل معدل التخلي.",
+     "نصوص سريعة وإيموجي لجذب الانتباه البصري."
+    ]
+   }
   },
-  {
-    "id": "eye-Htya3n-N3gc",
-    "topic": "RUMI’S SPICY NOODLES MUKBANG CHALLENGE 🍜 #kpop #kpopdemonhunters",
-    "angle": "Rumi unexpectedly pulls out a hidden ice cream scoop at the end, cooling down the heat and",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "تحدي النودلز النارية مع رومي 🍜🔥",
-    "title_en": "Rumi’s Fiery Noodle Challenge 🔥🍜",
-    "hook_ar": "استنوا، هل أقدر أتحمل النار دي؟",
-    "hook_en": "Watch me brave the hottest noodles ever!",
-    "facts_ar": [
-      "الموكبنج أصله من كوريا الجنوبية، بيجمع بين الأكل المبهر وتفاعل مباشر مع المتابعين.",
-      "الكابسايسين هو المادة الفاعلة في الفلفل الحار، بيشتغل على مستقبلات الحرارة في الجسم.",
-      "تحديات النودلز الحارة عادةً بتستخدم فلفل سيتشوان أو زيت الفلفل لتقوية الإحساس بالحرارة."
-    ],
-    "facts_en": [
-      "Mukbang started in South Korea as a livestream where hosts eat large portions while chatting with viewers.",
-      "Capsaicin, the active component in chili peppers, binds to TRPV1 receptors to create a heat sensation.",
-      "Spicy noodle challenges often add Sichuan peppercorns or chili oil to boost the perceived heat."
-    ],
-    "takeaway_ar": {
-      "aql": "الحرارة العالية بتظهر قوة التحمل والتركيز.",
-      "qalb": "المشاركة في التحدي بتقوي الروابط بين المتابعين.",
-      "rouh": "تجربة الجرأة بتدفعنا نكسر حدودنا."
-    },
-    "takeaway_en": {
-      "aql": "Extreme spice tests mental stamina and focus.",
-      "qalb": "Sharing the challenge builds a lively community bond.",
-      "rouh": "Daring the heat inspires us to push personal limits."
-    },
-    "tags": "نودلز,حارة,تحدي,مكبانغ,كوري,متعة",
-    "mood": "crazy",
-    "_kind": "eye",
-    "_visual_plan": [
-      {
-        "time": "0:00-0:03",
-        "scene": "لقطة قريبة لبولة نودلز تبخر بخار، نص ساطع على الشاشة يطرح سؤال التحدي.",
-        "style": "تقريب سريع، إضاءة حمراء ساطعة لتسليط الانتباه.",
-        "colors": [
-          "#FF4500",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:04-0:07",
-        "scene": "رومي ياخذ أول قضمة، تعبير وجه مبالغ فيه، شريط قياس رد فعل يشتغل.",
-        "style": "قصات سريعة، موسيقى كيبوب تنبض مع كل قطرة.",
-        "colors": [
-          "#FF4500",
-          "#FFB300"
-        ]
-      },
-      {
-        "time": "0:08-0:12",
-        "scene": "مونتاج سريع لكلمات مستوى الحرارة مع أيقونات نارية.",
-        "style": "إيقاع بصري متزامن مع إيقاع الأغنية، تأثيرات صوتية حماسية.",
-        "colors": [
-          "#FF4500",
-          "#FFB300",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:13-0:16",
-        "scene": "توقف مفاجئ، رومي يلتقط أنفاسه، صوت ضحكة كوميدية، نص على الشاشة يقول \"استنوا لللحظة المفاجئة\".",
-        "style": "إيقاع بطيء لحظة، إضاءة خافتة ثم إضاءة ساطعة للانفجار اللاحق.",
-        "colors": [
-          "#FFB300",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:17-0:20",
-        "scene": "رومي ينهى البولة، يمسح دموعه، يعلن الانتصار، انفجار من الفتات الملون.",
-        "style": "قطة واسعة لتظهر الفتات، موسيقى مرتفعة، شعور انتصار.",
-        "colors": [
-          "#FF4500",
-          "#FFB300",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:21-0:24",
-        "scene": "دعوة المتابعة: نص متحرك يطلب الإعجاب والتعليق، زر اشتراك يلمع.",
-        "style": "إيقاع ثابت، ألوان جذابة لتوجيه الانتباه.",
-        "colors": [
-          "#FF4500",
-          "#FFB300"
-        ]
-      }
-    ],
-    "_eye": {
-      "videoId": "Htya3n-N3gc",
-      "url": "https://youtu.be/Htya3n-N3gc",
-      "sourceTitle": "RUMI’S SPICY NOODLES MUKBANG CHALLENGE 🍜 #kpop #kpopdemonhunters",
-      "sourceChannel": "Big Marvel",
-      "sourceViews": 50381575,
-      "dna": {
-        "hook": {
-          "technique": "visual_curiosity",
-          "what_happens": "Rumi opens a massive bowl of ultra‑spicy noodles, steam rising, and looks straight into the camera with a daring grin.",
-          "why_it_works": "Immediate visual stimulus and the promise of extreme reaction trigger curiosity and the fear‑of‑missing‑out (FOMO) in viewers."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 45,
-          "energy_curve": "sharp rise in the first 10 seconds, brief dip at the twist, climax at payoff, quick drop to CTA"
-        },
-        "retention_tricks": [
-          "Immediate visual hook with steam and bold text",
-          "Rapid cut rhythm matching music beats",
-          "Micro‑cliffhanger pause before the surprise",
-          "Use of on‑screen emojis and graphics to reinforce emotions",
-          "Strong CTA placed right after the emotional high"
-        ]
-      }
-    },
-    "_critique": {
-      "score": 78,
-      "weaknesses": [
-        "Twist is vague; lacks a concrete, surprising payoff (e.g., the hidden ice‑cream scoop) that the DNA trend uses to create a memorable micro‑cliffhanger.",
-        "Audio description is minimal; no mention of voice style, comedic gasp SFX, or volume spikes that reinforce tension.",
-        "Missing explicit on‑screen emojis/stickers that the DNA trend leverages for emotional reinforcement.",
-        "Visual plan repeats colors and styles but doesn’t introduce any novel shot variation (e.g., handheld immediacy) to boost immersion.",
-        "The Arabic hook wording is less visually descriptive than the DNA example, potentially reducing instant visual stimulus."
-      ],
-      "verdict": "The proposal captures the core structure and energy of the DNA trend, but it falls short on the surprise twist and detailed audio/visual embellishments that make the original format stand out. Strengthening the payoff and enriching the sensory cues would push it closer to a top‑tier execution."
-    },
-    "_consumedAt": "2026-09-19T18:57:04Z",
-    "_skipReason": "already_produced"
+  "_critique": {
+   "score": 75,
+   "weaknesses": [
+    "The concept is almost a direct copy of the DNA template; originality is limited, which may reduce novelty for repeat viewers.",
+    "The twist, while unexpected, is somewhat predictable (a small living creature); a more unconventional find (e.g., a hidden gem or a tiny robot) could heighten shock.",
+    "Audio plan lacks detail on background music or sound layering; a subtle lo‑fi track could enhance the ASMR feel and keep viewers calm before the shock.",
+    "The episode is only 30 s long; while DNA’s 30‑s format works, adding a 5‑10 s teaser or a second twist could improve retention.",
+    "The visual plan does not mention camera movement or transitions beyond jump cuts, missing an opportunity to add dynamic energy."
+   ],
+   "verdict": "Solid execution that follows the DNA formula well, but it needs a stronger unique element and richer audio/visual details to stand out and maximize retention."
   },
-  {
-    "id": "eye-jgk0aOIEgog",
-    "topic": "HALAND X SHAKIRA PUZZLE CONNECTING CHALLENGE #haland #challenge #art",
-    "angle": "The puzzle pieces from two unrelated celebrities interlock to form a brand‑new collaborati",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "تحدي اللغز المتقاطع: هالاند وشاكيرا يدمجوا الفن!",
-    "title_en": "Cross‑Puzzle Challenge: Haland meets Shakira in a viral mashup!",
-    "hook_ar": "انتبه! لغز صورهم بيقربك من مفاجأة غير متوقعة!",
-    "hook_en": "Watch the pieces fall together for a surprise you won’t see coming!",
-    "facts_ar": [
-      "هالاند نجم كوري جنوبى مشهور بتحديات الرقص الفيروسية.",
-      "شاكيرا مغنية كولومبية تتعاون مع صانعي الترندات عالمياً.",
-      "تحديات ربط الألغاز تزيد نسبة المشاركة عن تحديات الرقص التقليدية."
-    ],
-    "facts_en": [
-      "Haland is a South Korean pop idol known for viral dance challenges.",
-      "Shakira is a Colombian singer who often joins global social media trends.",
-      "Puzzle‑connecting challenges boost share rates compared with standard dance trends."
-    ],
-    "takeaway_ar": {
-      "aql": "الابتكار في دمج شخصيات مختلفة يخلق محتوى فريد.",
-      "qalb": "المشاهد يشعر بالحماس لما يشوف التحدي يتحقق.",
-      "rouh": "التجربة تشجع المتابعين يشاركوا بإبداعهم."
-    },
-    "takeaway_en": {
-      "aql": "Merging unexpected icons fuels fresh creativity.",
-      "qalb": "Viewers feel the thrill as the puzzle clicks.",
-      "rouh": "The vibe pushes fans to join the challenge."
-    },
-    "tags": "تحدي,لغز,هالاند,شاكيرا,فن,فيديو,ترند",
-    "mood": "crazy",
-    "_kind": "eye",
-    "_visual_plan": [
-      {
-        "time": "0:00-0:03",
-        "scene": "مقدمة سريعة بنص متوهج يعلن عن تحدي اللغز المتقاطع مع قطع تتقارب.",
-        "style": "قصات سريعة، ألوان نيون ساطعة، نص متحرك.",
-        "colors": [
-          "#FF1493",
-          "#00BFFF",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:04-0:07",
-        "scene": "قرب يد هالاند وهو يضع قطعة اللغز، ثم رد فعل شاكيرا الضاحك.",
-        "style": "لقطة قريبة، إضاءة دافئة، مؤثر صوتي للضحكة.",
-        "colors": [
-          "#FF1493",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:08-0:11",
-        "scene": "شاشة مقسمة تُظهر كل نجم يعمل على نصف اللغز مع صوت عدّ توقيت.",
-        "style": "تقسيم الشاشة، مؤثر عدّ، إيقاع موسيقي متصاعد.",
-        "colors": [
-          "#00BFFF",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:12-0:15",
-        "scene": "القطعة الأخيرة تنقر وتكشف صورة هالاند وشاكيرا يرقصان معاً.",
-        "style": "تأثير بريق، موسيقى قمة، إضاءة ساطعة.",
-        "colors": [
-          "#FF1493",
-          "#00BFFF",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:16-0:18",
-        "scene": "دعوة للمشاركة مع هاشتاجات متوهجة وموسيقى نهائية حماسية.",
-        "style": "نص متحرك، إيقاع موسيقي نهائي، ألوان نيون.",
-        "colors": [
-          "#FF1493",
-          "#00BFFF"
-        ]
-      }
-    ],
-    "_eye": {
-      "videoId": "jgk0aOIEgog",
-      "url": "https://youtu.be/jgk0aOIEgog",
-      "sourceTitle": "HALAND X SHAKIRA PUZZLE CONNECTING CHALLENGE #haland #challenge #art",
-      "sourceChannel": "Seoul Dream Tales 🇰🇷",
-      "sourceViews": 49904280,
-      "dna": {
-        "hook": {
-          "technique": "visual_curiosity",
-          "what_happens": "The video opens with a rapid montage of Haland and Shakira's faces split into puzzle pieces that start moving toward each other.",
-          "why_it_works": "The immediate visual puzzle triggers curiosity and promises a satisfying reveal, compelling viewers to stay for the solution."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 120,
-          "energy_curve": "sharp rise in first 4 seconds → steady high energy through 12 seconds → brief dip for payoff → final spike at CTA"
-        },
-        "retention_tricks": [
-          "Immediate visual puzzle that promises a reveal",
-          "Split‑screen tension creating a dual‑track narrative",
-          "Fast‑paced editing to prevent boredom",
-          "Auditory ticking that subconsciously urges viewers to stay until the end"
-        ]
-      }
-    },
-    "_critique": {
-      "score": 82,
-      "weaknesses": [
-        "The concept is almost a direct copy of the DNA trend; there is little differentiation or unique twist that could set it apart.",
-        "The script lacks a distinct voice‑over or narrator style, which could reduce the emotional connection and reduce the “human” element seen in the DNA trend’s energetic female narrator.",
-        "Music and sound‑effects are mentioned only generically; specifying a K‑pop synth or a specific rhythm could strengthen the audio hook.",
-        "The CTA is generic (“try the challenge & tag”) and could be more compelling with a clear incentive or challenge prompt.",
-        "Emotional escalation beyond the puzzle (e.g., showcasing genuine reactions or storytelling) is minimal, potentially limiting viewer investment."
-      ],
-      "verdict": "The proposal is solid and closely follows a proven DNA formula, but it needs a stronger unique angle, clearer audio cues, and a more engaging CTA to stand out and maximize virality."
-    },
-    "_consumedAt": "2026-09-19T18:57:04Z",
-    "_skipReason": "already_produced"
+  "_consumedAt": "2026-09-19T18:57:04Z",
+  "_skipReason": "already_produced"
+ },
+ {
+  "id": "eye-OP3a2qzW5Yk",
+  "topic": "🏃 SPEED CHALLENGE: FOOTBALLERS VS DISCS! ⚽💿🏆",
+  "angle": "The footballer swaps the ball for a disc mid‑run and launches it, making the disc beat the",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "🏃 تحدي السرعة: لاعب كرة يجرّ disc ويكسب! ⚽💿",
+  "title_en": "🏃 Speed Showdown: Footballer vs Disc! ⚽💿",
+  "hook_ar": "إيه اللي بيجري أسرع، الكورة ولا الـ disc؟",
+  "hook_en": "Who’s quicker, the ball or the disc?",
+  "facts_ar": [
+   "محیط كرة القدم القياسي بيكون حوالى تسعة وستين إلى سبعين سنتيمتر.",
+   "قطر الفريسبي العادي بيقارب سبعة وعشرين سنتيمتر.",
+   "أعلى سرعة بشرية في السريع بتوصل لأكثر من عشرة أمتار في الثانية."
+  ],
+  "facts_en": [
+   "A standard soccer ball’s circumference is about sixty‑eight to seventy centimeters.",
+   "A common frisbee’s diameter is roughly twenty‑seven centimeters.",
+   "Top human sprint speed can exceed ten meters per second."
+  ],
+  "takeaway_ar": {
+   "aql": "السرعة مش بس في القوة، ده كمان في التفكير السريع.",
+   "qalb": "لما تشوف الحركة المفاجأة، هتحس بحماس لا يوصف.",
+   "rouh": "جرّب تبدل الأدوات، ويمكن تكتشف موهبة جديدة في نفسك."
   },
-  {
-    "id": "eye-hex0pvxJVtw",
-    "topic": "🥰 anaya ❣️ dad 🧡 wrong hand challenge #shorts #anaya #trending",
-    "angle": "The dad’s over‑the‑top shocked face turns into genuine laughter, turning a simple mistake ",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "❗️تحدي اليد الغلط مع أنيا 🤣 #ضحك_عائلي",
-    "title_en": "❗️Wrong Hand Challenge with Anaya 🤣 #FamilyFun",
-    "hook_ar": "خطر! أنيا هتحاول إطعام أبها بالمعلقة اليسرى!",
-    "hook_en": "Warning! Anaya’s trying to feed dad with the wrong hand!",
-    "facts_ar": [
-      "تحدي اليد الغلط بيطلب إنك تقوم بالمهام اليومية بيد غير اليد اللي بتستعملها عادة، وهو منتشر على تيك توك ويوتيوب شورتس.",
-      "الفيديوهات اللي فيها أطفال تحت سن الخمس بتحافظ على وقت مشاهدة أعلى بكتير مقارنة بمقاطع الكبار.",
-      "استخدام الإيموجيات في العناوين والصور المصغرة بيزود نسبة النقر على الفيديو بشكل ملحوظ في السوق العربية."
-    ],
-    "facts_en": [
-      "The Wrong Hand Challenge asks you to do everyday tasks with the opposite hand and is a recurring trend on TikTok and YouTube Shorts.",
-      "Videos featuring children under five keep viewers watching longer than adult‑only clips.",
-      "Adding emojis to titles and thumbnails boosts click‑through rates noticeably in the Arabic‑speaking market."
-    ],
-    "takeaway_ar": {
-      "aql": "الضحك بيظهر إن التحديات البسيطة ممكن تحوّل لحظات عادية إلى محتوى لا يُنسى.",
-      "qalb": "شوف رد فعل الأب بيذكّرنا إن السعادة الحقيقية بتتولد من لحظات العفوية مع العيلة.",
-      "rouh": "استمتع بوقتك مع الأطفال، لأنهم بيخلوا كل يوم مليان بهجة."
-    },
-    "takeaway_en": {
-      "aql": "Humor shows that simple challenges can turn ordinary moments into unforgettable content.",
-      "qalb": "Dad’s reaction reminds us that true joy comes from spontaneous family moments.",
-      "rouh": "Cherish time with kids, because they fill every day with delight."
-    },
-    "tags": "طفل,تحدي,يد غلط,ضحك,قصة عائلية",
-    "mood": "warm",
-    "_kind": "eye",
-    "_visual_plan": [
-      {
-        "time": "0:00-0:03",
-        "scene": "لقطة قريبة ليد أنيا اليسرى وهي تمسك بالمعلقة، والأب واقف خلفها بنظرة فضولية، نص على الشاشة يكتب \"تحدي اليد الغلط!\"",
-        "style": "قريب اليد، إضاءة ساطعة، ألوان زاهية",
-        "colors": [
-          "#FF6F61",
-          "#FFD700",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:04-0:08",
-        "scene": "المعلقة تنزل من يد أنيا وتسبب فوضى لطيفة على المائدة، مع حركة بطيئة للقطرة السائلة.",
-        "style": "لقطة يد، بطيء الحركة لحظة السقوط، مؤثرات بريق",
-        "colors": [
-          "#FF6F61",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:08-0:12",
-        "scene": "الأب يرفع حاجبه بصدمة كرتونية ثم ينفجر بالضحك، رموز قلب وضحك تظهر حوله.",
-        "style": "لقطة واسعة، تعبيرات مبالغ فيها، إيقاع الموسيقى يتنخفض ثم يرتفع",
-        "colors": [
-          "#FFD700",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:12-0:15",
-        "scene": "الاثنين يضحكان معًا، نص على الشاشة يدعو المتابعين للإعجاب والمتابعة.",
-        "style": "لقطة سريعة، نص متحرك، إيموجيات طايرة",
-        "colors": [
-          "#FF6F61",
-          "#FFD700",
-          "#FFFFFF"
-        ]
-      }
-    ],
-    "_eye": {
-      "videoId": "hex0pvxJVtw",
-      "url": "https://youtu.be/hex0pvxJVtw",
-      "sourceTitle": "🥰 anaya ❣️ dad 🧡 wrong hand challenge #shorts #anaya #trending",
-      "sourceChannel": "vfx MONSTER BHAI786",
-      "sourceViews": 23811752,
-      "dna": {
-        "hook": {
-          "technique": "visual_curiosity",
-          "what_happens": "A cute toddler named Anaya tries to feed her dad using the wrong hand, causing a surprised reaction and a burst of laughter.",
-          "why_it_works": "The unexpected switch of hand creates instant visual intrigue and taps into the universal appeal of adorable children, prompting viewers to watch the outcome."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 30,
-          "energy_curve": "rapid rise in the first 4 seconds, peak at the mishap (4‑8 s), slight dip for the reaction (8‑12 s), final spike with CTA (12‑15 s)."
-        },
-        "retention_tricks": [
-          "Strong visual hook in the first 2 seconds",
-          "Use of emojis and bright text overlays",
-          "Unexpected comedic twist",
-          "Fast‑paced editing with a clear climax",
-          "Direct CTA at the end"
-        ]
-      }
-    },
-    "_critique": {
-      "score": 82,
-      "weaknesses": [
-        "Missing explicit beat functions (hook, escalation, twist, payoff) and their time stamps – the DNA beats list is not reproduced.",
-        "No audio language details: voice style, music tempo, SFX cues, or energy notes are absent.",
-        "Pacing metrics (estimated cuts per minute, energy curve) are not quantified, making it hard to compare to DNA’s rapid rise/peak structure.",
-        "Twist or payoff is implied but not explicitly labeled; the DNA twist description is omitted.",
-        "Retention tricks list is not provided, though the visual plan hints at them.",
-        "Reusable facts are included but not formatted as a separate list with bullet points, which could reduce clarity for quick reference."
-      ],
-      "verdict": "The proposal captures the core DNA elements—hook, visual style, emojis, CTA, and pacing—but falls short on the detailed beat structure, audio cues, and explicit retention tactics. Strengthening these areas will bring it fully in line with the DNA trend’s proven formula."
-    },
-    "_consumedAt": "2026-09-19T18:57:04Z",
-    "_skipReason": "already_produced"
+  "takeaway_en": {
+   "aql": "Speed isn’t only about power, it’s also about quick thinking.",
+   "qalb": "The surprise switch sparks an instant rush of excitement.",
+   "rouh": "Mixing tools can reveal a hidden talent you never imagined."
   },
-  {
-    "id": "eye-JPbWXvyaCcw",
-    "topic": "Marshmallow #challenge",
-    "angle": "الهيكل ينهار عندما يُوضع المارشميلو، مما يكشف أن القاعدة الأساسية للتحدي هي أن المارشميلو ",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "تحدي المارشميلو: أبني برج من الحلوى!",
-    "title_en": "Marshmallow Challenge: Build a Sweet Tower!",
-    "hook_ar": "هل تجرّأ تبني برج من مارشميلو؟",
-    "hook_en": "Dare to build a marshmallow tower?",
-    "facts_ar": [
-      "تُستَخدم تحديات المارشميلو في الورش لتعليم التعاون والإبداع.",
-      "الهدف هو بناء أعلى هيكل ممكن بمواد محدودة وفي زمن قصير.",
-      "الفرق التي تتبع نهج تجريبي سريع غالبًا تتفوق على تلك التي تخطط بدقة."
+  "tags": "تحدي,سرعة,كرة,ديسك,مقارنة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "شعار القناة يلمع مع نص جريء \"تحدي السرعة\"، ومقاطع سريعة للاعب وكومة من الـ discs تدور.",
+    "style": "قصات سريعة، إضاءة عالية، نص متحرك بخط سميك.",
+    "colors": [
+     "#1A1A1A",
+     "#E53935",
+     "#FFEB3B"
     ],
-    "facts_en": [
-      "Marshmallow challenges are used in workshops to teach collaboration and creativity.",
-      "The goal is to build the tallest structure possible using limited materials in a short time.",
-      "Teams that adopt a rapid‑experiment approach usually beat those that plan meticulously."
-    ],
-    "takeaway_ar": {
-      "aql": "الإبداع يبدأ من تجربة بسيطة",
-      "qalb": "العمل الجماعي يصنع القمم",
-      "rouh": "استمتع بالفشل وتعلّم منه"
+    "overlay": "Countdown timer (3‑2‑1) appears center-right."
+   },
+   {
+    "time": "0:03-0:07",
+    "scene": "مقابلة قصيرة لللاعب (voice‑over) يشرح التحدي، ثم ينتقل إلى لقطات منخفضة الزاوية (low‑angle) للكرة والـ disc.",
+    "style": "إضاءة ناعمة، حركات كاميرا بطيئة.",
+    "overlay": "Speedometer graphic shows 0 m/s."
+   },
+   {
+    "time": "0:07-0:12",
+    "scene": "اللاعب يبدأ الركض، مع انطباع بالتصوير المنخفض الزاوية وبـ slow‑motion جزئي، تُظهر تفاصيل التفاعل مع الكرة.",
+    "style": "Slow‑motion 2× speed، مقاطع مقطوعة بشكل متتابع.",
+    "overlay": "Text overlay: \"Ready?\"."
+   },
+   {
+    "time": "0:12-0:16",
+    "scene": "الـ disc يطير عبر الساحة، مع split‑screen: اليمين يبين الكرة، اليسار يبين الـ disc في نفس اللحظة.",
+    "style": "تقسيم الشاشة 50/50، حركات كابلات لتسليط الضوء على الفرق في السرعة.",
+    "overlay": "الـ disc يملك رقم 1، الكرة رقم 2."
+   },
+   {
+    "time": "0:16-0:20",
+    "scene": "اللاعب يصل إلى منتصف المسار، يتوقف لحظة، ثم يبدل الكرة بالـ disc في حركة سريعة.",
+    "style": "Low‑angle slow‑motion مع سرعة التصوير 4×، تحريك الكاميرا من اللاعب إلى الـ disc.",
+    "overlay": "تغيير اللون الأزرق للـ disc إلى الأحمر."
+   },
+   {
+    "time": "0:20-0:24",
+    "scene": "اللاعب يركض مع الـ disc، واللقطات تظهر سرعة الحركة مقارنة بالكرة من خلال split‑screen مجدد.",
+    "style": "موسيقى تصاعدية، مقاطع مقطوعة كل 0.5 ثانية.",
+    "overlay": "مؤشر السرعة يتحرك على الـ disc."
+   },
+   {
+    "time": "0:24-0:28",
+    "scene": "الـ disc يصل إلى خط النهاية، ثم يظهر اللاعب وهو يرفع اليدين في نصر، مع تأثيرات ضوئية.",
+    "style": "تأثيرات ضوء نيون، مقاطع قصير‑سريعة.",
+    "overlay": "نص: \"You won!\"."
+   },
+   {
+    "time": "0:28-0:30",
+    "scene": "نهاية الحلقة: CTA مع رابط للشراء أو الاشتراك، مع شعار القناة والـ disc.",
+    "style": "تسريع الفيديو، نغمة نهاية مشهودة.",
+    "overlay": "CTA: \"اشتري الآن\" مع زر CTA يفتح متجر."
+   }
+  ],
+  "_eye": {
+   "videoId": "OP3a2qzW5Yk",
+   "url": "https://youtu.be/OP3a2qzW5Yk",
+   "sourceTitle": "🏃 SPEED CHALLENGE: FOOTBALLERS VS DISCS! ⚽💿🏆",
+   "sourceChannel": "GadzhiSoccer",
+   "sourceViews": 39450934,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "A footballer sprints toward a line of spinning discs, then dramatically swaps the ball for a disc mid‑run.",
+     "why_it_works": "The sudden, unexpected switch between two familiar sports objects creates immediate intrigue and forces viewers to stay for the payoff."
     },
-    "takeaway_en": {
-      "aql": "Creativity sparks from a simple experiment",
-      "qalb": "Teamwork builds the heights",
-      "rouh": "Enjoy the fall and learn from it"
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "Starts high with rapid cuts, peaks at the split‑screen race, spikes at the mid‑run disc throw, then drops slightly into a concise CTA."
     },
-    "tags": "مارشميلو,تحدي,إبداع,بناء,متعة",
-    "mood": "crazy",
-    "_kind": "eye",
-    "_visual_plan": [
-      {
-        "time": "0:00-0:03",
-        "scene": "لقطة مقربة لقطعة مارشميلو ضخمة تُقذف في الهواء وتستقر على منصة غير متوقعة.",
-        "style": "حركة كاميرا ديناميكية، نص متحرك يطرح سؤال الحافز.",
-        "colors": [
-          "#FF6F61",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:04-0:07",
-        "scene": "عرض مجموعة أدوات بسيطة (عصيان، شريط لاصق، خيوط) مع إيقاع موسيقي متصاعد.",
-        "style": "قفزات سريعة، إضاءة ساطعة لتسليط الضوء على الأدوات.",
-        "colors": [
-          "#F7E967",
-          "#2C3E50"
-        ]
-      },
-      {
-        "time": "0:08-0:12",
-        "scene": "بناء الهيكل بسرعة عالية مع قطع سريعة تُظهر كل خطوة في ثوانٍ معدودة.",
-        "style": "تقطيع سريع (jump cuts)، نصوص سميكة توضح الخطوات.",
-        "colors": [
-          "#FF6F61",
-          "#F7E967"
-        ]
-      },
-      {
-        "time": "0:13-0:15",
-        "scene": "الهيكل ينهار فجأةً عند وضع المارشميلو على القمة، مع صدمة صوتية.",
-        "style": "إيقاف الموسيقى لحظة الانهيار، مؤثر صوتي للانقضاض.",
-        "colors": [
-          "#2C3E50",
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:16-0:18",
-        "scene": "المبدئ يضحك ويحث المشاهد على تجربة التحدي، يظهر زر دعوة للمتابعة.",
-        "style": "قرب على الوجه، إيموجي مارشميلو متحرك، نص CTA واضح.",
-        "colors": [
-          "#FF6F61",
-          "#F7E967"
-        ]
-      }
-    ],
-    "_eye": {
-      "videoId": "JPbWXvyaCcw",
-      "url": "https://youtu.be/JPbWXvyaCcw",
-      "sourceTitle": "Marshmallow #challenge",
-      "sourceChannel": "Stoney Choi",
-      "sourceViews": 20322008,
-      "dna": {
-        "hook": {
-          "technique": "visual_curiosity",
-          "what_happens": "المبدئ يبدأ الفيديو بلقطة مقربة لقطعة مارشميلو ضخمة تُقذف في الهواء وتُسقط على منصة بناء غير متوقعة.",
-          "why_it_works": "اللقطة غير المتوقعة تثير الدهشة وتدفع المشاهد إلى الاستمرار لمعرفة ما سيحدث للمارشميلو."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 45,
-          "energy_curve": "صاعد سريع في الثواني الأولى، قمة توتر عند بناء الهيكل، ثم انخفاض مفاجئ عند الانهيار، يليه ارتفاع خفيف مع الدعوة للمتابعة."
-        },
-        "retention_tricks": [
-          "طرح سؤال في أول 3 ثوانٍ.",
-          "استخدام قطع سريعة (jump cuts) للحفاظ على إيقاع عالي.",
-          "إدراج نص متحرك يوضح الخطوات دون الحاجة لسماع كل شيء.",
-          "إنهاء الفيديو بلقطة فكاهية (الانهيار) تخلق رغبة في مشاهدة المزيد."
-        ]
-      }
-    },
-    "_critique": {
-      "score": 88,
-      "weaknesses": [
-        "Audio plan is not detailed; the DNA trend specifies a youthful, energetic voice and a specific music/sfx progression that is only implied here.",
-        "Timing of the twist (0:13‑0:15) is a second later than the DNA’s 0:12‑0:15 window, which could slightly affect the energy curve.",
-        "Heavy use of emojis and animated stickers may distract from the core message if not balanced carefully."
-      ],
-      "verdict": "The proposal aligns closely with the DNA trend and would likely perform well, but adding a concrete audio storyboard and fine‑tuning the twist timing would push it into the top tier."
-    },
-    "_consumedAt": "2026-09-19T20:38:05Z",
-    "_skipReason": "already_produced"
+    "retention_tricks": [
+     "Immediate visual hook with unexpected object swap",
+     "Countdown timer creates a ticking‑clock urgency",
+     "Split‑screen parallelism forces viewers to compare outcomes",
+     "Mid‑video skill reveal (disc throw) acts as a surprise twist"
+    ]
+   }
   },
-  {
-    "id": "eye-Ug7w1NXSfTI",
-    "topic": "Zelda Vs GTA 6: Water Comparison💀🤦‍♂️",
-    "angle": "الماء في GTA 6 يدمج عناصر الفيزياء المتفجرة مع ماء Zelda النقي، ما ينتج مشهدًا فوضويًا غير",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "مواجهة مائية بين زيلدا وجي‑تي‑أي ست ست 💀🤦‍♂️",
-    "title_en": "Zelda vs GTA Six: Water Showdown 💀🤦‍♂️",
-    "hook_ar": "اسمع يا حبة، شوف إيه اللي يحصل لما ميّة زيلدا تقابل فوضى جي‑تي‑أي!",
-    "hook_en": "Listen up, see what happens when Zelda’s water meets GTA chaos!",
-    "facts_ar": [
-      "زلدا بيعتمد على الميه لحل الألغاز داخل عوالمه الساحرة",
-      "جي‑تي‑أي ست ست متوقع يرفع مستوى فيزياء الميه عن النسخ اللي قبلها",
-      "المقارنات بين ألعاب مختلفة بتجذب متابعين من كل الأذواق"
-    ],
-    "facts_en": [
-      "Zelda uses water as a core element for puzzle solving",
-      "GTA Six is expected to upgrade water physics beyond its predecessors",
-      "Head‑to‑head comparisons of different games draw a wide audience"
-    ],
-    "takeaway_ar": {
-      "aql": "الخيال يخلط عوالم مختلفة ويولد مشاهد غير متوقعة",
-      "qalb": "ضحكة سريعة على الشاشة بتخلي التجربة أمتع",
-      "rouh": "المنافسة بين الألعاب تفتح لنا طاقة جديدة للاستكشاف"
-    },
-    "takeaway_en": {
-      "aql": "Imagination blends distinct worlds into surprising scenes",
-      "qalb": "A quick laugh makes the experience more enjoyable",
-      "rouh": "Game rivalries spark fresh energy for discovery"
-    },
-    "tags": "زيلدا,جي‑تي‑أي,مياه,مقارنة,فيديوهات",
-    "mood": "crazy",
-    "_kind": "eye",
-    "_visual_plan": [
-      {
-        "time": "0:00-0:03",
-        "scene": "شاشة مقسومة نص نص، نص زيلدا بألوان خضراء وزرقاء، نص جي‑تي‑أي بأحمر وأسود، ومية تتسرب من الفاصل وتخلق توتر بصري",
-        "style": "تقسيم الشاشة مع تأثير تدفق مائي ديناميكي",
-        "colors": [
-          "#1E8A1C",
-          "#0A0A0A",
-          "#FF4500",
-          "#00BFFF"
-        ]
-      },
-      {
-        "time": "0:04-0:07",
-        "scene": "لقطة هادئة لبركة زيلدا تعكس الشمس، تتبعها فجأة لقطة جي‑تي‑أي بموجات عنيفة وانفجارات مائية",
-        "style": "قفز سريع بين اللقطات مع صوت موج عالي",
-        "colors": [
-          "#1E8A1C",
-          "#FF4500"
-        ]
-      },
-      {
-        "time": "0:08-0:11",
-        "scene": "نص متحرك يكتب سؤال \"مين اللي هيفوز؟\" مع ضحكة خفيفة في الخلفية",
-        "style": "نص بخط جريء مع إيموجي وجه متنهد",
-        "colors": [
-          "#FFFFFF"
-        ]
-      },
-      {
-        "time": "0:12-0:15",
-        "scene": "دمج المشهدين: مية زيلدا الصافية تتقابل مع مية جي‑تي‑أي المتقلبة، وتظهر إيموجي الجمجمة والوجه المتنهد",
-        "style": "تداخل بصري مع تأثير فوضوي للمياه",
-        "colors": [
-          "#00BFFF",
-          "#FF4500"
-        ]
-      },
-      {
-        "time": "0:15-0:17",
-        "scene": "دعوة للمتابعة بخط كبير يلمع وزر متوهج يطلب من المشاهدين الضغط على المتابعة",
-        "style": "CTA واضح مع إضاءة ساطعة",
-        "colors": [
-          "#FF4500"
-        ]
-      }
-    ],
-    "_eye": {
-      "videoId": "Ug7w1NXSfTI",
-      "url": "https://youtu.be/Ug7w1NXSfTI",
-      "sourceTitle": "Zelda Vs GTA 6: Water Comparison💀🤦‍♂️",
-      "sourceChannel": "Ramo Akh",
-      "sourceViews": 20044142,
-      "dna": {
-        "hook": {
-          "technique": "visual_curiosity",
-          "what_happens": "يظهر مشهد سريع يدمج لقطات من لعبة Zelda مع لقطات من GTA 6، حيث يتسرب الماء من أحد المشاهد بطريقة غير متوقعة ويظهر رمز الجمجمة 💀 مع تعبير 🤦‍♂️.",
-          "why_it_works": "التقاطع غير المتوقع بين عالَمين مختلفين يثير الدهشة ويجذب الانتباه فوراً، خاصةً مع الرموز التعبيرية التي توحي بالفكاهة والسخرية."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 120,
-          "energy_curve": "صاعد سريع خلال الـ0-7 ثوانٍ، قمة عند 8-11 ثوانٍ، ثم انخفاض خفيف مع دفع CTA في النهاية."
-        },
-        "retention_tricks": [
-          "استخدام سؤال بصري غير معلن في الثواني الأولى.",
-          "تباين ألوان قوي بين الجزأين لتجذب العين.",
-          "إدخال إيموجيات تعبيرية لتوليد مشاعر فورية.",
-          "CTA واضح ومباشر في آخر 2 ثانية."
-        ]
-      }
-    },
-    "_critique": {
-      "score": 85,
-      "weaknesses": [
-        "Hook phrasing is a bit informal and lacks the punchy, curiosity‑driven question that DNA uses (e.g., \"من يفوز؟\").",
-        "Audio strategy is missing: no mention of voice‑over style, music, or sound effects, which are crucial for energy curve.",
-        "The comedic element (quick laugh) is only hinted at in the text overlay, not reinforced by audio cues.",
-        "CTA placement at 0:15‑0:17 is fine, but the visual emphasis could be stronger (e.g., a flashing button or animated arrow)."
-      ],
-      "verdict": "The proposal captures the core DNA elements—visual hook, beat structure, color contrast, and emojis—but falls slightly short in audio execution and hook wording. With a sharper, question‑driven hook and a defined audio plan, it would align even more closely with the trend and likely achieve higher retention."
-    },
-    "_consumedAt": "2026-09-19T22:37:28Z"
+  "_critique": {
+   "score": 45,
+   "rewritten": true,
+   "weaknesses": [
+    "Only the first 3 seconds of the visual plan are described; the rest of the 30‑second beat structure is missing.",
+    "No low‑angle slow‑motion, split‑screen race, or mid‑run disc‑swap that form the core twist/payoff of the DNA trend.",
+    "Absence of a countdown timer, graphic overlays, and the final CTA that drive retention and conversion.",
+    "Audio details (voice‑over style, music, SFX) are not specified, leaving a gap in the overall energy curve.",
+    "Pacing metrics (cuts per minute, energy curve) and retention tricks beyond the initial hook are not addressed."
+   ]
   },
-  {
-    "id": "eye-EvdXAoJjHKQ",
-    "topic": "Drawing challenge using numbers 🧠🏆#shorts #drawing #challenge #shinchan",
-    "angle": "اكتشاف أن الرقم يتحول إلى شخصية شينشان الشهيرة داخل الرسم، ما يضيف عنصر ثقافة بوب محبب للج",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "تحدي الرسم بالأرقام – هل تستطيع تحويله لفن؟",
-    "title_en": "Number to Art Challenge – Can You Do It?",
-    "hook_ar": "بوم! شوف الرقم يتحول لسحر فني في ثوانٍ!",
-    "hook_en": "Boom! Watch a number turn into art in a flash!",
-    "facts_ar": [
-      "الأرقام يمكن تحويلها إلى أشكال فنية باستخدام تقنيات الرسم الرقمي",
-      "التحديات الفنية القصيرة تجذب المشاهدين وتزيد من معدلات المشاركة",
-      "الموسيقى الإيقاعية تعزز تركيز المشاهد وتضيف طاقة للفيديو"
-    ],
-    "facts_en": [
-      "Numbers can be turned into artistic shapes using digital drawing techniques",
-      "Short art challenges attract viewers and boost engagement rates",
-      "Rhythmic music sharpens viewer focus and adds energy to the clip"
-    ],
-    "takeaway_ar": {
-      "aql": "إبداعك يبدأ بفكرة بسيطة يمكن تحويلها إلى تحفة",
-      "qalb": "حافظ على شغفك وشارك إبداعك مع الأصحاب",
-      "rouh": "كل رسمة جديدة هي خطوة نحو اكتشاف ذاتك الفنية"
-    },
-    "takeaway_en": {
-      "aql": "Your creativity starts with a simple idea that can become a masterpiece",
-      "qalb": "Keep the passion alive and share your art with friends",
-      "rouh": "Every new drawing is a step toward discovering your artistic self"
-    },
-    "tags": "رسم,تحدي,فن,إبداع,شينشان",
-    "mood": "warm",
-    "_kind": "eye",
-    "_visual_plan": [
-      {
-        "time": "0:00-0:03",
-        "scene": "رقم كبير يلمع على خلفية ملونة، مع صوت بوم جذاب",
-        "style": "لقطة من أعلى، تركيز على الرقم مع إضاءة ساطعة",
-        "colors": [
-          "#FF5733",
-          "#FFD700"
-        ]
-      },
-      {
-        "time": "0:03-0:10",
-        "scene": "يد تمسك قلمًا رقميًا وتبدأ في رسم الخطوط بسرعة timelapse",
-        "style": "لقطة قريبة من اليد/القلم، انتقالات سريعة",
-        "colors": [
-          "#00BFFF",
-          "#FF5733"
-        ]
-      },
-      {
-        "time": "0:10-0:16",
-        "scene": "ظهور تفاصيل غير متوقعة داخل الرسم، شخصية شينشان تتسلل بين الأشكال",
-        "style": "إضافة إيموجي 🧠🏆، تأثيرات ضوئية مفاجئة",
-        "colors": [
-          "#FFD700",
-          "#00BFFF"
-        ]
-      },
-      {
-        "time": "0:16-0:20",
-        "scene": "عرض النتيجة النهائية للرسمة بإضاءة ساطعة وواضحة",
-        "style": "تحريك بطيء للكاميرا لتبرز التفاصيل",
-        "colors": [
-          "#FF5733",
-          "#FFD700",
-          "#00BFFF"
-        ]
-      },
-      {
-        "time": "0:20-0:24",
-        "scene": "نص متحرك «هل تستطيع فعلها؟» يدعو المتابعين للإعجاب والمتابعة",
-        "style": "خط ساطع مع إيموجي، موسيقى تتوقف لحظة الدعوة",
-        "colors": [
-          "#FF5733"
-        ]
-      }
-    ],
-    "_eye": {
-      "videoId": "EvdXAoJjHKQ",
-      "url": "https://youtu.be/EvdXAoJjHKQ",
-      "sourceTitle": "Drawing challenge using numbers 🧠🏆#shorts #drawing #challenge #shinchan",
-      "sourceChannel": "Tèo vui vẻ",
-      "sourceViews": 17003104,
-      "dna": {
-        "hook": {
-          "technique": "visual_curiosity",
-          "what_happens": "يظهر رقم كبير يتحول تدريجياً إلى رسمة معقدة في ثوانٍ معدودة",
-          "why_it_works": "يثير الفضول الفوري لأن المشاهد يتساءل كيف يمكن لرقم بسيط أن يتحول إلى فن، ما يجبره على الاستمرار في المشاهدة"
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 30,
-          "energy_curve": "صعود سريع في أول 5 ثوانٍ → استقرار متوسط خلال عملية الرسم → قمة طاقة عند المفاجأة → انخفاض خفيف مع دعوة CTA"
-        },
-        "retention_tricks": [
-          "الافتتاح بأرقام ضخمة وجذابة في أول 2 ثانية",
-          "استخدام تقنية timelapse لتسريع العملية الإبداعية",
-          "إدخال عنصر مفاجأة (شخصية شينشان) في منتصف الفيديو",
-          "نص متحرك يحث المشاهد على التفاعل في آخر الفيديو"
-        ]
-      }
-    },
-    "_critique": {
-      "score": 88,
-      "weaknesses": [
-        "Hook duration is 0:00‑0:03 instead of the suggested 0:00‑0:04, slightly reducing initial impact.",
-        "Audio description is vague; lacks explicit mention of pen/brush SFX and the accelerating electronic track that should pause at the twist.",
-        "No explicit reference to the high cut rate (≈30 cuts/min) or rapid transitions that keep energy high.",
-        "CTA segment is 4 seconds long (0:20‑0:24) instead of the 3‑second slot in the DNA, risking a slight loss of momentum.",
-        "Mood is described as \"warm\" which may conflict with the high‑energy electronic vibe of the DNA trend."
-      ],
-      "verdict": "الاقتراح يلتزم بشكل كبير مع DNA الترند من حيث الفكرة، الهيكل البصري، والألوان، لكنه يحتاج إلى تحسينات دقيقة في الصوت، وتيرة القطعات، وتوقيت الافتتاح لضمان أقصى جذب للانتباه."
-    },
-    "_consumedAt": "2026-09-19T23:01:15Z"
+  "_consumedAt": "2026-09-19T18:57:04Z",
+  "_skipReason": "already_produced"
+ },
+ {
+  "id": "eye-9IaLY4J5zLg",
+  "topic": "سارة في 2023 🥹🥺 #ghaith_marwan #سارة_عصام_الورع #جنى_الحفار #saraaalwari #ترند #غيث_مروان #تحدي",
+  "angle": "The video flips from a tearful, vulnerable opening to a triumphant reveal of Sara’s achiev",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "قصة سارة: من الدموع إلى النجاح",
+  "title_en": "Sara’s Journey: Tears to Triumph",
+  "hook_ar": "شوفوا سارة وهي بتبكي…",
+  "hook_en": "Watch Sara's tearful start.",
+  "facts_ar": [
+   "حقق الفيديو أكثر من 11513792 مشاهدة.",
+   "حصل على أكثر من 55720 إعجاب.",
+   "نُشر على قناة سارة الوراي من مصر."
+  ],
+  "facts_en": [
+   "The short has gathered over 11513792 views.",
+   "It earned more than 55720 likes.",
+   "Published on the Sara Alwari channel, region Egypt."
+  ],
+  "takeaway_ar": {
+   "aql": "النجاح يتطلب صبرًا وإصرارًا.",
+   "qalb": "الدعم الحقيقي يغيّر مسار الحياة.",
+   "rouh": "بالعزم نرتقي فوق الألم."
   },
-  {
-    "id": "eye-yEyEnhc8WcY",
-    "topic": "ROBLOX GEARS IRL… 😱 #roblox #gaming #trolling #funny #memes #challenge",
-    "angle": "The gear, instead of destroying the set, releases a hidden stash of Roblox‑themed snacks, ",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "⚙️ عتلة روبلوكس العملاقة في البيت! 😱",
-    "title_en": "Giant Roblox Gear Goes Wild at Home!",
-    "hook_ar": "إنت مش هتصدق اللي حصل لحد ما شوفته!",
-    "hook_en": "You won’t believe what just crashed into my backyard!",
-    "facts_ar": [
-      "روبلكس منصة ألعاب يخلقها المستخدمون وتضم مئات الملايين من اللاعبين النشطين كل شهر.",
-      "التروس داخل روبلوكس تُستعمل في الصنع والقتال داخل اللعبة.",
-      "الفيديوهات القصيرة اللي مدتها أقل من نص دقيقة بتوصل نسبة إكمال أعلى على المنصات الاجتماعية."
-    ],
-    "facts_en": [
-      "Roblox is a user‑generated gaming platform with a massive monthly active community.",
-      "Gears in Roblox serve as crafting and combat items.",
-      "Short‑form videos under half a minute achieve higher completion rates on social platforms."
-    ],
-    "takeaway_ar": {
-      "aql": "الإبداع يخلّي فكرة بسيطة تتحول لتحدي حقيقي.",
-      "qalb": "ضحكة المفاجأة بتقربنا من بعض.",
-      "rouh": "جرّبوا تحدياتكم الخاصة وخليوا المتعة تكبر."
-    },
-    "takeaway_en": {
-      "aql": "Creativity turns a simple idea into a real‑world challenge.",
-      "qalb": "The surprise laugh brings us closer together.",
-      "rouh": "Try your own twists and let the fun grow."
-    },
-    "tags": "روبلكس,تحدي,مقالب,فيديوهات_قصيرة,متعة",
-    "mood": "crazy",
-    "_kind": "eye",
-    "_visual_plan": [
-      {
-        "time": "0:00-0:03",
-        "scene": "لقطة قريبة لعتلة روبلوكس العملاقة تدور بسرعة، إضاءة نيون ساطعة، وتعبير وجه المبدع المصدوم.",
-        "style": "قريب، قطع سريع، إضاءة عالية التباين.",
-        "colors": [
-          "#ff4d4d",
-          "#00ffcc",
-          "#ffffff"
-        ]
-      },
-      {
-        "time": "0:04-0:07",
-        "scene": "العتلة تسقط ببطء على مسار عقبة مصنوع من مكعبات LEGO، الكاميرا تتحرك ببطء لتبرز الدراما.",
-        "style": "حركة بطيئة، لقطات متتابعة، إضاءة خلفية نيون.",
-        "colors": [
-          "#ff4d4d",
-          "#00ffcc"
-        ]
-      },
-      {
-        "time": "0:08-0:11",
-        "scene": "العتلة تنطلق سلاسل من قنابل الفتات المتفجرة، صوت \"بووم!\" يرافق الانفجار مع رسومات روبلوكس متحركة كستيكرات رد فعل.",
-        "style": "قطع سريع، مؤثرات صوتية جليتشية، رسومات متحركة.",
-        "colors": [
-          "#ff4d4d",
-          "#ffffff"
-        ]
-      },
-      {
-        "time": "0:12-0:15",
-        "scene": "المبدع يوجه إصبعه للكاميرا، يكتب نص سريع على الشاشة: \"تقدروا تغلبوا ده؟\" مع أيقونة اشتراك متلألئة.",
-        "style": "لقطة مباشرة، نص متحرك، إضاءة خفيفة للتركيز على الدعوة.",
-        "colors": [
-          "#00ffcc",
-          "#ffffff"
-        ]
-      }
-    ],
-    "_eye": {
-      "videoId": "yEyEnhc8WcY",
-      "url": "https://youtu.be/yEyEnhc8WcY",
-      "sourceTitle": "ROBLOX GEARS IRL… 😱 #roblox #gaming #trolling #funny #memes #challenge",
-      "sourceChannel": "nobrainjames",
-      "sourceViews": 14888313,
-      "dna": {
-        "hook": {
-          "technique": "shock",
-          "what_happens": "The video opens with a real‑world giant Roblox gear spinning wildly in a backyard, accompanied by a startled scream.",
-          "why_it_works": "Immediate visual surprise combined with a familiar game element triggers curiosity and an adrenaline spike, forcing viewers to stay for the payoff."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 120,
-          "energy_curve": "sharp rise in the first 3 seconds, plateau with comedic tension, spike at the confetti explosion, quick dip for CTA."
-        },
-        "retention_tricks": [
-          "Immediate visual shock in the first 2 seconds.",
-          "Rapid pacing with >2 cuts per second.",
-          "Use of familiar Roblox branding to attract niche audience.",
-          "Mid‑video twist that subverts expectations.",
-          "Clear CTA with on‑screen text and visual cue."
-        ]
-      }
-    },
-    "_critique": {
-      "score": 78,
-      "weaknesses": [
-        "Hook relies on a verbal promise (“You won’t believe…”) rather than an immediate visual shock and startled scream, reducing the initial adrenaline spike.",
-        "The twist deviates from the DNA’s snack‑reveal payoff; it uses confetti explosions only, missing the surprise reward element.",
-        "Audio plan is absent – no mention of energetic teenage voice, high‑tempo electronic music, or glitch SFX, which are key to the DNA’s energy curve.",
-        "Pacing metrics (cuts per second, energy curve) are not specified, making it unclear if the rapid‑cut rhythm (>2 cuts/sec) is achieved.",
-        "CTA wording (“تقدروا تغلبوا ده؟”) is less compelling than the DNA’s direct challenge (“Can you beat this?”) and may not drive the same level of engagement."
-      ],
-      "verdict": "The proposal mirrors the DNA trend’s visual structure and branding very well, but it falls short on the hook’s shock value, the twist’s payoff, and the audio‑pacing details that give the trend its high‑energy retention. Strengthening those areas would push the score into the high 80s or low 90s."
-    },
-    "_consumedAt": "2026-09-20T01:07:00Z"
+  "takeaway_en": {
+   "aql": "Success demands patience and perseverance.",
+   "qalb": "Genuine support reshapes a life story.",
+   "rouh": "With determination we rise above pain."
   },
-  {
-    "id": "eye-YZWmX1rrfvA",
-    "topic": "GUESS THE DRINK CHALLENGE",
-    "angle": "The final drink is an intentionally disgusting flavor (e.g., hot sauce mixed with soda), c",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "اللي جربته ده خلاني أقذف!",
-    "title_en": "I Tasted THIS and Regret Everything!",
-    "hook_ar": "احزر المشروب الغامض بسرعة!",
-    "hook_en": "Guess the mystery drink fast!",
-    "facts_ar": [
-      "قاعدة واحدة: امسك الكوب وشربه.",
-      "بندلع عيوني مش عارف إيه ده.",
-      "خدته... طعمه غريب جداً يا جماعة."
-    ],
-    "facts_en": [
-      "One rule: grab the cup and drink.",
-      "Blindfolded, absolute chaos incoming.",
-      "Took a sip... weird taste honestly."
-    ],
-    "takeaway_ar": null,
-    "takeaway_en": null,
-    "tags": "تحدي, مشروبات, رد فعل, دوش, ترند",
-    "mood": "crazy",
-    "_kind": "eye",
-    "_visual_plan": [],
-    "shots": [
-      {
-        "t0": 0.0,
-        "t1": 3.0,
-        "dur": 3.0,
-        "say_ar": "احزر المشروب الغامض بسرعة!",
-        "say_en": "Guess the mystery drink fast!",
-        "visual_query": "man jumping shocked face",
-        "sfx": "whoosh",
-        "on_screen": "احزر المشروب!"
-      },
-      {
-        "t0": 3.0,
-        "t1": 9.0,
-        "dur": 6.0,
-        "say_ar": "قاعدة واحدة: امسك الكوب وشربه.",
-        "say_en": "One rule: grab the cup and drink.",
-        "visual_query": "hands grabbing glass table",
-        "sfx": "impact",
-        "on_screen": "القاعدة: اشرب"
-      },
-      {
-        "t0": 9.0,
-        "t1": 12.0,
-        "dur": 3.0,
-        "say_ar": "بندلع عيوني مش عارف إيه ده.",
-        "say_en": "Blindfolded, absolute chaos incoming.",
-        "visual_query": "hands tying blindfold eyes",
-        "sfx": "pop",
-        "on_screen": "عمى تام"
-      },
-      {
-        "t0": 12.0,
-        "t1": 18.0,
-        "dur": 6.0,
-        "say_ar": "خدته... طعمه غريب جداً يا جماعة.",
-        "say_en": "Took a sip... weird taste honestly.",
-        "visual_query": "closeup drinking from cup",
-        "sfx": "slurp",
-        "on_screen": ""
-      },
-      {
-        "t0": 18.0,
-        "t1": 21.0,
-        "dur": 3.0,
-        "say_ar": "لا استحيوا، ده مش طبيعي!",
-        "say_en": "No way, this is not normal!",
-        "visual_query": "man spitting drink disgusted",
-        "sfx": "spit",
-        "on_screen": "!"
-      },
-      {
-        "t0": 21.0,
-        "t1": 27.0,
-        "dur": 6.0,
-        "say_ar": "ليش حاططوا لي ده في الكوب؟",
-        "say_en": "Why did you put this in my cup?",
-        "visual_query": "man laughing confused face",
-        "sfx": "laugh",
-        "on_screen": ""
-      },
-      {
-        "t0": 27.0,
-        "t1": 30.0,
-        "dur": 3.0,
-        "say_ar": "الثاني أحسن، بس لسه مش عارف.",
-        "say_en": "Second one better, but still clueless.",
-        "visual_query": "man sipping soda happy",
-        "sfx": "pop",
-        "on_screen": ""
-      },
-      {
-        "t0": 30.0,
-        "t1": 36.0,
-        "dur": 6.0,
-        "say_ar": "يا إلهي، ده حار نار حقيقية.",
-        "say_en": "Oh god, this is actual fire.",
-        "visual_query": "man holding hot drink face",
-        "sfx": "fire",
-        "on_screen": "🔥 حار"
-      },
-      {
-        "t0": 36.0,
-        "t1": 39.0,
-        "dur": 3.0,
-        "say_ar": "مفيش طعم ده، ده تربس!",
-        "say_en": "No flavor, this is pure trash!",
-        "visual_query": "man throwing cup away",
-        "sfx": "impact",
-        "on_screen": "🗑️"
-      },
-      {
-        "t0": 39.0,
-        "t1": 45.0,
-        "dur": 6.0,
-        "say_ar": "اللي جاي ده هيكسرني أكيد.",
-        "say_en": "This next one is gonna break me.",
-        "visual_query": "man nervous looking at cup",
-        "sfx": "tension",
-        "on_screen": ""
-      },
-      {
-        "t0": 45.0,
-        "t1": 48.0,
-        "dur": 3.0,
-        "say_ar": "ده مش مشروب، ده سم سائل!",
-        "say_en": "This isn't a drink, it's poison!",
-        "visual_query": "green liquid in glass",
-        "sfx": "disgust",
-        "on_screen": "☠️"
-      },
-      {
-        "t0": 48.0,
-        "t1": 53.0,
-        "dur": 5.0,
-        "say_ar": "قولي اسم المشروب اللي عايز تجربته!",
-        "say_en": "Tell me the drink you want next!",
-        "visual_query": "man pointing at camera",
-        "sfx": "ding",
-        "on_screen": "اكتب في الكومنتات"
-      }
-    ],
-    "_replication": true,
-    "_eye": {
-      "videoId": "YZWmX1rrfvA",
-      "url": "https://youtu.be/YZWmX1rrfvA",
-      "sourceTitle": "GUESS THE DRINK CHALLENGE",
-      "sourceChannel": "IShowSpeed",
-      "sourceViews": 13425330,
-      "dna": {
-        "hook": {
-          "technique": "question",
-          "what_happens": "Speed is blindfolded and forced to guess a series of mystery drinks while reacting wildly.",
-          "why_it_works": "The immediate question creates curiosity, while the promise of exaggerated reactions triggers viewers to stay for the payoff."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 140,
-          "energy_curve": "sharp rise in the first 5 seconds → steady high plateau during tasting → spike at the twist → slight dip with CTA"
-        },
-        "retention_tricks": [
-          "Immediate question hook",
-          "Rapid‑cut editing (≈2‑3 s per beat)",
-          "Micro‑cliffhangers after each drink",
-          "Exaggerated facial reactions with visual emojis",
-          "Direct CTA encouraging comments"
-        ]
-      }
+  "tags": "سارة,نجاح,تحول,قصة,إلهام",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة قريبة لعين سارة المبللة بالدموع مع نص غامق فوق الشاشة.",
+    "style": "إحساس عاطفي، إضاءة ناعمة، حركة ثابتة.",
+    "colors": [
+     "#F5C6A5",
+     "#FF6F61",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:10",
+    "scene": "مونتاج سريع للذكريات السابقة لسارة: المدرسة، العائلة، الأصدقاء بألوان باستيل هادئ.",
+    "style": "قطات سريعة، انتقالات ديناميكية، إيقاع موسيقي خفيف.",
+    "colors": [
+     "#F5C6A5",
+     "#FF6F61"
+    ]
+   },
+   {
+    "time": "0:16-0:22",
+    "scene": "سارة الآن مبتسمة تحمل شهادة أو جائزة، خلفية مضيئة مع رسومات قنّاعات.",
+    "style": "إضاءة ساطعة، استقرار الكاميرا، مؤثرات بصرية احتفالية.",
+    "colors": [
+     "#FF6F61",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:22-0:27",
+    "scene": "دعوة للمتابعة: نص متحرك مع سهم متجه، موسيقى ترتفع تدريجيًا.",
+    "style": "حركة نصية ديناميكية، إيقاع صوتي متصاعد، ألوان مشجعة.",
+    "colors": [
+     "#FF6F61"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "9IaLY4J5zLg",
+   "url": "https://youtu.be/9IaLY4J5zLg",
+   "sourceTitle": "سارة في 2023 🥹🥺 #ghaith_marwan #سارة_عصام_الورع #جنى_الحفار #saraaalwari #ترند #غيث_مروان #تحدي",
+   "sourceChannel": "sara alwari ",
+   "sourceViews": 11513792,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "The video opens with a close‑up of Sara’s teary eyes and a caption “سارة في 2023 🥹🥺”, instantly evoking empathy and curiosity about her story.",
+     "why_it_works": "Human brains are wired to notice strong facial emotions; the combination of tears and a relatable Arabic phrase creates an immediate emotional hook that stops scrolling."
     },
-    "_critique": {
-      "score": 68,
-      "weaknesses": [
-        "Pacing is too slow – only 12 beats in 53 s, far below the 140 cuts/minute DNA benchmark.",
-        "Lacks rapid jump‑cuts and micro‑cliffhangers after each drink, reducing the sense of urgency.",
-        "Visual language is minimal: few emojis, no on‑screen graphics, and limited text overlays.",
-        "Audio cues are under‑developed; no clear high‑energy voice‑over or dynamic sound‑effects.",
-        "The twist (poison) is predictable and not as shocking as the DNA example’s extreme flavor."
-      ],
-      "verdict": null,
-      "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "low‑high‑peak‑release (starts subdued, ramps up with fast cuts, peaks at the reveal, then gently releases into CTA)."
     },
-    "_consumedAt": "2026-09-20T03:34:50Z"
+    "retention_tricks": [
+     "Immediate emotional hook (tears + bold text).",
+     "Rhetorical question that forces mental engagement.",
+     "Fast‑paced montage to prevent boredom.",
+     "Contrast twist (sad → happy) for payoff.",
+     "Strong CTA before the 30‑second limit."
+    ]
+   }
   },
-  {
-    "id": "eye-YZWmX1rrfvA",
-    "topic": "GUESS THE DRINK CHALLENGE",
-    "angle": "After several wrong guesses, Speed finally nails the last drink, and the video freezes on ",
-    "origin": "eye",
-    "status": "scripted",
-    "title_ar": "تحدي المشروبات المجنونة مع Speed",
-    "title_en": "Crazy Drink Guess Challenge!",
-    "hook_ar": "يلا يا جماعة، تحدي المشروبات!",
-    "hook_en": "Let's go, drink challenge!",
-    "facts_ar": [
-      "أول مشروب ييجي، شوف رد فعلي!",
-      "أظنها كوكاكولا، يا ريت!",
-      "خطأ! صوت البازر يطقطق!"
-    ],
-    "facts_en": [
-      "First drink arrives, watch my reaction!",
-      "I think it's cola, right!",
-      "Wrong! Buzzer sounds!"
-    ],
-    "takeaway_ar": null,
-    "takeaway_en": null,
-    "tags": "تحدي,مشروبات,ضحك,سرعة,مفاجأة",
-    "mood": "crazy",
-    "_kind": "eye",
-    "_visual_plan": [],
-    "shots": [
-      {
-        "t0": 0.0,
-        "t1": 3.0,
-        "dur": 3.0,
-        "say_ar": "يلا يا جماعة، تحدي المشروبات!",
-        "say_en": "Let's go, drink challenge!",
-        "visual_query": "young man shouting",
-        "sfx": "whoosh",
-        "on_screen": "إختر المشروب!"
-      },
-      {
-        "t0": 3.0,
-        "t1": 9.0,
-        "dur": 6.0,
-        "say_ar": "أول مشروب ييجي، شوف رد فعلي!",
-        "say_en": "First drink arrives, watch my reaction!",
-        "visual_query": "drink being poured closeup",
-        "sfx": "pop",
-        "on_screen": ""
-      },
-      {
-        "t0": 9.0,
-        "t1": 12.0,
-        "dur": 3.0,
-        "say_ar": "أظنها كوكاكولا، يا ريت!",
-        "say_en": "I think it's cola, right!",
-        "visual_query": "man guessing",
-        "sfx": "impact",
-        "on_screen": ""
-      },
-      {
-        "t0": 12.0,
-        "t1": 18.0,
-        "dur": 6.0,
-        "say_ar": "خطأ! صوت البازر يطقطق!",
-        "say_en": "Wrong! Buzzer sounds!",
-        "visual_query": "buzzer graphic",
-        "sfx": "impact",
-        "on_screen": "خطأ!"
-      },
-      {
-        "t0": 18.0,
-        "t1": 21.0,
-        "dur": 3.0,
-        "say_ar": "المشروب التاني، ضحكة صريحة!",
-        "say_en": "Second drink, big laugh!",
-        "visual_query": "laughing reaction",
-        "sfx": "pop",
-        "on_screen": ""
-      },
-      {
-        "t0": 21.0,
-        "t1": 27.0,
-        "dur": 6.0,
-        "say_ar": "أقول عصير مانجا؟ غلط!",
-        "say_en": "Mango juice? Nope!",
-        "visual_query": "wrong answer stamp",
-        "sfx": "impact",
-        "on_screen": "غلط!"
-      },
-      {
-        "t0": 27.0,
-        "t1": 30.0,
-        "dur": 3.0,
-        "say_ar": "تالت مشروب، واو، إقرف!",
-        "say_en": "Third drink, yuck!",
-        "visual_query": "disgusted face",
-        "sfx": "whoosh",
-        "on_screen": ""
-      },
-      {
-        "t0": 30.0,
-        "t1": 36.0,
-        "dur": 6.0,
-        "say_ar": "أحزر شاي بارد؟ لا!",
-        "say_en": "Cold tea? No!",
-        "visual_query": "wrong stamp",
-        "sfx": "impact",
-        "on_screen": "غلط!"
-      },
-      {
-        "t0": 36.0,
-        "t1": 39.0,
-        "dur": 3.0,
-        "say_ar": "المشروب الرابع، عجبني بجد!",
-        "say_en": "Fourth drink, really liked it!",
-        "visual_query": "surprised reaction",
-        "sfx": "pop",
-        "on_screen": ""
-      },
-      {
-        "t0": 39.0,
-        "t1": 45.0,
-        "dur": 6.0,
-        "say_ar": "أخيرًا صح! مشروب سري!",
-        "say_en": "Finally right! Secret drink!",
-        "visual_query": "slow motion shocked",
-        "sfx": "whoosh",
-        "on_screen": "صحيح!"
-      },
-      {
-        "t0": 45.0,
-        "t1": 48.0,
-        "dur": 3.0,
-        "say_ar": "الاشتراك دلوقتي، يلا شاركونا!",
-        "say_en": "Subscribe now, join us!",
-        "visual_query": "pointing subscribe button",
-        "sfx": "pop",
-        "on_screen": "اشترك"
-      },
-      {
-        "t0": 48.0,
-        "t1": 53.0,
-        "dur": 5.0,
-        "say_ar": "لحظات سريعة، إضحكوا معانا!",
-        "say_en": "Quick moments, laugh with us!",
-        "visual_query": "quick montage clips",
-        "sfx": "pop",
-        "on_screen": ""
-      }
-    ],
-    "_replication": true,
-    "_eye": {
-      "videoId": "YZWmX1rrfvA",
-      "url": "https://youtu.be/YZWmX1rrfvA",
-      "sourceTitle": "GUESS THE DRINK CHALLENGE",
-      "sourceChannel": "IShowSpeed",
-      "sourceViews": 13425330,
-      "dna": {
-        "hook": {
-          "technique": "question",
-          "what_happens": "IShowSpeed is blindfolded and forced to guess a series of mystery drinks while the camera zooms in on his frantic reactions.",
-          "why_it_works": "The immediate question creates curiosity, while Speed's unpredictable facial expressions promise humor and surprise, compelling viewers to stay for the answer."
-        },
-        "pacing": {
-          "estimated_cuts_per_minute": 150,
-          "energy_curve": "sharp rise in the first 5 seconds (hook), steady high energy through rapid cuts, spike at the final reveal, quick dip into CTA."
-        },
-        "retention_tricks": [
-          "Immediate question hook",
-          "Fast cuts and visual punchlines every 2‑3 seconds",
-          "Unexpected wrong‑guess reveals with buzzer sound",
-          "Humorous facial reactions that encourage replay",
-          "Clear CTA that ties back to the high‑energy climax"
-        ]
-      }
+  "_critique": {
+   "score": 75,
+   "weaknesses": [
+    "Missing a direct rhetorical question to force mental engagement (DNA uses \"هل تعرفين ما حدث لها في 2023؟\").",
+    "No heartbeat or subtle SFX to build suspense between the hook and the reveal.",
+    "No narrator voice or audio layering that mirrors the visual pacing (soft female narration + piano → heartbeat → upbeat synth).",
+    "Gap between 0:10‑0:16 with no beat or transition; the beat sequence is incomplete.",
+    "Limited use of on‑screen text/graphics; could add emojis, lower‑third captions, and animated arrows for stronger retention tricks.",
+    "Retention tricks list is absent; should explicitly mention emotional hook, question, fast montage, twist, CTA."
+   ],
+   "verdict": "The proposal captures the core DNA elements—emotional hook, quick montage, triumphant twist, and CTA—but falls short on key engagement tactics such as the rhetorical question, heartbeat SFX, and a complete beat sequence. Strengthening these areas will elevate the video to match or surpass the DNA trend’s high retention performance."
+  },
+  "_consumedAt": "2026-09-19T18:57:04Z",
+  "_skipReason": "already_produced"
+ },
+ {
+  "id": "eye-Htya3n-N3gc",
+  "topic": "RUMI’S SPICY NOODLES MUKBANG CHALLENGE 🍜 #kpop #kpopdemonhunters",
+  "angle": "Rumi unexpectedly pulls out a hidden ice cream scoop at the end, cooling down the heat and",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي النودلز النارية مع رومي 🍜🔥",
+  "title_en": "Rumi’s Fiery Noodle Challenge 🔥🍜",
+  "hook_ar": "استنوا، هل أقدر أتحمل النار دي؟",
+  "hook_en": "Watch me brave the hottest noodles ever!",
+  "facts_ar": [
+   "الموكبنج أصله من كوريا الجنوبية، بيجمع بين الأكل المبهر وتفاعل مباشر مع المتابعين.",
+   "الكابسايسين هو المادة الفاعلة في الفلفل الحار، بيشتغل على مستقبلات الحرارة في الجسم.",
+   "تحديات النودلز الحارة عادةً بتستخدم فلفل سيتشوان أو زيت الفلفل لتقوية الإحساس بالحرارة."
+  ],
+  "facts_en": [
+   "Mukbang started in South Korea as a livestream where hosts eat large portions while chatting with viewers.",
+   "Capsaicin, the active component in chili peppers, binds to TRPV1 receptors to create a heat sensation.",
+   "Spicy noodle challenges often add Sichuan peppercorns or chili oil to boost the perceived heat."
+  ],
+  "takeaway_ar": {
+   "aql": "الحرارة العالية بتظهر قوة التحمل والتركيز.",
+   "qalb": "المشاركة في التحدي بتقوي الروابط بين المتابعين.",
+   "rouh": "تجربة الجرأة بتدفعنا نكسر حدودنا."
+  },
+  "takeaway_en": {
+   "aql": "Extreme spice tests mental stamina and focus.",
+   "qalb": "Sharing the challenge builds a lively community bond.",
+   "rouh": "Daring the heat inspires us to push personal limits."
+  },
+  "tags": "نودلز,حارة,تحدي,مكبانغ,كوري,متعة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة قريبة لبولة نودلز تبخر بخار، نص ساطع على الشاشة يطرح سؤال التحدي.",
+    "style": "تقريب سريع، إضاءة حمراء ساطعة لتسليط الانتباه.",
+    "colors": [
+     "#FF4500",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "رومي ياخذ أول قضمة، تعبير وجه مبالغ فيه، شريط قياس رد فعل يشتغل.",
+    "style": "قصات سريعة، موسيقى كيبوب تنبض مع كل قطرة.",
+    "colors": [
+     "#FF4500",
+     "#FFB300"
+    ]
+   },
+   {
+    "time": "0:08-0:12",
+    "scene": "مونتاج سريع لكلمات مستوى الحرارة مع أيقونات نارية.",
+    "style": "إيقاع بصري متزامن مع إيقاع الأغنية، تأثيرات صوتية حماسية.",
+    "colors": [
+     "#FF4500",
+     "#FFB300",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:13-0:16",
+    "scene": "توقف مفاجئ، رومي يلتقط أنفاسه، صوت ضحكة كوميدية، نص على الشاشة يقول \"استنوا لللحظة المفاجئة\".",
+    "style": "إيقاع بطيء لحظة، إضاءة خافتة ثم إضاءة ساطعة للانفجار اللاحق.",
+    "colors": [
+     "#FFB300",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:17-0:20",
+    "scene": "رومي ينهى البولة، يمسح دموعه، يعلن الانتصار، انفجار من الفتات الملون.",
+    "style": "قطة واسعة لتظهر الفتات، موسيقى مرتفعة، شعور انتصار.",
+    "colors": [
+     "#FF4500",
+     "#FFB300",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:21-0:24",
+    "scene": "دعوة المتابعة: نص متحرك يطلب الإعجاب والتعليق، زر اشتراك يلمع.",
+    "style": "إيقاع ثابت، ألوان جذابة لتوجيه الانتباه.",
+    "colors": [
+     "#FF4500",
+     "#FFB300"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "Htya3n-N3gc",
+   "url": "https://youtu.be/Htya3n-N3gc",
+   "sourceTitle": "RUMI’S SPICY NOODLES MUKBANG CHALLENGE 🍜 #kpop #kpopdemonhunters",
+   "sourceChannel": "Big Marvel",
+   "sourceViews": 50381575,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "Rumi opens a massive bowl of ultra‑spicy noodles, steam rising, and looks straight into the camera with a daring grin.",
+     "why_it_works": "Immediate visual stimulus and the promise of extreme reaction trigger curiosity and the fear‑of‑missing‑out (FOMO) in viewers."
     },
-    "_critique": {
-      "score": 70,
-      "weaknesses": [
-        "Lacks a curiosity‑driving question hook that instantly grabs attention, no blindfold element to add novelty, camera style not specified (missing handheld rapid cuts), overall cuts per minute far below the 150 cuts/min target, missing high‑energy trap beat and celebratory chime for the correct guess, buzzer sound effect is only an impact rather than a distinct buzzer, visual language (dominant colors, stickers) not fully leveraged, audio energy curve not mapped to beats, retention tricks such as rapid visual punchlines every 2‑3 seconds are underutilized"
-      ],
-      "verdict": "The episode captures the core structure of the DNA trend—quick hook, escalating guesses, comedic reactions, and a payoff—but falls short on the high‑energy pacing, question hook, and audio/visual flair that make the original format so engaging. Boosting cut frequency, adding a question hook, incorporating a blindfold, and tightening the audio cues would raise the score significantly.",
-      "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "sharp rise in the first 10 seconds, brief dip at the twist, climax at payoff, quick drop to CTA"
     },
-    "_consumedAt": "2026-09-20T04:54:13Z"
-  }
+    "retention_tricks": [
+     "Immediate visual hook with steam and bold text",
+     "Rapid cut rhythm matching music beats",
+     "Micro‑cliffhanger pause before the surprise",
+     "Use of on‑screen emojis and graphics to reinforce emotions",
+     "Strong CTA placed right after the emotional high"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [
+    "Twist is vague; lacks a concrete, surprising payoff (e.g., the hidden ice‑cream scoop) that the DNA trend uses to create a memorable micro‑cliffhanger.",
+    "Audio description is minimal; no mention of voice style, comedic gasp SFX, or volume spikes that reinforce tension.",
+    "Missing explicit on‑screen emojis/stickers that the DNA trend leverages for emotional reinforcement.",
+    "Visual plan repeats colors and styles but doesn’t introduce any novel shot variation (e.g., handheld immediacy) to boost immersion.",
+    "The Arabic hook wording is less visually descriptive than the DNA example, potentially reducing instant visual stimulus."
+   ],
+   "verdict": "The proposal captures the core structure and energy of the DNA trend, but it falls short on the surprise twist and detailed audio/visual embellishments that make the original format stand out. Strengthening the payoff and enriching the sensory cues would push it closer to a top‑tier execution."
+  },
+  "_consumedAt": "2026-09-19T18:57:04Z",
+  "_skipReason": "already_produced"
+ },
+ {
+  "id": "eye-jgk0aOIEgog",
+  "topic": "HALAND X SHAKIRA PUZZLE CONNECTING CHALLENGE #haland #challenge #art",
+  "angle": "The puzzle pieces from two unrelated celebrities interlock to form a brand‑new collaborati",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي اللغز المتقاطع: هالاند وشاكيرا يدمجوا الفن!",
+  "title_en": "Cross‑Puzzle Challenge: Haland meets Shakira in a viral mashup!",
+  "hook_ar": "انتبه! لغز صورهم بيقربك من مفاجأة غير متوقعة!",
+  "hook_en": "Watch the pieces fall together for a surprise you won’t see coming!",
+  "facts_ar": [
+   "هالاند نجم كوري جنوبى مشهور بتحديات الرقص الفيروسية.",
+   "شاكيرا مغنية كولومبية تتعاون مع صانعي الترندات عالمياً.",
+   "تحديات ربط الألغاز تزيد نسبة المشاركة عن تحديات الرقص التقليدية."
+  ],
+  "facts_en": [
+   "Haland is a South Korean pop idol known for viral dance challenges.",
+   "Shakira is a Colombian singer who often joins global social media trends.",
+   "Puzzle‑connecting challenges boost share rates compared with standard dance trends."
+  ],
+  "takeaway_ar": {
+   "aql": "الابتكار في دمج شخصيات مختلفة يخلق محتوى فريد.",
+   "qalb": "المشاهد يشعر بالحماس لما يشوف التحدي يتحقق.",
+   "rouh": "التجربة تشجع المتابعين يشاركوا بإبداعهم."
+  },
+  "takeaway_en": {
+   "aql": "Merging unexpected icons fuels fresh creativity.",
+   "qalb": "Viewers feel the thrill as the puzzle clicks.",
+   "rouh": "The vibe pushes fans to join the challenge."
+  },
+  "tags": "تحدي,لغز,هالاند,شاكيرا,فن,فيديو,ترند",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "مقدمة سريعة بنص متوهج يعلن عن تحدي اللغز المتقاطع مع قطع تتقارب.",
+    "style": "قصات سريعة، ألوان نيون ساطعة، نص متحرك.",
+    "colors": [
+     "#FF1493",
+     "#00BFFF",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "قرب يد هالاند وهو يضع قطعة اللغز، ثم رد فعل شاكيرا الضاحك.",
+    "style": "لقطة قريبة، إضاءة دافئة، مؤثر صوتي للضحكة.",
+    "colors": [
+     "#FF1493",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "شاشة مقسمة تُظهر كل نجم يعمل على نصف اللغز مع صوت عدّ توقيت.",
+    "style": "تقسيم الشاشة، مؤثر عدّ، إيقاع موسيقي متصاعد.",
+    "colors": [
+     "#00BFFF",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "القطعة الأخيرة تنقر وتكشف صورة هالاند وشاكيرا يرقصان معاً.",
+    "style": "تأثير بريق، موسيقى قمة، إضاءة ساطعة.",
+    "colors": [
+     "#FF1493",
+     "#00BFFF",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:16-0:18",
+    "scene": "دعوة للمشاركة مع هاشتاجات متوهجة وموسيقى نهائية حماسية.",
+    "style": "نص متحرك، إيقاع موسيقي نهائي، ألوان نيون.",
+    "colors": [
+     "#FF1493",
+     "#00BFFF"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "jgk0aOIEgog",
+   "url": "https://youtu.be/jgk0aOIEgog",
+   "sourceTitle": "HALAND X SHAKIRA PUZZLE CONNECTING CHALLENGE #haland #challenge #art",
+   "sourceChannel": "Seoul Dream Tales 🇰🇷",
+   "sourceViews": 49904280,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "The video opens with a rapid montage of Haland and Shakira's faces split into puzzle pieces that start moving toward each other.",
+     "why_it_works": "The immediate visual puzzle triggers curiosity and promises a satisfying reveal, compelling viewers to stay for the solution."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "sharp rise in first 4 seconds → steady high energy through 12 seconds → brief dip for payoff → final spike at CTA"
+    },
+    "retention_tricks": [
+     "Immediate visual puzzle that promises a reveal",
+     "Split‑screen tension creating a dual‑track narrative",
+     "Fast‑paced editing to prevent boredom",
+     "Auditory ticking that subconsciously urges viewers to stay until the end"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 82,
+   "weaknesses": [
+    "The concept is almost a direct copy of the DNA trend; there is little differentiation or unique twist that could set it apart.",
+    "The script lacks a distinct voice‑over or narrator style, which could reduce the emotional connection and reduce the “human” element seen in the DNA trend’s energetic female narrator.",
+    "Music and sound‑effects are mentioned only generically; specifying a K‑pop synth or a specific rhythm could strengthen the audio hook.",
+    "The CTA is generic (“try the challenge & tag”) and could be more compelling with a clear incentive or challenge prompt.",
+    "Emotional escalation beyond the puzzle (e.g., showcasing genuine reactions or storytelling) is minimal, potentially limiting viewer investment."
+   ],
+   "verdict": "The proposal is solid and closely follows a proven DNA formula, but it needs a stronger unique angle, clearer audio cues, and a more engaging CTA to stand out and maximize virality."
+  },
+  "_consumedAt": "2026-09-19T18:57:04Z",
+  "_skipReason": "already_produced"
+ },
+ {
+  "id": "eye-hex0pvxJVtw",
+  "topic": "🥰 anaya ❣️ dad 🧡 wrong hand challenge #shorts #anaya #trending",
+  "angle": "The dad’s over‑the‑top shocked face turns into genuine laughter, turning a simple mistake ",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "❗️تحدي اليد الغلط مع أنيا 🤣 #ضحك_عائلي",
+  "title_en": "❗️Wrong Hand Challenge with Anaya 🤣 #FamilyFun",
+  "hook_ar": "خطر! أنيا هتحاول إطعام أبها بالمعلقة اليسرى!",
+  "hook_en": "Warning! Anaya’s trying to feed dad with the wrong hand!",
+  "facts_ar": [
+   "تحدي اليد الغلط بيطلب إنك تقوم بالمهام اليومية بيد غير اليد اللي بتستعملها عادة، وهو منتشر على تيك توك ويوتيوب شورتس.",
+   "الفيديوهات اللي فيها أطفال تحت سن الخمس بتحافظ على وقت مشاهدة أعلى بكتير مقارنة بمقاطع الكبار.",
+   "استخدام الإيموجيات في العناوين والصور المصغرة بيزود نسبة النقر على الفيديو بشكل ملحوظ في السوق العربية."
+  ],
+  "facts_en": [
+   "The Wrong Hand Challenge asks you to do everyday tasks with the opposite hand and is a recurring trend on TikTok and YouTube Shorts.",
+   "Videos featuring children under five keep viewers watching longer than adult‑only clips.",
+   "Adding emojis to titles and thumbnails boosts click‑through rates noticeably in the Arabic‑speaking market."
+  ],
+  "takeaway_ar": {
+   "aql": "الضحك بيظهر إن التحديات البسيطة ممكن تحوّل لحظات عادية إلى محتوى لا يُنسى.",
+   "qalb": "شوف رد فعل الأب بيذكّرنا إن السعادة الحقيقية بتتولد من لحظات العفوية مع العيلة.",
+   "rouh": "استمتع بوقتك مع الأطفال، لأنهم بيخلوا كل يوم مليان بهجة."
+  },
+  "takeaway_en": {
+   "aql": "Humor shows that simple challenges can turn ordinary moments into unforgettable content.",
+   "qalb": "Dad’s reaction reminds us that true joy comes from spontaneous family moments.",
+   "rouh": "Cherish time with kids, because they fill every day with delight."
+  },
+  "tags": "طفل,تحدي,يد غلط,ضحك,قصة عائلية",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة قريبة ليد أنيا اليسرى وهي تمسك بالمعلقة، والأب واقف خلفها بنظرة فضولية، نص على الشاشة يكتب \"تحدي اليد الغلط!\"",
+    "style": "قريب اليد، إضاءة ساطعة، ألوان زاهية",
+    "colors": [
+     "#FF6F61",
+     "#FFD700",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:08",
+    "scene": "المعلقة تنزل من يد أنيا وتسبب فوضى لطيفة على المائدة، مع حركة بطيئة للقطرة السائلة.",
+    "style": "لقطة يد، بطيء الحركة لحظة السقوط، مؤثرات بريق",
+    "colors": [
+     "#FF6F61",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:08-0:12",
+    "scene": "الأب يرفع حاجبه بصدمة كرتونية ثم ينفجر بالضحك، رموز قلب وضحك تظهر حوله.",
+    "style": "لقطة واسعة، تعبيرات مبالغ فيها، إيقاع الموسيقى يتنخفض ثم يرتفع",
+    "colors": [
+     "#FFD700",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "الاثنين يضحكان معًا، نص على الشاشة يدعو المتابعين للإعجاب والمتابعة.",
+    "style": "لقطة سريعة، نص متحرك، إيموجيات طايرة",
+    "colors": [
+     "#FF6F61",
+     "#FFD700",
+     "#FFFFFF"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "hex0pvxJVtw",
+   "url": "https://youtu.be/hex0pvxJVtw",
+   "sourceTitle": "🥰 anaya ❣️ dad 🧡 wrong hand challenge #shorts #anaya #trending",
+   "sourceChannel": "vfx MONSTER BHAI786",
+   "sourceViews": 23811752,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "A cute toddler named Anaya tries to feed her dad using the wrong hand, causing a surprised reaction and a burst of laughter.",
+     "why_it_works": "The unexpected switch of hand creates instant visual intrigue and taps into the universal appeal of adorable children, prompting viewers to watch the outcome."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 30,
+     "energy_curve": "rapid rise in the first 4 seconds, peak at the mishap (4‑8 s), slight dip for the reaction (8‑12 s), final spike with CTA (12‑15 s)."
+    },
+    "retention_tricks": [
+     "Strong visual hook in the first 2 seconds",
+     "Use of emojis and bright text overlays",
+     "Unexpected comedic twist",
+     "Fast‑paced editing with a clear climax",
+     "Direct CTA at the end"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 82,
+   "weaknesses": [
+    "Missing explicit beat functions (hook, escalation, twist, payoff) and their time stamps – the DNA beats list is not reproduced.",
+    "No audio language details: voice style, music tempo, SFX cues, or energy notes are absent.",
+    "Pacing metrics (estimated cuts per minute, energy curve) are not quantified, making it hard to compare to DNA’s rapid rise/peak structure.",
+    "Twist or payoff is implied but not explicitly labeled; the DNA twist description is omitted.",
+    "Retention tricks list is not provided, though the visual plan hints at them.",
+    "Reusable facts are included but not formatted as a separate list with bullet points, which could reduce clarity for quick reference."
+   ],
+   "verdict": "The proposal captures the core DNA elements—hook, visual style, emojis, CTA, and pacing—but falls short on the detailed beat structure, audio cues, and explicit retention tactics. Strengthening these areas will bring it fully in line with the DNA trend’s proven formula."
+  },
+  "_consumedAt": "2026-09-19T18:57:04Z",
+  "_skipReason": "already_produced"
+ },
+ {
+  "id": "eye-JPbWXvyaCcw",
+  "topic": "Marshmallow #challenge",
+  "angle": "الهيكل ينهار عندما يُوضع المارشميلو، مما يكشف أن القاعدة الأساسية للتحدي هي أن المارشميلو ",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي المارشميلو: أبني برج من الحلوى!",
+  "title_en": "Marshmallow Challenge: Build a Sweet Tower!",
+  "hook_ar": "هل تجرّأ تبني برج من مارشميلو؟",
+  "hook_en": "Dare to build a marshmallow tower?",
+  "facts_ar": [
+   "تُستَخدم تحديات المارشميلو في الورش لتعليم التعاون والإبداع.",
+   "الهدف هو بناء أعلى هيكل ممكن بمواد محدودة وفي زمن قصير.",
+   "الفرق التي تتبع نهج تجريبي سريع غالبًا تتفوق على تلك التي تخطط بدقة."
+  ],
+  "facts_en": [
+   "Marshmallow challenges are used in workshops to teach collaboration and creativity.",
+   "The goal is to build the tallest structure possible using limited materials in a short time.",
+   "Teams that adopt a rapid‑experiment approach usually beat those that plan meticulously."
+  ],
+  "takeaway_ar": {
+   "aql": "الإبداع يبدأ من تجربة بسيطة",
+   "qalb": "العمل الجماعي يصنع القمم",
+   "rouh": "استمتع بالفشل وتعلّم منه"
+  },
+  "takeaway_en": {
+   "aql": "Creativity sparks from a simple experiment",
+   "qalb": "Teamwork builds the heights",
+   "rouh": "Enjoy the fall and learn from it"
+  },
+  "tags": "مارشميلو,تحدي,إبداع,بناء,متعة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة مقربة لقطعة مارشميلو ضخمة تُقذف في الهواء وتستقر على منصة غير متوقعة.",
+    "style": "حركة كاميرا ديناميكية، نص متحرك يطرح سؤال الحافز.",
+    "colors": [
+     "#FF6F61",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "عرض مجموعة أدوات بسيطة (عصيان، شريط لاصق، خيوط) مع إيقاع موسيقي متصاعد.",
+    "style": "قفزات سريعة، إضاءة ساطعة لتسليط الضوء على الأدوات.",
+    "colors": [
+     "#F7E967",
+     "#2C3E50"
+    ]
+   },
+   {
+    "time": "0:08-0:12",
+    "scene": "بناء الهيكل بسرعة عالية مع قطع سريعة تُظهر كل خطوة في ثوانٍ معدودة.",
+    "style": "تقطيع سريع (jump cuts)، نصوص سميكة توضح الخطوات.",
+    "colors": [
+     "#FF6F61",
+     "#F7E967"
+    ]
+   },
+   {
+    "time": "0:13-0:15",
+    "scene": "الهيكل ينهار فجأةً عند وضع المارشميلو على القمة، مع صدمة صوتية.",
+    "style": "إيقاف الموسيقى لحظة الانهيار، مؤثر صوتي للانقضاض.",
+    "colors": [
+     "#2C3E50",
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:16-0:18",
+    "scene": "المبدئ يضحك ويحث المشاهد على تجربة التحدي، يظهر زر دعوة للمتابعة.",
+    "style": "قرب على الوجه، إيموجي مارشميلو متحرك، نص CTA واضح.",
+    "colors": [
+     "#FF6F61",
+     "#F7E967"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "JPbWXvyaCcw",
+   "url": "https://youtu.be/JPbWXvyaCcw",
+   "sourceTitle": "Marshmallow #challenge",
+   "sourceChannel": "Stoney Choi",
+   "sourceViews": 20322008,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "المبدئ يبدأ الفيديو بلقطة مقربة لقطعة مارشميلو ضخمة تُقذف في الهواء وتُسقط على منصة بناء غير متوقعة.",
+     "why_it_works": "اللقطة غير المتوقعة تثير الدهشة وتدفع المشاهد إلى الاستمرار لمعرفة ما سيحدث للمارشميلو."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "صاعد سريع في الثواني الأولى، قمة توتر عند بناء الهيكل، ثم انخفاض مفاجئ عند الانهيار، يليه ارتفاع خفيف مع الدعوة للمتابعة."
+    },
+    "retention_tricks": [
+     "طرح سؤال في أول 3 ثوانٍ.",
+     "استخدام قطع سريعة (jump cuts) للحفاظ على إيقاع عالي.",
+     "إدراج نص متحرك يوضح الخطوات دون الحاجة لسماع كل شيء.",
+     "إنهاء الفيديو بلقطة فكاهية (الانهيار) تخلق رغبة في مشاهدة المزيد."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 88,
+   "weaknesses": [
+    "Audio plan is not detailed; the DNA trend specifies a youthful, energetic voice and a specific music/sfx progression that is only implied here.",
+    "Timing of the twist (0:13‑0:15) is a second later than the DNA’s 0:12‑0:15 window, which could slightly affect the energy curve.",
+    "Heavy use of emojis and animated stickers may distract from the core message if not balanced carefully."
+   ],
+   "verdict": "The proposal aligns closely with the DNA trend and would likely perform well, but adding a concrete audio storyboard and fine‑tuning the twist timing would push it into the top tier."
+  },
+  "_consumedAt": "2026-09-19T20:38:05Z",
+  "_skipReason": "already_produced"
+ },
+ {
+  "id": "eye-Ug7w1NXSfTI",
+  "topic": "Zelda Vs GTA 6: Water Comparison💀🤦‍♂️",
+  "angle": "الماء في GTA 6 يدمج عناصر الفيزياء المتفجرة مع ماء Zelda النقي، ما ينتج مشهدًا فوضويًا غير",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "مواجهة مائية بين زيلدا وجي‑تي‑أي ست ست 💀🤦‍♂️",
+  "title_en": "Zelda vs GTA Six: Water Showdown 💀🤦‍♂️",
+  "hook_ar": "اسمع يا حبة، شوف إيه اللي يحصل لما ميّة زيلدا تقابل فوضى جي‑تي‑أي!",
+  "hook_en": "Listen up, see what happens when Zelda’s water meets GTA chaos!",
+  "facts_ar": [
+   "زلدا بيعتمد على الميه لحل الألغاز داخل عوالمه الساحرة",
+   "جي‑تي‑أي ست ست متوقع يرفع مستوى فيزياء الميه عن النسخ اللي قبلها",
+   "المقارنات بين ألعاب مختلفة بتجذب متابعين من كل الأذواق"
+  ],
+  "facts_en": [
+   "Zelda uses water as a core element for puzzle solving",
+   "GTA Six is expected to upgrade water physics beyond its predecessors",
+   "Head‑to‑head comparisons of different games draw a wide audience"
+  ],
+  "takeaway_ar": {
+   "aql": "الخيال يخلط عوالم مختلفة ويولد مشاهد غير متوقعة",
+   "qalb": "ضحكة سريعة على الشاشة بتخلي التجربة أمتع",
+   "rouh": "المنافسة بين الألعاب تفتح لنا طاقة جديدة للاستكشاف"
+  },
+  "takeaway_en": {
+   "aql": "Imagination blends distinct worlds into surprising scenes",
+   "qalb": "A quick laugh makes the experience more enjoyable",
+   "rouh": "Game rivalries spark fresh energy for discovery"
+  },
+  "tags": "زيلدا,جي‑تي‑أي,مياه,مقارنة,فيديوهات",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "شاشة مقسومة نص نص، نص زيلدا بألوان خضراء وزرقاء، نص جي‑تي‑أي بأحمر وأسود، ومية تتسرب من الفاصل وتخلق توتر بصري",
+    "style": "تقسيم الشاشة مع تأثير تدفق مائي ديناميكي",
+    "colors": [
+     "#1E8A1C",
+     "#0A0A0A",
+     "#FF4500",
+     "#00BFFF"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "لقطة هادئة لبركة زيلدا تعكس الشمس، تتبعها فجأة لقطة جي‑تي‑أي بموجات عنيفة وانفجارات مائية",
+    "style": "قفز سريع بين اللقطات مع صوت موج عالي",
+    "colors": [
+     "#1E8A1C",
+     "#FF4500"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "نص متحرك يكتب سؤال \"مين اللي هيفوز؟\" مع ضحكة خفيفة في الخلفية",
+    "style": "نص بخط جريء مع إيموجي وجه متنهد",
+    "colors": [
+     "#FFFFFF"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "دمج المشهدين: مية زيلدا الصافية تتقابل مع مية جي‑تي‑أي المتقلبة، وتظهر إيموجي الجمجمة والوجه المتنهد",
+    "style": "تداخل بصري مع تأثير فوضوي للمياه",
+    "colors": [
+     "#00BFFF",
+     "#FF4500"
+    ]
+   },
+   {
+    "time": "0:15-0:17",
+    "scene": "دعوة للمتابعة بخط كبير يلمع وزر متوهج يطلب من المشاهدين الضغط على المتابعة",
+    "style": "CTA واضح مع إضاءة ساطعة",
+    "colors": [
+     "#FF4500"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "Ug7w1NXSfTI",
+   "url": "https://youtu.be/Ug7w1NXSfTI",
+   "sourceTitle": "Zelda Vs GTA 6: Water Comparison💀🤦‍♂️",
+   "sourceChannel": "Ramo Akh",
+   "sourceViews": 20044142,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "يظهر مشهد سريع يدمج لقطات من لعبة Zelda مع لقطات من GTA 6، حيث يتسرب الماء من أحد المشاهد بطريقة غير متوقعة ويظهر رمز الجمجمة 💀 مع تعبير 🤦‍♂️.",
+     "why_it_works": "التقاطع غير المتوقع بين عالَمين مختلفين يثير الدهشة ويجذب الانتباه فوراً، خاصةً مع الرموز التعبيرية التي توحي بالفكاهة والسخرية."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "صاعد سريع خلال الـ0-7 ثوانٍ، قمة عند 8-11 ثوانٍ، ثم انخفاض خفيف مع دفع CTA في النهاية."
+    },
+    "retention_tricks": [
+     "استخدام سؤال بصري غير معلن في الثواني الأولى.",
+     "تباين ألوان قوي بين الجزأين لتجذب العين.",
+     "إدخال إيموجيات تعبيرية لتوليد مشاعر فورية.",
+     "CTA واضح ومباشر في آخر 2 ثانية."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 85,
+   "weaknesses": [
+    "Hook phrasing is a bit informal and lacks the punchy, curiosity‑driven question that DNA uses (e.g., \"من يفوز؟\").",
+    "Audio strategy is missing: no mention of voice‑over style, music, or sound effects, which are crucial for energy curve.",
+    "The comedic element (quick laugh) is only hinted at in the text overlay, not reinforced by audio cues.",
+    "CTA placement at 0:15‑0:17 is fine, but the visual emphasis could be stronger (e.g., a flashing button or animated arrow)."
+   ],
+   "verdict": "The proposal captures the core DNA elements—visual hook, beat structure, color contrast, and emojis—but falls slightly short in audio execution and hook wording. With a sharper, question‑driven hook and a defined audio plan, it would align even more closely with the trend and likely achieve higher retention."
+  },
+  "_consumedAt": "2026-09-19T22:37:28Z"
+ },
+ {
+  "id": "eye-EvdXAoJjHKQ",
+  "topic": "Drawing challenge using numbers 🧠🏆#shorts #drawing #challenge #shinchan",
+  "angle": "اكتشاف أن الرقم يتحول إلى شخصية شينشان الشهيرة داخل الرسم، ما يضيف عنصر ثقافة بوب محبب للج",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي الرسم بالأرقام – هل تستطيع تحويله لفن؟",
+  "title_en": "Number to Art Challenge – Can You Do It?",
+  "hook_ar": "بوم! شوف الرقم يتحول لسحر فني في ثوانٍ!",
+  "hook_en": "Boom! Watch a number turn into art in a flash!",
+  "facts_ar": [
+   "الأرقام يمكن تحويلها إلى أشكال فنية باستخدام تقنيات الرسم الرقمي",
+   "التحديات الفنية القصيرة تجذب المشاهدين وتزيد من معدلات المشاركة",
+   "الموسيقى الإيقاعية تعزز تركيز المشاهد وتضيف طاقة للفيديو"
+  ],
+  "facts_en": [
+   "Numbers can be turned into artistic shapes using digital drawing techniques",
+   "Short art challenges attract viewers and boost engagement rates",
+   "Rhythmic music sharpens viewer focus and adds energy to the clip"
+  ],
+  "takeaway_ar": {
+   "aql": "إبداعك يبدأ بفكرة بسيطة يمكن تحويلها إلى تحفة",
+   "qalb": "حافظ على شغفك وشارك إبداعك مع الأصحاب",
+   "rouh": "كل رسمة جديدة هي خطوة نحو اكتشاف ذاتك الفنية"
+  },
+  "takeaway_en": {
+   "aql": "Your creativity starts with a simple idea that can become a masterpiece",
+   "qalb": "Keep the passion alive and share your art with friends",
+   "rouh": "Every new drawing is a step toward discovering your artistic self"
+  },
+  "tags": "رسم,تحدي,فن,إبداع,شينشان",
+  "mood": "warm",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "رقم كبير يلمع على خلفية ملونة، مع صوت بوم جذاب",
+    "style": "لقطة من أعلى، تركيز على الرقم مع إضاءة ساطعة",
+    "colors": [
+     "#FF5733",
+     "#FFD700"
+    ]
+   },
+   {
+    "time": "0:03-0:10",
+    "scene": "يد تمسك قلمًا رقميًا وتبدأ في رسم الخطوط بسرعة timelapse",
+    "style": "لقطة قريبة من اليد/القلم، انتقالات سريعة",
+    "colors": [
+     "#00BFFF",
+     "#FF5733"
+    ]
+   },
+   {
+    "time": "0:10-0:16",
+    "scene": "ظهور تفاصيل غير متوقعة داخل الرسم، شخصية شينشان تتسلل بين الأشكال",
+    "style": "إضافة إيموجي 🧠🏆، تأثيرات ضوئية مفاجئة",
+    "colors": [
+     "#FFD700",
+     "#00BFFF"
+    ]
+   },
+   {
+    "time": "0:16-0:20",
+    "scene": "عرض النتيجة النهائية للرسمة بإضاءة ساطعة وواضحة",
+    "style": "تحريك بطيء للكاميرا لتبرز التفاصيل",
+    "colors": [
+     "#FF5733",
+     "#FFD700",
+     "#00BFFF"
+    ]
+   },
+   {
+    "time": "0:20-0:24",
+    "scene": "نص متحرك «هل تستطيع فعلها؟» يدعو المتابعين للإعجاب والمتابعة",
+    "style": "خط ساطع مع إيموجي، موسيقى تتوقف لحظة الدعوة",
+    "colors": [
+     "#FF5733"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "EvdXAoJjHKQ",
+   "url": "https://youtu.be/EvdXAoJjHKQ",
+   "sourceTitle": "Drawing challenge using numbers 🧠🏆#shorts #drawing #challenge #shinchan",
+   "sourceChannel": "Tèo vui vẻ",
+   "sourceViews": 17003104,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "يظهر رقم كبير يتحول تدريجياً إلى رسمة معقدة في ثوانٍ معدودة",
+     "why_it_works": "يثير الفضول الفوري لأن المشاهد يتساءل كيف يمكن لرقم بسيط أن يتحول إلى فن، ما يجبره على الاستمرار في المشاهدة"
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 30,
+     "energy_curve": "صعود سريع في أول 5 ثوانٍ → استقرار متوسط خلال عملية الرسم → قمة طاقة عند المفاجأة → انخفاض خفيف مع دعوة CTA"
+    },
+    "retention_tricks": [
+     "الافتتاح بأرقام ضخمة وجذابة في أول 2 ثانية",
+     "استخدام تقنية timelapse لتسريع العملية الإبداعية",
+     "إدخال عنصر مفاجأة (شخصية شينشان) في منتصف الفيديو",
+     "نص متحرك يحث المشاهد على التفاعل في آخر الفيديو"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 88,
+   "weaknesses": [
+    "Hook duration is 0:00‑0:03 instead of the suggested 0:00‑0:04, slightly reducing initial impact.",
+    "Audio description is vague; lacks explicit mention of pen/brush SFX and the accelerating electronic track that should pause at the twist.",
+    "No explicit reference to the high cut rate (≈30 cuts/min) or rapid transitions that keep energy high.",
+    "CTA segment is 4 seconds long (0:20‑0:24) instead of the 3‑second slot in the DNA, risking a slight loss of momentum.",
+    "Mood is described as \"warm\" which may conflict with the high‑energy electronic vibe of the DNA trend."
+   ],
+   "verdict": "الاقتراح يلتزم بشكل كبير مع DNA الترند من حيث الفكرة، الهيكل البصري، والألوان، لكنه يحتاج إلى تحسينات دقيقة في الصوت، وتيرة القطعات، وتوقيت الافتتاح لضمان أقصى جذب للانتباه."
+  },
+  "_consumedAt": "2026-09-19T23:01:15Z"
+ },
+ {
+  "id": "eye-yEyEnhc8WcY",
+  "topic": "ROBLOX GEARS IRL… 😱 #roblox #gaming #trolling #funny #memes #challenge",
+  "angle": "The gear, instead of destroying the set, releases a hidden stash of Roblox‑themed snacks, ",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "⚙️ عتلة روبلوكس العملاقة في البيت! 😱",
+  "title_en": "Giant Roblox Gear Goes Wild at Home!",
+  "hook_ar": "إنت مش هتصدق اللي حصل لحد ما شوفته!",
+  "hook_en": "You won’t believe what just crashed into my backyard!",
+  "facts_ar": [
+   "روبلكس منصة ألعاب يخلقها المستخدمون وتضم مئات الملايين من اللاعبين النشطين كل شهر.",
+   "التروس داخل روبلوكس تُستعمل في الصنع والقتال داخل اللعبة.",
+   "الفيديوهات القصيرة اللي مدتها أقل من نص دقيقة بتوصل نسبة إكمال أعلى على المنصات الاجتماعية."
+  ],
+  "facts_en": [
+   "Roblox is a user‑generated gaming platform with a massive monthly active community.",
+   "Gears in Roblox serve as crafting and combat items.",
+   "Short‑form videos under half a minute achieve higher completion rates on social platforms."
+  ],
+  "takeaway_ar": {
+   "aql": "الإبداع يخلّي فكرة بسيطة تتحول لتحدي حقيقي.",
+   "qalb": "ضحكة المفاجأة بتقربنا من بعض.",
+   "rouh": "جرّبوا تحدياتكم الخاصة وخليوا المتعة تكبر."
+  },
+  "takeaway_en": {
+   "aql": "Creativity turns a simple idea into a real‑world challenge.",
+   "qalb": "The surprise laugh brings us closer together.",
+   "rouh": "Try your own twists and let the fun grow."
+  },
+  "tags": "روبلكس,تحدي,مقالب,فيديوهات_قصيرة,متعة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [
+   {
+    "time": "0:00-0:03",
+    "scene": "لقطة قريبة لعتلة روبلوكس العملاقة تدور بسرعة، إضاءة نيون ساطعة، وتعبير وجه المبدع المصدوم.",
+    "style": "قريب، قطع سريع، إضاءة عالية التباين.",
+    "colors": [
+     "#ff4d4d",
+     "#00ffcc",
+     "#ffffff"
+    ]
+   },
+   {
+    "time": "0:04-0:07",
+    "scene": "العتلة تسقط ببطء على مسار عقبة مصنوع من مكعبات LEGO، الكاميرا تتحرك ببطء لتبرز الدراما.",
+    "style": "حركة بطيئة، لقطات متتابعة، إضاءة خلفية نيون.",
+    "colors": [
+     "#ff4d4d",
+     "#00ffcc"
+    ]
+   },
+   {
+    "time": "0:08-0:11",
+    "scene": "العتلة تنطلق سلاسل من قنابل الفتات المتفجرة، صوت \"بووم!\" يرافق الانفجار مع رسومات روبلوكس متحركة كستيكرات رد فعل.",
+    "style": "قطع سريع، مؤثرات صوتية جليتشية، رسومات متحركة.",
+    "colors": [
+     "#ff4d4d",
+     "#ffffff"
+    ]
+   },
+   {
+    "time": "0:12-0:15",
+    "scene": "المبدع يوجه إصبعه للكاميرا، يكتب نص سريع على الشاشة: \"تقدروا تغلبوا ده؟\" مع أيقونة اشتراك متلألئة.",
+    "style": "لقطة مباشرة، نص متحرك، إضاءة خفيفة للتركيز على الدعوة.",
+    "colors": [
+     "#00ffcc",
+     "#ffffff"
+    ]
+   }
+  ],
+  "_eye": {
+   "videoId": "yEyEnhc8WcY",
+   "url": "https://youtu.be/yEyEnhc8WcY",
+   "sourceTitle": "ROBLOX GEARS IRL… 😱 #roblox #gaming #trolling #funny #memes #challenge",
+   "sourceChannel": "nobrainjames",
+   "sourceViews": 14888313,
+   "dna": {
+    "hook": {
+     "technique": "shock",
+     "what_happens": "The video opens with a real‑world giant Roblox gear spinning wildly in a backyard, accompanied by a startled scream.",
+     "why_it_works": "Immediate visual surprise combined with a familiar game element triggers curiosity and an adrenaline spike, forcing viewers to stay for the payoff."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 120,
+     "energy_curve": "sharp rise in the first 3 seconds, plateau with comedic tension, spike at the confetti explosion, quick dip for CTA."
+    },
+    "retention_tricks": [
+     "Immediate visual shock in the first 2 seconds.",
+     "Rapid pacing with >2 cuts per second.",
+     "Use of familiar Roblox branding to attract niche audience.",
+     "Mid‑video twist that subverts expectations.",
+     "Clear CTA with on‑screen text and visual cue."
+    ]
+   }
+  },
+  "_critique": {
+   "score": 78,
+   "weaknesses": [
+    "Hook relies on a verbal promise (“You won’t believe…”) rather than an immediate visual shock and startled scream, reducing the initial adrenaline spike.",
+    "The twist deviates from the DNA’s snack‑reveal payoff; it uses confetti explosions only, missing the surprise reward element.",
+    "Audio plan is absent – no mention of energetic teenage voice, high‑tempo electronic music, or glitch SFX, which are key to the DNA’s energy curve.",
+    "Pacing metrics (cuts per second, energy curve) are not specified, making it unclear if the rapid‑cut rhythm (>2 cuts/sec) is achieved.",
+    "CTA wording (“تقدروا تغلبوا ده؟”) is less compelling than the DNA’s direct challenge (“Can you beat this?”) and may not drive the same level of engagement."
+   ],
+   "verdict": "The proposal mirrors the DNA trend’s visual structure and branding very well, but it falls short on the hook’s shock value, the twist’s payoff, and the audio‑pacing details that give the trend its high‑energy retention. Strengthening those areas would push the score into the high 80s or low 90s."
+  },
+  "_consumedAt": "2026-09-20T01:07:00Z"
+ },
+ {
+  "id": "eye-YZWmX1rrfvA",
+  "topic": "GUESS THE DRINK CHALLENGE",
+  "angle": "The final drink is an intentionally disgusting flavor (e.g., hot sauce mixed with soda), c",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "اللي جربته ده خلاني أقذف!",
+  "title_en": "I Tasted THIS and Regret Everything!",
+  "hook_ar": "احزر المشروب الغامض بسرعة!",
+  "hook_en": "Guess the mystery drink fast!",
+  "facts_ar": [
+   "قاعدة واحدة: امسك الكوب وشربه.",
+   "بندلع عيوني مش عارف إيه ده.",
+   "خدته... طعمه غريب جداً يا جماعة."
+  ],
+  "facts_en": [
+   "One rule: grab the cup and drink.",
+   "Blindfolded, absolute chaos incoming.",
+   "Took a sip... weird taste honestly."
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "تحدي, مشروبات, رد فعل, دوش, ترند",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 3.0,
+    "dur": 3.0,
+    "say_ar": "احزر المشروب الغامض بسرعة!",
+    "say_en": "Guess the mystery drink fast!",
+    "visual_query": "man jumping shocked face",
+    "sfx": "whoosh",
+    "on_screen": "احزر المشروب!"
+   },
+   {
+    "t0": 3.0,
+    "t1": 9.0,
+    "dur": 6.0,
+    "say_ar": "قاعدة واحدة: امسك الكوب وشربه.",
+    "say_en": "One rule: grab the cup and drink.",
+    "visual_query": "hands grabbing glass table",
+    "sfx": "impact",
+    "on_screen": "القاعدة: اشرب"
+   },
+   {
+    "t0": 9.0,
+    "t1": 12.0,
+    "dur": 3.0,
+    "say_ar": "بندلع عيوني مش عارف إيه ده.",
+    "say_en": "Blindfolded, absolute chaos incoming.",
+    "visual_query": "hands tying blindfold eyes",
+    "sfx": "pop",
+    "on_screen": "عمى تام"
+   },
+   {
+    "t0": 12.0,
+    "t1": 18.0,
+    "dur": 6.0,
+    "say_ar": "خدته... طعمه غريب جداً يا جماعة.",
+    "say_en": "Took a sip... weird taste honestly.",
+    "visual_query": "closeup drinking from cup",
+    "sfx": "slurp",
+    "on_screen": ""
+   },
+   {
+    "t0": 18.0,
+    "t1": 21.0,
+    "dur": 3.0,
+    "say_ar": "لا استحيوا، ده مش طبيعي!",
+    "say_en": "No way, this is not normal!",
+    "visual_query": "man spitting drink disgusted",
+    "sfx": "spit",
+    "on_screen": "!"
+   },
+   {
+    "t0": 21.0,
+    "t1": 27.0,
+    "dur": 6.0,
+    "say_ar": "ليش حاططوا لي ده في الكوب؟",
+    "say_en": "Why did you put this in my cup?",
+    "visual_query": "man laughing confused face",
+    "sfx": "laugh",
+    "on_screen": ""
+   },
+   {
+    "t0": 27.0,
+    "t1": 30.0,
+    "dur": 3.0,
+    "say_ar": "الثاني أحسن، بس لسه مش عارف.",
+    "say_en": "Second one better, but still clueless.",
+    "visual_query": "man sipping soda happy",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 30.0,
+    "t1": 36.0,
+    "dur": 6.0,
+    "say_ar": "يا إلهي، ده حار نار حقيقية.",
+    "say_en": "Oh god, this is actual fire.",
+    "visual_query": "man holding hot drink face",
+    "sfx": "fire",
+    "on_screen": "🔥 حار"
+   },
+   {
+    "t0": 36.0,
+    "t1": 39.0,
+    "dur": 3.0,
+    "say_ar": "مفيش طعم ده، ده تربس!",
+    "say_en": "No flavor, this is pure trash!",
+    "visual_query": "man throwing cup away",
+    "sfx": "impact",
+    "on_screen": "🗑️"
+   },
+   {
+    "t0": 39.0,
+    "t1": 45.0,
+    "dur": 6.0,
+    "say_ar": "اللي جاي ده هيكسرني أكيد.",
+    "say_en": "This next one is gonna break me.",
+    "visual_query": "man nervous looking at cup",
+    "sfx": "tension",
+    "on_screen": ""
+   },
+   {
+    "t0": 45.0,
+    "t1": 48.0,
+    "dur": 3.0,
+    "say_ar": "ده مش مشروب، ده سم سائل!",
+    "say_en": "This isn't a drink, it's poison!",
+    "visual_query": "green liquid in glass",
+    "sfx": "disgust",
+    "on_screen": "☠️"
+   },
+   {
+    "t0": 48.0,
+    "t1": 53.0,
+    "dur": 5.0,
+    "say_ar": "قولي اسم المشروب اللي عايز تجربته!",
+    "say_en": "Tell me the drink you want next!",
+    "visual_query": "man pointing at camera",
+    "sfx": "ding",
+    "on_screen": "اكتب في الكومنتات"
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "YZWmX1rrfvA",
+   "url": "https://youtu.be/YZWmX1rrfvA",
+   "sourceTitle": "GUESS THE DRINK CHALLENGE",
+   "sourceChannel": "IShowSpeed",
+   "sourceViews": 13425330,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "Speed is blindfolded and forced to guess a series of mystery drinks while reacting wildly.",
+     "why_it_works": "The immediate question creates curiosity, while the promise of exaggerated reactions triggers viewers to stay for the payoff."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 140,
+     "energy_curve": "sharp rise in the first 5 seconds → steady high plateau during tasting → spike at the twist → slight dip with CTA"
+    },
+    "retention_tricks": [
+     "Immediate question hook",
+     "Rapid‑cut editing (≈2‑3 s per beat)",
+     "Micro‑cliffhangers after each drink",
+     "Exaggerated facial reactions with visual emojis",
+     "Direct CTA encouraging comments"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 68,
+   "weaknesses": [
+    "Pacing is too slow – only 12 beats in 53 s, far below the 140 cuts/minute DNA benchmark.",
+    "Lacks rapid jump‑cuts and micro‑cliffhangers after each drink, reducing the sense of urgency.",
+    "Visual language is minimal: few emojis, no on‑screen graphics, and limited text overlays.",
+    "Audio cues are under‑developed; no clear high‑energy voice‑over or dynamic sound‑effects.",
+    "The twist (poison) is predictable and not as shocking as the DNA example’s extreme flavor."
+   ],
+   "verdict": null,
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  },
+  "_consumedAt": "2026-09-20T03:34:50Z"
+ },
+ {
+  "id": "eye-YZWmX1rrfvA",
+  "topic": "GUESS THE DRINK CHALLENGE",
+  "angle": "After several wrong guesses, Speed finally nails the last drink, and the video freezes on ",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "تحدي المشروبات المجنونة مع Speed",
+  "title_en": "Crazy Drink Guess Challenge!",
+  "hook_ar": "يلا يا جماعة، تحدي المشروبات!",
+  "hook_en": "Let's go, drink challenge!",
+  "facts_ar": [
+   "أول مشروب ييجي، شوف رد فعلي!",
+   "أظنها كوكاكولا، يا ريت!",
+   "خطأ! صوت البازر يطقطق!"
+  ],
+  "facts_en": [
+   "First drink arrives, watch my reaction!",
+   "I think it's cola, right!",
+   "Wrong! Buzzer sounds!"
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "تحدي,مشروبات,ضحك,سرعة,مفاجأة",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 3.0,
+    "dur": 3.0,
+    "say_ar": "يلا يا جماعة، تحدي المشروبات!",
+    "say_en": "Let's go, drink challenge!",
+    "visual_query": "young man shouting",
+    "sfx": "whoosh",
+    "on_screen": "إختر المشروب!"
+   },
+   {
+    "t0": 3.0,
+    "t1": 9.0,
+    "dur": 6.0,
+    "say_ar": "أول مشروب ييجي، شوف رد فعلي!",
+    "say_en": "First drink arrives, watch my reaction!",
+    "visual_query": "drink being poured closeup",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 9.0,
+    "t1": 12.0,
+    "dur": 3.0,
+    "say_ar": "أظنها كوكاكولا، يا ريت!",
+    "say_en": "I think it's cola, right!",
+    "visual_query": "man guessing",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 12.0,
+    "t1": 18.0,
+    "dur": 6.0,
+    "say_ar": "خطأ! صوت البازر يطقطق!",
+    "say_en": "Wrong! Buzzer sounds!",
+    "visual_query": "buzzer graphic",
+    "sfx": "impact",
+    "on_screen": "خطأ!"
+   },
+   {
+    "t0": 18.0,
+    "t1": 21.0,
+    "dur": 3.0,
+    "say_ar": "المشروب التاني، ضحكة صريحة!",
+    "say_en": "Second drink, big laugh!",
+    "visual_query": "laughing reaction",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 21.0,
+    "t1": 27.0,
+    "dur": 6.0,
+    "say_ar": "أقول عصير مانجا؟ غلط!",
+    "say_en": "Mango juice? Nope!",
+    "visual_query": "wrong answer stamp",
+    "sfx": "impact",
+    "on_screen": "غلط!"
+   },
+   {
+    "t0": 27.0,
+    "t1": 30.0,
+    "dur": 3.0,
+    "say_ar": "تالت مشروب، واو، إقرف!",
+    "say_en": "Third drink, yuck!",
+    "visual_query": "disgusted face",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 30.0,
+    "t1": 36.0,
+    "dur": 6.0,
+    "say_ar": "أحزر شاي بارد؟ لا!",
+    "say_en": "Cold tea? No!",
+    "visual_query": "wrong stamp",
+    "sfx": "impact",
+    "on_screen": "غلط!"
+   },
+   {
+    "t0": 36.0,
+    "t1": 39.0,
+    "dur": 3.0,
+    "say_ar": "المشروب الرابع، عجبني بجد!",
+    "say_en": "Fourth drink, really liked it!",
+    "visual_query": "surprised reaction",
+    "sfx": "pop",
+    "on_screen": ""
+   },
+   {
+    "t0": 39.0,
+    "t1": 45.0,
+    "dur": 6.0,
+    "say_ar": "أخيرًا صح! مشروب سري!",
+    "say_en": "Finally right! Secret drink!",
+    "visual_query": "slow motion shocked",
+    "sfx": "whoosh",
+    "on_screen": "صحيح!"
+   },
+   {
+    "t0": 45.0,
+    "t1": 48.0,
+    "dur": 3.0,
+    "say_ar": "الاشتراك دلوقتي، يلا شاركونا!",
+    "say_en": "Subscribe now, join us!",
+    "visual_query": "pointing subscribe button",
+    "sfx": "pop",
+    "on_screen": "اشترك"
+   },
+   {
+    "t0": 48.0,
+    "t1": 53.0,
+    "dur": 5.0,
+    "say_ar": "لحظات سريعة، إضحكوا معانا!",
+    "say_en": "Quick moments, laugh with us!",
+    "visual_query": "quick montage clips",
+    "sfx": "pop",
+    "on_screen": ""
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "YZWmX1rrfvA",
+   "url": "https://youtu.be/YZWmX1rrfvA",
+   "sourceTitle": "GUESS THE DRINK CHALLENGE",
+   "sourceChannel": "IShowSpeed",
+   "sourceViews": 13425330,
+   "dna": {
+    "hook": {
+     "technique": "question",
+     "what_happens": "IShowSpeed is blindfolded and forced to guess a series of mystery drinks while the camera zooms in on his frantic reactions.",
+     "why_it_works": "The immediate question creates curiosity, while Speed's unpredictable facial expressions promise humor and surprise, compelling viewers to stay for the answer."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 150,
+     "energy_curve": "sharp rise in the first 5 seconds (hook), steady high energy through rapid cuts, spike at the final reveal, quick dip into CTA."
+    },
+    "retention_tricks": [
+     "Immediate question hook",
+     "Fast cuts and visual punchlines every 2‑3 seconds",
+     "Unexpected wrong‑guess reveals with buzzer sound",
+     "Humorous facial reactions that encourage replay",
+     "Clear CTA that ties back to the high‑energy climax"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 70,
+   "weaknesses": [
+    "Lacks a curiosity‑driving question hook that instantly grabs attention, no blindfold element to add novelty, camera style not specified (missing handheld rapid cuts), overall cuts per minute far below the 150 cuts/min target, missing high‑energy trap beat and celebratory chime for the correct guess, buzzer sound effect is only an impact rather than a distinct buzzer, visual language (dominant colors, stickers) not fully leveraged, audio energy curve not mapped to beats, retention tricks such as rapid visual punchlines every 2‑3 seconds are underutilized"
+   ],
+   "verdict": "The episode captures the core structure of the DNA trend—quick hook, escalating guesses, comedic reactions, and a payoff—but falls short on the high‑energy pacing, question hook, and audio/visual flair that make the original format so engaging. Boosting cut frequency, adding a question hook, incorporating a blindfold, and tightening the audio cues would raise the score significantly.",
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  },
+  "_consumedAt": "2026-09-20T04:54:13Z"
+ },
+ {
+  "id": "eye-SqvtLWz9eDg",
+  "topic": "Animal Fact Time! 🦑 #learn #animals #kids #shorts",
+  "angle": "The squid’s ability to change color in a split second using chromatophores is revealed, tu",
+  "origin": "eye",
+  "status": "scripted",
+  "title_ar": "حبار يبهرك بألوانه السحرية!",
+  "title_en": "Mesmerizing Color‑Changing Squid!",
+  "hook_ar": "شوفوا الحبار اللامع ده!",
+  "hook_en": "Check out this glowing squid!",
+  "facts_ar": [
+   "الحبار عنده ثلاث قلوب",
+   "شوفوا أذرعه تتقلب بسرعة",
+   "إحنا بنكشف أسرار الحبار"
+  ],
+  "facts_en": [
+   "Squids have three hearts.",
+   "Watch its arms flicker fast.",
+   "Unveiling squid secrets."
+  ],
+  "takeaway_ar": null,
+  "takeaway_en": null,
+  "tags": "حبار,حقائق,حيوانات,تعلم,شورت",
+  "mood": "crazy",
+  "_kind": "eye",
+  "_visual_plan": [],
+  "shots": [
+   {
+    "t0": 0.0,
+    "t1": 2.0,
+    "dur": 2.0,
+    "say_ar": "شوفوا الحبار اللامع ده!",
+    "say_en": "Check out this glowing squid!",
+    "visual_query": "glowing squid closeup",
+    "visual_query2": "neon squid reveal",
+    "sfx": "whoosh",
+    "on_screen": "هل تعرف…؟"
+   },
+   {
+    "t0": 2.0,
+    "t1": 6.0,
+    "dur": 4.0,
+    "say_ar": "الحبار عنده ثلاث قلوب",
+    "say_en": "Squids have three hearts.",
+    "visual_query": "squid heart illustration",
+    "visual_query2": "squid anatomy closeup",
+    "sfx": "pop",
+    "on_screen": "ثلاث قلوب"
+   },
+   {
+    "t0": 6.0,
+    "t1": 8.0,
+    "dur": 2.0,
+    "say_ar": "شوفوا أذرعه تتقلب بسرعة",
+    "say_en": "Watch its arms flicker fast.",
+    "visual_query": "squid arms closeup",
+    "visual_query2": "squid tentacles motion",
+    "sfx": "splash",
+    "on_screen": ""
+   },
+   {
+    "t0": 8.0,
+    "t1": 12.0,
+    "dur": 4.0,
+    "say_ar": "إحنا بنكشف أسرار الحبار",
+    "say_en": "Unveiling squid secrets.",
+    "visual_query": "squid montage fast",
+    "visual_query2": "quick squid clips",
+    "sfx": "impact",
+    "on_screen": ""
+   },
+   {
+    "t0": 12.0,
+    "t1": 14.0,
+    "dur": 2.0,
+    "say_ar": "اللون بيتبدل من أزرق لأحمر!",
+    "say_en": "It flips from blue to orange!",
+    "visual_query": "squid color change",
+    "visual_query2": "squid chroma shift",
+    "sfx": "whoosh",
+    "on_screen": "لون سحري"
+   },
+   {
+    "t0": 14.0,
+    "t1": 18.0,
+    "dur": 4.0,
+    "say_ar": "ده بسبب خلايا الصباغ في جلده",
+    "say_en": "Thanks to chromatophore cells.",
+    "visual_query": "squid skin cells",
+    "visual_query2": "chromatophore closeup",
+    "sfx": "",
+    "on_screen": "خلايا الصباغ"
+   },
+   {
+    "t0": 18.0,
+    "t1": 20.0,
+    "dur": 2.0,
+    "say_ar": "الخلايا دي بتتحكم في اللون",
+    "say_en": "These cells control its color.",
+    "visual_query": "animated arrows squid",
+    "visual_query2": "color diagram overlay",
+    "sfx": "pop",
+    "on_screen": "تحكم اللون"
+   },
+   {
+    "t0": 20.0,
+    "t1": 24.0,
+    "dur": 4.0,
+    "say_ar": "الحبار يخلّيه يختفي من الأعداء",
+    "say_en": "It helps them hide from predators.",
+    "visual_query": "squid camouflaging",
+    "visual_query2": "squid blending background",
+    "sfx": "",
+    "on_screen": ""
+   },
+   {
+    "t0": 24.0,
+    "t1": 26.0,
+    "dur": 2.0,
+    "say_ar": "أكبر حبار بطول فوق عشر متر",
+    "say_en": "The biggest squid can grow huge.",
+    "visual_query": "giant squid size",
+    "visual_query2": "large squid swimming",
+    "sfx": "impact",
+    "on_screen": "طول هائل"
+   },
+   {
+    "t0": 26.0,
+    "t1": 30.0,
+    "dur": 4.0,
+    "say_ar": "بيتحرك بدفع المية من فمه",
+    "say_en": "It jets water to move.",
+    "visual_query": "squid jet propulsion",
+    "visual_query2": "squid water jet",
+    "sfx": "whoosh",
+    "on_screen": ""
+   },
+   {
+    "t0": 30.0,
+    "t1": 32.0,
+    "dur": 2.0,
+    "say_ar": "عايزين أكتر؟ دوس لايك!",
+    "say_en": "Want more? Hit like!",
+    "visual_query": "hand tapping like",
+    "visual_query2": "emoji bounce",
+    "sfx": "pop",
+    "on_screen": "دوس لايك"
+   },
+   {
+    "t0": 32.0,
+    "t1": 36.0,
+    "dur": 4.0,
+    "say_ar": "متنسوش تشتركوا عشان حقائق أكتر",
+    "say_en": "Subscribe for more facts!",
+    "visual_query": "subscribe button animation",
+    "visual_query2": "call to action graphic",
+    "sfx": "whoosh",
+    "on_screen": "اشترك الآن"
+   }
+  ],
+  "_replication": true,
+  "_eye": {
+   "videoId": "SqvtLWz9eDg",
+   "url": "https://youtu.be/SqvtLWz9eDg",
+   "sourceTitle": "Animal Fact Time! 🦑 #learn #animals #kids #shorts",
+   "sourceChannel": "DarDar - SuperHero",
+   "sourceViews": 14567011,
+   "dna": {
+    "hook": {
+     "technique": "visual_curiosity",
+     "what_happens": "A neon‑glowing squid bursts onto the screen, its mantle opening like a fireworks display.",
+     "why_it_works": "The sudden burst of bright color and movement creates an immediate visual surprise that forces the viewer to stop scrolling."
+    },
+    "pacing": {
+     "estimated_cuts_per_minute": 45,
+     "energy_curve": "sharp rise at 0:00‑0:04, steady high plateau through 0:04‑0:30, slight dip for CTA at 0:30‑0:36"
+    },
+    "retention_tricks": [
+     "Immediate visual shock",
+     "Question hook",
+     "Rapid cut rhythm",
+     "On‑screen text reinforcement",
+     "Surprise twist (color change)",
+     "Clear CTA with emoji"
+    ]
+   }
+  },
+  "_critique": {
+   "score": 68,
+   "weaknesses": [
+    "Pacing is too slow – only ~16 cuts per minute compared to the DNA trend’s 45 cuts/min, risking viewer drop‑off before the climax.",
+    "The visual language lacks the neon‑glow, high‑contrast macro shots and animated arrows that make the DNA hook so compelling.",
+    "Audio cues and voice style are not defined; the narration may feel flat without an enthusiastic, child‑friendly tone and background music.",
+    "The payoff segment (chromatophore explanation) is brief and lacks visual reinforcement (e.g., animated arrows or diagram overlays) that would deepen understanding.",
+    "The CTA is split into two separate beats (like and subscribe) instead of a single energetic, emoji‑rich prompt, diluting the impact."
+   ],
+   "verdict": "The episode has a solid foundation and covers the essential facts, but it falls short of the DNA trend’s high‑energy, rapid‑cut, visually striking standard. To reach a top score, tighten the pacing, amplify the neon visual shock, add animated graphics for the payoff, and define a lively audio style.",
+   "note": "تقليد لحظة-بلحظة — السكربت من اللقطات"
+  },
+  "_consumedAt": "2026-09-20T13:45:31Z"
+ }
 ]
