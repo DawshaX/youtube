@@ -53,3 +53,69 @@ class PromoteTest(unittest.TestCase):
         import scripts.factory_loop as fl
         src = inspect.getsource(fl.cycle_once)
         self.assertIn("published_today_pt() >= (settings.DAILY_CAP", src)
+
+
+class VaultGuardTest(unittest.TestCase):
+    """حراسة المخزون: مفيش حلقة بلا لقطات حية تتنشر.
+
+    بق حقيقي (2026-09-20): حلقة تقليد IShowSpeed اتخزنت وهي كلها خلفيات
+    مولّدة (صفر لقطة حية) وكانت هتتنشر أول ما الكوتة تفتح.
+    """
+
+    def test_pick_next_skips_zero_live(self):
+        from xtrendaw import github_store as g
+        entries = [
+            {"name": "q100.mp4", "meta": {"live_clips": 0, "kind": "eye", "shots": 12}},
+            {"name": "q200.mp4", "meta": {"live_clips": 4, "kind": "trend"}},
+        ]
+        self.assertEqual(g.pick_next(entries)["name"], "q200.mp4")
+
+    def test_pick_next_prefers_replication(self):
+        from xtrendaw import github_store as g
+        entries = [
+            {"name": "q100.mp4", "meta": {"live_clips": 3, "kind": "trend"}},
+            {"name": "q300.mp4", "meta": {"live_clips": 6, "kind": "eye", "shots": 9}},
+        ]
+        self.assertEqual(g.pick_next(entries)["name"], "q300.mp4")
+
+    def test_pick_next_unknown_meta_still_allowed(self):
+        """حلقة قديمة بلا تسجيل ميديا (زي q1789834592) تتسمح عادي."""
+        from xtrendaw import github_store as g
+        entries = [{"name": "q100.mp4", "meta": {}},
+                   {"name": "q050.mp4", "meta": {"credits": []}}]
+        self.assertEqual(g.pick_next(entries)["name"], "q050.mp4")
+
+    def test_pick_next_all_dead_returns_none(self):
+        from xtrendaw import github_store as g
+        self.assertIsNone(g.pick_next([{"name": "q1.mp4", "meta": {"live_clips": 0}}]))
+        self.assertIsNone(g.pick_next([]))
+
+    def test_dead_vault_assets_lists_only_zero_live(self):
+        from xtrendaw import github_store as g
+        dead = g.dead_vault_assets([
+            {"name": "q1.mp4", "meta": {"live_clips": 0}},
+            {"name": "q2.mp4", "meta": {"live_clips": 2}},
+            {"name": "q3.mp4", "meta": {}},
+        ])
+        self.assertEqual([d["name"] for d in dead], ["q1.mp4"])
+
+    def test_factory_records_live_clips_in_meta(self):
+        import inspect
+        from scripts import factory_loop
+        src = inspect.getsource(factory_loop)
+        self.assertIn('"live_clips": int(_ms.get("video") or 0)', src)
+
+    def test_unverified_replication_is_skipped(self):
+        """تقليد بشhots من غير إثبات لقطات حية = ما ينشرش (حماية إضافية)."""
+        from xtrendaw import github_store as g
+        entries = [
+            {"name": "q100.mp4", "meta": {"kind": "eye", "shots": 12, "_eye": {}}},
+            {"name": "q200.mp4", "meta": {"kind": "eye", "shots": 3, "live_clips": 7}},
+        ]
+        self.assertEqual(g.pick_next(entries)["name"], "q200.mp4")
+
+    def test_old_episode_without_meta_field_still_ok(self):
+        """حلقة قديمة (kind=eye بلا shots) مش تقليد ← تتسمح."""
+        from xtrendaw import github_store as g
+        e = [{"name": "q100.mp4", "meta": {"kind": "eye", "credits": []}}]
+        self.assertEqual(g.pick_next(e)["name"], "q100.mp4")
