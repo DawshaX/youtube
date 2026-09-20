@@ -1,5 +1,5 @@
 {
- "cycles": 20,
+ "cycles": 21,
  "renders": [
   {
    "at": "00:19",
@@ -87,6 +87,12 @@
    "video": "/home/runner/work/youtube/youtube/content/vids/auto-a15df06703.mp4",
    "ok": true,
    "sec": 505
+  },
+  {
+   "at": "12:47",
+   "video": "/home/runner/work/youtube/youtube/content/vids/eye-g8cRXvfHCcs.mp4",
+   "ok": true,
+   "sec": 649
   }
  ],
  "publish_attempts": [
@@ -187,6 +193,12 @@
    "topic": "auto-a15df06703",
    "ok": true,
    "why": "published"
+  },
+  {
+   "at": "12:47",
+   "topic": "eye-g8cRXvfHCcs",
+   "ok": true,
+   "why": "published"
   }
  ],
  "radar": [
@@ -278,6 +290,10 @@
   },
   {
    "at": "09:51",
+   "ok": true
+  },
+  {
+   "at": "12:47",
    "ok": true
   }
  ],
@@ -381,9 +397,14 @@
    "at": "09:51",
    "rc": -1,
    "err": "TimeoutExpired"
+  },
+  {
+   "at": "12:47",
+   "rc": -1,
+   "err": "TimeoutExpired"
   }
  ],
- "last_cycle_at": "2026-09-20 09:51:55",
+ "last_cycle_at": "2026-09-20 12:47:21",
  "last_commit": "saved",
  "last_error": "2026-09-19 00:34:44",
  "dubs": [
@@ -439,6 +460,12 @@
    "at": "09:51",
    "ok": false,
    "err": "KeyError"
+  },
+  {
+   "at": "12:47",
+   "lang": "en",
+   "topic": "eye-g8cRXvfHCcs-en",
+   "ok": true
   }
  ]
 }
