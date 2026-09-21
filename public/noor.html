@@ -22,7 +22,13 @@
   main{max-width:1000px;margin:0 auto;padding:18px 16px 60px}
   .hero{margin:22px 0 30px;border-radius:20px;overflow:hidden;background:#000;
         box-shadow:0 24px 60px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.06)}
-  .hero video{width:100%;max-height:72vh;display:block;background:#000}
+  .frame{width:100%;aspect-ratio:9/16;max-height:74vh;background:#000;display:flex;
+         align-items:center;justify-content:center;overflow:hidden}
+  .frame iframe{width:100%;height:100%;border:0}
+  .frame img{width:100%;height:100%;object-fit:cover}
+  .wait{position:relative;text-align:center;padding:26px}
+  .wait .pulse{font-size:15px;color:var(--gold);line-height:2}
+  .wait small{display:block;margin-top:10px;color:var(--mut);font-size:12.5px;line-height:1.9}
   .meta{padding:14px 16px 18px}
   .meta h2{font-size:19px;line-height:1.7;font-weight:700}
   .chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--mut)}
@@ -53,7 +59,7 @@
 
 <main>
   <div id="heroWrap" class="hero" hidden>
-    <video id="hero" controls playsinline preload="metadata"></video>
+    <div id="heroShell" class="frame"></div>
     <div class="meta">
       <h2 id="heroTitle">…</h2>
       <div class="chips" id="heroChips"></div>
@@ -82,14 +88,24 @@ const fmt = s => {
   const m = Math.floor(s/60), r = Math.round(s%60);
   return m ? `${m}:${String(r).padStart(2,"0")} د` : `${r} ث`;
 };
+const ytId = u => (String(u||"").match(/(?:v=|\/shorts\/|youtu\.be\/)([A-Za-z0-9_-]{6,})/)||[])[1] || "";
 fetch("./noor.json", {cache:"no-store"}).then(r=>r.json()).then(d=>{
   const items = (d.episodes||[]).filter(x=>x.video_url||x.youtube);
   if(!items.length){document.getElementById("empty").hidden=false;return;}
   const top = items[0];
   const hw = document.getElementById("heroWrap");
-  const hv = document.getElementById("hero");
-  hv.src = top.video_url || "";
-  hv.poster = top.cover_url || "";
+  const shell = document.getElementById("heroShell");
+  const tid = ytId(top.youtube);
+  if(tid){
+    shell.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${tid}?rel=0&playsinline=1"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen loading="lazy" title="${(top.title||"").replace(/"/g,"")}"></iframe>`;
+  }else if(top.cover_url){
+    shell.innerHTML = `<img src="${top.cover_url}" alt="">`;
+  }else{
+    shell.innerHTML = `<div class="wait"><div class="pulse">⏳ الحلقة الجديدة في الطابور<br>هنا في الشورت الجاي</div>
+      <small>المصنع بيكمّل شغل كل ساعة · الحلقات بتنزل على القناة أول ما وقت النشر يوصل</small></div>`;
+  }
   document.getElementById("heroTitle").innerHTML = top.title || "";
   const chips = [
     AR_KIND[top.kind] || "حلقة",
@@ -105,14 +121,15 @@ fetch("./noor.json", {cache:"no-store"}).then(r=>r.json()).then(d=>{
   hw.hidden = false;
 
   document.getElementById("grid").innerHTML = items.slice(1, 13).map(e=>{
+    const id = ytId(e.youtube);
     const href = e.youtube || e.video_url || "#";
-    const cover = e.cover_url || "";
+    const cover = (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : (e.cover_url || ""));
     return `<a class="card" href="${href}" target="_blank" rel="noopener">
       ${cover?`<img class="thumb" src="${cover}" loading="lazy" alt="">`:""}
       <div class="row">
         <b>${e.title || "حلقة"}</b>
         <span>${[AR_KIND[e.kind]||"", e.theme||"", e.duration?fmt(e.duration):""].filter(Boolean).join(" · ")}</span>
-        <span>${e.at||""}</span>
+        <span>${id ? "▶ على يوتيوب" : "🕒 في طابور النشر"} · ${e.at||""}</span>
       </div></a>`;
   }).join("");
 }).catch(()=>{document.getElementById("empty").hidden=false;});

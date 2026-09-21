@@ -301,8 +301,12 @@ def _site_sync() -> None:
         except Exception:
             spare = []
         eps = []
+        import re as _re
         for s in reversed(st.get("shorts", [])[-40:]):
-            eps.append({"title": s.get("title", ""), "kind": s.get("kind", "ayah"),
+            _yt = s.get("url", "") or ""
+            _m = _re.search(r"(?:v=|/shorts/|youtu\.be/)([A-Za-z0-9_-]{6,})", _yt)
+            eps.append({"yt_id": _m.group(1) if _m else "",
+                        "title": s.get("title", ""), "kind": s.get("kind", "ayah"),
                         "theme": s.get("theme", ""),
                         "reciter_name": REC_NAMES.get(s.get("reciter", ""), ""),
                         "duration": float(s.get("duration") or 0),
