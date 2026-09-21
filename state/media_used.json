@@ -1963,5 +1963,35 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-09-21 17:14"
+ },
+ "https://cdn.pixabay.com/video/2023/07/05/170258-843059148_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-21 18:01"
+ },
+ "clipcache:6dec21db24f8": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-21 18:01"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cc/Ghana_National_Mosque%2C_Kanda_at_night.jpg/1280px-Ghana_National_Mosque%2C_Kanda_at_night.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque architecture night",
+  "at": "2026-09-21 18:01"
+ },
+ "https://videos.pexels.com/video-files/7043523/7043523-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-21 18:02"
+ },
+ "clipcache:1dbee78fdae9": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-21 18:02"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Nova_vas%2C_Pol%C5%BEevo_04-edited.jpg/1280px-Nova_vas%2C_Pol%C5%BEevo_04-edited.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "sunset silhouette meditation",
+  "at": "2026-09-21 18:02"
  }
 }

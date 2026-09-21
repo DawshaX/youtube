@@ -51,9 +51,22 @@
    "err": "quota_guard",
    "at": "2026-09-21 17:15",
    "duration": 20.9
+  },
+  {
+   "id": "ayah-29-45",
+   "kind": "reel",
+   "theme": "ذكر",
+   "title": "الصلاة مش عادة… 🕌 | ذكر 🤍",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790013674/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790014002.mp4",
+   "err": "quota_guard",
+   "at": "2026-09-21 18:06",
+   "duration": 120.0
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-55-13"
+ "last_try": "ayah-29-45"
 }
