@@ -66,7 +66,19 @@ def _slots() -> list[int]:
     تنشر على مدار اليوم كله، بنرفع الرفعة وبنحجزها على الساعة الجاية في
     القائمة (publishAt) — فالجمهور يشوف نشر متوزّع، والحصة محترمة.
     """
-    raw = os.environ.get("NOOR_SLOTS", "5,9,13,16,19,22")
+    from xtrendaw import settings
+    # لو القناة بقى عندها أكتر من مشروع جوجل (حصة أكبر) → مواعيد أكتر تلقائيًا:
+    #  24 رفعة/يوم (4 مشاريع) = نشرة كل ساعة بالظبط
+    #  12 رفعة/يوم (مشروعين)   = نشرة كل ساعتين
+    cap = settings.YOUTUBE_DAILY_CAPACITY
+    raw = os.environ.get("NOOR_SLOTS", "")
+    if not raw:
+        if cap >= 24:
+            raw = ",".join(str(h) for h in range(24))
+        elif cap >= 12:
+            raw = ",".join(str(h) for h in range(0, 24, 2))
+        else:
+            raw = "5,9,13,16,19,22"
     out = []
     for x in raw.split(","):
         try:

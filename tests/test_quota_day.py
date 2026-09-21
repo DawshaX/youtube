@@ -61,7 +61,7 @@ class UploaderQuotaTest(unittest.TestCase):
         tmp = pathlib.Path(tempfile.mkdtemp()) / "v.mp4"
         tmp.write_bytes(b"x")
         with unittest.mock.patch.object(yt.settings, "has_youtube", lambda: True), \
-             unittest.mock.patch.object(yt, "_token", lambda: "tok"), \
+             unittest.mock.patch.object(yt, "_token", lambda *a, **k: "tok"), \
              unittest.mock.patch.object(yt.requests, "post", lambda *a, **k: R()):
             return yt.publish(tmp, "عنوان", "وصف", ["وسم"])
 

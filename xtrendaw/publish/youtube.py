@@ -10,13 +10,23 @@ import os
 import requests
 from .. import settings
 
-def _token():
+def _token(acc: dict | None = None):
+    """توكن وصول لحساب الرفع (المشروع الأساسي افتراضيًا)."""
+    acc = acc or settings.YOUTUBE
     r = requests.post("https://oauth2.googleapis.com/token", data={
-        "client_id": settings.YOUTUBE["client_id"],
-        "client_secret": settings.YOUTUBE["client_secret"],
-        "refresh_token": settings.YOUTUBE["refresh_token"],
+        "client_id": acc["client_id"],
+        "client_secret": acc["client_secret"],
+        "refresh_token": acc["refresh_token"],
         "grant_type": "refresh_token"}, timeout=30)
     return r.json().get("access_token") if r.ok else None
+
+
+def _reason_of(init) -> str:
+    try:
+        return str(((init.json().get("error") or {}).get("errors") or [{}])[0]
+                   .get("reason") or "")
+    except Exception:                             # noqa: BLE001
+        return ""
 
 def publish(video_path, title, caption, tags, cover=None,
             synthetic: bool = False, category: str = "27",
@@ -28,14 +38,10 @@ def publish(video_path, title, caption, tags, cover=None,
     """
     if not settings.has_youtube():
         return None, "no_credentials"
-    tok = _token()
-    if not tok:
-        return None, "refresh_failed"
-    _status = {"privacyStatus": "public", "selfDeclaredMadeForKids": False,
-               "containsSyntheticMedia": bool(synthetic)}
-    if publish_at:
-        _status["privacyStatus"] = "private"
-        _status["publishAt"] = publish_at
+    # ترتيب الأفضلية: الحسابات المرقّمة (مشاريع جوجل الإضافية) → وإلا المشروع
+    # الأساسي مباشرة (توافق كامل مع أي إعداد قديم أو اختبار).
+    accounts = list(settings.YOUTUBE_ACCOUNTS) or [settings.YOUTUBE]
+
     def _meta(status: dict) -> dict:
         return {"snippet": {"title": title[:100], "description": caption[:4900],
                             "tags": tags[:15], "categoryId": category,
@@ -43,42 +49,65 @@ def publish(video_path, title, caption, tags, cover=None,
                             "defaultAudioLanguage": "ar"},
                 "status": status}
 
-    meta = _meta(_status)
-    init = requests.post(
-        "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
-        headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json",
-                 "X-Upload-Content-Type": "video/mp4",
-                 "X-Upload-Content-Length": str(video_path.stat().st_size)},
-        json=meta, timeout=60)
-    if init.status_code != 200:
-        # فرّق بين «الحصة خلصت» و«رفض تاني» — الكوتة بتتفتح لوحدها،
-        # والفرق ده بيخلّي المصنع يهدى بدل ما يحاول ويحاول بلا فايدة.
-        try:
-            _why = (init.json().get("error", {}).get("errors") or [{}])[0]
-            _reason = str(_why.get("reason") or "")
-        except Exception:
-            _reason = ""
-        # ⚠️ أمان: لو جوجل رفض الجدولة (publishAt) لأي سبب (إعدادات القناة مثلًا)
-        # بنرفع فورًا بدل ما نضيّع الحلقة — النشر المباشر مقبول دايمًا.
-        if publish_at and init.status_code == 400:
+    _status = {"privacyStatus": "public", "selfDeclaredMadeForKids": False,
+               "containsSyntheticMedia": bool(synthetic)}
+    if publish_at:
+        _status["privacyStatus"] = "private"
+        _status["publishAt"] = publish_at
+
+    URL = ("https://www.googleapis.com/upload/youtube/v3/videos"
+           "?uploadType=resumable&part=snippet,status")
+    init = tok = None
+    last = "init_?"
+    # 🔁 تناوب مشاريع جوجل: كل مشروع ليه حصته اليومية (6 رفعات). لو مشروع
+    # خلصت حصته، بنكمّل بالمشروع اللي بعده تلقائيًا — يعني قناة تنشر كل ساعة
+    # لو صاحبها ضاف 4 مشاريع، بلا أي تدخّل يدوي.
+    for i, acc in enumerate(accounts):
+        tk = _token(acc)
+        if not tk:
+            last = "refresh_failed"
+            continue
+        init = requests.post(
+            URL, headers={"Authorization": f"Bearer {tk}",
+                          "Content-Type": "application/json",
+                          "X-Upload-Content-Type": "video/mp4",
+                          "X-Upload-Content-Length": str(video_path.stat().st_size)},
+            json=_meta(_status), timeout=60)
+        if init.status_code == 200:
+            tok = tk
+            if i:
+                print(f"[yt] ↪ رفعت من «{acc.get('label')}» (المشروع الأساسي "
+                      f"حصته خلصت)", flush=True)
+            break
+        reason = _reason_of(init)
+        if init.status_code == 400 and publish_at:
+            # جوجل رفض الجدولة → نرفع فورًا بدل ما نضيّع الحلقة
             print("SCHEDULE-rejected → نشر فوري", flush=True)
+            _fallback = {"privacyStatus": "public",
+                         "selfDeclaredMadeForKids": False,
+                         "containsSyntheticMedia": bool(synthetic)}
             init = requests.post(
-                "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
-                headers={"Authorization": f"Bearer {tok}",
-                         "Content-Type": "application/json",
-                         "X-Upload-Content-Type": "video/mp4",
-                         "X-Upload-Content-Length": str(video_path.stat().st_size)},
-                json=_meta({"privacyStatus": "public",
-                            "selfDeclaredMadeForKids": False,
-                            "containsSyntheticMedia": bool(synthetic)}),
-                timeout=60)
+                URL, headers={"Authorization": f"Bearer {tk}",
+                              "Content-Type": "application/json",
+                              "X-Upload-Content-Type": "video/mp4",
+                              "X-Upload-Content-Length":
+                                  str(video_path.stat().st_size)},
+                json=_meta(_fallback), timeout=60)
             if init.status_code == 200:
                 publish_at = None
-        if init.status_code == 403 and "quota" in _reason.lower():
-            return None, "quota_exceeded"
-        if init.status_code in (401, 403) and "quota" not in _reason.lower():
-            return None, f"auth_{init.status_code}"
-        return None, f"init_{init.status_code}"
+                tok = tk
+                break
+        if init.status_code == 403 and "quota" in reason.lower():
+            last = "quota_exceeded"
+            print(f"[yt] ⚠ حصة «{acc.get('label')}» خلصت — بجرّب مشروع تاني",
+                  flush=True)
+            continue
+        if init.status_code in (401, 403) and "quota" not in reason.lower():
+            last = f"auth_{init.status_code}"
+            continue
+        last = f"init_{init.status_code}"
+    if init is None or init.status_code != 200 or not tok:
+        return None, last
     up = requests.put(init.headers["Location"],
                       headers={"Content-Length": str(video_path.stat().st_size)},
                       data=open(video_path, "rb"), timeout=900)

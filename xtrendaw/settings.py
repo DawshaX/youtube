@@ -133,7 +133,38 @@ YOUTUBE = {
     "client_id": get("YOUTUBE_CLIENT_ID"),
     "client_secret": get("YOUTUBE_CLIENT_SECRET"),
     "refresh_token": get("YOUTUBE_REFRESH_TOKEN"),
+    "label": "المشروع الأساسي",
 }
+
+
+def _yt_accounts() -> list[dict]:
+    """حسابات الرفع — كل حساب = **مشروع جوجل مستقل** بحصته الخاصة.
+
+    ليه؟ يوتيوب بـAPI بيدي 10,000 وحدة/يوم **لكل مشروع جوجل** (والرفعة 1,600)
+    يعني 6 رفعات لكل مشروع. لو صاحب القناة ضاف مشاريع تانية (كل واحد بمعرّف
+    عميل وتوكن خاص بيه) المصنع بيستخدمها بالتناوب، والحصة اليومية بتتضاعف:
+    2 مشاريع = 12/يوم · 4 مشاريع = 24/يوم (نشرة كل ساعة).
+
+    الأسماء: YOUTUBE_CLIENT_ID · YOUTUBE_CLIENT_ID_2 · _3 · _4 …
+    """
+    out = []
+    base = {k: YOUTUBE.get(k, "") for k in
+            ("client_id", "client_secret", "refresh_token")}
+    if all(base.values()):
+        out.append(dict(base, label="المشروع الأساسي"))
+    for i in range(2, 9):
+        a = {"client_id": get(f"YOUTUBE_CLIENT_ID_{i}"),
+             "client_secret": get(f"YOUTUBE_CLIENT_SECRET_{i}"),
+             "refresh_token": get(f"YOUTUBE_REFRESH_TOKEN_{i}"),
+             "label": f"مشروع {i}"}
+        if all((a["client_id"], a["client_secret"], a["refresh_token"])):
+            out.append(a)
+    return out
+
+
+YOUTUBE_ACCOUNTS = _yt_accounts()
+# السقف اليومي = 6 رفعات لكل مشروع (10,000 ÷ 1,600) × عدد المشاريع
+YOUTUBE_DAILY_CAPACITY = 6 * max(1, len(YOUTUBE_ACCOUNTS))
 FACEBOOK = {"page_id": get("FACEBOOK_PAGE_ID"), "token": get("FACEBOOK_PAGE_TOKEN")}
 INSTAGRAM = {"user_id": get("INSTAGRAM_USER_ID"), "token": get("INSTAGRAM_ACCESS_TOKEN")}
 
@@ -191,10 +222,16 @@ TELEGRAM = {"token": get("TELEGRAM_BOT_TOKEN"),
             "chat_id": get("TELEGRAM_CHAT_ID"),
             "admin_chat": get("TELEGRAM_ADMIN_CHAT_ID")}
 
-DAILY_CAP = get_int("XT_DAILY_CAP", 4)          # سقف نشر آمن/يوم
+DAILY_CAP_BASE = get_int("XT_DAILY_CAP", 4)     # سقف آمن كتبه المستخدم
+# ✅ السقف الفعلي = سقف المستخدم، بس يزيد تلقائيًا لو فيه مشاريع جوجل إضافية
+# (كل مشروع بيدي 6 رفعات/يوم لوحده) — فممكن نوصل لنشرة كل ساعة
+DAILY_CAP = DAILY_CAP_BASE * max(1, len(YOUTUBE_ACCOUNTS))
 
 def has_youtube() -> bool:
-    return all(YOUTUBE.values())
+    if YOUTUBE_ACCOUNTS:
+        return True
+    return all(YOUTUBE.get(k) for k in
+               ("client_id", "client_secret", "refresh_token"))
 
 def has_facebook() -> bool:
     return bool(FACEBOOK["page_id"] and FACEBOOK["token"])
