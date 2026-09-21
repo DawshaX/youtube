@@ -164,7 +164,7 @@ def _yt_accounts() -> list[dict]:
 
 YOUTUBE_ACCOUNTS = _yt_accounts()
 # السقف اليومي = 6 رفعات لكل مشروع (10,000 ÷ 1,600) × عدد المشاريع
-YOUTUBE_DAILY_CAPACITY = 6 * max(1, len(YOUTUBE_ACCOUNTS))
+YOUTUBE_DAILY_CAPACITY = get_int("XT_DAILY_CAP", 6) * max(1, len(YOUTUBE_ACCOUNTS))
 FACEBOOK = {"page_id": get("FACEBOOK_PAGE_ID"), "token": get("FACEBOOK_PAGE_TOKEN")}
 INSTAGRAM = {"user_id": get("INSTAGRAM_USER_ID"), "token": get("INSTAGRAM_ACCESS_TOKEN")}
 

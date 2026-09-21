@@ -118,20 +118,17 @@ def _next_slot(used: list[str] | None) -> str | None:
 
 
 def _pick_at(st: dict) -> str | None:
-    """وقت النشر: فوري لو القناة ساكتة 3 ساعات، وإلا على شبكة المواعيد.
+    """وقت النشر: **فوري** (الحلقة تطلع للجمهور في نفس الدورة).
 
-    كده أول حلقة في اليوم بتنزل على طول (الجمهور يشوف نشاط)، وباقي حلقات
-    اليوم بتتوزّع على الساعات — بدل ما تنزل كلها ورا بعضها.
+    ليه فوري؟ طلب صاحب القناة (2026-09-21): «انشر حالًا ومن الآن كل ساعة حلقة
+    تتنشر باستمرار». الدورة أصلًا بتشتغل كل ساعة (نبضة داخلية)، فالنشر الفوري
+    معناه فيديو جديد للجمهور كل ساعة بالظبط — بلا أي تأخير مجدول.
+
+    لو حبّ يرجع للجدولة (مثلًا عشان النشر يبان على الساعة بالظبط) يشغّل
+    المصنع بـ NOOR_SCHEDULE=1 فيتوزّع على شبكة المواعيد من `_next_slot`.
     """
-    from xtrendaw import state
-    last = 0.0
-    for p in state.published_log():
-        try:
-            last = max(last, float(p.get("ts") or 0))
-        except (TypeError, ValueError):
-            continue
-    if time.time() - last >= 3 * 3600:
-        return None
+    if os.environ.get("NOOR_SCHEDULE") != "1":
+        return None                      # فوري — الجمهور يشوفه دلوقتي
     return _next_slot(st.get("slots") or [])
 
 

@@ -65,22 +65,33 @@ def test_next_slot_skips_used_hours_and_rolls_to_tomorrow(monkeypatch):
     assert at.startswith(tomorrow), f"المفروض ينزلق لبكرة، طلع {at}"
 
 
-def test_pick_at_instant_only_when_channel_quiet(monkeypatch):
+def test_pick_at_is_instant_by_default(monkeypatch):
+    """النشر فوري افتراضيًا — «كل ساعة حلقة تتنشر» بلا تأخير مجدول."""
+    monkeypatch.delenv("NOOR_SCHEDULE", raising=False)
     monkeypatch.delenv("NOOR_SLOTS", raising=False)
-    _cap(monkeypatch, 6)
 
-    # القناة ساكتة من 5 ساعات → نشر فوري
+    # القناة ساكتة أسبوع → برضه فوري
     monkeypatch.setattr(_state, "published_log",
-                        lambda: [{"ts": time.time() - 5 * 3600}])
+                        lambda: [{"ts": time.time() - 7 * 86400}])
     assert R._pick_at({}) is None
 
-    # ات نشرت دلوقتي → لازم تاخد موعد مش تنزل حالًا
+    # ات نشرت قبل ثانية → برضه فوري (مفيش حجز مواعيد)
     monkeypatch.setattr(_state, "published_log",
-                        lambda: [{"ts": time.time() - 60}])
+                        lambda: [{"ts": time.time() - 1}])
+    assert R._pick_at({}) is None
+
+
+def test_pick_at_schedules_only_when_asked(monkeypatch):
+    """لو اتطلب الجدولة صراحةً → موعد على الشبكة."""
+    monkeypatch.setenv("NOOR_SCHEDULE", "1")
+    monkeypatch.delenv("NOOR_SLOTS", raising=False)
+    _cap(monkeypatch, 24)
     at = R._pick_at({})
-    assert at and at.endswith("Z"), "لازم تكون مجدولة على ساعة، مش فورية"
+    assert at and at.endswith("Z"), "لازم يرجع موعد مجدول"
+    assert int(at[11:13]) in R._slots()
 
 
 def test_pick_at_handles_empty_log(monkeypatch):
+    monkeypatch.delenv("NOOR_SCHEDULE", raising=False)
     monkeypatch.setattr(_state, "published_log", lambda: [])
-    assert R._pick_at({}) is None, "قناة جديدة = انشر أول حلقة حالًا"
+    assert R._pick_at({}) is None
