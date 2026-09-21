@@ -57,7 +57,11 @@ class TestMultiProject(unittest.TestCase):
         with mock.patch.object(settings, "YOUTUBE_DAILY_CAPACITY", 12):
             self.assertEqual(len(R._slots()), 12)          # كل ساعتين
         with mock.patch.object(settings, "YOUTUBE_DAILY_CAPACITY", 6):
-            self.assertEqual(R._slots(), [5, 9, 13, 16, 19, 22])
+            grid = R._slots()
+            self.assertEqual(len(grid), 6)
+            gaps = [b - a for a, b in zip(grid, grid[1:])]
+            # توزيع متساوي على اليوم (كل 4 ساعات) — مش كله ورا بعضه
+            self.assertTrue(all(g == 4 for g in gaps), f"توزيع غير متساوي: {grid}")
 
 
 if __name__ == "__main__":
