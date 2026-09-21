@@ -219,6 +219,16 @@
    "url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Clouds_over_full_moon_at_night_%28Free_HD_stock_video%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
    "fetched_at": "2026-09-20T19:44:02+00:00",
    "sha256": "670f158a434e43c9367556fee77ee5eb30e08946de2855256e0f7cdfdd027585"
+  },
+  {
+   "path": "state/videolib/5cccd217ea16.mp4",
+   "source": "Wikimedia Commons",
+   "license": "CC-BY-4.0",
+   "attribution_required": true,
+   "credit_line": "Footage: File:Timelapse 2025 Kinnaur Monsoon.webm via Wikimedia Commons, CC-BY-4.0",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Timelapse_2025_Kinnaur_Monsoon.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "fetched_at": "2026-09-21T02:10:36+00:00",
+   "sha256": "ff4f29f87af033e4f0b7f0dda20cf45a98e4fae072b565d21060d7ec3223a57c"
   }
  ]
 }

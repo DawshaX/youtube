@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>نور · آية وسكينة — قرآن وتدبّر كل ساعة</title>
+<meta name="description" content="آية بتلاوة حقيقية وتفسير ميسّر، وحديث صحيح كل ساعة، وسورة كاملة كل يوم — بلا موسيقى وبلا حقوق.">
+<style>
+  :root{--ink:#0b1026;--ink2:#141c3a;--gold:#e8c37a;--paper:#f7f3e8;--mut:#9aa6c7}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(1200px 600px at 50% -10%,#1d2a55 0%,var(--ink) 55%,#05070f 100%);
+       color:var(--paper);font-family:"Segoe UI",Tahoma,system-ui,sans-serif;min-height:100vh}
+  header{padding:38px 20px 18px;text-align:center}
+  .brand{font-size:44px;font-weight:800;letter-spacing:1px;color:var(--gold);
+         text-shadow:0 2px 24px rgba(232,195,122,.25)}
+  .tag{margin-top:8px;color:var(--mut);font-size:15px}
+  .live{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:6px 14px;
+        border:1px solid rgba(232,195,122,.35);border-radius:999px;font-size:13px;color:var(--gold)}
+  .dot{width:8px;height:8px;border-radius:50%;background:#57d38c;box-shadow:0 0 10px #57d38c;
+       animation:p 1.6s infinite}
+  @keyframes p{50%{opacity:.35}}
+  main{max-width:1000px;margin:0 auto;padding:18px 16px 60px}
+  .hero{margin:22px 0 30px;border-radius:20px;overflow:hidden;background:#000;
+        box-shadow:0 24px 60px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.06)}
+  .hero video{width:100%;max-height:72vh;display:block;background:#000}
+  .meta{padding:14px 16px 18px}
+  .meta h2{font-size:19px;line-height:1.7;font-weight:700}
+  .chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--mut)}
+  .chip{border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:4px 11px}
+  h3.sec{margin:34px 0 14px;font-size:20px;color:var(--gold)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+  .card{background:linear-gradient(180deg,var(--ink2),#0d1330);border:1px solid rgba(255,255,255,.07);
+        border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;display:block;
+        transition:transform .18s ease,border-color .18s ease}
+  .card:hover{transform:translateY(-3px);border-color:rgba(232,195,122,.45)}
+  .card .thumb{aspect-ratio:9/16;width:100%;object-fit:cover;display:block;background:#000}
+  .card .row{padding:11px 12px 14px}
+  .card .row b{font-size:14px;font-weight:700;line-height:1.6;display:block}
+  .card .row span{font-size:11.5px;color:var(--mut);display:block;margin-top:7px}
+  .note{margin-top:26px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.03);
+        border:1px solid rgba(255,255,255,.07);color:var(--mut);font-size:13px;line-height:1.9}
+  footer{text-align:center;padding:26px 16px 50px;color:var(--mut);font-size:12.5px}
+  a.gold{color:var(--gold);text-decoration:none}
+  .empty{color:var(--mut);font-size:14px;padding:20px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">نور</div>
+  <div class="tag">آية وسكينة · حديث صحيح · سورة كاملة كل يوم — تُنشَر كل ساعة</div>
+  <div class="live"><span class="dot"></span> البثّ يتجدّد كل ساعة تلقائيًا</div>
+</header>
+
+<main>
+  <div id="heroWrap" class="hero" hidden>
+    <video id="hero" controls playsinline preload="metadata"></video>
+    <div class="meta">
+      <h2 id="heroTitle">…</h2>
+      <div class="chips" id="heroChips"></div>
+    </div>
+  </div>
+
+  <h3 class="sec">أحدث الحلقات</h3>
+  <div id="grid" class="grid"></div>
+  <div id="empty" class="empty" hidden>الحلقات بتوصل حالًا… افتح الصفحة بعد شويّة.</div>
+
+  <div class="note">
+    كل حلقة: <b>نص قرآني عثماني</b> من مصدر موثوق، <b>تلاوة حقيقية</b> لقارئ معتمد (منسوب باسمه)،
+    <b>تفسير ميسّر</b>، ومشاهد حرة — <b>بدون موسيقى</b> إطلاقًا.
+    الأحاديث من الصحيحين بالنص ورقمه. الصفحة دي بتتحدّث لوحدها كل ساعة من المصنع.
+  </div>
+</main>
+
+<footer>
+  نور · مصنع نشر يعمل تلقائيًا بلا توقّف — <a class="gold" href="./index.html">الصفحة الرئيسية</a>
+</footer>
+
+<script>
+const AR_KIND = {ayah:"آية", hadith:"حديث صحيح", long:"سورة كاملة", vault:"حلقة"};
+const fmt = s => {
+  if(!s) return "";
+  const m = Math.floor(s/60), r = Math.round(s%60);
+  return m ? `${m}:${String(r).padStart(2,"0")} د` : `${r} ث`;
+};
+fetch("./noor.json", {cache:"no-store"}).then(r=>r.json()).then(d=>{
+  const items = (d.episodes||[]).filter(x=>x.video_url||x.youtube);
+  if(!items.length){document.getElementById("empty").hidden=false;return;}
+  const top = items[0];
+  const hw = document.getElementById("heroWrap");
+  const hv = document.getElementById("hero");
+  hv.src = top.video_url || "";
+  hv.poster = top.cover_url || "";
+  document.getElementById("heroTitle").innerHTML = top.title || "";
+  const chips = [
+    AR_KIND[top.kind] || "حلقة",
+    top.theme ? `ثيم: ${top.theme}` : "",
+    top.reciter_name ? `القارئ: ${top.reciter_name}` : "",
+    top.duration ? `المدة: ${fmt(top.duration)}` : "",
+    top.at ? `نُشرت: ${top.at}` : "",
+    top.youtube ? "شاهدها على يوتيوب" : "جاهزة للعرض"
+  ].filter(Boolean);
+  document.getElementById("heroChips").innerHTML =
+    chips.map(c=>`<span class="chip">${c}</span>`).join("") +
+    (top.youtube ? `<a class="chip" style="color:var(--gold);text-decoration:none" href="${top.youtube}">يوتيوب ↗</a>` : "");
+  hw.hidden = false;
+
+  document.getElementById("grid").innerHTML = items.slice(1, 13).map(e=>{
+    const href = e.youtube || e.video_url || "#";
+    const cover = e.cover_url || "";
+    return `<a class="card" href="${href}" target="_blank" rel="noopener">
+      ${cover?`<img class="thumb" src="${cover}" loading="lazy" alt="">`:""}
+      <div class="row">
+        <b>${e.title || "حلقة"}</b>
+        <span>${[AR_KIND[e.kind]||"", e.theme||"", e.duration?fmt(e.duration):""].filter(Boolean).join(" · ")}</span>
+        <span>${e.at||""}</span>
+      </div></a>`;
+  }).join("");
+}).catch(()=>{document.getElementById("empty").hidden=false;});
+</script>
+</body>
+</html>

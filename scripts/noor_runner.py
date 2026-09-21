@@ -124,10 +124,43 @@ def _vault(video, cover, meta) -> str:
         return ""
 
 
-def short_once() -> int:
-    """ينتج شورت واحد (آية/حديث) وينشره لو الكوتة مفتوحة."""
+def short_once(tries: int = 3) -> int:
+    """ينتج شورت واحد (آية/حديث) وينشره لو الكوتة مفتوحة.
+
+    🛡️ لو عنصر فشل (نص/تلاوة/مشهد)، بنسجّله كـ«مكسور» ونجرّب عنصر تاني —
+    الدورة ما تفشلش أبدًا بسبب عنصر واحد (بق حقيقي 2026-09-21).
+    """
+    st0 = _load()
+    broken = set(st0.get("broken", []))
+    for attempt in range(tries):
+        rc = _short_one()
+        if rc == 0:
+            return 0
+        # العنصر اللي فشل يتسجّل عشان ما نرجعش له
+        try:
+            from xtrendaw import noor_pool
+            done = {str(x.get("id")) for x in noor_pool.history()}
+            last = (st0.get("shorts") or [None])[-1]
+            _ = last
+            st_now = _load()
+            tried = str(st_now.get("last_try") or "")
+            if tried:
+                broken.add(tried)
+            st_now["broken"] = sorted(broken)
+            _save(st_now)
+        except Exception:
+            pass
+        print(f"[noor] ↻ محاولة {attempt + 2}/{tries} بحلقة تانية…", flush=True)
+    return 1
+
+
+def _short_one() -> int:
+    """حلقة واحدة فعلية (من غير منطق الإعادة)."""
     from xtrendaw import noor_build, noor_pool
     item = noor_pool.pick()
+    _st = _load()
+    _st["last_try"] = item["id"]
+    _save(_st)
     wid = f"short_{int(time.time())}"
     work = WORK / wid
     work.mkdir(parents=True, exist_ok=True)
@@ -173,7 +206,8 @@ def short_once() -> int:
     st = _load()
     st.setdefault("shorts", []).append({
         "id": item["id"], "kind": item["kind"], "theme": item["theme"],
-        "reciter": item.get("reciter", ""), "video": str(res["video"]),
+        "title": title, "reciter": item.get("reciter", ""),
+        "video": str(res["video"]),
         "url": url or "", "vault": vault_url, "err": err,
         "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime()),
         "duration": round(res.get("duration", 0), 1)})
@@ -184,6 +218,7 @@ def short_once() -> int:
     if DRY:
         print("[noor] 🧪 معاينة فقط — مفيش رفع ومفيش تخزين", flush=True)
         return 0
+    _site_sync()
     return 0 if (url or vault_url) else 1
 
 
@@ -231,7 +266,96 @@ def long_once() -> int:
     _save(st)
     print(f"[noor] {'📺 اتنشر' if url else '⏸ اتخزن'} — {url or vault_url} "
           f"({dur_min:.1f} دقيقة)", flush=True)
+    _site_sync()
     return 0
+
+
+
+
+# ─────────────────────── واجهة الموقع (مجانية وبلا حدود) ───────────────────────
+SITE_JSON = ROOT / "public" / "noor.json"
+REC_NAMES = {"husary": "محمود خليل الحصري", "minshawi": "محمد صديق المنشاوي",
+             "shatri": "أبو بكر الشاطري", "ghamdi": "سعد الغامدي"}
+
+
+def _site_sync() -> None:
+    """يحدّث قائمة الموقع: كل حلقة اتنشرت أو اتخزنت بتبان على صفحة نور.
+
+    الموقع على GitHub Pages (مجاني وبلا حد نشر) — يعني «نشر كل ساعة» حقيقي:
+    كل دورة بتضيف الحلقة للصفحة فورًا، حتى والكوتة مقفولة على يوتيوب.
+    """
+    try:
+        st = _load()
+        from xtrendaw import noor_vault
+        spare = []
+        try:
+            for e in noor_vault.pending():
+                m = e.get("meta") or {}
+                spare.append({"title": m.get("title", ""), "kind": m.get("kind", ""),
+                              "theme": m.get("theme", ""),
+                              "reciter_name": REC_NAMES.get(m.get("reciter", ""), ""),
+                              "duration": float(m.get("duration") or 0),
+                              "at": m.get("at", ""),
+                              "video_url": e.get("asset", {}).get("browser_download_url", ""),
+                              "cover_url": (e.get("cover") or {}).get("browser_download_url", "")})
+        except Exception:
+            spare = []
+        eps = []
+        for s in reversed(st.get("shorts", [])[-40:]):
+            eps.append({"title": s.get("title", ""), "kind": s.get("kind", "ayah"),
+                        "theme": s.get("theme", ""),
+                        "reciter_name": REC_NAMES.get(s.get("reciter", ""), ""),
+                        "duration": float(s.get("duration") or 0),
+                        "at": s.get("at", ""), "youtube": s.get("url", "")})
+        for l in reversed(st.get("longs", [])[-10:]):
+            eps.append({"title": l.get("title", ""), "kind": "long",
+                        "theme": "", "duration": float(l.get("duration") or 0),
+                        "at": l.get("at", ""), "youtube": l.get("url", "")})
+        # ✅ المتاح للعرض فورًا (خزّان) يمشي الأول — عشان الصفحة ما تفضاش أبدًا
+        all_eps = spare + eps
+        seen, uniq = set(), []
+        for e in all_eps:
+            k = (e.get("title"), e.get("at"))
+            if k in seen or not (e.get("video_url") or e.get("youtube")):
+                continue
+            seen.add(k)
+            uniq.append(e)
+        SITE_JSON.parent.mkdir(parents=True, exist_ok=True)
+        SITE_JSON.write_text(json.dumps(
+            {"at": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
+             "count": len(uniq), "episodes": uniq[:60]},
+            ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"[noor] 🌐 الموقع اتحدّث: {len(uniq)} حلقة معروضة", flush=True)
+    except Exception as exc:                      # noqa: BLE001
+        print(f"[noor] ⚠ تحديث الموقع فشل: {type(exc).__name__}", flush=True)
+
+
+def _fill_quota(max_n: int = 6) -> int:
+    """يرفع كل الحلقات الجاهزة من الخزّان لحد ما حصة يوتيوب تخلص.
+
+    ليه؟ عشان أول ثانية الحصة تفتح (منتصف ليل PT = 10:00 بتوقيتك) تنزل الرفعات
+    الستة كلها مرة واحدة، كل واحدة محجوزة على ساعتها — بدل ما نستنى 6 دورات
+    ساعية. صفر وحدة زيادة: أي فشل (حصة/شبكة) بيوقف الحلقة فورًا.
+    """
+    if DRY:
+        return 0
+    from xtrendaw import noor_vault, settings, state
+    done = 0
+    while done < max_n:
+        if state.published_today_pt() >= (settings.DAILY_CAP or 6):
+            break
+        try:
+            if noor_vault.count() == 0:
+                break
+        except Exception:
+            break
+        if _publish_spare() != 0:
+            break                      # فشل (حصة خلصت أو الشبكة) — نوقف بهدوء
+        done += 1
+        time.sleep(6)                  # فاصل صغير بين الرفعات
+    if done:
+        print(f"[noor] ⚡ اترفع {done} حلقة جاهزة من الخزّان في الدورة دي", flush=True)
+    return done
 
 
 def _publish_spare() -> int:
@@ -295,9 +419,12 @@ def cycle() -> int:
         except Exception:
             n = 0
         if n > 0:
-            if _publish_spare() == 0:
-                return 0
-            print("[noor] الخزّان مش نافع دلوقتي — رندر جديد", flush=True)
+            # ⚡ املأ الحصة الموجودة: ارفع الجاهز (وممكن أكتر من حلقة في الدورة)
+            got = _fill_quota(max_n=min(left, 6))
+            if got and state.published_today_pt() >= cap:
+                return 0                      # الحصة اتقفلت — نستنى الدورة الجاية
+            if got:
+                return 0                      # اترفع جاهز = الدورة دي نجحت
         if not did_long:
             print(f"[noor] فيديو اليوم الطويل (فاضل {left} رفعة)", flush=True)
             return long_once()

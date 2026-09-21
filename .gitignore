@@ -41,3 +41,6 @@ cookies*
 doctor-report.json
 
 .venv/
+
+# ⚠️ توكن التشغيل المحلي (لا يُرفع ولا يُحفظ في git أبدًا)
+.token_cache

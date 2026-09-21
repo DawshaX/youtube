@@ -147,13 +147,23 @@ def history() -> list[dict]:
     return _load()
 
 
+def _broken() -> set[str]:
+    """العناصر اللي فشلت قبل كده (من ذاكرة المشغّل) — ما نرجّعش لها."""
+    try:
+        d = json.loads((settings.STATE / "noor_state.json").read_text(
+            encoding="utf-8"))
+        return {str(x) for x in (d.get("broken") or [])}
+    except Exception:
+        return set()
+
+
 def pick(item_id: str | None = None) -> dict:
     """يختار عنصر ما اتعملش قبل كده (وما اتكررش في آخر 60 حلقة).
 
     التنويع: الثيم + القارئ + النوع بيتغيروا بالتناوب — عشان القناة ما تبقاش
     «قالب ثابت» (سياسة المحتوى المتشابه) ولأن الجمهور بيمل من نفس الصوت.
     """
-    used = {str(h.get("id")) for h in history()}
+    used = {str(h.get("id")) for h in history()} | _broken()
     candidates = [c for c in (AYAHS + HADITHS) if c.get("id") or True]
     fresh = []
     for c in candidates:
@@ -183,7 +193,8 @@ def pick(item_id: str | None = None) -> dict:
 
 def _finish(item: dict) -> dict:
     """يضيف المشاهد + القارئ بالتناوب + الثيم."""
-    reciters = ["husary", "minshawi", "shatri", "ghamdi"]
+    # ⚠️ الغامدي مستثنى: ملفاته ناقصة على المصدر (404) — مش قارئ معتمد عمليًا
+    reciters = ["husary", "minshawi", "shatri", "abdulbasitmurattal"]
     item["reciter"] = reciters[len(history()) % len(reciters)]
     item["scenes"] = SCENES.get(item.get("theme", ""), SCENES["نور"])
     return item

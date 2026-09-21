@@ -45,11 +45,16 @@ APIQ = "https://api.alquran.cloud/v1"
 CDN = "https://cdn.islamic.network/quran/audio"
 
 # قرّاء هادئون مؤثرون (تُختار حكمة كل حلقة)
+# ترتيب البدائل لو قارئ ناقص على المصدر (بق حقيقي: الغامدي 404 دايمًا)
+RECITER_FALLBACK = ["husary", "minshawi", "shatri", "abdulbasitmurattal"]
+# (غامدي متسجّل للتاريخ بس — ملفاته 404 دايمًا، مش داخل التناوب ولا البدائل)
 RECITERS = {
+    # ترتيب البدائل (RECITER_FALLBACK) بيستخدم المفاتيح دي بالاسم
     "husary":   ("ar.husary", 128, "محمود خليل الحصري"),
     "minshawi": ("ar.minshawi", 128, "محمد صديق المنشاوي"),
     "ghamdi":   ("ar.saadalghamdi", 64, "سعد الغامدي"),
     "shatri":   ("ar.shaatree", 128, "أبو بكر الشاطري"),
+    "abdulbasitmurattal": ("ar.abdulbasitmurattal", 64, "عبد الباسط عبد الصمد"),
 }
 
 GRADE = ("eq=contrast=1.07:saturation=1.05:brightness=-0.015,"
@@ -103,40 +108,73 @@ def ayah_tafsir(surah: int, ayah: int) -> str:
     return (d.get("text") or "").strip()
 
 
+def _fetch_audio(slug: str, kb: int, num: int, mp3: Path) -> bool:
+    """ينزّل ملف آية واحدة للقارئ المحدّد → True/False (مفيش استثناءات)."""
+    for kb_ in dict.fromkeys((kb, 128, 64)):
+        try:
+            url = f"{CDN}/{kb_}/{slug}/{num}.mp3"
+            with urllib.request.urlopen(
+                    urllib.request.Request(url, headers=UA), timeout=120) as r:
+                body = r.read()
+            if len(body) > 1500:
+                mp3.write_bytes(body)
+                return True
+        except Exception:                      # noqa: BLE001
+            continue
+    return False
+
+
 def recitation(surah: int, ayah: int, reciter: str, workdir: Path,
                globals_: list[int] | None = None) -> Path:
-    """تلاوة حقيقية لقارئ معتمد (آية أو نطاق) → WAV واحد."""
-    slug, kbps, _name = RECITERS[reciter]
+    """تلاوة حقيقية لقارئ معتمد (آية أو نطاق) → WAV واحد.
+
+    🛡️ إصلاح جذري (بق حقيقي 2026-09-21): بعض القرّاء ملفاتهم ناقصة على
+    المصدر (سعد الغامدي مثلًا 404 على كل الجودات) — وكان ده بيوقف الدورة
+    كلها في حلقة مكسورة للأبد. دلوقتي: القارئ المطلوب → لو فشل نجرّب باقي
+    القرّاء المعتمدين بالترتيب، والمزيج المكسور بيتسجّل في الكاش عشان ما
+    نضيّعش وقت فيه تاني. **مفيش دورة تفشل بسبب قارئ ناقص.**
+    """
     CACHE.mkdir(parents=True, exist_ok=True)
-    workdir.mkdir(parents=True, exist_ok=True)   # المجلد لازم يكون موجود قبل ffmpeg
+    workdir.mkdir(parents=True, exist_ok=True)
     if not globals_:
         a = ayah_text(surah, ayah)
         globals_ = a["globals"]
+
+    order = [reciter] + [r for r in RECITER_FALLBACK if r != reciter]
     wavs: list[Path] = []
+    used: str | None = None
     for num in globals_:
-        mp3 = CACHE / f"{slug}-{num}.mp3"
-        if not mp3.exists():
-            last = ""
-            for kb in dict.fromkeys((kbps, 128, 64)):
-                try:
-                    url = f"{CDN}/{kb}/{slug}/{num}.mp3"
-                    with urllib.request.urlopen(
-                            urllib.request.Request(url, headers=UA),
-                            timeout=120) as r:
-                        body = r.read()
-                    if len(body) > 1500:
-                        mp3.write_bytes(body)
-                        break
-                    last = f"{len(body)} بايت"
-                except Exception as exc:      # noqa: BLE001
-                    last = f"{type(exc).__name__}"
-            else:
-                raise RuntimeError(f"تلاوة {slug}:{num} مش متاحة ({last})")
-        w = workdir / f"rec_{num}.wav"
-        subprocess.run([ffmpeg(), "-y", "-i", str(mp3), "-ar", "44100",
-                        "-ac", "2", "-c:a", "pcm_s16le", str(w)],
-                       capture_output=True, check=True)
-        wavs.append(w)
+        got = False
+        for r in order:
+            slug, kb, _name = RECITERS[r]
+            mp3 = CACHE / f"{slug}-{num}.mp3"
+            bad = CACHE / f"bad-{slug}-{num}"
+            if not mp3.exists():
+                if bad.exists() and r == reciter:
+                    continue                    # جرّبناه قبل كده وفشل
+                if not _fetch_audio(slug, kb, num, mp3):
+                    try:
+                        bad.touch()
+                    except Exception:
+                        pass
+                    continue
+            w = workdir / f"rec_{r}_{num}.wav"
+            if not w.exists():
+                rr = subprocess.run([ffmpeg(), "-y", "-i", str(mp3), "-ar",
+                                     "44100", "-ac", "2", "-c:a", "pcm_s16le",
+                                     str(w)], capture_output=True)
+                if rr.returncode:
+                    mp3.unlink(missing_ok=True)   # كاش فاسد → يتنزّل تاني
+                    continue
+            wavs.append(w)
+            used = r
+            got = True
+            break
+        if not got:
+            raise RuntimeError(f"التلاوة مش متاحة لآية {num} عند أي قارئ")
+    if used and used != reciter:
+        print(f"[noor] ↺ القارئ {reciter} ناقص على المصدر — استخدمت {used}",
+              flush=True)
     if len(wavs) == 1:
         return wavs[0]
     lst = workdir / "rec_concat.txt"
@@ -147,7 +185,6 @@ def recitation(surah: int, ayah: int, reciter: str, workdir: Path,
                     str(lst), "-ar", "44100", "-ac", "2", "-c:a", "pcm_s16le",
                     str(out)], capture_output=True, check=True)
     return out
-
 
 def dur_of(path: Path) -> float:
     out = subprocess.run([ffmpeg(), "-i", str(path)], capture_output=True,

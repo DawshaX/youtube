@@ -1745,9 +1745,9 @@
   "at": "2026-09-20 20:04"
  },
  "clipcache:5cccd217ea16": {
-  "source": "video:pixabay",
-  "episode": "2",
-  "at": "2026-09-20 20:04"
+  "source": "video:Wikimedia Commons",
+  "episode": "3",
+  "at": "2026-09-21 02:10"
  },
  "https://videos.pexels.com/video-files/32194802/13731378_682_360_30fps.mp4": {
   "source": "video:pexels",
@@ -1758,5 +1758,20 @@
   "source": "video:pexels",
   "episode": "2",
   "at": "2026-09-20 20:05"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/3/3d/Timelapse_2025_Kinnaur_Monsoon.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original": {
+  "source": "video:Wikimedia Commons",
+  "episode": "3",
+  "at": "2026-09-21 02:10"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/006_Dune_45_in_Sossusvlei_at_sunrise_Photo_by_Giles_Laurent.jpg/1280px-006_Dune_45_in_Sossusvlei_at_sunrise_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "desert dunes sunrise",
+  "at": "2026-09-21 02:10"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Time-lapse_video-_Southeast_Oregon_storm_%2848001723432%29.jpg/1280px-Time-lapse_video-_Southeast_Oregon_storm_%2848001723432%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mountains clouds time lapse",
+  "at": "2026-09-21 02:11"
  }
 }
