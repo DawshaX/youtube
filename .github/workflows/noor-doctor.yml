@@ -1,0 +1,114 @@
+name: 🩺 دكتور نور — فحص المفاتيح والصلاحيات
+
+# ليه؟ عشان نعرف بسرعة وبلا تخمين:
+#   1) الأسرار الموجودة إيه بالظبط (أسماء بس — مش قيم)
+#   2) توكنات يوتيوب معاها صلاحية الحذف (youtube.force-ssl) ولا رفع بس
+#   3) القناة اللي التوكن مربوط بيها اسمها إيه
+#   4) الخزّان فيه كام حلقة مستنية
+#
+# التشغيل: Actions → 🩺 دكتور نور → Run workflow
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: noor-doctor      # مجموعة تانية عشان مايتزنقش ورا دورة النشر
+  cancel-in-progress: true
+
+jobs:
+  doctor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 🩺 فحص المفاتيح والصلاحيات
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_CLIENT_ID_2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+          YOUTUBE_CLIENT_SECRET_2: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
+          YOUTUBE_REFRESH_TOKEN_2: ${{ secrets.YOUTUBE_REFRESH_TOKEN_2 }}
+          YOUTUBE_CLIENT_ID_3: ${{ secrets.YOUTUBE_CLIENT_ID_3 }}
+          YOUTUBE_CLIENT_SECRET_3: ${{ secrets.YOUTUBE_CLIENT_SECRET_3 }}
+          YOUTUBE_REFRESH_TOKEN_3: ${{ secrets.YOUTUBE_REFRESH_TOKEN_3 }}
+          YOUTUBE_CLIENT_ID_4: ${{ secrets.YOUTUBE_CLIENT_ID_4 }}
+          YOUTUBE_CLIENT_SECRET_4: ${{ secrets.YOUTUBE_CLIENT_SECRET_4 }}
+          YOUTUBE_REFRESH_TOKEN_4: ${{ secrets.YOUTUBE_REFRESH_TOKEN_4 }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TF_ENABLE_ONEDNN_OPTS: '0'
+        run: |
+          python - <<'PY'
+          import os, json, urllib.parse, urllib.request
+
+          def have(k):
+              return "✅ موجود" if os.environ.get(k) else "❌ ناقص"
+
+          print("═══ الأسرار ═══")
+          for i in range(1, 5):
+              suf = "" if i == 1 else f"_{i}"
+              print(f"مشروع {i}: client_id={have('YOUTUBE_CLIENT_ID'+suf)} · "
+                    f"secret={have('YOUTUBE_CLIENT_SECRET'+suf)} · "
+                    f"token={have('YOUTUBE_REFRESH_TOKEN'+suf)}")
+
+          for i in range(1, 5):
+              suf = "" if i == 1 else f"_{i}"
+              cid = os.environ.get("YOUTUBE_CLIENT_ID"+suf)
+              csec = os.environ.get("YOUTUBE_CLIENT_SECRET"+suf)
+              rt = os.environ.get("YOUTUBE_REFRESH_TOKEN"+suf)
+              if not (cid and csec and rt):
+                  continue
+              print(f"\n═══ مشروع {i} ═══")
+              data = urllib.parse.urlencode({
+                  "client_id": cid, "client_secret": csec,
+                  "refresh_token": rt, "grant_type": "refresh_token"}).encode()
+              try:
+                  r = json.loads(urllib.request.urlopen(
+                      urllib.request.Request(
+                          "https://oauth2.googleapis.com/token", data=data),
+                      timeout=30).read())
+              except Exception as exc:
+                  print("  ✗ تجديد التوكن فشل:", type(exc).__name__, exc)
+                  continue
+              scopes = r.get("scope", "")
+              can_del = "youtube.force-ssl" in scopes
+              print(f"  الصلاحيات: {scopes[:200]}")
+              print(f"  الحذف: {'✅ مسموح' if can_del else '❌ ممنوع (التوكن رفع بس)'}")
+              tok = r["access_token"]
+              try:
+                  ch = json.loads(urllib.request.urlopen(urllib.request.Request(
+                      "https://www.googleapis.com/youtube/v3/channels"
+                      "?part=snippet,statistics&mine=true",
+                      headers={"Authorization": f"Bearer {tok}"}), timeout=30).read())
+                  items = ch.get("items") or []
+                  if items:
+                      sn = items[0]["snippet"]
+                      st = items[0].get("statistics", {})
+                      print(f"  القناة: {sn['title']} · مشتركين {st.get('subscriberCount')}"
+                            f" · فيديوهات {st.get('videoCount')}")
+                  else:
+                      print("  ✗ مفيش قناة على التوكن ده")
+              except Exception as exc:
+                  print("  ✗ فحص القناة فشل:", type(exc).__name__)
+
+          print("\n═══ الخزّان ═══")
+          try:
+              import sys
+              sys.path.insert(0, ".")
+              from xtrendaw import noor_vault
+              p = noor_vault.pending()
+              print(f"  حلقات مستنية: {len(p)}")
+              for e in p[:6]:
+                  print("   ·", e.get("name"))
+          except Exception as exc:
+              print("  ✗ فحص الخزّان فشل:", type(exc).__name__, exc)
+          PY
