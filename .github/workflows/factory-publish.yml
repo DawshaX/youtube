@@ -163,6 +163,12 @@ jobs:
               "last_lines": tail[-1500:],
           }
           pathlib.Path("state").mkdir(exist_ok=True)
+          # ⚠️ المستودع عام: أي سطر لوج بيتحفظ لازم يتشطّف من المفاتيح
+          import re as _re
+          rep["last_lines"] = _re.sub(
+              r"(AIza[A-Za-z0-9_-]{20,}|gh[pous]_[A-Za-z0-9]{20,}"
+              r"|GOCSPX-[A-Za-z0-9_-]{10,}|1//[0-9A-Za-z_-]{20,})",
+              "***REDACTED***", str(rep.get("last_lines") or ""))
           pathlib.Path("state/last_cycle.json").write_text(
               json.dumps(rep, ensure_ascii=False, indent=1), encoding="utf-8")
           print(json.dumps({k: v for k, v in rep.items() if k != "last_lines"},
