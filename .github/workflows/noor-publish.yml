@@ -115,7 +115,8 @@ jobs:
           XT_YT: '1'
           XT_DAILY_CAP: '6'          # سقف كوتة يوتيوب (10,000 ÷ 1,600)
           XT_YT_QURAN: 'auto'
-          NOOR_SLOTS: '5,9,13,16,19,22'   # ساعات النشر UTC (publishAt)
+          # ساعات النشر بتتحدد تلقائيًا حسب عدد مشاريع جوجل
+          # (6 رفعات = 6 مواعيد · 24 رفعة = موعد كل ساعة) — تقدر تجبرها بـ NOOR_SLOTS
           NOOR_DRY: ${{ inputs.dry_run && '1' || '0' }}
         run: |
           set -o pipefail
