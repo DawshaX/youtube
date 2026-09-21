@@ -132,6 +132,26 @@ def _pick_at(st: dict) -> str | None:
     return _next_slot(st.get("slots") or [])
 
 
+HOUR_GAP = int(os.environ.get("NOOR_MIN_GAP_MIN", "45"))   # أقل فرق بين نشرتين
+
+
+def _too_soon() -> float:
+    """آخر نشر كان من كام دقيقة؟ (0 = مفيش نشر قبل كده).
+
+    ليه؟ أكتر من محرّك ممكن يشغّل دورة في نفس الوقت (النبضة + cron + أمر يدوي)،
+    والمطلوب نشرة **كل ساعة** — مش رشقة فيديوهات ورا بعضها. فلو لسه ناشرين
+    حالًّا، الدورة دي بتنتج وبتخزّن بس من غير نشر.
+    """
+    from xtrendaw import state
+    last = 0.0
+    for p in state.published_log():
+        try:
+            last = max(last, float(p.get("ts") or 0))
+        except (TypeError, ValueError):
+            continue
+    return (time.time() - last) / 60 if last else 0.0
+
+
 def _publish(video, cover, title, desc, tags, synthetic=False):
     from xtrendaw import settings, state
     if DRY:
@@ -140,6 +160,11 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
     cap = state.effective_cap(settings.DAILY_CAP or 6)
     if state.published_today_pt() >= cap:
         return None, "quota_guard"
+    gap = _too_soon()
+    if gap and gap < HOUR_GAP and os.environ.get("NOOR_ALLOW_BURST") != "1":
+        print(f"[noor] ⏳ آخر نشرة كانت من {gap:.0f} دقيقة — النشرة الجاية بعد "
+              f"{HOUR_GAP} دقيقة على الأقل (حلقة كل ساعة)", flush=True)
+        return None, "too_soon"
     st = _load()
     at = _pick_at(st)                      # فوري لو القناة ساكتة، وإلا ساعة فاضية
     url, err = yt.publish(video, title, desc, tags, cover=cover,
