@@ -436,8 +436,15 @@ def cycle() -> int:
     # الحصة مقفولة: ننتج للخزّان (لو فيه مكان) ونستريح لو مليان
     try:
         if not noor_vault.can_push():
-            print("[noor] ⏸ الحصة مقفولة والخزّان مليان — الدورة الجاية أحسن",
-                  flush=True)
+            # 🧹 دورة صيانة: الخزّان مليان (الحصة مقفولة) — بننضّفه ونطمّن
+            # على الجاهز بدل ما نحرق وقت رندر على حلقات مش هتتنشر.
+            print("[noor] 🧹 الخزّان مليان والحصة مقفولة — دورة صيانة", flush=True)
+            try:
+                n = noor_vault.dedupe()
+                print(f"[noor] 🧹 نسخ مكررة اتشالت: {n}", flush=True)
+            except Exception as exc:              # noqa: BLE001
+                print(f"[noor] ⚠ الصيانة: {type(exc).__name__}", flush=True)
+            _site_sync()
             return 0
     except Exception:
         pass

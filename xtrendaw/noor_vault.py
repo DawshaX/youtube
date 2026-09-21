@@ -19,7 +19,7 @@ import tempfile
 import time
 from pathlib import Path
 
-BACKLOG_CAP = 12          # أقصى عدد حلقات مستنية في الخزّان
+BACKLOG_CAP = 14          # أقصى عدد حلقات مستنية (أكتر من يومين نشر)
 
 
 def _api():

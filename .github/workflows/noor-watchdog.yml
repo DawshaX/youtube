@@ -1,0 +1,54 @@
+name: 🛡️ حارس نور السحابي — يضمن إن المصنع ما يوقفش أبدًا
+
+# ليه الحارس ده؟ سلسلة «النبضة» (كل دورة تشغّل اللي بعدها) هي الأساس، لكن لو
+# دورة اتقطعت (خطأ شبكة، إلغاء، تحديث GitHub) السلسلة تموت لوحدها. الحارس ده
+# بيفحص كل 30 دقيقة: لو مفيش دورة اتبدأت آخر 75 دقيقة ومفيش دورة شغالة → يبعت
+# دورة جديدة. يعني الإنتاج الساعي مضمون 24/7 من غير أي جهاز ولا مساحة عمل.
+on:
+  schedule:
+    - cron: '7,37 * * * *'      # مرتين كل ساعة (cron نفسه غير موثوق — ده احتياطي)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: noor-watchdog
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 🔍 افحص آخر دورة — وكمّل لو السلسلة اتقطعت
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh run list --repo "$GITHUB_REPOSITORY" --workflow noor-publish.yml \
+            --limit 10 --json status,createdAt,databaseId \
+            --jq '.[] | "\(.databaseId) \(.status) \(.createdAt)"' > /tmp/runs.txt
+          cat /tmp/runs.txt
+          ACTIVE=$(grep -cE ' (in_progress|queued|pending)$' /tmp/runs.txt || true)
+          if [ "${ACTIVE:-0}" -gt 0 ]; then
+            echo "✅ فيه دورة شغالة دلوقتي ($ACTIVE) — مفيش حاجة أعملها"
+            exit 0
+          fi
+          LAST_TS=$(head -1 /tmp/runs.txt | awk '{print $3}')
+          if [ -z "$LAST_TS" ]; then
+            echo "⚠️ مفيش أي دورة سابقة — هبدأ السلسلة من الأول"
+            gh workflow run noor-publish.yml --repo "$GITHUB_REPOSITORY" \
+              --ref main -f mode=cycle -f dry_run=false
+            exit 0
+          fi
+          AGE=$(( ( $(date -u +%s) - $(date -u -d "$LAST_TS" +%s) ) / 60 ))
+          echo "⏱️ آخر دورة اتبدأت قبل $AGE دقيقة"
+          if [ "$AGE" -gt 75 ]; then
+            echo "🚨 السلسلة اتقطعت ($AGE دقيقة) — بشغّل دورة حالًا وأرجّعها للحياة"
+            gh workflow run noor-publish.yml --repo "$GITHUB_REPOSITORY" \
+              --ref main -f mode=cycle -f dry_run=false
+          else
+            echo "✅ السلسلة سليمة — الأنتاج ماشي"
+          fi
