@@ -48,9 +48,22 @@
    "err": "quota_guard",
    "at": "2026-09-21 02:21",
    "duration": 26.4
+  },
+  {
+   "id": "ayah-67-3",
+   "kind": "ayah",
+   "theme": "توحيد",
+   "title": "بص على السماء… فيه خطأ؟ 🔭 — آية وسكينة ﴿سُورَةُ المُلۡكِ﴾",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1789961108/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1789961322.mp4",
+   "err": "quota_guard",
+   "at": "2026-09-21 03:28",
+   "duration": 62.2
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-3-200"
+ "last_try": "ayah-67-3"
 }
