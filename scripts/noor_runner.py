@@ -258,7 +258,7 @@ def long_once() -> int:
     name, surah, theme, maxa, extra = LONG_PLAN[idx]
     work = WORK / f"long_{surah}_{int(time.time())}"
     print(f"[noor] 🎥 فيديو طويل: {name}", flush=True)
-    reciters = ["husary", "minshawi", "shatri", "ghamdi"]
+    reciters = ["husary", "minshawi", "shatri", "abdulbasitmurattal"]
     rec = reciters[len(st.get("longs", [])) % len(reciters)]
     res = noor_build.build_long_surah(surah, work, reciter=rec, theme=theme,
                                       max_ayahs=maxa, extra=extra)
@@ -303,7 +303,8 @@ def long_once() -> int:
 # ─────────────────────── واجهة الموقع (مجانية وبلا حدود) ───────────────────────
 SITE_JSON = ROOT / "public" / "noor.json"
 REC_NAMES = {"husary": "محمود خليل الحصري", "minshawi": "محمد صديق المنشاوي",
-             "shatri": "أبو بكر الشاطري", "ghamdi": "سعد الغامدي"}
+             "shatri": "أبو بكر الشاطري", "ghamdi": "سعد الغامدي",
+             "abdulbasitmurattal": "عبد الباسط عبد الصمد (مرتّل)"}
 
 
 def _site_sync() -> None:
