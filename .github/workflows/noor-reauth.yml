@@ -1,0 +1,147 @@
+name: 🔑 مصنع نور — توثيق يوتيوب (صلاحية الحذف + مشاريع إضافية)
+
+# الفكرة: كل حاجة معقّدة تتشال من على المستخدم.
+#   الخطوة 1: تشغّل الحلقة دي بوضع «لينك» → اللوج بيطلع لينك موافقة جوجل (بس).
+#   الخطوة 2: تفتح اللينك في المتصفح → توافق → المتصفح بيوديك على صفحة
+#             http://localhost/?code=... (الصفحة نفسها مش هتفتح — عادي)
+#             انسخ **العنوان الكامل** من شريط العنوان.
+#   الخطوة 3: تشغّل الحلقة تاني بوضع «توكن» وتحط اللي نسخته في خانة الكود.
+#             الحلقة بتبدّل الكود بتوكن تجديد وتحفظه في إصدار خاص مؤقّت
+#             (اسمه reauth-tmp) — والمشرف بيسحبه فورًا ويثبّته كسرّ
+#             ويمسح الأثر. مفيش توكن بيتطبع في أي لوج.
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'نوع العملية: url = طلع لينك الموافقة · token = بدّل الكود بتوكن'
+        type: choice
+        options: [url, token]
+        default: url
+      project:
+        description: 'رقم مشروع جوجل (1 = الأساسي، أو 2/3/4 للمشاريع الإضافية)'
+        type: string
+        default: '1'
+      code:
+        description: 'عنوان الصفحة/الكود اللي ظهر بعد الموافقة (وضع «توكن» بس)'
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: noor-reauth
+  cancel-in-progress: false
+
+jobs:
+  reauth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: تجهيز الأدوات
+        run: pip install -q requests
+
+      - name: 🔗 لينك الموافقة
+        if: ${{ inputs.action == 'url' }}
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_ID_2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+          YOUTUBE_CLIENT_ID_3: ${{ secrets.YOUTUBE_CLIENT_ID_3 }}
+          YOUTUBE_CLIENT_ID_4: ${{ secrets.YOUTUBE_CLIENT_ID_4 }}
+          PROJ: ${{ inputs.project }}
+        run: |
+          python - <<'PY'
+          import os, urllib.parse
+          p = (os.environ.get("PROJ") or "1").strip()
+          suf = "" if p == "1" else f"_{p}"
+          cid = os.environ.get("YOUTUBE_CLIENT_ID" + suf, "")
+          if not cid:
+              raise SystemExit(f"⛔ مفيش YOUTUBE_CLIENT_ID{suf} في الأسرار")
+          scopes = [
+              "https://www.googleapis.com/auth/youtube.upload",
+              "https://www.googleapis.com/auth/youtube.force-ssl",
+              "https://www.googleapis.com/auth/youtube.readonly",
+              "https://www.googleapis.com/auth/userinfo.profile",
+          ]
+          url = "https://accounts.google.com/o/oauth2/v2/auth?" + urllib.parse.urlencode({
+              "client_id": cid, "redirect_uri": "http://localhost",
+              "response_type": "code", "scope": " ".join(scopes),
+              "access_type": "offline", "prompt": "consent",
+          })
+          print("\n=== افتح اللينك ده وسجّل دخول بحساب القناة ووافق (اسمح بكل الصلاحيات) ===\n")
+          print(url)
+          print("\n=== بعد الموافقة هيوديك على صفحة http://localhost ... "
+                "انسخ العنوان كامل والصقه في تشغيل جديد بوضع «توكن» ===\n")
+          PY
+
+      - name: 🎟️ تبديل الكود بتوكن وحفظه مؤقتًا
+        if: ${{ inputs.action == 'token' }}
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_CLIENT_ID_2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+          YOUTUBE_CLIENT_SECRET_2: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
+          YOUTUBE_CLIENT_ID_3: ${{ secrets.YOUTUBE_CLIENT_ID_3 }}
+          YOUTUBE_CLIENT_SECRET_3: ${{ secrets.YOUTUBE_CLIENT_SECRET_3 }}
+          YOUTUBE_CLIENT_ID_4: ${{ secrets.YOUTUBE_CLIENT_ID_4 }}
+          YOUTUBE_CLIENT_SECRET_4: ${{ secrets.YOUTUBE_CLIENT_SECRET_4 }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PROJ: ${{ inputs.project }}
+          CODE: ${{ inputs.code }}
+        run: |
+          python - <<'PY'
+          import json, os, time, urllib.parse, urllib.request, requests
+
+          p = (os.environ.get("PROJ") or "1").strip()
+          suf = "" if p == "1" else f"_{p}"
+          cid = os.environ.get("YOUTUBE_CLIENT_ID" + suf, "")
+          csec = os.environ.get("YOUTUBE_CLIENT_SECRET" + suf, "")
+          code = (os.environ.get("CODE") or "").strip()
+          if not (cid and csec):
+              raise SystemExit(f"⛔ ناقص client_id/secret للمشروع {p}")
+          if not code:
+              raise SystemExit("⛔ مفيش كود")
+          if "code=" in code:
+              code = urllib.parse.parse_qs(urllib.parse.urlparse(code).query)["code"][0]
+
+          data = urllib.parse.urlencode({
+              "code": code, "client_id": cid, "client_secret": csec,
+              "redirect_uri": "http://localhost",
+              "grant_type": "authorization_code"}).encode()
+          try:
+              r = json.loads(urllib.request.urlopen(urllib.request.Request(
+                  "https://oauth2.googleapis.com/token", data=data), timeout=60).read())
+          except Exception as exc:
+              raise SystemExit(f"✗ فشل التبديل: {exc}")
+          rt = r.get("refresh_token")
+          if not rt:
+              raise SystemExit("✗ مفيش refresh_token — جرّب مع prompt=consent")
+          scopes = r.get("scope", "")
+          print("✅ صلاحيات التوكن:", scopes[:200].replace(rt, "***"))
+          print("   الحذف مسموح:", "youtube.force-ssl" in scopes)
+
+          # حفظ مؤقّت في إصدار خاص (بيتم سحبه ومسحه فورًا من المشرف)
+          tok = os.environ["GH_TOKEN"]
+          h = {"Authorization": f"Bearer {tok}",
+               "Accept": "application/vnd.github+json"}
+          repo = os.environ["REPO"]
+          tag = "reauth-tmp"
+          rel = requests.get(f"https://api.github.com/repos/{repo}/releases/tags/{tag}",
+                             headers=h, timeout=30)
+          if rel.status_code == 404:
+              rel = requests.post(f"https://api.github.com/repos/{repo}/releases",
+                                  headers=h, json={"tag_name": tag,
+                                                   "name": "reauth-tmp",
+                                                   "body": "مؤقّت — مسح تلقائي",
+                                                   "prerelease": True}, timeout=30)
+          rid = rel.json()["id"]
+          name = f"proj{p}-{int(time.time())}.txt"
+          up = requests.post(
+              f"https://uploads.github.com/repos/{repo}/releases/{rid}/assets"
+              f"?name={name}", headers={**h, "Content-Type": "text/plain"},
+              data=json.dumps({"project": p, "refresh_token": rt,
+                               "scopes": scopes}).encode(), timeout=60)
+          print("حفظ التوكن مؤقتًا:", up.status_code, "→", name)
+          PY
