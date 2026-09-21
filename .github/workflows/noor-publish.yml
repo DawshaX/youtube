@@ -44,7 +44,8 @@ permissions:
 
 concurrency:
   group: noor-publish        # دورة واحدة في الوقت — مفيش تصادم على الذاكرة
-  cancel-in-progress: false
+  # ✅ لو دورة اتعلّقت، النبضة/الكورن بتلغيها وتبدأ نضافة: النشر ما يتوقفش أبدًا
+  cancel-in-progress: true
 
 jobs:
   noor:
