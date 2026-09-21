@@ -1,0 +1,45 @@
+name: quota-test
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: قياس الحصة الحقيقية
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q requests
+          ffmpeg -f lavfi -i color=c=black:s=1080x1920:d=3 -f lavfi -i anullsrc -t 3 -c:v libx264 -pix_fmt yuv420p -c:a aac -shortest /tmp/t.mp4 -y 2>/dev/null
+          ls -la /tmp/t.mp4
+          python - <<'PY'
+          import os, json, urllib.parse, urllib.request, requests, time
+          cid=os.environ["YOUTUBE_CLIENT_ID"]; csec=os.environ["YOUTUBE_CLIENT_SECRET"]; rt=os.environ["YOUTUBE_REFRESH_TOKEN"]
+          d=urllib.parse.urlencode({"client_id":cid,"client_secret":csec,"refresh_token":rt,"grant_type":"refresh_token"}).encode()
+          tok=json.loads(urllib.request.urlopen(urllib.request.Request("https://oauth2.googleapis.com/token",data=d),timeout=30).read())["access_token"]
+          print("التوكن جاهز:", bool(tok))
+          meta={"snippet":{"title":"اختبار الحصة (خاص) — يتشال","description":"test","categoryId":"27"},
+                "status":{"privacyStatus":"private","selfDeclaredMadeForKids":False}}
+          size=os.path.getsize("/tmp/t.mp4")
+          init=requests.post("https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
+              headers={"Authorization":f"Bearer {tok}","Content-Type":"application/json",
+                       "X-Upload-Content-Type":"video/mp4","X-Upload-Content-Length":str(size)},
+              json=meta, timeout=60)
+          print("بدء الرفعة:", init.status_code)
+          if init.status_code!=200:
+              e=init.json().get("error",{}); print("   السبب:", (e.get("errors") or [{}])[0].get("reason"), str(e.get("message"))[:130])
+              raise SystemExit(0)
+          up=requests.put(init.headers["Location"],headers={"Content-Length":str(size)},data=open("/tmp/t.mp4","rb"),timeout=300)
+          print("الرفعة نفسها:", up.status_code)
+          if up.status_code in (200,201):
+              print("🟢 الحصة متاحة أكتر من 6 — الرفعة نجحت:", up.json().get("id"))
+          else:
+              e=up.json().get("error",{}) if up.headers.get("content-type","").startswith("application/json") else {}
+              print("   السبب:", (e.get("errors") or [{}])[0].get("reason"), str(e.get("message"))[:130])
+          PY
