@@ -64,9 +64,34 @@
    "err": "quota_guard",
    "at": "2026-09-21 18:06",
    "duration": 120.0
+  },
+  {
+   "id": "vault:q1790008003.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=TPTLtcqbb6Q",
+   "at": "2026-09-21 18:52"
+  },
+  {
+   "id": "vault:q1790010930.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=QLOucul3ONc",
+   "at": "2026-09-21 18:53"
+  },
+  {
+   "id": "vault:q1790014002.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=0s9vzaCp69k",
+   "at": "2026-09-21 18:53"
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-29-45"
+ "last_try": "ayah-29-45",
+ "slots": [
+  "2026-09-21T23",
+  "2026-09-22T03"
+ ]
 }
