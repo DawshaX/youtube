@@ -18,6 +18,7 @@
 from __future__ import annotations
 
 import argparse
+import calendar
 import json
 import os
 import pathlib
@@ -60,48 +61,78 @@ DRY = os.environ.get("NOOR_DRY") == "1"
 
 
 def _slots() -> list[int]:
-    """ساعات النشر (UTC) — الفيديو بيتحجز عليها فبيتنشر لوحده في وقته.
+    """ساعات النشر على مدار اليوم (UTC) — بتتوسّع لوحدها حسب عدد مشاريع جوجل.
 
-    يوتيوب بيدّي 6 رفعات بالـAPI في اليوم (10,000 وحدة ÷ 1,600). عشان القناة
-    تنشر على مدار اليوم كله، بنرفع الرفعة وبنحجزها على الساعة الجاية في
-    القائمة (publishAt) — فالجمهور يشوف نشر متوزّع، والحصة محترمة.
+    يوتيوب بيدّي 6 رفعات بالـAPI لكل مشروع في اليوم (10,000 وحدة ÷ 1,600).
+    فبنرفع الرفعة وبنحجزها على ساعة فاضية قدام (publishAt) — الجمهور يشوف
+    نشر متوزّع على اليوم كله، مش كل الرفعات ورا بعضها في ساعة واحدة.
+
+      24 رفعة/يوم (4 مشاريع) = **نشرة كل ساعة بالظبط**
+      12 رفعة/يوم (مشروعين)  = نشرة كل ساعتين
+       6 رفعات/يوم (مشروع)   = نشرة كل 4 ساعات
     """
     from xtrendaw import settings
-    # لو القناة بقى عندها أكتر من مشروع جوجل (حصة أكبر) → مواعيد أكتر تلقائيًا:
-    #  24 رفعة/يوم (4 مشاريع) = نشرة كل ساعة بالظبط
-    #  12 رفعة/يوم (مشروعين)   = نشرة كل ساعتين
-    cap = settings.YOUTUBE_DAILY_CAPACITY
     raw = os.environ.get("NOOR_SLOTS", "")
-    if not raw:
-        if cap >= 24:
-            raw = ",".join(str(h) for h in range(24))
-        elif cap >= 12:
-            raw = ",".join(str(h) for h in range(0, 24, 2))
-        else:
-            raw = "5,9,13,16,19,22"
-    out = []
-    for x in raw.split(","):
-        try:
-            h = int(x.strip())
-            if 0 <= h <= 23:
-                out.append(h)
-        except ValueError:
+    if raw:
+        out = []
+        for x in raw.split(","):
+            try:
+                h = int(x.strip())
+                if 0 <= h <= 23:
+                    out.append(h)
+            except ValueError:
+                continue
+        if out:
+            return sorted(set(out))
+    cap = max(1, min(24, settings.YOUTUBE_DAILY_CAPACITY))
+    if cap >= 24:
+        return list(range(24))
+    if cap >= 12:
+        return list(range(0, 24, 2))
+    step = max(1, 24 // cap)
+    return [(3 + i * step) % 24 for i in range(24 // step)][:cap]
+
+
+def _next_slot(used: list[str] | None) -> str | None:
+    """أقرب ساعة نشر فاضية على شبكة اليوم/بكرة (UTC).
+
+    مهم: عمرها ما ترجّع None وهي فيه ساعات فاضية — الـNone كان معناه «انشر
+    حالًا»، وده اللي كان بيخلّي 3 فيديوهات تنزل ورا بعضها في نفس الدقيقة.
+    """
+    used = [str(x) for x in (used or [])]
+    now = time.time()
+    grid = set(_slots())
+    for add in range(0, 48 * 3600, 1800):        # بندوّر لحد 48 ساعة قدام
+        gm = time.gmtime(now + add)
+        if gm.tm_hour not in grid:
             continue
-    return sorted(set(out)) or [5, 9, 13, 16, 19, 22]
-
-
-def _next_slot(used: list[str]) -> str | None:
-    """أقرب ساعة نشر فاضية النهاردة (UTC) — ولا None لو اليوم اتغطى."""
-    now = time.gmtime()
-    today = time.strftime("%Y-%m-%d", now)
-    cur = now.tm_hour * 60 + now.tm_min
-    for h in _slots():
-        tag = f"{today}T{h:02d}"
+        tag = time.strftime("%Y-%m-%dT%H", gm)
         if tag in used:
             continue
-        if h * 60 - cur >= 12:              # لازم يفضل 12 دقيقة قبل الموعد
-            return f"{today}T{h:02d}:00:00Z"
+        slot = calendar.timegm((gm.tm_year, gm.tm_mon, gm.tm_mday,
+                                gm.tm_hour, 0, 0, 0, 0, 0))
+        if slot - now < 12 * 60:                  # لازم يفضل 12 دقيقة
+            continue
+        return time.strftime("%Y-%m-%dT%H:00:00Z", gm)
     return None
+
+
+def _pick_at(st: dict) -> str | None:
+    """وقت النشر: فوري لو القناة ساكتة 3 ساعات، وإلا على شبكة المواعيد.
+
+    كده أول حلقة في اليوم بتنزل على طول (الجمهور يشوف نشاط)، وباقي حلقات
+    اليوم بتتوزّع على الساعات — بدل ما تنزل كلها ورا بعضها.
+    """
+    from xtrendaw import state
+    last = 0.0
+    for p in state.published_log():
+        try:
+            last = max(last, float(p.get("ts") or 0))
+        except (TypeError, ValueError):
+            continue
+    if time.time() - last >= 3 * 3600:
+        return None
+    return _next_slot(st.get("slots") or [])
 
 
 def _publish(video, cover, title, desc, tags, synthetic=False):
@@ -112,8 +143,10 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
     cap = settings.DAILY_CAP or 6
     if state.published_today_pt() >= cap:
         return None, "quota_guard"
+    st = _load()
+    at = _pick_at(st)                      # فوري لو القناة ساكتة، وإلا ساعة فاضية
     url, err = yt.publish(video, title, desc, tags, cover=cover,
-                          synthetic=synthetic, category="27")
+                          synthetic=synthetic, category="27", publish_at=at)
     if url and "watch?v=" in url:
         vid = url.split("watch?v=")[-1].split("&")[0]
         state.push_published({"id": vid, "title": title, "kind": "noor",
@@ -121,6 +154,7 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
         if at:
             st.setdefault("slots", []).append(at[:13])       # اتشغلت الساعة دي
             _save(st)
+        print(f"[noor] ⏰ وقت النشر: {at or 'فوري (القناة كانت ساكتة)'}", flush=True)
     return url, err
 
 
@@ -406,7 +440,7 @@ def _publish_spare() -> int:
     title = str(meta.get("title") or "قرآن وتدبّر")
     print(f"[noor] 📤 رفع حلقة من الخزّان: {title[:60]}", flush=True)
     st = _load()
-    at = _next_slot(st.get("slots", []))
+    at = _pick_at(st)
     from xtrendaw.publish import youtube as yt
     url, err = yt.publish(got["video"], title[:95],
                           str(meta.get("caption") or ""),
