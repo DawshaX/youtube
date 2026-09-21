@@ -514,28 +514,27 @@ def cycle() -> int:
     if left > 0:
         try:
             n = noor_vault.count()
-        except Exception:
+        except Exception:                                 # noqa: BLE001
             n = 0
         if n > 0:
             # ⚡ املأ الحصة الموجودة: احجز الجاهز على ساعات اليوم الجاية
-            # (كل حلقة على ساعة — النشر يحصل على يوتيوب نفسه بلا انتظار سيرفر)
-            got = _fill_quota(max_n=min(left, 6))
-            if got and state.published_today_pt() >= cap:
+            # (كل حلقة على ساعة — يوتيوب ينشرها لوحده بلا انتظار سيرفر)
+            _fill_quota(max_n=min(left, 6))
+            if state.published_today_pt() >= cap:
                 return 0                      # الحصة اتقفلت — نستنى الدورة الجاية
-        if got:
-                n = 0
-                try:
-                    n = noor_vault.count()
-                except Exception:                 # noqa: BLE001
-                    pass
-                # 🏭 ضمان الاستمرارية: المخزون لازم يفضل فيه رصيد جاهز دايمًا،
-                # فلو نزل تحت الأرضية بننتج حلقة كمان في نفس الدورة (مش بس بنرفع).
-                floor = int(os.environ.get("NOOR_VAULT_FLOOR", "6"))
-                if n < floor:
-                    print(f"[noor] 🏭 المخزون {n}/{floor} — إنتاج حلقة جديدة "
-                          f"لضمان الاستمرار", flush=True)
-                    return short_once()
-                return 0                      # اترفع جاهز = الدورة دي نجحت
+            try:
+                n = noor_vault.count()
+            except Exception:                             # noqa: BLE001
+                pass
+        # 🏭 ضمان الاستمرارية (الأهم): المخزون لازم يفضل فيه رصيد جاهز دايمًا،
+        # فالرندر الخفيف (شورت/ريل) بياخد الأولوية دايمًا على أي حاجة تانية —
+        # عشان حلقة كل ساعة ما تتأخرش بسبب رندر تقيل.
+        floor = int(os.environ.get("NOOR_VAULT_FLOOR", "6"))
+        if n < floor:
+            print(f"[noor] 🏭 المخزون {n}/{floor} — إنتاج حلقة جديدة "
+                  f"لضمان الاستمرار", flush=True)
+            return short_once()
+        # المخزون مليان: نعمل الفيديو الطويل بتاع اليوم (لمّا يبقى فيه رصيد أمان)
         if not did_long:
             print(f"[noor] فيديو اليوم الطويل (فاضل {left} رفعة)", flush=True)
             return long_once()
