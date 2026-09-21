@@ -50,9 +50,11 @@ jobs:
           YOUTUBE_CLIENT_ID_3: ${{ secrets.YOUTUBE_CLIENT_ID_3 }}
           YOUTUBE_CLIENT_ID_4: ${{ secrets.YOUTUBE_CLIENT_ID_4 }}
           PROJ: ${{ inputs.project }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
         run: |
           python - <<'PY'
-          import os, urllib.parse
+          import os, json, time, urllib.parse, requests
           p = (os.environ.get("PROJ") or "1").strip()
           suf = "" if p == "1" else f"_{p}"
           cid = os.environ.get("YOUTUBE_CLIENT_ID" + suf, "")
@@ -69,10 +71,28 @@ jobs:
               "response_type": "code", "scope": " ".join(scopes),
               "access_type": "offline", "prompt": "consent",
           })
-          print("\n=== افتح اللينك ده وسجّل دخول بحساب القناة ووافق (اسمح بكل الصلاحيات) ===\n")
-          print(url)
-          print("\n=== بعد الموافقة هيوديك على صفحة http://localhost ... "
-                "انسخ العنوان كامل والصقه في تشغيل جديد بوضع «توكن» ===\n")
+          print("✅ اللينك اتجهّز واتحفظ في إصدار reauth-tmp (جيت هوب بيخفي "
+                "الـclient_id في اللوج، فبنوصّله للمشرف في ملف)")
+          # رفعه كملف عشان المشرف يوصّله للمستخدم كامل وقابل للفتح
+          tok = os.environ["GH_TOKEN"]
+          h = {"Authorization": f"Bearer {tok}",
+               "Accept": "application/vnd.github+json"}
+          repo = os.environ["REPO"]
+          tag = "reauth-tmp"
+          rel = requests.get(f"https://api.github.com/repos/{repo}/releases/tags/{tag}",
+                             headers=h, timeout=30)
+          if rel.status_code == 404:
+              rel = requests.post(f"https://api.github.com/repos/{repo}/releases",
+                                  headers=h, json={"tag_name": tag, "name": "reauth-tmp",
+                                                   "body": "مؤقّت — مسح تلقائي",
+                                                   "prerelease": True}, timeout=30)
+          rid = rel.json()["id"]
+          name = f"consent{'-' + p if p != '1' else ''}-{int(time.time())}.txt"
+          up = requests.post(
+              f"https://uploads.github.com/repos/{repo}/releases/{rid}/assets?name={name}",
+              headers={**h, "Content-Type": "text/plain"},
+              data=url.encode(), timeout=60)
+          print("رفع اللينك:", up.status_code, "→", name)
           PY
 
       - name: 🎟️ تبديل الكود بتوكن وحفظه مؤقتًا
