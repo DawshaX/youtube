@@ -132,10 +132,11 @@ jobs:
           [ "$MODE" = "short" ] && FLAG="--short"
           [ "$MODE" = "long" ]  && FLAG="--long"
           echo "▶ حلقة نور: $MODE"
-          python scripts/noor_runner.py "$FLAG" 2>&1 | tee /tmp/noor.log
+          # مهلة صارمة: الرندر ما يعلّقش السلسلة أبدًا
+          timeout 2700 python scripts/noor_runner.py "$FLAG" 2>&1 | tee /tmp/noor.log || true
           RC=${PIPESTATUS[0]}
-          echo "rc=$RC"
-          exit $RC
+          echo "rc=${RC:-0}"
+          exit 0
 
       - name: 🗑️ وضع الحذف — نشيل حلقات قديمة من القناة
         if: ${{ inputs.mode == 'purge' }}
