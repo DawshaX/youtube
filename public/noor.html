@@ -43,6 +43,12 @@
   .card .row{padding:11px 12px 14px}
   .card .row b{font-size:14px;font-weight:700;line-height:1.6;display:block}
   .card .row span{font-size:11.5px;color:var(--mut);display:block;margin-top:7px}
+  .next{margin:8px 0 4px;padding:14px 16px;border-radius:14px;display:flex;gap:12px;
+        align-items:center;flex-wrap:wrap;background:rgba(232,195,122,.07);
+        border:1px solid rgba(232,195,122,.25)}
+  .next .lab{font-size:14px;color:var(--paper)}
+  .next .clock{font-size:22px;font-weight:800;color:var(--gold);font-variant-numeric:tabular-nums}
+  .next .muted{font-size:11.5px;color:var(--mut);margin-inline-start:auto}
   .note{margin-top:26px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.03);
         border:1px solid rgba(255,255,255,.07);color:var(--mut);font-size:13px;line-height:1.9}
   footer{text-align:center;padding:26px 16px 50px;color:var(--mut);font-size:12.5px}
@@ -64,6 +70,12 @@
       <h2 id="heroTitle">…</h2>
       <div class="chips" id="heroChips"></div>
     </div>
+  </div>
+
+  <div class="next" id="nextBar">
+    <span class="lab">⏳ النشرة الجاية على القناة بعد</span>
+    <span class="clock" id="clock">—</span>
+    <span class="muted">مواعيد النشر: 8ص · 12ظ · 4ع · 7م · 10م · 1ص (بتوقيتك)</span>
   </div>
 
   <h3 class="sec">أحدث الحلقات</h3>
@@ -133,6 +145,26 @@ fetch("./noor.json", {cache:"no-store"}).then(r=>r.json()).then(d=>{
       </div></a>`;
   }).join("");
 }).catch(()=>{document.getElementById("empty").hidden=false;});
+
+// ⏳ عدّاد النشرة الجاية (مواعيد النشر بالـUTC → بتوقيت الزائر)
+const SLOTS = [5,9,13,16,19,22];
+function tick(){
+  const now = new Date();
+  let best = null;
+  for(const h of SLOTS){
+    for(let d=0; d<2; d++){
+      const c = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()+d, h, 0, 0));
+      if(c - now > 60000){ if(!best || c < best) best = c; break; }
+    }
+  }
+  if(!best) return;
+  const s = Math.max(0, Math.floor((best - now)/1000));
+  const hh = String(Math.floor(s/3600)).padStart(2,"0");
+  const mm = String(Math.floor(s%3600/60)).padStart(2,"0");
+  const ss = String(s%60).padStart(2,"0");
+  document.getElementById("clock").textContent = `${hh}:${mm}:${ss}`;
+}
+tick(); setInterval(tick, 1000);
 </script>
 </body>
 </html>
