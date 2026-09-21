@@ -237,8 +237,17 @@ def fetch_real_visual(query: str, out_path: Path, episode: str = "") -> bool:
         if not r.ok:
             return False
         import re as _re
-        _junk = _re.compile(r"collage|mosaic|composite|montage|\bmap\b|"
-                            r"diagram|chart|logo|poster|coat of arms", _re.I)
+        # ⚠️ فلتر أمان للمحتوى الديني (بق حقيقي 2026-09-21): كومنز رجّع
+        # «مهرّج» و«ماراثون» و«تمثال متحف» لمشهد عن الأخلاق — صور مش لائقة
+        # لمحتوى إسلامي. بنستبعد: بشر/مهرّجات/احتفالات/متاحف/تماثيل/حشود.
+        _junk = _re.compile(
+            r"collage|mosaic|composite|montage|\bmap\b|diagram|chart|logo|"
+            r"poster|coat of arms|clown|circus|parade|festival|carnival|"
+            r"costume|dancer|dancing|protest|demonstration|statue|sculpture|"
+            r"museum|sculptor|portrait of|self-portrait|\bman\b|\bwoman\b|"
+            r"\bmen\b|\bwomen\b|\bgirl\b|\bboy\b|crowd|people|"
+            r"marathon|runner|athlete|singer|band|stage|concert|bar\b|beer",
+            _re.I)
         pages = (r.json().get("query") or {}).get("pages") or {}
         cands = []
         for p in pages.values():

@@ -179,24 +179,40 @@ def _short_one() -> int:
     print(f"[noor] 🎬 حلقة {item['kind']} · ثيم {item['theme']} · قارئ "
           f"{item.get('reciter')} · {item['id']}", flush=True)
 
-    if item["kind"] == "hadith":
+    if item["kind"] == "reel":
+        # 🎬 ريلز الثيم: ٣ آيات + تعليق + تطبيق (لحد ٣ دقايق) — صوت من أوله لآخره
+        from xtrendaw import noor_premium as np2
+        from xtrendaw.noor_pool import APPLY
+        res = np2.render({
+            "ayahs": item["ayahs"], "reciter": item.get("reciter", "husary"),
+            "scenes": item.get("scenes"), "hook": item["hook"],
+            "outro": APPLY.get(item["theme"], "تابعنا… فيديو جديد كل ساعة"),
+            "brand": f"نور — {item['theme']}", "meaning": None}, work)
+        title = f"{item['hook']} | {item['theme']} 🤍"
+        body = f"آيات عن {item['theme']} · {res['ayahs_count']} آيات"
+        src_line = f"🎙️ تلاوة: {res['reciter']}"
+    elif item["kind"] == "hadith":
         res = noor_build.build_hadith_short(item, work)
         title = f"{item['hook']} — حديث اليوم 📖"
         body = res["text"]
         src_line = f"📖 {res['book']} — حديث رقم {res['number']}"
     else:
         from xtrendaw import noor_premium as np
+        from xtrendaw.noor_pool import APPLY
         res = np.render({"surah": item["surah"], "ayah": item["ayah"],
                          "ayah_to": item.get("ayah_to"),
                          "reciter": item.get("reciter", "husary"),
-                         "scenes": item.get("scenes")}, work)
+                         "scenes": item.get("scenes"),
+                         "hook": item.get("hook"),
+                         "outro": APPLY.get(item.get("theme", ""),
+                                            "تابعنا… آية وحديث كل ساعة")}, work)
         short = (res["text"][:60] + "…") if len(res["text"]) > 60 else res["text"]
         title = f"{item['hook']} — آية وسكينة ﴿{res['surah']}﴾"
         body = res["text"]
         src_line = f"🎙️ تلاوة: {res['reciter']}"
 
     tags = ["قرآن", "تلاوة", "إسلاميات", "أدعية", "ذكر", "shorts", "quran",
-            "islamic", "تفسير", "هدوء"]
+            "islamic", "تفسير", "هدوء"][:15]
     desc = (
         f"{body}\n\n"
         f"{src_line}\n"

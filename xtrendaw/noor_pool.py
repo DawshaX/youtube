@@ -32,20 +32,38 @@ SCENES = {
             "mountains clouds time lapse", "rough sea rocks waves"],
     "توحيد": ["galaxy nebula stars", "night sky milky way",
               "earth from space sunrise", "universe cosmos animation"],
-    "ذكر": ["person praying mosque silhouette", "mosque architecture night",
+    "ذكر": ["mosque minaret sunset silhouette", "mosque architecture night",
             "prayer beads closeup", "sunset silhouette meditation"],
     "قرآن": ["quran book open pages", "mosque interior arches",
-             "old library manuscripts", "calligraphy art"],
+             "old holy quran pages", "islamic calligraphy art"],
     "نور": ["sunrise above clouds", "lighthouse night beam",
             "candle flame dark", "stars long exposure"],
     "توبة": ["dawn light horizon", "open road sunrise", "fresh green field rain",
              "light through window curtain"],
     "جنة": ["waterfall lush garden", "flowers meadow sunlight",
             "river paradise nature", "butterfly flowers closeup"],
-    "أخلاق": ["hands helping each other", "smiling family together",
-              "charity food sharing", "children playing park"],
-    "وقت": ["hourglass sand closeup", "clock tower time lapse",
-            "sunset time lapse sky", "old calendar pages"],
+    # (استعلامات الحديث: طبيعة وعمارة إسلامية — بلا أي وجوه أو مشاهد مش لائقة)
+    "حديث": ["mosque interior arches", "prayer beads on wood",
+             "rain drops green leaves", "clouds sunset sky",
+             "old mosque minaret", "green trees light"],
+    "أخلاق": ["green leaves rain drops closeup", "mosque courtyard arches",
+              "dates fruit bowl", "trees sunlight path"],
+    "وقت": ["hourglass sand closeup", "minaret clock tower",
+            "sunset time lapse sky", "old lantern light"],
+}
+
+# جملة تطبيق عملية لكل ثيم (نصي أنا — نصيحة عامة، مش حكم شرعي ولا فتوى)
+APPLY = {
+    "رحمة": "النهاردة: افتح قلبك لحد زعلان منك، وابعت رسالة تطمّن حد بتحبه.",
+    "صبر": "النهاردة: حمّلك اللي تعبك… قول «حسبي الله ونعم الوكيل» وكمّل خطوة.",
+    "توحيد": "النهاردة: قبل ما تطلب من حد، اطلب من الله الأول — هو الأقرب.",
+    "ذكر": "النهاردة: خصّص دقيقة واحدة لسبحان الله وبحمده… وشوف الفرق في قلبك.",
+    "قرآن": "النهاردة: عيّن لنفسك صفحة واحدة بعد الفجر، وخلّيها عادة مش مرة.",
+    "نور": "النهاردة: كن سبب نور لحد حزين — كلمة طيبة بتغيّر يوم كامل.",
+    "توبة": "النهاردة: سيب الذنب اللي بتأجّله، وابدأ من الصلاة الجاية — الباب مفتوح.",
+    "جنة": "النهاردة: اعمل عمل صغير خفي، عشان تلاقيه في يوم أنت محتاجه.",
+    "أخلاق": "النهاردة: صل رحمك بمكالمة قصيرة، وابدأ بأمك.",
+    "وقت": "النهاردة: اكتب أهم حاجة واحدة في يومك، وابدأ بيها قبل أي حاجة تانية.",
 }
 
 # عناصر المحتوى: آيات مع ثيمها وهوكها (النص بيتجيب لايف بالـAPI)
@@ -192,12 +210,37 @@ def pick(item_id: str | None = None) -> dict:
 
 
 def _finish(item: dict) -> dict:
-    """يضيف المشاهد + القارئ بالتناوب + الثيم."""
+    """يضيف المشاهد + القارئ بالتناوب + الثيم (+ ريلز كل ٣ حلقات)."""
     # ⚠️ الغامدي مستثنى: ملفاته ناقصة على المصدر (404) — مش قارئ معتمد عمليًا
     reciters = ["husary", "minshawi", "shatri", "abdulbasitmurattal"]
-    item["reciter"] = reciters[len(history()) % len(reciters)]
-    item["scenes"] = SCENES.get(item.get("theme", ""), SCENES["نور"])
+    n = len(history())
+    item["reciter"] = reciters[n % len(reciters)]
+    if item.get("kind") == "hadith":
+        item["scenes"] = SCENES["حديث"]
+    else:
+        item["scenes"] = SCENES.get(item.get("theme", ""), SCENES["نور"])
+    # 🎬 كل ثالث حلقة ريلز (٣ آيات بنفس الثيم + تعليق + تطبيق) لحد 3 دقايق
+    if n % 3 == 2 and item.get("kind") == "ayah":
+        ay = reel_ayahs(item.get("theme", ""), 3)
+        if len(ay) >= 2:
+            item["kind"] = "reel"
+            item["ayahs"] = [{"surah": x["surah"], "ayah": x["ayah"],
+                              "ayah_to": x.get("ayah_to")} for x in ay]
     return item
+
+
+def reel_ayahs(theme: str, n: int = 3) -> list[dict]:
+    """آيات الريل: كل آيات الثيم (بدون اللي فشلت قبل كده) لحد n آيات."""
+    bad = _broken()
+    out = []
+    for a in AYAHS:
+        if a.get("theme") != theme:
+            continue
+        key = f"ayah-{a['surah']}-{a['ayah']}"
+        if key in bad:
+            continue
+        out.append(dict(a, id=key))
+    return out[:max(2, n)]
 
 
 def mark_done(item: dict, video: str = "", url: str = "") -> None:

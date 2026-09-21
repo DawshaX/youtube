@@ -18,8 +18,10 @@ import urllib.request
 from pathlib import Path
 
 from . import settings
-from .noor_premium import (CACHE, FONT_Q, FONT_UI, FONT_UI_B, FPS, H, UA, W,
-                           FPS_LONG, PRESET_LONG,
+from .noor_premium import (CACHE, FONT_DISPLAY, FONT_Q, FONT_UI, FONT_UI_B,
+                           FPS, H, UA, W,
+                           FPS_LONG, PRESET_LONG, _ambience, _mix_track,
+                           _trim_silence,
                            ayah_tafsir, ayah_text, dur_of, grade_and_concat,
                            overlay, recitation, scene_clip)
 from .tts import ffmpeg, synthesize_line, to_wav
@@ -68,7 +70,8 @@ def _narration(text: str, workdir: Path, name: str, voice: str,
                rate: str = "+0%") -> tuple[Path, float]:
     """تعليق بصوت edge-tts (صوت ولّدناه — بلا أي حقوق للغير)."""
     r = synthesize_line(text, "ar", workdir, name=name, rate=rate, voice=voice)
-    return r["wav"], r["duration"]
+    w = _trim_silence(Path(r["wav"]), workdir, name)
+    return w, dur_of(w)
 
 
 def _strip(text: str) -> tuple[str, list[int]]:
@@ -116,10 +119,10 @@ def build_hadith_short(item: dict, workdir: Path) -> dict:
     groups = [words[i:i + 6] for i in range(0, min(len(words), 72), 6)]
     voice = settings.VOICE_AR
 
-    lead = 0.7
+    lead = 0.45
     seq: list[tuple[Path, float, str]] = []       # (صوت، مدة، نص مصاحب)
-    wav_hook, d_hook = _narration(item["hook"] + ".", workdir, "hook", voice,
-                                  rate="+8%")
+    wav_hook, d_hook = _narration(item["hook"] + ".", workdir, "hook",
+                                  voice, rate="+10%")
     seq.append((wav_hook, d_hook, item["hook"]))
     for gi, g in enumerate(groups):
         w, d = _narration(" ".join(g), workdir, f"h{gi}", voice, rate="-4%")
@@ -127,11 +130,15 @@ def build_hadith_short(item: dict, workdir: Path) -> dict:
     wav_src, d_src = _narration(f"رواه {h['book']}، رقم {h['number']}.",
                                 workdir, "src", voice, rate="+2%")
     seq.append((wav_src, d_src, f"📖 {h['book']} — {h['number']}"))
-    total = lead + sum(d for _w, d, _t in seq) + 0.6 + 2.4
+    # 🎙️ خاتمة منطوقة — كان قبل كده 2.4 ثانية **صمت كامل** = موت الفيديو في آخره
+    outro_line = item.get("outro") or "تابعنا… حديث صحيح جديد كل ساعة"
+    wav_out, d_out = _narration(outro_line, workdir, "outro", voice, rate="+6%")
+    seq.append((wav_out, d_out, outro_line))
+    total = lead + sum(d for _w, d, _t in seq) + 0.25
 
     # خلفية: مشاهد الثيم
     scenes = item.get("scenes") or ["mosque interior arches"]
-    per = (total - 2.4) / max(1, len(scenes[:4]))
+    per = total / max(1, len(scenes[:4]))
     clips = []
     for i, q in enumerate(scenes[:4]):
         c, _src = scene_clip(q, per + 0.6, workdir, f"hd:{h['number']}:{i}", i)
@@ -148,10 +155,13 @@ def build_hadith_short(item: dict, workdir: Path) -> dict:
                       workdir / f"c{i}.png",
                       size=88 if i == 0 else (78 if "📖" not in t else 66),
                       y=0.44, max_lines=4,
-                      font_path=FONT_Q if ("📖" not in t and i > 0) else FONT_UI_B,
+                      font_path=FONT_UI_B if (i == 0 or "📖" in t or
+                                              i == len(seq) - 1) else FONT_DISPLAY,
                       color=(255, 252, 240, 255), halo=24, spacing=1.55)
         seg = workdir / f"s{i:02d}.mp4"
         fades = "fade=t=in:st=0:d=0.4:alpha=1"
+        if i == len(seq) - 1:            # آخر فصل: تلاشي للخارج زي باقي الفيديوهات
+            fades += f",fade=t=out:st={max(0.1, d - 0.5):.2f}:d=0.5:alpha=1"
         vf = ("[0:v]setsar=1[v0];[1:v]format=rgba," + fades +
               "[ov];[v0][ov]overlay=0:0:format=auto,format=yuv420p[v]")
         r = subprocess.run([ffmpeg(), "-y", "-ss", f"{t0:.3f}", "-i", str(bg),
@@ -166,24 +176,6 @@ def build_hadith_short(item: dict, workdir: Path) -> dict:
         segs.append(seg)
         plan_audio.append(w)
         t0 += d
-    # خاتمة ثابتة
-    op = overlay(["تابعنا للمزيد", "﴿ نور — قرآن وتدبر ﴾"], workdir / "out.png",
-                 size=78, y=0.46, font_path=FONT_UI_B, halo=26, max_lines=3,
-                 scrim_alpha=150)
-    seg = workdir / "sout.mp4"
-    r = subprocess.run([ffmpeg(), "-y", "-ss", f"{t0:.3f}", "-i", str(bg),
-                        "-loop", "1", "-t", "2.4", "-i", str(op),
-                        "-filter_complex",
-                        "[0:v]setsar=1[v0];[1:v]format=rgba,fade=t=in:st=0:d=0.4:alpha=1[ov];"
-                        "[v0][ov]overlay=0:0:format=auto,fade=t=out:st=1.6:d=0.8,"
-                        "format=yuv420p[v]", "-map", "[v]", "-t", "2.4",
-                        "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast",
-                        "-crf", "20", "-pix_fmt", "yuv420p", str(seg)],
-                       capture_output=True, text=True)
-    if r.returncode:
-        raise RuntimeError("خاتمة حديث فشلت: " + (r.stderr or "")[-300:])
-    segs.append(seg)
-
     lst = workdir / "segs.txt"
     lst.write_text("".join(f"file '{s.resolve()}'\n" for s in segs),
                    encoding="utf-8")
@@ -191,22 +183,18 @@ def build_hadith_short(item: dict, workdir: Path) -> dict:
     subprocess.run([ffmpeg(), "-y", "-f", "concat", "-safe", "0", "-i",
                     str(lst), "-c", "copy", str(silent)],
                    capture_output=True, check=True)
-    # الصوت: كل مقطع بوقته (مع هدوء البداية)
-    ins, fc = [], []
-    for i, w in enumerate(plan_audio, start=1):
-        ins += ["-i", str(w)]
+    # الصوت: كل مقطع في وقته + أجواء طبيعية تحت الكل (بلا موسيقى)
+    pieces = []
     cur = lead
-    for i in range(1, len(plan_audio) + 1):
-        fc.append(f"[{i}:a]adelay={int(cur*1000)}|{int(cur*1000)}[a{i}]")
-        cur += dur_of(Path(plan_audio[i - 1]))
-    fc.append("".join(f"[a{i}]" for i in range(1, len(plan_audio) + 1)) +
-              f"amix=inputs={len(plan_audio)}:normalize=0,apad,"
-              f"atrim=0:{total:.2f},loudnorm=I=-15:TP=-1.5:LRA=9[a]")
+    for w in plan_audio:
+        pieces.append((cur, w, 1.0))
+        cur += dur_of(w)
+    amb = _ambience(total, workdir / "amb.wav", seed=len(txt))
+    track = _mix_track(pieces, total, workdir / "track.m4a", ambience=amb)
     out = workdir / "noor.mp4"
-    r = subprocess.run([ffmpeg(), "-y", "-i", str(silent)] + ins +
-                       ["-filter_complex", ";".join(fc), "-map", "0:v",
-                        "-map", "[a]", "-t", f"{total:.2f}", "-c:v", "copy",
-                        "-c:a", "aac", "-b:a", "160k", "-movflags",
+    r = subprocess.run([ffmpeg(), "-y", "-i", str(silent), "-i", str(track),
+                        "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a",
+                        "aac", "-b:a", "192k", "-shortest", "-movflags",
                         "+faststart", str(out)], capture_output=True, text=True)
     if r.returncode:
         raise RuntimeError("دمج صوت الحديث فشل: " + (r.stderr or "")[-300:])
