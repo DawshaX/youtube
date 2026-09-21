@@ -479,18 +479,55 @@ def cycle() -> int:
     return short_once()
 
 
+def purge(ids: list[str]) -> int:
+    """🗑️ حذف حلقات مرفوعة + تنضيفها من الذاكرة.
+
+    ليه؟ أي حلقة اترفعت بالمحرك القديم (اللي كان فيه فترات صمت بتقتل الفيديو)
+    لازم تختفي من القناة، والذاكرة (السجل اليومي والإحصاءات) تتظبط معاها.
+    """
+    sys.path.insert(0, str(ROOT))
+    from xtrendaw import state
+    from xtrendaw.publish import youtube as yt
+
+    want = [v.strip() for v in ids if v and v.strip()]
+    if not want:
+        print("[purge] مفيش معرّفات", flush=True)
+        return 1
+    done: list[str] = []
+    for v in want:
+        print(f"[purge] 🗑️ بنحذف {v} …", flush=True)
+        if yt.delete(v):
+            done.append(v)
+            print(f"[purge] ✓ اتحذف {v}", flush=True)
+    if done:
+        try:
+            log = [p for p in state.published_log() if p.get("id") not in done]
+            state._wr(state.PUBLISHED_FILE, log)
+        except Exception as exc:
+            print(f"[purge] ⚠ ذاكرة الإحصاءات: {type(exc).__name__}", flush=True)
+        st = _load()
+        st["shorts"] = [s for s in st.get("shorts", [])
+                        if s.get("id") not in done]
+        _save(st)
+    print(f"[purge] ✅ اتحذف {len(done)}/{len(want)}", flush=True)
+    return 0 if len(done) == len(want) else 1
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--short", action="store_true")
     g.add_argument("--long", action="store_true")
     g.add_argument("--cycle", action="store_true")
+    g.add_argument("--purge", nargs="+", metavar="VIDEO_ID")
     a = ap.parse_args()
     sys.path.insert(0, str(ROOT))
     if a.short:
         return short_once()
     if a.long:
         return long_once()
+    if a.purge:
+        return purge(a.purge)
     return cycle()
 
 

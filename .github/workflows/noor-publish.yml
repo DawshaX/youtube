@@ -28,8 +28,12 @@ on:
       mode:
         description: 'نوع الحلقة'
         type: choice
-        options: [cycle, short, long]
+        options: [cycle, short, long, purge]
         default: cycle
+      ids:
+        description: 'معرّفات حلقات يوتيوب (وضع purge فقط) — افصل بمسافة'
+        type: string
+        default: ''
       dry_run:
         description: 'رندر بلا رفع (معاينة)'
         type: boolean
@@ -80,6 +84,7 @@ jobs:
           EOF
 
       - name: 🎬 الدورة (حلقة جديدة + نشر/تخزين)
+        if: ${{ inputs.mode != 'purge' }}
         env:
           # ── مفاتيح الوسائط (بيكسلز/بيكساباي/ناسا/أوبنفيرس) — لقطات حرة بلا حقوق
           PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
@@ -129,6 +134,27 @@ jobs:
           RC=${PIPESTATUS[0]}
           echo "rc=$RC"
           exit $RC
+
+      - name: 🗑️ وضع الحذف — نشيل حلقات قديمة من القناة
+        if: ${{ inputs.mode == 'purge' }}
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_CLIENT_ID_2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+          YOUTUBE_CLIENT_SECRET_2: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
+          YOUTUBE_REFRESH_TOKEN_2: ${{ secrets.YOUTUBE_REFRESH_TOKEN_2 }}
+          YOUTUBE_CLIENT_ID_3: ${{ secrets.YOUTUBE_CLIENT_ID_3 }}
+          YOUTUBE_CLIENT_SECRET_3: ${{ secrets.YOUTUBE_CLIENT_SECRET_3 }}
+          YOUTUBE_REFRESH_TOKEN_3: ${{ secrets.YOUTUBE_REFRESH_TOKEN_3 }}
+          YOUTUBE_CLIENT_ID_4: ${{ secrets.YOUTUBE_CLIENT_ID_4 }}
+          YOUTUBE_CLIENT_SECRET_4: ${{ secrets.YOUTUBE_CLIENT_SECRET_4 }}
+          YOUTUBE_REFRESH_TOKEN_4: ${{ secrets.YOUTUBE_REFRESH_TOKEN_4 }}
+        run: |
+          set -o pipefail
+          echo "🗑️ حذف: ${{ inputs.ids }}"
+          python scripts/noor_runner.py --purge ${{ inputs.ids }} 2>&1 | tee /tmp/purge.log
+          exit ${PIPESTATUS[0]}
 
       - name: خزّن ذاكرة نور على git (آخر حلقات + اللي اتنشر + اللي في الـvault)
         if: always()
