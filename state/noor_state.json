@@ -259,11 +259,24 @@
    "err": "quota_guard",
    "at": "2026-09-21 14:02",
    "duration": 46.1
+  },
+  {
+   "id": "ayah-55-13",
+   "kind": "ayah",
+   "theme": "توحيد",
+   "title": "أي نعمة أنكرتها؟ 🌊 — آية وسكينة ﴿سُورَةُ الرَّحۡمَٰن﴾",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790002127/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790002272.mp4",
+   "err": "quota_guard",
+   "at": "2026-09-21 14:51",
+   "duration": 18.4
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-2-186",
+ "last_try": "ayah-55-13",
  "slots": [
   "2026-09-21T09",
   "2026-09-21T13",
