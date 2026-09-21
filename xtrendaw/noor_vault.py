@@ -54,6 +54,33 @@ def pending() -> list[dict]:
     return out
 
 
+def dedupe() -> int:
+    """يشيل النسخ المكررة من الخزّان (نفس العنوان) — بيسيب أقدم نسخة."""
+    from . import github_store as gs
+    tok, rel = _api()
+    if not tok:
+        return 0
+    try:
+        entries = gs._vault_entries(tok, rel)
+    except Exception:
+        return 0
+    seen: dict[str, dict] = {}
+    n = 0
+    for e in sorted([x for x in entries if str(x.get("name","")).endswith(".mp4")],
+                    key=lambda x: str(x.get("name",""))):
+        title = str((e.get("meta") or {}).get("title") or "").strip()
+        if not title:
+            continue
+        if title in seen:
+            for a in (e.get("asset"), e.get("cover"), e.get("meta_asset")):
+                if a and gs.delete_asset(tok, a["id"]):
+                    n += 1
+            print(f"[vault] 🗑 نسخة مكررة اتشالت: {title[:50]}", flush=True)
+        else:
+            seen[title] = e
+    return n
+
+
 def purge_foreign() -> int:
     """يشيل من الخزّان أي حلقة مش من محرك نور (حلقات المصنع القديم المتروكة)."""
     from . import github_store as gs
@@ -93,8 +120,21 @@ def can_push(cap: int = BACKLOG_CAP) -> bool:
 
 
 def push(video: Path, cover: Path | None, meta: dict) -> str:
-    """يخزّن حلقة جاهزة (مقطع + غلاف + بيانات النشر) في الخزّان."""
+    """يخزّن حلقة جاهزة (مقطع + غلاف + بيانات النشر) في الخزّان.
+
+    🛡️ حماية من التكرار (بق حقيقي 2026-09-21): لو نفس العنوان موجود في الخزّان
+    (حصل لأن الحارس المحلي والسحابة اشتغلوا على نفس العنصر في نفس الوقت)،
+    ما نخزّنش نسخة تانية — إحنا أصلًا عندنا النسخة دي.
+    """
     from . import github_store as gs
+    want = str((meta or {}).get("title") or "").strip()
+    if want:
+        for e in pending():
+            have = str((e.get("meta") or {}).get("title") or "").strip()
+            if have == want:
+                print(f"[vault] ↺ نفس الحلقة موجودة في الخزّان — مش نخزّن نسخة "
+                      f"تانية: {want[:50]}", flush=True)
+                return (e.get("asset") or {}).get("browser_download_url", "")
     meta = dict(meta or {})
     meta.setdefault("at", time.strftime("%Y-%m-%d %H:%M", time.gmtime()))
     urls = gs.upload_to_vault(video, cover, meta)

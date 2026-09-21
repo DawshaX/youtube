@@ -58,6 +58,28 @@ while true; do
   git pull -q --rebase --autostash origin main >/dev/null 2>&1 || \
     log "ℹ️ مقدرتش أسحب آخر ذاكرة — هكمل بالحالة المحلية"
 
+  # 🛡️ لو السحابة شغالة (دورة اتبدأت في آخر 45 دقيقة) → مزامنة بس،
+  # من غير إنتاج — عشان ما نعملش نفس الحلقة مرتين. لو السحابة وقفت،
+  # الحارس بياخد الشغل لوحده (failover) — المصنع ما يوقفش أبدًا.
+  CLOUD=$(curl -s -m 25 "https://api.github.com/repos/DawshaX/youtube/actions/workflows/noor-publish.yml/runs?per_page=3" 2>/dev/null | python3 -c "
+import json,sys,time,datetime
+try:
+    d=json.load(sys.stdin); rs=d.get('workflow_runs',[])
+    if not rs: print('none'); raise SystemExit
+    t=rs[0]['created_at'].replace('Z','')
+    age=(datetime.datetime.utcnow()-datetime.datetime.fromisoformat(t)).total_seconds()/60
+    print(f'{age:.0f}')
+except Exception:
+    print('none')
+" 2>/dev/null)
+  if [ "$CLOUD" != "none" ] && [ -n "$CLOUD" ] && [ "$CLOUD" -lt 45 ] 2>/dev/null; then
+    log "☁️ السحابة شغالة (آخر دورة قبل ${CLOUD} دقيقة) — مزامنة بس، مش بعمل نسخة مكررة"
+    push_state
+    now=$(date +%s); next=$(( (now/3600 + 1) * 3600 )); sl=$(( next - now ))
+    [ "$sl" -lt 45 ] && sl=45
+    log "⏱️ نوم ${sl}ث — ولو السحابة وقفت في الوقت ده، أنا هكمّل مكانها"
+    sleep "$sl"; continue
+  fi
   log "▶ دورة إنتاج (شورت/طويل + تخزين + نشر لو الحصة مفتوحة)"
   timeout 3480 python3 scripts/noor_runner.py --cycle 2>&1 | tee -a "$LOG" | tail -14
   log "■ الدورة خلصت (rc=${PIPESTATUS[0]})"
