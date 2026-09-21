@@ -1,0 +1,50 @@
+name: cookie-probe
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: probe
+        env:
+          COOKIES_B64: ${{ secrets.YOUTUBE_COOKIES_B64 }}
+        run: |
+          pip install -q requests
+          python - <<'PY'
+          import os, base64, requests
+          raw = os.environ.get("COOKIES_B64","")
+          print("السر موجود؟", bool(raw), "| طوله:", len(raw))
+          if not raw: raise SystemExit("ناقص")
+          try:
+              txt = base64.b64decode(raw).decode("utf-8","replace")
+          except Exception as e:
+              txt = raw
+              print("مش base64:", e)
+          lines=[l for l in txt.splitlines() if l.strip() and not l.startswith("#")]
+          print("عدد الكوكيز:", len(lines))
+          names=[]
+          jar={}
+          for l in lines:
+              parts=l.split("\t")
+              if len(parts)>=7:
+                  names.append(parts[5]); jar[parts[5]]=parts[6]
+          print("أسماء الكوكيز:", ",".join(sorted(set(names))[:14]))
+          print("فيه SAPISID؟", "SAPISID" in jar, "| SID؟", "__Secure-1PSID" in jar or "SID" in jar)
+          s=requests.Session(); s.headers["User-Agent"]="Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+          for n,v in jar.items(): s.cookies.set(n,v,domain=".youtube.com")
+          try:
+              r=s.get("https://studio.youtube.com/", timeout=40, allow_redirects=True)
+              print("studio:", r.status_code, "| الرابط النهائي:", r.url[:90])
+              print("فيه Sign in؟", "Sign in" in r.text or accounts.google.com in r.url)
+              print("طول الصفحه:", len(r.text))
+          except Exception as e:
+              print("فشل studio:", type(e).__name__, str(e)[:120])
+          try:
+              r2=s.get("https://www.youtube.com/account", timeout=40, allow_redirects=True)
+              print("account:", r2.status_code, "| نهائي:", r2.url[:80])
+          except Exception as e:
+              print("فشل account:", type(e).__name__)
+          PY
