@@ -1,8 +1,8 @@
 {
- "checkedAt": "2026-09-21T04:55:18+00:00",
+ "checkedAt": "2026-09-21T10:41:06+00:00",
  "runner": "actions-or-local",
- "all_ok": true,
- "fails": 0,
+ "all_ok": false,
+ "fails": 1,
  "warns": 4,
  "checks": [
   {
@@ -32,8 +32,8 @@
   },
   {
    "name": "YOUTUBE_COOKIES_B64 (كوكيز العين)",
-   "status": "ok",
-   "detail": "الجلسة شغالة (24 زوج كوكي) — مسار العين (بيانات + مشاهد/كلام) بلا تنزيل"
+   "status": "fail",
+   "detail": "الكوكيز ماتت/مرفوضة — أعد تصديرها (دقيقتين): HTTPError: 429 Client Error: Too Many Requests for url: https://www.google.com/sorry/index?continue=https://www.youtube.com/watch%3Fv%3D2Vv-BfVoq4g&q=●●●"
   },
   {
    "name": "GROQ_API_KEY (مخ الذكاء 1)",
