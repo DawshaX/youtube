@@ -71,28 +71,11 @@ jobs:
               "response_type": "code", "scope": " ".join(scopes),
               "access_type": "offline", "prompt": "consent",
           })
-          print("✅ اللينك اتجهّز واتحفظ في إصدار reauth-tmp (جيت هوب بيخفي "
-                "الـclient_id في اللوج، فبنوصّله للمشرف في ملف)")
-          # رفعه كملف عشان المشرف يوصّله للمستخدم كامل وقابل للفتح
-          tok = os.environ["GH_TOKEN"]
-          h = {"Authorization": f"Bearer {tok}",
-               "Accept": "application/vnd.github+json"}
-          repo = os.environ["REPO"]
-          tag = "reauth-tmp"
-          rel = requests.get(f"https://api.github.com/repos/{repo}/releases/tags/{tag}",
-                             headers=h, timeout=30)
-          if rel.status_code == 404:
-              rel = requests.post(f"https://api.github.com/repos/{repo}/releases",
-                                  headers=h, json={"tag_name": tag, "name": "reauth-tmp",
-                                                   "body": "مؤقّت — مسح تلقائي",
-                                                   "prerelease": True}, timeout=30)
-          rid = rel.json()["id"]
-          name = f"consent{'-' + p if p != '1' else ''}-{int(time.time())}.txt"
-          up = requests.post(
-              f"https://uploads.github.com/repos/{repo}/releases/{rid}/assets?name={name}",
-              headers={**h, "Content-Type": "text/plain"},
-              data=url.encode(), timeout=60)
-          print("رفع اللينك:", up.status_code, "→", name)
+          print("✅ اللينك اتجهّز — هيتحفظ كـartifact محمي (الريبو عام، "
+                "فممنوع أي حاجة حساسة تبقى في رابط عام)")
+          import pathlib
+          pathlib.Path("handoff").mkdir(exist_ok=True)
+          pathlib.Path("handoff/consent.txt").write_text(url, encoding="utf-8")
           PY
 
       - name: 🎟️ تبديل الكود بتوكن وحفظه مؤقتًا
@@ -142,26 +125,20 @@ jobs:
           print("✅ صلاحيات التوكن:", scopes[:200].replace(rt, "***"))
           print("   الحذف مسموح:", "youtube.force-ssl" in scopes)
 
-          # حفظ مؤقّت في إصدار خاص (بيتم سحبه ومسحه فورًا من المشرف)
-          tok = os.environ["GH_TOKEN"]
-          h = {"Authorization": f"Bearer {tok}",
-               "Accept": "application/vnd.github+json"}
-          repo = os.environ["REPO"]
-          tag = "reauth-tmp"
-          rel = requests.get(f"https://api.github.com/repos/{repo}/releases/tags/{tag}",
-                             headers=h, timeout=30)
-          if rel.status_code == 404:
-              rel = requests.post(f"https://api.github.com/repos/{repo}/releases",
-                                  headers=h, json={"tag_name": tag,
-                                                   "name": "reauth-tmp",
-                                                   "body": "مؤقّت — مسح تلقائي",
-                                                   "prerelease": True}, timeout=30)
-          rid = rel.json()["id"]
-          name = f"proj{p}-{int(time.time())}.txt"
-          up = requests.post(
-              f"https://uploads.github.com/repos/{repo}/releases/{rid}/assets"
-              f"?name={name}", headers={**h, "Content-Type": "text/plain"},
-              data=json.dumps({"project": p, "refresh_token": rt,
-                               "scopes": scopes}).encode(), timeout=60)
-          print("حفظ التوكن مؤقتًا:", up.status_code, "→", name)
+          # الريبو عام → أي إصدار أو ملف بيبقى برابط عام. التوكن بيتحفظ في
+          # artifact محمي (مش بينزل غير بتوكن المستودع) وبيتمسح بعد التثبيت.
+          import pathlib
+          pathlib.Path("handoff").mkdir(exist_ok=True)
+          pathlib.Path("handoff/token.json").write_text(
+              json.dumps({"project": p, "refresh_token": rt, "scopes": scopes}),
+              encoding="utf-8")
+          print("✅ التوكن اتجهّز للتسليم الآمن (مش بيتطبع ولا بيتنشر)")
           PY
+
+      - name: 📦 تسليم محمي (artifact)
+        if: ${{ inputs.action == 'token' || inputs.action == 'url' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: handoff-${{ inputs.project }}-${{ github.run_id }}
+          path: handoff/
+          retention-days: 1
