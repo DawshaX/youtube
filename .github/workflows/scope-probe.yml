@@ -1,0 +1,36 @@
+name: scope-probe
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: probe
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: |
+          pip install -q requests
+          python - <<'PY'
+          import os, json, urllib.parse, urllib.request, requests
+          cid=os.environ["YOUTUBE_CLIENT_ID"]; csec=os.environ["YOUTUBE_CLIENT_SECRET"]; rt=os.environ["YOUTUBE_REFRESH_TOKEN"]
+          d=urllib.parse.urlencode({"client_id":cid,"client_secret":csec,"refresh_token":rt,"grant_type":"refresh_token"}).encode()
+          tok=json.loads(urllib.request.urlopen(urllib.request.Request("https://oauth2.googleapis.com/token",data=d),timeout=30).read())["access_token"]
+          H={"Authorization":f"Bearer {tok}"}
+          VID="XqgD_a8sEjA"     # حلقة مجدولة (مش منشورة للجمهور)
+          # 1) محاولة تعديل (إلغاء الجدولة)
+          body={"id":VID,"status":{"privacyStatus":"private","publishAt":None}}
+          r=requests.put("https://www.googleapis.com/youtube/v3/videos?part=status",headers={**H,"Content-Type":"application/json"},json=body,timeout=30)
+          print("تعديل الحلقة:", r.status_code)
+          if r.status_code!=200:
+              e=r.json().get("error",{}); print("   السبب:", (e.get("errors") or [{}])[0].get("reason"), "|", str(e.get("message"))[:110])
+          # 2) محاولة حذف
+          r2=requests.delete("https://www.googleapis.com/youtube/v3/videos",headers=H,params={"id":VID},timeout=30)
+          print("حذف الحلقة:", r2.status_code)
+          if r2.status_code not in (200,204):
+              e=r2.json().get("error",{}); print("   السبب:", (e.get("errors") or [{}])[0].get("reason"), "|", str(e.get("message"))[:110])
+          PY
