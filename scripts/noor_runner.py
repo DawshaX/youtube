@@ -93,7 +93,7 @@ def _slots() -> list[int]:
     return [(3 + i * step) % 24 for i in range(24 // step)][:cap]
 
 
-def _next_slot(used: list[str] | None) -> str | None:
+def _next_slot(used: list[str] | None, lead_min: int = 12) -> str | None:
     """أقرب ساعة نشر فاضية على شبكة اليوم/بكرة (UTC).
 
     مهم: عمرها ما ترجّع None وهي فيه ساعات فاضية — الـNone كان معناه «انشر
@@ -111,7 +111,7 @@ def _next_slot(used: list[str] | None) -> str | None:
             continue
         slot = calendar.timegm((gm.tm_year, gm.tm_mon, gm.tm_mday,
                                 gm.tm_hour, 0, 0, 0, 0, 0))
-        if slot - now < 12 * 60:                  # لازم يفضل 12 دقيقة
+        if slot - now < lead_min * 60:            # لازم يفضل وقت كافي قبله
             continue
         return time.strftime("%Y-%m-%dT%H:00:00Z", gm)
     return None
@@ -465,7 +465,10 @@ def _publish_spare() -> int:
     title = str(meta.get("title") or "قرآن وتدبّر")
     print(f"[noor] 📤 رفع حلقة من الخزّان: {title[:60]}", flush=True)
     st = _load()
-    at = _pick_at(st)
+    # 📅 الحلقة الجاهزة بتتحجز على **ساعة كاملة قدام** (١٠٠ دقيقة على الأقل):
+    # كده يوتيوب نفسه بينشرها في وقتها بالظبط — مفيش اعتماد على إن السيرفر
+    # يصحى في الساعة دي، ومفيش نشرتين ورا بعض. ده اللي بيمنع الفجوات.
+    at = _next_slot(st.get("slots") or [], lead_min=100)
     from xtrendaw.publish import youtube as yt
     url, err = yt.publish(got["video"], title[:95],
                           str(meta.get("caption") or ""),
@@ -514,7 +517,8 @@ def cycle() -> int:
         except Exception:
             n = 0
         if n > 0:
-            # ⚡ املأ الحصة الموجودة: ارفع الجاهز (وممكن أكتر من حلقة في الدورة)
+            # ⚡ املأ الحصة الموجودة: احجز الجاهز على ساعات اليوم الجاية
+            # (كل حلقة على ساعة — النشر يحصل على يوتيوب نفسه بلا انتظار سيرفر)
             got = _fill_quota(max_n=min(left, 6))
             if got and state.published_today_pt() >= cap:
                 return 0                      # الحصة اتقفلت — نستنى الدورة الجاية
