@@ -87,9 +87,22 @@
    "err": "quota_guard",
    "at": "2026-09-21 05:05",
    "duration": 28.6
+  },
+  {
+   "id": "ayah-25-70",
+   "kind": "ayah",
+   "theme": "توبة",
+   "title": "باب التوبة مفتوح 🚪 — آية وسكينة ﴿سُورَةُ الفُرۡقَانِ﴾",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1789969849/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1789969989.mp4",
+   "err": "quota_guard",
+   "at": "2026-09-21 05:53",
+   "duration": 31.0
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-73-1"
+ "last_try": "ayah-25-70"
 }
