@@ -140,7 +140,7 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
     if DRY:
         return None, "dry_run"
     from xtrendaw.publish import youtube as yt
-    cap = settings.DAILY_CAP or 6
+    cap = state.effective_cap(settings.DAILY_CAP or 6)
     if state.published_today_pt() >= cap:
         return None, "quota_guard"
     st = _load()
@@ -155,6 +155,9 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
             st.setdefault("slots", []).append(at[:13])       # اتشغلت الساعة دي
             _save(st)
         print(f"[noor] ⏰ وقت النشر: {at or 'فوري (القناة كانت ساكتة)'}", flush=True)
+    elif err and "quota" in str(err).lower():
+        # جوجل قالت «الحصة خلصت» → بنتعلّم السقف الحقيقي بدل التخمين
+        state.set_quota_ceiling(state.published_today_pt())
     return url, err
 
 
@@ -450,6 +453,9 @@ def _publish_spare() -> int:
     if not url:
         print(f"[noor] ⏸ الرفع من الخزّان فشل ({err}) — الحلقة رجعت مكانها",
               flush=True)
+        if "quota" in str(err).lower():
+            from xtrendaw import state as _stt
+            _stt.set_quota_ceiling(_stt.published_today_pt())
         return 1
     vid = url.split("watch?v=")[-1].split("&")[0]
     state.push_published({"id": vid, "title": title, "kind": "noor",

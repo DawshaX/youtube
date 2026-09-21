@@ -345,3 +345,40 @@ def set_tiktok_tokens(access_token: str, refresh_token: str) -> None:
     _wr(TIKTOK_TOKEN_FILE, payload)
     settings.TIKTOK["access_token"] = access_token
     settings.TIKTOK["refresh_token"] = refresh_token
+
+QUOTA_FILE = settings.STATE / "quota_ceiling.json"
+
+
+def quota_ceiling(now: float | None = None) -> int:
+    """أقصى عدد رفعات نجحت فعليًا النهاردة (0 = لسه مجرّبناش الحد).
+
+    ليه؟ الحد الحقيقي مش مكتوب في أي مكان من ناحيتنا — لا في كود ولا في توثيق،
+    لأنه **خاص بمشروع جوجل** (توسّع الحصة اللي أُقر لصاحب القناة). فبدل ما نخمّن
+    رقم، بنتعلّمه من الواقع: أول مرة جوجل ترد «quota exceeded» بنسجّل عدد الرفعات
+    اللي نجحت النهاردة، والحارس بيقف عند الرقم ده بدل ما يكرّر محاولات فاشلة.
+    """
+    day = time.strftime("%Y-%m-%d", time.gmtime(_pt_day_start(
+        now if now is not None else time.time()) + 3600 * 7))
+    try:
+        d = _rw(QUOTA_FILE, {})
+        if isinstance(d, dict) and d.get("day") == day:
+            return int(d.get("ceiling") or 0)
+    except Exception:                                     # noqa: BLE001
+        pass
+    return 0
+
+
+def set_quota_ceiling(n: int, now: float | None = None) -> None:
+    day = time.strftime("%Y-%m-%d", time.gmtime(_pt_day_start(
+        now if now is not None else time.time()) + 3600 * 7))
+    try:
+        _wr(QUOTA_FILE, {"day": day, "ceiling": int(n)})
+        print(f"[state] 📉 سقف اليوم الفعلي اتسجّل: {n} رفعة", flush=True)
+    except Exception:                                     # noqa: BLE001
+        pass
+
+
+def effective_cap(cap: int, now: float | None = None) -> int:
+    """السقف اللي بيمشي عليه الحارس = الأقل بين سقف الإعدادات والحد الفعلي المتعلّم."""
+    c = quota_ceiling(now)
+    return min(int(cap), c) if c else int(cap)
