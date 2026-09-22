@@ -2050,9 +2050,9 @@
   "at": "2026-09-21 21:00"
  },
  "clipcache:b552eb75902d": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg2",
-  "at": "2026-09-21 21:00"
+  "at": "2026-09-22 15:37"
  },
  "https://cdn.pixabay.com/video/2022/11/13/138752-770553716_medium.mp4": {
   "source": "video:pixabay",
@@ -2598,5 +2598,25 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-22 14:46"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Quran%2C_Tunisia.JPG/1280px-Quran%2C_Tunisia.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "quran book open pages",
+  "at": "2026-09-22 15:36"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/Arches_in_the_Taj_Mahal_Mosque_interior%2C_Agra.jpg/1280px-Arches_in_the_Taj_Mahal_Mosque_interior%2C_Agra.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-09-22 15:36"
+ },
+ "https://videos.pexels.com/video-files/9015573/9015573-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-22 15:37"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/A_calligraphic_composition_in_the_form_of_a_lion%2C_Persia%2C_19th_or_20th_century.jpg/1280px-A_calligraphic_composition_in_the_form_of_a_lion%2C_Persia%2C_19th_or_20th_century.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "islamic calligraphy art",
+  "at": "2026-09-22 15:37"
  }
 }
