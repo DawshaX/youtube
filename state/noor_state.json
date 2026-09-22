@@ -403,11 +403,38 @@
    "err": "init_400",
    "at": "2026-09-22 10:45",
    "duration": 22.2
+  },
+  {
+   "id": "vault:q1790070997.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=O39uhJHaI1U",
+   "at": "2026-09-22 11:30"
+  },
+  {
+   "id": "vault:q1790073903.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=rUFOgHbI55o",
+   "at": "2026-09-22 11:31"
+  },
+  {
+   "id": "ayah-2-186",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "title": "لما تدعي… الدعاء جنبك 🍃 — آية وسكينة ﴿سُورَةُ البَقَرَةِ﴾",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790076680/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790076986.mp4",
+   "err": "too_soon",
+   "at": "2026-09-22 11:36",
+   "duration": 50.2
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-13",
+ "last_try": "ayah-2-186",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
@@ -422,6 +449,8 @@
   "2026-09-22T12",
   "2026-09-22T13",
   "2026-09-22T14",
-  "2026-09-22T15"
+  "2026-09-22T15",
+  "2026-09-22T16",
+  "2026-09-22T17"
  ]
 }
