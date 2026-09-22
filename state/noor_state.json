@@ -290,11 +290,31 @@
    "err": "too_soon",
    "at": "2026-09-22 05:45",
    "duration": 185.5
+  },
+  {
+   "id": "vault:q1790055910.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=gRMdOv2g_kY",
+   "at": "2026-09-22 06:31"
+  },
+  {
+   "id": "ayah-25-70",
+   "kind": "ayah",
+   "theme": "توبة",
+   "title": "باب التوبة مفتوح 🚪 — آية وسكينة ﴿سُورَةُ الفُرۡقَانِ﴾",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790058668/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790058823.mp4",
+   "err": "too_soon",
+   "at": "2026-09-22 06:33",
+   "duration": 32.8
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-67-3",
+ "last_try": "ayah-25-70",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
@@ -304,6 +324,7 @@
   "2026-09-22T07",
   "2026-09-22T08",
   "2026-09-22T09",
-  "2026-09-22T10"
+  "2026-09-22T10",
+  "2026-09-22T11"
  ]
 }
