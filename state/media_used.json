@@ -1737,7 +1737,7 @@
  "clipcache:2d20de01f1fd": {
   "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-09-22 04:50"
+  "at": "2026-09-22 13:14"
  },
  "https://cdn.pixabay.com/video/2023/07/04/169951-842348732_medium.mp4": {
   "source": "video:pixabay",
@@ -1745,9 +1745,9 @@
   "at": "2026-09-20 20:04"
  },
  "clipcache:5cccd217ea16": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg2",
-  "at": "2026-09-22 04:50"
+  "at": "2026-09-22 13:15"
  },
  "https://videos.pexels.com/video-files/32194802/13731378_682_360_30fps.mp4": {
   "source": "video:pexels",
@@ -2538,5 +2538,25 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-22 12:25"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Dumont_Dunes_at_Sunrise.jpg/1280px-Dumont_Dunes_at_Sunrise.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "desert dunes sunrise",
+  "at": "2026-09-22 13:14"
+ },
+ "https://videos.pexels.com/video-files/33335064/14194862_682_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-22 13:14"
+ },
+ "https://videos.pexels.com/video-files/13756033/13756033-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-22 13:15"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/MOUTMARKA_F%C3%A6rder_nasjonalpark_T%C3%B8nsbergfjorden_2023-10-11_%28Tj%C3%B8me_Oslofjorden_Norway%29_Svaberg_fj%C3%A6re_strand_hav_vind_b%C3%B8lger_Fugler_gjentas_fordreid_panorama_Rocky_seashore_archipelago_Low_sun_Wind_Waves_Vegetation_Distorted_panoramic.jpg/1280px-thumbnail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "rough sea rocks waves",
+  "at": "2026-09-22 13:15"
  }
 }

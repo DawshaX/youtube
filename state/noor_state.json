@@ -450,11 +450,24 @@
    "err": "too_soon",
    "at": "2026-09-22 12:27",
    "duration": 58.2
+  },
+  {
+   "id": "ayah-3-200",
+   "kind": "reel",
+   "theme": "صبر",
+   "title": "لسه فاضل شوية ويفرجها ⏳ | صبر 🤍",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790082837/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790083157.mp4",
+   "err": "init_400",
+   "at": "2026-09-22 13:19",
+   "duration": 128.9
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-49-13",
+ "last_try": "ayah-3-200",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
