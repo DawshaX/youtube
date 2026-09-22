@@ -150,13 +150,34 @@
    "err": "too_soon",
    "at": "2026-09-22 00:06",
    "duration": 23.1
+  },
+  {
+   "id": "vault:q1790035611.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=o0ZGoQs8Mc4",
+   "at": "2026-09-22 00:52"
+  },
+  {
+   "id": "hadith-bukhari-69",
+   "kind": "hadith",
+   "theme": "رحمة",
+   "title": "يسّروا… ولا تعسّروا 🕊️ — حديث اليوم 📖",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790038372/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790038458.mp4",
+   "err": "too_soon",
+   "at": "2026-09-22 00:54",
+   "duration": 18.2
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-21-1",
+ "last_try": "hadith-bukhari-69",
  "slots": [
   "2026-09-21T23",
-  "2026-09-22T03"
+  "2026-09-22T03",
+  "2026-09-22T04"
  ]
 }
