@@ -190,15 +190,36 @@
    "err": "too_soon",
    "at": "2026-09-22 01:42",
    "duration": 20.3
+  },
+  {
+   "id": "vault:q1790041345.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=HcpqTOdpwxA",
+   "at": "2026-09-22 02:29"
+  },
+  {
+   "id": "hadith-bukhari-9",
+   "kind": "hadith",
+   "theme": "توحيد",
+   "title": "الإيمان 60+ شعبة… شوف أعلاها 🕌 — حديث اليوم 📖",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790044152/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790044267.mp4",
+   "err": "too_soon",
+   "at": "2026-09-22 02:31",
+   "duration": 20.2
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-35",
+ "last_try": "hadith-bukhari-9",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
   "2026-09-22T04",
-  "2026-09-22T05"
+  "2026-09-22T05",
+  "2026-09-22T06"
  ]
 }
