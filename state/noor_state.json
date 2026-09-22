@@ -137,11 +137,24 @@
    "err": null,
    "at": "2026-09-21 23:31",
    "duration": 54.6
+  },
+  {
+   "id": "ayah-21-1",
+   "kind": "ayah",
+   "theme": "وقت",
+   "title": "الحساب قرب 📜 — آية وسكينة ﴿سُورَةُ الأَنبِيَاءِ﴾",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790035472/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790035611.mp4",
+   "err": "too_soon",
+   "at": "2026-09-22 00:06",
+   "duration": 23.1
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-31-14",
+ "last_try": "ayah-21-1",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03"
