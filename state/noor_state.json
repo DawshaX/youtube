@@ -630,11 +630,31 @@
    "err": "too_soon",
    "at": "2026-09-22 21:41",
    "duration": 29.5
+  },
+  {
+   "id": "vault:q1790113280.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=cJCWlA-nIqw",
+   "at": "2026-09-22 22:27"
+  },
+  {
+   "id": "ayah-2-255",
+   "kind": "reel",
+   "theme": "توحيد",
+   "title": "أعظم آية في القرآن 🌌 | توحيد 🤍",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790116050/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790116382.mp4",
+   "err": "too_soon",
+   "at": "2026-09-22 22:33",
+   "duration": 153.3
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-3-200",
+ "last_try": "ayah-2-255",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
@@ -661,6 +681,7 @@
   "2026-09-23T03",
   "2026-09-23T04",
   "2026-09-23T05",
-  "2026-09-23T06"
+  "2026-09-23T06",
+  "2026-09-23T07"
  ]
 }
