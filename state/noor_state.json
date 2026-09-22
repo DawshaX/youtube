@@ -230,17 +230,38 @@
    "err": "too_soon",
    "at": "2026-09-22 03:20",
    "duration": 22.2
+  },
+  {
+   "id": "vault:q1790047199.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=cJuiJ_HnepQ",
+   "at": "2026-09-22 04:05"
+  },
+  {
+   "id": "ayah-13-28",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "title": "قلبك بيدق ليه؟ ❤️ — آية وسكينة ﴿سُورَةُ الرَّعۡدِ﴾",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790049955/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790050140.mp4",
+   "err": "too_soon",
+   "at": "2026-09-22 04:09",
+   "duration": 28.5
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "hadith-muslim-4",
+ "last_try": "ayah-13-28",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
   "2026-09-22T04",
   "2026-09-22T05",
   "2026-09-22T06",
-  "2026-09-22T07"
+  "2026-09-22T07",
+  "2026-09-22T08"
  ]
 }
