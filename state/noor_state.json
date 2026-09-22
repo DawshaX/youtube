@@ -310,11 +310,31 @@
    "err": "too_soon",
    "at": "2026-09-22 06:33",
    "duration": 32.8
+  },
+  {
+   "id": "vault:q1790058823.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=oL_2U6bj8Xg",
+   "at": "2026-09-22 07:19"
+  },
+  {
+   "id": "ayah-103-1",
+   "kind": "ayah",
+   "theme": "وقت",
+   "title": "خسارة العمر… سورة العصر ⏰ — آية وسكينة ﴿سُورَةُ العَصۡرِ﴾",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790061604/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790061769.mp4",
+   "err": "too_soon",
+   "at": "2026-09-22 07:22",
+   "duration": 28.7
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-25-70",
+ "last_try": "ayah-103-1",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
@@ -325,6 +345,7 @@
   "2026-09-22T08",
   "2026-09-22T09",
   "2026-09-22T10",
-  "2026-09-22T11"
+  "2026-09-22T11",
+  "2026-09-22T12"
  ]
 }
