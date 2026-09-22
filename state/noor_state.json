@@ -590,11 +590,31 @@
    "err": "too_soon",
    "at": "2026-09-22 20:17",
    "duration": 20.1
+  },
+  {
+   "id": "vault:q1790108255.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=UgeFDfEnqpo",
+   "at": "2026-09-22 21:03"
+  },
+  {
+   "id": "ayah-65-3",
+   "kind": "ayah",
+   "theme": "صبر",
+   "title": "خايف من المستقبل؟ ⛅ — آية وسكينة ﴿سُورَةُ الطَّلَاقِ﴾",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790111019/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790111226.mp4",
+   "err": "too_soon",
+   "at": "2026-09-22 21:07",
+   "duration": 44.9
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-38",
+ "last_try": "ayah-65-3",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
@@ -619,6 +639,7 @@
   "2026-09-23T01",
   "2026-09-23T02",
   "2026-09-23T03",
-  "2026-09-23T04"
+  "2026-09-23T04",
+  "2026-09-23T05"
  ]
 }
