@@ -270,11 +270,31 @@
    "err": "too_soon",
    "at": "2026-09-22 04:53",
    "duration": 32.8
+  },
+  {
+   "id": "vault:q1790052802.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=_CzX-aV3eDU",
+   "at": "2026-09-22 05:39"
+  },
+  {
+   "id": "ayah-67-3",
+   "kind": "reel",
+   "theme": "توحيد",
+   "title": "بص على السماء… فيه خطأ؟ 🔭 | توحيد 🤍",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790055589/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790055910.mp4",
+   "err": "too_soon",
+   "at": "2026-09-22 05:45",
+   "duration": 185.5
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-2-153",
+ "last_try": "ayah-67-3",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
@@ -283,6 +303,7 @@
   "2026-09-22T06",
   "2026-09-22T07",
   "2026-09-22T08",
-  "2026-09-22T09"
+  "2026-09-22T09",
+  "2026-09-22T10"
  ]
 }
