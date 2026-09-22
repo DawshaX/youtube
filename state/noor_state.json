@@ -463,11 +463,24 @@
    "err": "init_400",
    "at": "2026-09-22 13:19",
    "duration": 128.9
+  },
+  {
+   "id": "ayah-65-3",
+   "kind": "ayah",
+   "theme": "صبر",
+   "title": "خايف من المستقبل؟ ⛅ — آية وسكينة ﴿سُورَةُ الطَّلَاقِ﴾",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790085920/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790086199.mp4",
+   "err": "init_400",
+   "at": "2026-09-22 14:10",
+   "duration": 34.6
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-3-200",
+ "last_try": "ayah-65-3",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
