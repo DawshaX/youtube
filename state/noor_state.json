@@ -885,6 +885,19 @@
    "err": "refresh_failed",
    "at": "2026-09-23 14:35",
    "duration": 22.4
+  },
+  {
+   "id": "hadith-bukhari-35",
+   "kind": "hadith",
+   "theme": "وقت",
+   "title": "ليلة القدر… متسيبهاش 🌌 — حديث اليوم 📖",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790176887/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790177111.mp4",
+   "err": "refresh_failed",
+   "at": "2026-09-23 15:25",
+   "duration": 20.3
   }
  ],
  "longs": [
@@ -901,7 +914,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-6407",
+ "last_try": "hadith-bukhari-35",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
