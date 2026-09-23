@@ -1,8 +1,8 @@
 {
- "checkedAt": "2026-09-23T05:57:12+00:00",
+ "checkedAt": "2026-09-23T11:31:03+00:00",
  "runner": "actions-or-local",
- "all_ok": true,
- "fails": 0,
+ "all_ok": false,
+ "fails": 1,
  "warns": 4,
  "checks": [
   {
@@ -52,8 +52,8 @@
   },
   {
    "name": "YouTube OAuth (النشر)",
-   "status": "ok",
-   "detail": "شغال — توكن اتجدد (صلاحية الجلسة 3599ث)"
+   "status": "fail",
+   "detail": "فشل تجديد التوكن: Token has been expired or revoked."
   },
   {
    "name": "PIXABAY_API_KEY (لقطات فيديو)",
