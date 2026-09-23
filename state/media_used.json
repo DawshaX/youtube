@@ -2110,9 +2110,9 @@
   "at": "2026-09-21 22:37"
  },
  "clipcache:33f16deaefdc": {
-  "source": "video:pexels",
+  "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-09-22 14:44"
+  "at": "2026-09-23 09:12"
  },
  "https://videos.pexels.com/video-files/14215799/14215799-sd_640_360_30fps.mp4": {
   "source": "video:pexels",
@@ -2122,7 +2122,7 @@
  "clipcache:44fcd3b80955": {
   "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-09-21 22:38"
+  "at": "2026-09-23 09:13"
  },
  "https://videos.pexels.com/video-files/11260529/11260529-sd_640_338_30fps.mp4": {
   "source": "video:pexels",
@@ -2132,7 +2132,7 @@
  "clipcache:b3f796fa9d16": {
   "source": "video:pexels",
   "episode": "bg2",
-  "at": "2026-09-21 22:38"
+  "at": "2026-09-23 09:13"
  },
  "https://videos.pexels.com/video-files/33667619/14304136_720_1280_30fps.mp4": {
   "source": "video:pexels",
@@ -2142,7 +2142,7 @@
  "clipcache:3d5f7a6312a7": {
   "source": "video:pexels",
   "episode": "bg3",
-  "at": "2026-09-22 14:46"
+  "at": "2026-09-23 09:14"
  },
  "https://cdn.pixabay.com/video/2019/10/24/28236-368501609_medium.mp4": {
   "source": "video:pixabay",
@@ -3033,5 +3033,25 @@
   "source": "image:commons",
   "episode": "butterfly flowers closeup",
   "at": "2026-09-23 08:23"
+ },
+ "https://cdn.pixabay.com/video/2026/08/10/369845_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-23 09:12"
+ },
+ "https://videos.pexels.com/video-files/4975895/4975895-sd_640_360_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-23 09:13"
+ },
+ "https://videos.pexels.com/video-files/31970694/13622861_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-23 09:13"
+ },
+ "https://videos.pexels.com/video-files/33858167/14367518_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-23 09:14"
  }
 }

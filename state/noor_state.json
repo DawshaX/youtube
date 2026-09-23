@@ -781,6 +781,19 @@
    "err": "init_400",
    "at": "2026-09-23 08:26",
    "duration": 130.8
+  },
+  {
+   "id": "ayah-56-10",
+   "kind": "ayah",
+   "theme": "جنة",
+   "title": "أقرب الناس لله في الجنّة 👑 — آية وسكينة ﴿سُورَةُ الوَاقِعَةِ﴾",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790154747/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790154945.mp4",
+   "err": "init_400",
+   "at": "2026-09-23 09:15",
+   "duration": 36.4
   }
  ],
  "longs": [
@@ -797,7 +810,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-47-15",
+ "last_try": "ayah-56-10",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
