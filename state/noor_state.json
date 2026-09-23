@@ -1057,6 +1057,26 @@
    "err": "too_soon",
    "at": "2026-09-23 22:47",
    "duration": 103.9
+  },
+  {
+   "id": "vault:q1790147562.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=vUTfANfGmZA",
+   "at": "2026-09-23 23:33"
+  },
+  {
+   "id": "ayah-2-153",
+   "kind": "ayah",
+   "theme": "صبر",
+   "title": "صبرك مش ضايع 🌱 — آية وسكينة ﴿سُورَةُ البَقَرَةِ﴾",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790206427/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790206703.mp4",
+   "err": "too_soon",
+   "at": "2026-09-23 23:38",
+   "duration": 27.7
   }
  ],
  "longs": [
@@ -1073,7 +1093,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-2-186",
+ "last_try": "ayah-2-153",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
