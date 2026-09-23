@@ -1024,6 +1024,19 @@
    "err": "too_soon",
    "at": "2026-09-23 21:18",
    "duration": 42.0
+  },
+  {
+   "id": "ayah-94-5",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "title": "همّك هينتهي 🕊️ — آية وسكينة ﴿سُورَةُ الشَّرۡحِ﴾",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790200242/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790200467.mp4",
+   "err": "too_soon",
+   "at": "2026-09-23 21:54",
+   "duration": 25.3
   }
  ],
  "longs": [
@@ -1040,7 +1053,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-39-53",
+ "last_try": "ayah-94-5",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",

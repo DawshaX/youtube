@@ -1687,7 +1687,7 @@
  "clipcache:fca9f128e279": {
   "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-23 21:12"
+  "at": "2026-09-23 21:51"
  },
  "https://cdn.pixabay.com/video/2016/07/29/4071-176749154_medium.mp4": {
   "source": "video:pixabay",
@@ -1697,7 +1697,7 @@
  "clipcache:970e3445a707": {
   "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-09-23 21:13"
+  "at": "2026-09-23 21:51"
  },
  "https://cdn.pixabay.com/video/2026/01/05/326081_medium.mp4": {
   "source": "video:pixabay",
@@ -1705,9 +1705,9 @@
   "at": "2026-09-20 19:58"
  },
  "clipcache:5d44b8ffb677": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg2",
-  "at": "2026-09-22 11:32"
+  "at": "2026-09-23 21:52"
  },
  "https://cdn.pixabay.com/video/2026/01/28/331030_medium.mp4": {
   "source": "video:pixabay",
@@ -3348,5 +3348,20 @@
   "source": "image:commons",
   "episode": "calm river nature",
   "at": "2026-09-23 21:14"
+ },
+ "https://videos.pexels.com/video-files/32765994/13968356_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-09-23 21:51"
+ },
+ "https://videos.pexels.com/video-files/12279773/12279773-hd_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-23 21:51"
+ },
+ "https://videos.pexels.com/video-files/38262510/16246115_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-23 21:52"
  }
 }
