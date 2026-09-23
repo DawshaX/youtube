@@ -1,0 +1,101 @@
+name: 🔍 مفتّش المصانع — يراقب كل القنوات ويبلّغ فورًا
+
+# ليه؟ عشان «ضمان الاستمرار» يبقى مقيس مش كلام:
+#   كل نصف ساعة بيفحص **آخر فيديو نزل فعلًا** على كل قناة (من الـRSS العام،
+#   من غير أي مفاتيح) + حالة مصانعنا الداخلية، ولو حاجة واقفة أكتر من 110 دقيقة
+#   يبعت إنذار فوري على تليجرام بالسبب. يعني مفيش صمت ولا اكتشاف متأخر.
+
+on:
+  schedule:
+    - cron: '9,39 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: noor-inspector
+  cancel-in-progress: false
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 🔍 افحص كل المصانع والقنوات
+        env:
+          TG: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ADMIN: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+          STALE_MIN: '110'
+        run: |
+          pip install -q requests
+          python - <<'PYEOF'
+          import os, re, datetime, requests
+
+          TG = os.environ.get("TG", "")
+          CHAT = (os.environ.get("ADMIN") or os.environ.get("CHAT") or "").strip()
+          STALE = int(os.environ.get("STALE_MIN", "110"))
+          now = datetime.datetime.now(datetime.UTC)
+
+          def feed_latest(cid):
+              try:
+                  t = requests.get(
+                      f"https://www.youtube.com/feeds/videos.xml?channel_id={cid}",
+                      timeout=30).text
+                  times = re.findall(r"<published>([^<]+)</published>", t)
+                  if not times:
+                      return None, 0, "مفيش فيديوهات"
+                  ds = sorted(ts for ts in times if ts.startswith("20"))
+                  last = datetime.datetime.fromisoformat(ds[-1])
+                  today = sum(1 for x in times if x.startswith(now.strftime("%Y-%m-%d")))
+                  return last, today, ""
+              except Exception as exc:
+                  return None, 0, type(exc).__name__
+
+          CHANNELS = {
+              "XTreNDAW ShOrts": "UC2PCynDtd_wtPrgoAuqH6yw",
+              "دۅۄشے (نور)": "UCqsa-xL5a5Vm_jNaS5sGmkw",
+          }
+
+          lines, alerts = [], []
+          for name, cid in CHANNELS.items():
+              last, today, err = feed_latest(cid)
+              if err:
+                  lines.append(f"⚪ {name}: {err}")
+                  continue
+              age = (now - last).total_seconds() / 60
+              flag = "🔴" if age > STALE else "🟢"
+              lines.append(f"{flag} {name}: آخر فيديو قبل {age:.0f} دقيقة "
+                           f"({last.strftime('%m-%d %H:%M')} UTC) · النهاردة {today}")
+              if age > STALE:
+                  alerts.append(f"• قناة «{name}» مفيش فيها جديد من {age/60:.1f} ساعة")
+
+          # مصنعنا الداخلي
+          try:
+              pub = requests.get("https://raw.githubusercontent.com/DawshaX/youtube/"
+                                 "main/state/published.json", timeout=30).json()
+              if pub:
+                  ts = max(float(p.get("ts") or 0) for p in pub)
+                  age = (now.timestamp() - ts) / 60
+                  flag = "🔴" if age > STALE else "🟢"
+                  lines.append(f"{flag} مصنع نور (داخلي): آخر نشر قبل {age:.0f} دقيقة")
+                  if age > STALE:
+                      alerts.append(f"• مصنع نور الداخلي مفيش فيه نشر من {age/60:.1f} ساعة")
+          except Exception as exc:
+              lines.append(f"⚪ مصنع نور: {type(exc).__name__}")
+
+          print("\n".join(lines))
+
+          if alerts:
+              text = ("🔴 مفتّش المصانع: فيه مصنع مش بينشر!\n\n" + "\n".join(alerts)
+                      + "\n\n" + "\n".join(lines)
+                      + "\n\n(المصنع بيحاول تلقائيًا، والرسالة دي عشان تعرف)")
+              if TG and CHAT:
+                  r = requests.post(f"https://api.telegram.org/bot{TG}/sendMessage",
+                                    data={"chat_id": CHAT, "text": text[:3500]},
+                                    timeout=30)
+                  print("إنذار:", r.status_code)
+          else:
+              print("✅ كل المصانع بتنتج وبتحجز وقتها")
+          PYEOF
