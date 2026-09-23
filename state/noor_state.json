@@ -757,7 +757,19 @@
    "duration": 32.8
   }
  ],
- "longs": [],
+ "longs": [
+  {
+   "surah": "الرحمن",
+   "ayahs": 78,
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_55_1790145145/noor_long.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790147562.mp4",
+   "at": "2026-09-23 07:12",
+   "duration": 1060.8,
+   "err": "init_400"
+  }
+ ],
  "bad_reciters": [],
  "last_try": "ayah-25-70",
  "slots": [
