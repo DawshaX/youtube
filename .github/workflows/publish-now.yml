@@ -1,0 +1,47 @@
+name: publish-now
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: خلّي الفيديو السجين يطلع حالًا
+        env:
+          C2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+          S2: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
+          R2: ${{ secrets.YOUTUBE_REFRESH_TOKEN_2 }}
+        run: |
+          pip install -q requests
+          python - <<'PYEOF'
+          import os, json, urllib.parse, urllib.request, requests
+          cid=os.environ["C2"]; sec=os.environ["S2"]; rt=os.environ["R2"]
+          d=urllib.parse.urlencode({"client_id":cid,"client_secret":sec,"refresh_token":rt,"grant_type":"refresh_token"}).encode()
+          tok=json.loads(urllib.request.urlopen(urllib.request.Request("https://oauth2.googleapis.com/token",data=d),timeout=30).read())["access_token"]
+          print("الصلاحيات متاحة:", "ok")
+          # اقرأ فيديوهات القناة بحالتها
+          ch=requests.get("https://www.googleapis.com/youtube/v3/channels",
+                          params={"part":"contentDetails","mine":"true"},
+                          headers={"Authorization":f"Bearer {tok}"},timeout=30).json()
+          uploads=ch["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+          pl=requests.get("https://www.googleapis.com/youtube/v3/playlistItems",
+                          params={"part":"contentDetails","playlistId":uploads,"maxResults":8},
+                          headers={"Authorization":f"Bearer {tok}"},timeout=30).json()
+          ids=[i["contentDetails"]["videoId"] for i in pl.get("items",[])]
+          vids=requests.get("https://www.googleapis.com/youtube/v3/videos",
+                            params={"part":"snippet,status","id":",".join(ids)},
+                            headers={"Authorization":f"Bearer {tok}"},timeout=30).json()
+          for v in vids.get("items",[]):
+              st=v["status"]
+              print(f"  {v['id']} | {st.get('privacyStatus')} | publishAt={st.get('publishAt')} | {v['snippet']['title'][:45]}")
+              if st.get("privacyStatus")=="private":
+                  r=requests.put("https://www.googleapis.com/youtube/v3/videos?part=status",
+                      headers={"Authorization":f"Bearer {tok}","Content-Type":"application/json"},
+                      json={"id":v["id"],"status":{"privacyStatus":"public","selfDeclaredMadeForKids":False}},
+                      timeout=30)
+                  print(f"     → نشر فوري: {r.status_code}")
+                  if r.status_code!=200:
+                      print("       ", str(r.json())[:150])
+          PYEOF
