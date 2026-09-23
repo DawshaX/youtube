@@ -180,7 +180,34 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
     elif err and "quota" in str(err).lower():
         # جوجل قالت «الحصة خلصت» → بنتعلّم السقف الحقيقي بدل التخمين
         state.set_quota_ceiling(state.published_today_pt())
+    elif err and "refresh_failed" in str(err):
+        _alert_once("refresh", "🔴 مصنع نور: توكن يوتيوب انتهى صلاحيته "
+                               "(invalid_grant) — النشر واقف والحلقات بتتخزن "
+                               "في الخزنة. محتاج ضغطة موافقة جديدة من اللينك.")
     return url, err
+
+
+def _alert(text: str) -> None:
+    """إنذار فوري (تليجرام) لما حاجة تحتاج تدخّل — مش بعد يوم من الصمت.
+
+    الدرس (2026-09-23): التوكن مات والمصنع فضل ينتج ويخزّن بصمت يوم كامل.
+    """
+    try:
+        from xtrendaw.publish import telegram as tg
+        if tg.send_text(text):
+            print("[alert] 📨 الإنذار اتبعت على تليجرام", flush=True)
+    except Exception as exc:                              # noqa: BLE001
+        print(f"[alert] ⚠ مش قادر أبعت إنذار: {type(exc).__name__}", flush=True)
+
+
+_ALERTED = set()          # ما نزعجش المستخدم بنفس الإنذار كل شوية
+
+
+def _alert_once(key: str, text: str) -> None:
+    if key in _ALERTED:
+        return
+    _ALERTED.add(key)
+    _alert(text)
 
 
 def _vault(video, cover, meta) -> str:
@@ -478,6 +505,9 @@ def _publish_spare() -> int:
     if not url:
         print(f"[noor] ⏸ الرفع من الخزّان فشل ({err}) — الحلقة رجعت مكانها",
               flush=True)
+        if "refresh_failed" in str(err):
+            _alert_once("refresh", "🔴 مصنع نور: توكن يوتيوب انتهى صلاحيته — "
+                                   "النشر واقف. محتاج ضغطة موافقة جديدة.")
         if "quota" in str(err).lower():
             from xtrendaw import state as _stt
             _stt.set_quota_ceiling(_stt.published_today_pt())

@@ -1,19 +1,19 @@
 {
- "checkedAt": "2026-09-23T11:31:03+00:00",
- "runner": "actions-or-local",
- "all_ok": false,
- "fails": 1,
- "warns": 4,
+ "checkedAt": "2026-09-23T16:50:45+00:00",
+ "runner": "local",
+ "all_ok": true,
+ "fails": 0,
+ "warns": 15,
  "checks": [
   {
    "name": "ffmpeg (المونتاج)",
    "status": "ok",
-   "detail": "/usr/bin/ffmpeg"
+   "detail": "/usr/local/lib/python3.13/site-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2"
   },
   {
    "name": "حزم بايثون",
    "status": "ok",
-   "detail": "كل الحزم الأساسية متاحة"
+   "detail": "كل الحزم الأساسية متاحة · اختياري ناقص: yt_dlp"
   },
   {
    "name": "مكتبة الأصوات",
@@ -27,78 +27,78 @@
   },
   {
    "name": "YOUTUBE_API_KEY (الرادار)",
-   "status": "ok",
-   "detail": "شغال — استجابة حقيقية من يوتيوب"
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "YOUTUBE_COOKIES_B64 (كوكيز العين)",
-   "status": "ok",
-   "detail": "الجلسة شغالة (24 زوج كوكي) — مسار العين (بيانات + مشاهد/كلام) بلا تنزيل"
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "GROQ_API_KEY (مخ الذكاء 1)",
-   "status": "ok",
-   "detail": "شغال — قائمة الموديلات اتجابت"
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "GEMINI_API_KEY (مخ الذكاء 2)",
-   "status": "ok",
-   "detail": "شغال — قائمة الموديلات اتجابت"
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "LLM_API_* (مزوّد مخصص)",
    "status": "warn",
-   "detail": "غير مضبوط منفصلًا — بيستخدم Groq بدل مكانه"
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "YouTube OAuth (النشر)",
-   "status": "fail",
-   "detail": "فشل تجديد التوكن: Token has been expired or revoked."
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "PIXABAY_API_KEY (لقطات فيديو)",
-   "status": "ok",
-   "detail": "شغال — استجابة 200"
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   },
   {
-   "name": "PEXELS (لقطات احتياطية)",
+   "name": "PEXELS_API_KEY (لقطات احتياطية)",
    "status": "warn",
-   "detail": "غير مضبوط — لقطات بكسلز بتزيد تنوّع الفيديو (اختياري)"
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "NASA_API_KEY (فضاء)",
-   "status": "ok",
-   "detail": "شغال"
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "OPENVERSE (صور/ميديا)",
-   "status": "ok",
-   "detail": "شغال (المفتاح اختياري)"
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "RESTCOUNTRIES (مكتبة العالم)",
-   "status": "ok",
-   "detail": "شغال — بيانات مصر الحقيقية اتجابت (مفتاح مفعّل)"
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "FREESOUND_API_KEY (مؤثرات CC)",
    "status": "warn",
-   "detail": "غير مضبوط (اختياري)"
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "GNEWS_API_KEY (أخبار)",
-   "status": "ok",
-   "detail": "شغال — استجابة 200"
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "CURRENTS_API_KEY (أخبار لحظية)",
    "status": "warn",
-   "detail": "غير مضبوط (اختياري)"
+   "detail": "تم تخطيه (--local)"
   },
   {
    "name": "edge-tts (صوت حقيقي)",
-   "status": "ok",
-   "detail": "صوت حقيقي اتولّد (اختبار قصير)"
+   "status": "warn",
+   "detail": "تم تخطيه (--local)"
   }
  ]
 }
