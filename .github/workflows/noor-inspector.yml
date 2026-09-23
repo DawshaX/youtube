@@ -37,11 +37,12 @@ jobs:
           CHAT = (os.environ.get("ADMIN") or os.environ.get("CHAT") or "").strip()
           STALE = int(os.environ.get("STALE_MIN", "110"))
           now = datetime.datetime.now(datetime.UTC)
+          _NC = int(now.timestamp())  # كسر كاش الفيد
 
           def feed_latest(cid):
               try:
                   t = requests.get(
-                      f"https://www.youtube.com/feeds/videos.xml?channel_id={cid}",
+                      f"https://www.youtube.com/feeds/videos.xml?channel_id={cid}&nocache={_NC}",
                       timeout=30).text
                   times = re.findall(r"<published>([^<]+)</published>", t)
                   if not times:
