@@ -1687,7 +1687,7 @@
  "clipcache:fca9f128e279": {
   "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-23 20:19"
+  "at": "2026-09-23 21:12"
  },
  "https://cdn.pixabay.com/video/2016/07/29/4071-176749154_medium.mp4": {
   "source": "video:pixabay",
@@ -1695,9 +1695,9 @@
   "at": "2026-09-20 19:58"
  },
  "clipcache:970e3445a707": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-09-23 20:20"
+  "at": "2026-09-23 21:13"
  },
  "https://cdn.pixabay.com/video/2026/01/05/326081_medium.mp4": {
   "source": "video:pixabay",
@@ -3333,5 +3333,20 @@
   "source": "image:commons",
   "episode": "calm river nature",
   "at": "2026-09-23 20:21"
+ },
+ "https://videos.pexels.com/video-files/11935554/11935554-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-09-23 21:12"
+ },
+ "https://videos.pexels.com/video-files/39336191/16739482_720_1280_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-23 21:13"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Bunica_River_source_-_sky_reflection_and_surrounding_hills-bs.jpg/1280px-Bunica_River_source_-_sky_reflection_and_surrounding_hills-bs.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "calm river nature",
+  "at": "2026-09-23 21:14"
  }
 }
