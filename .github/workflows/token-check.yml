@@ -1,0 +1,41 @@
+name: token-check
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  c:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: فحص التوكنين
+        env:
+          C1: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          S1: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          R1: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          C2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+          S2: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
+          R2: ${{ secrets.YOUTUBE_REFRESH_TOKEN_2 }}
+        run: |
+          pip install -q requests
+          python - <<'PY'
+          import os, json, urllib.parse, urllib.request
+          def check(tag, cid, sec, rt):
+              print(f"── {tag} ──")
+              print("   client_id:", bool(cid), "| secret:", bool(sec), "| token:", bool(rt))
+              if not (cid and sec and rt):
+                  print("   ⚪ ناقص — مش بنختبره"); return
+              d=urllib.parse.urlencode({"client_id":cid,"client_secret":sec,"refresh_token":rt,"grant_type":"refresh_token"}).encode()
+              try:
+                  r=json.loads(urllib.request.urlopen(urllib.request.Request("https://oauth2.googleapis.com/token",data=d),timeout=30).read())
+                  print("   🟢 التوكن شغال! الصلاحيات:", r.get("scope","")[:120])
+              except urllib.error.HTTPError as e:
+                  body=e.read().decode()
+                  try: err=json.loads(body).get("error","?")
+                  except Exception: err=body[:60]
+                  print(f"   🔴 فشل ({e.code}): {err}")
+                  if err=="invalid_grant": print("      → التوكن انتهى/اتلغى (وضع Testing بينتهي بعد 7 أيام)")
+                  if err=="unauthorized_client": print("      → المشروع نفسه اتغيّر/اتحذف")
+          check("المشروع الأساسي", os.environ.get("C1"), os.environ.get("S1"), os.environ.get("R1"))
+          check("مشروع 2", os.environ.get("C2"), os.environ.get("S2"), os.environ.get("R2"))
+          PY
