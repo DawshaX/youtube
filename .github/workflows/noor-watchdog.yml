@@ -31,6 +31,17 @@ jobs:
             --limit 10 --json status,createdAt,databaseId \
             --jq '.[] | "\(.databaseId) \(.status) \(.createdAt)"' > /tmp/runs.txt
           cat /tmp/runs.txt
+          # 🧹 نضّف الطابور من أي دورة عالقة أكتر من 65 دقيقة (مش بنلغي الشغل السليم)
+          NOW=$(date -u +%s)
+          while read -r RID RST RTS; do
+            [ "$RST" = "in_progress" ] || continue
+            AGE=$(( (NOW - $(date -u -d "$RTS" +%s)) / 60 ))
+            if [ "$AGE" -gt 65 ]; then
+              echo "🧹 دورة عالقة من $AGE دقيقة ($RID) — بلغيها"
+              gh run cancel "$RID" --repo "$GITHUB_REPOSITORY" || true
+            fi
+          done < /tmp/runs.txt
+          sleep 5
           ACTIVE=$(grep -cE ' (in_progress|queued|pending)$' /tmp/runs.txt || true)
           if [ "${ACTIVE:-0}" -gt 0 ]; then
             echo "✅ فيه دورة شغالة دلوقتي ($ACTIVE) — مفيش حاجة أعملها"
