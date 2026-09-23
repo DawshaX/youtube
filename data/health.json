@@ -1,19 +1,19 @@
 {
- "checkedAt": "2026-09-23T17:45:12+00:00",
+ "checkedAt": "2026-09-23T19:00:42+00:00",
  "runner": "local",
- "all_ok": true,
- "fails": 0,
+ "all_ok": false,
+ "fails": 2,
  "warns": 15,
  "checks": [
   {
    "name": "ffmpeg (المونتاج)",
-   "status": "ok",
-   "detail": "/usr/local/lib/python3.13/site-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2"
+   "status": "fail",
+   "detail": "ملوش — المونتاج مش هيشتغل"
   },
   {
    "name": "حزم بايثون",
-   "status": "ok",
-   "detail": "كل الحزم الأساسية متاحة · اختياري ناقص: yt_dlp"
+   "status": "fail",
+   "detail": "ناقصة: edge_tts"
   },
   {
    "name": "مكتبة الأصوات",

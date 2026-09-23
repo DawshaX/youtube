@@ -500,10 +500,10 @@ def _publish_spare() -> int:
     title = str(meta.get("title") or "قرآن وتدبّر")
     print(f"[noor] 📤 رفع حلقة من الخزّان: {title[:60]}", flush=True)
     st = _load()
-    # 📅 الحلقة الجاهزة بتتحجز على **ساعة كاملة قدام** (١٠٠ دقيقة على الأقل):
-    # كده يوتيوب نفسه بينشرها في وقتها بالظبط — مفيش اعتماد على إن السيرفر
-    # يصحى في الساعة دي، ومفيش نشرتين ورا بعض. ده اللي بيمنع الفجوات.
-    at = _next_slot(st.get("slots") or [], lead_min=100)
+    # ⚡ نشر فوري (طلب صاحب القناة 2026-09-23): الحلقة الجاهزة تطلع للجمهور
+    # في نفس اللحظة، والدورة نفسها كل ساعة = فيديو جديد كل ساعة.
+    # (الجدولة متاحة اختياريًا بـ NOOR_SCHEDULE=1 لو احتاجناها يوم)
+    at = _pick_at(st)
     from xtrendaw.publish import youtube as yt
     url, err = yt.publish(got["video"], title[:95],
                           str(meta.get("caption") or ""),
