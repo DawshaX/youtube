@@ -794,6 +794,19 @@
    "err": "init_400",
    "at": "2026-09-23 09:15",
    "duration": 36.4
+  },
+  {
+   "id": "ayah-49-13",
+   "kind": "ayah",
+   "theme": "أخلاق",
+   "title": "مين أكرمك؟ مش فلوسك 🤲 — آية وسكينة ﴿سُورَةُ الحُجُرَاتِ﴾",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790156289/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790156563.mp4",
+   "err": "init_400",
+   "at": "2026-09-23 09:42",
+   "duration": 42.7
   }
  ],
  "longs": [
@@ -810,7 +823,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-56-10",
+ "last_try": "ayah-49-13",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
