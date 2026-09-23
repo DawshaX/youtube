@@ -158,10 +158,13 @@ jobs:
                   title = got.get("snippet", {}).get("title", "?")
                   cid_yt = got.get("id", "")
                   print(f"   القناة المفوّضة: {title} ({cid_yt})")
-                  if cid_yt != "UCqsa-xL5a5Vm_jNaS5sGmkw":
-                      print("   ⛔ مش قناة نور — مش هحفظ التوكن")
-                      tg_send(f"⚠️ مصنع نور: التفويض كان لقناة تانية «{title}» — "
-                              f"الرجاء التفويض لحساب قناة دۅۄشے نفسها.")
+                  # كل مشروع مرتبط بقناته: 1 = قناة نور · 2 = قناة XTreNDAW
+                  allowed = {"UCqsa-xL5a5Vm_jNaS5sGmkw",   # قناة نور (دۅۄشے)
+                             "UC2PCynDtd_wtPrgoAuqH6yw"}   # قناة XTreNDAW ShOrts
+                  if cid_yt not in allowed:
+                      print("   ⛔ قناة غير معروفة — مش هحفظ التوكن")
+                      tg_send(f"⚠️ مصنع نور: التفويض كان لقناة غير معروفة "
+                              f"«{title}» — الرجاء التفويض لحساب إحدى قنواتك.")
                       continue
               except Exception as exc:                     # noqa: BLE001
                   print("   ⚠ فحص القناة فشل:", type(exc).__name__)

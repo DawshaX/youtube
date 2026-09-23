@@ -58,6 +58,9 @@ def _save(d: dict) -> None:
 
 DRY = os.environ.get("NOOR_DRY") == "1"
 
+# اسم القناة في الوصف — بنغيّره حسب القناة اللي بننشر عليها
+BRAND = os.environ.get("NOOR_CHANNEL_NAME", "نور")
+
 
 
 def _slots() -> list[int]:
@@ -306,7 +309,7 @@ def _short_one() -> int:
         f"islamic.network (تُنسب للقارئ) · مشاهد برخص حرة (Pexels/Pixabay).\n"
         f"لا موسيقى في هذا الفيديو.\n\n"
         f"🤍 شاركها لو عجبتك — واكتب في تعليق: إيه اللي غيرت فيك الآية دي؟\n"
-        f"قناة «نور»: آية وسكينة كل ساعة، وحديث صحيح، وسورة كاملة كل يوم.\n\n"
+        f"قناة «{BRAND}»: آية وسكينة كل ساعة، وحديث صحيح، وسورة كاملة كل يوم.\n\n"
         f"#قرآن #تلاوة #إسلاميات #ذكر #shorts #حديث #تفسير"
     )
     url, err = _publish(res["video"], res.get("cover"), title[:95], desc, tags)
@@ -459,6 +462,11 @@ def _fill_quota(max_n: int = 6) -> int:
     if DRY:
         return 0
     from xtrendaw import noor_vault, settings, state
+    gap = _too_soon()
+    if gap and gap < HOUR_GAP and os.environ.get("NOOR_ALLOW_BURST") != "1":
+        print(f"[noor] ⏳ آخر نشرة من {gap:.0f} دقيقة — الدورة دي إنتاج بس "
+              f"(النشرة كل {HOUR_GAP} دقيقة)", flush=True)
+        return 0
     done = 0
     while done < max_n:
         if state.published_today_pt() >= (settings.DAILY_CAP or 6):
@@ -549,7 +557,7 @@ def cycle() -> int:
         if n > 0:
             # ⚡ املأ الحصة الموجودة: احجز الجاهز على ساعات اليوم الجاية
             # (كل حلقة على ساعة — يوتيوب ينشرها لوحده بلا انتظار سيرفر)
-            _fill_quota(max_n=min(left, 6))
+            _fill_quota(max_n=min(left, int(os.environ.get("NOOR_PER_CYCLE", "1"))))
             if state.published_today_pt() >= cap:
                 return 0                      # الحصة اتقفلت — نستنى الدورة الجاية
             try:
