@@ -964,6 +964,26 @@
    "err": "too_soon",
    "at": "2026-09-23 18:44",
    "duration": 22.2
+  },
+  {
+   "id": "vault:q1790127332.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=RW37nPunyho",
+   "at": "2026-09-23 19:30"
+  },
+  {
+   "id": "hadith-bukhari-38",
+   "kind": "hadith",
+   "theme": "صبر",
+   "title": "شهر ويفرجها… رمضان 🕌 — حديث اليوم 📖",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790191829/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790191992.mp4",
+   "err": "too_soon",
+   "at": "2026-09-23 19:33",
+   "duration": 20.1
   }
  ],
  "longs": [
@@ -980,7 +1000,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-muslim-4",
+ "last_try": "hadith-bukhari-38",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
