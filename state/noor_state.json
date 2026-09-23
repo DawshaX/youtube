@@ -703,11 +703,24 @@
    "err": "init_400",
    "at": "2026-09-23 00:46",
    "duration": 96.1
+  },
+  {
+   "id": "ayah-29-45",
+   "kind": "ayah",
+   "theme": "ذكر",
+   "title": "الصلاة مش عادة… 🕌 — آية وسكينة ﴿سُورَةُ العَنكَبُوتِ﴾",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790127180/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790127332.mp4",
+   "err": "init_400",
+   "at": "2026-09-23 01:35",
+   "duration": 36.6
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "ayah-33-41",
+ "last_try": "ayah-29-45",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
