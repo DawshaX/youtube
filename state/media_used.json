@@ -2152,7 +2152,7 @@
  "clipcache:5bf87afd5099": {
   "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-23 09:38"
+  "at": "2026-09-23 10:29"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_2.jpg/1280px-Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -3078,5 +3078,25 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-23 09:40"
+ },
+ "https://videos.pexels.com/video-files/38456189/16330856_640_360_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-09-23 10:29"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/3/3f/Arches_of_the_Ibn_Tulun_Mosque_in_Cairo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "mosque courtyard arches",
+  "at": "2026-09-23 10:29"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Bowl_of_Dates.jpg/1280px-Bowl_of_Dates.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "dates fruit bowl",
+  "at": "2026-09-23 10:30"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/8/80/Autumn_sunlight_on_Highbury_Fields_-_geograph.org.uk_-_5971185.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "trees sunlight path",
+  "at": "2026-09-23 10:31"
  }
 }
