@@ -1,0 +1,36 @@
+name: 📨 إنذار نور — رسالة تليجرام يدوية
+
+on:
+  workflow_dispatch:
+    inputs:
+      text:
+        description: 'نص الرسالة'
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 📨 ابعت الرسالة
+        env:
+          TG: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ADMIN: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+          TXT: ${{ inputs.text }}
+        run: |
+          pip install -q requests
+          python - <<'PY'
+          import os, requests
+          TG=os.environ.get("TG",""); CHAT=(os.environ.get("ADMIN") or os.environ.get("CHAT") or "").strip()
+          txt=os.environ.get("TXT","") or "اختبار"
+          if not (TG and CHAT):
+              raise SystemExit("⚪ تليجرام مش مضبوط (token/chat ناقصين)")
+          r=requests.post(f"https://api.telegram.org/bot{TG}/sendMessage",
+                          data={"chat_id":CHAT,"text":txt[:3500]}, timeout=30)
+          print("الإرسال:", r.status_code, r.text[:160])
+          PY

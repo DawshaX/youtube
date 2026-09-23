@@ -1,0 +1,191 @@
+name: ♻️ استرجاع التوكن ذاتيًا — بكود واحد من تليجرام
+
+# ليه؟ (2026-09-23) توكن يوتيوب مات (invalid_grant) والنشر وقف.
+# جوجل **بتصميم** ما بتديش توكن جديد من غير موافقة بشرية لمرة واحدة — مفيش API
+# بيعمل كده (اختبرنا كل الطرق: device flow مرفوض للعميل ده، وOOB ملغي).
+#
+# فالحل: صاحب القناة يوافق مرة واحدة (٣٠ ثانية) والصق اللي هيظهر في تليجرام.
+# والحلقة دي بتشتغل كل ٥ دقايق، بتقرأ رسايل البوت، وتلقط أي رسالة فيها
+# «code=»، بتبدّل الكود بتوكن، **بتحفظه كسرّ على طول** (مش بيتطبع في أي لوج)،
+# وترد على تليجرام «تم» + تشغّل دورة نشر فورًا. يعني: مفيش أي شغل يدوي تاني.
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: noor-catch-code
+  cancel-in-progress: false
+
+jobs:
+  catch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: 📥 التقط الكود وجدّد التوكن
+        env:
+          TG: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ADMIN: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+          C1: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          S1: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          C2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+          S2: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
+          C3: ${{ secrets.YOUTUBE_CLIENT_ID_3 }}
+          S3: ${{ secrets.YOUTUBE_CLIENT_SECRET_3 }}
+          BRIDGE: ${{ secrets.BRIDGE_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          pip install -q requests pynacl
+          python - <<'PY'
+          import os, json, base64, hashlib, urllib.parse, urllib.request
+          import requests
+          from nacl import encoding as enc, public as pub
+
+          TG  = os.environ.get("TG", "")
+          CHAT = (os.environ.get("ADMIN") or os.environ.get("CHAT") or "").strip()
+          BRIDGE = os.environ.get("BRIDGE", "")
+          REPO = os.environ["REPO"]
+
+          def tg_send(text):
+              if not TG or not CHAT:
+                  return
+              try:
+                  requests.post(f"https://api.telegram.org/bot{TG}/sendMessage",
+                                data={"chat_id": CHAT, "text": text[:3500]},
+                                timeout=30)
+              except Exception:
+                  pass
+
+          if not (TG and CHAT):
+              print("⚪ تليجرام مش مضبوط (token/chat) — اللقط من تليجرام مش ممكن")
+              raise SystemExit(0)
+
+          # اقرأ آخر الرسايل من البوت
+          try:
+              ups = requests.get(f"https://api.telegram.org/bot{TG}/getUpdates",
+                                 params={"limit": 20, "timeout": 0}, timeout=30).json()
+          except Exception as exc:
+              print("✗ getUpdates فشل:", type(exc).__name__)
+              raise SystemExit(0)
+
+          msgs = []
+          for u in ups.get("result", []):
+              m = u.get("message") or u.get("edited_message") or {}
+              txt = (m.get("text") or "").strip()
+              cid = str((m.get("chat") or {}).get("id", ""))
+              if txt:
+                  msgs.append((u["update_id"], cid, txt))
+
+          # اقفل كل الرسايل القديمة (نستقبل الجديد بس)
+          if msgs:
+              last = max(m[0] for m in msgs)
+              requests.get(f"https://api.telegram.org/bot{TG}/getUpdates",
+                           params={"offset": last + 1, "timeout": 0}, timeout=30)
+
+          # دوّر على رسالة فيها كود موافقة
+          code = None
+          for _, cid, txt in reversed(msgs):
+              if "code=" in txt:
+                  try:
+                      code = urllib.parse.parse_qs(
+                          urllib.parse.urlparse(txt).query)["code"][0]
+                  except Exception:
+                      code = txt.split("code=")[1].split("&")[0]
+                  break
+              if txt.strip().startswith("4/") and len(txt.strip()) < 200:
+                  code = txt.strip()          # كود مباشر
+                  break
+
+          if not code:
+              print("⚪ مفيش كود جديد في تليجرام — الحلقة دي خلصت")
+              raise SystemExit(0)
+
+          print("✅ لقيت كود موافقة — بجرّب المشاريع واحد واحد")
+
+          def put_secret(name, value):
+              key = requests.get(
+                  f"https://api.github.com/repos/{REPO}/actions/secrets/public-key",
+                  headers={"Authorization": f"Bearer {BRIDGE}",
+                           "Accept": "application/vnd.github+json"}, timeout=30).json()
+              box = pub.SealedBox(pub.PublicKey(key["key"].encode(),
+                                                enc.Base64Encoder()))
+              val = base64.b64encode(box.encrypt(value.encode())).decode()
+              r = requests.put(
+                  f"https://api.github.com/repos/{REPO}/actions/secrets/{name}",
+                  headers={"Authorization": f"Bearer {BRIDGE}",
+                           "Accept": "application/vnd.github+json"},
+                  json={"encrypted_value": val, "key_id": key["key_id"]},
+                  timeout=30)
+              return r.status_code
+
+          done = None
+          for i in range(1, 5):
+              suf = "" if i == 1 else f"_{i}"
+              cid_ = os.environ.get("YOUTUBE_CLIENT_ID" + suf, "")
+              sec_ = os.environ.get("YOUTUBE_CLIENT_SECRET" + suf, "")
+              if not (cid_ and sec_):
+                  continue
+              data = urllib.parse.urlencode({
+                  "code": code, "client_id": cid_, "client_secret": sec_,
+                  "redirect_uri": "http://localhost",
+                  "grant_type": "authorization_code"}).encode()
+              try:
+                  r = json.loads(urllib.request.urlopen(urllib.request.Request(
+                      "https://oauth2.googleapis.com/token", data=data),
+                      timeout=60).read())
+              except Exception as exc:
+                  print(f"   مشروع {i}: الكود مش بيخصه ({type(exc).__name__})")
+                  continue
+              rt = r.get("refresh_token")
+              if not rt:
+                  print(f"   مشروع {i}: مفيش refresh_token")
+                  continue
+              scopes = r.get("scope", "")
+              # 🔒 تحقق أمني: نتأكد إن التوكن لقناة نور نفسها (مش أي قناة تانية)
+              try:
+                  at = r.get("access_token")
+                  ch = json.loads(urllib.request.urlopen(urllib.request.Request(
+                      "https://www.googleapis.com/youtube/v3/channels"
+                      "?part=snippet&mine=true",
+                      headers={"Authorization": f"Bearer {at}"}), timeout=30).read())
+                  got = (ch.get("items") or [{}])[0]
+                  title = got.get("snippet", {}).get("title", "?")
+                  cid_yt = got.get("id", "")
+                  print(f"   القناة المفوّضة: {title} ({cid_yt})")
+                  if cid_yt != "UCqsa-xL5a5Vm_jNaS5sGmkw":
+                      print("   ⛔ مش قناة نور — مش هحفظ التوكن")
+                      tg_send(f"⚠️ مصنع نور: التفويض كان لقناة تانية «{title}» — "
+                              f"الرجاء التفويض لحساب قناة دۅۄشے نفسها.")
+                      continue
+              except Exception as exc:                     # noqa: BLE001
+                  print("   ⚠ فحص القناة فشل:", type(exc).__name__)
+              name = "YOUTUBE_REFRESH_TOKEN" + ("" if i == 1 else f"_{i}")
+              st = put_secret(name, rt)
+              print(f"   🟢 مشروع {i}: توكن جديد! حفظت {name} → {st}")
+              print(f"      الصلاحيات: {scopes[:160]}")
+              done = i
+              break
+
+          if not done:
+              print("✗ الكود مش بيخص أي مشروع معروف")
+              tg_send("⚠️ مصنع نور: الكود اللي وصل مش بيخص أي مشروع مسجّل. "
+                      "ابعت الرسالة تانية أو جرّب اللينك من جديد.")
+              raise SystemExit(0)
+
+          tg_send(f"✅ مصنع نور: التوكن اتجدّد بنجاح (مشروع {done})!\n"
+                  f"النشر رجع شغال الآن — والشغل الساعي على القناة مستمر 🤍")
+          requests.post(f"https://api.github.com/repos/{REPO}/actions/workflows/"
+                        f"noor-publish.yml/dispatches",
+                        headers={"Authorization": f"Bearer {BRIDGE}",
+                                 "Accept": "application/vnd.github+json"},
+                        json={"ref": "main",
+                              "inputs": {"mode": "cycle", "dry_run": "false"}},
+                        timeout=60)
+          print("🚀 دورة نشر اتشغلت بالتوكن الجديد")
+          PY
