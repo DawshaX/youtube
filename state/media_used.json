@@ -2185,9 +2185,9 @@
   "at": "2026-09-22 00:04"
  },
  "clipcache:d8d6cd442adf": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-22 07:20"
+  "at": "2026-09-23 11:21"
  },
  "https://cdn.pixabay.com/video/2020/04/03/34855-403777679_medium.mp4": {
   "source": "video:pixabay",
@@ -2197,7 +2197,7 @@
  "clipcache:7c9f3a1cd340": {
   "source": "video:pixabay",
   "episode": "bg1",
-  "at": "2026-09-22 07:20"
+  "at": "2026-09-23 11:22"
  },
  "https://cdn.pixabay.com/video/2016/12/18/6815-196282555_medium.mp4": {
   "source": "video:pixabay",
@@ -2207,7 +2207,7 @@
  "clipcache:6b34ac041190": {
   "source": "video:pixabay",
   "episode": "bg2",
-  "at": "2026-09-22 07:21"
+  "at": "2026-09-23 11:22"
  },
  "https://cdn.pixabay.com/video/2022/04/02/112635-695109796_medium.mp4": {
   "source": "video:pixabay",
@@ -2217,7 +2217,7 @@
  "clipcache:4d419d579674": {
   "source": "video:pixabay",
   "episode": "bg3",
-  "at": "2026-09-22 07:21"
+  "at": "2026-09-23 11:23"
  },
  "https://cdn.pixabay.com/video/2020/08/14/47170-450995627_medium.mp4": {
   "source": "video:pixabay",
@@ -3098,5 +3098,25 @@
   "source": "image:commons",
   "episode": "trees sunlight path",
   "at": "2026-09-23 10:31"
+ },
+ "https://videos.pexels.com/video-files/31112120/13293232_720_1280_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-09-23 11:21"
+ },
+ "https://cdn.pixabay.com/video/2024/08/03/224696_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-09-23 11:22"
+ },
+ "https://cdn.pixabay.com/video/2024/01/19/197316-904610074_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-23 11:22"
+ },
+ "https://cdn.pixabay.com/video/2024/03/08/203449-921267347_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-09-23 11:23"
  }
 }
