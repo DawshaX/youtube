@@ -3658,5 +3658,20 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-24 11:38"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Atik_Valide_Mosque_9571.jpg/1280px-Atik_Valide_Mosque_9571.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque courtyard arches",
+  "at": "2026-09-24 12:27"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Bowl_with_traces_of_tamarind_and_grapes%2C_faience_-_Museo_Egizio_%28Turin%29_S_8233_p01.jpg/1280px-Bowl_with_traces_of_tamarind_and_grapes%2C_faience_-_Museo_Egizio_%28Turin%29_S_8233_p01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "dates fruit bowl",
+  "at": "2026-09-24 12:28"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/c/cf/Autumn_sunlight_on_avenue_of_trees_near_Burnbake_-_geograph.org.uk_-_6332030.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "trees sunlight path",
+  "at": "2026-09-24 12:29"
  }
 }
