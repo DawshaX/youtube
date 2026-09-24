@@ -1224,6 +1224,26 @@
    "err": "too_soon",
    "at": "2026-09-24 06:38",
    "duration": 39.5
+  },
+  {
+   "id": "vault:q1790171631.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=_9aeM8PD8Fc",
+   "at": "2026-09-24 07:24"
+  },
+  {
+   "id": "ayah-73-1",
+   "kind": "reel",
+   "theme": "قرآن",
+   "title": "سِرّ القيام اللي محدش يقوله 🌙 | قرآن 🤍",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790234698/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790235027.mp4",
+   "err": "too_soon",
+   "at": "2026-09-24 07:30",
+   "duration": 92.1
   }
  ],
  "longs": [
@@ -1251,7 +1271,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-29-45",
+ "last_try": "ayah-73-1",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
