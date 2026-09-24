@@ -1284,6 +1284,26 @@
    "err": "too_soon",
    "at": "2026-09-24 09:10",
    "duration": 45.8
+  },
+  {
+   "id": "vault:q1790180092.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=MSwAwz4NuPo",
+   "at": "2026-09-24 09:56"
+  },
+  {
+   "id": "ayah-39-35",
+   "kind": "reel",
+   "theme": "توبة",
+   "title": "بداية جديدة من هنا 🌅 | توبة 🤍",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790243816/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790244059.mp4",
+   "err": "too_soon",
+   "at": "2026-09-24 10:01",
+   "duration": 83.3
   }
  ],
  "longs": [
@@ -1311,7 +1331,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-25-70",
+ "last_try": "ayah-39-35",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
