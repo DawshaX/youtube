@@ -1104,6 +1104,26 @@
    "err": "too_soon",
    "at": "2026-09-24 01:29",
    "duration": 38.8
+  },
+  {
+   "id": "vault:q1790154945.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=7vNmrit3uOU",
+   "at": "2026-09-24 02:15"
+  },
+  {
+   "id": "ayah-3-200",
+   "kind": "reel",
+   "theme": "صبر",
+   "title": "لسه فاضل شوية ويفرجها ⏳ | صبر 🤍",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790216142/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790216650.mp4",
+   "err": "too_soon",
+   "at": "2026-09-24 02:24",
+   "duration": 153.1
   }
  ],
  "longs": [
@@ -1131,7 +1151,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-65-3",
+ "last_try": "ayah-3-200",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
