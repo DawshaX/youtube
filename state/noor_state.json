@@ -1124,6 +1124,26 @@
    "err": "too_soon",
    "at": "2026-09-24 02:24",
    "duration": 153.1
+  },
+  {
+   "id": "vault:q1790156563.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=0ACsWpFixv4",
+   "at": "2026-09-24 03:10"
+  },
+  {
+   "id": "ayah-2-255",
+   "kind": "ayah",
+   "theme": "توحيد",
+   "title": "أعظم آية في القرآن 🌌 — آية وسكينة ﴿سُورَةُ البَقَرَةِ﴾",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790219435/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790219662.mp4",
+   "err": "too_soon",
+   "at": "2026-09-24 03:14",
+   "duration": 79.3
   }
  ],
  "longs": [
@@ -1151,7 +1171,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-3-200",
+ "last_try": "ayah-2-255",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
