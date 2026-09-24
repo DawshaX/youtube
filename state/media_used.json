@@ -3488,5 +3488,20 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-24 04:02"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/30_Doradus%2C_Tarantula_Nebula.jpg/1280px-30_Doradus%2C_Tarantula_Nebula.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "galaxy nebula stars",
+  "at": "2026-09-24 04:50"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Copper_Breaks_State_Park_with_the_Milky_Way_Galaxy.jpg/1280px-Copper_Breaks_State_Park_with_the_Milky_Way_Galaxy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "night sky milky way",
+  "at": "2026-09-24 04:50"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/An_orbital_sunrise_%28iss071e001425%29.jpg/1280px-An_orbital_sunrise_%28iss071e001425%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "earth from space sunrise",
+  "at": "2026-09-24 04:51"
  }
 }

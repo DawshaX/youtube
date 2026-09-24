@@ -1164,6 +1164,26 @@
    "err": "too_soon",
    "at": "2026-09-24 04:04",
    "duration": 46.1
+  },
+  {
+   "id": "vault:q1790162688.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=Ti9hG9SXgmc",
+   "at": "2026-09-24 04:50"
+  },
+  {
+   "id": "ayah-55-13",
+   "kind": "reel",
+   "theme": "توحيد",
+   "title": "أي نعمة أنكرتها؟ 🌊 | توحيد 🤍",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790225422/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790225858.mp4",
+   "err": "too_soon",
+   "at": "2026-09-24 04:57",
+   "duration": 162.3
   }
  ],
  "longs": [
@@ -1191,7 +1211,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-67-3",
+ "last_try": "ayah-55-13",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
