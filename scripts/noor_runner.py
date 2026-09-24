@@ -704,6 +704,10 @@ def cycle() -> int:
                    for l in st.get("longs", []))
     cap = settings.DAILY_CAP or 6
     left = cap - state.published_today_pt()
+    # 🎯 كل دورة لازم تطلع بنشرة: بنحاول في الأول، ولو مفيش (الفرق لسه ما كملش
+    # أو الجاهز اتأخر) بنحاول **تانى في آخر الدورة** بعد الرندر — كده النشرة
+    # الساعية ما تطيرش لو الدورة بدأت بدري شويّة عن موعدها (بق حقيقي 2026-09-25).
+    published_now = 0
     if left > 0:
         try:
             n = noor_vault.count()
@@ -712,7 +716,8 @@ def cycle() -> int:
         if n > 0:
             # ⚡ املأ الحصة الموجودة: احجز الجاهز على ساعات اليوم الجاية
             # (كل حلقة على ساعة — يوتيوب ينشرها لوحده بلا انتظار سيرفر)
-            _fill_quota(max_n=min(left, int(os.environ.get("NOOR_PER_CYCLE", "1"))))
+            published_now = _fill_quota(
+                max_n=min(left, int(os.environ.get("NOOR_PER_CYCLE", "1"))))
             if state.published_today_pt() >= cap:
                 return 0                      # الحصة اتقفلت — نستنى الدورة الجاية
             try:
@@ -726,12 +731,21 @@ def cycle() -> int:
         if n < floor:
             print(f"[noor] 🏭 المخزون {n}/{floor} — إنتاج حلقة جديدة "
                   f"لضمان الاستمرار", flush=True)
-            return short_once()
+            rc = short_once()
         # المخزون مليان: نعمل الفيديو الطويل بتاع اليوم (لمّا يبقى فيه رصيد أمان)
-        if not did_long:
+        elif not did_long:
             print(f"[noor] فيديو اليوم الطويل (فاضل {left} رفعة)", flush=True)
-            return long_once()
-        return short_once()
+            rc = long_once()
+        else:
+            rc = short_once()
+        # 🔁 محاولة النشر التانية: لو الدورة دي ما نشرتش لحد دلوقتي، والرندر
+        # خد وقت كفاية إن الفرق كمل — ننشر الجاهز من الخزّان قبل ما نقفل.
+        if not published_now and int(os.environ.get("NOOR_PER_CYCLE", "1")) >= 1:
+            again = _fill_quota(max_n=1)
+            if again:
+                print("[noor] 🔁 النشرة طلعت في محاولة الإغلاق "
+                      "(الفرق كمل بعد الرندر)", flush=True)
+        return rc
     # الحصة مقفولة: ننتج للخزّان (لو فيه مكان) ونستريح لو مليان
     try:
         if not noor_vault.can_push():
