@@ -1,78 +1,98 @@
 name: 🩺 فحص توكن الرفع — تشخيص سريع (مفيش أي سر بيطلع)
 
-# بيجاوب على سؤال واحد في ٣٠ ثانية: «توكن النشر شغال ولا مات؟»
-# بيجرّب تجديد توكن الوصول من جديد، ولو نجح بيطبع **اسم القناة** اللي التوكن
-# بيوصلها (من غير ما يطبع التوكن نفسه أبدًا). لو فشل بيطبع سبب جوجل بالحرف
-# (مثال: invalid_grant = التوكن انتهى/اتلغى → محتاج ضغطة موافقة جديدة).
+# بيجاوب على سؤال واحد: توكن النشر شغال ولا مات؟ ولكل مشروع جوجل عندنا.
+# لو التوكن شغال، بيطبع **اسم القناة** اللي بيوصلها (من غير طباعة أي سر).
+# لو مات، بيبعت تليجرام بلينك الموافقة جاهز عشان التوقف ما يعدّيش بصمت.
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: '17 */6 * * *'      # كل 6 ساعات: تقرير حالة التوكن من غير أي تدخل
+    - cron: '17 */6 * * *'
 permissions:
   contents: read
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 6
     steps:
-      - name: افحص توكن الرفع (من غير طباعة أي سر)
+      - name: افحص توكنات الرفع (1..4)
         env:
-          CID: ${{ secrets.YOUTUBE_CLIENT_ID }}
-          SEC: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
-          RTK: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          C1: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          S1: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          R1: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          C2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+          S2: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
+          R2: ${{ secrets.YOUTUBE_REFRESH_TOKEN_2 }}
+          C3: ${{ secrets.YOUTUBE_CLIENT_ID_3 }}
+          S3: ${{ secrets.YOUTUBE_CLIENT_SECRET_3 }}
+          R3: ${{ secrets.YOUTUBE_REFRESH_TOKEN_3 }}
+          C4: ${{ secrets.YOUTUBE_CLIENT_ID_4 }}
+          S4: ${{ secrets.YOUTUBE_CLIENT_SECRET_4 }}
+          R4: ${{ secrets.YOUTUBE_REFRESH_TOKEN_4 }}
           TG: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           CHAT: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
         run: |
           python - <<'PYEOF'
-          import os, json, urllib.request, urllib.parse
-          cid, sec, rtk = (os.environ.get("CID") or ""), (os.environ.get("SEC") or ""), (os.environ.get("RTK") or "")
-          print("موجود؟ client_id:", bool(cid), "| secret:", bool(sec), "| refresh:", bool(rtk))
-          data = urllib.parse.urlencode({"client_id": cid, "client_secret": sec,
-                                         "refresh_token": rtk, "grant_type": "refresh_token"}).encode()
-          try:
-              r = urllib.request.urlopen("https://oauth2.googleapis.com/token", data=data, timeout=30)
-              j = json.loads(r.read())
-              ok = bool(j.get("access_token"))
-              print("النتيجة: HTTP", r.status, "| توكن وصول؟", ok, "| صلاحية", j.get("expires_in"))
-              if ok:
-                  # نتأكد إنه نفس القناة فعلاً (من غير طباعة التوكن)
+          import os, json, urllib.parse, urllib.request
+          def tok(cid, sec, rtk):
+              data = urllib.parse.urlencode({"client_id": cid, "client_secret": sec,
+                                             "refresh_token": rtk,
+                                             "grant_type": "refresh_token"}).encode()
+              try:
+                  r = urllib.request.urlopen("https://oauth2.googleapis.com/token",
+                                             data=data, timeout=30)
+                  return json.loads(r.read()).get("access_token"), ""
+              except Exception as e:
+                  body = ""
+                  try: body = e.read().decode()[:220]
+                  except Exception: pass
+                  return None, f"{getattr(e,'code',type(e).__name__)} {body}"
+          def channel(at):
+              try:
                   req = urllib.request.Request(
                       "https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true",
-                      headers={"Authorization": "Bearer " + j["access_token"]})
-                  c = json.loads(urllib.request.urlopen(req, timeout=30).read())
-                  items = c.get("items") or []
-                  print("القناة:", items[0]["snippet"]["title"] if items else "مفيش قناة")
-          except Exception as e:
-              body = ""
-              try:
-                  body = e.read().decode()[:300]
-              except Exception:
-                  pass
-              print("فشل:", getattr(e, "code", type(e).__name__), body)
-          # إنذار تليجرام فيه لينك الموافقة — أول ما التوكن يموت، صاحب القناة
-          # يلاقي الحل جاهز في إيده (مش مجرد «فيه مشكلة»).
-          if "invalid_grant" in body and os.environ.get("TG") and os.environ.get("CHAT"):
-              import urllib.parse
-              scopes = " ".join([
-                  "https://www.googleapis.com/auth/youtube.upload",
-                  "https://www.googleapis.com/auth/youtube.force-ssl",
-                  "https://www.googleapis.com/auth/youtube.readonly",
-                  "https://www.googleapis.com/auth/userinfo.profile"])
+                      headers={"Authorization": "Bearer " + at})
+                  j = json.loads(urllib.request.urlopen(req, timeout=30).read())
+                  it = j.get("items") or []
+                  return (it[0]["snippet"]["title"] + " | " + it[0]["id"]) if it else "⚠ مفيش قناة على التوكن ده"
+              except Exception as e:
+                  return "⚠ فحص القناة فشل: " + type(e).__name__
+          dead = []
+          for i in (1, 2, 3, 4):
+              suf = "" if i == 1 else f"_{i}"
+              cid, sec, rtk = (os.environ.get("C%d" % i) or os.environ.get("YOUTUBE_CLIENT_ID" + suf) or "",
+                               os.environ.get("S%d" % i) or "",
+                               os.environ.get("R%d" % i) or "")
+              if not (cid and sec and rtk):
+                  print(f"مشروع {i}: غير مضبوط (مفيش أسرار)")
+                  continue
+              at, err = tok(cid, sec, rtk)
+              if at:
+                  print(f"مشروع {i}: ✅ شغال — القناة: {channel(at)}")
+              else:
+                  print(f"مشروع {i}: ❌ فشل — {err}")
+                  if "invalid_grant" in err:
+                      dead.append(cid)
+          if dead and os.environ.get("TG") and os.environ.get("CHAT"):
+              scopes = " ".join(["https://www.googleapis.com/auth/youtube.upload",
+                                 "https://www.googleapis.com/auth/youtube.force-ssl",
+                                 "https://www.googleapis.com/auth/youtube.readonly",
+                                 "https://www.googleapis.com/auth/userinfo.profile"])
               link = "https://accounts.google.com/o/oauth2/v2/auth?" + urllib.parse.urlencode({
-                  "client_id": cid, "redirect_uri": "http://localhost",
+                  "client_id": dead[0], "redirect_uri": "http://localhost",
                   "response_type": "code", "scope": scopes,
                   "access_type": "offline", "prompt": "consent"})
-              msg = ("🔴 توكن النشر بتاع نور مرفوض (invalid_grant) — النشر واقف.\n\n"
-                     "ضغطة واحدة (٣٠ ثانية): افتح اللينك ده ووافق، وانقل رابط الصفحة "
-                     "اللي هيظهر (فيه code=...) والصقه هنا في تليجرام:\n" + link +
-                     "\n\nأول ما توصل، المصنع بياخدها لوحده ويجدّد ويرجع ينشر فورًا.")
+              msg = ("🔴 توكن النشر مرفوض (invalid_grant) — الرفع من المصنع واقف.\n\n"
+                     "ضغطة واحدة (٣٠ ثانية): افتح اللينك ده ووافق، وانقل رابط "
+                     "الصفحة اللي هيظهر (فيه code=...) والصقه هنا في تليجرام:\n"
+                     + link + "\n\nأول ما توصل، المصنع بياخدها لوحده ويجدّد ويرجع "
+                     "ينشر فورًا.\n⚠️ مهم: سجّل الدخول بحساب قناة XTreNDAW بالظبط.")
               try:
-                  import urllib.request as _ur
-                  req = _ur.Request(f"https://api.telegram.org/bot{os.environ['TG']}/sendMessage",
-                                    data=urllib.parse.urlencode(
-                                        {"chat_id": os.environ["CHAT"], "text": msg}).encode())
-                  _ur.urlopen(req, timeout=20)
-                  print("📨 الإنذار اتغسل على تليجرام")
-              except Exception as _e:
-                  print("⚠ مش قادر أبعت الإنذار:", type(_e).__name__)
+                  req = urllib.request.Request(
+                      f"https://api.telegram.org/bot{os.environ['TG']}/sendMessage",
+                      data=urllib.parse.urlencode({"chat_id": os.environ["CHAT"],
+                                                   "text": msg}).encode())
+                  urllib.request.urlopen(req, timeout=20)
+                  print("📨 الإنذار اتبعت على تليجرام")
+              except Exception as e:
+                  print("⚠ مش قادر أبعت الإنذار:", type(e).__name__)
           PYEOF
