@@ -1184,6 +1184,26 @@
    "err": "too_soon",
    "at": "2026-09-24 04:57",
    "duration": 162.3
+  },
+  {
+   "id": "vault:q1790165654.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=DJzlVcSAbuA",
+   "at": "2026-09-24 05:43"
+  },
+  {
+   "id": "ayah-33-41",
+   "kind": "ayah",
+   "theme": "ذكر",
+   "title": "دقيقة ذكر تسوى الدنيا ✨ — آية وسكينة ﴿سُورَةُ الأَحۡزَابِ﴾",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790228631/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790228910.mp4",
+   "err": "too_soon",
+   "at": "2026-09-24 05:48",
+   "duration": 36.0
   }
  ],
  "longs": [
@@ -1211,7 +1231,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-55-13",
+ "last_try": "ayah-33-41",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
