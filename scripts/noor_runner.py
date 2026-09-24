@@ -136,7 +136,7 @@ def _pick_at(st: dict) -> str | None:
     return _next_slot(st.get("slots") or [])
 
 
-HOUR_GAP = int(os.environ.get("NOOR_MIN_GAP_MIN", "45"))   # أقل فرق بين نشرتين
+HOUR_GAP = int(os.environ.get("NOOR_MIN_GAP_MIN", "40"))   # أقل فرق بين نشرتين
 
 
 def _too_soon() -> float:
@@ -149,6 +149,11 @@ def _too_soon() -> float:
     from xtrendaw import state
     last = 0.0
     for p in state.published_log():
+        # 🎯 بنقيس الفرق من **نشراتنا إحنا** بس. السجل مشترك مع مصانع تانية
+        # في نفس المستودع، ونشرة مصنع تاني ما تمنعش نشرة نور (ومش عكسها).
+        kind = str(p.get("kind") or "")
+        if not (kind.startswith("noor") or kind == "vault"):
+            continue
         try:
             last = max(last, float(p.get("ts") or 0))
         except (TypeError, ValueError):
