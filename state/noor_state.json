@@ -1544,6 +1544,26 @@
    "err": "too_soon",
    "at": "2026-09-24 20:59",
    "duration": 20.2
+  },
+  {
+   "id": "vault:q1790222652.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=Ke-t2itnMLg",
+   "at": "2026-09-24 21:46"
+  },
+  {
+   "id": "hadith-bukhari-6011",
+   "kind": "hadith",
+   "theme": "رحمة",
+   "title": "المؤمنون زي الجسد الواحد 🤝 — حديث اليوم 📖",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790286372/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790286639.mp4",
+   "err": "too_soon",
+   "at": "2026-09-24 21:50",
+   "duration": 23.9
   }
  ],
  "longs": [
@@ -1571,7 +1591,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-9",
+ "last_try": "hadith-bukhari-6011",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
