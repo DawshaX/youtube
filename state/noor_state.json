@@ -1304,6 +1304,26 @@
    "err": "too_soon",
    "at": "2026-09-24 10:01",
    "duration": 83.3
+  },
+  {
+   "id": "vault:q1790183025.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=uX29vsHpnBY",
+   "at": "2026-09-24 10:47"
+  },
+  {
+   "id": "ayah-47-15",
+   "kind": "ayah",
+   "theme": "جنة",
+   "title": "تخيل الجنّة لحظة 🏞️ — آية وسكينة ﴿سُورَةُ مُحَمَّدٍ﴾",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790246837/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790247046.mp4",
+   "err": "too_soon",
+   "at": "2026-09-24 10:50",
+   "duration": 76.6
   }
  ],
  "longs": [
@@ -1331,7 +1351,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-39-35",
+ "last_try": "ayah-47-15",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
