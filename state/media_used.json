@@ -1727,7 +1727,7 @@
  "clipcache:9200fc61c53b": {
   "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-23 23:34"
+  "at": "2026-09-24 01:26"
  },
  "https://cdn.pixabay.com/video/2021/10/10/91517-630895566_medium.mp4": {
   "source": "video:pixabay",
@@ -1737,7 +1737,7 @@
  "clipcache:2d20de01f1fd": {
   "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-09-23 23:35"
+  "at": "2026-09-24 01:26"
  },
  "https://cdn.pixabay.com/video/2023/07/04/169951-842348732_medium.mp4": {
   "source": "video:pixabay",
@@ -1747,7 +1747,7 @@
  "clipcache:5cccd217ea16": {
   "source": "video:pexels",
   "episode": "bg2",
-  "at": "2026-09-23 23:35"
+  "at": "2026-09-24 01:27"
  },
  "https://videos.pexels.com/video-files/32194802/13731378_682_360_30fps.mp4": {
   "source": "video:pexels",
@@ -3413,5 +3413,25 @@
   "source": "image:commons",
   "episode": "mountains clouds sunrise",
   "at": "2026-09-24 00:32"
+ },
+ "https://videos.pexels.com/video-files/29660258/12759692_640_360_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-09-24 01:26"
+ },
+ "https://videos.pexels.com/video-files/4574693/4574693-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-24 01:26"
+ },
+ "https://videos.pexels.com/video-files/8025691/8025691-sd_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-24 01:27"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Snapper_Rocks_Queensland.jpg/1280px-Snapper_Rocks_Queensland.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "rough sea rocks waves",
+  "at": "2026-09-24 01:28"
  }
 }
