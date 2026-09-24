@@ -117,3 +117,57 @@ class TestTitleRules(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestVaultMetaUpgrade(unittest.TestCase):
+    """ترقية ميتاداتا الحلقات المخزّنة قبل كود 2026-09-25."""
+
+    def _ayah(self):
+        return {"kind": "noor",
+                "title": "أعظم آية في القرآن 🌌 — آية وسكينة ﴿سُورَةُ البَقَرَةِ﴾",
+                "tags": "قرآن,تلاوة,إسلاميات,shorts",
+                "caption": ("اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ\n\n"
+                            "🎙️ تلاوة: محمود خليل الحصري\nالمصادر: alquran.cloud\n"
+                            "لا موسيقى في هذا الفيديو.\n\n🤍 شاركها\n\n#قرآن #shorts")}
+
+    def _hadith(self):
+        return {"kind": "noor",
+                "title": "قبل ما تنشر حديث… شوف ده ⚠️ — حديث اليوم 📖",
+                "tags": "قرآن,تلاوة,shorts",
+                "caption": ("قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم …\n\n"
+                            "📖 صحيح مسلم — حديث رقم 4\nالمصادر: …\n"
+                            "🤍 شاركها\n\n#shorts #حديث")}
+
+    def test_ayah_title_upgraded(self):
+        t = nr._upgrade_meta(self._ayah())["title"]
+        self.assertIn("سورة البقرة", t)
+        self.assertIn("تلاوة محمود خليل الحصري", t)
+
+    def test_hadith_title_upgraded(self):
+        t = nr._upgrade_meta(self._hadith())["title"]
+        self.assertIn("حديث صحيح — صحيح مسلم", t)
+
+    def test_cta_added_once(self):
+        m = nr._upgrade_meta(self._ayah())
+        self.assertIn("🔔 اشترك", m["caption"])
+        m2 = nr._upgrade_meta(m)
+        self.assertEqual(m2["caption"].count("🔔 اشترك"), 1)   # مش بيتكرر
+
+    def test_tags_are_focused(self):
+        m = nr._upgrade_meta(self._ayah())
+        tags = m["tags"].split(",")
+        self.assertLessEqual(len(tags), 15)
+        self.assertIn("سورة البقرة", tags)
+
+    def test_unknown_title_stays(self):
+        m = nr._upgrade_meta({"title": "حاجة غريبة", "caption": "#shorts x"})
+        self.assertEqual(m["title"], "حاجة غريبة")
+
+    def test_upgrade_can_be_disabled(self):
+        import os
+        os.environ["NOOR_META_UPGRADE"] = "0"
+        try:
+            self.assertEqual(nr._upgrade_meta(self._ayah())["title"],
+                             self._ayah()["title"])
+        finally:
+            os.environ.pop("NOOR_META_UPGRADE", None)

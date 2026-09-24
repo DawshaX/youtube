@@ -22,6 +22,7 @@ import calendar
 import json
 import os
 import pathlib
+import re
 import subprocess
 import sys
 import time
@@ -374,6 +375,56 @@ def _to_playlist(url: str, kind: str) -> None:
         print(f"[noor] 🗂️ تخطّي قائمة التشغيل: {str(e)[:90]}", flush=True)
 
 
+# ─────────── ⬆️ ترقية ميتاداتا الحلقات المخزّنة قبل النشر ───────────
+# ليه؟ الخزّان فيه حلقات اتولّدت قبل تحديث الميتاداتا (2026-09-25)، وكانت
+# هتتنشر بعنوان قديم ضعيف من ناحية البحث. الترقية **محافظة**: لو فشل أي
+# استخراج، العنوان/الوصف الأصلي بيفضل زي ما هو — مفيش أي خطر.
+_OLD_AYAH_TITLE = re.compile(
+    r"^(?P<hook>.+?)\s+—\s+آية وسكينة\s+﴿(?P<surah>[^﴾]+)﴾\s*$")
+_OLD_HADITH_TITLE = re.compile(r"^(?P<hook>.+?)\s+—\s+حديث اليوم\s*📖\s*$")
+
+
+def _upgrade_meta(meta: dict) -> dict:
+    """يرقّي عنوان/وصف/وسوم الحلقة المخزّنة للصيغة الجديدة (2026-09-25)."""
+    if str(os.environ.get("NOOR_META_UPGRADE", "1")) != "1":
+        return meta
+    m = dict(meta or {})
+    title = str(m.get("title") or "").strip()
+    cap = str(m.get("caption") or "")
+    rec = (re.search(r"🎙️ تلاوة:\s*([^\n]+)", cap) or [None, ""])[1] \
+        if re.search(r"🎙️ تلاوة:\s*([^\n]+)", cap) else ""
+    rec = rec.strip()
+    book = ""
+    mb = re.search(r"📖\s*([^—\n]+?)\s*—\s*حديث رقم", cap)
+    if mb:
+        book = mb.group(1).strip()
+
+    new_title, tags = title, None
+    t = _OLD_AYAH_TITLE.match(title)
+    if t and t.group("hook").strip():
+        nm = _clean_surah(t.group("surah"))
+        new_title = (f"{t.group('hook').strip()} | سورة {nm} 🤍 تلاوة {rec}"
+                     if rec else f"{t.group('hook').strip()} | سورة {nm} 🤍")
+        tags = _tags_of({"kind": "ayah", "theme": ""},
+                        {"surah": nm, "reciter": rec}, "ayah", rec)
+    else:
+        th = _OLD_HADITH_TITLE.match(title)
+        if th and th.group("hook").strip() and book:
+            new_title = f"{th.group('hook').strip()} 📖 حديث صحيح — {book}"
+            tags = _tags_of({"kind": "hadith", "theme": ""},
+                            {"surah": "", "reciter": rec, "book": book},
+                            "hadith", rec)
+    if new_title != title:
+        m["title"] = new_title
+    if tags:
+        m["tags"] = ",".join(tags)
+    if "🔔 اشترك" not in cap:
+        add = (_cta_lines(BRAND) if "#shorts" in cap
+               else _cta_lines(BRAND) + "\n\n" + _hashtags())
+        m["caption"] = cap.rstrip() + "\n\n" + add
+    return m
+
+
 def _short_one() -> int:
     """حلقة واحدة فعلية (من غير منطق الإعادة)."""
     from xtrendaw import noor_build, noor_pool
@@ -650,7 +701,7 @@ def _publish_spare() -> int:
     got = noor_vault.take_oldest(WORK / "spare")
     if not got:
         return 1
-    meta = got["meta"] or {}
+    meta = _upgrade_meta(got["meta"] or {})
     title = str(meta.get("title") or "قرآن وتدبّر")
     print(f"[noor] 📤 رفع حلقة من الخزّان: {title[:60]}", flush=True)
     st = _load()
