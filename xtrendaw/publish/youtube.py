@@ -128,6 +128,75 @@ def publish(video_path, title, caption, tags, cover=None,
     return f"https://www.youtube.com/watch?v={vid}", None
 
 
+# ─────────────── 🗂️ قوائم التشغيل (مصدر مشاهدات إضافي) ───────────────
+# ليه: قائمة التشغيل بتخلي يوتيوب يقترح «شاهد التالي» جوه القناة، فبتزوّد
+# وقت المشاهدة الجلسي (= أهم رقم عند يوتيوب للمونيتايزيشن والانتشار).
+# ⚠️ حساب الحصة (مهم جدًا): كل رفعة = 1600 وحدة، وكوتة المشروع 10,000/يوم.
+#    عملية القائمة الواحدة = 50 (بحث) + 50 (إضافة) = 100 وحدة. لو شغّلناها
+#    على 24 حلقة يوميًا = 2,400 وحدة = حسابات كوتة كاملة بتتبهدل والنشر
+#    الساعي يقف. فالتشغيل الافتراضي: الفيديو الطويل بس (100 وحدة/يوم)،
+#    والشورتس بمفتاح env (NOOR_PLAYLIST_SHORTS=1) لما نتأكد إن فيها هامش.
+PLAYLISTS = {
+    "ayah":   "🕌 آية وسكينة — تلاوات خاشعة",
+    "hadith": "📖 أحاديث صحيحة — كنوز السنة",
+    "reel":   "🌙 سلاسل وتدبّر — آيات مختارة",
+    "long":   "🌌 سور كاملة — تلاوة هادئة قبل النوم",
+}
+
+
+def add_to_playlist(video_id: str, kind: str = "ayah") -> str:
+    """يضيف الفيديو لقائمة تشغيل (ويولّدها لو مش موجودة). يرجّع اسم القائمة.
+
+    أي فشل هنا (صلاحية/كوتة/شبكة) **ما يوقفش النشر أبدًا** — يرجّع "" وخلاص.
+    """
+    if not video_id or not settings.has_youtube():
+        return ""
+    title = PLAYLISTS.get(kind) or PLAYLISTS["ayah"]
+    accounts = list(settings.YOUTUBE_ACCOUNTS) or [settings.YOUTUBE]
+    for acc in accounts:
+        tk = _token(acc)
+        if not tk:
+            continue
+        h = {"Authorization": f"Bearer {tk}", "Content-Type": "application/json"}
+        try:
+            pid = ""
+            r = requests.get("https://www.googleapis.com/youtube/v3/playlists",
+                             headers=h, timeout=60,
+                             params={"part": "snippet", "mine": "true",
+                                     "maxResults": "50"})
+            if r.status_code == 200:
+                for it in r.json().get("items", []):
+                    if (it.get("snippet", {}).get("title", "").strip() == title):
+                        pid = it["id"]
+                        break
+            elif r.status_code in (401, 403):
+                continue
+            if not pid:
+                c = requests.post(
+                    "https://www.googleapis.com/youtube/v3/playlists",
+                    headers=h, timeout=60, params={"part": "snippet,status"},
+                    json={"snippet": {"title": title, "defaultLanguage": "ar",
+                                      "description":
+                                      "تلاوات هادئة وتدبّر — بلا موسيقى."},
+                          "status": {"privacyStatus": "public"}})
+                if c.status_code not in (200, 201):
+                    continue
+                pid = c.json().get("id", "")
+            if not pid:
+                continue
+            a = requests.post(
+                "https://www.googleapis.com/youtube/v3/playlistItems",
+                headers=h, timeout=60, params={"part": "snippet"},
+                json={"snippet": {"playlistId": pid,
+                                  "resourceId": {"kind": "youtube#video",
+                                                 "videoId": video_id}}})
+            if a.status_code in (200, 201):
+                return title
+        except Exception:                                     # noqa: BLE001
+            continue
+    return ""
+
+
 def autodelete_enabled() -> bool:
     """هل الحذف التلقائي مسموح؟ لازم مطلب صريح بالبيئة — الافتراضي: لا."""
     return os.environ.get("XT_ALLOW_YOUTUBE_AUTODELETE", "").strip() == "1"

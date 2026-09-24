@@ -121,18 +121,25 @@ def build_hadith_short(item: dict, workdir: Path) -> dict:
 
     lead = 0.45
     seq: list[tuple[Path, float, str]] = []       # (صوت، مدة، نص مصاحب)
+    # 🎙️ نبرة واحدة لكل الحلقة (تحديث 2026-09-25): قبل كده كان كل فصل بسرعة
+    # مختلفة (+10 / -4 / +2 / +6) فالصوت كان بيتنطّط ويبان «مقطّع». دلوقتي
+    # الهوك أسرع سنت بسيط، والمتن والحديث بسرعة تدبّر واحدة، والمصدر زي المتن.
     wav_hook, d_hook = _narration(item["hook"] + ".", workdir, "hook",
-                                  voice, rate="+10%")
-    seq.append((wav_hook, d_hook, item["hook"]))
+                                  voice, rate=settings.VOICE_RATE)
     for gi, g in enumerate(groups):
-        w, d = _narration(" ".join(g), workdir, f"h{gi}", voice, rate="-4%")
+        w, d = _narration(" ".join(g), workdir, f"h{gi}", voice,
+                          rate=settings.VOICE_RATE_TAFSIR)
         seq.append((w, d, " ".join(g)))
-    wav_src, d_src = _narration(f"رواه {h['book']}، رقم {h['number']}.",
-                                workdir, "src", voice, rate="+2%")
+    wav_src, d_src = _narration(f"رواه {h['book']}، حديث رقم {h['number']}.",
+                                workdir, "src", voice,
+                                rate=settings.VOICE_RATE_TAFSIR)
     seq.append((wav_src, d_src, f"📖 {h['book']} — {h['number']}"))
     # 🎙️ خاتمة منطوقة — كان قبل كده 2.4 ثانية **صمت كامل** = موت الفيديو في آخره
-    outro_line = item.get("outro") or "تابعنا… حديث صحيح جديد كل ساعة"
-    wav_out, d_out = _narration(outro_line, workdir, "outro", voice, rate="+6%")
+    outro_line = item.get("outro") or (
+        "لو الحديث أفادك، اكتب آمين في التعليق، وشاركه مع حد بتحبه. "
+        "وتابعنا… حديث صحيح جديد كل ساعة.")
+    wav_out, d_out = _narration(outro_line, workdir, "outro", voice,
+                                rate=settings.VOICE_RATE)
     seq.append((wav_out, d_out, outro_line))
     total = lead + sum(d for _w, d, _t in seq) + 0.25
 

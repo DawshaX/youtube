@@ -255,6 +255,114 @@ def short_once(tries: int = 3) -> int:
     return 1
 
 
+# ─────────────── 🎯 الميتاداتا: العنوان والوصف والوسوم (تحديث 2026-09-25) ───────
+# شكوى صاحب القناة: «مبيجيبوش مشاهدات». البحث على يوتيوب عربي بيدوّر على:
+#   اسم السورة + رقم الآية + «تلاوة» + «آيات» + اسم القارئ. فنعيد ترتيب
+# العنوان: (١) نية/هوك يوقّف التمرير (٢) كلمة مفتاحية يبحث بيها الناس
+# (٣) القارئ بالاسم (مصداقية + بحث). والوصف: النص كامل (بحث) + المرجع
+# بالآية (ثقة) + دعوة تفاعل صريحة (تعليق → مشاركة → اشتراك) + هاشتاجات.
+_CORE_TAGS_AR = ["قرآن كريم", "آيات قرآنية", "تلاوة خاشعة", "تفسير ميسّر",
+                 "راحة نفسية", "سكينة وطمأنينة", "ذكر الله", "إسلاميات"]
+_CORE_TAGS_EN = ["quran", "quran recitation", "quran shorts", "islamic shorts",
+                 "shorts", "peaceful quran", "viral quran"]
+
+
+def _clean_surah(name: str) -> str:
+    """اسم سورة نظيف للعنوان/الوصف: «سُورَةُ الرَّحۡمَٰنِ» → «الرحمن».
+
+    علامات الضبط القرآني (ۡ ٰ) كانت بتطلع في العنوان على يوتيوب شكلها غريب
+    ومش بتتقري في البحث. بنشيل كل الماركات (Mn) → الكتابة المتعارف عليها.
+    """
+    import unicodedata
+    n = (name or "")
+    for w in ("سُورَةُ", "سُورَةِ", "السُّورَةُ", "سورة"):
+        n = n.replace(w, "")
+    n = "".join(ch for ch in n if unicodedata.category(ch) != "Mn")
+    return " ".join(n.replace("\u0640", "").split()) or "القرآن الكريم"
+
+
+def _ref_of(item: dict, res: dict) -> str:
+    """مرجع الحلقة: «سورة الرحمن — الآية 13» (الكلمة اللي الناس بتبحث بيها)."""
+    name = _clean_surah(res.get("surah") or "")
+    a, b = item.get("ayah"), item.get("ayah_to")
+    if a and b and b != a:
+        return f"سورة {name} — الآيات {a}–{b}"
+    if a:
+        return f"سورة {name} — الآية {a}"
+    return f"سورة {name}"
+
+
+def _hashtags(extra: str = "") -> str:
+    return ("#shorts #قرآن #آيات_قرآنية #تلاوة_خاشعة #سكينة #راحة_نفسية "
+            "#تفسير_القرآن #ذكر " + extra).strip()
+
+
+def _cta_lines(brand: str) -> str:
+    return (
+        "🤍 لو الكلام ده لمست قلبك: اكتب «آمين» في التعليق، وابعت الفيديو "
+        "لحد بتحبه — الدال على الخير كفاعله.\n"
+        "🔔 اشترك في قناة «" + brand + "»: آية وسكينة كل ساعة، حديث صحيح، "
+        "وسورة كاملة كل ليلة.\n"
+        "🧭 شغّل التنبيهات (🔔) عشان ما يفوتكش الجديد."
+    )
+
+
+def _desc_of(title_hook: str, body: str, ref: str, src_lines: list[str],
+             brand: str, extra_tags: str = "") -> str:
+    """وصف مُهيّأ للبحث + الثقة + التفاعل (أول سطرين أهم حاجة)."""
+    return (
+        f"{title_hook}\n\n"
+        f"{body}\n\n"
+        f"﴿ {ref} ﴾\n"
+        + "".join(l + "\n" for l in src_lines) +
+        "🎬 مشاهد بترخيص حر (Pexels/Pixabay) · 🚫 بلا موسيقى — للتلاوة والتدبّر.\n\n"
+        + _cta_lines(brand) + "\n\n"
+        + _hashtags(extra_tags)
+    )
+
+
+def _tags_of(item: dict, res: dict, kind: str, reciter: str) -> list[str]:
+    name = _clean_surah(res.get("surah") or item.get("theme") or "")
+    if kind == "hadith":
+        head = ["حديث صحيح", "أحاديث نبوية", "السنة النبوية", "تذكير",
+                str(res.get("book") or "صحيح"), "إسلاميات", "نور"]
+    elif kind == "reel":
+        head = ["آيات قرآنية", f"تدبّر {item.get('theme', '')}".strip(),
+                "تلاوة خاشعة", "سلاسل قرآنية", "قرآن كريم"]
+    else:
+        head = ["آيات قرآنية", f"سورة {name}", "تلاوة خاشعة", "آية وسكينة",
+                "تدبّر القرآن"]
+    tags = head + ([str(reciter)] if reciter else []) + _CORE_TAGS_AR + _CORE_TAGS_EN
+    seen, out = set(), []
+    for t in tags:
+        t = t.strip()
+        if t and t not in seen:
+            seen.add(t)
+            out.append(t)
+    return out[:15]
+
+
+def _to_playlist(url: str, kind: str) -> None:
+    """🗂️ يضيف الفيديو لقائمة التشغيل المناسبة — فشل صامت مقصود.
+
+    قوائم التشغيل بتفتح مصدر مشاهدات إضافي (اقتراحات + «شاهد التالي») وترفع
+    وقت المشاهدة. لكن **ما توقفش النشر أبدًا** لو الصلاحية ناقصة.
+    """
+    vid = (url or "").split("watch?v=")[-1].split("&")[0]
+    if not vid:
+        return
+    # الشورتس مقفولة افتراضيًا: كل قائمة = 100 وحدة كوتة، والنشر الساعي أولى.
+    if kind != "long" and os.environ.get("NOOR_PLAYLIST_SHORTS") != "1":
+        return
+    try:
+        from xtrendaw.publish import youtube as _yt
+        got = _yt.add_to_playlist(vid, kind)
+        if got:
+            print(f"[noor] 🗂️ اتضاف لقائمة التشغيل: {got}", flush=True)
+    except Exception as e:                                    # noqa: BLE001
+        print(f"[noor] 🗂️ تخطّي قائمة التشغيل: {str(e)[:90]}", flush=True)
+
+
 def _short_one() -> int:
     """حلقة واحدة فعلية (من غير منطق الإعادة)."""
     from xtrendaw import noor_build, noor_pool
@@ -277,14 +385,27 @@ def _short_one() -> int:
             "scenes": item.get("scenes"), "hook": item["hook"],
             "outro": APPLY.get(item["theme"], "تابعنا… فيديو جديد كل ساعة"),
             "brand": f"نور — {item['theme']}", "meaning": None}, work)
-        title = f"{item['hook']} | {item['theme']} 🤍"
-        body = f"آيات عن {item['theme']} · {res['ayahs_count']} آيات"
-        src_line = f"🎙️ تلاوة: {res['reciter']}"
+        ref = f"سلاسل وتدبّر — {item['theme']}"
+        title = (f"{item['hook']} | {item['theme']} 🤍 آيات قرآنية "
+                 f"— تلاوة {res['reciter']}")
+        body = (f"آيات مختارة عن {item['theme']} — {res['ayahs_count']} آيات "
+                f"بتلاوة خاشعة وتدبّر مبسّط.")
+        _taf = " ".join(str(res.get("tafsir") or "").split())
+        _taf = (_taf[:110].rsplit(" ", 1)[0] + "…") if len(_taf) > 110 else _taf
+        src_lines = [f"🎙️ تلاوة: {res['reciter']} · {ref}",
+                     (f"🧩 من التفسير: {_taf}" if _taf else
+                      "🧩 تدبّر مبسّط لآيات السلسلة")]
+        extra = f"#{item['theme']} #تلاوة"
+        hook_line = item["hook"]
     elif item["kind"] == "hadith":
         res = noor_build.build_hadith_short(item, work)
-        title = f"{item['hook']} — حديث اليوم 📖"
+        ref = f"حديث رقم {res['number']} — {res['book']}"
+        title = f"{item['hook']} 📖 حديث صحيح — {res['book']}"
         body = res["text"]
-        src_line = f"📖 {res['book']} — حديث رقم {res['number']}"
+        src_lines = [f"📖 {res['book']} — حديث رقم {res['number']}",
+                     "✅ حديث من كتب السنة المعتمدة (نص أصلي بلا تصرّف)."]
+        extra = "#حديث #السنة_النبوية"
+        hook_line = item["hook"]
     else:
         from xtrendaw import noor_premium as np
         from xtrendaw.noor_pool import APPLY
@@ -295,24 +416,28 @@ def _short_one() -> int:
                          "hook": item.get("hook"),
                          "outro": APPLY.get(item.get("theme", ""),
                                             "تابعنا… آية وحديث كل ساعة")}, work)
-        short = (res["text"][:60] + "…") if len(res["text"]) > 60 else res["text"]
-        title = f"{item['hook']} — آية وسكينة ﴿{res['surah']}﴾"
+        ref = _ref_of(item, res)
+        # العنوان: هوك (يوقّف التمرير) + «سورة كذا آية كذا» (بحث حقيقي)
+        # + القارئ بالاسم (مصداقية وبحث). ده ترتيب مختلف عن الأول (كان
+        # «آية وسكينة» في النص) — الكلمات اللي الناس بتكتبها بقت قدام.
+        nm = _clean_surah(res["surah"])
+        num = (f"الآيات {item['ayah']}–{item['ayah_to']}"
+               if item.get("ayah_to") and item["ayah_to"] != item.get("ayah")
+               else f"آية {item.get('ayah', '')}")
+        title = (f"{item['hook']} | سورة {nm} {num} 🤍 تلاوة "
+                 f"{res['reciter']}")
         body = res["text"]
-        src_line = f"🎙️ تلاوة: {res['reciter']}"
+        src_lines = [f"🎙️ تلاوة: {res['reciter']} — {ref}",
+                     "🧩 التفسير: التفسير الميسّر (مجمّع الملك فهد) عبر "
+                     "alquran.cloud"]
+        extra = "#آية_وسكينة #تدبر"
+        hook_line = item["hook"]
 
-    tags = ["قرآن", "تلاوة", "إسلاميات", "أدعية", "ذكر", "shorts", "quran",
-            "islamic", "تفسير", "هدوء"][:15]
-    desc = (
-        f"{body}\n\n"
-        f"{src_line}\n"
-        f"المصادر: نص القرآن والتفسير من alquran.cloud · التلاوة من "
-        f"islamic.network (تُنسب للقارئ) · مشاهد برخص حرة (Pexels/Pixabay).\n"
-        f"لا موسيقى في هذا الفيديو.\n\n"
-        f"🤍 شاركها لو عجبتك — واكتب في تعليق: إيه اللي غيرت فيك الآية دي؟\n"
-        f"قناة «{BRAND}»: آية وسكينة كل ساعة، وحديث صحيح، وسورة كاملة كل يوم.\n\n"
-        f"#قرآن #تلاوة #إسلاميات #ذكر #shorts #حديث #تفسير"
-    )
+    tags = _tags_of(item, res, item["kind"], str(res.get("reciter") or ""))
+    desc = _desc_of(hook_line, body, ref, src_lines, BRAND, extra)
     url, err = _publish(res["video"], res.get("cover"), title[:95], desc, tags)
+    if url:
+        _to_playlist(url, item["kind"])
     status = "📺 اتنشر" if url else f"⏸ اتخزن ({err})"
     vault_url = ""
     if not url and not DRY:
@@ -352,22 +477,29 @@ def long_once() -> int:
     res = noor_build.build_long_surah(surah, work, reciter=rec, theme=theme,
                                       max_ayahs=maxa, extra=extra)
     dur_min = res["duration"] / 60
-    title = f"سورة {name} كاملة | تلاوة هادئة تريح القلب 🌙"
+    rec_name = REC_NAMES.get(rec, rec)
+    title = (f"سورة {name} كاملة | تلاوة هادئة تريح القلب قبل النوم "
+             f"— {rec_name} 🌙")
     if dur_min < 4:
         print(f"[noor] ⚠️ الفيديو قصير ({dur_min:.1f} دقيقة) — ممكن للشورتس الطويلة")
-    tags = ["قرآن", name, "تلاوة", "سورة", "إسلاميات", "quran", "relaxing",
-            "تلاوة هادئة", "sleep quran"]
+    tags = [f"سورة {name}", f"سورة {name} كاملة", "تلاوة هادئة قبل النوم",
+            rec_name, "قرآن كريم بصوت جميل", "راحة نفسية وسكينة", "تلاوة خاشعة",
+            "تفسير ميسّر", "quran full surah", f"surah {name}", "quran",
+            "quran recitation", "sleep quran", "islamic", "relaxing quran"][:15]
     desc = (
-        f"تلاوة سورة {name} كاملة بصوت القارئ "
-        f"{'محمود خليل الحصري' if rec == 'husary' else 'محمد صديق المنشاوي' if rec == 'minshawi' else 'أبو بكر الشاطري' if rec == 'shatri' else 'سعد الغامدي'}.\n"
+        f"سورة {name} كاملة بتلاوة هادئة بصوت {rec_name} — استمع لها قبل "
+        f"النوم أو في الصلاة، وخُد منها سكينة يومك.\n"
         f"مدة التلاوة: {dur_min:.1f} دقيقة · عدد الآيات: {res['ayahs']}\n\n"
-        f"نص القرآن الكريم والتفسير: alquran.cloud\n"
-        f"التلاوة: islamic.network (حُقوق التلاوة لأصحابها — تُنسب للقارئ)\n"
-        f"المشاهد: مكتبات مجانية برخص حرة (Pexels/Pixabay)\n"
-        f"بدون موسيقى — للتلاوة والتدبر.\n\n"
-        f"#قرآن #تلاوة #" + name
+        f"🎙️ التلاوة: {rec_name} (عبر islamic.network — الحقوق لأصحابها "
+        f"وتُنسب لهم)\n"
+        f"📖 نص القرآن والتفسير الميسّر: alquran.cloud\n"
+        f"🎬 مشاهد بترخيص حر (Pexels/Pixabay) · 🚫 بلا موسيقى — قرآن فقط.\n\n"
+        + _cta_lines(BRAND) + "\n\n"
+        + _hashtags(f"#{name} #سورة_كاملة #تلاوة_هادئة")
     )
     url, err = _publish(res["video"], res.get("cover"), title[:95], desc, tags)
+    if url:
+        _to_playlist(url, "long")
     vault_url = ""
     if not url and not DRY:
         vault_url = _vault(res["video"], res.get("cover"),
@@ -526,6 +658,7 @@ def _publish_spare() -> int:
     if at:
         st.setdefault("slots", []).append(at[:13])
         _save(st)
+    _to_playlist(url, "ayah")
     noor_vault.drop(got["entry"])
     st.setdefault("shorts", []).append({
         "id": "vault:" + str(got["entry"].get("name")), "kind": "vault",
