@@ -2032,7 +2032,7 @@
  "clipcache:e43ce375e514": {
   "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-09-23 02:21"
+  "at": "2026-09-24 08:17"
  },
  "https://cdn.pixabay.com/video/2020/08/13/47052-450995415_medium.mp4": {
   "source": "video:pixabay",
@@ -2050,9 +2050,9 @@
   "at": "2026-09-21 21:00"
  },
  "clipcache:b552eb75902d": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg2",
-  "at": "2026-09-24 07:26"
+  "at": "2026-09-24 08:17"
  },
  "https://cdn.pixabay.com/video/2022/11/13/138752-770553716_medium.mp4": {
   "source": "video:pixabay",
@@ -2060,9 +2060,9 @@
   "at": "2026-09-21 21:01"
  },
  "clipcache:66a456601e69": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg3",
-  "at": "2026-09-23 02:22"
+  "at": "2026-09-24 08:18"
  },
  "https://cdn.pixabay.com/video/2024/10/22/237553_medium.mp4": {
   "source": "video:pixabay",
@@ -3563,5 +3563,25 @@
   "source": "image:commons",
   "episode": "islamic calligraphy art",
   "at": "2026-09-24 07:26"
+ },
+ "https://cdn.pixabay.com/video/2022/12/03/141519-777930387_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-24 08:17"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Rethymno_Fortezza_Mosque_interior_04.JPG/1280px-Rethymno_Fortezza_Mosque_interior_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-09-24 08:17"
+ },
+ "https://videos.pexels.com/video-files/6805630/6805630-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-24 08:17"
+ },
+ "https://videos.pexels.com/video-files/5740929/5740929-sd_640_360_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-24 08:18"
  }
 }
