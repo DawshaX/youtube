@@ -192,8 +192,32 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
     elif err and "refresh_failed" in str(err):
         _alert_once("refresh", "🔴 مصنع نور: توكن يوتيوب انتهى صلاحيته "
                                "(invalid_grant) — النشر واقف والحلقات بتتخزن "
-                               "في الخزنة. محتاج ضغطة موافقة جديدة من اللينك.")
+                               "في الخزنة.\n\nضغطة واحدة (٣٠ ثانية): افتح "
+                               "اللينك ده ووافق، وانقل الرابط اللي هيظهر في "
+                               "شريط العنوان والصقه هنا في تليجرام:\n"
+                               + (_reauth_link() or "🔗 اطلب اللينك من المشرف"))
     return url, err
+
+
+def _reauth_link() -> str:
+    """يبني لينك موافقة جوجل على طول من client id — جاهز للضغط.
+
+    عشان أول ما التوكن يموت، صاحب القناة يلاقي **اللينك** في الإنذار نفسه،
+    مش بس كلام إن فيه مشكلة (بق حقيقي 2026-09-24: الإنذار كان بيقول «محتاج
+    ضغطة موافقة» وهو مش عارف منين).
+    """
+    import urllib.parse
+    cid = str(os.environ.get("YOUTUBE_CLIENT_ID") or "").strip()
+    if not cid:
+        return ""
+    scopes = ["https://www.googleapis.com/auth/youtube.upload",
+              "https://www.googleapis.com/auth/youtube.force-ssl",
+              "https://www.googleapis.com/auth/youtube.readonly",
+              "https://www.googleapis.com/auth/userinfo.profile"]
+    return "https://accounts.google.com/o/oauth2/v2/auth?" + urllib.parse.urlencode({
+        "client_id": cid, "redirect_uri": "http://localhost",
+        "response_type": "code", "scope": " ".join(scopes),
+        "access_type": "offline", "prompt": "consent"})
 
 
 def _alert(text: str) -> None:
@@ -725,7 +749,9 @@ def _publish_spare() -> int:
               flush=True)
         if "refresh_failed" in str(err):
             _alert_once("refresh", "🔴 مصنع نور: توكن يوتيوب انتهى صلاحيته — "
-                                   "النشر واقف. محتاج ضغطة موافقة جديدة.")
+                                   "النشر واقف.\n\nضغطة واحدة: افتح اللينك "
+                                   "وده ووافق، والصق رابط الصفحة هنا في "
+                                   "تليجرام:\n" + (_reauth_link() or ""))
         if "quota" in str(err).lower():
             from xtrendaw import state as _stt
             _stt.set_quota_ceiling(_stt.published_today_pt())
