@@ -446,6 +446,15 @@ def _short_one() -> int:
 
     tags = _tags_of(item, res, item["kind"], str(res.get("reciter") or ""))
     desc = _desc_of(hook_line, body, ref, src_lines, BRAND, extra)
+    # ⏱️ حارس مدة الريلز: قاعدة صاحب القناة «الريلز آخرها 3 دقايق».
+    _dur = float(res.get("duration", 0) or 0)
+    if item["kind"] == "reel" and _dur > 180:
+        print(f"[noor] ⚠️ ريلز {_dur:.0f}ث — أطول من حد الـ3 دقايق "
+              f"(الحد المعتمد) — الحلقة دي هتسجّل للمراجعة", flush=True)
+        if _dur > 200:
+            _alert_once(f"reel{int(_dur)}",
+                        f"⚠️ مصنع نور: ريلز {_dur/60:.1f} دقيقة — أطول من "
+                        f"الحد. راجع مخزون الريلز ({item['id']}).")
     url, err = _publish(res["video"], res.get("cover"), title[:95], desc, tags)
     if url:
         _to_playlist(url, item["kind"])
@@ -463,7 +472,9 @@ def _short_one() -> int:
         "video": str(res["video"]),
         "url": url or "", "vault": vault_url, "err": err,
         "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime()),
-        "duration": round(res.get("duration", 0), 1)})
+        "duration": round(res.get("duration", 0), 1),
+        "over_180s": bool(item["kind"] == "reel" and
+                          float(res.get("duration", 0) or 0) > 180)})
     _save(st)
     print(f"[noor] {status} — {url or vault_url}", flush=True)
     print(f"[noor] ⏱️ مدة {res.get('duration', 0):.1f}ث · ملف "
