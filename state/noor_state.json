@@ -1564,6 +1564,26 @@
    "err": "too_soon",
    "at": "2026-09-24 21:50",
    "duration": 23.9
+  },
+  {
+   "id": "vault:q1790225858.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=HCnNSfe0Hps",
+   "at": "2026-09-24 22:37"
+  },
+  {
+   "id": "hadith-muslim-4",
+   "kind": "hadith",
+   "theme": "قرآن",
+   "title": "قبل ما تنشر حديث… شوف ده ⚠️ — حديث اليوم 📖",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790289430/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790289627.mp4",
+   "err": "too_soon",
+   "at": "2026-09-24 22:40",
+   "duration": 22.2
   }
  ],
  "longs": [
@@ -1591,7 +1611,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-6011",
+ "last_try": "hadith-muslim-4",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",
