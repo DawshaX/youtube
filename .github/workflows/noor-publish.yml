@@ -172,6 +172,9 @@ jobs:
           BRANCH="${GITHUB_REF_NAME:-main}"
           git config user.name 'نور [Bot]'
           git config user.email 'noor@daousha.internal'
+          # نسحب الأول: أي دفع متزامن من برّه ما يضيّعش ذاكرة الحلقة (بق حقيقي
+          # 2026-09-24: دفع متزامن خلّى خطوة الخزن تخرج «مفيش تغيير» وهي فيها).
+          git pull --rebase --autostash origin "$BRANCH" >/dev/null 2>&1 || true
           for f in state/noor_state.json state/noor_pool.json \
                    state/published.json state/media_used.json \
                    state/yt_recent.json state/last_publish.json \

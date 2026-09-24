@@ -1,6 +1,13 @@
-name: yt-token-probe
+name: 🩺 فحص توكن الرفع — تشخيص سريع (مفيش أي سر بيطلع)
+
+# بيجاوب على سؤال واحد في ٣٠ ثانية: «توكن النشر شغال ولا مات؟»
+# بيجرّب تجديد توكن الوصول من جديد، ولو نجح بيطبع **اسم القناة** اللي التوكن
+# بيوصلها (من غير ما يطبع التوكن نفسه أبدًا). لو فشل بيطبع سبب جوجل بالحرف
+# (مثال: invalid_grant = التوكن انتهى/اتلغى → محتاج ضغطة موافقة جديدة).
 on:
   workflow_dispatch: {}
+  schedule:
+    - cron: '17 */6 * * *'      # كل 6 ساعات: تقرير حالة التوكن من غير أي تدخل
 permissions:
   contents: read
 jobs:
@@ -13,6 +20,8 @@ jobs:
           CID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           SEC: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           RTK: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          TG: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
         run: |
           python - <<'PYEOF'
           import os, json, urllib.request, urllib.parse
@@ -40,4 +49,30 @@ jobs:
               except Exception:
                   pass
               print("فشل:", getattr(e, "code", type(e).__name__), body)
+          # إنذار تليجرام فيه لينك الموافقة — أول ما التوكن يموت، صاحب القناة
+          # يلاقي الحل جاهز في إيده (مش مجرد «فيه مشكلة»).
+          if "invalid_grant" in body and os.environ.get("TG") and os.environ.get("CHAT"):
+              import urllib.parse
+              scopes = " ".join([
+                  "https://www.googleapis.com/auth/youtube.upload",
+                  "https://www.googleapis.com/auth/youtube.force-ssl",
+                  "https://www.googleapis.com/auth/youtube.readonly",
+                  "https://www.googleapis.com/auth/userinfo.profile"])
+              link = "https://accounts.google.com/o/oauth2/v2/auth?" + urllib.parse.urlencode({
+                  "client_id": cid, "redirect_uri": "http://localhost",
+                  "response_type": "code", "scope": scopes,
+                  "access_type": "offline", "prompt": "consent"})
+              msg = ("🔴 توكن النشر بتاع نور مرفوض (invalid_grant) — النشر واقف.\n\n"
+                     "ضغطة واحدة (٣٠ ثانية): افتح اللينك ده ووافق، وانقل رابط الصفحة "
+                     "اللي هيظهر (فيه code=...) والصقه هنا في تليجرام:\n" + link +
+                     "\n\nأول ما توصل، المصنع بياخدها لوحده ويجدّد ويرجع ينشر فورًا.")
+              try:
+                  import urllib.request as _ur
+                  req = _ur.Request(f"https://api.telegram.org/bot{os.environ['TG']}/sendMessage",
+                                    data=urllib.parse.urlencode(
+                                        {"chat_id": os.environ["CHAT"], "text": msg}).encode())
+                  _ur.urlopen(req, timeout=20)
+                  print("📨 الإنذار اتغسل على تليجرام")
+              except Exception as _e:
+                  print("⚠ مش قادر أبعت الإنذار:", type(_e).__name__)
           PYEOF
