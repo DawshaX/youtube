@@ -2187,7 +2187,7 @@
  "clipcache:d8d6cd442adf": {
   "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-23 12:11"
+  "at": "2026-09-24 14:12"
  },
  "https://cdn.pixabay.com/video/2020/04/03/34855-403777679_medium.mp4": {
   "source": "video:pixabay",
@@ -2197,7 +2197,7 @@
  "clipcache:7c9f3a1cd340": {
   "source": "video:pixabay",
   "episode": "bg1",
-  "at": "2026-09-23 12:12"
+  "at": "2026-09-24 14:13"
  },
  "https://cdn.pixabay.com/video/2016/12/18/6815-196282555_medium.mp4": {
   "source": "video:pixabay",
@@ -2217,7 +2217,7 @@
  "clipcache:4d419d579674": {
   "source": "video:pexels",
   "episode": "bg3",
-  "at": "2026-09-23 12:12"
+  "at": "2026-09-24 14:14"
  },
  "https://cdn.pixabay.com/video/2020/08/14/47170-450995627_medium.mp4": {
   "source": "video:pixabay",
@@ -3693,5 +3693,25 @@
   "source": "image:commons",
   "episode": "trees sunlight path",
   "at": "2026-09-24 13:23"
+ },
+ "https://videos.pexels.com/video-files/5660498/5660498-hd_720_1280_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-09-24 14:12"
+ },
+ "https://cdn.pixabay.com/video/2024/02/01/198866-908874705_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-09-24 14:13"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/d/d4/Grand_Canyon_National_Park_B-roll_Video_Cape_Royal_Sunset_-_Time-lapse_%288661965788%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "sunset time lapse sky",
+  "at": "2026-09-24 14:14"
+ },
+ "https://videos.pexels.com/video-files/5983914/5983914-hd_720_1280_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-24 14:14"
  }
 }
