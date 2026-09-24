@@ -307,18 +307,29 @@ def _cta_lines(brand: str) -> str:
     )
 
 
+# الحد الحقيقي لحقل الوصف في يوتيوب = 5000 حرف. بنسيب هامش أمان 100.
+_DESC_MAX = 4900
+
+
 def _desc_of(title_hook: str, body: str, ref: str, src_lines: list[str],
              brand: str, extra_tags: str = "") -> str:
-    """وصف مُهيّأ للبحث + الثقة + التفاعل (أول سطرين أهم حاجة)."""
-    return (
-        f"{title_hook}\n\n"
-        f"{body}\n\n"
-        f"﴿ {ref} ﴾\n"
-        + "".join(l + "\n" for l in src_lines) +
-        "🎬 مشاهد بترخيص حر (Pexels/Pixabay) · 🚫 بلا موسيقى — للتلاوة والتدبّر.\n\n"
-        + _cta_lines(brand) + "\n\n"
-        + _hashtags(extra_tags)
-    )
+    """وصف مُهيّأ للبحث + الثقة + التفاعل (أول سطرين أهم حاجة).
+
+    ⚠️ درس حقيقي (2026-09-25): كان القص بيحصل في الرفع (`caption[:4900]`)
+    يعني النص الطويل كان بياكل **المرجع والهاشتاجات والدعوة التفاعل** —
+    وهي أهم حاجة في الوصف! دلوقتي بنقصّر **النص القرآني** بس، وكل حاجة
+    تانية بتفضل كاملة مضمونة.
+    """
+    head = f"{title_hook}\n\n"
+    tail = (f"\n﴿ {ref} ﴾\n" + "".join(l + "\n" for l in src_lines) +
+            "🎬 مشاهد بترخيص حر (Pexels/Pixabay) · 🚫 بلا موسيقى — للتلاوة والتدبّر.\n\n"
+            + _cta_lines(brand) + "\n\n" + _hashtags(extra_tags))
+    room = _DESC_MAX - len(head) - len(tail)
+    if room <= 0:
+        body = ""
+    elif len(body) > room:
+        body = body[:room].rsplit(" ", 1)[0].rstrip("،,.") + " …"
+    return head + body + tail
 
 
 def _tags_of(item: dict, res: dict, kind: str, reciter: str) -> list[str]:
