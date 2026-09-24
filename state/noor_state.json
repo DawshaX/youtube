@@ -1364,6 +1364,26 @@
    "err": "too_soon",
    "at": "2026-09-24 12:34",
    "duration": 135.4
+  },
+  {
+   "id": "vault:q1790191992.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=5epL57_kNmc",
+   "at": "2026-09-24 13:20"
+  },
+  {
+   "id": "ayah-31-14",
+   "kind": "ayah",
+   "theme": "أخلاق",
+   "title": "أول وصية… لأمك 💐 — آية وسكينة ﴿سُورَةُ لُقۡمَانَ﴾",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790256062/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790256359.mp4",
+   "err": "too_soon",
+   "at": "2026-09-24 13:26",
+   "duration": 37.2
   }
  ],
  "longs": [
@@ -1391,7 +1411,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-49-13",
+ "last_try": "ayah-31-14",
  "slots": [
   "2026-09-21T23",
   "2026-09-22T03",

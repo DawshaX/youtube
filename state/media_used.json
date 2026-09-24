@@ -2150,9 +2150,9 @@
   "at": "2026-09-21 23:27"
  },
  "clipcache:5bf87afd5099": {
-  "source": "video:pexels",
+  "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-09-23 10:29"
+  "at": "2026-09-24 13:21"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_2.jpg/1280px-Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -2167,7 +2167,7 @@
  "clipcache:1ea380d63bcb": {
   "source": "video:pixabay",
   "episode": "bg2",
-  "at": "2026-09-23 09:39"
+  "at": "2026-09-24 13:22"
  },
  "https://cdn.pixabay.com/video/2025/02/24/260661_medium.mp4": {
   "source": "video:pixabay",
@@ -3673,5 +3673,25 @@
   "source": "image:commons",
   "episode": "trees sunlight path",
   "at": "2026-09-24 12:29"
+ },
+ "https://cdn.pixabay.com/video/2015/08/08/78-135733055_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-24 13:21"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Bukhara_Kalyan_Mosque_inner_court_6.jpg/1280px-Bukhara_Kalyan_Mosque_inner_court_6.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque courtyard arches",
+  "at": "2026-09-24 13:22"
+ },
+ "https://cdn.pixabay.com/video/2024/09/24/233024_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-24 13:22"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Avenue_of_trees_Magdalen_Laver_Essex_England.jpg/1280px-Avenue_of_trees_Magdalen_Laver_Essex_England.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "trees sunlight path",
+  "at": "2026-09-24 13:23"
  }
 }
