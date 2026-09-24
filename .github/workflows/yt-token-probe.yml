@@ -1,0 +1,43 @@
+name: yt-token-probe
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: افحص توكن الرفع (من غير طباعة أي سر)
+        env:
+          CID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          SEC: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          RTK: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: |
+          python - <<'PYEOF'
+          import os, json, urllib.request, urllib.parse
+          cid, sec, rtk = (os.environ.get("CID") or ""), (os.environ.get("SEC") or ""), (os.environ.get("RTK") or "")
+          print("موجود؟ client_id:", bool(cid), "| secret:", bool(sec), "| refresh:", bool(rtk))
+          data = urllib.parse.urlencode({"client_id": cid, "client_secret": sec,
+                                         "refresh_token": rtk, "grant_type": "refresh_token"}).encode()
+          try:
+              r = urllib.request.urlopen("https://oauth2.googleapis.com/token", data=data, timeout=30)
+              j = json.loads(r.read())
+              ok = bool(j.get("access_token"))
+              print("النتيجة: HTTP", r.status, "| توكن وصول؟", ok, "| صلاحية", j.get("expires_in"))
+              if ok:
+                  # نتأكد إنه نفس القناة فعلاً (من غير طباعة التوكن)
+                  req = urllib.request.Request(
+                      "https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true",
+                      headers={"Authorization": "Bearer " + j["access_token"]})
+                  c = json.loads(urllib.request.urlopen(req, timeout=30).read())
+                  items = c.get("items") or []
+                  print("القناة:", items[0]["snippet"]["title"] if items else "مفيش قناة")
+          except Exception as e:
+              body = ""
+              try:
+                  body = e.read().decode()[:300]
+              except Exception:
+                  pass
+              print("فشل:", getattr(e, "code", type(e).__name__), body)
+          PYEOF
