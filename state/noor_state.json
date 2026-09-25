@@ -55,6 +55,27 @@
    "at": "2026-09-25 06:12",
    "duration": 28.8,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790253276.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=p957uRyG2Yc",
+   "at": "2026-09-25 06:58"
+  },
+  {
+   "id": "ayah-39-53",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "title": "لو غلطت ألف مرة… اسمع ده 💛 | سورة الزمر آية 53 🤍 تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790319542/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790319784.mp4",
+   "err": "too_soon",
+   "at": "2026-09-25 07:03",
+   "duration": 35.9,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -71,5 +92,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-13-28"
+ "last_try": "ayah-39-53"
 }
