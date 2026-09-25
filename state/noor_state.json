@@ -391,6 +391,27 @@
    "at": "2026-09-25 19:37",
    "duration": 62.4,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790312251.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=cqwgdtbeDkc",
+   "at": "2026-09-25 20:23"
+  },
+  {
+   "id": "ayah-56-10",
+   "kind": "reel",
+   "theme": "جنة",
+   "title": "أقرب الناس لله في الجنّة 👑 | جنة 🤍 آيات قرآنية — تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790367843/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790368200.mp4",
+   "err": "too_soon",
+   "at": "2026-09-25 20:30",
+   "duration": 117.8,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -407,5 +428,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-47-15"
+ "last_try": "ayah-56-10"
 }
