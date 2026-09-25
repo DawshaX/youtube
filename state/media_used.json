@@ -3918,5 +3918,40 @@
   "source": "image:commons",
   "episode": "rain on window",
   "at": "2026-09-24 23:24"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/A_green_field_in_the_rain_-_geograph.org.uk_-_6982624.jpg/1280px-A_green_field_in_the_rain_-_geograph.org.uk_-_6982624.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "green fields rain",
+  "at": "2026-09-25 00:18"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Heavens_Above_Her.jpg/1280px-Heavens_Above_Her.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "night sky milky way",
+  "at": "2026-09-25 00:19"
+ },
+ "https://videos.pexels.com/video-files/10603138/10603138-sd_640_360_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "longbg36",
+  "at": "2026-09-25 00:19"
+ },
+ "clipcache:056fd2b534bd": {
+  "source": "video:pexels",
+  "episode": "longbg36",
+  "at": "2026-09-25 00:19"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Cappadociasunrise.jpg/1280px-Cappadociasunrise.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "sunrise over mountains",
+  "at": "2026-09-25 00:20"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/4/4b/Fawkham_Green%2C_after_rain_%28geograph_3726985%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "green fields rain",
+  "at": "2026-09-25 00:20"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/32/In_the_photo_there_is_one_Perseid%2C_Milky_Way_and_Andromega_galaxy_and_light_pollution_on_the_horizon_-_Luhasoo_bog_in_Estonia.jpg/1280px-In_the_photo_there_is_one_Perseid%2C_Milky_Way_and_Andromega_galaxy_and_light_pollution_on_the_horizon_-_Luhasoo_bog_in_Estonia.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "night sky milky way",
+  "at": "2026-09-25 00:21"
  }
 }
