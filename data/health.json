@@ -1,8 +1,8 @@
 {
- "checkedAt": "2026-09-25T01:28:15+00:00",
+ "checkedAt": "2026-09-25T07:45:11+00:00",
  "runner": "actions-or-local",
  "all_ok": false,
- "fails": 2,
+ "fails": 1,
  "warns": 4,
  "checks": [
   {
@@ -67,8 +67,8 @@
   },
   {
    "name": "NASA_API_KEY (فضاء)",
-   "status": "fail",
-   "detail": "HTTP 500 — {\"code\":500,\"msg\":\"Internal Service Error\",\"service_version\":\"v1\"}\n"
+   "status": "ok",
+   "detail": "شغال"
   },
   {
    "name": "OPENVERSE (صور/ميديا)",
