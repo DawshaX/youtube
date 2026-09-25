@@ -349,6 +349,27 @@
    "at": "2026-09-25 17:58",
    "duration": 61.7,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790301212.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=8iS_m1JjK6g",
+   "at": "2026-09-25 18:45"
+  },
+  {
+   "id": "ayah-39-35",
+   "kind": "ayah",
+   "theme": "توبة",
+   "title": "بداية جديدة من هنا 🌅 | سورة الزمر آية 35 🤍 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790361919/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790362063.mp4",
+   "err": "too_soon",
+   "at": "2026-09-25 18:47",
+   "duration": 33.4,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -365,5 +386,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-25-70"
+ "last_try": "ayah-39-35"
 }
