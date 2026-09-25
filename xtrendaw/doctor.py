@@ -151,30 +151,66 @@ def check_custom_llm() -> dict:
 
 
 def check_youtube_oauth() -> dict:
-    cid = settings.get("YOUTUBE_CLIENT_ID")
-    sec = settings.get("YOUTUBE_CLIENT_SECRET")
-    rtk = settings.get("YOUTUBE_REFRESH_TOKEN")
-    if not (cid and sec and rtk):
-        missing = [n for n, v in
-                   (("CLIENT_ID", cid), ("CLIENT_SECRET", sec),
-                    ("REFRESH_TOKEN", rtk)) if not v]
-        return {"name": "YouTube OAuth (النشر)", "status": "warn",
-                "detail": "غير مكتمل — ناقص: " + ", ".join(missing)}
-    code, body = _http_post(
-        "https://oauth2.googleapis.com/token",
-        data={"client_id": cid, "client_secret": sec,
-              "refresh_token": rtk, "grant_type": "refresh_token"})
-    try:
-        j = json.loads(body)
-    except Exception:
-        j = {}
-    if code == 200 and j.get("access_token"):
-        expires = j.get("expires_in", "?")
-        return {"name": "YouTube OAuth (النشر)", "status": "ok",
-                "detail": f"شغال — توكن اتجدد (صلاحية الجلسة {expires}ث)"}
-    err = j.get("error_description") or j.get("error") or body[:160]
+    """فحص **كل** مشاريع الرفع، مش المشروع الأساسي بس.
+
+    ⚠️ بق حقيقي (2026-09-25): الفحص القديم كان بيعتبر المشروع الأساسي مقياسًا
+    للحالة. المشروع الأساسي كان توكنه ميّت، والمشروع الثاني (قناة XTreNDAW)
+    **حيّ وشغال والنشر ماشي بيه** — فالتقرير كان بيقول «النشر واقف» وهو شغال.
+    الصح: شغال = **مشروع واحد على الأقل** بيجدد وبيوصل قناة.
+    """
+    accounts = list(settings.YOUTUBE_ACCOUNTS)
+    if not accounts:
+        cid = settings.get("YOUTUBE_CLIENT_ID")
+        sec = settings.get("YOUTUBE_CLIENT_SECRET")
+        rtk = settings.get("YOUTUBE_REFRESH_TOKEN")
+        if not (cid and sec and rtk):
+            missing = [n for n, v in (("CLIENT_ID", cid), ("CLIENT_SECRET", sec),
+                                      ("REFRESH_TOKEN", rtk)) if not v]
+            return {"name": "YouTube OAuth (النشر)", "status": "warn",
+                    "detail": "غير مكتمل — ناقص: " + ", ".join(missing)}
+        accounts = [{"client_id": cid, "client_secret": sec,
+                     "refresh_token": rtk, "label": "المشروع الأساسي"}]
+
+    alive, dead = [], []
+    for acc in accounts:
+        label = str(acc.get("label") or "مشروع")
+        code, body = _http_post(
+            "https://oauth2.googleapis.com/token",
+            data={"client_id": acc.get("client_id"),
+                  "client_secret": acc.get("client_secret"),
+                  "refresh_token": acc.get("refresh_token"),
+                  "grant_type": "refresh_token"})
+        try:
+            j = json.loads(body)
+        except Exception:
+            j = {}
+        at = j.get("access_token")
+        if code == 200 and at:
+            # نعرف القناة اللي التوكن ده بيوصلها (من غير أي سر في اللوج)
+            ch = ""
+            c2, b2 = _http_get(
+                "https://www.googleapis.com/youtube/v3/channels"
+                "?part=snippet&mine=true",
+                headers={"Authorization": f"Bearer {at}"})
+            if c2 == 200:
+                try:
+                    it = (json.loads(b2).get("items") or [{}])[0]
+                    ch = it.get("snippet", {}).get("title", "")
+                except Exception:
+                    ch = ""
+            alive.append(f"{label} → {ch or 'قناة غير معروفة'}")
+        else:
+            err = (j.get("error_description") or j.get("error")
+                   or body[:120] or f"HTTP {code}")
+            dead.append(f"{label}: {err}")
+
+    if alive:
+        detail = "شغال — " + " · ".join(alive)
+        if dead:
+            detail += f" | ⚠ احتياطي ميّت ({len(dead)}): " + " · ".join(dead)
+        return {"name": "YouTube OAuth (النشر)", "status": "ok", "detail": detail}
     return {"name": "YouTube OAuth (النشر)", "status": "fail",
-            "detail": f"فشل تجديد التوكن: {err}"}
+            "detail": "كل توكنات الرفع مرفوضة: " + " · ".join(dead)}
 
 
 def _simple_key_check(env_name: str, label: str, url: str,

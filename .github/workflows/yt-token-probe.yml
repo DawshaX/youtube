@@ -56,7 +56,7 @@ jobs:
                   return (it[0]["snippet"]["title"] + " | " + it[0]["id"]) if it else "⚠ مفيش قناة على التوكن ده"
               except Exception as e:
                   return "⚠ فحص القناة فشل: " + type(e).__name__
-          dead = []
+          dead, alive = [], []
           for i in (1, 2, 3, 4):
               suf = "" if i == 1 else f"_{i}"
               cid, sec, rtk = (os.environ.get("C%d" % i) or os.environ.get("YOUTUBE_CLIENT_ID" + suf) or "",
@@ -67,12 +67,18 @@ jobs:
                   continue
               at, err = tok(cid, sec, rtk)
               if at:
-                  print(f"مشروع {i}: ✅ شغال — القناة: {channel(at)}")
+                  _ch = channel(at)
+                  alive.append(f"مشروع {i} → {_ch}")
+                  print(f"مشروع {i}: ✅ شغال — القناة: {_ch}")
               else:
                   print(f"مشروع {i}: ❌ فشل — {err}")
                   if "invalid_grant" in err:
                       dead.append(cid)
-          if dead and os.environ.get("TG") and os.environ.get("CHAT"):
+          # ⚠️ الإنذار **بس** لما كل المشاريع تموت = الرفع واقف فعلًا.
+          # (بق حقيقي 2026-09-25: كان بيزنّ لما مشروع احتياطي يموت
+          # والرفع شغال بمشروع تاني — إنذار كاذب أزعج صاحب القناة)
+          print("ملخص: شغال =", len(alive), "| ميّت =", len(dead))
+          if dead and not alive and os.environ.get("TG") and os.environ.get("CHAT"):
               scopes = " ".join(["https://www.googleapis.com/auth/youtube.upload",
                                  "https://www.googleapis.com/auth/youtube.force-ssl",
                                  "https://www.googleapis.com/auth/youtube.readonly",
