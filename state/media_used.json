@@ -602,7 +602,7 @@
  "clipcache:5bf87afd5099": {
   "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-09-25 21:16"
+  "at": "2026-09-25 22:06"
  },
  "https://videos.pexels.com/video-files/34815634/14760797_640_360_30fps.mp4": {
   "source": "video:pexels",
@@ -622,7 +622,7 @@
  "clipcache:1ea380d63bcb": {
   "source": "video:pixabay",
   "episode": "bg2",
-  "at": "2026-09-25 21:17"
+  "at": "2026-09-25 22:08"
  },
  "https://cdn.pixabay.com/video/2025/02/24/260661_medium.mp4": {
   "source": "video:pixabay",
@@ -630,8 +630,28 @@
   "at": "2026-09-25 21:18"
  },
  "clipcache:52ade88d99c7": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg3",
-  "at": "2026-09-25 21:18"
+  "at": "2026-09-25 22:08"
+ },
+ "https://cdn.pixabay.com/video/2022/06/25/122078-724732492_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-25 22:06"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_1.jpg/1280px-Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque courtyard arches",
+  "at": "2026-09-25 22:07"
+ },
+ "https://cdn.pixabay.com/video/2020/03/14/33687-398256859_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-25 22:08"
+ },
+ "https://videos.pexels.com/video-files/38731248/16455038_720_1280_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-25 22:08"
  }
 }
