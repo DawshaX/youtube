@@ -265,6 +265,27 @@
    "at": "2026-09-25 14:36",
    "duration": 28.7,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790283588.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=JRYE2dwM2II",
+   "at": "2026-09-25 15:23"
+  },
+  {
+   "id": "ayah-29-45",
+   "kind": "reel",
+   "theme": "ذكر",
+   "title": "الصلاة مش عادة… 🕌 | ذكر 🤍 آيات قرآنية — تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790349823/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790350109.mp4",
+   "err": "too_soon",
+   "at": "2026-09-25 15:28",
+   "duration": 118.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -281,5 +302,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-33-41"
+ "last_try": "ayah-29-45"
 }

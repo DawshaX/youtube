@@ -367,7 +367,7 @@
  "clipcache:6dec21db24f8": {
   "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-09-25 14:34"
+  "at": "2026-09-25 15:23"
  },
  "https://cdn.pixabay.com/video/2017/10/21/12540-239934679_medium.mp4": {
   "source": "video:pixabay",
@@ -375,9 +375,9 @@
   "at": "2026-09-25 14:34"
  },
  "clipcache:29f4119affaf": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-09-25 14:34"
+  "at": "2026-09-25 15:24"
  },
  "https://cdn.pixabay.com/video/2022/11/26/140571-775389239_medium.mp4": {
   "source": "video:pixabay",
@@ -385,9 +385,9 @@
   "at": "2026-09-25 14:35"
  },
  "clipcache:1dbee78fdae9": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg2",
-  "at": "2026-09-25 14:35"
+  "at": "2026-09-25 15:25"
  },
  "https://cdn.pixabay.com/video/2020/05/07/38456-418027152_medium.mp4": {
   "source": "video:pixabay",
@@ -398,5 +398,25 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-09-25 14:35"
+ },
+ "https://cdn.pixabay.com/video/2023/07/05/170258-843059148_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-25 15:23"
+ },
+ "https://videos.pexels.com/video-files/27741149/12215951_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-25 15:24"
+ },
+ "https://videos.pexels.com/video-files/7043523/7043523-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-25 15:25"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Nova_vas%2C_Pol%C5%BEevo_04-edited.jpg/1280px-Nova_vas%2C_Pol%C5%BEevo_04-edited.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "sunset silhouette meditation",
+  "at": "2026-09-25 15:25"
  }
 }
