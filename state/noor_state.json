@@ -6,8 +6,27 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=dZBtKqBZWrk",
    "at": "2026-09-25 03:19"
+  },
+  {
+   "id": "vault:q1790244059.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=2odm4oCOH38",
+   "at": "2026-09-25 04:20"
   }
  ],
- "longs": [],
+ "longs": [
+  {
+   "surah": "الرحمن",
+   "ayahs": 78,
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_55_1790310032/noor_long.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790312251.mp4",
+   "at": "2026-09-25 04:57",
+   "duration": 1060.8,
+   "err": "too_soon"
+  }
+ ],
  "bad_reciters": []
 }
