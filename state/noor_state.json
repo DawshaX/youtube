@@ -307,6 +307,27 @@
    "at": "2026-09-25 16:18",
    "duration": 36.9,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790289627.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=h_u0n4gsM4c",
+   "at": "2026-09-25 17:04"
+  },
+  {
+   "id": "ayah-17-78",
+   "kind": "ayah",
+   "theme": "قرآن",
+   "title": "قوم الليل… المقام المحمود 🌌 | سورة الإسراء الآيات 78–79 🤍 تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790355874/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790356093.mp4",
+   "err": "too_soon",
+   "at": "2026-09-25 17:08",
+   "duration": 41.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -323,5 +344,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-73-1"
+ "last_try": "ayah-17-78"
 }
