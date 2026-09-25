@@ -285,9 +285,9 @@
   "at": "2026-09-25 12:03"
  },
  "clipcache:57aa0341311d": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-25 12:03"
+  "at": "2026-09-25 12:54"
  },
  "https://cdn.pixabay.com/video/2015/10/19/1099-143052470_medium.mp4": {
   "source": "video:pixabay",
@@ -317,6 +317,26 @@
  "clipcache:2ce92676c6db": {
   "source": "video:pexels",
   "episode": "bg3",
-  "at": "2026-09-25 12:04"
+  "at": "2026-09-25 12:55"
+ },
+ "https://videos.pexels.com/video-files/39449411/16800957_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-09-25 12:54"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/035_Vertical_panorama_of_the_Milky_Way_during_Perseids_seen_from_Oeschinensee_Photo_by_Giles_Laurent.jpg/1280px-035_Vertical_panorama_of_the_Milky_Way_during_Perseids_seen_from_Oeschinensee_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "night sky milky way",
+  "at": "2026-09-25 12:54"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/A_bright_orange_sunburst_illuminates_Earth%27s_atmosphere_during_an_orbital_sunrise_%28iss074e0779393%29.jpg/1280px-A_bright_orange_sunburst_illuminates_Earth%27s_atmosphere_during_an_orbital_sunrise_%28iss074e0779393%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "earth from space sunrise",
+  "at": "2026-09-25 12:54"
+ },
+ "https://videos.pexels.com/video-files/10882975/10882975-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-25 12:55"
  }
 }
