@@ -107,7 +107,7 @@
  "clipcache:fca9f128e279": {
   "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-09-25 06:59"
+  "at": "2026-09-25 07:49"
  },
  "https://cdn.pixabay.com/video/2016/07/29/4071-176749154_medium.mp4": {
   "source": "video:pixabay",
@@ -117,7 +117,7 @@
  "clipcache:970e3445a707": {
   "source": "video:pixabay",
   "episode": "bg1",
-  "at": "2026-09-25 06:59"
+  "at": "2026-09-25 07:49"
  },
  "https://cdn.pixabay.com/video/2026/01/05/326081_medium.mp4": {
   "source": "video:pixabay",
@@ -158,5 +158,25 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-25 07:01"
+ },
+ "https://cdn.pixabay.com/video/2023/09/06/179362-861795872_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-25 07:49"
+ },
+ "https://cdn.pixabay.com/video/2026/08/14/370575_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-09-25 07:49"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c0/%22River_by_the_Roadside%2C_Where_Calm_Waters_Meet_Endless_Skies%22_%F0%9F%8C%8A%F0%9F%8C%BF%E2%98%81%EF%B8%8F.jpg/1280px-%22River_by_the_Roadside%2C_Where_Calm_Waters_Meet_Endless_Skies%22_%F0%9F%8C%8A%F0%9F%8C%BF%E2%98%81%EF%B8%8F.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "calm river nature",
+  "at": "2026-09-25 07:50"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/DFC_4604_Twilight_stroll_through_the_pastel_village_of_Nong_Pla_Lai_-_cozy_cottages_warm_lights_and_a_peaceful_bridge_connecting_stories_by_the_cliff.jpg/1280px-DFC_4604_Twilight_stroll_through_the_pastel_village_of_Nong_Pla_Lai_-_cozy_cottages_warm_lights_and_a_peaceful_bridge_connecting_stories_by_the_cliff.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "warm light through trees",
+  "at": "2026-09-25 07:51"
  }
 }
