@@ -198,5 +198,45 @@
   "source": "image:commons",
   "episode": "warm light through trees",
   "at": "2026-09-25 08:43"
+ },
+ "https://cdn.pixabay.com/video/2023/11/23/190466-888131689_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-25 09:32"
+ },
+ "clipcache:9200fc61c53b": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-25 09:32"
+ },
+ "https://cdn.pixabay.com/video/2021/10/10/91517-630895566_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-09-25 09:32"
+ },
+ "clipcache:2d20de01f1fd": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-09-25 09:32"
+ },
+ "https://cdn.pixabay.com/video/2023/07/04/169951-842348732_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-25 09:33"
+ },
+ "clipcache:5cccd217ea16": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-25 09:33"
+ },
+ "https://videos.pexels.com/video-files/32194802/13731378_682_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-25 09:33"
+ },
+ "clipcache:403821340f95": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-25 09:33"
  }
 }

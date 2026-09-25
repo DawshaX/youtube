@@ -118,6 +118,27 @@
    "at": "2026-09-25 08:46",
    "duration": 46.9,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790262460.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=sfTR06ta8Jk",
+   "at": "2026-09-25 09:32"
+  },
+  {
+   "id": "ayah-2-153",
+   "kind": "ayah",
+   "theme": "صبر",
+   "title": "صبرك مش ضايع 🌱 | سورة البقرة آية 153 🤍 تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790328730/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790328909.mp4",
+   "err": "too_soon",
+   "at": "2026-09-25 09:35",
+   "duration": 26.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -134,5 +155,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-2-186"
+ "last_try": "ayah-2-153"
 }
