@@ -278,5 +278,45 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-25 11:15"
+ },
+ "https://cdn.pixabay.com/video/2024/06/07/215697_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-25 12:03"
+ },
+ "clipcache:57aa0341311d": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-25 12:03"
+ },
+ "https://cdn.pixabay.com/video/2015/10/19/1099-143052470_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-09-25 12:04"
+ },
+ "clipcache:cfd27fbac955": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-09-25 12:04"
+ },
+ "https://cdn.pixabay.com/video/2025/10/09/308799_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-25 12:04"
+ },
+ "clipcache:7de0383039f1": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-25 12:04"
+ },
+ "https://videos.pexels.com/video-files/15624853/15624853-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-25 12:04"
+ },
+ "clipcache:2ce92676c6db": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-25 12:04"
  }
 }
