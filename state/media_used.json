@@ -58,5 +58,45 @@
   "source": "image:commons",
   "episode": "sea sunset calm",
   "at": "2026-09-25 04:24"
+ },
+ "https://cdn.pixabay.com/video/2020/08/13/47052-450995415_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-09-25 05:21"
+ },
+ "clipcache:58cf3735c656": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-09-25 05:21"
+ },
+ "https://cdn.pixabay.com/video/2016/07/08/3742-174173818_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-09-25 05:21"
+ },
+ "clipcache:6293e8549d2c": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-09-25 05:21"
+ },
+ "https://cdn.pixabay.com/video/2021/08/18/85526-589164621_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-09-25 05:22"
+ },
+ "clipcache:9ad3e7ea2a37": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-09-25 05:22"
+ },
+ "https://cdn.pixabay.com/video/2020/01/12/31180-384523319_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-09-25 05:22"
+ },
+ "clipcache:8714af0b9515": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-09-25 05:22"
  }
 }
