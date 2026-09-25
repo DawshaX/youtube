@@ -223,6 +223,27 @@
    "at": "2026-09-25 12:58",
    "duration": 168.4,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790277598.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=fErfg6sW7yk",
+   "at": "2026-09-25 13:44"
+  },
+  {
+   "id": "ayah-55-13",
+   "kind": "ayah",
+   "theme": "توحيد",
+   "title": "أي نعمة أنكرتها؟ 🌊 | سورة الرحمن آية 13 🤍 تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790343907/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790344031.mp4",
+   "err": "too_soon",
+   "at": "2026-09-25 13:47",
+   "duration": 18.9,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -239,5 +260,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-67-3"
+ "last_try": "ayah-55-13"
 }
