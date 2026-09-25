@@ -34,6 +34,27 @@
    "at": "2026-09-25 05:24",
    "duration": 23.6,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790250011.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=-h96c4I8ptg",
+   "at": "2026-09-25 06:10"
+  },
+  {
+   "id": "ayah-13-28",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "title": "قلبك بيدق ليه؟ ❤️ | سورة الرعد آية 28 🤍 تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790316621/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790316774.mp4",
+   "err": "too_soon",
+   "at": "2026-09-25 06:12",
+   "duration": 28.8,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -50,5 +71,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-38"
+ "last_try": "ayah-13-28"
 }
