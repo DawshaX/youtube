@@ -244,6 +244,27 @@
    "at": "2026-09-25 13:47",
    "duration": 18.9,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790280559.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=1EuPvh8L4fM",
+   "at": "2026-09-25 14:33"
+  },
+  {
+   "id": "ayah-33-41",
+   "kind": "ayah",
+   "theme": "ذكر",
+   "title": "دقيقة ذكر تسوى الدنيا ✨ | سورة الأحزاب الآيات 41–42 🤍 تلاوة عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790346830/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790347009.mp4",
+   "err": "too_soon",
+   "at": "2026-09-25 14:36",
+   "duration": 28.7,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -260,5 +281,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-55-13"
+ "last_try": "ayah-33-41"
 }
