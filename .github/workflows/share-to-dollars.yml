@@ -1,0 +1,22 @@
+name: 🔗 مشاركة الاعتماد الاحتياطي مع Dollars
+# بينسخ اعتماد يوتيوب الثاني (YOUTUBE_*_2) لمستودع Dollars كمشروع جوجل رقم 3
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  share:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: قراءة الاعتماد الثاني · التأكد من القناة · النسخ
+        env:
+          CID: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+          CSEC: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
+          RT: ${{ secrets.YOUTUBE_REFRESH_TOKEN_2 }}
+          CROSS_PAT: ${{ secrets.CROSS_PAT }}
+          PREFIX: '3'
+          EXPECT_CHANNEL: UCG9g_26H65D3FahqyiYPHAw
+        run: |
+          pip install -q pynacl
+          python3 scripts/share_yt_creds.py
