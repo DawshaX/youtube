@@ -6,6 +6,20 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=JpwCQsgfN5I",
    "at": "2026-09-26 03:14"
+  },
+  {
+   "id": "ayah-13-28",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "title": "قلبك بيدق ليه؟ ❤️ | سورة الرعد آية 28 🤍 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790396122/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790396303.mp4",
+   "err": "too_soon",
+   "at": "2026-09-26 04:18",
+   "duration": 31.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -21,5 +35,6 @@
    "err": null
   }
  ],
- "bad_reciters": []
+ "bad_reciters": [],
+ "last_try": "ayah-13-28"
 }
