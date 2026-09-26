@@ -314,6 +314,27 @@
    "at": "2026-09-26 15:55",
    "duration": 28.4,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790380200.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=NV1arRUJL00",
+   "at": "2026-09-26 16:41"
+  },
+  {
+   "id": "hadith-bukhari-38",
+   "kind": "hadith",
+   "theme": "صبر",
+   "title": "شهر ويفرجها… رمضان 🕌 📖 حديث صحيح — صحيح البخاري",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790440912/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790441138.mp4",
+   "err": "too_soon",
+   "at": "2026-09-26 16:45",
+   "duration": 23.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -330,5 +351,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-6011"
+ "last_try": "hadith-bukhari-38"
 }
