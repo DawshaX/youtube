@@ -167,6 +167,27 @@
    "at": "2026-09-26 10:06",
    "duration": 31.9,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790359132.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=BGKp4x6neh8",
+   "at": "2026-09-26 10:52"
+  },
+  {
+   "id": "ayah-47-15",
+   "kind": "reel",
+   "theme": "جنة",
+   "title": "تخيل الجنّة لحظة 🏞️ | جنة 🤍 آيات قرآنية — تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790419986/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790420408.mp4",
+   "err": "too_soon",
+   "at": "2026-09-26 11:00",
+   "duration": 154.9,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -183,5 +204,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-25-70"
+ "last_try": "ayah-47-15"
 }
