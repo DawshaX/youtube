@@ -713,5 +713,35 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-09-25 23:48"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Celestial_Cloudscape_in_the_Orion_Nebula_%28potw2232a%29.jpg/1280px-Celestial_Cloudscape_in_the_Orion_Nebula_%28potw2232a%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "night sky stars cloudscape",
+  "at": "2026-09-26 00:38"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Ahuriri_River_before_sunrise%2C_Canterbury%2C_New_Zealand.jpg/1280px-Ahuriri_River_before_sunrise%2C_Canterbury%2C_New_Zealand.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mountains clouds sunrise",
+  "at": "2026-09-26 00:39"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/A_bird_flying_during_Colorful_sunset_at_Cape_zebib_beach.jpg/1280px-A_bird_flying_during_Colorful_sunset_at_Cape_zebib_beach.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "birds flying sunset",
+  "at": "2026-09-26 00:40"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Andaman_Islands%2C_Full_moon_night%2C_Forest_by_the_sea_at_night.jpg/1280px-Andaman_Islands%2C_Full_moon_night%2C_Forest_by_the_sea_at_night.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "night clouds moon",
+  "at": "2026-09-26 00:41"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Kochelsee_Nightscape_%28145892259%29.jpeg/1280px-Kochelsee_Nightscape_%28145892259%29.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "night sky stars cloudscape",
+  "at": "2026-09-26 00:41"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/Bieszczady_-_sunrise_from_Chatka_Puchatka_%282%29.jpg/1280px-Bieszczady_-_sunrise_from_Chatka_Puchatka_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mountains clouds sunrise",
+  "at": "2026-09-26 00:42"
  }
 }
