@@ -88,5 +88,40 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-26 05:06"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/006_Dune_45_in_Sossusvlei_at_sunrise_Photo_by_Giles_Laurent.jpg/1280px-006_Dune_45_in_Sossusvlei_at_sunrise_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "desert dunes sunrise",
+  "at": "2026-09-26 05:54"
+ },
+ "https://videos.pexels.com/video-files/33335064/14194862_682_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-26 05:54"
+ },
+ "clipcache:2d20de01f1fd": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-26 05:54"
+ },
+ "https://videos.pexels.com/video-files/13756033/13756033-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-26 05:55"
+ },
+ "clipcache:5cccd217ea16": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-26 05:55"
+ },
+ "https://videos.pexels.com/video-files/32194802/13731378_682_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-26 05:55"
+ },
+ "clipcache:403821340f95": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-26 05:55"
  }
 }
