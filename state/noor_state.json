@@ -209,6 +209,27 @@
    "at": "2026-09-26 11:50",
    "duration": 42.7,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790365065.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=dDRprFVNrBM",
+   "at": "2026-09-26 12:36"
+  },
+  {
+   "id": "ayah-103-1",
+   "kind": "ayah",
+   "theme": "وقت",
+   "title": "خسارة العمر… سورة العصر ⏰ | سورة العصر الآيات 1–3 🤍 تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790426184/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790426329.mp4",
+   "err": "too_soon",
+   "at": "2026-09-26 12:38",
+   "duration": 28.3,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -225,5 +246,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-49-13"
+ "last_try": "ayah-103-1"
 }
