@@ -11,6 +11,16 @@
    "sha256": "670f158a434e43c9367556fee77ee5eb30e08946de2855256e0f7cdfdd027585"
   },
   {
+   "path": "state/videolib/58cf3735c656.mp4",
+   "source": "pixabay",
+   "license": "Pixabay-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://cdn.pixabay.com/video/2020/06/13/41946-431406999_medium.mp4",
+   "fetched_at": "2026-09-26T02:26:25+00:00",
+   "sha256": "191886d2972419874e041ada6df2895d0d88514086e12ac3bbf066b22ec89206"
+  },
+  {
    "path": "state/videolib/5cccd217ea16.mp4",
    "source": "Wikimedia Commons",
    "license": "CC-BY-4.0",
@@ -19,6 +29,36 @@
    "url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Timelapse_2025_Kinnaur_Monsoon.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
    "fetched_at": "2026-09-21T02:10:36+00:00",
    "sha256": "ff4f29f87af033e4f0b7f0dda20cf45a98e4fae072b565d21060d7ec3223a57c"
+  },
+  {
+   "path": "state/videolib/6293e8549d2c.mp4",
+   "source": "pixabay",
+   "license": "Pixabay-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://cdn.pixabay.com/video/2016/02/15/2173-155441327_medium.mp4",
+   "fetched_at": "2026-09-26T02:26:39+00:00",
+   "sha256": "95e8fbf09fd5273a5e65a34c9c56cf56caec4d10f99ceea0ebe0ae90d9537c31"
+  },
+  {
+   "path": "state/videolib/8714af0b9515.mp4",
+   "source": "pexels",
+   "license": "Pexels-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://videos.pexels.com/video-files/10753302/10753302-sd_640_360_30fps.mp4",
+   "fetched_at": "2026-09-26T02:27:37+00:00",
+   "sha256": "ff7591e9cc47a2277d0a3061fdbf4e4326e2df85105c80adc03e0954a5c3f2e0"
+  },
+  {
+   "path": "state/videolib/9ad3e7ea2a37.mp4",
+   "source": "pixabay",
+   "license": "Pixabay-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://cdn.pixabay.com/video/2022/03/21/111522-691223024_medium.mp4",
+   "fetched_at": "2026-09-26T02:26:56+00:00",
+   "sha256": "faa8ebf0979bf37ca6c2a96a03c7386a2c6ada0a43c95d1cc33669951790fd6b"
   }
  ]
 }
