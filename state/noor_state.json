@@ -251,6 +251,27 @@
    "at": "2026-09-26 13:27",
    "duration": 21.9,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790371219.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=0q5VE2f6OvE",
+   "at": "2026-09-26 14:13"
+  },
+  {
+   "id": "hadith-bukhari-6407",
+   "kind": "hadith",
+   "theme": "ذكر",
+   "title": "الفرق بين قلب حي وقلب ميّت ✨ 📖 حديث صحيح — صحيح البخاري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790432029/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790432201.mp4",
+   "err": "too_soon",
+   "at": "2026-09-26 14:16",
+   "duration": 23.5,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -267,5 +288,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-13"
+ "last_try": "hadith-bukhari-6407"
 }
