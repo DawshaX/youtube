@@ -1,5 +1,5 @@
-name: 🔗 مشاركة الاعتماد الاحتياطي مع Dollars
-# بينسخ اعتماد يوتيوب الثاني (YOUTUBE_*_2) لمستودع Dollars كمشروع جوجل رقم 3
+name: 🔗 مشاركة اعتماد يوتيوب مع Dollars
+# بينسخ اعتماد مشروع جوجل بتاع المستودع ده لمستودع Dollars كمشروع رقم 3 (= +٦ رفعات/يوم)
 on:
   workflow_dispatch:
 permissions:
@@ -9,12 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: قراءة الاعتماد الثاني · التأكد من القناة · النسخ
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: قراءة الاعتماد · التأكد من القناة · النسخ
         env:
-          CID: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
-          CSEC: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
-          RT: ${{ secrets.YOUTUBE_REFRESH_TOKEN_2 }}
+          CID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          CSEC: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          RT: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           CROSS_PAT: ${{ secrets.CROSS_PAT }}
+          TARGET: DawshaX/Dollars
           PREFIX: '3'
           EXPECT_CHANNEL: UCG9g_26H65D3FahqyiYPHAw
         run: |
