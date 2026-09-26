@@ -440,6 +440,27 @@
    "at": "2026-09-26 20:57",
    "duration": 22.1,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790402348.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=Rm806zvkRk8",
+   "at": "2026-09-26 21:43"
+  },
+  {
+   "id": "ayah-65-3",
+   "kind": "ayah",
+   "theme": "صبر",
+   "title": "خايف من المستقبل؟ ⛅ | سورة الطلاق آية 3 🤍 تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790459022/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790459313.mp4",
+   "err": "too_soon",
+   "at": "2026-09-26 21:48",
+   "duration": 32.4,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -456,5 +477,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-9"
+ "last_try": "ayah-65-3"
 }
