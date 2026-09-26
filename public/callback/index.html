@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تم الربط ✅ — XDAW NOVA</title>
+<style>
+  :root { --bg:#0b1018; --card:#131c28; --ink:#eaf2fb; --muted:#93a4b8; --ok:#39d98a; --accent:#7fb2ff; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; background:radial-gradient(1200px 600px at 20% -10%, #1a2740 0%, var(--bg) 60%);
+         color:var(--ink); font-family:-apple-system,"Segoe UI",Tahoma,system-ui,sans-serif;
+         display:flex; align-items:center; justify-content:center; padding:20px; }
+  .card { background:var(--card); border:1px solid #22303f; border-radius:22px; padding:26px 22px;
+          max-width:620px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.45); }
+  h1 { font-size:22px; margin:0 0 6px; }
+  .sub { color:var(--muted); font-size:14px; line-height:1.7; margin-bottom:18px; }
+  .badge { display:inline-block; background:rgba(57,217,138,.14); color:var(--ok); border:1px solid rgba(57,217,138,.35);
+           padding:4px 12px; border-radius:999px; font-size:13px; margin-bottom:14px; }
+  .badge.err { background:rgba(255,107,107,.14); color:#ff8f8f; border-color:rgba(255,107,107,.35); }
+  code, .box { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; }
+  .box { background:#0a121b; border:1px solid #22303f; border-radius:14px; padding:14px; word-break:break-all;
+         color:#cfe6ff; direction:ltr; text-align:left; max-height:190px; overflow:auto; }
+  button { width:100%; margin-top:14px; padding:15px 18px; font-size:16px; font-weight:700; cursor:pointer;
+           border:0; border-radius:14px; background:linear-gradient(135deg,#4f8cff,#7fb2ff); color:#07121f;
+           transition:transform .08s ease; font-family:inherit; }
+  button:active { transform:scale(.98); }
+  ol { color:var(--muted); font-size:14px; line-height:2; padding-inline-start:20px; margin:18px 0 0; }
+  .foot { margin-top:18px; padding-top:14px; border-top:1px solid #22303f; color:#6f819a; font-size:12.5px; }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="badge" class="badge">تم استلام التفويض ✅</div>
+  <h1 id="title">خلاص! الكود وصل</h1>
+  <div class="sub" id="sub">انسخ الكود ده وابعته في الشات (أو على تلجرام) — وأنا بثبّت التوكن الدائم فورًا.</div>
+
+  <div class="box" id="out">…</div>
+  <button id="copy">📋 انسخ الكود</button>
+  <button id="copyall" style="background:#22303f;color:#dbe8f7">🔗 انسخ العنوان كامل</button>
+
+  <ol id="steps">
+    <li>اضغط «انسخ الكود»</li>
+    <li>ابعته في الشات / تلجرام</li>
+    <li>الباقي أوتوماتيك: تبديل + تثبيت + رسالة تأكيد</li>
+  </ol>
+  <div class="foot">Xdaw Nova Studio · كل حاجة من صنعنا — مفيش أي بيانات بتتسجل على الصفحة دي.</div>
+</div>
+<script>
+  var p = new URLSearchParams(location.search);
+  var code = p.get("code"), err = p.get("error"), full = location.href;
+  var badge = document.getElementById("badge"), out = document.getElementById("out");
+  if (err) {
+    badge.className = "badge err"; badge.textContent = "فيه مشكلة في التفويض ⚠️";
+    document.getElementById("title").textContent = "التفويض ما كمّلش";
+    document.getElementById("sub").textContent = "ابعت الرسالة اللي تحت للاستوديو وهو يظبّطها في دقيقة.";
+    out.textContent = (err + " " + (p.get("error_description") || "")).trim();
+    document.getElementById("steps").className = "hidden";
+  } else if (code) {
+    out.textContent = code;
+  } else {
+    badge.textContent = "الصفحة دي لاستقبال كود الربط";
+    document.getElementById("title").textContent = "ابدأ الربط من لينك الاستوديو";
+    document.getElementById("sub").textContent = "افتح لينك الموافقة اللي وصلك على تلجرام — وبعد الموافقة هترجع هنا ومعاك الكود.";
+    out.textContent = "لا يوجد كود في العنوان — دوّر على لينك الموافقة في تلجرام.";
+    document.getElementById("steps").className = "hidden";
+  }
+  function copy(t, btn) {
+    navigator.clipboard.writeText(t).then(function () {
+      var old = btn.textContent; btn.textContent = "✅ اتنسخ!";
+      setTimeout(function(){ btn.textContent = old; }, 1600);
+    });
+  }
+  document.getElementById("copy").onclick = function () { copy(code || out.textContent, this); };
+  document.getElementById("copyall").onclick = function () { copy(full, this); };
+</script>
+</body>
+</html>
