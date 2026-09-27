@@ -1,6 +1,16 @@
 {
  "assets": [
   {
+   "path": "state/videolib/1ea380d63bcb.mp4",
+   "source": "pixabay",
+   "license": "Pixabay-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://cdn.pixabay.com/video/2024/09/24/233024_medium.mp4",
+   "fetched_at": "2026-09-27T23:07:05+00:00",
+   "sha256": "b3c14afb8fbc0330778acdebb7b590ca25fe7b3b5188f027eda0b218ffc35c48"
+  },
+  {
    "path": "state/videolib/375f71c149ed.mp4",
    "source": "Wikimedia Commons",
    "license": "CC-BY-3.0",
@@ -19,6 +29,26 @@
    "url": "https://cdn.pixabay.com/video/2020/06/13/41946-431406999_medium.mp4",
    "fetched_at": "2026-09-26T02:26:25+00:00",
    "sha256": "191886d2972419874e041ada6df2895d0d88514086e12ac3bbf066b22ec89206"
+  },
+  {
+   "path": "state/videolib/5bf87afd5099.mp4",
+   "source": "pexels",
+   "license": "Pexels-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://videos.pexels.com/video-files/5170597/5170597-sd_640_360_24fps.mp4",
+   "fetched_at": "2026-09-27T23:06:17+00:00",
+   "sha256": "ca4baf424053c4e5cf2728dda2df0dc584c398ed540aa2ed2728aefee98cf53a"
+  },
+  {
+   "path": "state/videolib/5c06e8ce1699.mp4",
+   "source": "pexels",
+   "license": "Pexels-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://videos.pexels.com/video-files/35354333/14978586_640_360_16fps.mp4",
+   "fetched_at": "2026-09-27T23:06:45+00:00",
+   "sha256": "b08e9f68efeaccbc6927614e0cb1be6df3c95f66dcbb61eb800169650acbb5f0"
   },
   {
    "path": "state/videolib/5cccd217ea16.mp4",
