@@ -503,6 +503,13 @@
    "at": "2026-09-26 23:27",
    "duration": 22.1,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790411305.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=BHD-KV9-7Ok",
+   "at": "2026-09-27 00:14"
   }
  ],
  "longs": [
@@ -516,6 +523,17 @@
    "at": "2026-09-26 03:59",
    "duration": 1060.8,
    "err": null
+  },
+  {
+   "surah": "الملك والقلم",
+   "ayahs": 82,
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_67_1790468052/noor_long.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790469936.mp4",
+   "at": "2026-09-27 00:45",
+   "duration": 879.5,
+   "err": "too_soon"
   }
  ],
  "bad_reciters": [],
