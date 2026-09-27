@@ -972,6 +972,27 @@
    "at": "2026-09-27 18:59",
    "duration": 32.6,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790484055.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=cVTAyC5KPY8",
+   "at": "2026-09-27 19:45"
+  },
+  {
+   "id": "ayah-39-35",
+   "kind": "ayah",
+   "theme": "توبة",
+   "title": "بداية جديدة من هنا 🌅 | سورة الزمر آية 35 🤍 تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790538364/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790538516.mp4",
+   "err": "too_soon",
+   "at": "2026-09-27 19:48",
+   "duration": 25.8,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -999,5 +1020,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-25-70"
+ "last_try": "ayah-39-35"
 }
