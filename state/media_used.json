@@ -102,7 +102,7 @@
  "clipcache:2d20de01f1fd": {
   "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-09-26 21:45"
+  "at": "2026-09-27 10:29"
  },
  "https://videos.pexels.com/video-files/13756033/13756033-sd_640_360_30fps.mp4": {
   "source": "video:pexels",
@@ -938,5 +938,25 @@
   "source": "image:commons",
   "episode": "calm river nature",
   "at": "2026-09-27 09:39"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Ballooning%2C_Swakopmund_Namibia_%283052369581%29.jpg/1280px-Ballooning%2C_Swakopmund_Namibia_%283052369581%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "desert dunes sunrise",
+  "at": "2026-09-27 10:29"
+ },
+ "https://videos.pexels.com/video-files/32994458/14062538_640_360_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-27 10:29"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Time-lapse_video-_Southeast_Oregon_storm_%2848001723432%29.jpg/1280px-Time-lapse_video-_Southeast_Oregon_storm_%2848001723432%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mountains clouds time lapse",
+  "at": "2026-09-27 10:29"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/A_few_rocks_visible%21.jpg/1280px-A_few_rocks_visible%21.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "rough sea rocks waves",
+  "at": "2026-09-27 10:30"
  }
 }
