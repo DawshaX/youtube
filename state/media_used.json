@@ -828,5 +828,25 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-27 04:38"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/0/0b/CAIRO._-_The_interior_of_the_mosque_of_Amrou._%28n.d.%29_-_front_-_TIMEA.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-09-27 05:27"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Half_of_a_Prayer_Bead_with_the_Crucifixion_MET_DP371021.jpg/1280px-Half_of_a_Prayer_Bead_with_the_Crucifixion_MET_DP371021.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "prayer beads on wood",
+  "at": "2026-09-27 05:27"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/e/e5/Drops_%28274645807%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "rain drops green leaves",
+  "at": "2026-09-27 05:28"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Blue_and_orange_clouds_over_the_Mekong_with_a_pirogue_running_in_the_water_at_sunset_in_Don_Det_Laos.jpg/1280px-Blue_and_orange_clouds_over_the_Mekong_with_a_pirogue_running_in_the_water_at_sunset_in_Don_Det_Laos.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "clouds sunset sky",
+  "at": "2026-09-27 05:28"
  }
 }
