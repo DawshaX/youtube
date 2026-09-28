@@ -272,6 +272,27 @@
    "at": "2026-09-28 10:58",
    "duration": 23.5,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790538516.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=v0IHkB84BF4",
+   "at": "2026-09-28 11:44"
+  },
+  {
+   "id": "hadith-bukhari-55",
+   "kind": "hadith",
+   "theme": "أخلاق",
+   "title": "مصاريف بيتك… صدقة؟ 💛 📖 حديث صحيح — صحيح البخاري",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790595878/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790596095.mp4",
+   "err": "too_soon",
+   "at": "2026-09-28 11:48",
+   "duration": 22.0,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -288,5 +309,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-6407"
+ "last_try": "hadith-bukhari-55"
 }
