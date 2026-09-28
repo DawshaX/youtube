@@ -100,9 +100,9 @@
   "at": "2026-09-28 02:35"
  },
  "clipcache:2d20de01f1fd": {
-  "source": "video:pexels",
+  "source": "video:pixabay",
   "episode": "bg1",
-  "at": "2026-09-28 02:35"
+  "at": "2026-09-28 03:27"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Time-lapse_video-_Southeast_Oregon_storm_%2848001723432%29.jpg/1280px-Time-lapse_video-_Southeast_Oregon_storm_%2848001723432%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -113,5 +113,40 @@
   "source": "image:commons",
   "episode": "rough sea rocks waves",
   "at": "2026-09-28 02:36"
+ },
+ "https://cdn.pixabay.com/video/2023/11/23/190466-888131689_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-28 03:27"
+ },
+ "clipcache:9200fc61c53b": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-28 03:27"
+ },
+ "https://cdn.pixabay.com/video/2019/10/04/27539-364430966_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-09-28 03:27"
+ },
+ "https://cdn.pixabay.com/video/2023/07/04/169951-842348732_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-28 03:27"
+ },
+ "clipcache:5cccd217ea16": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-28 03:27"
+ },
+ "https://videos.pexels.com/video-files/32194802/13731378_682_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-28 03:28"
+ },
+ "clipcache:403821340f95": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-28 03:28"
  }
 }
