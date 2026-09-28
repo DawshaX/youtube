@@ -20,6 +20,27 @@
    "at": "2026-09-28 00:59",
    "duration": 31.1,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790502169.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=bfqZ98YyYt8",
+   "at": "2026-09-28 01:45"
+  },
+  {
+   "id": "ayah-94-5",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "title": "همّك هينتهي 🕊️ | سورة الشرح الآيات 5–6 🤍 تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790559956/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790560121.mp4",
+   "err": "too_soon",
+   "at": "2026-09-28 01:48",
+   "duration": 23.4,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -36,5 +57,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-13-28"
+ "last_try": "ayah-94-5"
 }
