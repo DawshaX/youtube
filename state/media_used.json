@@ -340,9 +340,9 @@
   "at": "2026-09-28 08:28"
  },
  "clipcache:5bf87afd5099": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-29 01:25"
+  "at": "2026-09-29 19:10"
  },
  "https://videos.pexels.com/video-files/34815634/14760797_640_360_30fps.mp4": {
   "source": "video:pexels",
@@ -352,7 +352,7 @@
  "clipcache:5c06e8ce1699": {
   "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-09-28 08:29"
+  "at": "2026-09-29 19:11"
  },
  "https://cdn.pixabay.com/video/2023/01/10/146013-788094717_medium.mp4": {
   "source": "video:pixabay",
@@ -362,7 +362,7 @@
  "clipcache:1ea380d63bcb": {
   "source": "video:pixabay",
   "episode": "bg2",
-  "at": "2026-09-29 01:26"
+  "at": "2026-09-29 19:11"
  },
  "https://cdn.pixabay.com/video/2025/02/24/260661_medium.mp4": {
   "source": "video:pixabay",
@@ -1213,5 +1213,25 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-29 18:22"
+ },
+ "https://videos.pexels.com/video-files/5170597/5170597-sd_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-09-29 19:10"
+ },
+ "https://videos.pexels.com/video-files/35354333/14978586_640_360_16fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-29 19:11"
+ },
+ "https://cdn.pixabay.com/video/2024/09/24/233024_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-29 19:11"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/8/80/Autumn_sunlight_on_Highbury_Fields_-_geograph.org.uk_-_5971185.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "trees sunlight path",
+  "at": "2026-09-29 19:13"
  }
 }
