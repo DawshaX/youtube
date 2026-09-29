@@ -35,9 +35,9 @@
   "at": "2026-09-28 00:56"
  },
  "clipcache:fca9f128e279": {
-  "source": "video:pexels",
+  "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-09-29 03:58"
+  "at": "2026-09-29 05:40"
  },
  "https://cdn.pixabay.com/video/2016/07/29/4071-176749154_medium.mp4": {
   "source": "video:pixabay",
@@ -45,9 +45,9 @@
   "at": "2026-09-28 00:56"
  },
  "clipcache:970e3445a707": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-09-29 04:48"
+  "at": "2026-09-29 05:40"
  },
  "https://cdn.pixabay.com/video/2026/01/05/326081_medium.mp4": {
   "source": "video:pixabay",
@@ -55,9 +55,9 @@
   "at": "2026-09-28 00:57"
  },
  "clipcache:5d44b8ffb677": {
-  "source": "video:pexels",
+  "source": "video:pixabay",
   "episode": "bg2",
-  "at": "2026-09-29 03:59"
+  "at": "2026-09-29 05:41"
  },
  "https://cdn.pixabay.com/video/2026/01/28/331030_medium.mp4": {
   "source": "video:pixabay",
@@ -908,5 +908,20 @@
   "source": "image:commons",
   "episode": "warm light through trees",
   "at": "2026-09-29 04:49"
+ },
+ "https://cdn.pixabay.com/video/2023/02/09/149928-797491628_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-09-29 05:40"
+ },
+ "https://videos.pexels.com/video-files/12279773/12279773-hd_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-29 05:40"
+ },
+ "https://cdn.pixabay.com/video/2022/09/24/132413-753435562_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-09-29 05:41"
  }
 }
