@@ -155,9 +155,9 @@
   "at": "2026-09-28 04:16"
  },
  "clipcache:57aa0341311d": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-28 21:51"
+  "at": "2026-09-29 09:56"
  },
  "https://cdn.pixabay.com/video/2015/10/19/1099-143052470_medium.mp4": {
   "source": "video:pixabay",
@@ -187,7 +187,7 @@
  "clipcache:2ce92676c6db": {
   "source": "video:pexels",
   "episode": "bg3",
-  "at": "2026-09-28 21:52"
+  "at": "2026-09-29 09:57"
  },
  "https://cdn.pixabay.com/video/2023/07/05/170258-843059148_medium.mp4": {
   "source": "video:pixabay",
@@ -998,5 +998,25 @@
   "source": "image:commons",
   "episode": "rough sea rocks waves",
   "at": "2026-09-29 09:08"
+ },
+ "https://videos.pexels.com/video-files/27394420/12133353_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-09-29 09:56"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/036_Milky_Way_during_Perseids_seen_from_Oeschinensee_with_water_reflections_Photo_by_Giles_Laurent.jpg/1280px-036_Milky_Way_during_Perseids_seen_from_Oeschinensee_with_water_reflections_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "night sky milky way",
+  "at": "2026-09-29 09:56"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/A_yellow-green_airglow_blankets_Earth_as_an_orbital_sunrise_illuminates_the_planet_%28iss073e0880390%29.jpg/1280px-A_yellow-green_airglow_blankets_Earth_as_an_orbital_sunrise_illuminates_the_planet_%28iss073e0880390%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "earth from space sunrise",
+  "at": "2026-09-29 09:56"
+ },
+ "https://videos.pexels.com/video-files/15562120/15562120-sd_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-09-29 09:57"
  }
 }
