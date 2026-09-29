@@ -909,6 +909,27 @@
    "at": "2026-09-29 13:21",
    "duration": 35.1,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790643211.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=zPjOBdZIcOs",
+   "at": "2026-09-29 14:07"
+  },
+  {
+   "id": "ayah-73-1",
+   "kind": "ayah",
+   "theme": "قرآن",
+   "title": "سِرّ القيام اللي محدش يقوله 🌙 | سورة المزمل الآيات 1–4 🤍 تلاوة عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790690882/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790691103.mp4",
+   "err": "too_soon",
+   "at": "2026-09-29 14:11",
+   "duration": 36.0,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -936,5 +957,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-29-45"
+ "last_try": "ayah-73-1"
 }
