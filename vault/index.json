@@ -21,6 +21,16 @@
    "sha256": "670f158a434e43c9367556fee77ee5eb30e08946de2855256e0f7cdfdd027585"
   },
   {
+   "path": "state/videolib/4d419d579674.mp4",
+   "source": "pixabay",
+   "license": "Pixabay-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://cdn.pixabay.com/video/2024/03/08/203449-921267347_medium.mp4",
+   "fetched_at": "2026-09-29T21:44:52+00:00",
+   "sha256": "03bc780db0331f5e8fbba4021674488e73e0879b29c41c86657504bdd7a076c5"
+  },
+  {
    "path": "state/videolib/58cf3735c656.mp4",
    "source": "pixabay",
    "license": "Pixabay-License",
@@ -71,6 +81,26 @@
    "sha256": "95e8fbf09fd5273a5e65a34c9c56cf56caec4d10f99ceea0ebe0ae90d9537c31"
   },
   {
+   "path": "state/videolib/6b34ac041190.mp4",
+   "source": "pixabay",
+   "license": "Pixabay-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://cdn.pixabay.com/video/2024/01/24/197994-906226497_medium.mp4",
+   "fetched_at": "2026-09-29T21:44:33+00:00",
+   "sha256": "dc15f626dc835f2b815ead8d28de8f39816746c3ee69bfaafba259a11c50fda6"
+  },
+  {
+   "path": "state/videolib/7c9f3a1cd340.mp4",
+   "source": "pixabay",
+   "license": "Pixabay-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://cdn.pixabay.com/video/2024/08/03/224696_medium.mp4",
+   "fetched_at": "2026-09-29T21:44:13+00:00",
+   "sha256": "1f1a99d4501300c3b460a3ca7afd32021785e04d51b36a998f0bc277351d87f4"
+  },
+  {
    "path": "state/videolib/8714af0b9515.mp4",
    "source": "pexels",
    "license": "Pexels-License",
@@ -89,6 +119,16 @@
    "url": "https://cdn.pixabay.com/video/2022/03/21/111522-691223024_medium.mp4",
    "fetched_at": "2026-09-26T02:26:56+00:00",
    "sha256": "faa8ebf0979bf37ca6c2a96a03c7386a2c6ada0a43c95d1cc33669951790fd6b"
+  },
+  {
+   "path": "state/videolib/d8d6cd442adf.mp4",
+   "source": "pixabay",
+   "license": "Pixabay-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://cdn.pixabay.com/video/2025/06/09/284566_medium.mp4",
+   "fetched_at": "2026-09-29T21:43:52+00:00",
+   "sha256": "b189ca4e2b1b5c0e79ee13d135eebc2d56743b0f2fa831741b461ce271182325"
   }
  ]
 }
