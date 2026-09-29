@@ -783,6 +783,27 @@
    "at": "2026-09-29 08:19",
    "duration": 42.7,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790623393.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=TEW32pFYu1Q",
+   "at": "2026-09-29 09:05"
+  },
+  {
+   "id": "ayah-3-200",
+   "kind": "ayah",
+   "theme": "صبر",
+   "title": "لسه فاضل شوية ويفرجها ⏳ | سورة ال عمران آية 200 🤍 تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790672721/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790672978.mp4",
+   "err": "too_soon",
+   "at": "2026-09-29 09:09",
+   "duration": 26.8,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -810,5 +831,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-65-3"
+ "last_try": "ayah-3-200"
 }
