@@ -102,7 +102,7 @@
  "clipcache:2d20de01f1fd": {
   "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-09-29 07:22"
+  "at": "2026-09-29 08:14"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Time-lapse_video-_Southeast_Oregon_storm_%2848001723432%29.jpg/1280px-Time-lapse_video-_Southeast_Oregon_storm_%2848001723432%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -122,7 +122,7 @@
  "clipcache:9200fc61c53b": {
   "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-28 18:29"
+  "at": "2026-09-29 08:14"
  },
  "https://cdn.pixabay.com/video/2019/10/04/27539-364430966_medium.mp4": {
   "source": "video:pixabay",
@@ -137,7 +137,7 @@
  "clipcache:5cccd217ea16": {
   "source": "video:pexels",
   "episode": "bg2",
-  "at": "2026-09-29 07:22"
+  "at": "2026-09-29 08:15"
  },
  "https://videos.pexels.com/video-files/32194802/13731378_682_360_30fps.mp4": {
   "source": "video:pexels",
@@ -958,5 +958,25 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-09-29 07:23"
+ },
+ "https://videos.pexels.com/video-files/33549992/14265380_640_360_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-09-29 08:14"
+ },
+ "https://videos.pexels.com/video-files/33019536/14074233_640_360_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-09-29 08:14"
+ },
+ "https://videos.pexels.com/video-files/8201470/8201470-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg2",
+  "at": "2026-09-29 08:15"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Big_waves.jpg/1280px-Big_waves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "rough sea rocks waves",
+  "at": "2026-09-29 08:17"
  }
 }
