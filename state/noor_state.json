@@ -104,6 +104,27 @@
    "at": "2026-09-30 21:21",
    "duration": 27.8,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790761471.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=UIsWBbzrZDk",
+   "at": "2026-09-30 22:08"
+  },
+  {
+   "id": "ayah-67-3",
+   "kind": "ayah",
+   "theme": "توحيد",
+   "title": "بص على السماء… فيه خطأ؟ 🔭 | سورة الملك الآيات 3–4 🤍 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790806129/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790806343.mp4",
+   "err": "too_soon",
+   "at": "2026-09-30 22:12",
+   "duration": 61.9,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -120,5 +141,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-3-200"
+ "last_try": "ayah-67-3"
 }
