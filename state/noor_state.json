@@ -13,8 +13,27 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=615LR_SEVcM",
    "at": "2026-09-30 16:44"
+  },
+  {
+   "id": "vault:q1790743613.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=Q3sUm-5KABw",
+   "at": "2026-09-30 17:44"
   }
  ],
- "longs": [],
+ "longs": [
+  {
+   "surah": "الرحمن",
+   "ayahs": 78,
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_55_1790790302/noor_long.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790792107.mp4",
+   "at": "2026-09-30 18:15",
+   "duration": 1060.8,
+   "err": "too_soon"
+  }
+ ],
  "bad_reciters": []
 }
