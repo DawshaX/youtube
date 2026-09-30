@@ -1,5 +1,5 @@
 [eye] ✓ الكوكيز اتظبطت (pairs (24 كوكي)) — المصادقة شغالة
-## فحص الحالة — 2026-09-30T19:17:37+00:00
+## فحص الحالة — 2026-09-30T23:02:31+00:00
 
 **النتيجة: في مشاكل ❌ (2)** · تحذيرات: 4
 
@@ -17,7 +17,8 @@
 | YouTube OAuth (النشر) | ❌ fail | كل توكنات الرفع مرفوضة: المشروع الأساسي: Token has been expired or revoked. |
 | PIXABAY_API_KEY (لقطات فيديو) | ✅ ok | شغال — استجابة 200 |
 | PEXELS (لقطات احتياطية) | ⚠️ warn | غير مضبوط — لقطات بكسلز بتزيد تنوّع الفيديو (اختياري) |
-| NASA_API_KEY (فضاء) | ❌ fail | HTTP -1 — ReadTimeout: HTTPSConnectionPool(host='api.nasa.gov', port=443): Read timed out. (read timeout=20) |
+| NASA_API_KEY (فضاء) | ❌ fail | HTTP 500 — {"code":500,"msg":"Internal Service Error","service_version":"v1"}
+ |
 | OPENVERSE (صور/ميديا) | ✅ ok | شغال (المفتاح اختياري) |
 | RESTCOUNTRIES (مكتبة العالم) | ✅ ok | شغال — بيانات مصر الحقيقية اتجابت (مفتاح مفعّل) |
 | FREESOUND_API_KEY (مؤثرات CC) | ⚠️ warn | غير مضبوط (اختياري) |
