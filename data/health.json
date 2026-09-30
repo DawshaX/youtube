@@ -1,5 +1,5 @@
 {
- "checkedAt": "2026-09-30T00:25:37+00:00",
+ "checkedAt": "2026-09-30T06:41:32+00:00",
  "runner": "actions-or-local",
  "all_ok": false,
  "fails": 2,
@@ -68,7 +68,7 @@
   {
    "name": "NASA_API_KEY (فضاء)",
    "status": "fail",
-   "detail": "HTTP 503 — upstream connect error or disconnect/reset before headers. reset reason: connection timeout"
+   "detail": "HTTP -1 — ReadTimeout: HTTPSConnectionPool(host='api.nasa.gov', port=443): Read timed out. (read timeout=20)"
   },
   {
    "name": "OPENVERSE (صور/ميديا)",
