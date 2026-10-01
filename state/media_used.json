@@ -300,9 +300,9 @@
   "at": "2026-09-30 23:49"
  },
  "clipcache:58cf3735c656": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "hd",
-  "at": "2026-10-01 05:46"
+  "at": "2026-10-01 07:24"
  },
  "https://cdn.pixabay.com/video/2022/09/14/131292-749647627_medium.mp4": {
   "source": "video:pixabay",
@@ -512,7 +512,7 @@
  "clipcache:6293e8549d2c": {
   "source": "video:pixabay",
   "episode": "hd",
-  "at": "2026-10-01 06:36"
+  "at": "2026-10-01 07:25"
  },
  "https://cdn.pixabay.com/video/2022/03/21/111522-691223024_medium.mp4": {
   "source": "video:pixabay",
@@ -520,9 +520,9 @@
   "at": "2026-10-01 04:58"
  },
  "clipcache:9ad3e7ea2a37": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "hd",
-  "at": "2026-10-01 05:47"
+  "at": "2026-10-01 07:26"
  },
  "https://cdn.pixabay.com/video/2020/01/12/31180-384523319_medium.mp4": {
   "source": "video:pixabay",
@@ -530,9 +530,9 @@
   "at": "2026-10-01 04:59"
  },
  "clipcache:8714af0b9515": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "hd",
-  "at": "2026-10-01 04:59"
+  "at": "2026-10-01 07:26"
  },
  "https://cdn.pixabay.com/video/2020/06/13/41946-431406999_medium.mp4": {
   "source": "video:pixabay",
@@ -573,5 +573,25 @@
   "source": "image:commons",
   "episode": "clouds sunset sky",
   "at": "2026-10-01 06:37"
+ },
+ "https://videos.pexels.com/video-files/37340385/15815731_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "hd",
+  "at": "2026-10-01 07:24"
+ },
+ "https://cdn.pixabay.com/video/2023/09/05/179207-861403607_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-10-01 07:25"
+ },
+ "https://videos.pexels.com/video-files/5210318/5210318-sd_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "hd",
+  "at": "2026-10-01 07:26"
+ },
+ "https://videos.pexels.com/video-files/10753302/10753302-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "hd",
+  "at": "2026-10-01 07:26"
  }
 }
