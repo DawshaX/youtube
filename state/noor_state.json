@@ -174,6 +174,27 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=gJjlRjKtO9M",
    "at": "2026-10-01 00:37"
+  },
+  {
+   "id": "vault:q1790773494.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=KZxnWVagEX0",
+   "at": "2026-10-01 01:35"
+  },
+  {
+   "id": "ayah-25-70",
+   "kind": "ayah",
+   "theme": "توبة",
+   "title": "باب التوبة مفتوح 🚪 | سورة الفرقان آية 70 🤍 تلاوة عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790818531/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790818706.mp4",
+   "err": "too_soon",
+   "at": "2026-10-01 01:38",
+   "duration": 31.9,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -201,5 +222,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-73-1"
+ "last_try": "ayah-25-70"
 }
