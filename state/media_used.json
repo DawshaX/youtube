@@ -250,9 +250,9 @@
   "at": "2026-09-30 22:59"
  },
  "clipcache:6dec21db24f8": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-09-30 22:59"
+  "at": "2026-10-01 17:31"
  },
  "https://videos.pexels.com/video-files/27741149/12215951_640_360_30fps.mp4": {
   "source": "video:pexels",
@@ -282,7 +282,7 @@
  "clipcache:f0725d185021": {
   "source": "video:pixabay",
   "episode": "bg3",
-  "at": "2026-09-30 23:00"
+  "at": "2026-10-01 17:32"
  },
  "https://cdn.pixabay.com/video/2025/03/02/261978_medium.mp4": {
   "source": "video:pixabay",
@@ -828,5 +828,20 @@
   "source": "video:pexels",
   "episode": "bg3",
   "at": "2026-10-01 16:39"
+ },
+ "https://videos.pexels.com/video-files/30148493/12928001_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-10-01 17:31"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Arc_design_National_Mosque_of_Ghana.jpg/1280px-Arc_design_National_Mosque_of_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque architecture night",
+  "at": "2026-10-01 17:31"
+ },
+ "https://cdn.pixabay.com/video/2025/02/22/260253_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-01 17:32"
  }
 }
