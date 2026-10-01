@@ -292,7 +292,7 @@
  "clipcache:e43ce375e514": {
   "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-09-30 23:49"
+  "at": "2026-10-01 15:47"
  },
  "https://cdn.pixabay.com/video/2020/08/13/47052-450995415_medium.mp4": {
   "source": "video:pixabay",
@@ -312,7 +312,7 @@
  "clipcache:b552eb75902d": {
   "source": "video:pixabay",
   "episode": "bg2",
-  "at": "2026-09-30 23:49"
+  "at": "2026-10-01 15:48"
  },
  "https://cdn.pixabay.com/video/2022/11/18/139577-774507809_medium.mp4": {
   "source": "video:pixabay",
@@ -322,7 +322,7 @@
  "clipcache:66a456601e69": {
   "source": "video:pixabay",
   "episode": "bg3",
-  "at": "2026-09-30 23:50"
+  "at": "2026-10-01 15:48"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Celestial_Cloudscape_in_the_Orion_Nebula_%28potw2232a%29.jpg/1280px-Celestial_Cloudscape_in_the_Orion_Nebula_%28potw2232a%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -788,5 +788,25 @@
   "source": "video:pexels",
   "episode": "hd",
   "at": "2026-10-01 14:59"
+ },
+ "https://cdn.pixabay.com/video/2025/03/11/263962_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-01 15:47"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Aqmar_mosque_interior.jpg/1280px-Aqmar_mosque_interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-10-01 15:47"
+ },
+ "https://cdn.pixabay.com/video/2019/05/22/23879-337972820_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-01 15:48"
+ },
+ "https://cdn.pixabay.com/video/2023/03/14/154715-808169685_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-01 15:48"
  }
 }
