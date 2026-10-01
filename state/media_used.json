@@ -100,9 +100,9 @@
   "at": "2026-09-30 18:47"
  },
  "clipcache:970e3445a707": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-10-01 21:00"
+  "at": "2026-10-01 22:42"
  },
  "https://cdn.pixabay.com/video/2026/01/05/326081_medium.mp4": {
   "source": "video:pixabay",
@@ -938,5 +938,20 @@
   "source": "image:commons",
   "episode": "calm river nature",
   "at": "2026-10-01 21:51"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Rain-Kissed_Blossoms.jpg/1280px-Rain-Kissed_Blossoms.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "soft rain on green leaves",
+  "at": "2026-10-01 22:40"
+ },
+ "https://videos.pexels.com/video-files/12598728/12598728-hd_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-10-01 22:42"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Avon_Valley_Nature_Reserve_6.jpg/1280px-Avon_Valley_Nature_Reserve_6.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "calm river nature",
+  "at": "2026-10-01 22:42"
  }
 }
