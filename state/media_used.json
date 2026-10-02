@@ -292,7 +292,7 @@
  "clipcache:e43ce375e514": {
   "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-10-01 15:47"
+  "at": "2026-10-02 10:09"
  },
  "https://cdn.pixabay.com/video/2020/08/13/47052-450995415_medium.mp4": {
   "source": "video:pixabay",
@@ -312,7 +312,7 @@
  "clipcache:b552eb75902d": {
   "source": "video:pixabay",
   "episode": "bg2",
-  "at": "2026-10-01 15:48"
+  "at": "2026-10-02 10:10"
  },
  "https://cdn.pixabay.com/video/2022/11/18/139577-774507809_medium.mp4": {
   "source": "video:pixabay",
@@ -322,7 +322,7 @@
  "clipcache:66a456601e69": {
   "source": "video:pixabay",
   "episode": "bg3",
-  "at": "2026-10-01 15:48"
+  "at": "2026-10-02 10:10"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Celestial_Cloudscape_in_the_Orion_Nebula_%28potw2232a%29.jpg/1280px-Celestial_Cloudscape_in_the_Orion_Nebula_%28potw2232a%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -1203,5 +1203,25 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-10-02 09:21"
+ },
+ "https://cdn.pixabay.com/video/2022/12/03/141519-777930387_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-02 10:09"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Chandelier_not_on_and_arch_inside_Jinnah_Memorial_Mosque_AKA_St_Joseph_TML_Masjid.jpg/1280px-Chandelier_not_on_and_arch_inside_Jinnah_Memorial_Mosque_AKA_St_Joseph_TML_Masjid.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-10-02 10:09"
+ },
+ "https://cdn.pixabay.com/video/2022/07/13/124062-729835809_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-02 10:10"
+ },
+ "https://cdn.pixabay.com/video/2022/11/13/138752-770553716_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-02 10:10"
  }
 }
