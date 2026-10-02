@@ -427,7 +427,7 @@
  "clipcache:5bf87afd5099": {
   "source": "video:pexels",
   "episode": "bg0",
-  "at": "2026-10-02 15:09"
+  "at": "2026-10-02 15:59"
  },
  "https://videos.pexels.com/video-files/34815634/14760797_640_360_30fps.mp4": {
   "source": "video:pexels",
@@ -1343,5 +1343,25 @@
   "source": "image:commons",
   "episode": "trees sunlight path",
   "at": "2026-10-02 15:11"
+ },
+ "https://videos.pexels.com/video-files/38456189/16330856_640_360_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg0",
+  "at": "2026-10-02 15:59"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_2.jpg/1280px-Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque courtyard arches",
+  "at": "2026-10-02 16:00"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Bowl_of_Dates.jpg/1280px-Bowl_of_Dates.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "dates fruit bowl",
+  "at": "2026-10-02 16:00"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/c/cf/Autumn_sunlight_on_avenue_of_trees_near_Burnbake_-_geograph.org.uk_-_6332030.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "trees sunlight path",
+  "at": "2026-10-02 16:01"
  }
 }
