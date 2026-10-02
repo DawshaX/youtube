@@ -986,6 +986,27 @@
    "at": "2026-10-02 11:04",
    "duration": 127.7,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790908354.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=NjOGDOUsVmg",
+   "at": "2026-10-02 11:50"
+  },
+  {
+   "id": "ayah-25-70",
+   "kind": "ayah",
+   "theme": "توبة",
+   "title": "باب التوبة مفتوح 🚪 | سورة الفرقان آية 70 🤍 تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790941842/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790942008.mp4",
+   "err": "too_soon",
+   "at": "2026-10-02 11:53",
+   "duration": 32.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -1024,5 +1045,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-17-78"
+ "last_try": "ayah-25-70"
 }
