@@ -467,7 +467,7 @@
  "clipcache:d8d6cd442adf": {
   "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-10-01 11:37"
+  "at": "2026-10-02 16:52"
  },
  "https://cdn.pixabay.com/video/2024/04/08/207307_medium.mp4": {
   "source": "video:pixabay",
@@ -477,7 +477,7 @@
  "clipcache:7c9f3a1cd340": {
   "source": "video:pixabay",
   "episode": "bg1",
-  "at": "2026-10-01 11:37"
+  "at": "2026-10-02 16:52"
  },
  "https://cdn.pixabay.com/video/2016/12/18/6815-196282555_medium.mp4": {
   "source": "video:pixabay",
@@ -487,7 +487,7 @@
  "clipcache:6b34ac041190": {
   "source": "video:pixabay",
   "episode": "bg2",
-  "at": "2026-10-01 11:37"
+  "at": "2026-10-02 16:52"
  },
  "https://cdn.pixabay.com/video/2022/04/02/112635-695109796_medium.mp4": {
   "source": "video:pixabay",
@@ -497,7 +497,7 @@
  "clipcache:4d419d579674": {
   "source": "video:pixabay",
   "episode": "bg3",
-  "at": "2026-10-01 11:37"
+  "at": "2026-10-02 16:53"
  },
  "https://cdn.pixabay.com/video/2017/03/03/8132-207209040_medium.mp4": {
   "source": "video:pixabay",
@@ -1363,5 +1363,25 @@
   "source": "image:commons",
   "episode": "trees sunlight path",
   "at": "2026-10-02 16:01"
+ },
+ "https://cdn.pixabay.com/video/2025/06/09/284566_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-02 16:52"
+ },
+ "https://cdn.pixabay.com/video/2024/08/03/224696_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-02 16:52"
+ },
+ "https://cdn.pixabay.com/video/2024/01/24/197994-906226497_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-02 16:52"
+ },
+ "https://cdn.pixabay.com/video/2024/03/08/203449-921267347_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-02 16:53"
  }
 }
