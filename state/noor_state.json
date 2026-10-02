@@ -748,6 +748,13 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=0yVZlKNVJJM",
    "at": "2026-10-02 00:25"
+  },
+  {
+   "id": "vault:q1790866840.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=Jg7HS_TtbAY",
+   "at": "2026-10-02 01:26"
   }
  ],
  "longs": [
@@ -771,6 +778,17 @@
    "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790816563.mp4",
    "at": "2026-10-01 01:02",
    "duration": 879.5,
+   "err": "too_soon"
+  },
+  {
+   "surah": "يس",
+   "ayahs": 80,
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_36_1790904390/noor_long.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790906434.mp4",
+   "at": "2026-10-02 02:00",
+   "duration": 780.9,
    "err": "too_soon"
   }
  ],
