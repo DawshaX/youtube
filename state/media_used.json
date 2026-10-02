@@ -1404,6 +1404,7 @@
   "episode": "bg3",
   "at": "2026-10-02 17:41"
  },
+<<<<<<< Updated upstream
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Great_Mosque_Kilwa_Interior.jpg/1280px-Great_Mosque_Kilwa_Interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
   "episode": "mosque interior arches",
@@ -1413,15 +1414,35 @@
   "source": "video:pexels",
   "episode": "hd",
   "at": "2026-10-02 18:30"
+=======
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Diyarbak%C4%B1r_Iskender_Pa%C5%9Fa_Mosque_7705.jpg/1280px-Diyarbak%C4%B1r_Iskender_Pa%C5%9Fa_Mosque_7705.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-10-02 19:56"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Half_of_a_Prayer_Bead_with_the_Crucifixion_MET_DP371021.jpg/1280px-Half_of_a_Prayer_Bead_with_the_Crucifixion_MET_DP371021.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "prayer beads on wood",
+  "at": "2026-10-02 19:56"
+>>>>>>> Stashed changes
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Drops_02_%2842577920%29.jpeg/1280px-Drops_02_%2842577920%29.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
   "episode": "rain drops green leaves",
+<<<<<<< Updated upstream
   "at": "2026-10-02 18:31"
  },
  "https://videos.pexels.com/video-files/6459951/6459951-sd_640_360_25fps.mp4": {
   "source": "video:pexels",
   "episode": "hd",
   "at": "2026-10-02 18:32"
+=======
+  "at": "2026-10-02 19:56"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Boats_on_the_Mekong_with_dark_clouds_and_blue_sky_in_the_late_afternoon_in_Luang_Prabang_Laos.jpg/1280px-Boats_on_the_Mekong_with_dark_clouds_and_blue_sky_in_the_late_afternoon_in_Luang_Prabang_Laos.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "clouds sunset sky",
+  "at": "2026-10-02 19:57"
+>>>>>>> Stashed changes
  }
 }
