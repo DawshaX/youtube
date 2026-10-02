@@ -776,6 +776,27 @@
    "at": "2026-10-02 02:32",
    "duration": 34.6,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790872890.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=mUTrUdPtjg4",
+   "at": "2026-10-02 03:20"
+  },
+  {
+   "id": "ayah-2-153",
+   "kind": "reel",
+   "theme": "صبر",
+   "title": "صبرك مش ضايع 🌱 | صبر 🤍 آيات قرآنية — تلاوة عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790911212/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790911594.mp4",
+   "err": "too_soon",
+   "at": "2026-10-02 03:26",
+   "duration": 136.7,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -814,5 +835,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-2-186"
+ "last_try": "ayah-2-153"
 }

@@ -157,7 +157,7 @@
  "clipcache:2d20de01f1fd": {
   "source": "video:pexels",
   "episode": "bg1",
-  "at": "2026-10-01 13:16"
+  "at": "2026-10-02 03:20"
  },
  "https://videos.pexels.com/video-files/13756033/13756033-sd_640_360_30fps.mp4": {
   "source": "video:pexels",
@@ -177,7 +177,7 @@
  "clipcache:403821340f95": {
   "source": "video:pexels",
   "episode": "bg3",
-  "at": "2026-10-01 13:18"
+  "at": "2026-10-02 03:22"
  },
  "https://cdn.pixabay.com/video/2023/11/23/190466-888131689_medium.mp4": {
   "source": "video:pixabay",
@@ -1048,5 +1048,25 @@
   "source": "video:pexels",
   "episode": "bg2",
   "at": "2026-10-02 02:29"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Ballooning%2C_Swakopmund_Namibia_%283052369581%29.jpg/1280px-Ballooning%2C_Swakopmund_Namibia_%283052369581%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "desert dunes sunrise",
+  "at": "2026-10-02 03:20"
+ },
+ "https://videos.pexels.com/video-files/32994458/14062538_640_360_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg1",
+  "at": "2026-10-02 03:20"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Time-lapse_video-_Southeast_Oregon_storm_%2848001723432%29.jpg/1280px-Time-lapse_video-_Southeast_Oregon_storm_%2848001723432%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mountains clouds time lapse",
+  "at": "2026-10-02 03:21"
+ },
+ "https://videos.pexels.com/video-files/29493224/12695271_640_360_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "bg3",
+  "at": "2026-10-02 03:22"
  }
 }
