@@ -968,5 +968,40 @@
   "source": "video:pixabay",
   "episode": "bg2",
   "at": "2026-10-01 23:36"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/A_green_field_in_the_rain_-_geograph.org.uk_-_6982624.jpg/1280px-A_green_field_in_the_rain_-_geograph.org.uk_-_6982624.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "green fields rain",
+  "at": "2026-10-02 00:27"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/036_Milky_Way_during_Perseids_seen_from_Oeschinensee_with_water_reflections_Photo_by_Giles_Laurent.jpg/1280px-036_Milky_Way_during_Perseids_seen_from_Oeschinensee_with_water_reflections_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "night sky milky way",
+  "at": "2026-10-02 00:28"
+ },
+ "https://videos.pexels.com/video-files/10603138/10603138-sd_640_360_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "longbg36",
+  "at": "2026-10-02 00:29"
+ },
+ "clipcache:056fd2b534bd": {
+  "source": "video:pexels",
+  "episode": "longbg36",
+  "at": "2026-10-02 00:29"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Cappadociasunrise.jpg/1280px-Cappadociasunrise.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "sunrise over mountains",
+  "at": "2026-10-02 00:29"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/4/4b/Fawkham_Green%2C_after_rain_%28geograph_3726985%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "green fields rain",
+  "at": "2026-10-02 00:29"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/360-degree_Panorama_of_the_Southern_Sky.jpg/1280px-360-degree_Panorama_of_the_Southern_Sky.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "night sky milky way",
+  "at": "2026-10-02 00:30"
  }
 }
