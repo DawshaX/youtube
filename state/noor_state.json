@@ -6,6 +6,27 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=BMbvw5PpDZA",
    "at": "2026-10-02 20:45"
+  },
+  {
+   "id": "vault:q1790942008.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=zESQhLY2NZM",
+   "at": "2026-10-02 21:46"
+  },
+  {
+   "id": "ayah-13-28",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "title": "قلبك بيدق ليه؟ ❤️ | سورة الرعد آية 28 🤍 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790977574/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790977731.mp4",
+   "err": "too_soon",
+   "at": "2026-10-02 21:48",
+   "duration": 31.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -21,5 +42,6 @@
    "err": "too_soon"
   }
  ],
- "bad_reciters": []
+ "bad_reciters": [],
+ "last_try": "ayah-13-28"
 }
