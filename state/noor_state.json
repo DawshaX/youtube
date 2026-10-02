@@ -755,6 +755,27 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=Jg7HS_TtbAY",
    "at": "2026-10-02 01:26"
+  },
+  {
+   "id": "vault:q1790869869.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=Yw_vyAzDpuQ",
+   "at": "2026-10-02 02:27"
+  },
+  {
+   "id": "ayah-2-186",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "title": "لما تدعي… الدعاء جنبك 🍃 | سورة البقرة آية 186 🤍 تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790908033/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790908354.mp4",
+   "err": "too_soon",
+   "at": "2026-10-02 02:32",
+   "duration": 34.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -793,5 +814,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-94-5"
+ "last_try": "ayah-2-186"
 }
