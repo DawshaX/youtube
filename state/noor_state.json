@@ -412,6 +412,27 @@
    "at": "2026-10-03 14:50",
    "duration": 25.8,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791009306.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=0mSGFkhFP8I",
+   "at": "2026-10-03 15:36"
+  },
+  {
+   "id": "ayah-21-1",
+   "kind": "ayah",
+   "theme": "وقت",
+   "title": "الحساب قرب 📜 | سورة الأنبياء آية 1 🤍 تلاوة عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791041817/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791041971.mp4",
+   "err": "too_soon",
+   "at": "2026-10-03 15:39",
+   "duration": 22.4,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -439,5 +460,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-39-35"
+ "last_try": "ayah-21-1"
 }
