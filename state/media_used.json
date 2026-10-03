@@ -333,5 +333,40 @@
   "source": "image:commons",
   "episode": "butterfly flowers closeup",
   "at": "2026-10-03 05:39"
+ },
+ "https://cdn.pixabay.com/video/2019/10/24/28236-368501609_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-03 06:31"
+ },
+ "clipcache:5bf87afd5099": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-03 06:31"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Al-Hakim_Mosque_Courtyard_at_Night%2C_Cairo.jpg/1280px-Al-Hakim_Mosque_Courtyard_at_Night%2C_Cairo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque courtyard arches",
+  "at": "2026-10-03 06:31"
+ },
+ "https://cdn.pixabay.com/video/2023/01/10/146013-788094717_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-03 06:32"
+ },
+ "clipcache:1ea380d63bcb": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-03 06:32"
+ },
+ "https://cdn.pixabay.com/video/2025/02/24/260661_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-03 06:33"
+ },
+ "clipcache:52ade88d99c7": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-03 06:33"
  }
 }

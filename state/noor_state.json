@@ -202,6 +202,27 @@
    "at": "2026-10-03 05:44",
    "duration": 154.9,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790977731.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=67necE6XVCs",
+   "at": "2026-10-03 06:31"
+  },
+  {
+   "id": "ayah-49-13",
+   "kind": "ayah",
+   "theme": "أخلاق",
+   "title": "مين أكرمك؟ مش فلوسك 🤲 | سورة الحجرات آية 13 🤍 تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791009078/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791009306.mp4",
+   "err": "too_soon",
+   "at": "2026-10-03 06:35",
+   "duration": 42.7,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -229,5 +250,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-47-15"
+ "last_try": "ayah-49-13"
 }
