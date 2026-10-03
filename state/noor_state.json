@@ -349,6 +349,27 @@
    "at": "2026-10-03 12:15",
    "duration": 23.6,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791000212.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=U5kl2GSYAH0",
+   "at": "2026-10-03 13:01"
+  },
+  {
+   "id": "ayah-2-186",
+   "kind": "ayah",
+   "theme": "رحمة",
+   "title": "لما تدعي… الدعاء جنبك 🍃 | سورة البقرة آية 186 🤍 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791032501/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791032799.mp4",
+   "err": "too_soon",
+   "at": "2026-10-03 13:06",
+   "duration": 46.9,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -376,5 +397,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-38"
+ "last_try": "ayah-2-186"
 }
