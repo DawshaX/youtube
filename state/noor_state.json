@@ -76,6 +76,27 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=A3F9J1D65I8",
    "at": "2026-10-03 00:31"
+  },
+  {
+   "id": "vault:q1790953985.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=c9yrd3Lebuk",
+   "at": "2026-10-03 01:32"
+  },
+  {
+   "id": "ayah-3-200",
+   "kind": "ayah",
+   "theme": "صبر",
+   "title": "لسه فاضل شوية ويفرجها ⏳ | سورة ال عمران آية 200 🤍 تلاوة عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1790991166/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1790991326.mp4",
+   "err": "too_soon",
+   "at": "2026-10-03 01:35",
+   "duration": 27.8,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -103,5 +124,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-2-153"
+ "last_try": "ayah-3-200"
 }
