@@ -244,6 +244,27 @@
    "at": "2026-10-03 07:23",
    "duration": 28.3,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1790984744.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=OpwlNQBpyCg",
+   "at": "2026-10-03 08:09"
+  },
+  {
+   "id": "hadith-bukhari-13",
+   "kind": "hadith",
+   "theme": "أخلاق",
+   "title": "إيمانك ناقص من غير ده؟ 🤍 📖 حديث صحيح — صحيح البخاري",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791014987/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791015126.mp4",
+   "err": "too_soon",
+   "at": "2026-10-03 08:12",
+   "duration": 21.9,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -271,5 +292,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-103-1"
+ "last_try": "hadith-bukhari-13"
 }
