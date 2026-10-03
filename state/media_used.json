@@ -160,9 +160,9 @@
   "at": "2026-10-03 01:33"
  },
  "clipcache:5cccd217ea16": {
-  "source": "video:pixabay",
+  "source": "video:Wikimedia Commons",
   "episode": "bg2",
-  "at": "2026-10-03 01:33"
+  "at": "2026-10-03 17:15"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Big_waves.jpg/1280px-Big_waves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -618,5 +618,20 @@
   "source": "image:commons",
   "episode": "clouds sunset sky",
   "at": "2026-10-03 16:26"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Ballooning%2C_Swakopmund_Namibia_%283052369581%29.jpg/1280px-Ballooning%2C_Swakopmund_Namibia_%283052369581%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "desert dunes sunrise",
+  "at": "2026-10-03 17:14"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/3/3d/Timelapse_2025_Kinnaur_Monsoon.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original": {
+  "source": "video:Wikimedia Commons",
+  "episode": "bg2",
+  "at": "2026-10-03 17:15"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/MOUTMARKA_F%C3%A6rder_nasjonalpark_T%C3%B8nsbergfjorden_2023-10-11_%28Tj%C3%B8me_Oslofjorden_Norway%29_Svaberg_fj%C3%A6re_strand_hav_vind_b%C3%B8lger_Fugler_gjentas_fordreid_panorama_Rocky_seashore_archipelago_Low_sun_Wind_Waves_Vegetation_Distorted_panoramic.jpg/1280px-thumbnail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "rough sea rocks waves",
+  "at": "2026-10-03 17:16"
  }
 }
