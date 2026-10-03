@@ -633,5 +633,35 @@
   "source": "image:commons",
   "episode": "rough sea rocks waves",
   "at": "2026-10-03 17:16"
+ },
+ "https://cdn.pixabay.com/video/2026/08/10/369845_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-03 18:04"
+ },
+ "clipcache:33f16deaefdc": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-03 18:04"
+ },
+ "https://cdn.pixabay.com/video/2020/05/17/39300-422620718_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-03 18:04"
+ },
+ "clipcache:44fcd3b80955": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-03 18:04"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/6/65/A_nature_paradise_of_pune.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "river paradise nature",
+  "at": "2026-10-03 18:05"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/A_butterfly_on_a_purple_flower.jpg/1280px-A_butterfly_on_a_purple_flower.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "butterfly flowers closeup",
+  "at": "2026-10-03 18:05"
  }
 }
