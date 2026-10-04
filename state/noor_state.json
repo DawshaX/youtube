@@ -1,40 +1,11 @@
 {
  "shorts": [
   {
-   "id": "vault:q1791039040.mp4",
+   "id": "vault:q1791047888.mp4",
    "kind": "vault",
    "video": "",
-   "url": "https://www.youtube.com/watch?v=okmY0erBFGY",
-   "at": "2026-10-03 22:55"
-  },
-  {
-   "id": "ayah-13-28",
-   "kind": "ayah",
-   "theme": "رحمة",
-   "title": "قلبك بيدق ليه؟ ❤️ | سورة الرعد آية 28 🤍 تلاوة محمود خليل الحصري",
-   "reciter": "husary",
-   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791071731/noor.mp4",
-   "url": "",
-   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791071913.mp4",
-   "err": "too_soon",
-   "at": "2026-10-03 23:58",
-   "duration": 31.1,
-   "over_180s": false
-  },
-  {
-<<<<<<< Updated upstream
-   "id": "vault:q1791041971.mp4",
-   "kind": "vault",
-   "video": "",
-   "url": "https://www.youtube.com/watch?v=ks8yNu3SV90",
-   "at": "2026-10-04 00:44"
-=======
-   "id": "vault:q1791044855.mp4",
-   "kind": "vault",
-   "video": "",
-   "url": "https://www.youtube.com/watch?v=jeUu2yvUhok",
-   "at": "2026-10-04 01:45"
->>>>>>> Stashed changes
+   "url": "https://www.youtube.com/watch?v=lK__zaRXDd0",
+   "at": "2026-10-04 02:40"
   }
  ],
  "longs": [
@@ -42,32 +13,13 @@
    "surah": "الرحمن",
    "ayahs": 78,
    "reciter": "husary",
-   "video": "/home/runner/work/youtube/youtube/work/noor/long_55_1791068109/noor_long.mp4",
-   "url": "https://www.youtube.com/watch?v=VELdRpSAE6A",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_55_1791081639/noor_long.mp4",
+   "url": "https://www.youtube.com/watch?v=9sBJzPzq9Tk",
    "vault": "",
-   "at": "2026-10-03 23:38",
+   "at": "2026-10-04 03:23",
    "duration": 1060.8,
    "err": null
-  },
-  {
-   "surah": "الملك والقلم",
-   "ayahs": 82,
-   "reciter": "minshawi",
-<<<<<<< Updated upstream
-   "video": "/home/runner/work/youtube/youtube/work/noor/long_67_1791074698/noor_long.mp4",
-   "url": "",
-   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791076561.mp4",
-   "at": "2026-10-04 01:16",
-=======
-   "video": "/home/runner/work/youtube/youtube/work/noor/long_67_1791078337/noor_long.mp4",
-   "url": "",
-   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791076561.mp4",
-   "at": "2026-10-04 02:18",
->>>>>>> Stashed changes
-   "duration": 879.5,
-   "err": "too_soon"
   }
  ],
- "bad_reciters": [],
- "last_try": "ayah-13-28"
+ "bad_reciters": []
 }
