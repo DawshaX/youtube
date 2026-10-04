@@ -83,5 +83,40 @@
   "source": "image:commons",
   "episode": "rough sea rocks waves",
   "at": "2026-10-04 04:31"
+ },
+ "https://cdn.pixabay.com/video/2023/11/23/190466-888131689_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-04 05:21"
+ },
+ "clipcache:9200fc61c53b": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-04 05:21"
+ },
+ "https://cdn.pixabay.com/video/2021/10/10/91517-630895566_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-04 05:21"
+ },
+ "clipcache:2d20de01f1fd": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-04 05:21"
+ },
+ "https://cdn.pixabay.com/video/2023/07/04/169951-842348732_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-04 05:21"
+ },
+ "clipcache:5cccd217ea16": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-04 05:21"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Big_waves.jpg/1280px-Big_waves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "rough sea rocks waves",
+  "at": "2026-10-04 05:22"
  }
 }
