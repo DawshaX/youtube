@@ -1,5 +1,5 @@
 {
- "checkedAt": "2026-10-03T23:01:25+00:00",
+ "checkedAt": "2026-10-04T02:35:43+00:00",
  "runner": "actions-or-local",
  "all_ok": false,
  "fails": 2,
@@ -68,7 +68,7 @@
   {
    "name": "NASA_API_KEY (فضاء)",
    "status": "fail",
-   "detail": "HTTP 503 — upstream connect error or disconnect/reset before headers. reset reason: connection timeout"
+   "detail": "HTTP 500 — {\"code\":500,\"msg\":\"Internal Service Error\",\"service_version\":\"v1\"}\n"
   },
   {
    "name": "OPENVERSE (صور/ميديا)",
