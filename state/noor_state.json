@@ -1,125 +1,11 @@
 {
  "shorts": [
   {
-   "id": "vault:q1791047888.mp4",
+   "id": "vault:q1791071913.mp4",
    "kind": "vault",
    "video": "",
-   "url": "https://www.youtube.com/watch?v=lK__zaRXDd0",
-   "at": "2026-10-04 02:40"
-  },
-  {
-   "id": "ayah-94-5",
-   "kind": "ayah",
-   "theme": "رحمة",
-   "title": "همّك هينتهي 🕊️ | سورة الشرح الآيات 5–6 🤍 تلاوة محمد صديق المنشاوي",
-   "reciter": "minshawi",
-   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791085267/noor.mp4",
-   "url": "",
-   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791085425.mp4",
-   "err": "too_soon",
-   "at": "2026-10-04 03:43",
-   "duration": 23.4,
-   "over_180s": false
-  },
-  {
-   "id": "vault:q1791050823.mp4",
-   "kind": "vault",
-   "video": "",
-   "url": "https://www.youtube.com/watch?v=1LyyvQCBxUI",
-   "at": "2026-10-04 04:29"
-  },
-  {
-   "id": "ayah-2-153",
-   "kind": "reel",
-   "theme": "صبر",
-   "title": "صبرك مش ضايع 🌱 | صبر 🤍 آيات قرآنية — تلاوة أبو بكر الشاطري",
-   "reciter": "shatri",
-   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791088200/noor.mp4",
-   "url": "",
-   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791088479.mp4",
-   "err": "too_soon",
-   "at": "2026-10-04 04:34",
-   "duration": 129.4,
-   "over_180s": false
-  },
-  {
-   "id": "vault:q1791053769.mp4",
-   "kind": "vault",
-   "video": "",
-   "url": "https://www.youtube.com/watch?v=W7D5HDcaue0",
-   "at": "2026-10-04 05:20"
-  },
-  {
-   "id": "ayah-3-200",
-   "kind": "ayah",
-   "theme": "صبر",
-   "title": "لسه فاضل شوية ويفرجها ⏳ | سورة ال عمران آية 200 🤍 تلاوة عبد الباسط عبد الصمد",
-   "reciter": "abdulbasitmurattal",
-   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791091255/noor.mp4",
-   "url": "",
-   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791091442.mp4",
-   "err": "too_soon",
-   "at": "2026-10-04 05:24",
-   "duration": 27.8,
-   "over_180s": false
-  },
-  {
-   "id": "vault:q1791056764.mp4",
-   "kind": "vault",
-   "video": "",
-   "url": "https://www.youtube.com/watch?v=OCtXEy6Xku8",
-   "at": "2026-10-04 06:10"
-  },
-  {
-   "id": "ayah-67-3",
-   "kind": "ayah",
-   "theme": "توحيد",
-   "title": "بص على السماء… فيه خطأ؟ 🔭 | سورة الملك الآيات 3–4 🤍 تلاوة محمود خليل الحصري",
-   "reciter": "husary",
-   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791094232/noor.mp4",
-   "url": "",
-   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791094474.mp4",
-   "err": "too_soon",
-   "at": "2026-10-04 06:14",
-   "duration": 61.9,
-   "over_180s": false
-  },
-  {
-<<<<<<< Updated upstream
-   "id": "vault:q1791059701.mp4",
-   "kind": "vault",
-   "video": "",
-   "url": "https://www.youtube.com/watch?v=JrscWlBO06I",
-   "at": "2026-10-04 07:00"
-=======
-   "id": "vault:q1791062801.mp4",
-   "kind": "vault",
-   "video": "",
-   "url": "https://www.youtube.com/watch?v=_Opo8RIrGb0",
-   "at": "2026-10-04 07:51"
->>>>>>> Stashed changes
-  },
-  {
-   "id": "ayah-33-41",
-   "kind": "reel",
-   "theme": "ذكر",
-   "title": "دقيقة ذكر تسوى الدنيا ✨ | ذكر 🤍 آيات قرآنية — تلاوة محمد صديق المنشاوي",
-   "reciter": "minshawi",
-<<<<<<< Updated upstream
-   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791097241/noor.mp4",
-   "url": "",
-   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791097529.mp4",
-   "err": "too_soon",
-   "at": "2026-10-04 07:05",
-=======
-   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791100303/noor.mp4",
-   "url": "",
-   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791097529.mp4",
-   "err": "too_soon",
-   "at": "2026-10-04 07:56",
->>>>>>> Stashed changes
-   "duration": 95.5,
-   "over_180s": false
+   "url": "https://www.youtube.com/watch?v=DX0Ic5tz5Bs",
+   "at": "2026-10-04 08:42"
   }
  ],
  "longs": [
@@ -127,14 +13,13 @@
    "surah": "الرحمن",
    "ayahs": 78,
    "reciter": "husary",
-   "video": "/home/runner/work/youtube/youtube/work/noor/long_55_1791081639/noor_long.mp4",
-   "url": "https://www.youtube.com/watch?v=9sBJzPzq9Tk",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_55_1791103365/noor_long.mp4",
+   "url": "https://www.youtube.com/watch?v=qCpGoTKNC3A",
    "vault": "",
-   "at": "2026-10-04 03:23",
+   "at": "2026-10-04 09:24",
    "duration": 1060.8,
    "err": null
   }
  ],
- "bad_reciters": [],
- "last_try": "ayah-33-41"
+ "bad_reciters": []
 }
