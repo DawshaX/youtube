@@ -83,6 +83,27 @@
    "at": "2026-10-04 06:14",
    "duration": 61.9,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791059701.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=JrscWlBO06I",
+   "at": "2026-10-04 07:00"
+  },
+  {
+   "id": "ayah-33-41",
+   "kind": "reel",
+   "theme": "ذكر",
+   "title": "دقيقة ذكر تسوى الدنيا ✨ | ذكر 🤍 آيات قرآنية — تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791097241/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791097529.mp4",
+   "err": "too_soon",
+   "at": "2026-10-04 07:05",
+   "duration": 95.5,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -99,5 +120,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-67-3"
+ "last_try": "ayah-33-41"
 }

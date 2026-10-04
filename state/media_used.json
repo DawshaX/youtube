@@ -158,5 +158,30 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-10-04 06:11"
+ },
+ "https://cdn.pixabay.com/video/2023/07/05/170258-843059148_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-04 07:00"
+ },
+ "clipcache:6dec21db24f8": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-04 07:00"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Arc_design_National_Mosque_of_Ghana.jpg/1280px-Arc_design_National_Mosque_of_Ghana.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque architecture night",
+  "at": "2026-10-04 07:01"
+ },
+ "https://cdn.pixabay.com/video/2020/05/07/38456-418027152_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-04 07:02"
+ },
+ "clipcache:f0725d185021": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-04 07:02"
  }
 }
