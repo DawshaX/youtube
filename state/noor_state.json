@@ -755,6 +755,27 @@
    "at": "2026-10-05 14:54",
    "duration": 136.7,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791208875.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=RdjFO3QJkFg",
+   "at": "2026-10-05 15:40"
+  },
+  {
+   "id": "ayah-65-3",
+   "kind": "ayah",
+   "theme": "صبر",
+   "title": "خايف من المستقبل؟ ⛅ | سورة الطلاق آية 3 🤍 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791214864/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791215159.mp4",
+   "err": "too_soon",
+   "at": "2026-10-05 15:46",
+   "duration": 42.7,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -771,5 +792,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-2-153"
+ "last_try": "ayah-65-3"
 }
