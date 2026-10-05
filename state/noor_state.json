@@ -818,6 +818,27 @@
    "at": "2026-10-05 17:28",
    "duration": 152.6,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791218147.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=035jCcOL0Ws",
+   "at": "2026-10-05 18:14"
+  },
+  {
+   "id": "ayah-67-3",
+   "kind": "ayah",
+   "theme": "توحيد",
+   "title": "بص على السماء… فيه خطأ؟ 🔭 | سورة الملك الآيات 3–4 🤍 تلاوة عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791224069/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791224270.mp4",
+   "err": "too_soon",
+   "at": "2026-10-05 18:17",
+   "duration": 49.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -834,5 +855,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-2-255"
+ "last_try": "ayah-67-3"
 }
