@@ -212,7 +212,7 @@
  "clipcache:e43ce375e514": {
   "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-10-04 14:41"
+  "at": "2026-10-05 05:33"
  },
  "https://cdn.pixabay.com/video/2020/08/13/47052-450995415_medium.mp4": {
   "source": "video:pixabay",
@@ -232,7 +232,7 @@
  "clipcache:b552eb75902d": {
   "source": "video:pixabay",
   "episode": "bg2",
-  "at": "2026-10-04 14:42"
+  "at": "2026-10-05 05:34"
  },
  "https://cdn.pixabay.com/video/2022/11/18/139577-774507809_medium.mp4": {
   "source": "video:pixabay",
@@ -242,7 +242,7 @@
  "clipcache:66a456601e69": {
   "source": "video:pixabay",
   "episode": "bg3",
-  "at": "2026-10-04 14:42"
+  "at": "2026-10-05 05:34"
  },
  "https://cdn.pixabay.com/video/2024/10/22/237553_medium.mp4": {
   "source": "video:pixabay",
@@ -653,5 +653,25 @@
   "source": "image:commons",
   "episode": "clouds sunset sky",
   "at": "2026-10-05 04:45"
+ },
+ "https://cdn.pixabay.com/video/2025/03/11/263962_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-05 05:33"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Defterdar_Mahmut_Efendi_mosque_8585.jpg/1280px-Defterdar_Mahmut_Efendi_mosque_8585.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-10-05 05:33"
+ },
+ "https://cdn.pixabay.com/video/2019/05/22/23879-337972820_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-05 05:34"
+ },
+ "https://cdn.pixabay.com/video/2023/03/14/154715-808169685_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-05 05:34"
  }
 }
