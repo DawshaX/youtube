@@ -202,7 +202,7 @@
  "clipcache:f0725d185021": {
   "source": "video:pixabay",
   "episode": "bg3",
-  "at": "2026-10-04 13:52"
+  "at": "2026-10-05 19:59"
  },
  "https://cdn.pixabay.com/video/2025/03/02/261978_medium.mp4": {
   "source": "video:pixabay",
@@ -938,5 +938,15 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-10-05 19:05"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Baitul_Aman_Mosque.JPG/1280px-Baitul_Aman_Mosque.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque architecture night",
+  "at": "2026-10-05 19:58"
+ },
+ "https://cdn.pixabay.com/video/2025/02/22/260253_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-05 19:59"
  }
 }
