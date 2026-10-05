@@ -881,6 +881,27 @@
    "at": "2026-10-05 20:02",
    "duration": 95.5,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791227187.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=2Q84IT33ryQ",
+   "at": "2026-10-05 22:33"
+  },
+  {
+   "id": "ayah-29-45",
+   "kind": "ayah",
+   "theme": "ذكر",
+   "title": "الصلاة مش عادة… 🕌 | سورة العنكبوت آية 45 🤍 تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791239609/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791239780.mp4",
+   "err": "too_soon",
+   "at": "2026-10-05 22:36",
+   "duration": 35.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -897,5 +918,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-33-41"
+ "last_try": "ayah-29-45"
 }
