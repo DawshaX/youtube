@@ -312,7 +312,7 @@
  "clipcache:5bf87afd5099": {
   "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-10-04 17:12"
+  "at": "2026-10-05 08:58"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Al-Hakim_Mosque_Courtyard_at_Night%2C_Cairo.jpg/1280px-Al-Hakim_Mosque_Courtyard_at_Night%2C_Cairo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -327,7 +327,7 @@
  "clipcache:1ea380d63bcb": {
   "source": "video:pixabay",
   "episode": "bg2",
-  "at": "2026-10-04 17:13"
+  "at": "2026-10-05 08:58"
  },
  "https://cdn.pixabay.com/video/2025/02/24/260661_medium.mp4": {
   "source": "video:pixabay",
@@ -723,5 +723,25 @@
   "source": "image:commons",
   "episode": "clouds sunset sky",
   "at": "2026-10-05 08:10"
+ },
+ "https://cdn.pixabay.com/video/2022/06/25/122078-724732492_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-05 08:58"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_2.jpg/1280px-Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque courtyard arches",
+  "at": "2026-10-05 08:58"
+ },
+ "https://cdn.pixabay.com/video/2020/03/14/33687-398256859_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-05 08:58"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/8/80/Autumn_sunlight_on_Highbury_Fields_-_geograph.org.uk_-_5971185.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "trees sunlight path",
+  "at": "2026-10-05 08:59"
  }
 }

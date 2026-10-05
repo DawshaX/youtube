@@ -587,6 +587,27 @@
    "at": "2026-10-05 08:11",
    "duration": 23.5,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791184964.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=AA4-kwg0X6E",
+   "at": "2026-10-05 08:57"
+  },
+  {
+   "id": "ayah-31-14",
+   "kind": "ayah",
+   "theme": "أخلاق",
+   "title": "أول وصية… لأمك 💐 | سورة لقمان آية 14 🤍 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791190655/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791190917.mp4",
+   "err": "too_soon",
+   "at": "2026-10-05 09:02",
+   "duration": 53.8,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -603,5 +624,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-35"
+ "last_try": "ayah-31-14"
 }
