@@ -823,5 +823,15 @@
   "source": "video:pixabay",
   "episode": "bg2",
   "at": "2026-10-05 13:10"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/2020-07-01_20_17_15_Cumulus_clouds_and_crepuscular_rays_just_before_sunset_viewed_from_Hidden_Meadow_Drive_in_the_Franklin_Glen_section_of_Chantilly%2C_Fairfax_County%2C_Virginia.jpg/1280px-thumbnail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "clouds sunlight rays sky",
+  "at": "2026-10-05 13:59"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Bunica_River_-_morning_fog-bs.jpg/1280px-Bunica_River_-_morning_fog-bs.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "calm river nature",
+  "at": "2026-10-05 13:59"
  }
 }
