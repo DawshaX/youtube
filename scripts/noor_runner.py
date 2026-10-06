@@ -161,6 +161,23 @@ def _too_soon() -> float:
     return (time.time() - last) / 60 if last else 0.0
 
 
+
+def _dupe_title(title: str) -> bool:
+    """🚫 ممنوع نشر نفس العنوان تاني (حصل فعلًا ٥+ مرات ⇒ إشارة «محتوى مكرر» عند يوتيوب)."""
+    if not title:
+        return False
+    norm = re.sub(r"\\s+", " ", str(title)).strip()
+    if not norm:
+        return False
+    try:
+        from xtrendaw import state
+        recent = [re.sub(r"\\s+", " ", str(p.get("title") or "")).strip()
+                  for p in state.published_log()[-250:]]
+    except Exception:
+        return False
+    return norm in {t for t in recent if t}
+
+
 def _publish(video, cover, title, desc, tags, synthetic=False):
     from xtrendaw import settings, state
     if DRY:
@@ -169,6 +186,10 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
     cap = state.effective_cap(settings.DAILY_CAP or 6)
     if state.published_today_pt() >= cap:
         return None, "quota_guard"
+    if _dupe_title(title) and os.environ.get("NOOR_ALLOW_DUPES") != "1":
+        print("[noor] 🚫 نفس العنوان اتنشر قبل كده — بنستبدله بحلقة تانية "
+              "(حماية من سياسة المحتوى المكرر)", flush=True)
+        return None, "duplicate"
     gap = _too_soon()
     if gap and gap < HOUR_GAP and os.environ.get("NOOR_ALLOW_BURST") != "1":
         print(f"[noor] ⏳ آخر نشرة كانت من {gap:.0f} دقيقة — النشرة الجاية بعد "
