@@ -1364,6 +1364,27 @@
    "at": "2026-10-06 16:50",
    "duration": 24.8,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791302449.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=W7UyqGDMmtI",
+   "at": "2026-10-06 17:36"
+  },
+  {
+   "id": "ayah-2-186",
+   "kind": "reel",
+   "theme": "رحمة",
+   "title": "لما تدعي… الدعاء جنبك 🍃 | رحمة 🤍 آيات قرآنية — تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791308176/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791308421.mp4",
+   "err": "too_soon",
+   "at": "2026-10-06 17:40",
+   "duration": 102.9,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -1380,5 +1401,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-94-5"
+ "last_try": "ayah-2-186"
 }
