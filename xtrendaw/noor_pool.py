@@ -183,10 +183,22 @@ def pick(item_id: str | None = None) -> dict:
     """
     used = {str(h.get("id")) for h in history()} | _broken()
     candidates = [c for c in (AYAHS + HADITHS) if c.get("id") or True]
+    # 🆕 تصنيفات جديدة (2026-10-06): أسماء الله الحسنى · أذكار حصن المسلم ·
+    #    أدعية قرآنية · قصص الأنبياء · كويز «من أي سورة؟» — كلها من APIs
+    #    مجانية موثّقة ⇒ مخزون محتوى لا ينتهي بلا تكرار.
+    try:
+        from . import noor_cats
+        for _k in noor_cats.CATS:
+            _it = noor_cats.make(_k)
+            if _it:
+                candidates.append(_it)
+    except Exception:
+        pass
     fresh = []
     for c in candidates:
-        key = f"{c['kind']}-{c.get('collection', c.get('surah'))}-" \
-              f"{c.get('index', c.get('ayah'))}"
+        key = str(c.get("id") or
+                  f"{c['kind']}-{c.get('collection', c.get('surah'))}-"
+                  f"{c.get('index', c.get('ayah'))}")
         c = dict(c)
         c["id"] = key
         if key in used:
@@ -199,8 +211,9 @@ def pick(item_id: str | None = None) -> dict:
     if not fresh:
         # خلص المخزون: نبدأ من الأول مع تنويع أكبر
         for c in candidates:
-            key = f"{c['kind']}-{c.get('collection', c.get('surah'))}-" \
-                  f"{c.get('index', c.get('ayah'))}"
+            key = str(c.get("id") or
+                      f"{c['kind']}-{c.get('collection', c.get('surah'))}-"
+                      f"{c.get('index', c.get('ayah'))}")
             c = dict(c)
             c["id"] = key
             fresh.append(c)
