@@ -78,5 +78,40 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-10-06 20:35"
+ },
+ "https://cdn.pixabay.com/video/2025/12/28/324623_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card317",
+  "at": "2026-10-06 21:23"
+ },
+ "clipcache:b5add6ccb9b7": {
+  "source": "video:pixabay",
+  "episode": "card317",
+  "at": "2026-10-06 21:23"
+ },
+ "https://cdn.pixabay.com/video/2024/08/17/226996_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card317",
+  "at": "2026-10-06 21:23"
+ },
+ "clipcache:8613ba224664": {
+  "source": "video:pixabay",
+  "episode": "card317",
+  "at": "2026-10-06 21:23"
+ },
+ "https://cdn.pixabay.com/video/2022/02/08/107143-675298848_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card317",
+  "at": "2026-10-06 21:23"
+ },
+ "clipcache:23e877c7caa4": {
+  "source": "video:pixabay",
+  "episode": "card317",
+  "at": "2026-10-06 21:23"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/018_Human_looking_at_the_stars_during_Perseids_with_the_Milky_Way_in_the_background_Photo_by_Giles_Laurent.jpg/1280px-018_Human_looking_at_the_stars_during_Perseids_with_the_Milky_Way_in_the_background_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "stars long exposure",
+  "at": "2026-10-06 21:23"
  }
 }
