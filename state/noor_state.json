@@ -41,11 +41,25 @@
    "at": "2026-10-06 21:26",
    "duration": 82.0,
    "over_180s": false
+  },
+  {
+   "id": "asma-33",
+   "kind": "asma",
+   "theme": "توحيد",
+   "title": "اسم الله «الْعَظِيمُ» ✨ | أسماء الله الحسنى 🤍 الْعَظِيمُ مع الدليل من القرآن",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791324739/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791324833.mp4",
+   "err": "quota_guard",
+   "at": "2026-10-06 22:13",
+   "duration": 10.7,
+   "over_180s": false
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "quiz-2-255",
+ "last_try": "asma-33",
  "broken": [
   "dua-3-8"
  ]

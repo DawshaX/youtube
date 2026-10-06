@@ -113,5 +113,45 @@
   "source": "image:commons",
   "episode": "stars long exposure",
   "at": "2026-10-06 21:23"
+ },
+ "https://cdn.pixabay.com/video/2024/06/07/215697_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card7",
+  "at": "2026-10-06 22:12"
+ },
+ "clipcache:57aa0341311d": {
+  "source": "video:pixabay",
+  "episode": "card7",
+  "at": "2026-10-06 22:12"
+ },
+ "https://cdn.pixabay.com/video/2017/06/28/10339-865412856_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card7",
+  "at": "2026-10-06 22:12"
+ },
+ "clipcache:cfd27fbac955": {
+  "source": "video:pixabay",
+  "episode": "card7",
+  "at": "2026-10-06 22:12"
+ },
+ "https://cdn.pixabay.com/video/2025/05/13/278841_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card7",
+  "at": "2026-10-06 22:13"
+ },
+ "clipcache:7de0383039f1": {
+  "source": "video:pixabay",
+  "episode": "card7",
+  "at": "2026-10-06 22:13"
+ },
+ "https://cdn.pixabay.com/video/2021/04/17/71428-538962667_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card7",
+  "at": "2026-10-06 22:13"
+ },
+ "clipcache:2ce92676c6db": {
+  "source": "video:pixabay",
+  "episode": "card7",
+  "at": "2026-10-06 22:13"
  }
 }
