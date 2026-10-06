@@ -1385,6 +1385,20 @@
    "at": "2026-10-06 17:40",
    "duration": 102.9,
    "over_180s": false
+  },
+  {
+   "id": "athkar-25-67",
+   "kind": "athkar",
+   "theme": "ذكر",
+   "title": "ذكر يقوّي قلبك 🤍 | الأذكار بعد السلام من الصلاة | أذكار يومية 🤍 من حصن المسلم",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791312934/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791313135.mp4",
+   "err": "quota_guard",
+   "at": "2026-10-06 18:59",
+   "duration": 30.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -1401,5 +1415,9 @@
   }
  ],
  "bad_reciters": [],
+<<<<<<< Updated upstream
  "last_try": "ayah-2-153"
+=======
+ "last_try": "athkar-25-67"
+>>>>>>> Stashed changes
 }

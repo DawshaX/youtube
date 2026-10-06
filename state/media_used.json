@@ -966,8 +966,8 @@
  },
  "clipcache:1dbee78fdae9": {
   "source": "video:pixabay",
-  "episode": "bg2",
-  "at": "2026-10-05 22:34"
+  "episode": "card12",
+  "at": "2026-10-06 18:57"
  },
  "https://cdn.pixabay.com/video/2021/05/28/75609-556482734_medium.mp4": {
   "source": "video:pixabay",
@@ -1374,6 +1374,7 @@
   "episode": "calm river nature",
   "at": "2026-10-06 17:37"
  },
+<<<<<<< Updated upstream
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Early_morning_shots_-_Crescent_Dunes%2C_near_Tonopah%2C_Nev_-_%2818103164921%29.jpg/1280px-Early_morning_shots_-_Crescent_Dunes%2C_near_Tonopah%2C_Nev_-_%2818103164921%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
   "episode": "desert dunes sunrise",
@@ -1383,5 +1384,21 @@
   "source": "image:commons",
   "episode": "rough sea rocks waves",
   "at": "2026-10-06 18:50"
+=======
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/Environs_of_the_Grand_Mosque_of_Makkah%2C_Saudi_Arabia%2C_at_night_%281%29_%2852501898355%29.jpg/1280px-Environs_of_the_Grand_Mosque_of_Makkah%2C_Saudi_Arabia%2C_at_night_%281%29_%2852501898355%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque architecture night",
+  "at": "2026-10-06 18:56"
+ },
+ "https://cdn.pixabay.com/video/2017/06/16/10018-222013922_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card12",
+  "at": "2026-10-06 18:57"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Pagan_meditation.jpg/1280px-Pagan_meditation.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "sunset silhouette meditation",
+  "at": "2026-10-06 18:57"
+>>>>>>> Stashed changes
  }
 }

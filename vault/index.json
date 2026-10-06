@@ -1,6 +1,16 @@
 {
  "assets": [
   {
+   "path": "state/videolib/1dbee78fdae9.mp4",
+   "source": "pixabay",
+   "license": "Pixabay-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://cdn.pixabay.com/video/2017/06/16/10018-222013922_medium.mp4",
+   "fetched_at": "2026-10-06T18:57:04+00:00",
+   "sha256": "982ae4c2c927c2d5b404738acd3d5a66698451836163f9c84b9b635a31d0c06b"
+  },
+  {
    "path": "state/videolib/1ea380d63bcb.mp4",
    "source": "pixabay",
    "license": "Pixabay-License",
