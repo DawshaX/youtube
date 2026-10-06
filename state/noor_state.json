@@ -1049,6 +1049,27 @@
    "at": "2026-10-06 04:23",
    "duration": 42.7,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791257594.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=vgCtB5Zu_H4",
+   "at": "2026-10-06 05:09"
+  },
+  {
+   "id": "ayah-31-14",
+   "kind": "reel",
+   "theme": "أخلاق",
+   "title": "أول وصية… لأمك 💐 | أخلاق 🤍 آيات قرآنية — تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791263369/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791263729.mp4",
+   "err": "too_soon",
+   "at": "2026-10-06 05:15",
+   "duration": 100.4,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -1065,5 +1086,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-49-13"
+ "last_try": "ayah-31-14"
 }
