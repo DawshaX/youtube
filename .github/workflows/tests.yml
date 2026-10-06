@@ -31,4 +31,4 @@ jobs:
           echo "✓ مفيش أسماء غير معرّفة"
 
       - name: Node — النشر
-        run: node --test tests/publishing.test.js
+        run: node --test tests/publishing.test.js pytest requests pillow numpy
