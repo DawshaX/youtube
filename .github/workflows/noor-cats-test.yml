@@ -1,0 +1,44 @@
+name: 🧪 نور — اختبار التصنيفات الجديدة (رندر بلا نشر)
+
+# تشغيل يدوي فقط: يرندر كل تصنيف جديد (أسماء الله · أذكار · كويز) للتأكد إن
+# القوالب بتشتغل على السيرفر، وبيتحقق من بيانات الأدعية والقصص.
+# ⚠️ صفر رفع وصفر نشر — ده اختبار جودة بس.
+on:
+  workflow_dispatch:
+    inputs:
+      kinds:
+        description: 'تصنيفات معيّنة (فاصلة) — فاضي = كله'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  cats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: تجهيز المكتبات
+        run: |
+          python -m pip install --quiet --upgrade pip
+          python -m pip install --quiet pillow requests numpy edge-tts \
+            imageio-ffmpeg arabic-reshaper python-bidi
+      - name: تشغيل الاختبار
+        env:
+          NOOR_DRY: '1'
+          KINDS: ${{ inputs.kinds }}
+        run: |
+          if [ -n "$KINDS" ]; then
+            python - <<'PY'
+import os, pathlib, sys
+sys.path.insert(0, str(pathlib.Path(".").resolve()))
+from xtrendaw import noor_cats
+print("التصنيفات المتاحة:", noor_cats.CATS)
+PY
+          fi
+          python scripts/noor_cats_test.py
