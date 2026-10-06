@@ -1301,6 +1301,27 @@
    "at": "2026-10-06 14:18",
    "duration": 23.6,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791293317.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=uRivVqgXEvw",
+   "at": "2026-10-06 15:04"
+  },
+  {
+   "id": "ayah-13-28",
+   "kind": "reel",
+   "theme": "رحمة",
+   "title": "قلبك بيدق ليه؟ ❤️ | رحمة 🤍 آيات قرآنية — تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791299060/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791299453.mp4",
+   "err": "too_soon",
+   "at": "2026-10-06 15:10",
+   "duration": 92.5,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -1317,5 +1338,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "hadith-bukhari-38"
+ "last_try": "ayah-13-28"
 }
