@@ -391,6 +391,21 @@ def _tags_of(item: dict, res: dict, kind: str, reciter: str) -> list[str]:
     elif kind == "reel":
         head = ["آيات قرآنية", f"تدبّر {item.get('theme', '')}".strip(),
                 "تلاوة خاشعة", "سلاسل قرآنية", "قرآن كريم"]
+    elif kind == "asma":
+        head = ["أسماء الله الحسنى", "التوحيد", str(item.get("name") or ""),
+                "أسماء الله", "معاني أسماء الله", "إسلاميات"]
+    elif kind == "athkar":
+        head = ["أذكار", "حصن المسلم", "أذكار الصباح والمساء", "ذكر الله",
+                "تسبيح", "أذكار النوم"]
+    elif kind == "dua":
+        head = ["دعاء", "أدعية قرآنية", "دعاء من القرآن", "آيات قرآنية",
+                "تلاوة خاشعة", "سكينة"]
+    elif kind == "story":
+        head = [f"قصة {item.get('who', '')}".strip(), "قصص الأنبياء",
+                "قصص القرآن", "قصص إسلامية", "تلاوة خاشعة"]
+    elif kind == "quiz":
+        head = ["كويز إسلامي", "اختبر معرفتك", "أسئلة دينية", "من أي سورة",
+                "تحدي قرآني", "معلومات إسلامية"]
     else:
         head = ["آيات قرآنية", f"سورة {name}", "تلاوة خاشعة", "آية وسكينة",
                 "تدبّر القرآن"]
@@ -517,6 +532,84 @@ def _short_one() -> int:
         src_lines = [f"📖 {res['book']} — حديث رقم {res['number']}",
                      "✅ حديث من كتب السنة المعتمدة (نص أصلي بلا تصرّف)."]
         extra = "#حديث #السنة_النبوية"
+        hook_line = item["hook"]
+    elif item["kind"] in ("asma", "athkar"):
+        # 🆕 أسماء الله الحسنى (api.aladhan) + أذكار حصن المسلم — كارت منطوق
+        from xtrendaw import noor_cards
+        res = noor_cards.build_card_short(item, work)
+        if item["kind"] == "asma":
+            nm = _clean_surah(item.get("surah_name") or "")
+            ref = (f"اسم الله {item['name']} — سورة {nm} "
+                   f"({item['surah']}:{item['ayah']})")
+            title = (f"{item['hook']} | أسماء الله الحسنى 🤍 {item['name']} "
+                     f"مع الدليل من القرآن")
+            body = (f"{item['name']} — {item.get('meaning', '')}\n"
+                    f"﴿ {str(item.get('verse') or '')[:280]} ﴾\n"
+                    f"🧩 {str(item.get('tafsir') or '')[:280]}")
+            src_lines = [f"📖 الدليل: سورة {nm} — الآية {item['ayah']}",
+                         "🧩 التفسير الميسّر (مجمّع الملك فهد) عبر alquran.cloud",
+                         f"🇬🇧 Meaning: {item.get('meaning', '')}"]
+            extra = "#أسماء_الله_الحسنى #التوحيد #ذكر_الله"
+        else:
+            ref = str(item.get("source") or "حصن المسلم")
+            title = f"{item['hook']} | أذكار يومية 🤍 من حصن المسلم"
+            body = str((item.get("lines") or [""])[0])[:700]
+            src_lines = [f"🧿 {item.get('source', '')}",
+                         "✅ ذكر ثابت من حصن المسلم (بالنص الأصلي، بلا زيادة)."]
+            extra = "#أذكار #حصن_المسلم #ذكر_الله #تسبيح"
+        hook_line = item["hook"]
+    elif item["kind"] == "quiz":
+        # 🆕 كويز «من أي سورة هذه الآية؟» — التفاعل (التعليقات) = وقود الخوارزمية
+        from xtrendaw import noor_cards
+        res = noor_cards.build_quiz_short(item, work)
+        nm = _clean_surah(item.get("surah_name") or "")
+        ref = f"كويز: من أي سورة هذه الآية؟ — الإجابة سورة {nm}"
+        title = (f"من أي سورة هذه الآية؟ 👀 | اختبر معرفتك بالقرآن 📖 "
+                 f"كويز إسلامي")
+        body = ("اسمع الآية، واختار السورة الصح، واكتب توقعك في التعليق "
+                "قبل ما تسمع الإجابة 🤍\n\n"
+                f"السؤال: من أي سورة هذه الآية؟\n"
+                f"الاختيارات: {' · '.join(item.get('options') or [])}\n\n"
+                f"✅ الإجابة: {item.get('answer')} (الآية {item['ayah']})\n"
+                f"﴿ {str(item.get('verse') or '')[:200]} ﴾")
+        src_lines = [f"📖 سورة {nm} — الآية {item['ayah']}",
+                     f"🎙️ تلاوة: {res.get('reciter', '')} — «من أي سورة» كويز"]
+        extra = "#كويز_إسلامي #اختبر_معرفتك #أسئلة_دينية #القرآن_الكريم"
+        hook_line = item["hook"]
+    elif item["kind"] in ("dua", "story"):
+        # 🆕 أدعية قرآنية + قصص الأنبياء — آيات بتلاوة حقيقية + تفسير ميسّر
+        from xtrendaw import noor_premium as np
+        _outro = ("لو الدعاء لمس قلبك، اكتب آمين وشاركه مع حد بتحبه 🤲 "
+                  "وتابعنا… نور جديد كل يوم."
+                  if item["kind"] == "dua" else
+                  "لو القصة أفادتك، شاركها مع حد بتحبه 🤍 "
+                  "وتابعنا… قصص القرآن من غير ما تتقطع.")
+        res = np.render({"surah": item["surah"], "ayah": item["ayah"],
+                         "ayah_to": item.get("ayah_to"),
+                         "reciter": item.get("reciter", "husary"),
+                         "scenes": item.get("scenes"),
+                         "hook": item["hook"], "outro": _outro}, work)
+        nm = _clean_surah(res.get("surah") or item.get("surah_name") or "")
+        num = (f"الآيات {item['ayah']}–{item['ayah_to']}"
+               if item.get("ayah_to") and item["ayah_to"] != item.get("ayah")
+               else f"آية {item['ayah']}")
+        if item["kind"] == "dua":
+            title = (f"{item['hook']} | دعاء من سورة {nm} ({num}) 🤲 "
+                     f"تلاوة {res['reciter']}")
+            extra = "#أدعية #دعاء #آيات_قرآنية #تدبر"
+            src_lines = [f"🎙️ تلاوة: {res['reciter']} — سورة {nm} {num}",
+                         "🧩 التفسير الميسّر (مجمّع الملك فهد) عبر alquran.cloud",
+                         "🤲 دعاء قرآني — اقرأه بحضور قلب."]
+        else:
+            who = item.get("who") or "قصص القرآن"
+            title = (f"{item['hook']} | قصة {who} من سورة {nm} 🤍 "
+                     f"تلاوة {res['reciter']}")
+            extra = "#قصص_الأنبياء #قصص_القرآن #تلاوة_خاشعة"
+            src_lines = [f"🎙️ تلاوة: {res['reciter']} — سورة {nm} {num}",
+                         "🧩 التفسير الميسّر (مجمّع الملك فهد) عبر alquran.cloud",
+                         f"📖 قصة {who} — نص القرآن فقط (بلا زيادات)."]
+        body = res["text"]
+        ref = f"{num} — سورة {nm}"
         hook_line = item["hook"]
     else:
         from xtrendaw import noor_premium as np
