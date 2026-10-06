@@ -986,6 +986,27 @@
    "at": "2026-10-06 01:53",
    "duration": 25.8,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791248686.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=qlvucVEh4IY",
+   "at": "2026-10-06 02:39"
+  },
+  {
+   "id": "ayah-47-15",
+   "kind": "reel",
+   "theme": "جنة",
+   "title": "تخيل الجنّة لحظة 🏞️ | جنة 🤍 آيات قرآنية — تلاوة عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791254374/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791254649.mp4",
+   "err": "too_soon",
+   "at": "2026-10-06 02:44",
+   "duration": 129.8,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -1002,5 +1023,5 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ayah-39-35"
+ "last_try": "ayah-47-15"
 }

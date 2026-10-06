@@ -1053,5 +1053,20 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-10-06 01:52"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/Amargosa_Wild_and_Scenic_River%2C_California_%2835827312433%29.jpg/1280px-Amargosa_Wild_and_Scenic_River%2C_California_%2835827312433%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "waterfall lush garden",
+  "at": "2026-10-06 02:39"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Cam_Paradise_Reserve.jpg/1280px-Cam_Paradise_Reserve.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "river paradise nature",
+  "at": "2026-10-06 02:40"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/Buddleja_globosa_single_flower_cluster_closeup.jpg/1280px-Buddleja_globosa_single_flower_cluster_closeup.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "butterfly flowers closeup",
+  "at": "2026-10-06 02:40"
  }
 }
