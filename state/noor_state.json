@@ -440,6 +440,27 @@
    "at": "2026-10-07 22:37",
    "duration": 39.8,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791313135.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=UJhU2hoAbLA",
+   "at": "2026-10-07 23:39"
+  },
+  {
+   "id": "dua-2-127",
+   "kind": "dua",
+   "theme": "ذكر",
+   "title": "دعاء من القرآن لقلبك 🤲 | دعاء من سورة البقرة (آية 127) 🤲 تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791416368/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791416559.mp4",
+   "err": "too_soon",
+   "at": "2026-10-07 23:42",
+   "duration": 31.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -456,7 +477,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "q-001-005",
+ "last_try": "dua-2-127",
  "broken": [
   "dua-3-8"
  ]
