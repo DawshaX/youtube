@@ -426,6 +426,20 @@
    "at": "2026-10-07 21:53",
    "duration": 11.4,
    "over_180s": false
+  },
+  {
+   "id": "q-001-005",
+   "kind": "ayah",
+   "theme": "قرآن",
+   "title": "آية افتح بيها يومك 🌅 | سورة ٱلفاتحة الآيات 5–7 🤍 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791412439/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791412631.mp4",
+   "err": "too_soon",
+   "at": "2026-10-07 22:37",
+   "duration": 39.8,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -442,7 +456,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "asma-80",
+ "last_try": "q-001-005",
  "broken": [
   "dua-3-8"
  ]
