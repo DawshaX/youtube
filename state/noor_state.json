@@ -398,6 +398,20 @@
    "at": "2026-10-07 20:18",
    "duration": 32.7,
    "over_180s": false
+  },
+  {
+   "id": "h-bukhari-1",
+   "kind": "hadith",
+   "theme": "حديث",
+   "title": "حديث صحيح ✅ 📖 حديث صحيح — صحيح البخاري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791407127/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791407328.mp4",
+   "err": "too_soon",
+   "at": "2026-10-07 21:08",
+   "duration": 30.4,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -414,7 +428,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "q-001-001",
+ "last_try": "h-bukhari-1",
  "broken": [
   "dua-3-8"
  ]

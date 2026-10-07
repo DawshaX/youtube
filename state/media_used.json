@@ -538,5 +538,40 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-10-07 20:17"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Chandelier_not_on_and_arch_inside_Jinnah_Memorial_Mosque_AKA_St_Joseph_TML_Masjid.jpg/1280px-Chandelier_not_on_and_arch_inside_Jinnah_Memorial_Mosque_AKA_St_Joseph_TML_Masjid.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-10-07 21:05"
+ },
+ "https://cdn.pixabay.com/video/2016/07/08/3742-174173818_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-10-07 21:06"
+ },
+ "clipcache:6293e8549d2c": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-10-07 21:06"
+ },
+ "https://cdn.pixabay.com/video/2021/08/18/85526-589164621_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-10-07 21:06"
+ },
+ "clipcache:9ad3e7ea2a37": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-10-07 21:06"
+ },
+ "https://cdn.pixabay.com/video/2020/01/12/31180-384523319_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-10-07 21:07"
+ },
+ "clipcache:8714af0b9515": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-10-07 21:07"
  }
 }
