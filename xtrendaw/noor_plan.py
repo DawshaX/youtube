@@ -28,16 +28,28 @@ STOCK = settings.STATE / "noor_cache" / "stock"
 UA = {"User-Agent": "NoorFactory/1.0 (free Islamic dawah content)"}
 
 # توزيع الأنواع: قرآن أكتر (هو القلب) + حديث + تنويع
+# 🆕 2026-10-07: ٢٨ خطوة — كل الأنواع بتنوّع على مدار اليوم
 ROTATION = ["quran", "hadith", "asma", "quran", "dua", "qissa", "athkar",
-            "quran", "quiz", "spirit", "quran", "tafsir", "hadith", "spirit",
-            "quran", "asma", "dua", "qissa", "quran", "athkar", "spirit",
-            "quran", "hadith", "quiz", "quran", "spirit", "dua", "quran"]
+            "quran", "quiz", "spirit", "quran", "salah", "tafsir", "hadith",
+            "spirit", "quran", "asma", "hijri", "quran", "proverb", "dua",
+            "quran", "qfacts", "qissa", "quran", "hadith", "spirit", "quran"]
+
+COLLECTIONS = ("bukhari", "muslim", "abudawud", "nasai", "ibnmajah",
+               "malik", "nawawi", "dehlawi")
 
 QURAN_HOOKS = ["آية تُريح القلب 🤍", "تلاوة تُسكِن الروح 🕊️", "كلام الله… اسمعها بقلبك",
                "آية لكل قلب تعبان 💛", "دقيقة مع القرآن ✨", "لو قلبك مشغول… اسمع دي",
                "آية افتح بيها يومك 🌅", "تلاوة هادية لقلبك 🌿"]
 TAFSIR_HOOKS = ["افهم الآية دي صح 🧩", "تدبّر آية… تغيّر نظرتك", "معنى آية كنت بتقراها ومش فاهمها"]
 QISSA_HOOKS = ["قصة من القرآن 🤍", "حكاية فيها عبرة 📖", "قصة من غير ما تتقطع 📚"]
+
+
+def _surah_ar(name: str | None) -> str:
+    try:
+        from .noor_cats import strip_marks
+        return strip_marks(name or "").replace("سورة", "").strip() or str(name or "")
+    except Exception:
+        return str(name or "")
 
 
 def _ledger() -> dict:
@@ -83,14 +95,16 @@ def windows() -> list[dict]:
     wins = []
     for s in data:
         n, num = int(s["numberOfAyahs"]), int(s["number"])
-        if n <= 3:
-            wins.append({"surah": num, "frm": 1, "to": n, "name": s.get("name", "")})
-            continue
-        step = 4
+        step = n if n <= 4 else 4
+        parts = []
         for frm in range(1, n + 1, step):
             to = min(n, frm + step - 1)
-            wins.append({"surah": num, "frm": frm, "to": to,
-                         "name": s.get("name", "")})
+            parts.append({"surah": num, "frm": frm, "to": to,
+                          "name": s.get("name", "")})
+        # 🎬 ترقيم السلسلة (سورة البقرة ٣ / ٧٢) — بيخلّي المشاهد يكمّل ويشترك
+        for i, w in enumerate(parts, 1):
+            w["idx"], w["total"] = i, len(parts)
+            wins.append(w)
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(wins, ensure_ascii=False), encoding="utf-8")
     return wins
@@ -153,11 +167,14 @@ def series(kind: str) -> list[tuple[str, dict]]:
             out.append((key, {"kind": "ayah", "surah": w["surah"],
                               "ayah": w["frm"], "ayah_to": w["to"],
                               "theme": "قرآن" if kind == "quran" else "تدبر",
-                              "hook": hook, "plan": kind}))
+                              "hook": hook, "plan": kind,
+                              "series": (f"سلسلة {_surah_ar(w.get('name'))} "
+                                         f"({w.get('idx', 1)}/{w.get('total', 1)})")
+                              if w.get("total") else ""}))
         return out
     if kind == "hadith":
         out = []
-        for col in ("bukhari", "muslim"):
+        for col in COLLECTIONS:      # 🆕 ٨ مجموعات (~٣٢ ألف حديث)
             for h in hadith_stock(col):
                 out.append((f"h-{col}-{h['n']}",
                             {"kind": "hadith", "collection": col,
@@ -213,7 +230,7 @@ def next_item() -> dict | None:
 def stats() -> dict:
     """جردة المخزون — كام حلقة متاحة وكام اتعمل (للتقرير)."""
     out = {"done": len(done_keys()), "kinds": {}}
-    for kind in ("quran", "tafsir", "hadith", "qissa", "spirit"):
+    for kind in ("quran", "tafsir", "qissa", "spirit"):
         try:
             n = len(series(kind))
         except Exception:
