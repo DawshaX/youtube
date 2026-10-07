@@ -184,7 +184,11 @@ def make_athkar() -> dict | None:
         cats = _cache("hisn_index.json", _hisn_categories, ttl_hours=24 * 30)
     except Exception:
         return None
-    cats = [c for c in cats if str(c.get("TITLE")) in ATHKAR_WANTED]
+    # 🆕 كل أبواب حصن المسلم (١٣٢ باب) — مش ١٠ بس. الفلترة الآمنة تحت
+    # بتستبعد أي باب مفيهوش ذكر نظيف قابل للنطق.
+    priority = [c for c in cats if str(c.get("TITLE")) in ATHKAR_WANTED]
+    rest = [c for c in cats if str(c.get("TITLE")) not in ATHKAR_WANTED]
+    cats = priority + rest
     if not cats:
         return None
     idx = _rot() % len(cats)
@@ -288,6 +292,49 @@ STORIES = [
      "hook": "أصحاب الكهف… المعجزة 🕯️"},
     {"who": "لقمان", "surah": 31, "ayah": 12, "ayah_to": 13,
      "hook": "وصية لقمان… لأولاده 🧡"},
+    # 🆕 توسعة 2026-10-07: قصص من القرآن (نصوص آيات موثّقة — بلا كتابة من الذاكرة)
+    {"who": "موسى والخضر", "surah": 18, "ayah": 60, "ayah_to": 65,
+     "hook": "رحلة موسى… والعبد الصالح 🌊"},
+    {"who": "موسى والخضر", "surah": 18, "ayah": 71, "ayah_to": 82,
+     "hook": "ثلاث مواقف… وحكمة مخفية 🕯️"},
+    {"who": "طالوت وداود", "surah": 2, "ayah": 246, "ayah_to": 251,
+     "hook": "قلة غلبت كثرة 🛡️"},
+    {"who": "قارون", "surah": 28, "ayah": 76, "ayah_to": 79,
+     "hook": "كنز قارون… وما نفع؟ 🏛️"},
+    {"who": "أصحاب البستان", "surah": 68, "ayah": 17, "ayah_to": 24,
+     "hook": "بستان احترق في ليلة 🌾"},
+    {"who": "قوم سبأ", "surah": 34, "ayah": 15, "ayah_to": 19,
+     "hook": "نعمة سبأ… لما اتنكرت 🍇"},
+    {"who": "لوط", "surah": 11, "ayah": 77, "ayah_to": 83,
+     "hook": "لوط… وضيوف الملائكة 🕊️"},
+    {"who": "شعيب", "surah": 11, "ayah": 84, "ayah_to": 88,
+     "hook": "شعيب… والميزان العدل ⚖️"},
+    {"who": "صالح", "surah": 7, "ayah": 73, "ayah_to": 79,
+     "hook": "ناقة صالح… الآية 🐪"},
+    {"who": "هود", "surah": 7, "ayah": 65, "ayah_to": 72,
+     "hook": "هود… وقوم عاد 🏜️"},
+    {"who": "إبراهيم والنار", "surah": 21, "ayah": 68, "ayah_to": 70,
+     "hook": "النار… لما بقت بردًا 🔥"},
+    {"who": "سليمان والهدهد", "surah": 27, "ayah": 20, "ayah_to": 28,
+     "hook": "هدهد سليمان… والخبر العجيب 🐦"},
+    {"who": "ملكة سبأ", "surah": 27, "ayah": 29, "ayah_to": 35,
+     "hook": "ملكة سبأ… ورسالة سليمان 👑"},
+    {"who": "يوسف في السجن", "surah": 12, "ayah": 36, "ayah_to": 42,
+     "hook": "يوسف… والسجن اللي بقى نور 🌟"},
+    {"who": "رؤيا الملك", "surah": 12, "ayah": 43, "ayah_to": 49,
+     "hook": "سبع بقرات… ورؤيا الملك 🐄"},
+    {"who": "لقاء يوسف وإخوته", "surah": 12, "ayah": 58, "ayah_to": 68,
+     "hook": "لما التقى يوسف بإخوته ✨"},
+    {"who": "يونس والحوت", "surah": 37, "ayah": 139, "ayah_to": 148,
+     "hook": "يونس… وفي بطن الحوت 🐋"},
+    {"who": "زكريا ويحيى", "surah": 19, "ayah": 2, "ayah_to": 15,
+     "hook": "دعاء زكريا… بعد اليأس 🤲"},
+    {"who": "عيسى", "surah": 3, "ayah": 45, "ayah_to": 51,
+     "hook": "بشارة عيسى… وكلام الله ✨"},
+    {"who": "الإسراء", "surah": 17, "ayah": 1,
+     "hook": "رحلة الإسراء… من المسجد الحرام 🌙"},
+    {"who": "دعاء ذي النون", "surah": 21, "ayah": 87, "ayah_to": 88,
+     "hook": "لا إله إلا أنت… سبحانك 🤲"},
 ]
 
 
