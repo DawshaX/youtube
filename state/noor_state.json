@@ -377,6 +377,27 @@
    "at": "2026-10-07 17:24",
    "duration": 61.8,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791312671.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=215r2iosB_0",
+   "at": "2026-10-07 20:15"
+  },
+  {
+   "id": "q-001-001",
+   "kind": "ayah",
+   "theme": "قرآن",
+   "title": "كلام الله… اسمعها بقلبك | سورة ٱلفاتحة الآيات 1–4 🤍 تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791404161/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791404319.mp4",
+   "err": "too_soon",
+   "at": "2026-10-07 20:18",
+   "duration": 32.7,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -393,7 +414,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "dua-18-14",
+ "last_try": "q-001-001",
  "broken": [
   "dua-3-8"
  ]
