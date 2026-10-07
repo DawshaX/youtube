@@ -17,6 +17,7 @@ from __future__ import annotations
 import datetime as _dt
 import json
 import time
+import urllib.parse
 import urllib.request
 
 from . import settings
@@ -70,6 +71,15 @@ def _get(url: str, timeout: int = 30):
         .read().decode("utf-8-sig", "replace"))
 
 
+def self_test() -> list[str]:
+    """فحص سريع لكل المدن — يرجّع أسماء اللي فشلت (للتقرير)."""
+    bad = []
+    for i, (ar, en, country) in enumerate(CITIES):
+        if not make_salah(i):
+            bad.append(ar)
+    return bad
+
+
 def _cache(name: str, fn, ttl_h: float = 6.0):
     CACHE.mkdir(parents=True, exist_ok=True)
     p = CACHE / name
@@ -98,8 +108,10 @@ def make_salah(city_index: int | None = None) -> dict | None:
     ar, en, country = CITIES[i]
     day = time.strftime("%Y-%m-%d", time.gmtime())
     def fetch():
-        d = _get(f"https://api.aladhan.com/v1/timingsByCity?city={en}"
-                 f"&country={country}&method=4")["data"]
+        # 🔧 مسافات أسماء المدن لازم تترمّز (New York / Abu Dhabi / Kuwait City)
+        d = _get("https://api.aladhan.com/v1/timingsByCity"
+                 f"?city={urllib.parse.quote(en)}"
+                 f"&country={urllib.parse.quote(country)}&method=4")["data"]
         t = d["timings"]
         return {"fajr": t["Fajr"], "dhuhr": t["Dhuhr"], "asr": t["Asr"],
                 "maghrib": t["Maghrib"], "isha": t["Isha"],
