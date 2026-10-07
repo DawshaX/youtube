@@ -161,6 +161,10 @@ def make_asma() -> dict | None:
 
 # ─────────────────────────────── ٢) الأذكار (حصن المسلم) ───────────────────────
 
+# 🛡️ أبواب تُستبعد من العرض العام (قناة مناسبة لكل العالم والعيلة)
+ATHKAR_EXCLUDE = ("الخلاء", "الجماع", "إتيان", "الحيض", "الجنابة",
+                  "الاستنجاء", "قضاء الحاجة", "النفاس", "الغسل")
+
 ATHKAR_WANTED = ["أذكار الصباح والمساء", "أذكار النوم", "أذكار الاستيقاظ من النوم",
                  "الأذكار بعد السلام من الصلاة", "دعاء الهم والحزن",
                  "دعاء الفزع في النوم و من بُلِيَ بالوحشة", "أذكار السفر",
@@ -195,6 +199,8 @@ def make_athkar() -> dict | None:
     for k in range(len(cats)):
         c = cats[(idx + k) % len(cats)]
         title = str(c.get("TITLE"))
+        if any(x in title for x in ATHKAR_EXCLUDE):
+            continue
         url = str(c.get("TEXT") or "").replace("http://", "https://")
         if not url.endswith(".json"):
             continue
@@ -211,6 +217,8 @@ def make_athkar() -> dict | None:
             if not t or "﴿" in t or "ﷺ" in t:
                 continue          # فيها آية أو صيغة صلاة على النبي → نخليها لحلقة تانية
             if len(t.split()) < 4 or len(t.split()) > 60:
+                continue
+            if any(x in t for x in ATHKAR_EXCLUDE):
                 continue
             clean.append({"id": (it or {}).get("ID"), "text": t,
                           "repeat": (it or {}).get("REPEAT") or ""})
@@ -368,11 +376,8 @@ SURAH_NAMES = ["الكهف", "يوسف", "البقرة", "الرحمن", "مري
                "الأعلى", "الشمس", "الضحى", "الكوثر", "الإخلاص", "المعارج", "القيامة"]
 
 
-def make_quiz() -> dict | None:
-    if not QUIZ_REFS:
-        return None
-    turn = _rot()
-    s, a = QUIZ_REFS[turn % len(QUIZ_REFS)]
+def _quiz_item(s: int, a: int, turn: int = 0) -> dict | None:
+    """يبني كويز لآية محددة (نفس منطق make_quiz بلا دوران)."""
     try:
         v = ayah_full(s, a)
     except Exception:
@@ -396,6 +401,14 @@ def make_quiz() -> dict | None:
     }
 
 
+def make_quiz() -> dict | None:
+    if not QUIZ_REFS:
+        return None
+    turn = _rot()
+    s, a = QUIZ_REFS[turn % len(QUIZ_REFS)]
+    return _quiz_item(s, a, turn)
+
+
 MAKERS = {"asma": make_asma, "athkar": make_athkar, "dua": make_dua,
           "story": make_story, "quiz": make_quiz}
 
@@ -408,3 +421,171 @@ def make(kind: str) -> dict | None:
         return fn()
     except Exception:
         return None
+
+
+# ─────────── 📦 المجمّعات (لكل الأنواع) — وقود المخطّط الأبدي ───────────
+# ليه؟ المخطّط محتاج يعرف **كل** المتاح مش عنصر واحد كل مرة. المجمّعات دي
+# بترجّع قوائم كاملة، وبتكمل نفسها تدريجيًا (كل تشغيل بيزوّد شويّة) عشان
+# ما تعلّقش الدورة على مئات نداءات الشبكة.
+
+POOL_DIR = settings.STATE / "noor_cache" / "pools"
+
+
+def _pool(name: str) -> list[dict]:
+    try:
+        f = POOL_DIR / f"{name}.json"
+        if f.exists():
+            return json.loads(f.read_text(encoding="utf-8")) or []
+    except Exception:
+        pass
+    return []
+
+
+def _pool_add(name: str, items: list[dict]) -> list[dict]:
+    """يضمّ الجديد لمجمّع محفوظ على git — بلا تكرار."""
+    POOL_DIR.mkdir(parents=True, exist_ok=True)
+    f = POOL_DIR / f"{name}.json"
+    have = _pool(name)
+    seen = {str(x.get("id")) for x in have}
+    merged = have + [x for x in items if str(x.get("id")) not in seen]
+    try:
+        f.write_text(json.dumps(merged, ensure_ascii=False), encoding="utf-8")
+    except Exception:
+        pass
+    return merged
+
+
+def athkar_pool(limit: int = 200) -> list[dict]:
+    """كل الأذكار النظيفة القابلة للنطق من أبواب حصن المسلم (بلا الحسّاسة)."""
+    try:
+        cats = _cache("hisn_index.json", _hisn_categories, ttl_hours=24 * 30)
+    except Exception:
+        cats = []
+    out = []
+    for c in cats:
+        title = str(c.get("TITLE") or "")
+        if not title or any(x in title for x in ATHKAR_EXCLUDE):
+            continue
+        url = str(c.get("TEXT") or "").replace("http://", "https://")
+        if not url.endswith(".json"):
+            continue
+        try:
+            items = _cache(f"hisn_{c.get('ID')}.json", lambda u=url: _json(u),
+                           ttl_hours=24 * 30)
+        except Exception:
+            continue
+        if isinstance(items, dict):
+            items = next((v for v in items.values() if isinstance(v, list)), [])
+        for it in (items or []):
+            t = str((it or {}).get("ARABIC_TEXT") or "").strip()
+            if not t or "﴿" in t or "ﷺ" in t:
+                continue
+            if len(t.split()) < 4 or len(t.split()) > 60:
+                continue
+            if any(x in t for x in ATHKAR_EXCLUDE):
+                continue
+            out.append({"id": f"athkar-{c.get('ID')}-{(it or {}).get('ID')}",
+                        "kind": "athkar", "theme": "ذكر",
+                        "hook": f"ذكر يقوّي قلبك 🤍 | {title}",
+                        "lines": [t], "source": f"🧿 حصن المسلم — {title}",
+                        "repeat": (it or {}).get("REPEAT") or ""})
+            if len(out) >= limit:
+                return _pool_add("athkar", out)
+    return _pool_add("athkar", out)
+
+
+def asma_pool(limit: int = 99, per_run: int = 14) -> list[dict]:
+    """أسماء الله الـ٩٩ اللي ليها دليل قرآني — بيكمل نفسه تدريجيًا."""
+    got = _pool("asma")
+    if len(got) >= limit:
+        return got[:limit]
+    try:
+        names = _cache("asma99.json",
+                       lambda: (_json(ASMA_API) or {}).get("data") or [],
+                       ttl_hours=24 * 60)
+    except Exception:
+        return got
+    have = {str(x.get("id")) for x in got}
+    fresh = []
+    for n in names:
+        if len(fresh) >= per_run:
+            break
+        if not isinstance(n, dict) or not n.get("name"):
+            continue
+        key = f"asma-{n.get('number')}"
+        if key in have:
+            continue
+        pure = strip_marks(n["name"]).replace("ال", "", 1) \
+            if len(strip_marks(n["name"])) > 4 else strip_marks(n["name"])
+        try:
+            refs = _cache(f"asma_refs_{n.get('number')}.json",
+                          lambda p=pure: search_refs(p, limit=10),
+                          ttl_hours=24 * 60)
+        except Exception:
+            refs = []
+        for s, a in (refs or [])[:6]:
+            try:
+                v = ayah_full(s, a)
+            except Exception:
+                continue
+            if pure and pure in strip_marks(v["text"]):
+                fresh.append({
+                    "id": key, "kind": "asma", "theme": "توحيد",
+                    "hook": f"تعرف معنى «{n['name']}»؟ ✨",
+                    "name": n["name"],
+                    "meaning": ((n.get("en") or {}).get("meaning") or ""),
+                    "surah": s, "ayah": a, "surah_name": v["surah_name"],
+                    "verse": v["text"], "tafsir": v["tafsir"]})
+                break
+    return _pool_add("asma", fresh)[:limit] if fresh else got
+
+
+def dua_pool(limit: int = 120, per_run: int = 18) -> list[dict]:
+    """أدعية قرآنية «ربنا…» — بيكمل نفسه تدريجيًا."""
+    got = _pool("dua")
+    if len(got) >= limit:
+        return got[:limit]
+    try:
+        refs = _cache("dua_refs.json", lambda: search_refs("ربنا", limit=200),
+                      ttl_hours=24 * 30)
+    except Exception:
+        refs = []
+    have = {str(x.get("id")) for x in got}
+    fresh = []
+    for s, a in (refs or []):
+        if len(fresh) >= per_run:
+            break
+        key = f"dua-{s}-{a}"
+        if key in have:
+            continue
+        try:
+            v = ayah_full(s, a)
+        except Exception:
+            continue
+        if "ربنا" in strip_marks(v["text"]) or "ربى" in strip_marks(v["text"]):
+            fresh.append({"id": key, "kind": "dua", "theme": "ذكر",
+                          "hook": "دعاء من القرآن لقلبك 🤲",
+                          "surah": s, "ayah": a,
+                          "surah_name": v["surah_name"], "verse": v["text"],
+                          "tafsir": v["tafsir"]})
+    return _pool_add("dua", fresh)[:limit] if fresh else got
+
+
+def quiz_pool() -> list[dict]:
+    """كل الكويزات الجاهزة (الآية + الاختيارات + الإجابة)."""
+    got = _pool("quiz")
+    if len(got) >= len(QUIZ_REFS):
+        return got
+    have = {str(x.get("id")) for x in got}
+    out = list(got)
+    for s, a in QUIZ_REFS:
+        key = f"quiz-{s}-{a}"
+        if key in have:
+            continue
+        try:
+            item = _quiz_item(s, a)
+        except Exception:
+            item = None
+        if item:
+            out.append(item)
+    return _pool_add("quiz", out)
