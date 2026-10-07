@@ -134,6 +134,10 @@ jobs:
           NOOR_CHANNEL_NAME: 'XTreNDAW'
           # حلقة واحدة في الدورة (والدورة كل ساعة) = نشرة كل ساعة بالظبط
           NOOR_PER_CYCLE: '1'
+          # 🧠 المخطّط الأبدي: مخزون آلاف الحلقات بلا تكرار (قرآن/تفسير/حديث/قصص/روحانيات)
+          NOOR_PLAN: '1'
+          # 🌍 الطبقة العالمية: ترجمة العنوان + ترجمة الآية المعتمدة في الوصف
+          NOOR_GLOBAL: '1'
           NOOR_DRY: ${{ inputs.dry_run && '1' || '0' }}
         run: |
           set -o pipefail
@@ -185,6 +189,10 @@ jobs:
             [ -f "$f" ] && git add -f "$f"
           done
           # ملفات الأحاديث الصغيرة (الكاش الكبير مستثنى في .gitignore)
+          # كاش المخزون (نوافذ القرآن + الأحاديث القصيرة + المسجّل) — يفضل على git
+          for f in state/noor_ledger.json state/noor_cache/stock/*.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
           for f in state/noor_cache/h-*.json; do
             [ -f "$f" ] && git add -f "$f"
           done
