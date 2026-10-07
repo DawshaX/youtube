@@ -433,5 +433,10 @@
   "source": "video:pixabay",
   "episode": "card7",
   "at": "2026-10-07 10:42"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cc/Ghana_National_Mosque%2C_Kanda_at_night.jpg/1280px-Ghana_National_Mosque%2C_Kanda_at_night.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque architecture night",
+  "at": "2026-10-07 11:30"
  }
 }
