@@ -181,6 +181,17 @@ def pick(item_id: str | None = None) -> dict:
     التنويع: الثيم + القارئ + النوع بيتغيروا بالتناوب — عشان القناة ما تبقاش
     «قالب ثابت» (سياسة المحتوى المتشابه) ولأن الجمهور بيمل من نفس الصوت.
     """
+    import os
+    # 🧠 المخطّط الأبدي (NOOR_PLAN=1): مخزون آلاف الحلقات بلا تكرار
+    if os.environ.get("NOOR_PLAN") == "1":
+        try:
+            from . import noor_plan
+            it = noor_plan.next_item()
+            if it:
+                return _finish(it)
+        except Exception as e:  # noqa: BLE001
+            print("[noor] ⚠️ المخطّط اتعذّر — رجعنا للمخزون العادي:",
+                  str(e)[:90], flush=True)
     used = {str(h.get("id")) for h in history()} | _broken()
     candidates = [c for c in (AYAHS + HADITHS) if c.get("id") or True]
     # 🆕 تصنيفات جديدة (2026-10-06): أسماء الله الحسنى · أذكار حصن المسلم ·
@@ -257,6 +268,14 @@ def reel_ayahs(theme: str, n: int = 3) -> list[dict]:
 
 
 def mark_done(item: dict, video: str = "", url: str = "") -> None:
+    # 🧠 المسجّل: المخطّط يعرف إن المفتاح ده اتعمل (صفر تكرار لسنين)
+    try:
+        import os
+        if os.environ.get("NOOR_PLAN") == "1" and item.get("id"):
+            from . import noor_plan
+            noor_plan.mark(str(item["id"]))
+    except Exception:
+        pass
     items = _load()
     items.append({"id": item.get("id"), "kind": item.get("kind"),
                   "theme": item.get("theme"), "at": __import__("time").strftime(
