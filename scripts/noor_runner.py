@@ -406,6 +406,18 @@ def _tags_of(item: dict, res: dict, kind: str, reciter: str) -> list[str]:
     elif kind == "quiz":
         head = ["كويز إسلامي", "اختبر معرفتك", "أسئلة دينية", "من أي سورة",
                 "تحدي قرآني", "معلومات إسلامية"]
+    elif kind == "salah":
+        head = ["مواقيت الصلاة", "أوقات الصلاة", "الصلاة", "أذان",
+                "prayer times", "مواقيت الصلاة اليوم"]
+    elif kind == "hijri":
+        head = ["التقويم الهجري", "التاريخ الهجري", "رمضان", "عيد",
+                "hijri date", "المناسبات الإسلامية"]
+    elif kind == "qfacts":
+        head = ["معلومات قرآنية", "هل تعلم", "القرآن الكريم", "معلومات إسلامية",
+                "quran facts", "إسلاميات"]
+    elif kind == "proverb":
+        head = ["أمثال عربية", "حكمة", "أقوال", "تراث", "wisdom",
+                "arabic proverbs"]
     else:
         head = ["آيات قرآنية", f"سورة {name}", "تلاوة خاشعة", "آية وسكينة",
                 "تدبّر القرآن"]
@@ -494,6 +506,14 @@ def _short_one() -> int:
     """حلقة واحدة فعلية (من غير منطق الإعادة)."""
     from xtrendaw import noor_build, noor_pool
     item = noor_pool.pick()
+    # 🎙️ تنويع الأصوات: نبرة لكل نوع + دوران بلا رتابة (درس: نفس الصوت = بوت)
+    try:
+        from xtrendaw import noor_voice
+        _v = noor_voice.apply(item)
+        print(f"[noor] 🎙️ صوت الحلقة: {_v}", flush=True)
+    except Exception as _e:  # noqa: BLE001
+        print(f"[noor] 🎙️ تنويع الصوت اتعذّر (مش بيمنع النشر): {str(_e)[:60]}",
+              flush=True)
     _st = _load()
     _st["last_try"] = item["id"]
     _save(_st)
@@ -532,6 +552,19 @@ def _short_one() -> int:
         src_lines = [f"📖 {res['book']} — حديث رقم {res['number']}",
                      "✅ حديث من كتب السنة المعتمدة (نص أصلي بلا تصرّف)."]
         extra = "#حديث #السنة_النبوية"
+        hook_line = item["hook"]
+    elif item["kind"] in ("salah", "hijri", "qfacts", "proverb"):
+        # 🆕 التصنيفات الإضافية (مواقيت الصلاة · التقويم الهجري · معلومات
+        #    قرآنية محسوبة · أمثال عربية) — كلها كروت منطوقة بنفس الهوية.
+        from xtrendaw import noor_cards
+        res = noor_cards.build_card_short(item, work)
+        title = str(item.get("title") or item["hook"])
+        body = str(item.get("body") or "\n".join(str(x) for x in
+                                                 (item.get("lines") or [])))
+        src_lines = list(item.get("src_lines") or
+                         ([str(item["source"])] if item.get("source") else []))
+        ref = str(item.get("ref") or "")
+        extra = str(item.get("tags_extra") or "")
         hook_line = item["hook"]
     elif item["kind"] == "spirit":
         # 🌿 روحانيات عامة: سكينة/امتنان/أمل/لطف/صبر/تأمل — تريح القلب لكل الناس
@@ -643,6 +676,9 @@ def _short_one() -> int:
                else f"آية {item.get('ayah', '')}")
         title = (f"{item['hook']} | سورة {nm} {num} 🤍 تلاوة "
                  f"{res['reciter']}")
+        if item.get("series"):
+            # 🎬 «سلسلة البقرة (٣/٧٢)» — بيدفع المشاهد يكمّل ويشترك
+            title = f"{item['series']} — {title}"
         body = res["text"]
         src_lines = [f"🎙️ تلاوة: {res['reciter']} — {ref}",
                      "🧩 التفسير: التفسير الميسّر (مجمّع الملك فهد) عبر "
