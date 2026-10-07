@@ -97,11 +97,25 @@
    "at": "2026-10-07 00:46",
    "duration": 134.7,
    "over_180s": false
+  },
+  {
+   "id": "quiz-103-1",
+   "kind": "quiz",
+   "theme": "تدبر",
+   "title": "من أي سورة هذه الآية؟ 👀 | اختبر معرفتك بالقرآن 📖 كويز إسلامي",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791336852/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791321967.mp4",
+   "err": "quota_guard",
+   "at": "2026-10-07 01:35",
+   "duration": 17.0,
+   "over_180s": false
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "story-12-99",
+ "last_try": "quiz-103-1",
  "broken": [
   "dua-3-8"
  ]
