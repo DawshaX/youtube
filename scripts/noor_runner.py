@@ -533,6 +533,18 @@ def _short_one() -> int:
                      "✅ حديث من كتب السنة المعتمدة (نص أصلي بلا تصرّف)."]
         extra = "#حديث #السنة_النبوية"
         hook_line = item["hook"]
+    elif item["kind"] == "spirit":
+        # 🌿 روحانيات عامة: سكينة/امتنان/أمل/لطف/صبر/تأمل — تريح القلب لكل الناس
+        from xtrendaw import noor_cards
+        res = noor_cards.build_card_short(item, work)
+        th = item.get("theme") or "سكينة"
+        title = f"{item['hook']} | كلمة تطمئن القلب 🤍 {th}"
+        body = str((item.get("lines") or [""])[0])[:600]
+        src_lines = [f"🌿 نور — {th} (كلمة تطمئن القلب، بلا موسيقى)",
+                     "🤍 محتوى إنساني لكل الناس — فكّر، اهدى، وكمّل يومك."]
+        extra = f"#سكينة #راحة_نفسية #تأمل #{th} #كلمات_تطمئن"
+        ref = f"🌿 {th}"
+        hook_line = item["hook"]
     elif item["kind"] in ("asma", "athkar"):
         # 🆕 أسماء الله الحسنى (api.aladhan) + أذكار حصن المسلم — كارت منطوق
         from xtrendaw import noor_cards
@@ -640,6 +652,16 @@ def _short_one() -> int:
 
     tags = _tags_of(item, res, item["kind"], str(res.get("reciter") or ""))
     desc = _desc_of(hook_line, body, ref, src_lines, BRAND, extra)
+    # 🌍 الطبقة العالمية: ترجمة العنوان + ترجمة الآية المعتمدة لكل لغة كبيرة
+    if os.environ.get("NOOR_GLOBAL") == "1":
+        try:
+            from xtrendaw import noor_global
+            blk = noor_global.global_block(title, body, item.get("surah"),
+                                           item.get("ayah"))
+            if blk:
+                desc = desc[: max(0, 4900 - len(blk))] + blk
+        except Exception as e:  # noqa: BLE001
+            print(f"[noor] 🌍 الترجمة اتعذّرت: {str(e)[:80]}", flush=True)
     # ⏱️ حارس مدة الريلز: قاعدة صاحب القناة «الريلز آخرها 3 دقايق».
     _dur = float(res.get("duration", 0) or 0)
     if item["kind"] == "reel" and _dur > 180:
@@ -680,8 +702,60 @@ def _short_one() -> int:
     return 0 if (url or vault_url) else 1
 
 
-def long_once() -> int:
-    """فيديو طويل: سورة كاملة (مرة كل يوم) — ده محرّك ساعات المشاهدة."""
+def _long_series_once() -> int:
+    """🎥 حلقة طويلة مجمّعة: قصص الأنبياء متتابعة (٦–٩ دقايق) — محرّك المشاهدة."""
+    from xtrendaw import noor_long, noor_plan
+    led = noor_plan.done_keys()
+    picks = []
+    for key, spec in noor_plan.series("qissa"):
+        if key in led:
+            continue
+        spec = dict(spec)
+        spec["id"] = key
+        picks.append(spec)
+        if len(picks) >= 5:
+            break
+    if len(picks) < 3:
+        print("[noor] 🎥 مفيش قصص كفاية للطويل — بنرجع للسورة الكاملة", flush=True)
+        return _long_surah_once()
+    work = WORK / f"longq_{int(time.time())}"
+    res = noor_long.build_long_series(picks, work, max_items=len(picks))
+    names = " · ".join(str(p.get("who") or "") for p in picks if p.get("who"))
+    title = (f"قصص الأنبياء كاملة 📖 {names} | حكايات القرآن بترتيبها "
+             f"— تلاوة خاشعة من غير ما تتقطع")
+    desc = (f"رحلة مع قصص الأنبياء من القرآن الكريم: {names}.\n"
+            "🎙️ تلاوة القرّاء المعتمدين · 🧩 تدبّر مبسّط · 🚫 بلا موسيقى.\n"
+            "لو القصص أفادتك، اشترك وشارك الفيديو مع من تحب 🤍")
+    tags = ["قصص الأنبياء", "قصص القرآن", "قصص إسلامية", "قصص الانبياء كاملة",
+            "تلاوة خاشعة", "قرآن كريم", "سلاسل قرآنية", "قصص دينية",
+            "prophets stories", "quran stories", "islamic stories"]
+    cover = res.get("cover")
+    url, err = _publish(res["video"], cover, title[:100], desc, tags)
+    st = _load()
+    st.setdefault("longs", []).append({
+        "id": f"longq-{int(time.time())}", "kind": "long_series",
+        "title": title, "video": str(res["video"]), "url": url or "",
+        "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime()),
+        "duration": round(res.get("duration", 0), 1), "err": err})
+    _save(st)
+    for p in picks:
+        try:
+            noor_plan.mark(str(p["id"]))
+        except Exception:
+            pass
+    print(f"[noor] {'📺 اتنشر' if url else '⏸ اتخزن'} ({err}) — {url}", flush=True)
+    return 0 if url else 1
+
+
+def _long_surah_once() -> int:
+    """الطريق القديم: سورة كاملة (مرة كل يوم)."""
+    from xtrendaw import noor_build
+    """فيديو طويل: سورة كاملة (مرة كل يوم) — ده محرّك ساعات المشاهدة.
+
+    لو NOOR_LONG_SERIES=1: بنطلّع **حلقة قصص مجمّعة** (٤–٥ قصص متتابعة).
+    """
+    if os.environ.get("NOOR_LONG_SERIES") == "1":
+        return _long_series_once()
     from xtrendaw import noor_build
     st = _load()
     idx = len(st.get("longs", [])) % len(LONG_PLAN)
