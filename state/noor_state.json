@@ -335,6 +335,20 @@
    "at": "2026-10-07 14:56",
    "duration": 24.1,
    "over_180s": false
+  },
+  {
+   "id": "dua-16-86",
+   "kind": "dua",
+   "theme": "ذكر",
+   "title": "دعاء مش هتنساه 🤲 | دعاء من سورة النحل (آية 86) 🤲 تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791387767/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791387898.mp4",
+   "err": "too_soon",
+   "at": "2026-10-07 15:45",
+   "duration": 39.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -351,7 +365,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "athkar-25-73",
+ "last_try": "dua-16-86",
  "broken": [
   "dua-3-8"
  ]
