@@ -321,6 +321,20 @@
    "at": "2026-10-07 14:07",
    "duration": 108.9,
    "over_180s": false
+  },
+  {
+   "id": "athkar-25-73",
+   "kind": "athkar",
+   "theme": "ذكر",
+   "title": "ذكر يقوّي قلبك 🤍 | الأذكار بعد السلام من الصلاة | أذكار يومية 🤍 من حصن المسلم",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791384846/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=3a6MX8eF-Qk",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-07 14:56",
+   "duration": 24.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -337,7 +351,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "story-19-16",
+ "last_try": "athkar-25-73",
  "broken": [
   "dua-3-8"
  ]
