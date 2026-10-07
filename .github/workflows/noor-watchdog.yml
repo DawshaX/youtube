@@ -22,6 +22,25 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: 🧹 اقتل أي دورة واقفة (قديمة أكتر من ٧٠ دقيقة)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          # 🛡️ درس 2026-10-07: دورة اتعلّقت ساعتين في خطوة النبضة وقفلت الطابور
+          STALE=$(timeout 45 gh run list --repo "$GITHUB_REPOSITORY" \
+            --workflow noor-publish.yml --limit 20 --json databaseId,status,createdAt \
+            --jq '[.[] | select(.status=="in_progress" or .status=="queued" or .status=="pending") | select((now - (.createdAt|fromdateiso8601)) > 4200) | .databaseId] | join(" ")' 2>/dev/null)
+          if [ -n "$STALE" ]; then
+            for rid in $STALE; do
+              echo "🧹 إلغاء دورة واقفة: $rid"
+              timeout 45 gh run cancel "$rid" --repo "$GITHUB_REPOSITORY" || true
+            done
+            sleep 20
+          else
+            echo "✓ مفيش دورات واقفة"
+          fi
+
       - name: 🔍 افحص آخر دورة — وكمّل لو السلسلة اتقطعت
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
