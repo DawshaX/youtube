@@ -28,7 +28,11 @@ from .tts import ffmpeg, synthesize_line, to_wav
 
 HADITH_CDN = ("https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/"
               "ara-{col}.min.json")
-COLLECTION_AR = {"bukhari": "صحيح البخاري", "muslim": "صحيح مسلم"}
+COLLECTION_AR = {"bukhari": "صحيح البخاري", "muslim": "صحيح مسلم",
+                 "abudawud": "سنن أبي داود", "nasai": "سنن النسائي",
+                 "ibnmajah": "سنن ابن ماجه", "malik": "موطأ مالك",
+                 "nawawi": "الأربعون النووية",
+                 "dehlawi": "أربعون الدهلوي"}
 
 
 # ─────────────────────────── نصوص ───────────────────────────
