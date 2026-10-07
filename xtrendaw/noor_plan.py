@@ -44,6 +44,21 @@ TAFSIR_HOOKS = ["افهم الآية دي صح 🧩", "تدبّر آية… تغ
 QISSA_HOOKS = ["قصة من القرآن 🤍", "حكاية فيها عبرة 📖", "قصة من غير ما تتقطع 📚"]
 
 
+def _number_windows(flat: list[dict]) -> list[dict]:
+    """ترقيم النوافذ جوه كل سورة: الجزء ٣ من ٧٢ (بيخلّي المشاهد يكمّل)."""
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for w in flat:
+        groups[int(w.get("surah") or 0)].append(w)
+    out = []
+    for _s, ws in groups.items():
+        ws.sort(key=lambda x: int(x.get("frm") or 1))
+        for i, w in enumerate(ws, 1):
+            w["idx"], w["total"] = i, len(ws)
+            out.append(w)
+    return out
+
+
 def _surah_ar(name: str | None) -> str:
     try:
         from .noor_cats import strip_marks
@@ -86,6 +101,13 @@ def windows() -> list[dict]:
         try:
             d = json.loads(p.read_text(encoding="utf-8"))
             if d:
+                if "idx" not in d[0]:
+                    d = _number_windows(d)
+                    try:
+                        p.write_text(json.dumps(d, ensure_ascii=False),
+                                     encoding="utf-8")
+                    except Exception:
+                        pass
                 return d
         except Exception:
             pass
@@ -195,7 +217,43 @@ def series(kind: str) -> list[tuple[str, dict]]:
     if kind == "spirit":
         from . import noor_spirit
         return [(it["id"], it) for it in noor_spirit.series()]
-    # الأنواع الديناميكية (أسماء/أذكار/أدعية/كويز) — تتولّد من مصادرها
+    if kind in ("salah", "hijri", "qfacts", "proverb"):
+        from . import noor_more
+        if kind == "salah":
+            out = []
+            for i in range(len(noor_more.CITIES)):
+                it = noor_more.make_salah(i)
+                if it:
+                    out.append((it["id"], it))
+            return out
+        if kind == "hijri":
+            it = noor_more.make_hijri()
+            return [(it["id"], it)] if it else []
+        wk = time.strftime("%Y-W%W", time.gmtime())
+        n_items = (len(noor_more._qfacts_list()) if kind == "qfacts"
+                   else len(noor_more.PROVERBS))
+        out = []
+        for i in range(n_items):
+            it = (noor_more.make_qfacts(i) if kind == "qfacts"
+                  else noor_more.make_proverb(i))
+            if it:
+                it = dict(it)
+                it["id"] = f"{kind}-{i}-{wk}"
+                out.append((it["id"], it))
+        return out
+    if kind == "athkar":
+        from . import noor_cats
+        return [(it["id"], it) for it in noor_cats.athkar_pool(200)]
+    if kind == "asma":
+        from . import noor_cats
+        return [(it["id"], it) for it in noor_cats.asma_pool(99, per_run=14)]
+    if kind == "dua":
+        from . import noor_cats
+        return [(it["id"], it) for it in noor_cats.dua_pool(120, per_run=18)]
+    if kind == "quiz":
+        from . import noor_cats
+        return [(it["id"], it) for it in noor_cats.quiz_pool()]
+    # أي نوع تاني (ديناميكي) — عنصر واحد من مصدره
     from . import noor_cats
     it = noor_cats.make(kind)
     if not it:
