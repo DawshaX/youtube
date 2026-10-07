@@ -7,7 +7,7 @@
  "clipcache:6dec21db24f8": {
   "source": "video:pixabay",
   "episode": "card12",
-  "at": "2026-10-06 23:00"
+  "at": "2026-10-07 08:17"
  },
  "https://cdn.pixabay.com/video/2017/10/21/12540-239934679_medium.mp4": {
   "source": "video:pixabay",
@@ -373,5 +373,20 @@
   "source": "image:commons",
   "episode": "sea sunset calm",
   "at": "2026-10-07 07:20"
+ },
+ "https://cdn.pixabay.com/video/2018/05/09/16093-269128036_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card12",
+  "at": "2026-10-07 08:17"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Exterior_National_Mosque_of_Ghana_architecture.jpg/1280px-Exterior_National_Mosque_of_Ghana_architecture.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque architecture night",
+  "at": "2026-10-07 08:17"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Silent_Prayer_in_the_Crimson_Dusk.jpg/1280px-Silent_Prayer_in_the_Crimson_Dusk.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "sunset silhouette meditation",
+  "at": "2026-10-07 08:17"
  }
 }

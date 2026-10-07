@@ -202,6 +202,20 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=tqolRlQatCE",
    "at": "2026-10-07 07:16"
+  },
+  {
+   "id": "athkar-27-88",
+   "kind": "athkar",
+   "theme": "ذكر",
+   "title": "ذكر يقوّي قلبك 🤍 | أذكار الصباح والمساء | أذكار يومية 🤍 من حصن المسلم",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791361016/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791361117.mp4",
+   "err": "too_soon",
+   "at": "2026-10-07 08:18",
+   "duration": 21.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -218,7 +232,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "asma-50",
+ "last_try": "athkar-27-88",
  "broken": [
   "dua-3-8"
  ]
