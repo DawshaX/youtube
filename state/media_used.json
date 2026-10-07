@@ -193,5 +193,25 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-10-06 23:51"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Quran%2C_Tunisia.JPG/1280px-Quran%2C_Tunisia.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "quran book open pages",
+  "at": "2026-10-07 00:39"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_1.jpg/1280px-Al_-_Moayad_Sheikh_Mosque_-_Pillars_%26_Arches_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-10-07 00:40"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/A_long_standing_column_of_Mosque_of_Sher_Shah%2C_Purana_Quila_%28OLD_FORT%29.jpg/1280px-A_long_standing_column_of_Mosque_of_Sher_Shah%2C_Purana_Quila_%28OLD_FORT%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "old holy quran pages",
+  "at": "2026-10-07 00:40"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/A_calligraphic_composition_in_the_form_of_a_lion%2C_Persia%2C_19th_or_20th_century.jpg/1280px-A_calligraphic_composition_in_the_form_of_a_lion%2C_Persia%2C_19th_or_20th_century.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "islamic calligraphy art",
+  "at": "2026-10-07 00:40"
  }
 }

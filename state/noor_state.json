@@ -83,11 +83,25 @@
    "at": "2026-10-06 23:53",
    "duration": 59.1,
    "over_180s": false
+  },
+  {
+   "id": "story-12-99",
+   "kind": "story",
+   "theme": "قرآن",
+   "title": "آخر الحكاية… كيف انتهى يوسف؟ 👑 | قصة يوسف من سورة يوسف 🤍 تلاوة محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791333568/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791333969.mp4",
+   "err": "quota_guard",
+   "at": "2026-10-07 00:46",
+   "duration": 134.7,
+   "over_180s": false
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "dua-3-193",
+ "last_try": "story-12-99",
  "broken": [
   "dua-3-8"
  ]
