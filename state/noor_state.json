@@ -279,6 +279,20 @@
    "at": "2026-10-07 11:34",
    "duration": 66.0,
    "over_180s": false
+  },
+  {
+   "id": "story-21-87",
+   "kind": "story",
+   "theme": "قرآن",
+   "title": "دعاء الخروج من الظلمة 🐋 | قصة يونس من سورة الأنبياء 🤍 تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791375614/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=rZumGyBhbUc",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-07 12:24",
+   "duration": 51.2,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -295,7 +309,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "dua-10-88",
+ "last_try": "story-21-87",
  "broken": [
   "dua-3-8"
  ]
