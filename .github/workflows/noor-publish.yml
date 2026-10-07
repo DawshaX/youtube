@@ -193,6 +193,10 @@ jobs:
           for f in state/noor_ledger.json state/noor_cache/stock/*.json; do
             [ -f "$f" ] && git add -f "$f"
           done
+          # 📦 مجمّعات المحتوى (أذكار/أسماء/أدعية/كويز) — بتكبر تدريجيًا وبتفضل
+          for f in state/noor_cache/pools/*.json state/noor_cache/cats/*.json                    state/noor_cache/more/*.json state/noor_cache/i18n/*.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
           for f in state/noor_cache/h-*.json; do
             [ -f "$f" ] && git add -f "$f"
           done
