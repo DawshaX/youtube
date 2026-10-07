@@ -218,14 +218,17 @@ jobs:
           START="${JOB_START:-$(date +%s)}"      # بداية الدورة الحقيقية
           NOW=$(date +%s)
           SLEEP=$(( 3600 - (NOW - START) ))
-          [ "$SLEEP" -gt 2700 ] && SLEEP=2700
-          [ "$SLEEP" -lt 0 ] && SLEEP=0
+          # 🛡️ 2026-10-07: الدورة دي كانت بتعلّق ساعتين (gh من غير مهلة) فوقفت
+          # السلسلة. دلوقتي: سقف نوم أقصر + مهل صارمة على كل نداء gh.
+          [ "$SLEEP" -gt 2400 ] && SLEEP=2400
+          [ "$SLEEP" -lt 30 ] && SLEEP=30
+          [ "$SLEEP" -gt 60 ] && echo "⏱️ هستنى ${SLEEP}ث — النبضة بتقيس من بداية الدوران"
           echo "⏱️ الدورة خدت $(( NOW - START ))ث — هستنى ${SLEEP}ث وأشغّل الجاية"
           sleep "$SLEEP"
           # ⚠️ حماية من مضاعفة السلسلة: الدورة دي نفسها "شغالة" — فلو فيه دورة
           # تانية شغالة/في الطابور كمان (cron + نبضة) مش نبعت واحدة زيادة.
           # (بق حقيقي: العدّ بأي دورة حديثة كان بيوقف السلسلة تمامًا)
-          ACTIVE=$(gh run list --repo "$GITHUB_REPOSITORY" \
+          ACTIVE=$(timeout 45 gh run list --repo "$GITHUB_REPOSITORY" \
             --workflow noor-publish.yml --limit 15 --json status \
             --jq '[.[] | select(.status=="in_progress" or .status=="queued" or .status=="pending")] | length' 2>/dev/null || echo 1)
           if [ "${ACTIVE:-1}" -gt 1 ]; then
@@ -233,7 +236,7 @@ jobs:
             exit 0
           fi
           for attempt in 1 2 3; do
-            if gh workflow run noor-publish.yml --repo "$GITHUB_REPOSITORY" \
+            if timeout 60 gh workflow run noor-publish.yml --repo "$GITHUB_REPOSITORY" \
                  --ref main -f mode=cycle -f dry_run=false; then
               echo "✓ الحلقة الجاية اتبعتت"; exit 0
             fi
