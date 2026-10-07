@@ -363,6 +363,20 @@
    "at": "2026-10-07 16:33",
    "duration": 21.7,
    "over_180s": false
+  },
+  {
+   "id": "dua-18-14",
+   "kind": "dua",
+   "theme": "ذكر",
+   "title": "أجمل دعاء تقوله النهاردة 🤲 | دعاء من سورة الكهف (آية 14) 🤲 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791393590/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791393876.mp4",
+   "err": "too_soon",
+   "at": "2026-10-07 17:24",
+   "duration": 61.8,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -379,7 +393,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "athkar-28-108",
+ "last_try": "dua-18-14",
  "broken": [
   "dua-3-8"
  ]
