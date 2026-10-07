@@ -52,7 +52,7 @@ concurrency:
 jobs:
   noor:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 75      # 🛡️ أي دورة تتعلّق تموت لوحدها وما تقفلش السلسلة
     steps:
       - uses: actions/checkout@v4
 
