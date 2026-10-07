@@ -106,8 +106,8 @@
  },
  "clipcache:23e877c7caa4": {
   "source": "video:pixabay",
-  "episode": "card2326",
-  "at": "2026-10-07 09:54"
+  "episode": "card738",
+  "at": "2026-10-07 13:13"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/018_Human_looking_at_the_stars_during_Perseids_with_the_Milky_Way_in_the_background_Photo_by_Giles_Laurent.jpg/1280px-018_Human_looking_at_the_stars_during_Perseids_with_the_Milky_Way_in_the_background_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -458,5 +458,25 @@
   "source": "video:pixabay",
   "episode": "bg3",
   "at": "2026-10-07 12:21"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Above_the_Cloud_-_Flickr_-_Jaykhuang.jpg/1280px-Above_the_Cloud_-_Flickr_-_Jaykhuang.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "sunrise above clouds",
+  "at": "2026-10-07 13:12"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/2009_01_01_-_Barnegat_Light_-_Barnegat_Lighthouse_over_Andy%27s_%283166745095%29.jpg/1280px-2009_01_01_-_Barnegat_Light_-_Barnegat_Lighthouse_over_Andy%27s_%283166745095%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "lighthouse night beam",
+  "at": "2026-10-07 13:12"
+ },
+ "https://cdn.pixabay.com/video/2020/01/20/31440-386853550_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card738",
+  "at": "2026-10-07 13:13"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/7._Photograph_of_polar_stars%2C_ordinary_camera%2C_2hr_exposure_%2822759327951%29.jpg/1280px-7._Photograph_of_polar_stars%2C_ordinary_camera%2C_2hr_exposure_%2822759327951%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "stars long exposure",
+  "at": "2026-10-07 13:13"
  }
 }
