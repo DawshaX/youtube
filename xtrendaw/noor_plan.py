@@ -10,6 +10,12 @@
   dua    : أدعية قرآنية «ربنا…»                (مئات)
   quiz   : كويز «من أي سورة هذه الآية؟»        (٢٨+)
   spirit : روحانيات عامة (سكينة/امتنان/أمل)    (٣٦)
+  mujiza : معجزات الأنبياء من نص القرآن        (٢٢ نافذة)
+  hamd   : ولله الحمد وخير الله الدائم         (٢٠ نافذة)
+  nasr   : الله غالب — فرج ونصر من غير عنف     (٢١ نافذة)
+
+الجدول (NOOR_GRID=1): ١٢ نوع على أيام الأسبوع وساعات القاهرة،
+٨ نشرات/يوم منهم ٣ طويلة. التفاصيل في noor_grid.py.
 
 الدوران: كل نوع بياخد دوره — والمسجّل (ledger) على git يعني كل دورة تكمل
 من مكان اللي قبلها، مش تعيد. ده اللي يخلي الشغل «أبدي».
@@ -17,6 +23,7 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 import urllib.request
 from pathlib import Path
@@ -32,7 +39,8 @@ UA = {"User-Agent": "NoorFactory/1.0 (free Islamic dawah content)"}
 ROTATION = ["quran", "hadith", "asma", "quran", "dua", "qissa", "athkar",
             "quran", "quiz", "spirit", "quran", "salah", "tafsir", "hadith",
             "spirit", "quran", "asma", "hijri", "quran", "proverb", "dua",
-            "quran", "qfacts", "qissa", "quran", "hadith", "spirit", "quran"]
+            "quran", "qfacts", "qissa", "quran", "hadith", "spirit", "quran",
+            "mujiza", "hamd", "nasr", "qissa", "mujiza", "hamd"]
 
 COLLECTIONS = ("bukhari", "muslim", "abudawud", "nasai", "ibnmajah",
                "malik", "nawawi", "dehlawi")
@@ -253,6 +261,9 @@ def series(kind: str) -> list[tuple[str, dict]]:
     if kind == "quiz":
         from . import noor_cats
         return [(it["id"], it) for it in noor_cats.quiz_pool()]
+    if kind in ("mujiza", "hamd", "nasr"):
+        from . import noor_signs
+        return noor_signs.series(kind)
     # أي نوع تاني (ديناميكي) — عنصر واحد من مصدره
     from . import noor_cats
     it = noor_cats.make(kind)
@@ -262,12 +273,27 @@ def series(kind: str) -> list[tuple[str, dict]]:
 
 
 def next_item() -> dict | None:
-    """الحلقة الجاية: النوع اللي عليه الدور → أول مفتاح لسه ما اتعملش."""
+    """الحلقة الجاية: النوع اللي عليه الدور → أول مفتاح لسه ما اتعملش.
+
+    لو NOOR_FORCE_KIND موجود (جدول اليوم) النوع ده بيتقدّم. في وضع الجدول
+    الصارم ما بنسقطش على نوع تاني لو النوع المطلوب فاضي.
+    """
     led = _ledger()
     turn = int(led.get("turn") or 0)
     done = done_keys()
-    for step in range(len(ROTATION) * 2):
-        kind = ROTATION[(turn + step) % len(ROTATION)]
+    forced = os.environ.get("NOOR_FORCE_KIND", "").strip()
+    strict = os.environ.get("NOOR_GRID_STRICT") == "1" and bool(forced)
+    order = []
+    if forced:
+        order.append(forced)
+    if not strict:
+        for step in range(len(ROTATION) * 2):
+            order.append(ROTATION[(turn + step) % len(ROTATION)])
+    seen: set[str] = set()
+    for kind in order:
+        if kind in seen:
+            continue
+        seen.add(kind)
         try:
             s = series(kind)
         except Exception:
@@ -279,8 +305,11 @@ def next_item() -> dict | None:
             spec.setdefault("theme", "قرآن")
             spec["id"] = key
             spec["plan_kind"] = kind
-            led["turn"] = (turn + step + 1) % len(ROTATION)
-            _save(led)
+            if not forced:
+                led["turn"] = (turn + 1) % len(ROTATION)
+                _save(led)
+            else:
+                _save(led)
             return spec
     return None
 

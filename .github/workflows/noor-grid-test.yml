@@ -1,0 +1,24 @@
+name: 🗓️ فحص جدول الـ١٢ (بلا نشر)
+# إضافة فقط — يتأكد إن الأسبوع ١٢ نوع و٣ طويل كل يوم، والمكتبة والمراجع حية.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "xtrendaw/noor_grid.py"
+      - "xtrendaw/noor_signs.py"
+      - "xtrendaw/noor_ideas.py"
+      - "tools/noor_grid_check.py"
+      - "content/idea_library.json"
+permissions:
+  contents: read
+jobs:
+  grid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: فحص الجدول والمكتبة
+        run: python tools/noor_grid_check.py

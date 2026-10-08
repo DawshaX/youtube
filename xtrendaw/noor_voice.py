@@ -19,6 +19,7 @@ KIND_MOOD = {
     "qfacts": "warm", "proverb": "warm",
     "quran": "serious", "tafsir": "serious", "hadith": "serious",
     "qissa": "serious", "story": "serious", "ayah": "serious", "reel": "serious",
+    "mujiza": "serious", "hamd": "calm", "nasr": "warm",
 }
 
 

@@ -136,8 +136,15 @@ jobs:
           NOOR_PER_CYCLE: '1'
           # 🧠 المخطّط الأبدي: مخزون آلاف الحلقات بلا تكرار (قرآن/تفسير/حديث/قصص/روحانيات)
           NOOR_PLAN: '1'
+          # 🗓️ جدول القاهرة: ١٢ نوع · ٨/يوم منهم ٣ طويلة. الإضافة مش بتقفل الدورة القديمة.
+          NOOR_GRID: '1'
+          NOOR_STUDIO_LLM: '1'
           # 🌍 الطبقة العالمية: ترجمة العنوان + ترجمة الآية المعتمدة في الوصف
           NOOR_GLOBAL: '1'
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          LLM_API_BASE: https://api.groq.com/openai/v1
           NOOR_DRY: ${{ inputs.dry_run && '1' || '0' }}
         run: |
           set -o pipefail
@@ -194,7 +201,9 @@ jobs:
             [ -f "$f" ] && git add -f "$f"
           done
           # 📦 مجمّعات المحتوى (أذكار/أسماء/أدعية/كويز) — بتكبر تدريجيًا وبتفضل
-          for f in state/noor_cache/pools/*.json state/noor_cache/cats/*.json                    state/noor_cache/more/*.json state/noor_cache/i18n/*.json; do
+          for f in state/noor_cache/pools/*.json state/noor_cache/cats/*.json \
+                   state/noor_cache/more/*.json state/noor_cache/i18n/*.json \
+                   state/noor_cache/ideas/*.json state/noor_cache/studio/*.json; do
             [ -f "$f" ] && git add -f "$f"
           done
           for f in state/noor_cache/h-*.json; do

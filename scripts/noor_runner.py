@@ -514,6 +514,13 @@ def _short_one() -> int:
     except Exception as _e:  # noqa: BLE001
         print(f"[noor] 🎙️ تنويع الصوت اتعذّر (مش بيمنع النشر): {str(_e)[:60]}",
               flush=True)
+    # 🎬 مكتبة الاستوديو: مشاهد حرة حسب النوع، والذكاء يكمل مشاهد لو المفتاح موجود
+    try:
+        from xtrendaw import noor_studio
+        noor_studio.maybe_enrich(item)
+    except Exception as _e:  # noqa: BLE001
+        print(f"[noor] 🎬 الاستوديو اتعذّر (المشهور يكفي): {str(_e)[:60]}",
+              flush=True)
     _st = _load()
     _st["last_try"] = item["id"]
     _save(_st)
@@ -621,7 +628,7 @@ def _short_one() -> int:
                      f"🎙️ تلاوة: {res.get('reciter', '')} — «من أي سورة» كويز"]
         extra = "#كويز_إسلامي #اختبر_معرفتك #أسئلة_دينية #القرآن_الكريم"
         hook_line = item["hook"]
-    elif item["kind"] in ("dua", "story"):
+    elif item["kind"] in ("dua", "story", "mujiza", "hamd", "nasr"):
         # 🆕 أدعية قرآنية + قصص الأنبياء — آيات بتلاوة حقيقية + تفسير ميسّر
         from xtrendaw import noor_premium as np
         _outro = ("لو الدعاء لمس قلبك، اكتب آمين وشاركه مع حد بتحبه 🤲 "
@@ -645,6 +652,28 @@ def _short_one() -> int:
             src_lines = [f"🎙️ تلاوة: {res['reciter']} — سورة {nm} {num}",
                          "🧩 التفسير الميسّر (مجمّع الملك فهد) عبر alquran.cloud",
                          "🤲 دعاء قرآني — اقرأه بحضور قلب."]
+        elif item["kind"] == "mujiza":
+            who = item.get("who") or "معجزة"
+            title = (f"{item['hook']} | معجزة من القرآن: {who} — سورة {nm} "
+                     f"{num} 🤍 تلاوة {res['reciter']}")
+            extra = "#معجزات #آيات_الله #قصص_الأنبياء #قرآن"
+            src_lines = [f"🎙️ تلاوة: {res['reciter']} — سورة {nm} {num}",
+                         "🧩 التفسير الميسّر عبر alquran.cloud",
+                         f"✨ معجزة {who} — نص القرآن فقط، بلا زيادة."]
+        elif item["kind"] == "hamd":
+            title = (f"{item['hook']} | ولله الحمد — سورة {nm} {num} 🤍 "
+                     f"تلاوة {res['reciter']}")
+            extra = "#الحمد_لله #شكر #نعم_الله #قرآن"
+            src_lines = [f"🎙️ تلاوة: {res['reciter']} — سورة {nm} {num}",
+                         "🧩 التفسير الميسّر عبر alquran.cloud",
+                         "🤍 خير الله دائم — الحمد من نص الآية."]
+        elif item["kind"] == "nasr":
+            title = (f"{item['hook']} | الله غالب — سورة {nm} {num} 🤍 "
+                     f"تلاوة {res['reciter']}")
+            extra = "#نصر_الله #فرج #توكل #خير_الله"
+            src_lines = [f"🎙️ تلاوة: {res['reciter']} — سورة {nm} {num}",
+                         "🧩 التفسير الميسّر عبر alquran.cloud",
+                         "🌤️ فرج ونصر من الله — من نص الآية، بلا مشاهد عنف."]
         else:
             who = item.get("who") or "قصص القرآن"
             title = (f"{item['hook']} | قصة {who} من سورة {nm} 🤍 "
@@ -847,6 +876,133 @@ def _long_surah_once() -> int:
 
 
 
+def _long_kind_once(kind: str) -> int:
+    """🎥 حلقة طويلة من سلسلة موثّقة: قصص / معجزات / حمد / نصر."""
+    from xtrendaw import noor_long, noor_plan
+    led = noor_plan.done_keys()
+    picks = []
+    for key, spec in noor_plan.series(kind):
+        if key in led or not spec.get("surah"):
+            continue
+        spec = dict(spec)
+        spec["id"] = key
+        picks.append(spec)
+        if len(picks) >= 4:
+            break
+    if len(picks) < 2:
+        print(f"[noor] 🎥 سلسلة {kind} خلصت — بنرجع لسورة كاملة", flush=True)
+        return _long_surah_once()
+    work = WORK / f"long_{kind}_{int(time.time())}"
+    res = noor_long.build_long_series(picks, work, max_items=len(picks))
+    names = " · ".join(str(p.get("who") or "") for p in picks if p.get("who"))
+    labels = {
+        "qissa": "قصص الأنبياء",
+        "mujiza": "معجزات من القرآن",
+        "hamd": "ولله الحمد",
+        "nasr": "الله غالب",
+    }
+    label = labels.get(kind, kind)
+    title = f"{label} 📖 {names} | تلاوة خاشعة من غير ما تتقطع"
+    desc = (f"{label}: {names}.\\n"
+            "🎙️ تلاوة القرّاء المعتمدين · 🧩 تدبّر مبسّط · 🚫 بلا موسيقى.\\n"
+            "النص من القرآن الكريم عبر alquran.cloud — بلا زيادة.\\n"
+            "لو أفادك، اشترك وشارك الفيديو 🤍")
+    tags = [label, "قرآن كريم", "تلاوة خاشعة", "سلاسل قرآنية",
+            "quran", "islamic", "no music"]
+    url, err = _publish(res["video"], res.get("cover"), title[:100], desc, tags)
+    st = _load()
+    st.setdefault("longs", []).append({
+        "id": f"long-{kind}-{int(time.time())}", "kind": f"long_{kind}",
+        "title": title, "video": str(res["video"]), "url": url or "",
+        "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime()),
+        "duration": round(res.get("duration", 0), 1), "err": err})
+    _save(st)
+    for pk in picks:
+        try:
+            noor_plan.mark(str(pk["id"]))
+        except Exception:
+            pass
+    print(f"[noor] {'📺 اتنشر' if url else '⏸ اتخزن'} ({err}) — {url}", flush=True)
+    return 0 if (url or DRY) else 1
+
+
+def long_once() -> int:
+    """مدخل الطويل: نوع الجدول لو موجود، وإلا السورة الكاملة."""
+    kind = (os.environ.get("NOOR_LONG_KIND") or "").strip()
+    if kind in ("qissa", "mujiza", "hamd", "nasr"):
+        return _long_kind_once(kind)
+    if kind == "quran":
+        return _long_surah_once()
+    if os.environ.get("NOOR_LONG_SERIES") == "1":
+        return _long_series_once()
+    return _long_surah_once()
+
+
+def _mark_grid(key: str) -> None:
+    st = _load()
+    gd = [str(x) for x in (st.get("grid_done") or [])]
+    if key not in gd:
+        gd.append(key)
+    st["grid_done"] = gd[-500:]
+    st.pop("grid_hold", None)
+    _save(st)
+
+
+def _grid_cycle() -> int:
+    """موعد واحد من جدول القاهرة. مش بنلحق اليوم كله، عشان القناة ما تتخنقش."""
+    from xtrendaw import noor_grid
+    # الجدول نفسه هو المسافة (ساعتان ونص). النشر الواحد في الدورة ما يتقفلش
+    # بحارس الفرق لو السيرفر اتأخر دقايق.
+    os.environ["NOOR_ALLOW_BURST"] = "1"
+    os.environ["NOOR_GRID_STRICT"] = "1"
+    st = _load()
+    hold = st.get("grid_hold") or {}
+    if hold.get("key"):
+        n = _fill_quota(max_n=1)
+        if n:
+            _mark_grid(str(hold["key"]))
+            print("[noor] 🗓️ الحلقة المستنية نزلت على معادها", flush=True)
+            return 0
+        print("[noor] 🗓️ حلقة مستنية المسافة — مش هنتج تانية فوقها", flush=True)
+        return 0
+    done = {str(x) for x in (st.get("grid_done") or [])}
+    forced = os.environ.get("NOOR_FORCE_SLOT", "").strip()
+    if forced:
+        due = [{
+            "kind": forced,
+            "form": os.environ.get("NOOR_FORCE_FORM", "short") or "short",
+            "key": f"manual-{forced}-{time.strftime('%Y%m%d%H%M')}",
+            "label": forced,
+        }]
+    else:
+        due = noor_grid.due(done)
+    if not due:
+        print(f"[noor] 🗓️ مش موعد نشرة — الجاية: {noor_grid.next_slot(done)}",
+              flush=True)
+        return 0
+    slot = due[0]
+    print(f"[noor] 🗓️ موعد: {slot.get('label') or slot['kind']} ({slot['form']})",
+          flush=True)
+    if slot["form"] == "long":
+        os.environ["NOOR_LONG_KIND"] = slot["kind"]
+        rc = long_once()
+        rows = (_load().get("longs") or [])
+    else:
+        os.environ["NOOR_FORCE_KIND"] = slot["kind"]
+        rc = short_once()
+        rows = (_load().get("shorts") or [])
+    url = str((rows[-1] if rows else {}).get("url") or "")
+    if url or DRY:
+        _mark_grid(slot["key"])
+    elif rc == 0:
+        st = _load()
+        st["grid_hold"] = {"key": slot["key"], "kind": slot["kind"],
+                           "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime())}
+        _save(st)
+        print("[noor] 🗓️ اتخزنت — هتنزل أول ما النشر يفتح", flush=True)
+    return rc
+
+
 # ─────────────────────── واجهة الموقع (مجانية وبلا حدود) ───────────────────────
 SITE_JSON = ROOT / "public" / "noor.json"
 REC_NAMES = {"husary": "محمود خليل الحصري", "minshawi": "محمد صديق المنشاوي",
@@ -1000,9 +1156,17 @@ def _publish_spare() -> int:
 def cycle() -> int:
     """دورة الساعة: ارفع من الخزّان لو الحصة مفتوحة، وإلا ارندر/خزّن.
 
+    NOOR_GRID=1: جدول القاهرة (١٢ نوع · ٣ طويل/يوم) هو اللي يقرر الموعد.
+
     الترتيب ده مقصود: الحلقة الجاهزة بتترفع فورًا (صفر وقت رندر)، والرندر
     بيشتغل بس لما يكون فيه فرصة نشر حقيقية أو مكان في الخزّان.
     """
+    if os.environ.get("NOOR_GRID") == "1":
+        try:
+            return _grid_cycle()
+        except Exception as exc:  # noqa: BLE001
+            print(f"[noor] ⚠️ الجدول اتعذّر — رجعنا للدورة العادية: {str(exc)[:80]}",
+                  flush=True)
     from xtrendaw import noor_vault, settings, state
     st = _load()
     today = time.strftime("%Y-%m-%d", time.gmtime())

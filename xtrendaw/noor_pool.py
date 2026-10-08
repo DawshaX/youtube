@@ -189,6 +189,8 @@ def pick(item_id: str | None = None) -> dict:
             it = noor_plan.next_item()
             if it:
                 return _finish(it)
+            if os.environ.get("NOOR_GRID_STRICT") == "1":
+                raise RuntimeError("نوع الجدول فاضي")
         except Exception as e:  # noqa: BLE001
             print("[noor] ⚠️ المخطّط اتعذّر — رجعنا للمخزون العادي:",
                   str(e)[:90], flush=True)
