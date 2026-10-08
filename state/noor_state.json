@@ -489,6 +489,20 @@
    "at": "2026-10-08 05:53",
    "duration": 31.1,
    "over_180s": false
+  },
+  {
+   "id": "athkar-27-78",
+   "kind": "athkar",
+   "theme": "ذكر",
+   "title": "ذكر يقوّي قلبك 🤍 | أذكار الصباح والمساء | أذكار يومية 🤍 من حصن المسلم",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791441277/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791361117.mp4",
+   "err": "quota_guard",
+   "at": "2026-10-08 06:37",
+   "duration": 31.7,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -505,7 +519,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "s-12-4",
+ "last_try": "athkar-27-78",
  "broken": [
   "dua-3-8"
  ]
