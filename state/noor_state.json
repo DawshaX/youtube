@@ -475,6 +475,20 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=b6S5mNhjzcY",
    "at": "2026-10-08 05:09"
+  },
+  {
+   "id": "s-12-4",
+   "kind": "story",
+   "theme": "قرآن",
+   "title": "حكاية فيها عبرة 📖 | قصة يوسف من سورة يوسف 🤍 تلاوة أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791438659/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791438801.mp4",
+   "err": "quota_guard",
+   "at": "2026-10-08 05:53",
+   "duration": 31.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -491,7 +505,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "dua-2-127",
+ "last_try": "s-12-4",
  "broken": [
   "dua-3-8"
  ]
