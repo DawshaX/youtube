@@ -96,8 +96,8 @@
  },
  "clipcache:8613ba224664": {
   "source": "video:pixabay",
-  "episode": "card2326",
-  "at": "2026-10-07 09:54"
+  "episode": "bg1",
+  "at": "2026-10-08 21:07"
  },
  "https://cdn.pixabay.com/video/2022/02/08/107143-675298848_medium.mp4": {
   "source": "video:pixabay",
@@ -106,8 +106,8 @@
  },
  "clipcache:23e877c7caa4": {
   "source": "video:pixabay",
-  "episode": "card738",
-  "at": "2026-10-07 13:13"
+  "episode": "bg2",
+  "at": "2026-10-08 21:07"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/018_Human_looking_at_the_stars_during_Perseids_with_the_Milky_Way_in_the_background_Photo_by_Giles_Laurent.jpg/1280px-018_Human_looking_at_the_stars_during_Perseids_with_the_Milky_Way_in_the_background_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -236,8 +236,8 @@
  },
  "clipcache:36346b987207": {
   "source": "video:pixabay",
-  "episode": "card2326",
-  "at": "2026-10-07 09:54"
+  "episode": "bg3",
+  "at": "2026-10-08 21:07"
  },
  "https://cdn.pixabay.com/video/2019/07/12/25168-347958130_medium.mp4": {
   "source": "video:pixabay",
@@ -638,5 +638,25 @@
   "source": "image:commons",
   "episode": "mosque architecture night",
   "at": "2026-10-08 06:35"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/0/05/Above_the_Clouds_at_Sunrise_Frederic_Edwin_Church.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "sunrise above clouds",
+  "at": "2026-10-08 21:06"
+ },
+ "https://cdn.pixabay.com/video/2019/03/17/22059-325253411_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-08 21:07"
+ },
+ "https://cdn.pixabay.com/video/2022/12/17/143328-782178570_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-08 21:07"
+ },
+ "https://cdn.pixabay.com/video/2026/09/24/378475_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-08 21:07"
  }
 }

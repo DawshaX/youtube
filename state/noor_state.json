@@ -538,6 +538,20 @@
    "video": "",
    "url": "https://www.youtube.com/watch?v=5XasFoj0bnA",
    "at": "2026-10-08 19:02"
+  },
+  {
+   "id": "t-001-001",
+   "kind": "ayah",
+   "theme": "تدبر",
+   "title": "سلسلة ٱلفاتحة (1/2) — معنى آية كنت بتقراها ومش فاهمها | سورة ٱلفاتحة الآيات 1–4 🤍 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791493562/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=lHAVMXlU-fQ",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-08 21:09",
+   "duration": 31.8,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -554,8 +568,11 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "athkar-27-78",
+ "last_try": "t-001-001",
  "broken": [
   "dua-3-8"
+ ],
+ "grid_done": [
+  "2026-10-08T23:30|tafsir|short"
  ]
 }
