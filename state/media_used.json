@@ -773,5 +773,30 @@
   "source": "video:pixabay",
   "episode": "bg1",
   "at": "2026-10-09 04:49"
+ },
+ "https://cdn.pixabay.com/video/2023/06/25/168811-839864556_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card568",
+  "at": "2026-10-09 06:13"
+ },
+ "clipcache:6f8ac8cd9c68": {
+  "source": "video:pixabay",
+  "episode": "card568",
+  "at": "2026-10-09 06:13"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/3/34/2008_T136%2C_Early_Bronze_Age_gold_lunula_terminal_%28FindID_210888%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "geometric pattern gold",
+  "at": "2026-10-09 06:13"
+ },
+ "https://cdn.pixabay.com/video/2022/12/28/144597-784867462_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card568",
+  "at": "2026-10-09 06:14"
+ },
+ "clipcache:c39acc442ac1": {
+  "source": "video:pixabay",
+  "episode": "card568",
+  "at": "2026-10-09 06:14"
  }
 }

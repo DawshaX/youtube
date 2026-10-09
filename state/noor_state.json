@@ -608,6 +608,20 @@
    "at": "2026-10-09 04:50",
    "duration": 50.7,
    "over_180s": false
+  },
+  {
+   "id": "quiz-18-10",
+   "kind": "quiz",
+   "theme": "تدبر",
+   "title": "من أي سورة هذه الآية؟ 👀 | اختبر معرفتك بالقرآن 📖 كويز إسلامي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791526341/noor.mp4",
+   "url": "",
+   "vault": "https://github.com/DawshaX/youtube/releases/download/vault/q1791526640.mp4",
+   "err": "duplicate",
+   "at": "2026-10-09 06:17",
+   "duration": 35.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -624,7 +638,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "dua-2-128",
+ "last_try": "quiz-18-10",
  "broken": [
   "dua-3-8"
  ],
@@ -633,5 +647,10 @@
   "2026-10-09T05:00|asma|short",
   "2026-10-09T06:20|athkar|short",
   "2026-10-09T07:40|dua|short"
- ]
+ ],
+ "grid_hold": {
+  "key": "2026-10-09T09:00|quiz|short",
+  "kind": "quiz",
+  "at": "2026-10-09 06:17"
+ }
 }
