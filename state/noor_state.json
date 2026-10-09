@@ -657,6 +657,20 @@
    "at": "2026-10-09 09:09",
    "duration": 44.0,
    "over_180s": false
+  },
+  {
+   "id": "mu-20-17",
+   "kind": "mujiza",
+   "theme": "معجزات",
+   "title": "من سورة سُورَةُ طه | معجزة | الآيات 17–22 — سورة طه | محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791543044/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=CDJ9I3G-sTc",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-09 10:56",
+   "duration": 92.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -683,7 +697,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "mu-26-63",
+ "last_try": "mu-20-17",
  "broken": [
   "dua-3-8"
  ],
@@ -694,6 +708,7 @@
   "2026-10-09T07:40|dua|short",
   "2026-10-09T09:00|quiz|short",
   "2026-10-09T10:20|spirit|short",
-  "2026-10-09T11:40|qissa|long"
+  "2026-10-09T11:40|qissa|long",
+  "2026-10-09T13:00|mujiza|short"
  ]
 }
