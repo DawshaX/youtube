@@ -1,0 +1,97 @@
+name: 🎬 أول نشر بالنمط الجديد
+# دورة واحدة: شورت ثم طويل. مجموعة تزامن منفصلة عشان ما تتلغاش من طابور النشر الساعي.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: noor-debut
+  cancel-in-progress: false
+jobs:
+  debut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+      PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+      PEXELS: ${{ secrets.PEXELS }}
+      PIXABAY: ${{ secrets.PIXABAY_API_KEY }}
+      NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+      NASA: ${{ secrets.NASA }}
+      OPENVERSE_API_KEY: ${{ secrets.OPENVERSE }}
+      OPENVERSE: ${{ secrets.OPENVERSE }}
+      YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+      YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+      YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+      YOUTUBE_CLIENT_ID_2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+      YOUTUBE_CLIENT_SECRET_2: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
+      YOUTUBE_REFRESH_TOKEN_2: ${{ secrets.YOUTUBE_REFRESH_TOKEN_2 }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      LLM_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      LLM_API_BASE: https://api.groq.com/openai/v1
+      XT_NET_FOOTAGE: "1"
+      XT_STATIC_VAULT: "0"
+      XT_YT: "1"
+      XT_DAILY_CAP: "8"
+      NOOR_MIN_GAP_MIN: "20"
+      NOOR_ALLOW_BURST: "1"
+      NOOR_CHANNEL_NAME: XTreNDAW
+      NOOR_PLAN: "1"
+      NOOR_LOOK: "1"
+      NOOR_GLOBAL: "1"
+      NOOR_LONG_ITEMS: "3"
+      NOOR_GRID: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: تجهيز الرندر
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core libraqm0
+          python -m pip install --quiet pillow requests numpy edge-tts \
+            imageio-ffmpeg arabic-reshaper python-bidi pymediainfo curl_cffi pynacl pyyaml
+      - name: شورت بالنمط الجديد
+        run: |
+          set -o pipefail
+          export NOOR_FORCE_KIND=mujiza
+          echo "▶ شورت معجزة"
+          timeout 1500 python scripts/noor_runner.py --short 2>&1 | tee /tmp/short.log || true
+      - name: طويل بالنمط الجديد
+        run: |
+          set -o pipefail
+          export NOOR_LONG_KIND=qissa
+          echo "▶ طويل قصص"
+          timeout 2400 python scripts/noor_runner.py --long 2>&1 | tee /tmp/long.log || true
+      - name: خزّن الذاكرة
+        if: always()
+        run: |
+          git config user.name "نور [Bot]"
+          git config user.email "noor@daousha.internal"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" >/dev/null 2>&1 || true
+          for f in state/noor_state.json state/noor_ledger.json state/noor_pool.json state/published.json; do
+            [ -f "$f" ] && git add -f "$f" || true
+          done
+          if git diff --staged --quiet; then
+            echo "مفيش تغيير"
+            exit 0
+          fi
+          git commit -m "noor(state): بعد أول نشر بالنمط الجديد [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME:-main}" || true
+      - name: ملخص
+        if: always()
+        run: |
+          echo "### شورت" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          grep -E "نمط|يتكلم|اتنشر|اتخزن|موعد|❌|⚠️" /tmp/short.log | tail -n 30 >> "$GITHUB_STEP_SUMMARY" || true
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo "### طويل" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          grep -E "نمط|يتكلم|اتنشر|اتخزن|طويل|❌|⚠️" /tmp/long.log | tail -n 30 >> "$GITHUB_STEP_SUMMARY" || true
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
