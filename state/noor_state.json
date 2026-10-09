@@ -566,6 +566,20 @@
    "at": "2026-10-09 00:36",
    "duration": 53.7,
    "over_180s": false
+  },
+  {
+   "id": "asma-1",
+   "kind": "asma",
+   "theme": "توحيد",
+   "title": "معاكم نور. تعرف معنى «الرَّحْمَنُ»؟ ✨ | أسماء الله الحسنى 🤍 الرَّحْمَنُ مع الدليل من القرآن",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791513617/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=XalLVH5L__k",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-09 02:42",
+   "duration": 13.2,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -582,11 +596,12 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "mu-21-68",
+ "last_try": "asma-1",
  "broken": [
   "dua-3-8"
  ],
  "grid_done": [
-  "2026-10-08T23:30|tafsir|short"
+  "2026-10-08T23:30|tafsir|short",
+  "2026-10-09T05:00|asma|short"
  ]
 }
