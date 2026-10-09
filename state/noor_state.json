@@ -643,6 +643,20 @@
    "at": "2026-10-09 07:42",
    "duration": 16.3,
    "over_180s": false
+  },
+  {
+   "id": "mu-26-63",
+   "kind": "mujiza",
+   "theme": "معجزات",
+   "title": "من سورة سُورَةُ الشُّعَرَاءِ | معجزة | الآيات 63–66 — سورة الشعراء | عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791536673/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=3EOsbPNgK5A",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-09 09:09",
+   "duration": 44.0,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -659,7 +673,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "spirit-سكينة-0",
+ "last_try": "mu-26-63",
  "broken": [
   "dua-3-8"
  ],
