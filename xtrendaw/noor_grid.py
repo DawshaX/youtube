@@ -101,6 +101,26 @@ def _day_kinds(weekday: int) -> list[str]:
 WEEK = {wd: _day_kinds(wd) for wd in range(7)}
 
 
+SCENES = {
+    "quran": ["mosque courtyard empty dawn", "quran book soft light", "desert sunrise aerial"],
+    "tafsir": ["library sunlight dust", "arabic calligraphy closeup", "quiet study window light"],
+    "hadith": ["olive tree wind", "old manuscript light", "courtyard fountain calm"],
+    "qissa": ["desert caravan distant", "sea horizon dawn", "mountain path mist"],
+    "asma": ["stars milky way", "light through geometric window", "calm lake reflection"],
+    "athkar": ["morning mist meadow", "prayer beads wood table", "sunrise clouds gold"],
+    "dua": ["hands light silhouette no face", "rain on leaves", "candle light dark wood"],
+    "quiz": ["open book aerial", "night sky question", "geometric pattern gold"],
+    "spirit": ["forest light rays", "ocean waves slow", "rain window glass"],
+    "mujiza": ["ocean split light abstract", "fire embers to cool mist", "moon over still water"],
+    "hamd": ["wheat field sunlight", "fruit and water still life", "sunrise above clouds"],
+    "nasr": ["dawn after storm", "birds over calm sea", "green valley after rain"],
+    "salah": ["minaret silhouette dawn", "empty mosque interior light", "city sunrise aerial"],
+    "hijri": ["crescent moon night", "lanterns warm bokeh", "desert night stars"],
+    "qfacts": ["open quran pages", "arabic geometric art", "gold light marble"],
+    "proverb": ["old market empty morning", "coffee cup window light", "olive grove path"],
+}
+
+
 def cairo_now(now: dt.datetime | None = None) -> dt.datetime:
     if now is None:
         now = dt.datetime.now(dt.timezone.utc)
