@@ -7,8 +7,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from xtrendaw.noor_sense import (  # noqa: E402
-    ROUTES, SHORT_MAX, SHORT_MIN, awaken, hook_from_text, is_generic,
-    long_title, speech_room, title_of,
+    BUDGET, ROUTES, SHORT_MAX, SHORT_MIN, awaken, hook_from_text, is_generic,
+    long_title, quotes_verse, speech_room, title_of,
 )
 
 
@@ -16,10 +16,13 @@ def main() -> int:
     errs = []
     fire = "قلنا يا نار كوني بردا وسلاما على ابراهيم"
     hook = hook_from_text(fire, surah="الأنبياء", who="إبراهيم", kind="mujiza")
-    if "نار" not in hook and "إبراهيم" not in hook:
-        errs.append("هوك المعجزة ما أخدش من النص: " + hook)
-    if "تلاوة خاشعة" in hook:
-        errs.append("هوك المعجزة قال تلاوة")
+    if "إبراهيم" not in hook:
+        errs.append("هوك المعجزة ما سمّاش صاحب القصة: " + hook)
+    if quotes_verse(hook, fire):
+        errs.append("الهوك بيقتبس الآية: " + hook)
+    quran_hook = hook_from_text(fire, surah="الأنبياء", kind="quran")
+    if quotes_verse(quran_hook, fire):
+        errs.append("هوك التلاوة بينطق الآية: " + quran_hook)
     if not is_generic("آية تُريح القلب 🤍"):
         errs.append("الشعار العام ما اتعرفش")
     if is_generic("رؤيا يوسف… بداية الحكاية 🌙"):
@@ -36,11 +39,12 @@ def main() -> int:
     if len(generic.get("scenes") or []) < 2:
         errs.append("مشاهد القصة أقل من لقطتين")
     quiz = hook_from_text("إنا أنزلناه في ليلة القدر", kind="quiz")
-    lead = quiz.split("…")[0]
-    if "ليلة" not in lead or "القدر" in lead and "سورة" in lead:
-        errs.append("الكويز إما فاضي أو كاشف الإجابة: " + quiz)
+    if quotes_verse(quiz, "إنا أنزلناه في ليلة القدر"):
+        errs.append("الكويز بينطق الآية قبل التلاوة: " + quiz)
     if "من أي سورة" not in quiz:
         errs.append("الكويز ما سألش: " + quiz)
+    if BUDGET["quiz"] > 60 or BUDGET["qissa"] < 150:
+        errs.append("ميزانية الأنواع مش ماشية مع طبيعة الفيديو")
     lt = long_title("qissa", "يوسف · يعقوب · موسى")
     if "تلاوة" in lt or "يوسف" not in lt:
         errs.append("عنوان الطويل لسه قالب: " + lt)

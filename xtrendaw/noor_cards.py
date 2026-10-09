@@ -102,6 +102,20 @@ def build_card_short(item: dict, workdir: Path) -> dict:
     seq: list[tuple[Path, float, str]] = []
     w, d = _narration(hook + ".", workdir, "hook", voice, rate=settings.VOICE_RATE)
     seq.append((w, d, hook))
+    # كلام الله: تلاوة شيخ، مش صوت آلة. الكارت يعرض النص والصوت تلاوة.
+    if item.get("surah") and item.get("ayah") and item.get("verse"):
+        try:
+            from .noor_premium import _trim_silence, ayah_text, dur_of, recitation
+            s_n, a_n = int(item["surah"]), int(item["ayah"])
+            ay = ayah_text(s_n, a_n, int(item.get("ayah_to") or a_n))
+            rec = _trim_silence(
+                recitation(s_n, a_n, item.get("reciter") or "husary", workdir,
+                           globals_=ay.get("globals")),
+                workdir, f"card_{s_n}_{a_n}")
+            seq.append((rec, max(1.2, dur_of(rec)), ay.get("text") or item["verse"]))
+            lines = [ln for ln in lines if str(ln).strip() != str(item.get("verse") or "").strip()]
+        except Exception as exc:
+            print(f"[noor] 🎙️ تلاوة الدليل اتعذّرت: {str(exc)[:80]}", flush=True)
     for i, ln in enumerate(lines):
         w, d = _narration(ln, workdir, f"l{i}", voice,
                           rate=settings.VOICE_RATE_TAFSIR)

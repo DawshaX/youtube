@@ -113,33 +113,68 @@ def clip_spoken(text: str, max_words: int = 70) -> str:
     return cut
 
 
+# كلام الله ما يتقالش بصوت آلة. الهوك المنطوق وصف بشري، والآية تلاوة شيخ.
+SPOKEN = {
+    "quiz": "من أي سورة الآية دي؟",
+    "dua": "دعاء من القرآن… اسمع التلاوة",
+    "quran": "آية… اسمعها بتلاوة",
+    "ayah": "آية… اسمعها بتلاوة",
+    "tafsir": "معنى الآية بعد التلاوة",
+    "reel": "آيات… اسمع التلاوة",
+    "hadith": "حديث… اسمع المتن",
+    "asma": "اسم من أسماء الله… والدليل تلاوة",
+    "athkar": "ذكر… اسمعه",
+    "spirit": "كلمة تطمئن",
+    "salah": "مواقيت الصلاة",
+    "hijri": "التاريخ الهجري",
+    "qfacts": "معلومة من القرآن",
+    "proverb": "مثل… وفكرته",
+}
+
+BUDGET = {
+    "quiz": 50, "salah": 45, "hijri": 40, "proverb": 45, "qfacts": 55,
+    "spirit": 60, "athkar": 75, "asma": 100, "hadith": 90,
+    "dua": 120, "quran": 120, "ayah": 120, "tafsir": 140,
+    "hamd": 150, "nasr": 150, "story": 170, "qissa": 170,
+    "mujiza": 170, "reel": 170,
+}
+
+
 def hook_from_text(text: str, *, surah: str = "", who: str = "",
                    kind: str = "") -> str:
-    """هوك من الكلام نفسه. الكويز ما يكشفش اسم السورة."""
-    text = re.sub(r"\s+", " ", text or "").strip()
+    """هوك يتقال بصوت بشري. ممنوع يقتبس كلمات الآية — دي للتلاوة بس."""
     who = (who or "").strip()
     surah = (surah or "").strip()
     kind = kind or ""
-    words = [w for w in text.replace("﴿", "").replace("﴾", "").split() if len(w) > 1]
     if kind == "quiz":
-        lead = " ".join(words[:4])
-        return f"{lead}… من أي سورة؟" if lead else "من أي سورة هذه الآية؟"
+        return SPOKEN["quiz"]
     found = anchors_in(text)
+    topic = found[0][2] if found else ""
     if who and kind in ("story", "qissa", "mujiza"):
-        if found:
-            return f"{who}… و{found[0][2]}"
-        return f"قصة {who}"
-    if found and surah and kind != "quiz":
-        return f"{found[0][2]}… من سورة {surah}"
-    if found:
-        return f"{found[0][2]} في الكلام ده"
-    if words and surah and kind not in ("quiz",):
-        return " ".join(words[:4]) + f" — سورة {surah}"
-    if words:
-        return " ".join(words[:6])
+        return f"{who}… و{topic}" if topic else f"قصة {who}"
+    if topic and surah:
+        return f"{topic}… من سورة {surah}"
+    if topic:
+        return f"{topic}… في الآية دي"
+    if surah:
+        return f"من سورة {surah}"
     if who:
         return f"قصة {who}"
-    return ""
+    return SPOKEN.get(kind, "")
+
+
+def quotes_verse(hook: str, verse: str) -> bool:
+    """لو الهوك فيه ٣ كلمات متتالية من الآية، يبقى اقتباس. ما يتقالش بصوت آلة."""
+    hw = [w for w in bare(hook).split() if len(w) > 1]
+    vw = [w for w in bare(verse).split() if len(w) > 1]
+    if len(hw) < 3 or len(vw) < 3:
+        return False
+    verse_s = " " + " ".join(vw) + " "
+    for i in range(len(hw) - 2):
+        frag = " ".join(hw[i:i + 3])
+        if f" {frag} " in verse_s:
+            return True
+    return False
 
 
 def scenes_from(text: str, kind: str = "") -> list[str]:
@@ -174,7 +209,7 @@ def awaken(item: dict, *, short: bool = True) -> dict:
     if weak or is_generic(str(item.get("hook") or "")):
         item["scenes"] = scenes_from(blob + " " + str(item.get("hook") or ""), kind)
     if short:
-        item["max_sec"] = SHORT_MAX
+        item["max_sec"] = BUDGET.get(kind, 120)
     item["sense"] = True
     return item
 

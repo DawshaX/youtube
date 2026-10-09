@@ -560,6 +560,10 @@ def render(spec: dict, workdir: Path) -> dict:
                 surah=str(items[0]["ay"].get("surah") or ""),
                 who=str(spec.get("who") or ""),
                 kind=str(spec.get("kind") or spec.get("plan_kind") or ""))
+            from .noor_sense import quotes_verse
+            if quotes_verse(hook, items[0]["ay"]["text"]):
+                sur = str(items[0]["ay"].get("surah") or "")
+                hook = f"من سورة {sur}".strip() if sur else "اسمع التلاوة"
         except Exception:
             hook = hook or "اسمع الآية دي للآخر… هتغيّر يومك"
     hook = hook or "اسمع الآية دي للآخر… هتغيّر يومك"
