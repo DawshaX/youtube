@@ -128,9 +128,22 @@ def bind(item: dict, workdir: Path | None = None) -> dict:
         look = item["_look"]
     else:
         look = pick(item)
+        try:
+            from .noor_variety import look_for
+            extra = look_for(item)
+            host = next(h for h in HOSTS if h["name"] == extra["host"])
+            look.update(y=extra["y"], grade=extra["grade"], plate=extra.get("plate") or "bl",
+                        step=extra.get("step") or 3, size=extra.get("size") or 84,
+                        host=host["name"], voice=host["voice"], host_color=host["color"])
+            if item.get("plan_kind") == "khair":
+                look["name"] = str(item.get("theme") or look["name"])
+        except Exception:
+            look.setdefault("plate", "bl")
+            look.setdefault("step", 3)
         item["_look"] = look
         item["_look_bound"] = True
-        item["scenes"] = scenes_for(item)
+        if len(item.get("scenes") or []) < 2:
+            item["scenes"] = scenes_for(item)
         hook = str(item.get("hook") or "").strip()
         host = look["host"]
         if hook and not hook.startswith("معاكم"):
@@ -145,6 +158,8 @@ def bind(item: dict, workdir: Path | None = None) -> dict:
     os.environ["NOOR_LOOK_HOST"] = look["host"]
     os.environ["NOOR_LOOK_Y"] = str(look["y"])
     os.environ["NOOR_LOOK_GRADE"] = look["grade"]
+    os.environ["NOOR_WORD_STEP"] = str(look.get("step") or 3)
+    os.environ["NOOR_LOOK_SIZE"] = str(look.get("size") or 84)
     try:
         from . import settings
         settings.VOICE_AR = look["voice"]
@@ -167,18 +182,29 @@ def draw_frame(look: dict, out: Path) -> Path:
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     col = tuple(look.get("host_color") or (220, 190, 140))
-    # بطاقة الشخصية تحت شمال — واضحة إنها بتتكلم
-    d.rounded_rectangle((36, 1680, 520, 1868), radius=28, fill=(8, 10, 16, 190))
-    d.ellipse((58, 1704, 186, 1832), fill=col + (255,))
-    d.ellipse((96, 1736, 148, 1788), fill=(255, 248, 236, 230))
+    plate = look.get("plate") or "bl"
+    boxes = {
+        "bl": (36, 1680, 520, 1868, 58, 1704, 206, 1724),
+        "br": (560, 1680, 1044, 1868, 582, 1704, 730, 1724),
+        "tl": (36, 48, 520, 236, 58, 72, 206, 92),
+        "tr": (560, 48, 1044, 236, 582, 72, 730, 92),
+    }
+    if plate == "none":
+        d.rectangle((0, 0, W, 10), fill=col + (220,))
+        img.save(out)
+        return out
+    x0, y0, x1, y1, cx, cy, tx, ty = boxes.get(plate, boxes["bl"])
+    d.rounded_rectangle((x0, y0, x1, y1), radius=28, fill=(8, 10, 16, 190))
+    d.ellipse((cx, cy, cx + 128, cy + 128), fill=col + (255,))
+    d.ellipse((cx + 38, cy + 32, cx + 90, cy + 84), fill=(255, 248, 236, 230))
     try:
         font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 36)
         small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 24)
     except Exception:
         font = ImageFont.load_default()
         small = font
-    d.text((206, 1724), look.get("host") or "", font=font, fill=(255, 248, 236, 255))
-    d.text((206, 1772), "يتكلم الآن · " + str(look.get("name") or ""), font=small,
+    d.text((tx, ty), look.get("host") or "", font=font, fill=(255, 248, 236, 255))
+    d.text((tx, ty + 48), "يتكلم الآن · " + str(look.get("name") or ""), font=small,
            fill=(255, 214, 140, 230))
     out.parent.mkdir(parents=True, exist_ok=True)
     img.save(out)

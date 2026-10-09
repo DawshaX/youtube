@@ -49,7 +49,8 @@ def _assemble(seq: list[tuple[Path, float, str]], scenes: list[str], workdir: Pa
         raw = (str(t).replace("🤍", "").replace("✨", "").replace("👀", "")
                .replace("💛", "").replace("🕊️", "").replace("🤲", "").strip())
         words = raw.split() or ["…"]
-        groups = [words[j:j + 3] for j in range(0, len(words), 3)] or [words]
+        step = int(__import__("os").environ.get("NOOR_WORD_STEP") or "3")
+        groups = [words[j:j + step] for j in range(0, len(words), step)] or [words]
         n = len(groups)
         from .noor_look import compose_seg
         for k in range(1, n + 1):

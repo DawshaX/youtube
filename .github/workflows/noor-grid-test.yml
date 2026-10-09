@@ -9,6 +9,8 @@ on:
       - "xtrendaw/noor_sense.py"
       - "xtrendaw/noor_signs.py"
       - "xtrendaw/noor_ideas.py"
+      - "xtrendaw/noor_variety.py"
+      - "tools/noor_variety_check.py"
       - "tools/noor_grid_check.py"
       - "tools/noor_sense_check.py"
       - "content/idea_library.json"
@@ -27,3 +29,4 @@ jobs:
         run: |
           python tools/noor_grid_check.py
           python tools/noor_sense_check.py
+          python tools/noor_variety_check.py

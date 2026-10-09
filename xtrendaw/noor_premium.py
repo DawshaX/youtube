@@ -666,7 +666,7 @@ def render(spec: dict, workdir: Path) -> dict:
         lines = b["lines"]
         if b["reveal"]:
             words = lines[0].split()
-            step = 2 if _os.environ.get("NOOR_SENSE", "1") != "0" else 4
+            step = 2  # الآية دايمًا كلمتين — كلام الله ما يتغيرش شكله عشوائي
             groups = [words[j:j + step] for j in range(0, len(words), step)] or [words]
             n = len(groups)
             for k in range(1, n + 1):
@@ -680,7 +680,7 @@ def render(spec: dict, workdir: Path) -> dict:
         else:
             # كل كلمة تظهر، مش فقرة مرة واحدة — على الهوك والشرح والخاتمة كمان.
             words = " ".join(str(x) for x in lines).split() or ["…"]
-            step = 3
+            step = int(_os.environ.get("NOOR_WORD_STEP") or "3")
             groups = [words[j:j + step] for j in range(0, len(words), step)] or [words]
             n = len(groups)
             st = b["size"] - (10 if b["kind"] == "tafsir" else 0)
