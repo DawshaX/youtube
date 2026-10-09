@@ -622,6 +622,13 @@
    "at": "2026-10-09 06:17",
    "duration": 35.6,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791345849.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=Appg_x6LVlw",
+   "at": "2026-10-09 06:58"
   }
  ],
  "longs": [
@@ -646,11 +653,7 @@
   "2026-10-08T23:30|tafsir|short",
   "2026-10-09T05:00|asma|short",
   "2026-10-09T06:20|athkar|short",
-  "2026-10-09T07:40|dua|short"
- ],
- "grid_hold": {
-  "key": "2026-10-09T09:00|quiz|short",
-  "kind": "quiz",
-  "at": "2026-10-09 06:17"
- }
+  "2026-10-09T07:40|dua|short",
+  "2026-10-09T09:00|quiz|short"
+ ]
 }
