@@ -209,14 +209,14 @@ def series(kind: str) -> list[tuple[str, dict]]:
                 out.append((f"h-{col}-{h['n']}",
                             {"kind": "hadith", "collection": col,
                              "index": h["n"], "theme": "حديث",
-                             "hook": "حديث صحيح ✅"}))
+                             "hook": f"من {col}"}))
         return out
     if kind == "qissa":
         from . import noor_cats
         out = []
         for it in noor_cats.STORIES:
             key = f"s-{it['surah']}-{it['ayah']}"
-            hook = QISSA_HOOKS[(it["surah"] + it["ayah"]) % len(QISSA_HOOKS)]
+            hook = it.get("hook") or QISSA_HOOKS[(it["surah"] + it["ayah"]) % len(QISSA_HOOKS)]
             out.append((key, {"kind": "story", "them": "قرآن", "theme": "قرآن",
                               "hook": hook, "who": it["who"],
                               "surah": it["surah"], "ayah": it["ayah"],

@@ -241,12 +241,17 @@ def _finish(item: dict) -> dict:
     reciters = ["husary", "minshawi", "shatri", "abdulbasitmurattal"]
     n = len(history())
     item["reciter"] = reciters[n % len(reciters)]
-    if item.get("kind") == "hadith":
+    import os
+    own = item.get("scenes") if isinstance(item.get("scenes"), list) else []
+    if len(own) >= 2:
+        item["scenes"] = own
+    elif item.get("kind") == "hadith":
         item["scenes"] = SCENES["حديث"]
     else:
         item["scenes"] = SCENES.get(item.get("theme", ""), SCENES["نور"])
-    # 🎬 كل ثالث حلقة ريلز (٣ آيات بنفس الثيم + تعليق + تطبيق) لحد 3 دقايق
-    if n % 3 == 2 and item.get("kind") == "ayah":
+    # الجدول الصارم يسيب النوع زي ما هو. الريلز كل ثالث حلقة بس برا الجدول.
+    if (os.environ.get("NOOR_GRID_STRICT") != "1" and n % 3 == 2
+            and item.get("kind") == "ayah"):
         ay = reel_ayahs(item.get("theme", ""), 3)
         if len(ay) >= 2:
             item["kind"] = "reel"

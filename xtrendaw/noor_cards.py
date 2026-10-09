@@ -97,9 +97,7 @@ def build_card_short(item: dict, workdir: Path) -> dict:
     hook = str(item.get("hook") or "من نور الله 🤍")
     lines = [str(x) for x in (item.get("lines") or []) if str(x).strip()]
     src = str(item.get("source") or "")
-    outro = str(item.get("outro") or
-                "لو الكلام أفادك، اكتب آمين في التعليق وشاركه مع حد بتحبه، "
-                "وتابعنا… نور جديد كل يوم.")
+    outro = str(item.get("outro") or "لو الكلام أفادك، شاركه مع حد يهمه.")
 
     seq: list[tuple[Path, float, str]] = []
     w, d = _narration(hook + ".", workdir, "hook", voice, rate=settings.VOICE_RATE)

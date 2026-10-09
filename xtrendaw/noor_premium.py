@@ -540,7 +540,29 @@ def render(spec: dict, workdir: Path) -> dict:
     if not items:
         raise RuntimeError("مفيش آيات صالحة للرندر")
 
-    hook = spec.get("hook") or "اسمع الآية دي للآخر… هتغيّر يومك"
+    # الشورت: لو أكتر من آية هتعدّي ٣ دقايق، نسيب الآية ونكمّل في حلقة تانية
+    max_sec = float(spec.get("max_sec") or 0)
+    if max_sec > 0 and len(items) > 1:
+        kept, acc = [], 10.0
+        for it in items:
+            if kept and acc + it["rec_d"] > max_sec - 8:
+                break
+            kept.append(it)
+            acc += it["rec_d"]
+        items = kept or items[:1]
+
+    hook = spec.get("hook") or ""
+    if _os.environ.get("NOOR_SENSE", "1") != "0":
+        try:
+            from .noor_sense import refine_hook
+            hook = refine_hook(
+                hook, items[0]["ay"]["text"],
+                surah=str(items[0]["ay"].get("surah") or ""),
+                who=str(spec.get("who") or ""),
+                kind=str(spec.get("kind") or spec.get("plan_kind") or ""))
+        except Exception:
+            hook = hook or "اسمع الآية دي للآخر… هتغيّر يومك"
+    hook = hook or "اسمع الآية دي للآخر… هتغيّر يومك"
     outro = spec.get("outro") or "تابعنا… آية وحديث كل ساعة"
     brand = spec.get("brand") or "نور — قرآن وتدبّر"
     # التفسير المنطوق: أول جملتين (الميسّر بيبدأ بالمعنى المباشر)
@@ -562,10 +584,18 @@ def render(spec: dict, workdir: Path) -> dict:
                       "dur": it["rec_d"] + 0.35, "size": 94, "tag": tag,
                       "reveal": True, "kind": "ayah"})
         spoken = _spoken_taf(spec.get("meaning") if len(items) == 1 else it["taf"])
-        w_t, d_t = say(spoken, workdir, f"taf{k}", rate="+2%")
-        beats.append({"lines": [spoken], "audio": w_t, "dur": d_t + 0.3,
-                      "size": 72, "tag": "المعنى", "reveal": False,
-                      "kind": "tafsir"})
+        if max_sec > 0:
+            from .noor_sense import speech_room
+            room = speech_room(sum(x["rec_d"] for x in items), max_sec)
+            if room < 5:
+                spoken = ""
+            else:
+                spoken = _spoken_taf(spoken, limit=max(40, int(room * 8)))
+        if spoken:
+            w_t, d_t = say(spoken, workdir, f"taf{k}", rate="+2%")
+            beats.append({"lines": [spoken], "audio": w_t, "dur": d_t + 0.3,
+                          "size": 72, "tag": "المعنى", "reveal": False,
+                          "kind": "tafsir"})
     w_out, d_out = say(outro, workdir, "outro", rate="+6%")
     beats.append({"lines": [outro], "audio": w_out, "dur": d_out + 0.55,
                   "size": 80, "tag": brand, "reveal": False, "kind": "outro"})
@@ -594,7 +624,8 @@ def render(spec: dict, workdir: Path) -> dict:
         lines = b["lines"]
         if b["reveal"]:
             words = lines[0].split()
-            groups = [words[j:j + 4] for j in range(0, len(words), 4)] or [words]
+            step = 2 if _os.environ.get("NOOR_SENSE", "1") != "0" else 4
+            groups = [words[j:j + step] for j in range(0, len(words), step)] or [words]
             n = len(groups)
             for k in range(1, n + 1):
                 png = overlay([" ".join(" ".join(g) for g in groups[:k])],
@@ -638,7 +669,7 @@ def render(spec: dict, workdir: Path) -> dict:
             "ayah": first["number"], "text": first["text"],
             "tafsir": items[0]["taf"], "sources": srcs,
             "rec_duration": sum(i["rec_d"] for i in items),
-            "ayahs_count": len(items), "has_voice": True}
+            "ayahs_count": len(items), "has_voice": True, "hook": hook}
 
 
 def _clip_seg(bg: Path, t0: float, dur: float, png: Path, workdir: Path,

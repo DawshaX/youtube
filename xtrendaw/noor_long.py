@@ -50,9 +50,11 @@ def build_long_series(items: list[dict], workdir: Path,
                          "ayah_to": it.get("ayah_to"),
                          "reciter": it.get("reciter", "husary"),
                          "hook": (it.get("hook") if i == 0 else
-                                  f"قصة {title_piece} 🤍"),
+                                  f"قصة {title_piece}"),
                          "outro": outro,
                          "scenes": it.get("scenes"),
+                         "who": it.get("who") or title_piece,
+                         "kind": it.get("plan_kind") or it.get("kind") or "qissa",
                          "brand": f"نور — {it.get('theme') or 'قصص القرآن'}"},
                         sub)
         segs.append(res["video"])

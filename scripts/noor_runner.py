@@ -345,11 +345,21 @@ def _ref_of(item: dict, res: dict) -> str:
 
 
 def _hashtags(extra: str = "") -> str:
+    kind = os.environ.get("NOOR_DESC_KIND") or ""
+    if kind and kind not in ("quran", "ayah", "reel", "dua"):
+        return ("#shorts #نور #سكينة #تدبر #معلومة " + extra).strip()
     return ("#shorts #قرآن #آيات_قرآنية #تلاوة_خاشعة #سكينة #راحة_نفسية "
             "#تفسير_القرآن #ذكر " + extra).strip()
 
 
 def _cta_lines(brand: str) -> str:
+    if os.environ.get("NOOR_SENSE", "1") != "0":
+        return (
+            "🤍 لو الكلام ده أفادك: اكتب اللي حسّيته، وابعت الفيديو لحد يهمه.\n"
+            "🔔 اشترك في «" + brand + "»: ١٢ شورت و٣ فيديوهات طويلة كل يوم، "
+            "كل واحد بشكله.\n"
+            "🧭 شغّل التنبيهات عشان ما يفوتكش الجديد."
+        )
     return (
         "🤍 لو الكلام ده لمست قلبك: اكتب «آمين» في التعليق، وابعت الفيديو "
         "لحد بتحبه — الدال على الخير كفاعله.\n"
@@ -519,6 +529,13 @@ def _short_one() -> int:
     except Exception as _e:  # noqa: BLE001
         print(f"[noor] 🎙️ تنويع الصوت اتعذّر (مش بيمنع النشر): {str(_e)[:60]}",
               flush=True)
+    if os.environ.get("NOOR_SENSE", "1") != "0":
+        try:
+            from xtrendaw.noor_sense import awaken
+            item = awaken(item, short=True)
+            print(f"[noor] 🧠 فهم: {item.get('hook', '')[:80]}", flush=True)
+        except Exception as _e:  # noqa: BLE001
+            print(f"[noor] 🧠 الفهم اتعذّر: {str(_e)[:60]}", flush=True)
     # 🎬 مكتبة الاستوديو: مشاهد حرة حسب النوع، والذكاء يكمل مشاهد لو المفتاح موجود
     try:
         from xtrendaw import noor_studio
@@ -542,6 +559,8 @@ def _short_one() -> int:
         res = np2.render({
             "ayahs": item["ayahs"], "reciter": item.get("reciter", "husary"),
             "scenes": item.get("scenes"), "hook": item["hook"],
+            "who": item.get("who"), "kind": item.get("plan_kind") or item.get("kind"),
+            "max_sec": item.get("max_sec") or 175,
             "outro": APPLY.get(item["theme"], "تابعنا… فيديو جديد كل ساعة"),
             "brand": f"نور — {item['theme']}", "meaning": None}, work)
         ref = f"سلاسل وتدبّر — {item['theme']}"
@@ -645,7 +664,10 @@ def _short_one() -> int:
                          "ayah_to": item.get("ayah_to"),
                          "reciter": item.get("reciter", "husary"),
                          "scenes": item.get("scenes"),
-                         "hook": item["hook"], "outro": _outro}, work)
+                         "hook": item["hook"], "outro": _outro,
+                         "who": item.get("who"),
+                         "kind": item.get("plan_kind") or item.get("kind"),
+                         "max_sec": item.get("max_sec") or 175}, work)
         nm = _clean_surah(res.get("surah") or item.get("surah_name") or "")
         num = (f"الآيات {item['ayah']}–{item['ayah_to']}"
                if item.get("ayah_to") and item["ayah_to"] != item.get("ayah")
@@ -698,6 +720,9 @@ def _short_one() -> int:
                          "reciter": item.get("reciter", "husary"),
                          "scenes": item.get("scenes"),
                          "hook": item.get("hook"),
+                         "who": item.get("who"),
+                         "kind": item.get("plan_kind") or item.get("kind"),
+                         "max_sec": item.get("max_sec") or 175,
                          "outro": APPLY.get(item.get("theme", ""),
                                             "تابعنا… آية وحديث كل ساعة")}, work)
         ref = _ref_of(item, res)
@@ -721,6 +746,21 @@ def _short_one() -> int:
         hook_line = item["hook"]
 
     tags = _tags_of(item, res, item["kind"], str(res.get("reciter") or ""))
+    if os.environ.get("NOOR_SENSE", "1") != "0":
+        try:
+            from xtrendaw.noor_sense import is_generic, refine_hook, title_of
+            kind = item.get("plan_kind") or item.get("kind")
+            spoken = str(res.get("hook") or hook_line or "")
+            if is_generic(spoken):
+                spoken = refine_hook(
+                    spoken, str(res.get("text") or body or ""),
+                    surah=_clean_surah(str(res.get("surah") or item.get("surah_name") or "")),
+                    who=str(item.get("who") or ""), kind=str(kind)) or spoken
+            title = title_of(kind=str(kind), hook=spoken, ref=ref,
+                             reciter=str(res.get("reciter") or ""))
+            os.environ["NOOR_DESC_KIND"] = str(kind)
+        except Exception as _e:  # noqa: BLE001
+            print(f"[noor] 🧠 عنوان اتعذّر: {str(_e)[:60]}", flush=True)
     desc = _desc_of(hook_line, body, ref, src_lines, BRAND, extra)
     # 🌍 الطبقة العالمية: ترجمة العنوان + ترجمة الآية المعتمدة لكل لغة كبيرة
     if os.environ.get("NOOR_GLOBAL") == "1":
@@ -791,13 +831,11 @@ def _long_series_once() -> int:
     work = WORK / f"longq_{int(time.time())}"
     res = noor_long.build_long_series(picks, work, max_items=len(picks))
     names = " · ".join(str(p.get("who") or "") for p in picks if p.get("who"))
-    title = (f"قصص الأنبياء كاملة 📖 {names} | حكايات القرآن بترتيبها "
-             f"— تلاوة خاشعة من غير ما تتقطع")
-    desc = (f"رحلة مع قصص الأنبياء من القرآن الكريم: {names}.\n"
-            "🎙️ تلاوة القرّاء المعتمدين · 🧩 تدبّر مبسّط · 🚫 بلا موسيقى.\n"
-            "لو القصص أفادتك، اشترك وشارك الفيديو مع من تحب 🤍")
+    from xtrendaw.noor_sense import long_title, long_desc
+    title = long_title("qissa", names)
+    desc = long_desc("qissa", names)
     tags = ["قصص الأنبياء", "قصص القرآن", "قصص إسلامية", "قصص الانبياء كاملة",
-            "تلاوة خاشعة", "قرآن كريم", "سلاسل قرآنية", "قصص دينية",
+            "قرآن كريم", "سلاسل قرآنية", "قصص دينية",
             "prophets stories", "quran stories", "islamic stories"]
     cover = res.get("cover")
     url, err = _publish(res["video"], cover, title[:100], desc, tags)
@@ -906,13 +944,13 @@ def _long_kind_once(kind: str) -> int:
         "tafsir": "تدبر", "dua": "أدعية من القرآن", "quran": "قرآن",
     }
     label = labels.get(kind, kind)
-    title = f"{label} 📖 {names} | تلاوة خاشعة من غير ما تتقطع"
-    desc = (f"{label}: {names}.\\n"
-            "🎙️ تلاوة القرّاء المعتمدين · 🧩 تدبّر مبسّط · 🚫 بلا موسيقى.\\n"
-            "النص من القرآن الكريم عبر alquran.cloud — بلا زيادة.\\n"
-            "لو أفادك، اشترك وشارك الفيديو 🤍")
-    tags = [label, "قرآن كريم", "تلاوة خاشعة", "سلاسل قرآنية",
+    from xtrendaw.noor_sense import long_desc, long_title
+    title = long_title(kind, names)
+    desc = long_desc(kind, names)
+    tags = [label, "قرآن كريم", "سلاسل قرآنية",
             "quran", "islamic", "no music"]
+    if kind == "quran":
+        tags.insert(1, "تلاوة خاشعة")
     url, err = _publish(res["video"], res.get("cover"), title[:100], desc, tags)
     st = _load()
     st.setdefault("longs", []).append({

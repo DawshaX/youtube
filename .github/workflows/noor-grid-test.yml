@@ -6,9 +6,11 @@ on:
     paths:
       - "xtrendaw/noor_grid.py"
       - "xtrendaw/noor_look.py"
+      - "xtrendaw/noor_sense.py"
       - "xtrendaw/noor_signs.py"
       - "xtrendaw/noor_ideas.py"
       - "tools/noor_grid_check.py"
+      - "tools/noor_sense_check.py"
       - "content/idea_library.json"
 permissions:
   contents: read
@@ -22,4 +24,6 @@ jobs:
         with:
           python-version: "3.12"
       - name: فحص الجدول والمكتبة
-        run: python tools/noor_grid_check.py
+        run: |
+          python tools/noor_grid_check.py
+          python tools/noor_sense_check.py

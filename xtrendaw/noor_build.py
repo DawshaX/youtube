@@ -169,10 +169,14 @@ def build_hadith_short(item: dict, workdir: Path) -> dict:
         except Exception:
             pass
     h = hadith_text(item["collection"], int(item["index"]))
-    txt = _matn(h["text"])
+    from .noor_sense import clip_spoken, is_generic
+    txt = clip_spoken(_matn(h["text"]), 64)
     words = txt.split()
-    groups = [words[i:i + 6] for i in range(0, min(len(words), 72), 6)]
+    groups = [words[i:i + 6] for i in range(0, len(words), 6)]
     voice = settings.VOICE_AR
+    if is_generic(item.get("hook")) or str(item.get("hook") or "").startswith("من "):
+        item = dict(item)
+        item["hook"] = f"من {h['book']}"
 
     lead = 0.45
     seq: list[tuple[Path, float, str]] = []       # (صوت، مدة، نص مصاحب)
@@ -181,6 +185,7 @@ def build_hadith_short(item: dict, workdir: Path) -> dict:
     # الهوك أسرع سنت بسيط، والمتن والحديث بسرعة تدبّر واحدة، والمصدر زي المتن.
     wav_hook, d_hook = _narration(item["hook"] + ".", workdir, "hook",
                                   voice, rate=settings.VOICE_RATE)
+    seq.append((wav_hook, d_hook, item["hook"]))
     for gi, g in enumerate(groups):
         w, d = _narration(" ".join(g), workdir, f"h{gi}", voice,
                           rate=settings.VOICE_RATE_TAFSIR)
@@ -256,7 +261,8 @@ def build_hadith_short(item: dict, workdir: Path) -> dict:
                     "-frames:v", "1", str(cover)], capture_output=True)
     return {"video": out, "cover": cover, "duration": total,
             "text": txt, "book": h["book"], "number": h["number"],
-            "sources": ["حديث صحيح — " + h["book"]]}
+            "hook": item["hook"],
+            "sources": ["حديث — " + h["book"]]}
 
 
 # ─────────────────────────── فيديو طويل: سورة كاملة ───────────────────────────
