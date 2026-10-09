@@ -774,6 +774,17 @@
    "at": "2026-10-09 14:41",
    "duration": 130.9,
    "err": null
+  },
+  {
+   "surah": "الواقعة",
+   "ayahs": 89,
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_56_1791576602/noor_long.mp4",
+   "url": "https://www.youtube.com/watch?v=Mvj9BIBaqYY",
+   "vault": "",
+   "at": "2026-10-09 20:51",
+   "duration": 1200.4,
+   "err": null
   }
  ],
  "bad_reciters": [],
@@ -795,6 +806,7 @@
   "2026-10-09T17:00|hamd|long",
   "2026-10-09T18:20|quran|short",
   "2026-10-09T19:40|tafsir|short",
-  "2026-10-09T22:20|hadith|short"
+  "2026-10-09T22:20|hadith|short",
+  "2026-10-09T21:00|quran|long"
  ]
 }
