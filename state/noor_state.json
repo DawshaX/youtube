@@ -722,6 +722,16 @@
    "at": "2026-10-09 10:19",
    "duration": 364.3,
    "err": null
+  },
+  {
+   "id": "long-hamd-1791556899",
+   "kind": "long_hamd",
+   "title": "الحمد في القرآن: الحمد على الخلق · الحمد على الكتاب · الحمد في السماء والأرض",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_hamd_1791556140/noor_long.mp4",
+   "url": "https://www.youtube.com/watch?v=9xUqqj3dIuw",
+   "at": "2026-10-09 14:41",
+   "duration": 130.9,
+   "err": null
   }
  ],
  "bad_reciters": [],
@@ -739,6 +749,7 @@
   "2026-10-09T11:40|qissa|long",
   "2026-10-09T13:00|mujiza|short",
   "2026-10-09T14:20|hamd|short",
-  "2026-10-09T15:40|nasr|short"
+  "2026-10-09T15:40|nasr|short",
+  "2026-10-09T17:00|hamd|long"
  ]
 }
