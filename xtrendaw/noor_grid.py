@@ -1,14 +1,9 @@
-"""🗓️ جدول الـ١٢ نوع — تقسيم اليوم والساعة بتوقيت القاهرة.
+"""🗓️ جدول ١٢ شورت + ٣ طويل كل يوم — توقيت القاهرة.
 
-الـ٩ أنواع الأصلية في المخطّط بقت ١٢:
-  قرآن · تدبر · حديث · قصص الأنبياء · أسماء الله · أذكار · أدعية · كويز · روح
-  + معجزات · ولله الحمد · الله غالب (خير الله دائم)
-
-كل يوم ٨ نشرات (القاعدة القديمة) **منهم ٣ فيديوهات طويلة**.
-المسافة بين المواعيد ساعتان ونص، والنافذة ٧٠–١٠٠ دقيقة عشان تأخير
-السيرفر ما يضيّعش الموعد، ومن غير ما يلحق موعدين في نفس الدورة.
-
-النص الديني مش بيتكتب هنا. الجدول بيختار النوع، والمصدر (API) بيجيب النص.
+كل نوع من الـ١٢ ياخد شورت في اليوم، والطويل يتبدّل على الأنواع كلها
+(سورة، قصص، معجزات، حمد، نصر، حديث، روح…).
+المصنع بينشر موعدًا واحدًا في الدورة، ولو فات موعد يلحقه في الدورة الجاية
+من غير ما يكدّس اليوم كله في دقيقة.
 """
 from __future__ import annotations
 
@@ -16,19 +11,7 @@ import datetime as dt
 from zoneinfo import ZoneInfo
 
 CAIRO = ZoneInfo("Africa/Cairo")
-GRACE_MIN = 100
-
-# ترتيب ثابت = ترتيب الخانات تحت
-SLOTS = [
-    {"h": 6, "m": 0, "form": "short", "name": "فجر"},
-    {"h": 8, "m": 30, "form": "short", "name": "صباح"},
-    {"h": 11, "m": 0, "form": "long", "name": "ضحى طويل"},
-    {"h": 13, "m": 30, "form": "short", "name": "ظهر"},
-    {"h": 16, "m": 0, "form": "long", "name": "عصر طويل"},
-    {"h": 18, "m": 30, "form": "short", "name": "مغرب"},
-    {"h": 21, "m": 0, "form": "long", "name": "ليل طويل"},
-    {"h": 23, "m": 30, "form": "short", "name": "هدوء"},
-]
+GRACE_MIN = 70
 
 TYPES = [
     {"id": "quran", "ar": "قرآن", "lane": "دين"},
@@ -47,59 +30,75 @@ TYPES = [
 TYPE_IDS = tuple(t["id"] for t in TYPES)
 TYPE_AR = {t["id"]: t["ar"] for t in TYPES}
 TYPE_AR.update({
-    "salah": "مواقيت الصلاة",
-    "hijri": "تقويم هجري",
-    "qfacts": "معلومة قرآنية",
-    "proverb": "مثل عربي",
+    "salah": "مواقيت الصلاة", "hijri": "تقويم هجري",
+    "qfacts": "معلومة قرآنية", "proverb": "مثل عربي",
 })
 
-# الطويل لازم يكون نوع المحرّك يعرف يجمعه (تلاوة/سلسلة)، مش كارت معلومة
-LONG_KINDS = {"quran", "qissa", "mujiza", "hamd", "nasr"}
-
-# لمسات إضافية لسه في المصنع (مش من الـ١٢) — خانة في الأسبوع عشان متختفيش
-BONUS = {"salah", "hijri", "qfacts", "proverb"}
+# الطويل ينفع من أي نوع. المحرّك يختار طريق التلاوة أو طريق الكروت.
+LONG_KINDS = set(TYPE_IDS)
+AYAH_LONG = {"quran", "tafsir", "qissa", "mujiza", "hamd", "nasr", "dua"}
+CARD_LONG = {"hadith", "asma", "athkar", "spirit", "quiz", "salah", "hijri",
+             "qfacts", "proverb"}
 
 WEEKDAY_AR = ["الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد"]
 DAY_THEME = [
-    "مواقيت وقرآن وقصص",
-    "حمد ونصر وخير الله",
-    "قصص وسكينة",
-    "حديث ومعجزة",
-    "جمعة وحمد",
-    "قصص الأنبياء ومعجزات",
-    "روح وخير الله الدائم",
+    "قرآن وقصص ومعجزة",
+    "حمد ونصر وتدبر",
+    "حديث وروح ودعاء",
+    "أسماء وأذكار وكويز",
+    "جمعة: قصص وحمد وقرآن",
+    "معجزات ونصر وسكينة",
+    "تدبر وقصص وحمد",
 ]
 
-# ٨ خانات لكل يوم، بنفس ترتيب SLOTS. الخانات 2 و4 و6 طويلة.
-WEEK: dict[int, list[str]] = {
-    0: ["salah", "athkar", "quran", "tafsir", "qissa", "hadith", "mujiza", "dua"],
-    1: ["asma", "hamd", "nasr", "spirit", "hamd", "quiz", "quran", "nasr"],
-    2: ["qissa", "dua", "qissa", "athkar", "quran", "quran", "mujiza", "spirit"],
-    3: ["hadith", "mujiza", "hamd", "hijri", "nasr", "quiz", "qissa", "tafsir"],
-    4: ["quran", "hamd", "quran", "dua", "hamd", "spirit", "mujiza", "tafsir"],
-    5: ["qissa", "mujiza", "qissa", "nasr", "mujiza", "qfacts", "quran", "asma"],
-    6: ["spirit", "proverb", "hamd", "quran", "qissa", "hadith", "nasr", "dua"],
-}
+# ١٢ شورت + ٣ طويل. المسافة حوالي ٨٠ دقيقة عشان النبضة الساعية تلحق.
+_TIMES = [
+    (5, 0, "short", "فجر"),
+    (6, 20, "short", "صباح ١"),
+    (7, 40, "short", "صباح ٢"),
+    (9, 0, "short", "ضحى"),
+    (10, 20, "short", "قبل الطويل"),
+    (11, 40, "long", "طويل الضحى"),
+    (13, 0, "short", "ظهر"),
+    (14, 20, "short", "بعد الظهر"),
+    (15, 40, "short", "عصر"),
+    (17, 0, "long", "طويل العصر"),
+    (18, 20, "short", "مغرب"),
+    (19, 40, "short", "مساء"),
+    (21, 0, "long", "طويل الليل"),
+    (22, 20, "short", "ليل"),
+    (23, 40, "short", "هدوء"),
+]
+SLOTS = [{"h": h, "m": m, "form": form, "name": name} for h, m, form, name in _TIMES]
 
-# مشاهد إنجليزي للمصادر الحرة — طبيعة وعمارة فاضية، بلا وجوه وبلا سلاح
-SCENES = {
-    "quran": ["mosque courtyard empty dawn", "quran book soft light", "desert sunrise aerial"],
-    "tafsir": ["library sunlight dust", "arabic calligraphy closeup", "quiet study window light"],
-    "hadith": ["olive tree wind", "old manuscript light", "courtyard fountain calm"],
-    "qissa": ["desert caravan distant", "sea horizon dawn", "mountain path mist"],
-    "asma": ["stars milky way", "light through geometric window", "calm lake reflection"],
-    "athkar": ["morning mist meadow", "prayer beads wood table", "sunrise clouds gold"],
-    "dua": ["hands light silhouette no face", "rain on leaves", "candle light dark wood"],
-    "quiz": ["open book aerial", "night sky question", "geometric pattern gold"],
-    "spirit": ["forest light rays", "ocean waves slow", "rain window glass"],
-    "mujiza": ["ocean split light abstract", "fire embers to cool mist", "moon over still water"],
-    "hamd": ["wheat field sunlight", "fruit and water still life", "sunrise above clouds"],
-    "nasr": ["dawn after storm", "birds over calm sea", "green valley after rain"],
-    "salah": ["minaret silhouette dawn", "empty mosque interior light", "city sunrise aerial"],
-    "hijri": ["crescent moon night", "lanterns warm bokeh", "desert night stars"],
-    "qfacts": ["open quran pages", "arabic geometric art", "gold light marble"],
-    "proverb": ["old market empty morning", "coffee cup window light", "olive grove path"],
-}
+_SHORTS = list(TYPE_IDS)
+_LONGS = [
+    ["quran", "qissa", "mujiza"],
+    ["hamd", "nasr", "tafsir"],
+    ["hadith", "spirit", "dua"],
+    ["asma", "athkar", "quiz"],
+    ["qissa", "hamd", "quran"],
+    ["mujiza", "nasr", "spirit"],
+    ["tafsir", "qissa", "hamd"],
+]
+
+
+def _day_kinds(weekday: int) -> list[str]:
+    shorts = _SHORTS[weekday:] + _SHORTS[:weekday]
+    longs = list(_LONGS[weekday])
+    out = []
+    si = li = 0
+    for slot in SLOTS:
+        if slot["form"] == "long":
+            out.append(longs[li])
+            li += 1
+        else:
+            out.append(shorts[si])
+            si += 1
+    return out
+
+
+WEEK = {wd: _day_kinds(wd) for wd in range(7)}
 
 
 def cairo_now(now: dt.datetime | None = None) -> dt.datetime:
@@ -130,34 +129,43 @@ def day_slots(weekday: int, day: dt.date | None = None) -> list[dict]:
     return out
 
 
-def due(done: set[str], now: dt.datetime | None = None) -> list[dict]:
-    """الموعد اللي وقته عدّى ولسه جوه نافذة السماح، والأقدم أولًا.
-
-    نافذة واحدة بس بتيجي في الدورة — المواعيد متباعدة ساعتين ونص.
-    """
+def _rows(done: set[str], now: dt.datetime | None, offsets: tuple[int, ...]) -> list[tuple[float, dict]]:
     local = cairo_now(now)
     found = []
-    for offset in (0, -1):
-        day = (local + dt.timedelta(days=offset)).date()
-        midnight = local.replace(hour=0, minute=0, second=0, microsecond=0)
-        base = midnight + dt.timedelta(days=offset)
+    for offset in offsets:
+        base = local.replace(hour=0, minute=0, second=0, microsecond=0) + dt.timedelta(days=offset)
+        day = base.date()
         for item in day_slots(base.weekday(), day):
             when = base.replace(hour=item["h"], minute=item["m"])
             delta = (local - when).total_seconds() / 60
-            if 0 <= delta <= GRACE_MIN and item["key"] not in done:
-                row = dict(item)
-                row["when"] = when.isoformat(timespec="minutes")
-                found.append(row)
-    found.sort(key=lambda r: r["when"])
+            if item["key"] in done:
+                continue
+            row = dict(item)
+            row["when"] = when.isoformat(timespec="minutes")
+            found.append((delta, row))
     return found
+
+
+def due(done: set[str], now: dt.datetime | None = None) -> list[dict]:
+    """الموعد اللي جوه نافذة السماح. موعد واحد غالبًا."""
+    hits = [row for delta, row in _rows(done, now, (0, -1)) if 0 <= delta <= GRACE_MIN]
+    hits.sort(key=lambda r: r["when"])
+    return hits
+
+
+def backlog(done: set[str], now: dt.datetime | None = None) -> list[dict]:
+    """مواعيد النهاردة اللي فاتت. الأقدم أولًا — الدورة تلحق واحدًا بس."""
+    hits = [row for delta, row in _rows(done, now, (0,)) if delta > GRACE_MIN]
+    hits.sort(key=lambda r: r["when"])
+    return hits
 
 
 def next_slot(done: set[str] | None = None, now: dt.datetime | None = None) -> str:
     local = cairo_now(now)
     done = done or set()
     for add in range(0, 3):
-        day = (local + dt.timedelta(days=add)).date()
         base = local.replace(hour=0, minute=0, second=0, microsecond=0) + dt.timedelta(days=add)
+        day = base.date()
         for item in day_slots(base.weekday(), day):
             when = base.replace(hour=item["h"], minute=item["m"])
             if when >= local and item["key"] not in done:
@@ -166,39 +174,39 @@ def next_slot(done: set[str] | None = None, now: dt.datetime | None = None) -> s
 
 
 def validate() -> list[str]:
-    """يرجّع قائمة أخطاء. فاضية = الجدول سليم."""
     bad = []
     if len(TYPES) != 12:
         bad.append(f"الأنواع {len(TYPES)} مش ١٢")
-    if len(WEEK) != 7:
-        bad.append("الأسبوع ناقص")
-    seen = set()
+    if len(SLOTS) != 15:
+        bad.append(f"الخانات {len(SLOTS)} مش ١٥")
+    if sum(1 for s in SLOTS if s["form"] == "short") != 12:
+        bad.append("الشورتس مش ١٢")
+    if sum(1 for s in SLOTS if s["form"] == "long") != 3:
+        bad.append("الطويل مش ٣")
     for wd, kinds in WEEK.items():
-        if len(kinds) != 8:
+        if len(kinds) != 15:
             bad.append(f"{WEEKDAY_AR[wd]} خاناته {len(kinds)}")
             continue
+        shorts = [k for k, s in zip(kinds, SLOTS) if s["form"] == "short"]
         longs = [k for k, s in zip(kinds, SLOTS) if s["form"] == "long"]
-        if len(longs) != 3:
-            bad.append(f"{WEEKDAY_AR[wd]} الطويل {len(longs)}")
+        if len(shorts) != 12 or set(shorts) != set(TYPE_IDS):
+            bad.append(f"{WEEKDAY_AR[wd]} الشورتس مش كل الـ١٢")
+        if len(longs) != 3 or len(set(longs)) < 3:
+            bad.append(f"{WEEKDAY_AR[wd]} الطويل مكرر أو ناقص")
         for k in longs:
             if k not in LONG_KINDS:
-                bad.append(f"طويل مش مدعوم: {k} يوم {WEEKDAY_AR[wd]}")
-        seen.update(kinds)
-    missing = [t for t in TYPE_IDS if t not in seen]
-    if missing:
-        bad.append("نوع من الـ١٢ مش في الأسبوع: " + "، ".join(missing))
+                bad.append(f"طويل مش مدعوم: {k}")
     return bad
 
 
 def markdown() -> str:
-    lines = ["# جدول نور الأسبوعي — ١٢ نوع · توقيت القاهرة", ""]
-    lines.append("كل يوم ٨ نشرات، منهم ٣ طويلة. المسافة ساعتان ونص.")
+    lines = ["# جدول نور — ١٢ شورت + ٣ طويل · توقيت القاهرة", ""]
+    lines.append("كل نوع ياخد شورت في اليوم. الطويل يتبدّل على الأنواع. كل فيديو بنمط مختلف.")
     lines.append("")
     for wd in range(7):
         lines.append(f"## {WEEKDAY_AR[wd]} — {DAY_THEME[wd]}")
         for item in day_slots(wd, dt.date(2026, 1, 5 + wd)):
             mark = "🎥" if item["form"] == "long" else "📱"
-            # التاريخ فوق وهمي عشان المفتاح؛ العرض بالساعة بس
             hh = f"{item['h']:02d}:{item['m']:02d}"
             lines.append(f"- {mark} {hh} {item['slot_name']}: **{item['kind_ar']}** (`{item['kind']}`)")
         lines.append("")

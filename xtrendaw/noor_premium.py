@@ -224,6 +224,12 @@ def overlay(lines: list[str], out: Path, *, size: int = 84, y: float = 0.42,
     + auto-fit: لو النص طلع أكتر من max_lines سطر، الخط بيصغر لحد ما يظبط.
     """
     W_ = W if max_w is None else max_w
+    import os as _os
+    if _os.environ.get("NOOR_LOOK_Y"):
+        try:
+            y = float(_os.environ["NOOR_LOOK_Y"])
+        except ValueError:
+            pass
     from . import textrender as _tr
     kw = {"layout_engine": ImageFont.Layout.RAQM} if _tr.HAS_RAQM else {}
     _dir = {"direction": "rtl", "language": "ar"} if _tr.HAS_RAQM else {}
@@ -428,6 +434,9 @@ def say(text: str, workdir: Path, name: str, *, rate: str = "+0%",
     الصوت: edge-tts (نيورال عربي وقور). لو الشبكة وقعت، tts فيها احتياطي محلي.
     """
     from .tts import synthesize_line
+    import os as _os
+    if not voice:
+        voice = _os.environ.get("NOOR_LOOK_VOICE") or None
     r = synthesize_line(text, "ar", workdir, name=f"v_{name}", rate=rate,
                         pitch=pitch, voice=voice)
     w = _trim_silence(Path(r["wav"]), workdir, f"v_{name}")
@@ -500,6 +509,14 @@ def render(spec: dict, workdir: Path) -> dict:
            brand, ayahs[] (للريلز: [{surah, ayah, ayah_to}])}
     """
     workdir.mkdir(parents=True, exist_ok=True)
+    import os as _os
+    if _os.environ.get("NOOR_LOOK") == "1":
+        try:
+            from .noor_look import bind
+            look = bind(spec, workdir)
+            print(f"[noor] 🎬 نمط {look['name']} · يتكلم {look['host']}", flush=True)
+        except Exception as _e:
+            print(f"[noor] 🎬 النمط اتعذّر: {str(_e)[:80]}", flush=True)
     reciter = spec.get("reciter") or "husary"
     # آيات الفيديو: واحدة للسكوت، أو قائمة (ريلز لحد 3 دقايق)
     wants = spec.get("ayahs") or [{"surah": spec.get("surah"),
@@ -632,17 +649,8 @@ def _clip_seg(bg: Path, t0: float, dur: float, png: Path, workdir: Path,
     fades = "fade=t=in:st=0:d=0.4:alpha=1"
     if last:
         fades += f",fade=t=out:st={max(0.1, d_ - 0.8):.2f}:d=0.8:alpha=1"
-    vf = ("[0:v]setsar=1[v0];[1:v]format=rgba," + fades +
-          "[ov];[v0][ov]overlay=0:0:format=auto,format=yuv420p[v]")
-    r = subprocess.run([ffmpeg(), "-y", "-ss", f"{max(0, t0):.3f}", "-i",
-                        str(bg), "-loop", "1", "-t", f"{d_:.3f}", "-i",
-                        str(png), "-filter_complex", vf, "-map", "[v]", "-t",
-                        f"{d_:.3f}", "-r", str(FPS), "-c:v", "libx264",
-                        "-preset", "veryfast", "-crf", "20", "-pix_fmt",
-                        "yuv420p", "-an", str(seg)], capture_output=True,
-                       text=True)
-    if r.returncode:
-        raise RuntimeError(f"فصل {name} فشل: " + (r.stderr or "")[-300:])
+    from .noor_look import compose_seg
+    compose_seg(ffmpeg(), bg, png, seg, ss=t0, dur=d_, fades=fades, fps=FPS)
     return seg
 
 

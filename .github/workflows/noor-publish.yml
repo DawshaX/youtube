@@ -125,8 +125,8 @@ jobs:
           # الحارس يتعلّم الحد الفعلي تلقائيًا لو جوجل ردت «quota exceeded»
           # 📅 ٨ فيديوهات في اليوم بالظبط: السقف الفعلي = الرقم ده × عدد مشاريع جوجل
           # (عندنا مشروعان ⇒ ٤ × ٢ = ٨). كانت ٢٤ ⇒ ٤٨ فيديو/يوم ⇒ ٠ مشاهدات.
-          XT_DAILY_CAP: '4'
-          NOOR_MIN_GAP_MIN: '150'    # ⏳ مسافة ٢.٥ ساعة بين النشرات (انتشار على اليوم)
+          XT_DAILY_CAP: '8'  # ١٢ شورت + ٣ طويل (طلب 2026-10-09)
+          NOOR_MIN_GAP_MIN: '45'     # ١٥ نشرة/يوم — الجدول هو المسافة الحقيقية
           XT_YT_QURAN: 'auto'
           # ساعات النشر بتتحدد تلقائيًا حسب عدد مشاريع جوجل
           # (6 رفعات = 6 مواعيد · 24 رفعة = موعد كل ساعة) — تقدر تجبرها بـ NOOR_SLOTS
@@ -138,6 +138,8 @@ jobs:
           NOOR_PLAN: '1'
           # 🗓️ جدول القاهرة: ١٢ نوع · ٨/يوم منهم ٣ طويلة. الإضافة مش بتقفل الدورة القديمة.
           NOOR_GRID: '1'
+          NOOR_LOOK: '1'             # كل فيديو بنمط وشخصية ومشهد
+          NOOR_LONG_ITEMS: '3'
           NOOR_STUDIO_LLM: '1'
           # 🌍 الطبقة العالمية: ترجمة العنوان + ترجمة الآية المعتمدة في الوصف
           NOOR_GLOBAL: '1'
@@ -152,6 +154,14 @@ jobs:
           FLAG="--cycle"
           [ "$MODE" = "short" ] && FLAG="--short"
           [ "$MODE" = "long" ]  && FLAG="--long"
+          if [ "$MODE" = "long" ]; then
+            export NOOR_LONG_KIND="${NOOR_LONG_KIND:-qissa}"
+            echo "▶ طويل بالنمط الجديد: $NOOR_LONG_KIND"
+          fi
+          if [ "$MODE" = "short" ]; then
+            export NOOR_FORCE_KIND="${NOOR_FORCE_KIND:-mujiza}"
+            echo "▶ شورت بالنمط الجديد: $NOOR_FORCE_KIND"
+          fi
           echo "▶ حلقة نور: $MODE"
           # مهلة صارمة: الرندر ما يعلّقش السلسلة أبدًا
           timeout 2700 python scripts/noor_runner.py "$FLAG" 2>&1 | tee /tmp/noor.log || true

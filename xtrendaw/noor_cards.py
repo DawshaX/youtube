@@ -54,16 +54,8 @@ def _assemble(seq: list[tuple[Path, float, str]], scenes: list[str], workdir: Pa
         fades = "fade=t=in:st=0:d=0.4:alpha=1"
         if last:
             fades += f",fade=t=out:st={max(0.1, d - 0.5):.2f}:d=0.5:alpha=1"
-        vf = ("[0:v]setsar=1[v0];[1:v]format=rgba," + fades +
-              "[ov];[v0][ov]overlay=0:0:format=auto,format=yuv420p[v]")
-        r = subprocess.run([ffmpeg(), "-y", "-ss", f"{t0:.3f}", "-i", str(bg),
-                            "-loop", "1", "-t", f"{d:.3f}", "-i", str(png),
-                            "-filter_complex", vf, "-map", "[v]", "-t", f"{d:.3f}",
-                            "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast",
-                            "-crf", "20", "-pix_fmt", "yuv420p", str(seg)],
-                           capture_output=True, text=True)
-        if r.returncode:
-            raise RuntimeError("فصل كارت فشل: " + (r.stderr or "")[-300:])
+        from .noor_look import compose_seg
+        compose_seg(ffmpeg(), bg, png, seg, ss=t0, dur=d, fades=fades, fps=FPS)
         segs.append(seg)
         t0 += d
 
@@ -94,6 +86,13 @@ def _assemble(seq: list[tuple[Path, float, str]], scenes: list[str], workdir: Pa
 
 def build_card_short(item: dict, workdir: Path) -> dict:
     """كارت منطوق: هوك → الأسطر (اسم/ذكر) → سطر المصدر → خاتمة."""
+    import os as _os
+    if _os.environ.get("NOOR_LOOK") == "1":
+        try:
+            from .noor_look import bind
+            bind(item, workdir)
+        except Exception:
+            pass
     voice = settings.VOICE_AR
     hook = str(item.get("hook") or "من نور الله 🤍")
     lines = [str(x) for x in (item.get("lines") or []) if str(x).strip()]
@@ -127,6 +126,13 @@ def build_quiz_short(item: dict, workdir: Path) -> dict:
     """كويز تفاعلي: تلاوة الآية (بشر) → «من أي سورة؟» → اختيارات → الإجابة."""
     from .noor_premium import _trim_silence, ayah_text, dur_of, recitation
 
+    import os as _os
+    if _os.environ.get("NOOR_LOOK") == "1":
+        try:
+            from .noor_look import bind
+            bind(item, workdir)
+        except Exception:
+            pass
     voice = settings.VOICE_AR
     s, a = int(item["surah"]), int(item["ayah"])
     reciter = item.get("reciter") or "husary"

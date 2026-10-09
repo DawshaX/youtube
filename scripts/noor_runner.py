@@ -277,6 +277,7 @@ def _vault(video, cover, meta) -> str:
 
 
 def short_once(tries: int = 3) -> int:
+    os.environ.setdefault("NOOR_LOOK", "1")
     """ينتج شورت واحد (آية/حديث) وينشره لو الكوتة مفتوحة.
 
     🛡️ لو عنصر فشل (نص/تلاوة/مشهد)، بنسجّله كـ«مكسور» ونجرّب عنصر تاني —
@@ -372,7 +373,11 @@ def _desc_of(title_hook: str, body: str, ref: str, src_lines: list[str],
     تانية بتفضل كاملة مضمونة.
     """
     head = f"{title_hook}\n\n"
+    look = os.environ.get("NOOR_LOOK_NAME") or ""
+    host = os.environ.get("NOOR_LOOK_HOST") or ""
+    look_line = (f"🎬 نمط {look} · يتكلم {host}\n" if look else "")
     tail = (f"\n﴿ {ref} ﴾\n" + "".join(l + "\n" for l in src_lines) +
+            look_line +
             "🎬 مشاهد بترخيص حر (Pexels/Pixabay) · 🚫 بلا موسيقى — للتلاوة والتدبّر.\n\n"
             + _cta_lines(brand) + "\n\n" + _hashtags(extra_tags))
     room = _DESC_MAX - len(head) - len(tail)
@@ -887,7 +892,7 @@ def _long_kind_once(kind: str) -> int:
         spec = dict(spec)
         spec["id"] = key
         picks.append(spec)
-        if len(picks) >= 4:
+        if len(picks) >= int(os.environ.get("NOOR_LONG_ITEMS", "3")):
             break
     if len(picks) < 2:
         print(f"[noor] 🎥 سلسلة {kind} خلصت — بنرجع لسورة كاملة", flush=True)
@@ -896,10 +901,9 @@ def _long_kind_once(kind: str) -> int:
     res = noor_long.build_long_series(picks, work, max_items=len(picks))
     names = " · ".join(str(p.get("who") or "") for p in picks if p.get("who"))
     labels = {
-        "qissa": "قصص الأنبياء",
-        "mujiza": "معجزات من القرآن",
-        "hamd": "ولله الحمد",
-        "nasr": "الله غالب",
+        "qissa": "قصص الأنبياء", "mujiza": "معجزات من القرآن",
+        "hamd": "ولله الحمد", "nasr": "الله غالب",
+        "tafsir": "تدبر", "dua": "أدعية من القرآن", "quran": "قرآن",
     }
     label = labels.get(kind, kind)
     title = f"{label} 📖 {names} | تلاوة خاشعة من غير ما تتقطع"
@@ -926,11 +930,86 @@ def _long_kind_once(kind: str) -> int:
     return 0 if (url or DRY) else 1
 
 
+def _long_cards_once(kind: str) -> int:
+    """🎥 طويل من كروت (حديث/أذكار/روح/كويز…) — ٣ حلقات متتابعة بنمطها."""
+    from xtrendaw import noor_build, noor_cards, noor_plan
+    led = noor_plan.done_keys()
+    n = int(os.environ.get("NOOR_LONG_ITEMS", "3"))
+    picks = []
+    for key, spec in noor_plan.series(kind):
+        if key in led:
+            continue
+        spec = dict(spec)
+        spec["id"] = key
+        spec.setdefault("kind", kind)
+        picks.append(spec)
+        if len(picks) >= n:
+            break
+    if len(picks) < 2:
+        print(f"[noor] 🎥 كروت {kind} مش كفاية — سورة كاملة", flush=True)
+        return _long_surah_once()
+    work = WORK / f"longcard_{kind}_{int(time.time())}"
+    segs = []
+    for i, spec in enumerate(picks):
+        sub = work / f"seg{i:02d}"
+        try:
+            if kind == "hadith":
+                res = noor_build.build_hadith_short(spec, sub)
+            elif kind == "quiz":
+                res = noor_cards.build_quiz_short(spec, sub)
+            else:
+                res = noor_cards.build_card_short(spec, sub)
+            segs.append(pathlib.Path(res["video"]))
+            print(f"[noor] 🎞️ كارت {i+1}/{len(picks)}", flush=True)
+        except Exception as exc:
+            print(f"[noor] ⚠️ كارت {kind} فشل: {str(exc)[:100]}", flush=True)
+    if len(segs) < 2:
+        return _long_surah_once()
+    lst = work / "long.txt"
+    lst.write_text("".join(f"file '{s.resolve()}'\n" for s in segs), encoding="utf-8")
+    out = work / "noor_long.mp4"
+    from xtrendaw.tts import ffmpeg as _ff
+    r = subprocess.run([_ff(), "-y", "-f", "concat", "-safe", "0", "-i", str(lst),
+                        "-c", "copy", "-movflags", "+faststart", str(out)],
+                       capture_output=True, text=True)
+    if r.returncode:
+        raise RuntimeError("جمع الطويل فشل: " + (r.stderr or "")[-250:])
+    cover = work / "cover.png"
+    subprocess.run([_ff(), "-y", "-ss", "2", "-i", str(out), "-frames:v", "1", str(cover)],
+                   capture_output=True)
+    title = f"حلقة طويلة · {kind} | نور — من غير ما تتقطع"
+    desc = (f"حلقة طويلة من نوع {kind}.\n"
+            "🎙️ أصوات نيورال · 🎬 نمط مختلف لكل مقطع · 🚫 بلا موسيقى.\n"
+            "لو أفادك، اشترك وشارك 🤍")
+    url, err = _publish(out, cover if cover.exists() else None, title[:100], desc,
+                        [kind, "نور", "تلاوة", "quran", "islamic"])
+    st = _load()
+    st.setdefault("longs", []).append({
+        "id": f"longcard-{kind}-{int(time.time())}", "kind": f"long_{kind}",
+        "title": title, "video": str(out), "url": url or "",
+        "at": time.strftime("%Y-%m-%d %H:%M", time.gmtime()), "err": err})
+    _save(st)
+    for pk in picks[:len(segs)]:
+        try:
+            noor_plan.mark(str(pk["id"]))
+        except Exception:
+            pass
+    print(f"[noor] {'📺 اتنشر' if url else '⏸ اتخزن'} ({err}) — {url}", flush=True)
+    return 0 if (url or DRY) else 1
+
+
 def long_once() -> int:
-    """مدخل الطويل: نوع الجدول لو موجود، وإلا السورة الكاملة."""
+    """مدخل الطويل: أي نوع من الـ١٢، وإلا السورة الكاملة."""
+    os.environ.setdefault("NOOR_LOOK", "1")
     kind = (os.environ.get("NOOR_LONG_KIND") or "").strip()
-    if kind in ("qissa", "mujiza", "hamd", "nasr"):
-        return _long_kind_once(kind)
+    try:
+        from xtrendaw import noor_grid
+        if kind in noor_grid.CARD_LONG:
+            return _long_cards_once(kind)
+        if kind in noor_grid.AYAH_LONG and kind != "quran":
+            return _long_kind_once(kind)
+    except Exception as exc:
+        print(f"[noor] ⚠️ توجيه الطويل: {str(exc)[:80]}", flush=True)
     if kind == "quran":
         return _long_surah_once()
     if os.environ.get("NOOR_LONG_SERIES") == "1":
@@ -976,6 +1055,11 @@ def _grid_cycle() -> int:
         }]
     else:
         due = noor_grid.due(done)
+        if not due:
+            missed = noor_grid.backlog(done)
+            if missed:
+                due = missed[:1]
+                print(f"[noor] 🗓️ لحاق موعد فات: {due[0].get('label')}", flush=True)
     if not due:
         print(f"[noor] 🗓️ مش موعد نشرة — الجاية: {noor_grid.next_slot(done)}",
               flush=True)

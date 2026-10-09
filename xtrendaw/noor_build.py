@@ -161,6 +161,13 @@ def _matn(text: str) -> str:
 
 def build_hadith_short(item: dict, workdir: Path) -> dict:
     workdir.mkdir(parents=True, exist_ok=True)
+    import os as _os
+    if _os.environ.get("NOOR_LOOK") == "1":
+        try:
+            from .noor_look import bind
+            bind(item, workdir)
+        except Exception:
+            pass
     h = hadith_text(item["collection"], int(item["index"]))
     txt = _matn(h["text"])
     words = txt.split()
@@ -217,17 +224,8 @@ def build_hadith_short(item: dict, workdir: Path) -> dict:
         fades = "fade=t=in:st=0:d=0.4:alpha=1"
         if i == len(seq) - 1:            # آخر فصل: تلاشي للخارج زي باقي الفيديوهات
             fades += f",fade=t=out:st={max(0.1, d - 0.5):.2f}:d=0.5:alpha=1"
-        vf = ("[0:v]setsar=1[v0];[1:v]format=rgba," + fades +
-              "[ov];[v0][ov]overlay=0:0:format=auto,format=yuv420p[v]")
-        r = subprocess.run([ffmpeg(), "-y", "-ss", f"{t0:.3f}", "-i", str(bg),
-                            "-loop", "1", "-t", f"{d:.3f}", "-i", str(png),
-                            "-filter_complex", vf, "-map", "[v]", "-t",
-                            f"{d:.3f}", "-r", str(FPS), "-c:v", "libx264",
-                            "-preset", "veryfast", "-crf", "20",
-                            "-pix_fmt", "yuv420p", str(seg)],
-                           capture_output=True, text=True)
-        if r.returncode:
-            raise RuntimeError("فصل حديث فشل: " + (r.stderr or "")[-300:])
+        from .noor_look import compose_seg
+        compose_seg(ffmpeg(), bg, png, seg, ss=t0, dur=d, fades=fades, fps=FPS)
         segs.append(seg)
         plan_audio.append(w)
         t0 += d

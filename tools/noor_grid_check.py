@@ -11,7 +11,7 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from xtrendaw import noor_grid, noor_signs  # noqa: E402
+from xtrendaw import noor_grid, noor_look, noor_signs  # noqa: E402
 
 
 def main() -> int:
@@ -21,14 +21,18 @@ def main() -> int:
         kinds = noor_grid.WEEK[wd]
         longs = [k for k, s in zip(kinds, noor_grid.SLOTS) if s["form"] == "long"]
         print(f"  {noor_grid.WEEKDAY_AR[wd]}: {noor_grid.DAY_THEME[wd]} | طويل: {', '.join(longs)}")
-    # نافذة واحدة: خميس ١١:٢٠ القاهرة لازم يلقط الطويل ١١:٠٠ بس
+    # نافذة واحدة: خميس ١١:٥٠ القاهرة يلقط الطويل ١١:٤٠ بس
     cairo = ZoneInfo("Africa/Cairo")
-    sample = dt.datetime(2026, 10, 8, 11, 20, tzinfo=cairo)
+    sample = dt.datetime(2026, 10, 8, 11, 50, tzinfo=cairo)
     got = noor_grid.due(set(), sample)
     if len(got) != 1 or got[0]["form"] != "long" or got[0]["h"] != 11:
         fails.append(f"نافذة الخميس غلط: {got}")
     else:
         print("نافذة الاختبار:", got[0]["label"])
+    if len(noor_look.LOOKS) != 12 or len(noor_look.HOSTS) < 6:
+        fails.append("الأنماط أو الشخصيات ناقصة")
+    else:
+        print(f"أنماط: {len(noor_look.LOOKS)} | شخصيات بتتكلم: {len(noor_look.HOSTS)}")
     # مراجع المعجزات/الحمد/النصر
     for kind in ("mujiza", "hamd", "nasr"):
         n = len(noor_signs.series(kind))

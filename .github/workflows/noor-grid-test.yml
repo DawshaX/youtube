@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "xtrendaw/noor_grid.py"
+      - "xtrendaw/noor_look.py"
       - "xtrendaw/noor_signs.py"
       - "xtrendaw/noor_ideas.py"
       - "tools/noor_grid_check.py"
