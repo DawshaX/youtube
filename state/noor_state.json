@@ -670,6 +670,16 @@
    "at": "2026-10-07 07:53",
    "duration": 1060.8,
    "err": "duplicate"
+  },
+  {
+   "id": "long-qissa-1791541186",
+   "kind": "long_qissa",
+   "title": "قصص من القرآن: يوسف · يعقوب · موسى",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_qissa_1791539409/noor_long.mp4",
+   "url": "https://www.youtube.com/watch?v=Dnkv6X5AvV8",
+   "at": "2026-10-09 10:19",
+   "duration": 364.3,
+   "err": null
   }
  ],
  "bad_reciters": [],
@@ -683,6 +693,7 @@
   "2026-10-09T06:20|athkar|short",
   "2026-10-09T07:40|dua|short",
   "2026-10-09T09:00|quiz|short",
-  "2026-10-09T10:20|spirit|short"
+  "2026-10-09T10:20|spirit|short",
+  "2026-10-09T11:40|qissa|long"
  ]
 }
