@@ -596,10 +596,19 @@ def render(spec: dict, workdir: Path) -> dict:
             else:
                 spoken = _spoken_taf(spoken, limit=max(40, int(room * 8)))
         if spoken:
-            w_t, d_t = say(spoken, workdir, f"taf{k}", rate="+2%")
-            beats.append({"lines": [spoken], "audio": w_t, "dur": d_t + 0.3,
-                          "size": 72, "tag": "المعنى", "reveal": False,
-                          "kind": "tafsir"})
+            from .noor_sense import without_verse
+            heard = without_verse(spoken, it["ay"]["text"])
+            # لو الشرح كله اقتباس من الآية، ما ننطقوش. التلاوة قالت الكلام.
+            if len(heard.split()) >= 4:
+                w_t, d_t = say(heard, workdir, f"taf{k}", rate="+2%")
+                beats.append({"lines": [heard], "audio": w_t, "dur": d_t + 0.3,
+                              "size": 72, "tag": "المعنى", "reveal": False,
+                              "kind": "tafsir"})
+    if items:
+        from .noor_sense import without_verse as _wv
+        cleaned = _wv(outro, items[0]["ay"]["text"])
+        if cleaned and cleaned != outro:
+            outro = cleaned
     w_out, d_out = say(outro, workdir, "outro", rate="+6%")
     beats.append({"lines": [outro], "audio": w_out, "dur": d_out + 0.55,
                   "size": 80, "tag": brand, "reveal": False, "kind": "outro"})

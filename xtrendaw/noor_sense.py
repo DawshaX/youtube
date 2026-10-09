@@ -177,6 +177,27 @@ def quotes_verse(hook: str, verse: str) -> bool:
     return False
 
 
+def without_verse(speech: str, verse: str) -> str:
+    """يشيل من الشرح أي كلمات متتالية من الآية. الباقي يتقال، والآية تفضل تلاوة."""
+    words = (speech or "").split()
+    vw = [w for w in bare(verse).split() if len(w) > 1]
+    if len(words) < 3 or len(vw) < 3:
+        return (speech or "").strip()
+    bares = [bare(w) for w in words]
+    verse_s = " ".join(vw)
+    drop = [False] * len(words)
+    for i in range(len(bares) - 2):
+        frag = " ".join(w for w in bares[i:i + 3] if w)
+        if len(frag.split()) < 3:
+            continue
+        if frag in verse_s:
+            drop[i] = drop[i + 1] = drop[i + 2] = True
+    kept = [w for w, d in zip(words, drop) if not d]
+    out = " ".join(kept)
+    out = re.sub(r"\s+", " ", out).strip(" ،.؛:")
+    return out
+
+
 def scenes_from(text: str, kind: str = "") -> list[str]:
     qs = [a[1] for a in anchors_in(text)]
     for q in KIND_SCENES.get(kind, ["calm nature aerial no people",

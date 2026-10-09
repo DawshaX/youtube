@@ -116,10 +116,16 @@ def build_card_short(item: dict, workdir: Path) -> dict:
             lines = [ln for ln in lines if str(ln).strip() != str(item.get("verse") or "").strip()]
         except Exception as exc:
             print(f"[noor] 🎙️ تلاوة الدليل اتعذّرت: {str(exc)[:80]}", flush=True)
+    verse = str(item.get("verse") or "")
+    from .noor_sense import quotes_verse, without_verse
     for i, ln in enumerate(lines):
-        w, d = _narration(ln, workdir, f"l{i}", voice,
+        heard = without_verse(ln, verse) if verse else ln
+        if verse and (quotes_verse(ln, verse) or "﴿" in ln):
+            if len(heard.split()) < 4:
+                continue
+        w, d = _narration(heard, workdir, f"l{i}", voice,
                           rate=settings.VOICE_RATE_TAFSIR)
-        seq.append((w, d, ln))
+        seq.append((w, d, heard))
     if src:
         w, d = _narration(src.replace("🧿", "").replace("🧩", "").strip(), workdir,
                           "src", voice, rate=settings.VOICE_RATE_TAFSIR)
