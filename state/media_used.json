@@ -97,7 +97,7 @@
  "clipcache:8613ba224664": {
   "source": "video:pixabay",
   "episode": "bg1",
-  "at": "2026-10-08 21:07"
+  "at": "2026-10-09 11:38"
  },
  "https://cdn.pixabay.com/video/2022/02/08/107143-675298848_medium.mp4": {
   "source": "video:pixabay",
@@ -888,5 +888,25 @@
   "source": "image:commons",
   "episode": "stars long exposure",
   "at": "2026-10-09 10:51"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/An_orbital_sunrise_breaks_above_the_clouds_%28iss073e0028091%29.jpg/1280px-An_orbital_sunrise_breaks_above_the_clouds_%28iss073e0028091%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "sunrise above clouds",
+  "at": "2026-10-09 11:37"
+ },
+ "https://cdn.pixabay.com/video/2026/08/22/372041_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-09 11:38"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/Candle_Cranberry_-_Flickr_-_jeans_Photos.jpg/1280px-Candle_Cranberry_-_Flickr_-_jeans_Photos.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "candle flame dark",
+  "at": "2026-10-09 11:38"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Gazing_at_the_Milky_Way_Morvan_2019-08-31.jpg/1280px-Gazing_at_the_Milky_Way_Morvan_2019-08-31.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "stars long exposure",
+  "at": "2026-10-09 11:38"
  }
 }

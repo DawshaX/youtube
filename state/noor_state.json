@@ -671,6 +671,20 @@
    "at": "2026-10-09 10:56",
    "duration": 92.6,
    "over_180s": false
+  },
+  {
+   "id": "ha-1-2",
+   "kind": "hamd",
+   "theme": "حمد",
+   "title": "من سورة سُورَةُ ٱلْفَاتِحَةِ | حمد | الآيات 2–4 — سورة ٱلفاتحة | محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791545822/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=0Pdawec_PYg",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-09 11:41",
+   "duration": 27.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -697,7 +711,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "mu-20-17",
+ "last_try": "ha-1-2",
  "broken": [
   "dua-3-8"
  ],
@@ -709,6 +723,7 @@
   "2026-10-09T09:00|quiz|short",
   "2026-10-09T10:20|spirit|short",
   "2026-10-09T11:40|qissa|long",
-  "2026-10-09T13:00|mujiza|short"
+  "2026-10-09T13:00|mujiza|short",
+  "2026-10-09T14:20|hamd|short"
  ]
 }
