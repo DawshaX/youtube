@@ -733,5 +733,35 @@
   "source": "image:commons",
   "episode": "calm nature aerial no people",
   "at": "2026-10-09 02:41"
+ },
+ "https://cdn.pixabay.com/video/2024/10/27/238405_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card12",
+  "at": "2026-10-09 03:23"
+ },
+ "clipcache:41de01fd1fbf": {
+  "source": "video:pixabay",
+  "episode": "card12",
+  "at": "2026-10-09 03:23"
+ },
+ "https://cdn.pixabay.com/video/2018/11/01/19049-298313364_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card12",
+  "at": "2026-10-09 03:23"
+ },
+ "clipcache:a18c6c34345f": {
+  "source": "video:pixabay",
+  "episode": "card12",
+  "at": "2026-10-09 03:23"
+ },
+ "https://cdn.pixabay.com/video/2023/12/10/192778-893446884_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card12",
+  "at": "2026-10-09 03:24"
+ },
+ "clipcache:71018c2d0aea": {
+  "source": "video:pixabay",
+  "episode": "card12",
+  "at": "2026-10-09 03:24"
  }
 }
