@@ -763,5 +763,15 @@
   "source": "video:pixabay",
   "episode": "card12",
   "at": "2026-10-09 03:24"
+ },
+ "https://cdn.pixabay.com/video/2017/06/06/9617-220523798_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-09 04:49"
+ },
+ "clipcache:02544bbad770": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-09 04:49"
  }
 }

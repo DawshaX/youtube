@@ -594,6 +594,20 @@
    "at": "2026-10-09 03:26",
    "duration": 29.9,
    "over_180s": false
+  },
+  {
+   "id": "dua-2-128",
+   "kind": "dua",
+   "theme": "ذكر",
+   "title": "دعاء من القرآن لقلبك 🤲 | دعاء من سورة البقرة (آية 128) 🤲 تلاوة محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791521296/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=KDykmN9xqK0",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-09 04:50",
+   "duration": 50.7,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -610,13 +624,14 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "athkar-27-79",
+ "last_try": "dua-2-128",
  "broken": [
   "dua-3-8"
  ],
  "grid_done": [
   "2026-10-08T23:30|tafsir|short",
   "2026-10-09T05:00|asma|short",
-  "2026-10-09T06:20|athkar|short"
+  "2026-10-09T06:20|athkar|short",
+  "2026-10-09T07:40|dua|short"
  ]
 }
