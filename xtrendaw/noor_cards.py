@@ -46,18 +46,24 @@ def _assemble(seq: list[tuple[Path, float, str]], scenes: list[str], workdir: Pa
         last = i == len(seq) - 1
         size = _size_hook if i == 0 else (_size_src if ("📖" in t or "🧿" in t or
                                                         "🎙" in t) else _size_body)
-        png = overlay([str(t).replace("🤍", "").replace("✨", "").replace("👀", "")
-                       .replace("💛", "").replace("🕊️", "").replace("🤲", "").strip()],
-                      workdir / f"c{i}.png", size=size, y=y, max_lines=5,
-                      color=(255, 252, 240, 255), halo=24, spacing=1.55)
-        seg = workdir / f"s{i:02d}.mp4"
-        fades = "fade=t=in:st=0:d=0.4:alpha=1"
-        if last:
-            fades += f",fade=t=out:st={max(0.1, d - 0.5):.2f}:d=0.5:alpha=1"
+        raw = (str(t).replace("🤍", "").replace("✨", "").replace("👀", "")
+               .replace("💛", "").replace("🕊️", "").replace("🤲", "").strip())
+        words = raw.split() or ["…"]
+        groups = [words[j:j + 3] for j in range(0, len(words), 3)] or [words]
+        n = len(groups)
         from .noor_look import compose_seg
-        compose_seg(ffmpeg(), bg, png, seg, ss=t0, dur=d, fades=fades, fps=FPS)
-        segs.append(seg)
-        t0 += d
+        for k in range(1, n + 1):
+            shown = " ".join(" ".join(g) for g in groups[:k])
+            png = overlay([shown], workdir / f"c{i}_{k}.png", size=size, y=y,
+                          max_lines=5, color=(255, 252, 240, 255), halo=24, spacing=1.55)
+            seg = workdir / f"s{i:02d}_{k}.mp4"
+            d_ = d / n
+            fades = "fade=t=in:st=0:d=0.25:alpha=1"
+            if last and k == n:
+                fades += f",fade=t=out:st={max(0.1, d_ - 0.35):.2f}:d=0.35:alpha=1"
+            compose_seg(ffmpeg(), bg, png, seg, ss=t0, dur=d_, fades=fades, fps=FPS)
+            segs.append(seg)
+            t0 += d_
 
     lst = workdir / "segs.txt"
     lst.write_text("".join(f"file '{s.resolve()}'\n" for s in segs), encoding="utf-8")

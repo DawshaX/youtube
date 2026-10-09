@@ -620,6 +620,24 @@ def render(spec: dict, workdir: Path) -> dict:
         cleaned = _wv(outro, items[0]["ay"]["text"])
         if cleaned and cleaned != outro:
             outro = cleaned
+    # دبلجة المعنى بس — مش الآية. سطر إنجليزي بعد الشرح، ولو الترجمة وقعت نكمّل.
+    if items and _os.environ.get("NOOR_GLOBAL") == "1":
+        try:
+            from .noor_global import translate_text
+            from .noor_sense import human_meaning, quotes_verse
+            src = human_meaning(
+                str(spec.get("kind") or ""), str(spec.get("who") or ""),
+                str(items[0]["ay"].get("surah") or ""),
+                str(items[0].get("taf") or ""), items[0]["ay"]["text"])
+            en = translate_text(src, "en")
+            if en and not quotes_verse(en, items[0]["ay"]["text"]):
+                w_en, d_en = say(en[:180], workdir, "en", rate="+0%",
+                                 voice="en-US-AndrewNeural")
+                beats.append({"lines": [en[:180]], "audio": w_en, "dur": d_en + 0.2,
+                              "size": 64, "tag": "English", "reveal": False, "kind": "en"})
+                print("[noor] 🌍 المعنى اتقال بالإنجليزي", flush=True)
+        except Exception as _e:
+            print(f"[noor] 🌍 الدبلجة اتعذّرت: {str(_e)[:70]}", flush=True)
     w_out, d_out = say(outro, workdir, "outro", rate="+6%")
     beats.append({"lines": [outro], "audio": w_out, "dur": d_out + 0.55,
                   "size": 80, "tag": brand, "reveal": False, "kind": "outro"})
@@ -660,13 +678,21 @@ def render(spec: dict, workdir: Path) -> dict:
                                       last=False))
                 t0 += d_
         else:
+            # كل كلمة تظهر، مش فقرة مرة واحدة — على الهوك والشرح والخاتمة كمان.
+            words = " ".join(str(x) for x in lines).split() or ["…"]
+            step = 3
+            groups = [words[j:j + step] for j in range(0, len(words), step)] or [words]
+            n = len(groups)
             st = b["size"] - (10 if b["kind"] == "tafsir" else 0)
-            png = overlay(lines, workdir / f"b{i}.png", size=st, y=0.46,
-                          max_lines=5, tag=b["tag"],
-                          font_path=FONT_UI_B if b["kind"] != "ayah" else None)
-            segs.append(_clip_seg(bg, t0, b["dur"], png, workdir, f"s{i}",
-                                  last=(i == len(beats) - 1)))
-            t0 += b["dur"]
+            for k in range(1, n + 1):
+                shown = " ".join(" ".join(g) for g in groups[:k])
+                png = overlay([shown], workdir / f"b{i}_{k}.png", size=st, y=0.46,
+                              max_lines=5, tag=b["tag"] if k == n else "",
+                              font_path=FONT_UI_B if b["kind"] != "ayah" else None)
+                d_ = b["dur"] / n
+                segs.append(_clip_seg(bg, t0, d_, png, workdir, f"s{i}_{k}",
+                                      last=(i == len(beats) - 1 and k == n)))
+                t0 += d_
         audio.append((sum(x["dur"] for x in beats[:i]), b["audio"], 1.0))
 
     lst = workdir / "segs.txt"

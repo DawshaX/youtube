@@ -834,6 +834,14 @@ def _long_series_once() -> int:
     from xtrendaw.noor_sense import long_title, long_desc
     title = long_title("qissa", names)
     desc = long_desc("qissa", names)
+    if os.environ.get("NOOR_GLOBAL") == "1":
+        try:
+            from xtrendaw import noor_global
+            blk = noor_global.global_block(title, names, None, None)
+            if blk:
+                desc = (desc + "\n\n" + blk)[:4900]
+        except Exception:
+            pass
     tags = ["قصص الأنبياء", "قصص القرآن", "قصص إسلامية", "قصص الانبياء كاملة",
             "قرآن كريم", "سلاسل قرآنية", "قصص دينية",
             "prophets stories", "quran stories", "islamic stories"]
@@ -947,6 +955,14 @@ def _long_kind_once(kind: str) -> int:
     from xtrendaw.noor_sense import long_desc, long_title
     title = long_title(kind, names)
     desc = long_desc(kind, names)
+    if os.environ.get("NOOR_GLOBAL") == "1":
+        try:
+            from xtrendaw import noor_global
+            blk = noor_global.global_block(title, names, None, None)
+            if blk:
+                desc = (desc + "\n\n" + blk)[:4900]
+        except Exception:
+            pass
     tags = [label, "قرآن كريم", "سلاسل قرآنية",
             "quran", "islamic", "no music"]
     if kind == "quran":
