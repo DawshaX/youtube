@@ -301,3 +301,21 @@ def long_desc(kind: str, names: str) -> str:
 def speech_room(rec_seconds: float, max_sec: float = SHORT_MAX) -> float:
     """ثواني الشرح المسموحة بعد التلاوة، من غير ما الشورت يعدّي ٣ دقايق."""
     return max(0.0, float(max_sec) - float(rec_seconds) - 6.0)
+
+
+def human_meaning(kind: str = "", who: str = "", surah: str = "",
+                  tafsir: str = "", verse: str = "") -> str:
+    """شرح يتقال بصوت بشري. لو التفسير بيقتبس الآية، الشرح ما يعيدش الاقتباس."""
+    cleaned = without_verse(tafsir or "", verse or "")
+    if quotes_verse(cleaned, verse or ""):
+        cleaned = ""
+    if len(cleaned.split()) >= 4:
+        return " ".join(cleaned.split()[:32])
+    who = (who or "").strip()
+    surah = (surah or "").strip()
+    kind = kind or ""
+    if who and kind in ("story", "qissa", "mujiza"):
+        return f"دي قصة {who}. التلاوة هي الحدث، من غير زيادة على النص."
+    if surah:
+        return f"من سورة {surah}. التلاوة كلام الله، والمعنى من التفسير الميسّر."
+    return "التلاوة كلام الله. المعنى من التفسير الميسّر، من غير زيادة."

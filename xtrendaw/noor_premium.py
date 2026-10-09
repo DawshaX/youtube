@@ -465,7 +465,8 @@ def _ambience(seconds: float, out: Path, seed: int = 0) -> Path:
 
 
 def _mix_track(pieces: list[tuple[float, Path, float]], total: float, out: Path,
-               ambience: Path | None = None, amb_gain: float = 0.16) -> Path:
+               ambience: Path | None = None, amb_gain: float = 0.16,
+               quiet_spans: list[tuple[float, float]] | None = None) -> Path:
     """يركّب المسار الصوتي: كل قطعة في وقتها + الأجواء تحت الكل + ماسترينج.
 
     pieces: [(بداية بالثواني، ملف، معامل الصوت)] — بيسمح بالتلاقي (crossfade
@@ -476,7 +477,14 @@ def _mix_track(pieces: list[tuple[float, Path, float]], total: float, out: Path,
     idx = 0
     if ambience is not None:
         ins += ["-i", str(ambience)]
-        fc.append(f"[{idx}:a]volume={amb_gain},apad,atrim=0:{total:.2f}[amb]")
+        vol = str(amb_gain)
+        # تحت التلاوة الصوت ينزل خالص. الهوا يفضل على كلام البشر بس.
+        for a, b in (quiet_spans or []):
+            vol = f"if(between(t,{a:.2f},{b:.2f}),0.012,{vol})"
+        if quiet_spans:
+            fc.append(f"[{idx}:a]volume='{vol}':eval=frame,apad,atrim=0:{total:.2f}[amb]")
+        else:
+            fc.append(f"[{idx}:a]volume={amb_gain},apad,atrim=0:{total:.2f}[amb]")
         idx += 1
     labels = []
     for k, (start, wav, gain) in enumerate(pieces):
@@ -597,13 +605,16 @@ def render(spec: dict, workdir: Path) -> dict:
                 spoken = _spoken_taf(spoken, limit=max(40, int(room * 8)))
         if spoken:
             from .noor_sense import without_verse
+            from .noor_sense import human_meaning, quotes_verse
             heard = without_verse(spoken, it["ay"]["text"])
-            # لو الشرح كله اقتباس من الآية، ما ننطقوش. التلاوة قالت الكلام.
-            if len(heard.split()) >= 4:
-                w_t, d_t = say(heard, workdir, f"taf{k}", rate="+2%")
-                beats.append({"lines": [heard], "audio": w_t, "dur": d_t + 0.3,
-                              "size": 72, "tag": "المعنى", "reveal": False,
-                              "kind": "tafsir"})
+            if len(heard.split()) < 4 or quotes_verse(heard, it["ay"]["text"]):
+                heard = human_meaning(
+                    str(spec.get("kind") or ""), str(spec.get("who") or ""),
+                    str(it["ay"].get("surah") or ""), "", it["ay"]["text"])
+            w_t, d_t = say(heard, workdir, f"taf{k}", rate="+2%")
+            beats.append({"lines": [heard], "audio": w_t, "dur": d_t + 0.3,
+                          "size": 72, "tag": "المعنى", "reveal": False,
+                          "kind": "tafsir"})
     if items:
         from .noor_sense import without_verse as _wv
         cleaned = _wv(outro, items[0]["ay"]["text"])
@@ -664,7 +675,14 @@ def render(spec: dict, workdir: Path) -> dict:
     silent = workdir / "silent.mp4"
     subprocess.run([ffmpeg(), "-y", "-f", "concat", "-safe", "0", "-i", str(lst),
                     "-c", "copy", str(silent)], capture_output=True, check=True)
-    track = _mix_track(audio, total, workdir / "track.m4a", ambience=amb)
+    spans = []
+    cursor = 0.0
+    for b in beats:
+        if b.get("kind") == "ayah":
+            spans.append((cursor, cursor + b["dur"]))
+        cursor += b["dur"]
+    track = _mix_track(audio, total, workdir / "track.m4a", ambience=amb,
+                       quiet_spans=spans)
     out = workdir / "noor.mp4"
     r = subprocess.run([ffmpeg(), "-y", "-i", str(silent), "-i", str(track),
                         "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a",
