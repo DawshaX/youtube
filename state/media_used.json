@@ -552,7 +552,7 @@
  "clipcache:6293e8549d2c": {
   "source": "video:pixabay",
   "episode": "hd",
-  "at": "2026-10-07 21:06"
+  "at": "2026-10-09 19:26"
  },
  "https://cdn.pixabay.com/video/2021/08/18/85526-589164621_medium.mp4": {
   "source": "video:pixabay",
@@ -562,7 +562,7 @@
  "clipcache:9ad3e7ea2a37": {
   "source": "video:pixabay",
   "episode": "hd",
-  "at": "2026-10-07 21:06"
+  "at": "2026-10-09 19:26"
  },
  "https://cdn.pixabay.com/video/2020/01/12/31180-384523319_medium.mp4": {
   "source": "video:pixabay",
@@ -1063,5 +1063,25 @@
   "source": "image:commons",
   "episode": "storm clouds dark sky",
   "at": "2026-10-09 18:23"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/3/36/Interior_of_Grand_mosque.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-10-09 19:26"
+ },
+ "https://cdn.pixabay.com/video/2016/02/15/2173-155441327_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-10-09 19:26"
+ },
+ "https://cdn.pixabay.com/video/2022/03/21/111522-691223024_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "hd",
+  "at": "2026-10-09 19:26"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Blue_and_orange_clouds_over_the_Mekong_with_a_pirogue_running_in_the_water_at_sunset_in_Don_Det_Laos.jpg/1280px-Blue_and_orange_clouds_over_the_Mekong_with_a_pirogue_running_in_the_water_at_sunset_in_Don_Det_Laos.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "clouds sunset sky",
+  "at": "2026-10-09 19:27"
  }
 }

@@ -727,6 +727,20 @@
    "at": "2026-10-09 16:56",
    "duration": 48.4,
    "over_180s": false
+  },
+  {
+   "id": "h-bukhari-2",
+   "kind": "hadith",
+   "theme": "حديث",
+   "title": "معاكم نور. من bukhari | حديث | حديث رقم 2 — صحيح البخاري",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791573915/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=toy4JIhGdoE",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-09 19:29",
+   "duration": 43.3,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -763,7 +777,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "t-001-005",
+ "last_try": "h-bukhari-2",
  "broken": [
   "dua-3-8"
  ],
@@ -780,6 +794,7 @@
   "2026-10-09T15:40|nasr|short",
   "2026-10-09T17:00|hamd|long",
   "2026-10-09T18:20|quran|short",
-  "2026-10-09T19:40|tafsir|short"
+  "2026-10-09T19:40|tafsir|short",
+  "2026-10-09T22:20|hadith|short"
  ]
 }
