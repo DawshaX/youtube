@@ -1303,5 +1303,90 @@
   "source": "image:commons",
   "episode": "islamic calligraphy art",
   "at": "2026-10-10 13:11"
+ },
+ "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-10 14:37"
+ },
+ "clipcache:cfed9fd228ce": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-10 14:50"
+ },
+ "https://cdn.pixabay.com/video/2024/10/20/237249_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-10 14:38"
+ },
+ "clipcache:e9ff87fedd8f": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-10 14:38"
+ },
+ "https://cdn.pixabay.com/video/2025/06/06/283923_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-10 14:38"
+ },
+ "clipcache:5b4f4c392160": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-10 14:38"
+ },
+ "https://cdn.pixabay.com/video/2017/07/23/10851-226632936_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-10 14:42"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Clearing_sky_after_dawn_storm%2C_Geebung_Railway_Station_DSCF0834_01.jpg/1280px-Clearing_sky_after_dawn_storm%2C_Geebung_Railway_Station_DSCF0834_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "dawn after storm",
+  "at": "2026-10-10 14:42"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Birds_and_nature_%281901%29_%2814562107067%29.jpg/1280px-Birds_and_nature_%281901%29_%2814562107067%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "birds over calm sea",
+  "at": "2026-10-10 14:43"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/Fog_in_the_Central_Valley_%28MODIS%29.jpg/1280px-Fog_in_the_Central_Valley_%28MODIS%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "green valley after rain",
+  "at": "2026-10-10 14:43"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/%40dailyshoot-_2010-12-29-_Make_a_photograph_with_as_soft_a_light_source_as_you_can_find_or_create._-ds409_%285305162369%29.jpg/1280px-%40dailyshoot-_2010-12-29-_Make_a_photograph_with_as_soft_a_light_source_as_you_can_find_or_create._-ds409_%285305162369%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "soft morning light window",
+  "at": "2026-10-10 14:49"
+ },
+ "https://cdn.pixabay.com/video/2026/08/22/372048_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-10 14:50"
+ },
+ "clipcache:b340cf9cd326": {
+  "source": "video:pixabay",
+  "episode": "bg1",
+  "at": "2026-10-10 14:50"
+ },
+ "https://cdn.pixabay.com/video/2024/11/17/241802_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-10 14:50"
+ },
+ "clipcache:8be215ad8123": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-10 14:50"
+ },
+ "https://cdn.pixabay.com/video/2024/02/24/201766-916357972_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-10 14:50"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Clearing_sky_after_dawn_storm%2C_Geebung_Railway_Station_DSCF0834_02.jpg/1280px-Clearing_sky_after_dawn_storm%2C_Geebung_Railway_Station_DSCF0834_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "dawn after storm",
+  "at": "2026-10-10 14:50"
  }
 }

@@ -921,6 +921,16 @@
    "at": "2026-10-10 09:37",
    "duration": 417.0,
    "err": null
+  },
+  {
+   "id": "long-nasr-1791644128",
+   "kind": "long_nasr",
+   "title": "الفرج في القرآن: الضحى · من يتقِ الله · رحمة واسعة",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_nasr_1791643038/noor_long.mp4",
+   "url": "https://www.youtube.com/watch?v=T4qYFLpN-us",
+   "at": "2026-10-10 14:55",
+   "duration": 212.5,
+   "err": null
   }
  ],
  "bad_reciters": [],
@@ -953,6 +963,7 @@
   "2026-10-10T11:40|mujiza|long",
   "2026-10-10T13:00|hamd|short",
   "2026-10-10T14:20|nasr|short",
-  "2026-10-10T15:40|quran|short"
+  "2026-10-10T15:40|quran|short",
+  "2026-10-10T17:00|nasr|long"
  ]
 }
