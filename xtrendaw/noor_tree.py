@@ -143,6 +143,10 @@ BRANCHES = [
      "note": "سؤال فقط. لا لعبة عنف."},
     {"id": "islamic", "ar": "ديني إسلامي", "family": "sacred", "status": "linked", "engine": "quran",
      "note": "عيلة جامعة للمسارات الموجودة، مش مسار ينسخها."},
+    {"id": "khair-1000", "ar": "ألف سيناريو خير", "family": "spirit", "status": "live", "engine": "spirit",
+     "note": "إضافة على الـ١٠٨. خانة الروح تمشيهم واحد واحد."},
+    {"id": "branch-index", "ar": "فهرس الفروع", "family": "knowledge", "status": "linked", "engine": "spirit",
+     "note": "عناوين محسوبة يمشي عليها بوت التنظيم. لا تُنشر وحدها."},
 ]
 
 

@@ -11,6 +11,10 @@ on:
       - "xtrendaw/noor_ideas.py"
       - "xtrendaw/noor_variety.py"
       - "xtrendaw/noor_tree.py"
+      - "xtrendaw/noor_thousand.py"
+      - "xtrendaw/noor_branches.py"
+      - "xtrendaw/noor_keeper.py"
+      - "tools/noor_thousand_check.py"
       - "tools/noor_tree_check.py"
       - "tools/noor_variety_check.py"
       - "tools/noor_grid_check.py"
@@ -33,3 +37,4 @@ jobs:
           python tools/noor_sense_check.py
           python tools/noor_variety_check.py
           python tools/noor_tree_check.py
+          python tools/noor_thousand_check.py

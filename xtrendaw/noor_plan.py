@@ -223,13 +223,17 @@ def series(kind: str) -> list[tuple[str, dict]]:
                               "ayah_to": it.get("ayah_to")}))
         return out
     if kind == "spirit":
-        from . import noor_spirit, noor_variety
+        from . import noor_spirit, noor_variety, noor_thousand
         extra = noor_variety.cards()
+        more = noor_thousand.cards()
         base = [(it["id"], it) for it in noor_spirit.series()]
-        return extra + base
+        return extra + more + base
     if kind == "khair":
         from . import noor_variety
         return noor_variety.cards()
+    if kind == "sanad":
+        from . import noor_thousand
+        return noor_thousand.cards()
     if kind in ("salah", "hijri", "qfacts", "proverb"):
         from . import noor_more
         if kind == "salah":
@@ -352,4 +356,9 @@ def stats() -> dict:
         except Exception:
             n = 0
         out["kinds"][kind] = n
+    try:
+        from .noor_keeper import report
+        out["keeper"] = report(set(done_keys()))
+    except Exception:
+        pass
     return out
