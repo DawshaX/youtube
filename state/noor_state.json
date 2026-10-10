@@ -895,6 +895,20 @@
    "at": "2026-10-10 17:06",
    "duration": 35.8,
    "over_180s": false
+  },
+  {
+   "id": "s-28-22",
+   "kind": "story",
+   "theme": "قرآن",
+   "title": "معاكم حَكيم. موسى… والفرار والأمل 🌵 | قصة | الآيات 22–24 — سورة القصص | محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791662220/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=5xIlwuu0pZ8",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-10 20:04",
+   "duration": 93.4,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -971,7 +985,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "h-bukhari-3",
+ "last_try": "s-28-22",
  "broken": [
   "dua-3-8"
  ],
@@ -1004,6 +1018,7 @@
   "2026-10-10T17:00|nasr|long",
   "2026-10-10T18:20|tafsir|short",
   "2026-10-10T19:40|hadith|short",
-  "2026-10-10T21:00|spirit|long"
+  "2026-10-10T21:00|spirit|long",
+  "2026-10-10T22:20|qissa|short"
  ]
 }
