@@ -769,6 +769,20 @@
    "at": "2026-10-10 02:09",
    "duration": 31.0,
    "over_180s": false
+  },
+  {
+   "id": "dua-2-129",
+   "kind": "dua",
+   "theme": "ذكر",
+   "title": "معاكم فارس. دعاء من القرآن لقلبك 🤲 | آية 129 — سورة البقرة | محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791603108/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=IIBNDSL0YHc",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-10 03:36",
+   "duration": 59.4,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -816,7 +830,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "athkar-27-80",
+ "last_try": "dua-2-129",
  "broken": [
   "dua-3-8"
  ],
@@ -837,6 +851,7 @@
   "2026-10-09T22:20|hadith|short",
   "2026-10-09T21:00|quran|long",
   "2026-10-09T23:40|qissa|short",
-  "2026-10-10T05:00|athkar|short"
+  "2026-10-10T05:00|athkar|short",
+  "2026-10-10T06:20|dua|short"
  ]
 }
