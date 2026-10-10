@@ -140,6 +140,16 @@ def bind(item: dict, workdir: Path | None = None) -> dict:
         except Exception:
             look.setdefault("plate", "bl")
             look.setdefault("step", 3)
+        try:
+            from .noor_tree import NEON_GRADE, format_for
+            if format_for(item) == "neon":
+                look["grade"] = NEON_GRADE
+                look["id"] = "neon"
+                look["name"] = "شاشة نور"
+                look["y"] = 0.48
+                look["plate"] = "tl"
+        except Exception:
+            pass
         item["_look"] = look
         item["_look_bound"] = True
         if len(item.get("scenes") or []) < 2:

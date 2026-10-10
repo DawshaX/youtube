@@ -256,7 +256,27 @@ def series(kind: str) -> list[tuple[str, dict]]:
         return out
     if kind == "athkar":
         from . import noor_cats
-        return [(it["id"], it) for it in noor_cats.athkar_pool(200)]
+        pool = list(noor_cats.athkar_pool(200))
+
+        def _rank(it: dict) -> int:
+            blob = str(it.get("source") or "") + str(it.get("hook") or "")
+            if "صباح" in blob or "مساء" in blob:
+                return 0
+            return 1
+
+        pool.sort(key=_rank)
+        return [(it["id"], it) for it in pool]
+    if kind == "athkar-sabah-masaa":
+        from . import noor_cats
+        out = []
+        for it in noor_cats.athkar_pool(200):
+            blob = str(it.get("source") or "") + str(it.get("hook") or "")
+            if "صباح" in blob or "مساء" in blob:
+                spec = dict(it)
+                spec["branch"] = kind
+                spec["format"] = "neon"
+                out.append((it["id"], spec))
+        return out
     if kind == "asma":
         from . import noor_cats
         return [(it["id"], it) for it in noor_cats.asma_pool(99, per_run=14)]
@@ -269,6 +289,10 @@ def series(kind: str) -> list[tuple[str, dict]]:
     if kind in ("mujiza", "hamd", "nasr"):
         from . import noor_signs
         return noor_signs.series(kind)
+    # رف مقفول في الشجرة لا يتألف له محتوى
+    from .noor_tree import is_hold
+    if is_hold(kind):
+        return []
     # أي نوع تاني (ديناميكي) — عنصر واحد من مصدره
     from . import noor_cats
     it = noor_cats.make(kind)
