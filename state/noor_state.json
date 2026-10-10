@@ -839,6 +839,20 @@
    "at": "2026-10-10 10:22",
    "duration": 69.7,
    "over_180s": false
+  },
+  {
+   "id": "na-94-5",
+   "kind": "nasr",
+   "theme": "نصر",
+   "title": "من سورة سُورَةُ الشَّرۡحِ | فرج | الآيات 5–6 — سورة الشرح | محمد صديق المنشاوي",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791632642/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=ppQEsn7VQYk",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-10 11:47",
+   "duration": 32.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -896,7 +910,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "ha-35-1",
+ "last_try": "na-94-5",
  "broken": [
   "dua-3-8"
  ],
@@ -923,6 +937,7 @@
   "2026-10-10T09:00|spirit|short",
   "2026-10-10T10:20|mujiza|short",
   "2026-10-10T11:40|mujiza|long",
-  "2026-10-10T13:00|hamd|short"
+  "2026-10-10T13:00|hamd|short",
+  "2026-10-10T14:20|nasr|short"
  ]
 }
