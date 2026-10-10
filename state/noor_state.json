@@ -783,6 +783,20 @@
    "at": "2026-10-10 03:36",
    "duration": 59.4,
    "over_180s": false
+  },
+  {
+   "id": "quiz-12-4",
+   "kind": "quiz",
+   "theme": "تدبر",
+   "title": "معاكم أمل. من أي سورة الآية دي؟ | كويز",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791608294/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=hm0B48dGl9w",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-10 05:01",
+   "duration": 34.2,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -830,7 +844,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "dua-2-129",
+ "last_try": "quiz-12-4",
  "broken": [
   "dua-3-8"
  ],
@@ -852,6 +866,7 @@
   "2026-10-09T21:00|quran|long",
   "2026-10-09T23:40|qissa|short",
   "2026-10-10T05:00|athkar|short",
-  "2026-10-10T06:20|dua|short"
+  "2026-10-10T06:20|dua|short",
+  "2026-10-10T07:40|quiz|short"
  ]
 }

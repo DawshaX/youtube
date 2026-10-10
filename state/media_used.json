@@ -106,8 +106,8 @@
  },
  "clipcache:23e877c7caa4": {
   "source": "video:pixabay",
-  "episode": "bg2",
-  "at": "2026-10-08 21:07"
+  "episode": "card376",
+  "at": "2026-10-10 04:59"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/018_Human_looking_at_the_stars_during_Perseids_with_the_Milky_Way_in_the_background_Photo_by_Giles_Laurent.jpg/1280px-018_Human_looking_at_the_stars_during_Perseids_with_the_Milky_Way_in_the_background_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -1133,5 +1133,25 @@
   "source": "image:commons",
   "episode": "mosque architecture night",
   "at": "2026-10-10 03:32"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Good_morning_Sunrise_view_from_Mont_Pelerin_at_1075_above_sea_level.jpg/1280px-Good_morning_Sunrise_view_from_Mont_Pelerin_at_1075_above_sea_level.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "sunrise above clouds",
+  "at": "2026-10-10 04:58"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/2009_01_03_-_Barnegat_Light_-_Barnegat_Lighthouse_%283166778249%29.jpg/1280px-2009_01_03_-_Barnegat_Light_-_Barnegat_Lighthouse_%283166778249%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "lighthouse night beam",
+  "at": "2026-10-10 04:59"
+ },
+ "https://cdn.pixabay.com/video/2022/03/10/110366-688648551_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card376",
+  "at": "2026-10-10 04:59"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Iss072e159833_%28Nov_10%2C_2024%29_--_A_long-exposure_shot_taken_by_NASA_astronaut_Don_Pettit_shows_the_intricacies_of_stars_in_the_Milky_Way_as_the_International_Space_Station_orbited_253_miles_above_the_Atlantic_Ocean.jpg/1280px-thumbnail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "stars long exposure",
+  "at": "2026-10-10 04:59"
  }
 }
