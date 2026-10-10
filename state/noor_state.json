@@ -825,6 +825,20 @@
    "at": "2026-10-10 07:54",
    "duration": 103.1,
    "over_180s": false
+  },
+  {
+   "id": "ha-35-1",
+   "kind": "hamd",
+   "theme": "حمد",
+   "title": "من سورة سُورَةُ فَاطِرٍ | حمد | آية 1 — سورة فاطر | محمود خليل الحصري",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791627414/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=9I8Yok-JFZE",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-10 10:22",
+   "duration": 69.7,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -882,7 +896,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "mu-3-49",
+ "last_try": "ha-35-1",
  "broken": [
   "dua-3-8"
  ],
@@ -908,6 +922,7 @@
   "2026-10-10T07:40|quiz|short",
   "2026-10-10T09:00|spirit|short",
   "2026-10-10T10:20|mujiza|short",
-  "2026-10-10T11:40|mujiza|long"
+  "2026-10-10T11:40|mujiza|long",
+  "2026-10-10T13:00|hamd|short"
  ]
 }
