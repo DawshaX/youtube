@@ -867,7 +867,7 @@
  "clipcache:51abd8fe5ba6": {
   "source": "video:pixabay",
   "episode": "bg3",
-  "at": "2026-10-09 09:06"
+  "at": "2026-10-10 09:26"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/An_orbital_sunrise_above_Namibia_in_Africa_%28iss072e487315%29.jpg/1280px-An_orbital_sunrise_above_Namibia_in_Africa_%28iss072e487315%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -1193,5 +1193,65 @@
   "source": "image:commons",
   "episode": "stars long exposure",
   "at": "2026-10-10 07:49"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/1952._East_face_of_Mary%27s_Peak._Light_trees_were_beetle_killed._The_beetles_bred_in_1949-1950_blowdown._Benton_County%2C_OR._%2834265971566%29.jpg/1280px-1952._East_face_of_Mary%27s_Peak._Light_trees_were_beetle_killed._The_beetles_bred_in_1949-1950_blowdown._Benton_County%2C_OR._%2834265971566%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "ocean aerial light",
+  "at": "2026-10-10 09:16"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/%28Barcelona%29_The_Full_Moon_over_Water_-_c.1823-6_-_William_Turner_-_Tate_Britain.jpg/1280px-%28Barcelona%29_The_Full_Moon_over_Water_-_c.1823-6_-_William_Turner_-_Tate_Britain.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "moon over water",
+  "at": "2026-10-10 09:16"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/KC-10_Extender_150507-F-RU983-006.jpg/1280px-KC-10_Extender_150507-F-RU983-006.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "desert dawn aerial",
+  "at": "2026-10-10 09:17"
+ },
+ "https://cdn.pixabay.com/video/2022/06/21/121615-724710355_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-10 09:25"
+ },
+ "clipcache:0396e95f539d": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-10 09:25"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/48/Engineer_Dive_Detachment_in_Pool_140712-A-KD550-519.jpg/1280px-Engineer_Dive_Detachment_in_Pool_140712-A-KD550-519.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "underwater blue calm",
+  "at": "2026-10-10 09:25"
+ },
+ "https://cdn.pixabay.com/video/2020/07/08/44184-438212386_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-10 09:26"
+ },
+ "clipcache:abb6d829b129": {
+  "source": "video:pixabay",
+  "episode": "bg2",
+  "at": "2026-10-10 09:26"
+ },
+ "https://cdn.pixabay.com/video/2026/01/06/326199_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg3",
+  "at": "2026-10-10 09:26"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/1960._Sellwood_photo_lab._Showing_the_light_table_in_the_work_room._It_is_designed_to_handle_aerial_film_as_well_as_other_jobs_such_as_dodge_dyeing._Portland%2C_OR._%2834358710194%29.jpg/1280px-thumbnail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "ocean aerial light",
+  "at": "2026-10-10 09:29"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/036_Milky_Way_during_Perseids_seen_from_Oeschinensee_with_water_reflections_Photo_by_Giles_Laurent.jpg/1280px-036_Milky_Way_during_Perseids_seen_from_Oeschinensee_with_water_reflections_Photo_by_Giles_Laurent.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "moon over water",
+  "at": "2026-10-10 09:30"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/KC-10_Extender_150507-F-RU983-015.jpg/1280px-KC-10_Extender_150507-F-RU983-015.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "desert dawn aerial",
+  "at": "2026-10-10 09:30"
  }
 }

@@ -869,6 +869,16 @@
    "at": "2026-10-09 20:51",
    "duration": 1200.4,
    "err": null
+  },
+  {
+   "id": "long-mujiza-1791625067",
+   "kind": "long_mujiza",
+   "title": "معجزات من القرآن: ناقة صالح · يونس والحوت · نوح والفلك",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_mujiza_1791623764/noor_long.mp4",
+   "url": "https://www.youtube.com/watch?v=5M_FxaHq3Kg",
+   "at": "2026-10-10 09:37",
+   "duration": 417.0,
+   "err": null
   }
  ],
  "bad_reciters": [],
@@ -897,6 +907,7 @@
   "2026-10-10T06:20|dua|short",
   "2026-10-10T07:40|quiz|short",
   "2026-10-10T09:00|spirit|short",
-  "2026-10-10T10:20|mujiza|short"
+  "2026-10-10T10:20|mujiza|short",
+  "2026-10-10T11:40|mujiza|long"
  ]
 }
