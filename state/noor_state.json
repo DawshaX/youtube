@@ -959,6 +959,15 @@
    "at": "2026-10-10 14:55",
    "duration": 212.5,
    "err": null
+  },
+  {
+   "id": "longcard-spirit-1791657327",
+   "kind": "long_spirit",
+   "title": "حلقة طويلة · spirit | نور — من غير ما تتقطع",
+   "video": "/home/runner/work/youtube/youtube/work/noor/longcard_spirit_1791656932/noor_long.mp4",
+   "url": "https://www.youtube.com/watch?v=EgJJLlMUmWY",
+   "at": "2026-10-10 18:35",
+   "err": null
   }
  ],
  "bad_reciters": [],
@@ -994,6 +1003,7 @@
   "2026-10-10T15:40|quran|short",
   "2026-10-10T17:00|nasr|long",
   "2026-10-10T18:20|tafsir|short",
-  "2026-10-10T19:40|hadith|short"
+  "2026-10-10T19:40|hadith|short",
+  "2026-10-10T21:00|spirit|long"
  ]
 }

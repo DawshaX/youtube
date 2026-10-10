@@ -1423,5 +1423,45 @@
   "source": "image:commons",
   "episode": "clouds sunset sky",
   "at": "2026-10-10 17:05"
+ },
+ "https://cdn.pixabay.com/video/2022/06/21/121609-724710330_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card12",
+  "at": "2026-10-10 18:29"
+ },
+ "clipcache:8618dfcbf897": {
+  "source": "video:pixabay",
+  "episode": "card12",
+  "at": "2026-10-10 18:29"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/A_natural_history_of_the_ducks_%281922%29_%2814578268120%29.jpg/1280px-A_natural_history_of_the_ducks_%281922%29_%2814578268120%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "soft natural light no people",
+  "at": "2026-10-10 18:29"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/D%C3%BClmen%2C_Wildpark%2C_Br%C3%BCcke_am_Herzteich_--_2013_--_0784.jpg/1280px-D%C3%BClmen%2C_Wildpark%2C_Br%C3%BCcke_am_Herzteich_--_2013_--_0784.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "empty park path morning",
+  "at": "2026-10-10 18:31"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/A_natural_history_of_the_ducks_%281922%29_%2814769565635%29.jpg/1280px-A_natural_history_of_the_ducks_%281922%29_%2814769565635%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "soft natural light no people",
+  "at": "2026-10-10 18:32"
+ },
+ "https://cdn.pixabay.com/video/2016/09/02/4878-181170845_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card15",
+  "at": "2026-10-10 18:33"
+ },
+ "clipcache:e92830ba2393": {
+  "source": "video:pixabay",
+  "episode": "card15",
+  "at": "2026-10-10 18:33"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/DFC_2113_Looking_up_through_a_curved_white_spiral_staircase_with_metal_railings_and_soft_natural_light_filtering_from_above.jpg/1280px-DFC_2113_Looking_up_through_a_curved_white_spiral_staircase_with_metal_railings_and_soft_natural_light_filtering_from_above.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "soft natural light no people",
+  "at": "2026-10-10 18:33"
  }
 }
