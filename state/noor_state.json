@@ -853,6 +853,20 @@
    "at": "2026-10-10 11:47",
    "duration": 32.6,
    "over_180s": false
+  },
+  {
+   "id": "q-002-005",
+   "kind": "ayah",
+   "theme": "قرآن",
+   "title": "معاكم نور. آية… اسمعها بتلاوة | سورة البقرة — الآيات 5–8 | أبو بكر الشاطري",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791637767/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=mI2l5GgCaTI",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-10 13:16",
+   "duration": 84.5,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -910,7 +924,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "na-94-5",
+ "last_try": "q-002-005",
  "broken": [
   "dua-3-8"
  ],
@@ -938,6 +952,7 @@
   "2026-10-10T10:20|mujiza|short",
   "2026-10-10T11:40|mujiza|long",
   "2026-10-10T13:00|hamd|short",
-  "2026-10-10T14:20|nasr|short"
+  "2026-10-10T14:20|nasr|short",
+  "2026-10-10T15:40|quran|short"
  ]
 }
