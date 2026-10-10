@@ -1173,5 +1173,25 @@
   "source": "video:pixabay",
   "episode": "card14",
   "at": "2026-10-10 06:25"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Haleakala_Observatory_above_clouds_sunrise_Maui.jpg/1280px-Haleakala_Observatory_above_clouds_sunrise_Maui.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "sunrise above clouds",
+  "at": "2026-10-10 07:49"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/2009_01_03_-_Barnegat_Light_-_Barnegat_Lighthouse_%283166788921%29.jpg/1280px-2009_01_03_-_Barnegat_Light_-_Barnegat_Lighthouse_%283166788921%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "lighthouse night beam",
+  "at": "2026-10-10 07:49"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/One_flame%2COne_heart.One_promise.jpg/1280px-One_flame%2COne_heart.One_promise.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "candle flame dark",
+  "at": "2026-10-10 07:49"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Kitt_Peak_National_Observatory_Beneath_Star_Trails_%28noirlab2512ae%29.jpg/1280px-Kitt_Peak_National_Observatory_Beneath_Star_Trails_%28noirlab2512ae%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "stars long exposure",
+  "at": "2026-10-10 07:49"
  }
 }

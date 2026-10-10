@@ -811,6 +811,20 @@
    "at": "2026-10-10 06:27",
    "duration": 18.6,
    "over_180s": false
+  },
+  {
+   "id": "mu-3-49",
+   "kind": "mujiza",
+   "theme": "معجزات",
+   "title": "معاكم فارس. آية عيسى… من آل عمران ✨ | معجزة | آية 49 — سورة ال عمران | عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791618534/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=LrmSj7PuOl4",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-10 07:54",
+   "duration": 103.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -858,7 +872,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "khair-000-nafs",
+ "last_try": "mu-3-49",
  "broken": [
   "dua-3-8"
  ],
@@ -882,6 +896,7 @@
   "2026-10-10T05:00|athkar|short",
   "2026-10-10T06:20|dua|short",
   "2026-10-10T07:40|quiz|short",
-  "2026-10-10T09:00|spirit|short"
+  "2026-10-10T09:00|spirit|short",
+  "2026-10-10T10:20|mujiza|short"
  ]
 }
