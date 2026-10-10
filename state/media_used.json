@@ -1153,5 +1153,25 @@
   "source": "image:commons",
   "episode": "stars long exposure",
   "at": "2026-10-10 04:59"
+ },
+ "https://cdn.pixabay.com/video/2022/12/04/141606-777930540_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card14",
+  "at": "2026-10-10 06:24"
+ },
+ "clipcache:f1abfd400161": {
+  "source": "video:pixabay",
+  "episode": "card14",
+  "at": "2026-10-10 06:24"
+ },
+ "https://cdn.pixabay.com/video/2025/10/18/310711_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "card14",
+  "at": "2026-10-10 06:25"
+ },
+ "clipcache:7ba3167395cc": {
+  "source": "video:pixabay",
+  "episode": "card14",
+  "at": "2026-10-10 06:25"
  }
 }
