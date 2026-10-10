@@ -867,6 +867,20 @@
    "at": "2026-10-10 13:16",
    "duration": 84.5,
    "over_180s": false
+  },
+  {
+   "id": "t-002-001",
+   "kind": "ayah",
+   "theme": "تدبر",
+   "title": "معاكم راوي. معنى الآية بعد التلاوة | تدبر | سورة البقرة — الآيات 1–4 | عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791646583/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=pGuUJ54tFfc",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-10 15:41",
+   "duration": 64.7,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -934,7 +948,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "q-002-005",
+ "last_try": "t-002-001",
  "broken": [
   "dua-3-8"
  ],
@@ -964,6 +978,7 @@
   "2026-10-10T13:00|hamd|short",
   "2026-10-10T14:20|nasr|short",
   "2026-10-10T15:40|quran|short",
-  "2026-10-10T17:00|nasr|long"
+  "2026-10-10T17:00|nasr|long",
+  "2026-10-10T18:20|tafsir|short"
  ]
 }
