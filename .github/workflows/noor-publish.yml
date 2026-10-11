@@ -163,39 +163,11 @@ jobs:
             export NOOR_FORCE_KIND="${NOOR_FORCE_KIND:-mujiza}"
             echo "▶ شورت بالنمط الجديد: $NOOR_FORCE_KIND"
           fi
-          echo "▶ حلقة نور: $MODE"
-          # مهلة صارمة: الرندر ما يعلّقش السلسلة أبدًا
-          timeout 2700 python scripts/noor_runner.py "$FLAG" 2>&1 | tee /tmp/noor.log || true
+          echo "▶ حلقة من المكتبة الواحدة"
+          # القديم والجديد في طابور واحد. المسار القديم يفضل محرك التلاوة، مش مصدر تاني.
+          timeout 2700 python scripts/noor_one.py 2>&1 | tee /tmp/noor.log || true
           RC=${PIPESTATUS[0]}
           echo "rc=${RC:-0}"
-          exit 0
-
-      - name: 📚 حلقة مكتبة زيادة — من غير ما تلغي الموعد القديم
-        if: ${{ inputs.mode != 'purge' }}
-        env:
-          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
-          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-          PEXELS: ${{ secrets.PEXELS }}
-          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
-          NASA: ${{ secrets.NASA }}
-          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
-          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
-          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
-          YOUTUBE_CLIENT_ID_2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
-          YOUTUBE_CLIENT_SECRET_2: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
-          YOUTUBE_REFRESH_TOKEN_2: ${{ secrets.YOUTUBE_REFRESH_TOKEN_2 }}
-          YOUTUBE_CLIENT_ID_3: ${{ secrets.YOUTUBE_CLIENT_ID_3 }}
-          YOUTUBE_CLIENT_SECRET_3: ${{ secrets.YOUTUBE_CLIENT_SECRET_3 }}
-          YOUTUBE_REFRESH_TOKEN_3: ${{ secrets.YOUTUBE_REFRESH_TOKEN_3 }}
-          YOUTUBE_CLIENT_ID_4: ${{ secrets.YOUTUBE_CLIENT_ID_4 }}
-          YOUTUBE_CLIENT_SECRET_4: ${{ secrets.YOUTUBE_CLIENT_SECRET_4 }}
-          YOUTUBE_REFRESH_TOKEN_4: ${{ secrets.YOUTUBE_REFRESH_TOKEN_4 }}
-          XT_NET_FOOTAGE: '1'
-          XT_YT: '1'
-          NOOR_ALLOW_BURST: '1'
-          NOOR_DRY: ${{ inputs.dry_run && '1' || '0' }}
-        run: |
-          timeout 1500 python scripts/noor_library_publish.py 2>&1 | tee /tmp/library.log || true
           exit 0
 
       - name: 🗑️ وضع الحذف — نشيل حلقات قديمة من القناة
