@@ -12,7 +12,7 @@ from .montage import loudnorm, overlay_frame, pick_feeling, pick_transition, wri
 from .palettes import palette_for
 from .queries import queries_for
 from .souls import pick_soul, portrait
-from .studio import burn_words, circle, layer, licensed_whoosh, mark, mix_bed, say
+from .studio import burn_words, circle, halo, layer, licensed_whoosh, mark, mix_bed, say
 from .timeline import sentences, sacred_text
 
 W, H, FPS = 1080, 1920, 30
@@ -140,6 +140,8 @@ def render(episode: dict, work: Path) -> dict | None:
         grade = "," + feel["grade"] + "," + look.get("grade", "eq=saturation=1.02")
         if fmt.get("neon"):
             grade += ",eq=saturation=1.12"
+        if soul and soul.get("style") in ("queen", "soul"):
+            grade += ",eq=gamma=1.05:saturation=1.04"
         _style_clip(got, styled, dur, grade, motion_for(fmt, i))
         png = work / f"cap-{i}.png"
         _caption(line, png, float(look.get("y") or 0.56), pal.get("text") or "#F7F1E6", int(feel["size"]))
@@ -177,7 +179,12 @@ def render(episode: dict, work: Path) -> dict | None:
     if face:
         avatar = work / "avatar.png"
         if circle(face, avatar):
-            floated = "'1510+5*sin(t)'" if soul and soul.get("style") in ("cartoon", "neon") else "1510"
+            soft = bool(soul and soul.get("style") in ("cartoon", "neon", "queen", "soul"))
+            floated = "'1510+5*sin(t)'" if soft else "1510"
+            if soul and soul.get("style") in ("queen", "soul"):
+                ring = work / "halo.png"
+                halo(ring, soul.get("mark") or "#F6E7C8")
+                over = layer(over, work / "halo.mp4", ring, "16", "'1480+5*sin(t)'" if soft else "1480", _run)
             over = layer(over, work / "avatar.mp4", avatar, "46", floated, _run)
     badge = work / "mark.png"
     mark(badge, (soul or {}).get("mark") or "#E2B07A")

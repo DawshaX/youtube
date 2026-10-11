@@ -48,6 +48,18 @@ def circle(src: Path, dst: Path, size: int = 280) -> bool:
     return dst.exists()
 
 
+def halo(path: Path, color: str = "#F6E7C8") -> None:
+    from PIL import Image, ImageDraw
+
+    size = 340
+    im = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(im)
+    draw.ellipse((10, 10, size - 11, size - 11), outline=color, width=8)
+    draw.ellipse((24, 24, size - 25, size - 25), outline=(255, 247, 230, 110), width=4)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    im.save(path)
+
+
 def mark(path: Path, color: str) -> None:
     from PIL import Image, ImageDraw
 
