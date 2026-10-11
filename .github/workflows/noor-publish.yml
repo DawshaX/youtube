@@ -182,7 +182,10 @@ jobs:
           RC=${PIPESTATUS[0]}
           set -e
           echo "rc=${RC}"
-          if [ "${NOOR_FIRST}" = "1" ] && ! grep -q "watch?v=" /tmp/noor.log; then
+          if grep -q "watch?v=" /tmp/noor.log; then
+            exit 0
+          fi
+          if [ "${NOOR_FIRST}" = "1" ]; then
             echo "مفيش فيديو جديد نزل"
             exit 1
           fi

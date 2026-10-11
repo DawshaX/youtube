@@ -33,6 +33,26 @@ def _dur(path: Path) -> float:
     return float(r.stdout.strip() or 0)
 
 
+def _line_audio(line: str, raw: Path, wav: Path, voice: str, rate: str, pitch: str):
+    """جملة صوتها قصير أو وقع مش تلغي الحلقة. بنعيد مرة، وبعدين نتخطاها."""
+    for attempt in (1, 2):
+        try:
+            spoken_words = say(line, raw, voice, rate, pitch)
+            _run([
+                "ffmpeg", "-y", "-i", str(raw),
+                "-af", "apad=pad_dur=0.06",
+                "-ar", "48000", "-ac", "2", str(wav),
+            ])
+            dur = _dur(wav)
+        except Exception as exc:
+            print(f"[studio] الصوت وقع ({attempt}): {type(exc).__name__}", flush=True)
+            continue
+        if dur >= 0.45:
+            return spoken_words, dur
+        print(f"[studio] الصوت قصير ({attempt}): {line[:40]}", flush=True)
+    return None
+
+
 def _voice(episode: dict, pal: dict, soul: dict | None) -> tuple[str, str, str]:
     if pal.get("sacred") or soul is None and pal.get("id") == "faith":
         return "ar-SA-HamedNeural", "-12%", "-4Hz"
@@ -126,15 +146,11 @@ def render(episode: dict, work: Path) -> dict | None:
     for i, line in enumerate(lines):
         raw = work / f"say-{i}.mp3"
         wav = work / f"say-{i}.wav"
-        spoken_words = say(line, raw, voice, rate, pitch)
-        _run([
-            "ffmpeg", "-y", "-i", str(raw),
-            "-af", "apad=pad_dur=0.06",
-            "-ar", "48000", "-ac", "2", str(wav),
-        ])
-        dur = _dur(wav)
-        if dur < 0.45:
-            return None
+        spoken = _line_audio(line, raw, wav, voice, rate, pitch)
+        if spoken is None:
+            print(f"[studio] الجملة اتخطت: {line[:40]}", flush=True)
+            continue
+        spoken_words, dur = spoken
         origin = spoken_words[0]["t"] if spoken_words else 0.0
         for word in spoken_words:
             words.append({
@@ -173,6 +189,8 @@ def render(episode: dict, work: Path) -> dict | None:
         caps.append(png)
         durs.append(dur)
         cursor += dur
+    if len(clips) < 2:
+        return None
     lst = work / "v.txt"
     lst.write_text("".join(f"file '{p}'\n" for p in clips), encoding="utf-8")
     silent = work / "silent.mp4"

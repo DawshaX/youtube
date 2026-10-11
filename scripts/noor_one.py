@@ -210,7 +210,8 @@ def _one_live(kind: str, tries: int = 4) -> int:
             rc = _publish_life(row)
         except Exception as exc:
             print(f"[one] الرندر وقع على {row.get('id')}: {type(exc).__name__}: {exc}", flush=True)
-            return 1
+            _mark(row, err=type(exc).__name__)
+            continue
         if rc == 0:
             print(f"[one] نزل {kind} {row.get('id')}", flush=True)
             return 0
@@ -252,7 +253,12 @@ def main() -> int:
             print("[one] الطابور خلص", flush=True)
             return 1
         engine = row.get("engine")
-        rc = _publish_source(row) if engine == "source" else _publish_life(row)
+        try:
+            rc = _publish_source(row) if engine == "source" else _publish_life(row)
+        except Exception as exc:
+            print(f"[one] الرندر وقع على {row.get('id')}: {type(exc).__name__}: {exc}", flush=True)
+            _mark(row, err=type(exc).__name__)
+            continue
         if rc == 2:
             return 0
         if rc == 0:

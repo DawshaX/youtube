@@ -12,6 +12,7 @@ from xtrendaw.noor_next.formats import REFUSED, pick_format  # noqa: E402
 from xtrendaw.noor_next.montage import pick_feeling, pick_transition  # noqa: E402
 from xtrendaw.noor_next.souls import face_allowed, pick_soul  # noqa: E402
 from xtrendaw.noor_next.queries import queries_for  # noqa: E402
+from xtrendaw.noor_next.studio import tts_pitch  # noqa: E402
 from xtrendaw.noor_next.timeline import build, sacred_text  # noqa: E402
 from xtrendaw.noor_next.vault import add_item, empty_index, match  # noqa: E402
 
@@ -76,6 +77,13 @@ class SoulTests(unittest.TestCase):
         self.assertIn("مش نسخ", spec["rights"])
         self.assertIn("coverr_api", REFUSED)
         self.assertIn("famous_video_file", REFUSED)
+
+
+class VoiceTests(unittest.TestCase):
+    def test_zero_pitch_gets_a_sign(self):
+        self.assertEqual(tts_pitch("0Hz"), "+0Hz")
+        self.assertEqual(tts_pitch("-2Hz"), "-2Hz")
+        self.assertEqual(tts_pitch(""), "+0Hz")
 
 
 class QueryTests(unittest.TestCase):

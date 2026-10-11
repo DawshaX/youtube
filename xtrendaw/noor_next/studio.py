@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import asyncio
+import re
 from pathlib import Path
 
 from xtrendaw import textrender
@@ -12,10 +13,19 @@ from xtrendaw import textrender
 W, H = 1080, 1920
 
 
+def tts_pitch(pitch: str) -> str:
+    """edge-tts يرفض «0Hz». لازم علامة + أو − حتى لو القيمة صفر."""
+    match = re.fullmatch(r"([+-]?)(\d+)Hz", (pitch or "").strip())
+    if not match:
+        return "+0Hz"
+    sign = match.group(1) if match.group(1) in ("+", "-") else "+"
+    return f"{sign}{int(match.group(2))}Hz"
+
+
 async def speak_words(text: str, path: Path, voice: str, rate: str, pitch: str) -> list[dict]:
     import edge_tts
 
-    comm = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
+    comm = edge_tts.Communicate(text, voice, rate=rate, pitch=tts_pitch(pitch))
     words: list[dict] = []
     with path.open("wb") as handle:
         async for chunk in comm.stream():
