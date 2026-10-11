@@ -1,4 +1,15 @@
 {
-  "served": [],
-  "turn": 2
+  "served": [
+    "ser-study-s01"
+  ],
+  "turn": 4,
+  "last_series": "ser-study",
+  "done": [
+    {
+      "id": "ser-study-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    }
+  ]
 }
