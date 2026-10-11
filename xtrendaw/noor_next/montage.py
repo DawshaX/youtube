@@ -38,8 +38,8 @@ def pick_transition(episode_id: str) -> str:
     return TRANSITIONS[n % len(TRANSITIONS)]
 
 
-def write_timeline(path: Path, episode: dict, shots: list[dict], feeling: str, transition: str) -> None:
-    path.write_text(json.dumps({
+def write_timeline(path: Path, episode: dict, shots: list[dict], feeling: str, transition: str, extra: dict | None = None) -> None:
+    payload = {
         "id": episode.get("id"),
         "series": episode.get("series_title"),
         "feeling": feeling,
@@ -51,7 +51,10 @@ def write_timeline(path: Path, episode: dict, shots: list[dict], feeling: str, t
             "خط زمني", "لقطة لكل جملة", "تدريج", "كابشن عربي",
             "انتقال هادي", "إطار", "صوت مضبوط", "ترخيص مع اللقطة",
         ],
-    }, ensure_ascii=False, indent=2), encoding="utf-8")
+    }
+    if extra:
+        payload.update(extra)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def loudnorm(src: Path, dst: Path, run) -> None:

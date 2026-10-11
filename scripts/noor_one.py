@@ -81,7 +81,10 @@ def _publish_life(row: dict) -> int:
     title = f"{made['lines'][0][:70]} | {row.get('series_title') or 'نور'}"
     src = row.get("source") or ""
     credits = "\n".join(made["credits"]) or "لقطات مرخّصة."
-    desc = f"{row.get('spoken') or ''}\n\n{src}\n\n{credits}"
+    who = made.get("soul")
+    host = f"الشخصية: {who}، أصلية للمصنع.\n" if who else ""
+    craft = f"أسلوب اللقطات: {made.get('format')} — صناعة المصنع، مش نسخ لفيديو.\n" if made.get("format") else ""
+    desc = f"{host}{craft}{row.get('spoken') or ''}\n\n{src}\n\n{credits}"
     url, err = runner._publish(made["video"], None, title[:95], desc, ["نور", row.get("series_title") or "خير"], synthetic=True)
     if err in ("quota_guard", "too_soon"):
         return 2

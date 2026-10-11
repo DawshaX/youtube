@@ -7,7 +7,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from xtrendaw.noor_next.formats import REFUSED, pick_format  # noqa: E402
 from xtrendaw.noor_next.montage import pick_feeling, pick_transition  # noqa: E402
+from xtrendaw.noor_next.souls import face_allowed, pick_soul  # noqa: E402
 from xtrendaw.noor_next.queries import queries_for  # noqa: E402
 from xtrendaw.noor_next.timeline import build, sacred_text  # noqa: E402
 from xtrendaw.noor_next.vault import add_item, empty_index, match  # noqa: E402
@@ -43,6 +45,23 @@ class MontageTests(unittest.TestCase):
         name, feel = pick_feeling({"id": "child-1", "series_title": "طفل بستر", "emotion": "", "field": ""})
         self.assertEqual(name, "طفل")
         self.assertFalse(feel.get("neon"))
+
+
+class SoulTests(unittest.TestCase):
+    def test_child_is_cartoon_and_faith_has_no_face(self):
+        ward = pick_soul({"id": "child-1", "series_title": "طفل بستر", "emotion": "طفل"})
+        self.assertEqual(ward["id"], "ward")
+        self.assertFalse(ward.get("neon"))
+        self.assertFalse(face_allowed({"series_title": "تذكير", "field": "خالق"}))
+        self.assertIsNone(pick_soul({"id": "f", "series_title": "تذكير", "field": "خالق"}))
+
+    def test_format_is_ours_not_a_copied_video(self):
+        name, spec = pick_format({"id": "ser-kitchen-s01", "series_title": "مطبخ من غير خوف"})
+        self.assertIn(name, ("افتتاح وقطع", "قائمة", "حكاية", "قبل وبعد", "نيون هادي", "طين ثلاثي"))
+        self.assertFalse(spec["copied_video"])
+        self.assertIn("مش نسخ", spec["rights"])
+        self.assertIn("coverr_api", REFUSED)
+        self.assertIn("famous_video_file", REFUSED)
 
 
 class QueryTests(unittest.TestCase):
