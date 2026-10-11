@@ -97,6 +97,20 @@
    "at": "2026-10-11 16:21",
    "duration": 18.6,
    "over_180s": false
+  },
+  {
+   "id": "s-28-7",
+   "kind": "story",
+   "theme": "قرآن",
+   "title": "معاكم نور. أم موسى… وأصعب قرار 💙 | قصة | الآيات 7–9 — سورة القصص | عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791738169/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=L4Y9tT4wsKM",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-11 17:10",
+   "duration": 101.9,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -112,7 +126,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "khair-000-nafs",
+ "last_try": "s-28-7",
  "grid_done": [
   "2026-10-11T13:00|nasr|short",
   "2026-10-11T14:20|quran|short",
@@ -121,6 +135,7 @@
   "2026-10-11T06:20|quiz|short",
   "2026-10-11T17:00|qissa|long",
   "2026-10-11T18:20|hadith|short",
-  "2026-10-11T07:40|spirit|short"
+  "2026-10-11T07:40|spirit|short",
+  "2026-10-11T19:40|qissa|short"
  ]
 }
