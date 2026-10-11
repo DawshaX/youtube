@@ -1,0 +1,12 @@
+{
+  "id": "ser-kitchen-s01",
+  "series_id": "ser-kitchen",
+  "series_title": "مطبخ من غير خوف",
+  "kind": "short",
+  "field": "مطبخ",
+  "hook": "قطّع على اللوح، مش في إيدك.",
+  "spoken": "قطّع على اللوح، مش في إيدك. الإيد أمانة. البصل بيدمع لأن بخاره يلمس العين. مش سحر. اغسله بهدوء ومتكبش المية في الحوض وهي سخنة أوي.",
+  "scene": "wooden cutting board kitchen morning no people",
+  "benefit": "تتجنب الحرق والغلط. من غير وصفة مسروقة.",
+  "factory": false
+}
