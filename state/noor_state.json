@@ -83,6 +83,20 @@
    "at": "2026-10-11 15:36",
    "duration": 33.5,
    "over_180s": false
+  },
+  {
+   "id": "khair-000-nafs",
+   "kind": "spirit",
+   "theme": "نفس",
+   "title": "معاكم نور. قبل ما ترد… خد نفس | كلمة | 🌿 نفس",
+   "reciter": "shatri",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791735455/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=NMJIoCJECEc",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-11 16:21",
+   "duration": 18.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -98,7 +112,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "h-bukhari-1",
+ "last_try": "khair-000-nafs",
  "grid_done": [
   "2026-10-11T13:00|nasr|short",
   "2026-10-11T14:20|quran|short",
@@ -106,6 +120,7 @@
   "2026-10-11T15:40|tafsir|short",
   "2026-10-11T06:20|quiz|short",
   "2026-10-11T17:00|qissa|long",
-  "2026-10-11T18:20|hadith|short"
+  "2026-10-11T18:20|hadith|short",
+  "2026-10-11T07:40|spirit|short"
  ]
 }
