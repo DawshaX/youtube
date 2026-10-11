@@ -163,6 +163,124 @@ SOULS = (
         "fits": ("روح", "سماء", "ألوان"),
         "note": "روح نور أصلية. مش شيخ.",
     },
+    {
+        "id": "layl",
+        "name": "ليل",
+        "style": "queen",
+        "voice": "ar-OM-AyshaNeural",
+        "rate": "-7%",
+        "pitch": "-2Hz",
+        "mark": "#1F6B45",
+        "file": "layl.png",
+        "neon": False,
+        "court": True,
+        "fits": ("ليل", "جمال", "ملكة"),
+        "note": "ملكة أصلية. مش ملكة جمال حقيقية.",
+    },
+    {
+        "id": "zahr",
+        "name": "زهر",
+        "style": "queen",
+        "voice": "ar-BH-LailaNeural",
+        "rate": "-6%",
+        "pitch": "-1Hz",
+        "mark": "#E07A62",
+        "file": "zahr.png",
+        "neon": False,
+        "court": True,
+        "fits": ("زهر", "جمال", "ضيافة"),
+        "note": "ملكة أصلية. مش ملكة جمال حقيقية.",
+    },
+    {
+        "id": "lamis",
+        "name": "لميس",
+        "style": "soul",
+        "voice": "ar-TN-ReemNeural",
+        "rate": "-9%",
+        "pitch": "-2Hz",
+        "mark": "#F4E7D4",
+        "file": "lamis.png",
+        "neon": False,
+        "court": True,
+        "fits": ("روح", "وهم", "عبرة"),
+        "note": "روح نور أصلية. مش بتقرأ قرآن.",
+    },
+    {
+        "id": "sahab",
+        "name": "سحاب",
+        "style": "soul",
+        "voice": "ar-YE-SalehNeural",
+        "rate": "-10%",
+        "pitch": "-3Hz",
+        "mark": "#C9D4EA",
+        "file": "sahab.png",
+        "neon": False,
+        "court": True,
+        "fits": ("روح", "سماء", "مطر"),
+        "note": "روح نور أصلية. مش شيخ.",
+    },
+    {
+        "id": "falfa",
+        "name": "فلفلة",
+        "style": "cartoon",
+        "voice": "ar-LY-OmarNeural",
+        "rate": "-2%",
+        "pitch": "+1Hz",
+        "mark": "#F0A202",
+        "file": "falfa.png",
+        "neon": False,
+        "wild": True,
+        "fits": ("ضحك", "نكشة", "زحمة", "موبايل"),
+        "note": "شخصية هزار أصلية. مش شخص حقيقي.",
+    },
+    {
+        "id": "barq",
+        "name": "برق",
+        "style": "sport",
+        "voice": "ar-QA-MoazNeural",
+        "rate": "-4%",
+        "pitch": "0Hz",
+        "mark": "#F2C14E",
+        "file": "barq.png",
+        "neon": False,
+        "wild": True,
+        "fits": ("ملعب",),
+        "note": "رياضي أصلي. مش لاعب مشهور.",
+    },
+    {
+        "id": "san3a",
+        "name": "صنعة",
+        "style": "clay3d",
+        "voice": "ar-IQ-RanaNeural",
+        "rate": "-8%",
+        "pitch": "-2Hz",
+        "mark": "#C4A46A",
+        "file": "san3a.png",
+        "neon": False,
+        "wild": True,
+        "fits": ("حرفة", "شغل"),
+    },
+    {
+        "id": "lughz",
+        "name": "لُغز",
+        "style": "neon",
+        "voice": "ar-DZ-AminaNeural",
+        "rate": "-4%",
+        "pitch": "0Hz",
+        "mark": "#3DDCFF",
+        "file": "lughz.png",
+        "neon": True,
+        "wild": True,
+        "fits": ("سؤال", "امتحان"),
+    },
+)
+
+GENRES = (
+    (("ضحك", "نكشة", "زحمة", "موبايل"), "falfa"),
+    (("ملعب",), "barq"),
+    (("حرفة", "شغل"), "san3a"),
+    (("سؤال", "امتحان"), "lughz"),
+    (("وهم", "عبرة"), "lamis"),
 )
 
 COURT_KEYS = ("رفق", "ضيافة", "سماء", "ألوان", "مطر", "لحظة", "جمال", "ملكة", "روح", "قمر")
@@ -190,17 +308,27 @@ def pick_soul(episode: dict, feeling: str = "") -> dict | None:
     if "حزن" in blob or "صبر" in blob:
         return _ready(SOULS[4])
     series = " ".join(str(episode.get(k) or "") for k in ("series_title", "field", "emotion"))
+    for keys, sid in GENRES:
+        if any(key in series for key in keys):
+            return _named(sid)
     if any(key in series for key in COURT_KEYS):
         court = [s for s in SOULS if s.get("court")]
         n = sum(ord(c) for c in str(episode.get("id") or "نور"))
         return _ready(court[n % len(court)])
-    pool = [s for s in SOULS if not s.get("child") and not s.get("court") and not (s.get("neon") and "علم" not in blob and "لحظة" not in blob)]
+    pool = [s for s in SOULS if not s.get("child") and not s.get("court") and not s.get("wild") and not (s.get("neon") and "علم" not in blob and "لحظة" not in blob)]
     if not pool:
         pool = [s for s in SOULS if not s.get("child")]
     n = sum(ord(c) for c in str(episode.get("id") or "نور"))
     matched = [s for s in pool if any(k in blob for k in s.get("fits") or ())]
     chosen = matched or pool
     return _ready(chosen[n % len(chosen)])
+
+
+def _named(sid: str) -> dict:
+    for soul in SOULS:
+        if soul["id"] == sid:
+            return _ready(soul)
+    raise KeyError(sid)
 
 
 def _ready(soul: dict) -> dict:

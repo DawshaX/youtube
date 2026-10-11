@@ -57,6 +57,9 @@ class SoulTests(unittest.TestCase):
         court = pick_soul({"id": "sky-1", "series_title": "سماء بهدوء"})
         self.assertTrue(court.get("court"))
         self.assertIn(court["style"], ("queen", "soul"))
+        self.assertEqual(pick_soul({"id": "joke-1", "series_title": "سلسلة ضحك نظيف"})["id"], "falfa")
+        self.assertEqual(pick_soul({"id": "play-1", "series_title": "سلسلة ملعب"})["id"], "barq")
+        self.assertEqual(pick_soul({"id": "k-1", "series_title": "مطبخ من غير خوف"})["id"], "nour")
 
     def test_format_is_ours_not_a_copied_video(self):
         name, spec = pick_format({"id": "ser-kitchen-s01", "series_title": "مطبخ من غير خوف"})
