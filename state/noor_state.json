@@ -41,14 +41,29 @@
    "at": "2026-10-11 12:21",
    "duration": 32.9,
    "over_180s": false
+  },
+  {
+   "id": "t-001-001",
+   "kind": "ayah",
+   "theme": "تدبر",
+   "title": "معاكم راوي. معنى الآية بعد التلاوة | تدبر | سورة ٱلفاتحة — الآيات 1–4 | عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791723735/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=5t1rkdTz4GE",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-11 13:06",
+   "duration": 27.8,
+   "over_180s": false
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "dua-2-127",
+ "last_try": "t-001-001",
  "grid_done": [
   "2026-10-11T13:00|nasr|short",
   "2026-10-11T14:20|quran|short",
-  "2026-10-11T05:00|dua|short"
+  "2026-10-11T05:00|dua|short",
+  "2026-10-11T15:40|tafsir|short"
  ]
 }
