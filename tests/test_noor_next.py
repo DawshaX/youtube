@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from xtrendaw.noor_next.queries import queries_for  # noqa: E402
 from xtrendaw.noor_next.timeline import build, sacred_text  # noqa: E402
 from xtrendaw.noor_next.vault import add_item, empty_index, match  # noqa: E402
 
@@ -30,6 +31,13 @@ class TimelineTests(unittest.TestCase):
         bad["spoken"] = "قال رسول الله في الحديث."
         with self.assertRaises(ValueError):
             build(bad)
+
+
+class QueryTests(unittest.TestCase):
+    def test_sentence_gets_its_own_shot(self):
+        qs = queries_for("البصل بيدمع لأن بخاره يلمس العين.", "kitchen morning no people")
+        self.assertIn("onion on wooden board no people", qs)
+        self.assertTrue(all("no people" in q or "onion" in q for q in qs))
 
 
 class VaultTests(unittest.TestCase):

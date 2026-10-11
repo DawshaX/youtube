@@ -1121,6 +1121,21 @@ def _grid_cycle() -> int:
     slot = due[0]
     print(f"[noor] 🗓️ موعد: {slot.get('label') or slot['kind']} ({slot['form']})",
           flush=True)
+    # دمج: التلاوة والحديث من المصدر يفضلوا. باقي المواعيد من المكتبة بلقطات حية.
+    # لو المكتبة ما لقتش لقطة، المسار القديم يكمل الموعد عشان القناة ما تفضاش.
+    source_kinds = {"quran", "tafsir", "hadith", "asma", "athkar", "dua",
+                    "salah", "hijri", "qfacts"}
+    if os.environ.get("NOOR_MERGE") == "1" and slot["kind"] not in source_kinds:
+        try:
+            from xtrendaw.noor_next.cycle import publish_next
+            lib = publish_next("long" if slot["form"] == "long" else "short")
+            if lib == 0:
+                _mark_grid(slot["key"])
+                print("[noor] 📚 الموعد اتغطى من المكتبة", flush=True)
+                return 0
+            print("[noor] 📚 المكتبة ما نشرتش — المسار القديم يكمل", flush=True)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[noor] 📚 المكتبة اتعذرت: {str(exc)[:140]}", flush=True)
     if slot["form"] == "long":
         os.environ["NOOR_LONG_KIND"] = slot["kind"]
         rc = long_once()
