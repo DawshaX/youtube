@@ -6,10 +6,11 @@
     "ser-anger-l06",
     "ser-child-s01",
     "ser-animal-l09",
-    "ser-field-لحظة-l09"
+    "ser-field-لحظة-l09",
+    "ser-queue-s01"
   ],
-  "turn": 13,
-  "last_series": "ser-field-لحظة",
+  "turn": 14,
+  "last_series": "ser-queue",
   "done": [
     {
       "id": "ser-study-s01",
@@ -52,11 +53,17 @@
       "url": "https://www.youtube.com/watch?v=a4kvrr_7bHg",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-queue-s01",
+      "url": "https://www.youtube.com/watch?v=RrfbELm-4po",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-11",
-    "short": 0,
+    "short": 1,
     "long": 1
   }
 }
