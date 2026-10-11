@@ -69,6 +69,20 @@
    "at": "2026-10-11 13:49",
    "duration": 38.9,
    "over_180s": false
+  },
+  {
+   "id": "h-bukhari-1",
+   "kind": "hadith",
+   "theme": "حديث",
+   "title": "معاكم نور. من bukhari | حديث | حديث رقم 1 — صحيح البخاري",
+   "reciter": "minshawi",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791732677/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=oB5XoyWNiRY",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-11 15:36",
+   "duration": 33.5,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -84,13 +98,14 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "quiz-18-10",
+ "last_try": "h-bukhari-1",
  "grid_done": [
   "2026-10-11T13:00|nasr|short",
   "2026-10-11T14:20|quran|short",
   "2026-10-11T05:00|dua|short",
   "2026-10-11T15:40|tafsir|short",
   "2026-10-11T06:20|quiz|short",
-  "2026-10-11T17:00|qissa|long"
+  "2026-10-11T17:00|qissa|long",
+  "2026-10-11T18:20|hadith|short"
  ]
 }

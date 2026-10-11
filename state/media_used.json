@@ -570,9 +570,9 @@
   "at": "2026-10-07 21:07"
  },
  "clipcache:8714af0b9515": {
-  "source": "video:pixabay",
+  "source": "video:Wikimedia Commons",
   "episode": "hd",
-  "at": "2026-10-07 21:07"
+  "at": "2026-10-11 15:33"
  },
  "https://cdn.pixabay.com/video/2019/06/23/24623-345209544_medium.mp4": {
   "source": "video:pixabay",
@@ -1613,5 +1613,25 @@
   "source": "video:pixabay",
   "episode": "bg1",
   "at": "2026-10-11 14:47"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Les_arches_de_Tinmel.jpg/1280px-Les_arches_de_Tinmel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-10-11 15:31"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Half_of_a_Prayer_Bead_with_the_Crucifixion_MET_DP371021.jpg/1280px-Half_of_a_Prayer_Bead_with_the_Crucifixion_MET_DP371021.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "prayer beads on wood",
+  "at": "2026-10-11 15:32"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/e/e5/Drops_%28274645807%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled": {
+  "source": "image:commons",
+  "episode": "rain drops green leaves",
+  "at": "2026-10-11 15:32"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/4/47/Clouds_at_sunset_%28time_lapse%29.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original": {
+  "source": "video:Wikimedia Commons",
+  "episode": "hd",
+  "at": "2026-10-11 15:33"
  }
 }
