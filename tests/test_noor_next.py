@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from scripts.noor_one import wanted_kind  # noqa: E402
 from xtrendaw.noor_next.formats import REFUSED, pick_format  # noqa: E402
 from xtrendaw.noor_next.montage import pick_feeling, pick_transition  # noqa: E402
 from xtrendaw.noor_next.souls import face_allowed, pick_soul  # noqa: E402
@@ -34,6 +35,15 @@ class TimelineTests(unittest.TestCase):
         bad["spoken"] = "قال رسول الله في الحديث."
         with self.assertRaises(ValueError):
             build(bad)
+
+
+class DayCapTests(unittest.TestCase):
+    def test_eight_shorts_and_four_longs(self):
+        self.assertEqual(wanted_kind(0, 0), "short")
+        self.assertEqual(wanted_kind(2, 0), "long")
+        self.assertEqual(wanted_kind(8, 2), "long")
+        self.assertEqual(wanted_kind(3, 4), "short")
+        self.assertIsNone(wanted_kind(8, 4))
 
 
 class MontageTests(unittest.TestCase):

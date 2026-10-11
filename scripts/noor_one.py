@@ -10,6 +10,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+SHORT_CAP = int(os.environ.get("NOOR_SHORTS_PER_DAY", "8"))
+LONG_CAP = int(os.environ.get("NOOR_LONGS_PER_DAY", "4"))
 LIB = ROOT / "data" / "noor_next" / "one_library.jsonl"
 LEDGER = ROOT / "state" / "noor_library.json"
 
@@ -31,12 +33,62 @@ def _rows() -> list[dict]:
     return [json.loads(l) for l in LIB.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
-def next_item() -> dict | None:
+def _day() -> str:
+    import datetime as dt
+    try:
+        from zoneinfo import ZoneInfo
+        tz = ZoneInfo("America/Los_Angeles")
+    except Exception:
+        tz = dt.timezone(dt.timedelta(hours=-7))
+    return dt.datetime.now(tz).date().isoformat()
+
+
+def _counts() -> tuple[int, int]:
+    bag = _load().get("day") or {}
+    if bag.get("date") != _day():
+        return 0, 0
+    return int(bag.get("short") or 0), int(bag.get("long") or 0)
+
+
+def _bump(kind: str) -> None:
+    st = _load()
+    day = _day()
+    bag = st.get("day") or {}
+    if bag.get("date") != day:
+        bag = {"date": day, "short": 0, "long": 0}
+    key = "long" if kind == "long" else "short"
+    bag[key] = int(bag.get(key) or 0) + 1
+    st["day"] = bag
+    _save(st)
+
+
+def wanted_kind(shorts: int | None = None, longs: int | None = None) -> str | None:
+    if shorts is None or longs is None:
+        shorts, longs = _counts()
+    if shorts >= SHORT_CAP and longs >= LONG_CAP:
+        return None
+    if longs >= LONG_CAP:
+        return "short"
+    if shorts >= SHORT_CAP:
+        return "long"
+    return "long" if (shorts + longs) % 3 == 2 else "short"
+
+
+def next_item(kind: str | None = None) -> dict | None:
     st = _load()
     done = set(st.get("served") or [])
     last = str(st.get("last_series") or "")
-    fresh = [r for r in _rows() if r.get("id") not in done and r.get("series_id") != last]
-    pool = fresh or [r for r in _rows() if r.get("id") not in done]
+    def ok(row: dict) -> bool:
+        if row.get("id") in done:
+            return False
+        is_long = row.get("kind") == "long"
+        if kind == "long":
+            return is_long
+        if kind == "short":
+            return not is_long
+        return True
+    fresh = [r for r in _rows() if ok(r) and r.get("series_id") != last]
+    pool = fresh or [r for r in _rows() if ok(r)]
     if not pool:
         return None
     # لفّ بين العائلات عشان القديم والجديد يطلعوا، ومش نوع واحد ياكل الطابور.
@@ -54,8 +106,10 @@ def _mark(row: dict, url: str = "", err: str = "") -> None:
     st = _load()
     st["served"] = list(dict.fromkeys([*(st.get("served") or []), row["id"]]))
     st["last_series"] = row.get("series_id") or ""
-    st.setdefault("done", []).append({"id": row["id"], "url": url, "err": err})
+    st.setdefault("done", []).append({"id": row["id"], "url": url, "err": err, "kind": row.get("kind")})
     _save(st)
+    if url:
+        _bump(str(row.get("kind") or "short"))
 
 
 def _runner():
@@ -147,13 +201,17 @@ def opening() -> int:
 
 
 def main() -> int:
-    if os.environ.get("NOOR_OPENING") == "1":
-        return opening()
     if not LIB.exists():
         print("[one] المكتبة الواحدة مش موجودة", flush=True)
         return 1
+    kind = wanted_kind()
+    shorts, longs = _counts()
+    if kind is None:
+        print(f"[one] سقف اليوم خلص: {shorts} شورت و{longs} طويل", flush=True)
+        return 0
+    print(f"[one] اليوم {shorts}/{SHORT_CAP} شورت و{longs}/{LONG_CAP} طويل — الجاية {kind}", flush=True)
     for _ in range(3):
-        row = next_item()
+        row = next_item(kind)
         if not row:
             print("[one] الطابور خلص", flush=True)
             return 1
@@ -163,10 +221,8 @@ def main() -> int:
             return 0
         if rc == 0:
             return 0
-    # ساعة ما تفضاش: المسار القديم يكمّل لو المكتبة وقعت ثلاث مرات.
-    runner = _runner()
-    print("[one] ثلاث محاولات وقعت — المسار القديم يكمل الساعة", flush=True)
-    return runner.short_once()
+    print("[one] ثلاث محاولات وقعت — الساعة دي من غير نشر قديم", flush=True)
+    return 1
 
 
 if __name__ == "__main__":
