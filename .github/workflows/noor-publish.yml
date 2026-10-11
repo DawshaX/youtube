@@ -138,6 +138,7 @@ jobs:
           NOOR_PLAN: '1'
           # 🗓️ جدول القاهرة: ١٢ نوع · ٨/يوم منهم ٣ طويلة. الإضافة مش بتقفل الدورة القديمة.
           NOOR_GRID: '1'
+          NOOR_MERGE: '1'          # المكتبة تكمل الجدول. التلاوة والحديث من المصدر يفضلوا.
           NOOR_LOOK: '1'             # كل فيديو بنمط وشخصية ومشهد
           NOOR_SENSE: '1'            # الهوك والعنوان من النص نفسه، مش شعار ثابت
           NOOR_LONG_ITEMS: '3'
@@ -203,7 +204,7 @@ jobs:
           for f in state/noor_state.json state/noor_pool.json \
                    state/published.json state/media_used.json \
                    state/yt_recent.json state/last_publish.json \
-                   state/last_cycle.json; do
+                   state/last_cycle.json state/noor_library.json; do
             [ -f "$f" ] && git add -f "$f"
           done
           # ملفات الأحاديث الصغيرة (الكاش الكبير مستثنى في .gitignore)
