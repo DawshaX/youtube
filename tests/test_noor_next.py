@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from xtrendaw.noor_next.montage import pick_feeling, pick_transition  # noqa: E402
 from xtrendaw.noor_next.queries import queries_for  # noqa: E402
 from xtrendaw.noor_next.timeline import build, sacred_text  # noqa: E402
 from xtrendaw.noor_next.vault import add_item, empty_index, match  # noqa: E402
@@ -31,6 +32,17 @@ class TimelineTests(unittest.TestCase):
         bad["spoken"] = "قال رسول الله في الحديث."
         with self.assertRaises(ValueError):
             build(bad)
+
+
+class MontageTests(unittest.TestCase):
+    def test_two_episodes_can_differ(self):
+        a = pick_transition("ser-kitchen-s01")
+        b = pick_transition("ser-sky-s08")
+        self.assertIn(a, ("fade", "fadeblack", "smoothleft", "smoothright", "dissolve"))
+        self.assertIn(b, ("fade", "fadeblack", "smoothleft", "smoothright", "dissolve"))
+        name, feel = pick_feeling({"id": "child-1", "series_title": "طفل بستر", "emotion": "", "field": ""})
+        self.assertEqual(name, "طفل")
+        self.assertFalse(feel.get("neon"))
 
 
 class QueryTests(unittest.TestCase):

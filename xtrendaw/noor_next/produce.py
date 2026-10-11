@@ -8,6 +8,7 @@ from pathlib import Path
 from xtrendaw import footage, textrender
 from xtrendaw.noor_look import pick as pick_look
 
+from .montage import loudnorm, overlay_frame, pick_feeling, pick_transition, write_timeline
 from .palettes import palette_for
 from .queries import queries_for
 from .timeline import sentences, sacred_text
@@ -59,9 +60,9 @@ def _style_clip(src: Path, dst: Path, seconds: float, grade: str) -> None:
     ])
 
 
-def _caption(text: str, path: Path, y: float) -> None:
+def _caption(text: str, path: Path, y: float, fill: str, size: int) -> None:
     textrender.text_image(
-        text, path, canvas=(W, H), font_size=64, fill="#F7F1E6",
+        text, path, canvas=(W, H), font_size=size, fill=fill,
         stroke="#14110E", stroke_width=5, y_ratio=y, max_width_ratio=0.72,
     )
 
@@ -75,6 +76,8 @@ def render(episode: dict, work: Path) -> dict | None:
         return None
     pal = palette_for(episode)
     look = pick_look({"id": episode.get("id"), "hook": lines[0], "kind": pal["id"]})
+    feeling, feel = pick_feeling(episode)
+    transition = pick_transition(str(episode.get("id") or ""))
     voice, rate, pitch = _voice(episode, pal)
     work.mkdir(parents=True, exist_ok=True)
     clips: list[Path] = []
@@ -112,9 +115,10 @@ def render(episode: dict, work: Path) -> dict | None:
         elif rec.get("source"):
             credits.append(f"{rec.get('source')} · {rec.get('license') or ''}")
         styled = work / f"shot-{i}.mp4"
-        _style_clip(got, styled, dur, "," + look.get("grade", "eq=saturation=1.02"))
+        grade = "," + feel["grade"] + "," + look.get("grade", "eq=saturation=1.02")
+        _style_clip(got, styled, dur, grade)
         png = work / f"cap-{i}.png"
-        _caption(line, png, float(look.get("y") or 0.56))
+        _caption(line, png, float(look.get("y") or 0.56), pal.get("text") or "#F7F1E6", int(feel["size"]))
         clips.append(styled)
         wavs.append(wav)
         caps.append(png)
@@ -141,23 +145,28 @@ def render(episode: dict, work: Path) -> dict | None:
         "-pix_fmt", "yuv420p", "-an", str(over),
     ])
     _run(cmd)
+    framed = work / "framed.mp4"
+    overlay_frame(over, framed, _run)
     alst = work / "a.txt"
     alst.write_text("".join(f"file '{p}'\n" for p in wavs), encoding="utf-8")
     mixed = work / "mixed.wav"
     _run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(alst), "-c:a", "pcm_s16le", str(mixed)])
     normal = work / "normal.wav"
-    _run(["ffmpeg", "-y", "-i", str(mixed), "-af", "loudnorm=I=-14:TP=-1.5:LRA=11",
-          "-ar", "48000", "-ac", "2", str(normal)])
+    loudnorm(mixed, normal, _run)
     out = work / "episode.mp4"
     _run([
-        "ffmpeg", "-y", "-i", str(over), "-i", str(normal),
+        "ffmpeg", "-y", "-i", str(framed), "-i", str(normal),
         "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac",
         "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(out),
     ])
+    shots = [{"i": i, "say": line, "dur": durs[i], "visual": "footage"} for i, line in enumerate(lines)]
+    write_timeline(work / "timeline.json", episode, shots, feeling, transition)
     return {
         "video": out,
         "duration": _dur(out),
         "look": look.get("name") or look.get("id"),
+        "feeling": feeling,
+        "transition": transition,
         "voice": voice,
         "credits": list(dict.fromkeys(credits)),
         "lines": lines,
