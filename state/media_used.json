@@ -1663,5 +1663,15 @@
   "source": "image:commons",
   "episode": "stars long exposure",
   "at": "2026-10-11 17:53"
+ },
+ "https://cdn.pixabay.com/video/2016/09/06/4973-181688494_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-kitchen-s01",
+  "at": "2026-10-11 18:38"
+ },
+ "clipcache:f6962a1a011e": {
+  "source": "video:pixabay",
+  "episode": "ser-kitchen-s01",
+  "at": "2026-10-11 18:38"
  }
 }
