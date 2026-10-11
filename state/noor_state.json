@@ -71,7 +71,18 @@
    "over_180s": false
   }
  ],
- "longs": [],
+ "longs": [
+  {
+   "id": "long-qissa-1791730219",
+   "kind": "long_qissa",
+   "title": "قصص من القرآن: يوسف · يوسف · يعقوب",
+   "video": "/home/runner/work/youtube/youtube/work/noor/long_qissa_1791729030/noor_long.mp4",
+   "url": "https://www.youtube.com/watch?v=r_LZaI5y1rQ",
+   "at": "2026-10-11 14:50",
+   "duration": 228.2,
+   "err": null
+  }
+ ],
  "bad_reciters": [],
  "last_try": "quiz-18-10",
  "grid_done": [
@@ -79,6 +90,7 @@
   "2026-10-11T14:20|quran|short",
   "2026-10-11T05:00|dua|short",
   "2026-10-11T15:40|tafsir|short",
-  "2026-10-11T06:20|quiz|short"
+  "2026-10-11T06:20|quiz|short",
+  "2026-10-11T17:00|qissa|long"
  ]
 }
