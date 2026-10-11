@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from xtrendaw.tts import normalize_for_speech  # noqa: E402
+from xtrendaw.tts import normalize_for_speech, speakable  # noqa: E402
 
 
 class TestSpeechNormalize(unittest.TestCase):
@@ -57,6 +57,12 @@ class TestSpeechNormalize(unittest.TestCase):
 
     def test_tatweel_and_variant_letters(self):
         self.assertEqual("كِتَابٌ كَبِير هُدَى", normalize_for_speech("كِتَابٌ کَبِير ھُدَى ـــ"))
+
+    def test_egyptian_words_get_vowels_for_speech_only(self):
+        heard = speakable("هو مش اختياري. قدامك.")
+        self.assertIn("مِش", heard)
+        self.assertIn("أُدّامَك", heard)
+        self.assertNotIn("ﷺ", heard)
 
     def test_spacing_clean(self):
         self.assertNotIn("  ", normalize_for_speech("مرحبا   بالعالم  "))

@@ -436,16 +436,22 @@ def _pixabay_candidates(query: str) -> list:
               flush=True)
         return []
     try:
+        page = 1 + (int(hashlib.sha256(query.encode()).hexdigest()[:2], 16) % 4)
         r = requests.get("https://pixabay.com/api/videos/",
-                         params={"key": key, "q": query, "per_page": 8,
-                                 "safesearch": "true"},
+                         params={"key": key, "q": query, "per_page": 20,
+                                 "page": page, "safesearch": "true"},
                          headers=UA, timeout=25)
         if not r.ok:
             print(f"[footage] ⚠ بيكساباي HTTP {r.status_code}: "
                   f"{r.text[:120]}", flush=True)
             return []
+        people = {"person", "people", "woman", "man", "girl", "boy", "face",
+                  "faces", "portrait", "crowd", "selfie", "model", "child", "baby"}
         out = []
         for h in r.json().get("hits", []):
+            tags = {t.strip().lower() for t in str(h.get("tags") or "").replace(";", ",").split(",")}
+            if tags & people:
+                continue
             vids = h.get("videos") or {}
             # medium ≈ 1280 بكسل — كفاية لـ1080 وأخف من large
             f = vids.get("medium") or vids.get("small") or vids.get("tiny")

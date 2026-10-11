@@ -90,6 +90,8 @@ class QueryTests(unittest.TestCase):
     def test_sentence_gets_its_own_shot(self):
         qs = queries_for("البصل بيدمع لأن بخاره يلمس العين.", "kitchen morning no people")
         self.assertIn("onion on wooden board no people", qs)
+        angled = queries_for("الدور ييجي.", "queue line marks floor", salt=1)
+        self.assertTrue(any("queue" in q or "wide shot" in q for q in angled))
         self.assertTrue(all("no people" in q or "onion" in q for q in qs))
 
 

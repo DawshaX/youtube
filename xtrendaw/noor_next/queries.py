@@ -33,16 +33,37 @@ HINTS = (
     ("ليل", "quiet night window light"),
     ("فجر", "sunrise above clouds"),
     ("مغرب", "sunset sky calm"),
+    ("دور", "empty queue floor marks no people"),
+    ("طابور", "empty queue floor marks no people"),
+    ("ضوء", "sunrise through window no people"),
+    ("صبح", "sunrise through window no people"),
+    ("شباك", "curtain window morning light no people"),
+    ("باب", "wooden door morning light no people"),
+    ("بيت", "quiet room window light no people"),
+    ("نوم", "empty bed morning light no people"),
+    ("شارع", "empty street morning no people"),
 )
 
 
-def queries_for(sentence: str, scene: str) -> list[str]:
+ANGLES = (
+    "close up",
+    "wide shot",
+    "overhead",
+    "morning light",
+    "slow detail",
+    "soft window light",
+)
+
+
+def queries_for(sentence: str, scene: str, salt: int = 0) -> list[str]:
     found = [q for word, q in HINTS if word in sentence]
     base = (scene or "calm nature empty no people").strip()
     if "no people" not in base:
         base += " no people"
+    angle = ANGLES[int(salt) % len(ANGLES)]
+    varied = f"{base} {angle}"
     out = []
-    for q in found + [base, "calm empty landscape no people no text"]:
+    for q in found + [varied, base, "calm empty landscape no people no text"]:
         if q not in out:
             out.append(q)
     return out[:4]

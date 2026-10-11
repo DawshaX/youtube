@@ -4,7 +4,7 @@ from __future__ import annotations
 import subprocess
 from pathlib import Path
 
-from xtrendaw import footage, textrender
+from xtrendaw import footage, textrender, tts
 from xtrendaw.noor_look import pick as pick_look
 
 from .formats import motion_for, pick_format
@@ -56,11 +56,10 @@ def _line_audio(line: str, raw: Path, wav: Path, voice: str, rate: str, pitch: s
 def _voice(episode: dict, pal: dict, soul: dict | None) -> tuple[str, str, str]:
     if pal.get("sacred") or soul is None and pal.get("id") == "faith":
         return "ar-SA-HamedNeural", "-12%", "-4Hz"
-    if soul:
-        return soul["voice"], soul.get("rate") or "-6%", soul.get("pitch") or "-2Hz"
+    # الحياة عامية. صوت خليجي أو نبرة صفر بيطلّع النطق بايظ.
     voices = ("ar-EG-SalmaNeural", "ar-EG-ShakirNeural")
     seed = str(episode.get("id") or "")
-    return voices[sum(ord(c) for c in seed) % 2], pal.get("rate") or "-6%", pal.get("pitch") or "-2Hz"
+    return voices[sum(ord(c) for c in seed) % 2], "-8%", "+0Hz"
 
 
 def _crop(motion: str, seconds: float) -> tuple[str, str]:
@@ -102,6 +101,67 @@ def _style_clip(src: Path, dst: Path, seconds: float, grade: str, motion: str) -
         encode(plain)
 
 
+_XFADE = {
+    "fade": "fade",
+    "fadeblack": "fadeblack",
+    "smoothleft": "smoothleft",
+    "smoothright": "smoothright",
+    "dissolve": "dissolve",
+}
+
+
+def _spans(lines: list[str], total: float) -> list[tuple[float, float]]:
+    weights = [max(8, len(line)) for line in lines]
+    whole = sum(weights) or 1
+    cursor = 0.0
+    out = []
+    for weight in weights:
+        dur = max(0.9, total * weight / whole)
+        out.append((cursor, dur))
+        cursor += dur
+    if out and cursor > 0:
+        scale = total / cursor
+        cursor = 0.0
+        scaled = []
+        for _, dur in out:
+            dur = max(0.8, dur * scale)
+            scaled.append((cursor, dur))
+            cursor += dur
+        out = scaled
+    return out
+
+
+def _join(clips: list[Path], durs: list[float], transition: str, dst: Path) -> float:
+    """انتقال حقيقي بين اللقطات. القصّ الجاف لوحده مش مونتاج."""
+    if len(clips) == 1:
+        dst.write_bytes(clips[0].read_bytes())
+        return durs[0]
+    name = _XFADE.get(transition, "fade")
+    cmd = ["ffmpeg", "-y"]
+    for clip in clips:
+        cmd.extend(["-i", str(clip)])
+    parts = []
+    acc = durs[0]
+    prev = "0:v"
+    for i in range(1, len(clips)):
+        fade = min(0.22, durs[i - 1] * 0.28, durs[i] * 0.28, 0.35)
+        fade = max(0.08, fade)
+        offset = max(0.04, acc - fade)
+        label = f"x{i}"
+        parts.append(
+            f"[{prev}][{i}:v]xfade=transition={name}:duration={fade:.2f}:offset={offset:.2f}[{label}]"
+        )
+        prev = label
+        acc += durs[i] - fade
+    cmd.extend([
+        "-filter_complex", ";".join(parts), "-map", f"[{prev}]",
+        "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
+        "-pix_fmt", "yuv420p", "-an", str(dst),
+    ])
+    _run(cmd)
+    return acc
+
+
 def _plate(dst: Path, seconds: float, color: str) -> None:
     frames = max(12, int(seconds * FPS) + 2)
     paint = color if str(color).startswith("0x") else "0x1C2428"
@@ -135,66 +195,72 @@ def render(episode: dict, work: Path) -> dict | None:
     transition = pick_transition(str(episode.get("id") or ""))
     voice, rate, pitch = _voice(episode, pal, soul)
     work.mkdir(parents=True, exist_ok=True)
+    # الصوت مرة واحدة. التقطيع جملة-جملة كان بيطلّع النطق متقطع وبايظ.
+    speech = tts.synthesize_line(
+        tts.speakable(spoken), "ar", work, "full",
+        rate=rate, pitch=pitch, voice=voice,
+    )
+    audio = Path(speech["wav"])
+    total = float(speech.get("duration") or 0)
+    if total < 2 or not audio.exists():
+        print("[studio] الصوت ما طلّعش", flush=True)
+        return None
+    spans = _spans(lines, total)
+    words = []
+    for word in speech.get("words") or []:
+        start = float(word.get("start") or 0)
+        end = float(word.get("end") or start)
+        words.append({"t": start, "d": max(0.12, end - start), "w": word.get("word") or ""})
     clips: list[Path] = []
-    wavs: list[Path] = []
     caps: list[Path] = []
     credits: list[str] = []
     durs: list[float] = []
-    words: list[dict] = []
+    used: list[str] = []
+    pool: list[Path] = []
+    unique = 0
     scene = str(episode.get("scene") or "")
-    cursor = 0.0
     for i, line in enumerate(lines):
-        raw = work / f"say-{i}.mp3"
-        wav = work / f"say-{i}.wav"
-        spoken = _line_audio(line, raw, wav, voice, rate, pitch)
-        if spoken is None:
-            print(f"[studio] الجملة اتخطت: {line[:40]}", flush=True)
-            continue
-        spoken_words, dur = spoken
-        origin = spoken_words[0]["t"] if spoken_words else 0.0
-        for word in spoken_words:
-            words.append({
-                "t": cursor + max(0.0, word["t"] - origin),
-                "d": word["d"],
-                "w": word["w"],
-            })
+        dur = spans[i][1]
         got = None
-        for q in queries_for(line, scene):
+        fresh = False
+        for q in queries_for(line, scene, salt=i):
             got = footage.fetch_clip(q, dur + 0.3, work, f"{episode.get('id')}:{i}:{q}")
             if got:
+                fresh = True
                 break
+        if not got and pool:
+            got = pool[i % len(pool)]
+            print(f"[library] زاوية تانية من لقطة الحلقة: {line[:32]}", flush=True)
         if not got:
-            print(f"[library] مفيش لقطة مرخّصة، الخلفية من المصنع: {line[:40]}", flush=True)
-            got = work / f"plate-{i}.mp4"
-            _plate(got, dur + 0.2, pal.get("c0") or "0x1C2428")
-            credits.append("خلفية من المصنع. اللقطة المرخّصة ما نزلتش.")
-        from xtrendaw import vault
-        rec = vault.record_for(got) or {}
-        if rec.get("credit_line"):
-            credits.append(rec["credit_line"])
-        elif rec.get("source"):
-            credits.append(f"{rec.get('source')} · {rec.get('license') or ''}")
+            print(f"[library] مفيش لقطة، ومفيش لوحة فاضية: {line[:40]}", flush=True)
+            continue
+        if fresh:
+            unique += 1
+            pool.append(got)
+            from xtrendaw import vault
+            rec = vault.record_for(got) or {}
+            if rec.get("credit_line"):
+                credits.append(rec["credit_line"])
+            elif rec.get("source"):
+                credits.append(f"{rec.get('source')} · {rec.get('license') or ''}")
         styled = work / f"shot-{i}.mp4"
         grades = [feel["grade"], look.get("grade") or "eq=saturation=1.02"]
         if fmt.get("neon"):
             grades.append("eq=saturation=1.12")
-        if soul and soul.get("style") in ("queen", "soul"):
-            grades.append("eq=gamma=1.05:saturation=1.04")
         grade = ",".join(part.strip(",") for part in grades if part)
         _style_clip(got, styled, dur, grade, motion_for(fmt, i))
         png = work / f"cap-{i}.png"
-        _caption(line, png, float(look.get("y") or 0.56), pal.get("text") or "#F7F1E6", int(feel["size"]))
+        _caption(line, png, float(look.get("y") or 0.62), pal.get("text") or "#F7F1E6", int(feel["size"]))
         clips.append(styled)
-        wavs.append(wav)
         caps.append(png)
         durs.append(dur)
-        cursor += dur
-    if len(clips) < 2:
+        used.append(line)
+    if unique < 2 or len(clips) < 2:
+        print(f"[studio] المشاهد ناقصة ({unique} لقطة) — مش هننشر لوحة", flush=True)
         return None
-    lst = work / "v.txt"
-    lst.write_text("".join(f"file '{p}'\n" for p in clips), encoding="utf-8")
     silent = work / "silent.mp4"
-    _run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy", str(silent)])
+    visual_len = _join(clips, durs, transition, silent)
+    scale = visual_len / sum(durs) if sum(durs) else 1.0
     cmd = ["ffmpeg", "-y", "-i", str(silent)]
     for png in caps:
         cmd.extend(["-i", str(png)])
@@ -202,9 +268,10 @@ def render(episode: dict, work: Path) -> dict | None:
     prev = "0:v"
     t = 0.0
     for i, dur in enumerate(durs, 1):
-        chain.append(f"[{prev}][{i}:v]overlay=0:0:enable='between(t,{t:.3f},{t + dur:.3f})'[v{i}]")
+        shown = max(0.4, dur * scale)
+        chain.append(f"[{prev}][{i}:v]overlay=0:0:enable='between(t,{t:.3f},{t + shown:.3f})'[v{i}]")
         prev = f"v{i}"
-        t += dur
+        t += shown
     over = work / "over.mp4"
     cmd.extend([
         "-filter_complex", ";".join(chain), "-map", f"[{prev}]",
@@ -212,60 +279,40 @@ def render(episode: dict, work: Path) -> dict | None:
         "-pix_fmt", "yuv420p", "-an", str(over),
     ])
     _run(cmd)
+    if words and total > 0:
+        fit = visual_len / total
+        words = [{"t": w["t"] * fit, "d": w["d"] * fit, "w": w["w"]} for w in words]
     try:
         over = burn_words(over, words, work, pal.get("text") or "#F7F1E6", _run)
     except Exception as exc:
         print(f"[studio] تلوين الكلمة اتخطى: {type(exc).__name__}", flush=True)
-    face = portrait(soul)
+    drawn = ("cartoon", "clay3d", "flat", "watercolor", "pastel", "lowpoly", "neon", "dusk", "sport")
+    face = portrait(soul) if soul and soul.get("style") in drawn else None
     if face:
         avatar = work / "avatar.png"
         if circle(face, avatar):
-            soft = bool(soul)
-            floated = "'1510+5*sin(t)'" if soft else "1510"
-            if soul and soul.get("style") in ("queen", "soul"):
-                ring = work / "halo.png"
-                halo(ring, soul.get("mark") or "#F6E7C8")
-                over = layer(over, work / "halo.mp4", ring, "16", "'1480+5*sin(t)'" if soft else "1480", _run)
-            over = layer(over, work / "avatar.mp4", avatar, "46", floated, _run)
+            over = layer(over, work / "avatar.mp4", avatar, "46", "'1510+5*sin(t)'", _run)
     badge = work / "mark.png"
     mark(badge, (soul or {}).get("mark") or "#E2B07A")
     over = layer(over, work / "marked.mp4", badge, "960", "72", _run)
     framed = work / "framed.mp4"
     overlay_frame(over, framed, _run)
-    alst = work / "a.txt"
-    alst.write_text("".join(f"file '{p}'\n" for p in wavs), encoding="utf-8")
-    mixed = work / "mixed.wav"
-    _run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(alst), "-c:a", "pcm_s16le", str(mixed)])
     music_credit = None
-    voiced = mixed
-    if not pal.get("sacred"):
-        try:
-            bedded = work / "bedded.wav"
-            music_credit = mix_bed(mixed, bedded, cursor, _run)
-            if music_credit and bedded.exists():
-                voiced = bedded
-                credits.append(music_credit)
-        except Exception as exc:
-            print(f"[studio] الموسيقى اتخطت: {type(exc).__name__}", flush=True)
-        if feeling in ("هزار", "لحظة") and not (soul and soul.get("child")):
-            whoosh, sfx_credit = licensed_whoosh(work)
-            if whoosh and sfx_credit:
-                try:
-                    hit = work / "hit.wav"
-                    _run([
-                        "ffmpeg", "-y", "-i", str(voiced), "-i", str(whoosh),
-                        "-filter_complex",
-                        "[1]volume=0.04,afade=t=out:st=0.35:d=0.25[s];"
-                        "[0][s]amix=inputs=2:duration=first:normalize=0[a]",
-                        "-map", "[a]", "-ar", "48000", "-ac", "2", str(hit),
-                    ])
-                    if hit.exists():
-                        voiced = hit
-                        credits.append(sfx_credit)
-                except Exception as exc:
-                    print(f"[studio] المؤثر اتخطى: {type(exc).__name__}", flush=True)
+    voiced = audio
+    ratio = (visual_len / total) if total else 1.0
+    fitted = work / "fitted.wav"
+    if 0.82 <= ratio <= 1.18:
+        tempo = max(0.5, min(2.0, total / max(visual_len, 0.1)))
+        _run(["ffmpeg", "-y", "-i", str(audio), "-af", f"atempo={tempo:.4f}", "-ar", "48000", "-ac", "2", str(fitted)])
+        if fitted.exists():
+            voiced = fitted
+    else:
+        _run(["ffmpeg", "-y", "-i", str(audio), "-af", "apad=pad_dur=3", "-t", f"{visual_len:.2f}", "-ar", "48000", "-ac", "2", str(fitted)])
+        if fitted.exists():
+            voiced = fitted
     normal = work / "normal.wav"
     loudnorm(voiced, normal, _run)
+    lines = used
     out = work / "episode.mp4"
     _run([
         "ffmpeg", "-y", "-i", str(framed), "-i", str(normal),
@@ -287,8 +334,8 @@ def render(episode: dict, work: Path) -> dict | None:
         "music": music_credit,
         "tools": [
             "خط زمني", "لقطة لكل جملة", "أسلوب لقطات أصلي", "كابشن عربي",
-            "كلمة بتتلون", "انتقال هادي", "إطار", "صوت مضبوط",
-            "شخصية كرتون أو طين أو نيون", "موسيقى مولّدة", "ترخيص مع اللقطة",
+            "كلمة بتتلون", "انتقال بين اللقطات", "إطار", "صوت مصري متصل",
+            "من غير لوحة فاضية", "ترخيص مع اللقطة",
         ],
     })
     return {

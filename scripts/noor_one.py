@@ -130,7 +130,8 @@ def _publish_life(row: dict) -> int:
     work = runner.WORK / f"one_{row['id']}"
     made = render(row, work)
     if not made:
-        _mark(row, err="no_footage")
+        # متتحرقش الحلقة. اللوحة الفاضية مش فيديو، والمحاولة الجاية ممكن تلاقي لقطة.
+        print(f"[one] {row.get('id')} اتأجل: مفيش مشاهد مرخّصة كفاية", flush=True)
         return 1
     title = f"{made['lines'][0][:70]} | {row.get('series_title') or 'نور'}"
     src = row.get("source") or ""
