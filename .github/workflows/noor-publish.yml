@@ -176,12 +176,17 @@ jobs:
             export NOOR_FORCE_KIND="${NOOR_FORCE_KIND:-mujiza}"
             echo "▶ شورت بالنمط الجديد: $NOOR_FORCE_KIND"
           fi
-          echo "▶ حلقة من المكتبة الواحدة"
-          # القديم والجديد في طابور واحد. المسار القديم يفضل محرك التلاوة، مش مصدر تاني.
-          timeout 2700 python scripts/noor_one.py 2>&1 | tee /tmp/noor.log || true
+          echo "▶ المصنع الجديد من المكتبة. من غير الرجوع للشكل القديم."
+          set +e
+          timeout 2700 python scripts/noor_one.py 2>&1 | tee /tmp/noor.log
           RC=${PIPESTATUS[0]}
-          echo "rc=${RC:-0}"
-          exit 0
+          set -e
+          echo "rc=${RC}"
+          if [ "${NOOR_FIRST}" = "1" ] && ! grep -q "watch?v=" /tmp/noor.log; then
+            echo "مفيش فيديو جديد نزل"
+            exit 1
+          fi
+          exit "$RC"
 
       - name: 🗑️ وضع الحذف — نشيل حلقات قديمة من القناة
         if: ${{ inputs.mode == 'purge' }}

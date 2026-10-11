@@ -200,23 +200,38 @@ def opening() -> int:
     return 0 if published else 1
 
 
+def _one_live(kind: str, tries: int = 4) -> int:
+    for _ in range(tries):
+        row = next_item(kind)
+        if not row:
+            print(f"[one] مفيش {kind} جديد", flush=True)
+            return 1
+        try:
+            rc = _publish_life(row)
+        except Exception as exc:
+            print(f"[one] الرندر وقع على {row.get('id')}: {type(exc).__name__}: {exc}", flush=True)
+            return 1
+        if rc == 0:
+            print(f"[one] نزل {kind} {row.get('id')}", flush=True)
+            return 0
+        if rc == 2:
+            return 2
+        print(f"[one] {row.get('id')} ما نزلش، هنجرب غيره", flush=True)
+    return 1
+
+
 def first() -> int:
     """أول ريل وأول طويل من المصنع الجديد، وبعدها الساعة تكمل بنفس الشكل."""
-    batch = _diverse(_unserved("short"), 1) + _diverse(_unserved("long"), 1)
-    if len(batch) < 2:
-        print("[one] مفيش شورت أو طويل جديد جاهز", flush=True)
-        return 1
     published = 0
-    for row in batch:
-        rc = _publish_life(row)
-        if rc == 2:
-            print(f"[one] أول دفعة وقفت بعد {published}", flush=True)
-            return 0 if published else 0
+    for kind in ("short", "long"):
+        rc = _one_live(kind)
         if rc == 0:
             published += 1
-            print(f"[one] جديد {row.get('kind')} {row.get('id')}", flush=True)
-    print(f"[one] أول دفعة نشرت {published}", flush=True)
-    return 0 if published else 1
+        elif rc == 2:
+            print(f"[one] وقفنا بعد {published}. الحصة أو الوقت.", flush=True)
+            return 0 if published else 2
+    print(f"[one] أول دفعة نشرت {published} من 2", flush=True)
+    return 0 if published == 2 else 1
 
 
 def main() -> int:

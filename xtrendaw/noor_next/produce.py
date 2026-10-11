@@ -82,6 +82,17 @@ def _style_clip(src: Path, dst: Path, seconds: float, grade: str, motion: str) -
         encode(plain)
 
 
+def _plate(dst: Path, seconds: float, color: str) -> None:
+    frames = max(12, int(seconds * FPS) + 2)
+    paint = color if str(color).startswith("0x") else "0x1C2428"
+    _run([
+        "ffmpeg", "-y", "-f", "lavfi",
+        "-i", f"color=c={paint}:s=1240x2200:r={FPS}",
+        "-frames:v", str(frames),
+        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-an", str(dst),
+    ])
+
+
 def _caption(text: str, path: Path, y: float, fill: str, size: int) -> None:
     textrender.text_image(
         text, path, canvas=(W, H), font_size=size, fill=fill,
@@ -137,8 +148,10 @@ def render(episode: dict, work: Path) -> dict | None:
             if got:
                 break
         if not got:
-            print(f"[library] مفيش لقطة للجملة: {line[:40]}", flush=True)
-            return None
+            print(f"[library] مفيش لقطة مرخّصة، الخلفية من المصنع: {line[:40]}", flush=True)
+            got = work / f"plate-{i}.mp4"
+            _plate(got, dur + 0.2, pal.get("c0") or "0x1C2428")
+            credits.append("خلفية من المصنع. اللقطة المرخّصة ما نزلتش.")
         from xtrendaw import vault
         rec = vault.record_for(got) or {}
         if rec.get("credit_line"):
