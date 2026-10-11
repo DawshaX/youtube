@@ -1741,8 +1741,8 @@
  },
  "clipcache:5c0eac49caf4": {
   "source": "video:cache",
-  "episode": "ser-field-لحظة-l09",
-  "at": "2026-10-11 22:20"
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:08"
  },
  "https://cdn.pixabay.com/video/2023/11/12/188778-883818276_medium.mp4": {
   "source": "video:pixabay",
@@ -1751,8 +1751,8 @@
  },
  "clipcache:1451f7c712ad": {
   "source": "video:cache",
-  "episode": "ser-field-لحظة-l09",
-  "at": "2026-10-11 22:22"
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:10"
  },
  "https://cdn.pixabay.com/video/2019/02/07/21209-315852818_medium.mp4": {
   "source": "video:pixabay",
@@ -1793,5 +1793,115 @@
   "source": "video:pixabay",
   "episode": "ser-animal-s01",
   "at": "2026-10-11 22:31"
+ },
+ "https://cdn.pixabay.com/video/2022/05/19/117446-711854375_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 22:56"
+ },
+ "clipcache:e8bae453b27c": {
+  "source": "video:cache",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:08"
+ },
+ "https://cdn.pixabay.com/video/2020/06/30/43476-436041814_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 22:56"
+ },
+ "clipcache:10053d4f7e36": {
+  "source": "video:cache",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:05"
+ },
+ "https://cdn.pixabay.com/video/2024/08/05/224947_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 22:57"
+ },
+ "https://cdn.pixabay.com/video/2019/06/08/24265-341474077_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 22:58"
+ },
+ "clipcache:42f2e7c184ca": {
+  "source": "video:cache",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:09"
+ },
+ "https://cdn.pixabay.com/video/2024/07/11/220727_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 22:58"
+ },
+ "clipcache:853e9ed5acd5": {
+  "source": "video:cache",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:09"
+ },
+ "https://cdn.pixabay.com/video/2017/11/28/13100-245530611_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 22:59"
+ },
+ "clipcache:0c4a7ffcb6a9": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 22:59"
+ },
+ "https://cdn.pixabay.com/video/2020/08/15/47246-451099630_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 22:59"
+ },
+ "clipcache:c1a1c2c983ad": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 22:59"
+ },
+ "https://cdn.pixabay.com/video/2024/07/04/219491_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 22:59"
+ },
+ "clipcache:b561eb25a3ae": {
+  "source": "video:cache",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:08"
+ },
+ "https://cdn.pixabay.com/video/2023/07/27/173522-849651812_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:00"
+ },
+ "clipcache:d95584770b91": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:00"
+ },
+ "https://cdn.pixabay.com/video/2021/08/29/86746-594416971_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:01"
+ },
+ "clipcache:5568b233d91b": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:01"
+ },
+ "https://cdn.pixabay.com/video/2020/05/13/39011-420224644_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:06"
+ },
+ "https://cdn.pixabay.com/video/2022/05/19/117442-711854357_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:07"
+ },
+ "clipcache:17223af5802c": {
+  "source": "video:cache",
+  "episode": "ser-clean-l12",
+  "at": "2026-10-11 23:09"
  }
 }

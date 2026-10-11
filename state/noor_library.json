@@ -7,10 +7,11 @@
     "ser-child-s01",
     "ser-animal-l09",
     "ser-field-لحظة-l09",
-    "ser-queue-s01"
+    "ser-queue-s01",
+    "ser-clean-l12"
   ],
-  "turn": 14,
-  "last_series": "ser-queue",
+  "turn": 15,
+  "last_series": "ser-clean",
   "done": [
     {
       "id": "ser-study-s01",
@@ -59,11 +60,17 @@
       "url": "https://www.youtube.com/watch?v=RrfbELm-4po",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-clean-l12",
+      "url": "https://www.youtube.com/watch?v=C6tekuVWBwY",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-11",
     "short": 1,
-    "long": 1
+    "long": 2
   }
 }
