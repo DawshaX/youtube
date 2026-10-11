@@ -1,12 +1,19 @@
 {
   "served": [
-    "ser-study-s01"
+    "ser-study-s01",
+    "ser-money-s01"
   ],
-  "turn": 4,
-  "last_series": "ser-study",
+  "turn": 6,
+  "last_series": "ser-money",
   "done": [
     {
       "id": "ser-study-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-money-s01",
       "url": "",
       "err": "no_footage",
       "kind": "short"

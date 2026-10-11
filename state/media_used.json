@@ -1683,5 +1683,15 @@
   "source": "video:pixabay",
   "episode": "ser-clean-s01",
   "at": "2026-10-11 19:19"
+ },
+ "https://cdn.pixabay.com/video/2024/05/02/210430_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-plant-s01",
+  "at": "2026-10-11 20:42"
+ },
+ "clipcache:5d5c1888e592": {
+  "source": "video:pixabay",
+  "episode": "ser-plant-s01",
+  "at": "2026-10-11 20:42"
  }
 }
