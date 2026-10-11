@@ -111,6 +111,20 @@
    "at": "2026-10-11 17:10",
    "duration": 101.9,
    "over_180s": false
+  },
+  {
+   "id": "mu-21-68",
+   "kind": "mujiza",
+   "theme": "معجزات",
+   "title": "معاكم سَكينة. النار… لما بقت بردًا وسلامًا 🤍 | معجزة | الآيات 68–70 — سورة الأنبياء | محمود خلي",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791741103/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=LfpIa52FDzM",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-11 17:57",
+   "duration": 57.6,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -126,7 +140,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "s-28-7",
+ "last_try": "mu-21-68",
  "grid_done": [
   "2026-10-11T13:00|nasr|short",
   "2026-10-11T14:20|quran|short",
@@ -136,6 +150,7 @@
   "2026-10-11T17:00|qissa|long",
   "2026-10-11T18:20|hadith|short",
   "2026-10-11T07:40|spirit|short",
-  "2026-10-11T19:40|qissa|short"
+  "2026-10-11T19:40|qissa|short",
+  "2026-10-11T09:00|mujiza|short"
  ]
 }
