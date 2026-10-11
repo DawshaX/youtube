@@ -161,7 +161,7 @@ jobs:
           NOOR_DRY: ${{ inputs.dry_run && '1' || '0' }}
           NOOR_OPENING: ${{ inputs.opening && '1' || '0' }}
           NOOR_FIRST: ${{ inputs.first && '1' || '0' }}
-          NOOR_ALLOW_BURST: ${{ (inputs.opening || inputs.first) && '1' || '0' }}
+          NOOR_ALLOW_BURST: ${{ (inputs.opening || inputs.first || inputs.mode == 'short') && '1' || '0' }}
         run: |
           set -o pipefail
           MODE="${{ inputs.mode || 'cycle' }}"
@@ -185,7 +185,7 @@ jobs:
           if grep -q "watch?v=" /tmp/noor.log; then
             exit 0
           fi
-          if [ "${NOOR_FIRST}" = "1" ]; then
+          if [ "${NOOR_FIRST}" = "1" ] || [ "$MODE" = "short" ]; then
             echo "مفيش فيديو جديد نزل"
             exit 1
           fi
