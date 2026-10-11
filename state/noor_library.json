@@ -1,10 +1,12 @@
 {
   "served": [
     "ser-study-s01",
-    "ser-money-s01"
+    "ser-money-s01",
+    "ser-kitchen-s01",
+    "ser-anger-l06"
   ],
   "turn": 7,
-  "last_series": "ser-money",
+  "last_series": "ser-anger",
   "done": [
     {
       "id": "ser-study-s01",
@@ -17,6 +19,18 @@
       "url": "",
       "err": "no_footage",
       "kind": "short"
+    },
+    {
+      "id": "ser-kitchen-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-anger-l06",
+      "url": "",
+      "err": "no_footage",
+      "kind": "long"
     }
   ]
 }
