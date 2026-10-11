@@ -3,10 +3,13 @@
     "ser-study-s01",
     "ser-money-s01",
     "ser-kitchen-s01",
-    "ser-anger-l06"
+    "ser-anger-l06",
+    "ser-child-s01",
+    "ser-animal-l09",
+    "ser-field-لحظة-l09"
   ],
-  "turn": 8,
-  "last_series": "ser-anger",
+  "turn": 12,
+  "last_series": "ser-field-لحظة",
   "done": [
     {
       "id": "ser-study-s01",
@@ -31,6 +34,29 @@
       "url": "",
       "err": "no_footage",
       "kind": "long"
+    },
+    {
+      "id": "ser-child-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-animal-l09",
+      "url": "",
+      "err": "no_footage",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-لحظة-l09",
+      "url": "https://www.youtube.com/watch?v=a4kvrr_7bHg",
+      "err": "",
+      "kind": "long"
     }
-  ]
+  ],
+  "day": {
+    "date": "2026-10-11",
+    "short": 0,
+    "long": 1
+  }
 }
