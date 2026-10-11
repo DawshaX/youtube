@@ -37,6 +37,10 @@ on:
         description: 'رندر بلا رفع (معاينة)'
         type: boolean
         default: false
+      opening:
+        description: 'دفعة أولى: شورتان وفيديو طويل، ثم الساعة ترجع عادي'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -149,6 +153,8 @@ jobs:
           LLM_API_KEY: ${{ secrets.GROQ_API_KEY }}
           LLM_API_BASE: https://api.groq.com/openai/v1
           NOOR_DRY: ${{ inputs.dry_run && '1' || '0' }}
+          NOOR_OPENING: ${{ inputs.opening && '1' || '0' }}
+          NOOR_ALLOW_BURST: ${{ inputs.opening && '1' || '0' }}
         run: |
           set -o pipefail
           MODE="${{ inputs.mode || 'cycle' }}"

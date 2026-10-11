@@ -179,7 +179,7 @@ def render(episode: dict, work: Path) -> dict | None:
     if face:
         avatar = work / "avatar.png"
         if circle(face, avatar):
-            soft = bool(soul and soul.get("style") in ("cartoon", "neon", "queen", "soul", "sport"))
+            soft = bool(soul)
             floated = "'1510+5*sin(t)'" if soft else "1510"
             if soul and soul.get("style") in ("queen", "soul"):
                 ring = work / "halo.png"

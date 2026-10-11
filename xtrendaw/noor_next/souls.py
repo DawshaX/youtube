@@ -273,6 +273,71 @@ SOULS = (
         "wild": True,
         "fits": ("سؤال", "امتحان"),
     },
+    {
+        "id": "tina",
+        "name": "طينة",
+        "style": "clay3d",
+        "voice": "ar-DZ-IsmaelNeural",
+        "rate": "-6%",
+        "pitch": "-1Hz",
+        "mark": "#7EB0D6",
+        "file": "tina.png",
+        "neon": False,
+        "open": True,
+        "note": "أسلوب طين أزرق. شخصية أصلية، مش منسوخة من بينترست.",
+    },
+    {
+        "id": "mahna",
+        "name": "مهنة",
+        "style": "flat",
+        "voice": "ar-JO-TaimNeural",
+        "rate": "-6%",
+        "pitch": "-2Hz",
+        "mark": "#C46B4A",
+        "file": "mahna.png",
+        "neon": False,
+        "open": True,
+        "note": "رسم مسطّح أصلي. مش صورة من بينترست.",
+    },
+    {
+        "id": "mayya",
+        "name": "مائي",
+        "style": "watercolor",
+        "voice": "ar-SY-AmanyNeural",
+        "rate": "-8%",
+        "pitch": "-2Hz",
+        "mark": "#7BA3A0",
+        "file": "mayya.png",
+        "neon": False,
+        "open": True,
+        "note": "مائي أصلي. مش لوحة حد تاني.",
+    },
+    {
+        "id": "pastel",
+        "name": "باستيل",
+        "style": "pastel",
+        "voice": "ar-YE-MaryamNeural",
+        "rate": "-6%",
+        "pitch": "0Hz",
+        "mark": "#C9A6D8",
+        "file": "pastel.png",
+        "neon": False,
+        "open": True,
+        "note": "باستيل أصلي. مش رسم منسوخ.",
+    },
+    {
+        "id": "mudalla",
+        "name": "مُضلّع",
+        "style": "lowpoly",
+        "voice": "ar-BH-AliNeural",
+        "rate": "-5%",
+        "pitch": "-1Hz",
+        "mark": "#E07A3D",
+        "file": "mudalla.png",
+        "neon": False,
+        "open": True,
+        "note": "لو بولي أصلي. مش شخصية محفوظة.",
+    },
 )
 
 GENRES = (
@@ -305,23 +370,10 @@ def pick_soul(episode: dict, feeling: str = "") -> dict | None:
     ) + " " + feeling
     if "طفل" in blob:
         return _ready(SOULS[3])
-    if "حزن" in blob or "صبر" in blob:
-        return _ready(SOULS[4])
-    series = " ".join(str(episode.get(k) or "") for k in ("series_title", "field", "emotion"))
-    for keys, sid in GENRES:
-        if any(key in series for key in keys):
-            return _named(sid)
-    if any(key in series for key in COURT_KEYS):
-        court = [s for s in SOULS if s.get("court")]
-        n = sum(ord(c) for c in str(episode.get("id") or "نور"))
-        return _ready(court[n % len(court)])
-    pool = [s for s in SOULS if not s.get("child") and not s.get("court") and not s.get("wild") and not (s.get("neon") and "علم" not in blob and "لحظة" not in blob)]
-    if not pool:
-        pool = [s for s in SOULS if not s.get("child")]
+    # أي نوع حياة يقدر ياخد أي شخصية. التلاوة والطفل بس هم الاستثناء.
+    pool = [s for s in SOULS if not s.get("child")]
     n = sum(ord(c) for c in str(episode.get("id") or "نور"))
-    matched = [s for s in pool if any(k in blob for k in s.get("fits") or ())]
-    chosen = matched or pool
-    return _ready(chosen[n % len(chosen)])
+    return _ready(pool[n % len(pool)])
 
 
 def _named(sid: str) -> dict:

@@ -103,7 +103,52 @@ def _publish_source(row: dict) -> int:
     return 0 if rc == 0 else 1
 
 
+def _unserved(kind: str, engine: str = "life") -> list[dict]:
+    done = set(_load().get("served") or [])
+    rows = []
+    for row in _rows():
+        if row.get("id") in done or row.get("engine") != engine or row.get("kind") != kind:
+            continue
+        rows.append(row)
+    return rows
+
+
+def _diverse(rows: list[dict], count: int) -> list[dict]:
+    out = []
+    seen = set()
+    for row in rows:
+        series = row.get("series_id") or row.get("id")
+        if series in seen:
+            continue
+        seen.add(series)
+        out.append(row)
+        if len(out) == count:
+            break
+    return out
+
+
+def opening() -> int:
+    """شورتان وفيديو طويل من المكتبة، وبعدها الساعة ترجع عادي."""
+    batch = _diverse(_unserved("short"), 2) + _diverse(_unserved("long"), 1)
+    if len(batch) < 3:
+        print("[one] الافتتاح ناقص شورت أو طويل", flush=True)
+        return 1
+    published = 0
+    for row in batch:
+        rc = _publish_life(row)
+        if rc == 2:
+            print(f"[one] الافتتاح وقف بعد {published} — الحصة أو الوقت", flush=True)
+            return 0 if published else 0
+        if rc == 0:
+            published += 1
+            print(f"[one] افتتاح {row.get('kind')} {row.get('id')}", flush=True)
+    print(f"[one] الافتتاح نشر {published}", flush=True)
+    return 0 if published else 1
+
+
 def main() -> int:
+    if os.environ.get("NOOR_OPENING") == "1":
+        return opening()
     if not LIB.exists():
         print("[one] المكتبة الواحدة مش موجودة", flush=True)
         return 1

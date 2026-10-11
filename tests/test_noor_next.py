@@ -54,12 +54,10 @@ class SoulTests(unittest.TestCase):
         self.assertFalse(ward.get("neon"))
         self.assertFalse(face_allowed({"series_title": "تذكير", "field": "خالق"}))
         self.assertIsNone(pick_soul({"id": "f", "series_title": "تذكير", "field": "خالق"}))
-        court = pick_soul({"id": "sky-1", "series_title": "سماء بهدوء"})
-        self.assertTrue(court.get("court"))
-        self.assertIn(court["style"], ("queen", "soul"))
-        self.assertEqual(pick_soul({"id": "joke-1", "series_title": "سلسلة ضحك نظيف"})["id"], "falfa")
-        self.assertEqual(pick_soul({"id": "play-1", "series_title": "سلسلة ملعب"})["id"], "barq")
-        self.assertEqual(pick_soul({"id": "k-1", "series_title": "مطبخ من غير خوف"})["id"], "nour")
+        seen = {pick_soul({"id": f"mix-{i}", "series_title": "مطبخ من غير خوف"})["id"] for i in range(40)}
+        self.assertGreater(len(seen), 8)
+        self.assertIn("malika", seen)
+        self.assertIn("tina", seen)
 
     def test_format_is_ours_not_a_copied_video(self):
         name, spec = pick_format({"id": "ser-kitchen-s01", "series_title": "مطبخ من غير خوف"})
