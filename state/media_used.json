@@ -1673,5 +1673,15 @@
   "source": "video:pixabay",
   "episode": "ser-kitchen-s01",
   "at": "2026-10-11 18:38"
+ },
+ "https://cdn.pixabay.com/video/2020/11/30/57916-486683368_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-s01",
+  "at": "2026-10-11 19:19"
+ },
+ "clipcache:3c6023ba7b01": {
+  "source": "video:pixabay",
+  "episode": "ser-clean-s01",
+  "at": "2026-10-11 19:19"
  }
 }
