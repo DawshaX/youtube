@@ -47,7 +47,7 @@
  "clipcache:e43ce375e514": {
   "source": "video:pixabay",
   "episode": "bg0",
-  "at": "2026-10-08 05:51"
+  "at": "2026-10-11 11:32"
  },
  "https://cdn.pixabay.com/video/2020/08/13/47052-450995415_medium.mp4": {
   "source": "video:pixabay",
@@ -1558,5 +1558,20 @@
   "source": "image:commons",
   "episode": "stars long exposure",
   "at": "2026-10-11 10:47"
+ },
+ "https://cdn.pixabay.com/video/2022/10/21/135877-764362178_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "bg0",
+  "at": "2026-10-11 11:32"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Jamali_Kamali_mosque_interior.jpg/1280px-Jamali_Kamali_mosque_interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "mosque interior arches",
+  "at": "2026-10-11 11:32"
+ },
+ "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/Khalili_Collection_Islamic_Art_cal_0463.jpg/1280px-Khalili_Collection_Islamic_Art_cal_0463.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
+  "source": "image:commons",
+  "episode": "islamic calligraphy art",
+  "at": "2026-10-11 11:33"
  }
 }
