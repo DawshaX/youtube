@@ -951,6 +951,13 @@
    "at": "2026-10-11 03:48",
    "duration": 75.6,
    "over_180s": false
+  },
+  {
+   "id": "vault:q1791348862.mp4",
+   "kind": "vault",
+   "video": "",
+   "url": "https://www.youtube.com/watch?v=_qJRfsUb97c",
+   "at": "2026-10-11 04:29"
   }
  ],
  "longs": [
@@ -1063,11 +1070,7 @@
   "2026-10-10T21:00|spirit|long",
   "2026-10-10T22:20|qissa|short",
   "2026-10-10T23:40|asma|short",
-  "2026-10-11T05:00|dua|short"
- ],
- "grid_hold": {
-  "key": "2026-10-11T06:20|quiz|short",
-  "kind": "quiz",
-  "at": "2026-10-11 03:48"
- }
+  "2026-10-11T05:00|dua|short",
+  "2026-10-11T06:20|quiz|short"
+ ]
 }
