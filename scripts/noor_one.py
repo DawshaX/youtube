@@ -79,7 +79,7 @@ def next_item(kind: str | None = None) -> dict | None:
     done = set(st.get("served") or [])
     last = str(st.get("last_series") or "")
     def ok(row: dict) -> bool:
-        if row.get("id") in done:
+        if row.get("id") in done or row.get("engine") == "source":
             return False
         is_long = row.get("kind") == "long"
         if kind == "long":
@@ -200,7 +200,28 @@ def opening() -> int:
     return 0 if published else 1
 
 
+def first() -> int:
+    """أول ريل وأول طويل من المصنع الجديد، وبعدها الساعة تكمل بنفس الشكل."""
+    batch = _diverse(_unserved("short"), 1) + _diverse(_unserved("long"), 1)
+    if len(batch) < 2:
+        print("[one] مفيش شورت أو طويل جديد جاهز", flush=True)
+        return 1
+    published = 0
+    for row in batch:
+        rc = _publish_life(row)
+        if rc == 2:
+            print(f"[one] أول دفعة وقفت بعد {published}", flush=True)
+            return 0 if published else 0
+        if rc == 0:
+            published += 1
+            print(f"[one] جديد {row.get('kind')} {row.get('id')}", flush=True)
+    print(f"[one] أول دفعة نشرت {published}", flush=True)
+    return 0 if published else 1
+
+
 def main() -> int:
+    if os.environ.get("NOOR_FIRST") == "1":
+        return first()
     if not LIB.exists():
         print("[one] المكتبة الواحدة مش موجودة", flush=True)
         return 1

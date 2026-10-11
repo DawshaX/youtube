@@ -41,6 +41,10 @@ on:
         description: 'دفعة أولى: شورتان وفيديو طويل، ثم الساعة ترجع عادي'
         type: boolean
         default: false
+      first:
+        description: 'أول ريل وأول طويل من المصنع الجديد'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -156,7 +160,8 @@ jobs:
           LLM_API_BASE: https://api.groq.com/openai/v1
           NOOR_DRY: ${{ inputs.dry_run && '1' || '0' }}
           NOOR_OPENING: ${{ inputs.opening && '1' || '0' }}
-          NOOR_ALLOW_BURST: ${{ inputs.opening && '1' || '0' }}
+          NOOR_FIRST: ${{ inputs.first && '1' || '0' }}
+          NOOR_ALLOW_BURST: ${{ (inputs.opening || inputs.first) && '1' || '0' }}
         run: |
           set -o pipefail
           MODE="${{ inputs.mode || 'cycle' }}"

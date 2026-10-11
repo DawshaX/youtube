@@ -60,17 +60,26 @@ def _style_clip(src: Path, dst: Path, seconds: float, grade: str, motion: str) -
     fade = 0.27
     out_st = max(0.2, seconds - fade)
     x, y = _crop(motion, seconds)
-    vf = (
+    base = (
         f"scale={int(W * 1.08)}:{int(H * 1.08)}:force_original_aspect_ratio=increase,"
-        f"crop={W}:{H}:x='{x}':y='{y}',"
-        f"{grade},fade=t=in:st=0:d={fade},fade=t=out:st={out_st:.2f}:d={fade},"
-        "fps=30,format=yuv420p"
+        f"crop={W}:{H}:x='{x}':y='{y}'"
     )
-    _run([
-        "ffmpeg", "-y", "-i", str(src), "-t", f"{seconds:.2f}", "-vf", vf,
-        "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
-        "-pix_fmt", "yuv420p", str(dst),
-    ])
+    tail = f"fade=t=in:st=0:d={fade},fade=t=out:st={out_st:.2f}:d={fade},fps=30,format=yuv420p"
+    fancy = f"{base},{grade},{tail}" if grade else f"{base},{tail}"
+    plain = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps=30,format=yuv420p"
+
+    def encode(vf: str) -> None:
+        _run([
+            "ffmpeg", "-y", "-i", str(src), "-t", f"{seconds:.2f}", "-vf", vf,
+            "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
+            "-pix_fmt", "yuv420p", str(dst),
+        ])
+
+    try:
+        encode(fancy)
+    except RuntimeError as exc:
+        print(f"[studio] التدريج اتخطى: {str(exc)[-180:]}", flush=True)
+        encode(plain)
 
 
 def _caption(text: str, path: Path, y: float, fill: str, size: int) -> None:
@@ -137,11 +146,12 @@ def render(episode: dict, work: Path) -> dict | None:
         elif rec.get("source"):
             credits.append(f"{rec.get('source')} · {rec.get('license') or ''}")
         styled = work / f"shot-{i}.mp4"
-        grade = "," + feel["grade"] + "," + look.get("grade", "eq=saturation=1.02")
+        grades = [feel["grade"], look.get("grade") or "eq=saturation=1.02"]
         if fmt.get("neon"):
-            grade += ",eq=saturation=1.12"
+            grades.append("eq=saturation=1.12")
         if soul and soul.get("style") in ("queen", "soul"):
-            grade += ",eq=gamma=1.05:saturation=1.04"
+            grades.append("eq=gamma=1.05:saturation=1.04")
+        grade = ",".join(part.strip(",") for part in grades if part)
         _style_clip(got, styled, dur, grade, motion_for(fmt, i))
         png = work / f"cap-{i}.png"
         _caption(line, png, float(look.get("y") or 0.56), pal.get("text") or "#F7F1E6", int(feel["size"]))
