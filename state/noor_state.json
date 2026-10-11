@@ -55,15 +55,30 @@
    "at": "2026-10-11 13:06",
    "duration": 27.8,
    "over_180s": false
+  },
+  {
+   "id": "quiz-18-10",
+   "kind": "quiz",
+   "theme": "تدبر",
+   "title": "معاكم سَكينة. من أي سورة الآية دي؟ | كويز",
+   "reciter": "husary",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791726420/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=t1roWS3xIVE",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-11 13:49",
+   "duration": 38.9,
+   "over_180s": false
   }
  ],
  "longs": [],
  "bad_reciters": [],
- "last_try": "t-001-001",
+ "last_try": "quiz-18-10",
  "grid_done": [
   "2026-10-11T13:00|nasr|short",
   "2026-10-11T14:20|quran|short",
   "2026-10-11T05:00|dua|short",
-  "2026-10-11T15:40|tafsir|short"
+  "2026-10-11T15:40|tafsir|short",
+  "2026-10-11T06:20|quiz|short"
  ]
 }
