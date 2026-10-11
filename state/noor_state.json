@@ -986,6 +986,20 @@
    "at": "2026-10-11 06:38",
    "duration": 45.9,
    "over_180s": false
+  },
+  {
+   "id": "ha-25-1",
+   "kind": "hamd",
+   "theme": "حمد",
+   "title": "من سورة سُورَةُ الفُرۡقَانِ | حمد | آية 1 — سورة الفرقان | عبد الباسط عبد الصمد",
+   "reciter": "abdulbasitmurattal",
+   "video": "/home/runner/work/youtube/youtube/work/noor/short_1791705624/noor.mp4",
+   "url": "https://www.youtube.com/watch?v=vItbxUIKMKk",
+   "vault": "",
+   "err": null,
+   "at": "2026-10-11 08:03",
+   "duration": 24.1,
+   "over_180s": false
   }
  ],
  "longs": [
@@ -1062,7 +1076,7 @@
   }
  ],
  "bad_reciters": [],
- "last_try": "mu-21-81",
+ "last_try": "ha-25-1",
  "broken": [
   "dua-3-8"
  ],
@@ -1101,6 +1115,7 @@
   "2026-10-11T05:00|dua|short",
   "2026-10-11T06:20|quiz|short",
   "2026-10-11T07:40|spirit|short",
-  "2026-10-11T09:00|mujiza|short"
+  "2026-10-11T09:00|mujiza|short",
+  "2026-10-11T10:20|hamd|short"
  ]
 }
