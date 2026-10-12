@@ -8,10 +8,11 @@
     "ser-animal-l09",
     "ser-field-لحظة-l09",
     "ser-queue-s01",
-    "ser-clean-l12"
+    "ser-clean-l12",
+    "ser-field-أرض-s01"
   ],
-  "turn": 15,
-  "last_series": "ser-clean",
+  "turn": 16,
+  "last_series": "ser-field-أرض",
   "done": [
     {
       "id": "ser-study-s01",
@@ -66,11 +67,17 @@
       "url": "https://www.youtube.com/watch?v=C6tekuVWBwY",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-field-أرض-s01",
+      "url": "https://www.youtube.com/watch?v=3gPRq_raSro",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-11",
-    "short": 1,
+    "short": 2,
     "long": 2
   }
 }
