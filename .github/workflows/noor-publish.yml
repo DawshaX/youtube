@@ -93,6 +93,19 @@ jobs:
               sys.exit(1)
           EOF
 
+      - name: 🎨 حراسة المشاهد المولّدة داخليًا — ضمان «مفيش مشاهد ناقصة» أبدًا
+        continue-on-error: true
+        run: |
+          # الأصول المولّدة متسجلة في الريبو، والخطوة دي بس بتتأكد إنها موجودة
+          # وبتبني اللي ناقص (بتتخطى الموجود → ثواني). لو فشلت مفيش ضرر:
+          # الطبقة الجديدة في footage.py بتولّد عند الطلب وقت الرندر نفسه.
+          have=$(ls assets/footage/gen_*.mp4 2>/dev/null | wc -l)
+          echo "مشاهد مولّدة موجودة: $have"
+          if [ "$have" -lt 14 ]; then
+            python -m xtrendaw.noor_next.scenes build || echo "⚠️ البناء مشي بتخطي — الرندر هيولّد عند الطلب"
+          fi
+          ls assets/footage/ | head -20
+
       - name: 🎬 الدورة (حلقة جديدة + نشر/تخزين)
         if: ${{ inputs.mode != 'purge' }}
         env:
