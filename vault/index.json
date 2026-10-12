@@ -1,6 +1,146 @@
 {
  "assets": [
   {
+   "path": "assets/footage/gen_calm_sea.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "0e639bf13953e8303ace90627dcf78bfcbe83d31ef8f577dbeccab8a96c51dc9"
+  },
+  {
+   "path": "assets/footage/gen_desert_dunes.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "28b85114f02d7c95453927850f7a1a1a1b4656ba1fee318a96dfa5470f8688ab"
+  },
+  {
+   "path": "assets/footage/gen_dust_sunbeam.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "3362d29f5bcd6c5edc956a8eb728ae6bb78be11767398839a5e029c7cebb6cb9"
+  },
+  {
+   "path": "assets/footage/gen_fabric_fold.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "dc6feef1892f0ad69ec27b74daec406784d6d2ce5b8e49d1cd74a149b5056e51"
+  },
+  {
+   "path": "assets/footage/gen_green_leaves.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "7f7ae6e8a7d31ed39c0af2e6ea4911e43dd497f1ff0f8dcbb9982ac70cee2643"
+  },
+  {
+   "path": "assets/footage/gen_kitchen_clean.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "b482ef678cc7b02bb4606611bc5e307772dca07976589058751da5e11fd9440c"
+  },
+  {
+   "path": "assets/footage/gen_mountain_mist.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "d18f0c8e49a3d2bd8fd725fdd91c5d142d065820032226fdf0b6a91f471dc057"
+  },
+  {
+   "path": "assets/footage/gen_night_lights.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "34c53b50a44e201f9ff8ec7442a0c20612924c1126b3782132307187f2646b76"
+  },
+  {
+   "path": "assets/footage/gen_palm_sunset.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "c29366aeacd117447b433b2309e21107aa7fcb5bbed67cfd958474697249dc80"
+  },
+  {
+   "path": "assets/footage/gen_sky_clouds.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "c263f8d0461eaba493cedac744ea7ac6bde8fbcdbd8d52da048e591912849301"
+  },
+  {
+   "path": "assets/footage/gen_stone_wall.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "dac63db3583bb6360f7b2ff1a9f1f9671ee4cf1d4d8bec27abbd10c643b7dae3"
+  },
+  {
+   "path": "assets/footage/gen_sunlit_floor.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "a8e93645f498cb7ebff700b78526261a96047fc098e187fec2ba19d1e243bfac"
+  },
+  {
+   "path": "assets/footage/gen_water_ripple.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "cb69c54a824a3197075e168ed39535cc5f6267e2c2f42cac2f28a4c60274fb1f"
+  },
+  {
+   "path": "assets/footage/gen_window_light.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T00:50:21+00:00",
+   "sha256": "d9c36d871a1b27493ba1188992625bc6213a9cec7bdf5b46a7da738ed828fd06"
+  },
+  {
    "path": "state/videolib/1dbee78fdae9.mp4",
    "source": "pixabay",
    "license": "Pixabay-License",

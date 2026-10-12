@@ -299,10 +299,24 @@ def _good_title(title: str) -> bool:
     return not any(b in t for b in BAD_TITLES)
 
 
+# كلمات عامة مش بتحدد موضوع اللقطة — وجودها لوحده مش دليل صلة
+_STOP = {"file", "video", "close", "shot", "wide", "slow", "detail", "light",
+         "morning", "night", "calm", "view", "clip", "with", "from", "this",
+         "that", "time", "lapse", "high", "full", "free", "best", "good"}
+
+
 def _relevant(text: str, query: str) -> bool:
-    """عنوان اللقطة لازم يشارك الاستعلام كلمة حقيقية — لا وثائقيات عشوائية."""
+    """عنوان اللقطة لازم يشارك الاستعلام كلمة حقيقية — لا وثائقيات عشوائية.
+
+    تعديل 2026-10-12 (بعد قياس): الشرط القديم كان بيرفض مرشحين صالحين لأن
+    كلمات الوصف العام («close up» / «morning light») كانت بتتحسب صلة.
+    دلوقتي: كلمة دلالية واحدة تكفي، والكلمات العامة بتتشال.
+    """
     t = (text or "").lower()
-    words = [w for w in re.split(r"[^a-z]+", query.lower()) if len(w) >= 4]
+    words = [w for w in re.split(r"[^a-z]+", query.lower())
+             if len(w) >= 4 and w not in _STOP]
+    if not words:
+        words = [w for w in re.split(r"[^a-z]+", query.lower()) if len(w) >= 4]
     return any(w in t for w in words)
 
 
@@ -312,7 +326,7 @@ def _commons_candidates(query: str) -> list:
             "https://commons.wikimedia.org/w/api.php",
             params={"action": "query", "generator": "search",
                     "gsrsearch": f"{query} filetype:video", "gsrnamespace": 6,
-                    "gsrlimit": 15, "prop": "imageinfo",
+                    "gsrlimit": 45, "prop": "imageinfo",
                     "iiprop": "url|mime|size|extmetadata",
                     "format": "json"},
             headers=UA, timeout=20).json()
@@ -330,7 +344,7 @@ def _commons_candidates(query: str) -> list:
                 ii["_title"] = p.get("title", "")
                 ii["_source"] = "Wikimedia Commons"
                 out.append(ii)
-        return sorted(out, key=lambda x: -x.get("size", 0))[:3]
+        return sorted(out, key=lambda x: -x.get("size", 0))[:6]
     except Exception:
         return []
 
@@ -508,6 +522,47 @@ def _pexels_candidates(query: str) -> list:
         return []
 
 
+def _vault_local(query: str, seconds: float, workdir: Path, seed: str,
+                 require_match: bool = True) -> Path | None:
+    """اللقطة المولّدة داخليًا — الطبقة الأولى دايمًا.
+
+    سبب وجودها (2026-10-12): المصادر الشبكية بتدّي 1–3 مرشحين للاستعلام
+    الواحد وبتخلص (ذاكرة «اللقطة المستخدمة»). المصنع وقف عن النشر لأن
+    الرندر محتاج لقطتين فريدتين وما لقاش. المشاهد المولّدة **بلا حد**،
+    صفر شبكة، وترخيصها Internal-Generated (ملك المصنع).
+    """
+    try:
+        from .noor_next import scenes as _scenes
+    except Exception:
+        return None
+    folder = settings.ASSETS / "footage"
+    name = _scenes.pick(query, seed, require_match=require_match)
+    if not name:
+        return None
+    src = folder / f"gen_{name}.mp4"
+    if not src.exists():
+        return None
+    workdir.mkdir(parents=True, exist_ok=True)
+    out = workdir / f"gen_{name}_{hashlib.sha256(str(seed).encode()).hexdigest()[:8]}.mp4"
+    dur = _probe_dur(src)
+    if dur < max(2.0, seconds * 0.6):
+        return None
+    room = max(1, int(max(0, dur - seconds)))
+    off = int(hashlib.sha256(f"{seed}:{name}".encode()).hexdigest()[:6], 16) % room
+    if not _prep(str(src), seconds, out, offset=off):
+        return None
+    # تسجيل الترخيص إلزامي قبل ما اللقطة تتاح للرندر (بند 0/4) — ولازم
+    # يكون على مسار الملف نفسه عشان سطور الكريدتس تطلع صح.
+    try:
+        from .. import vault as _vault
+        _vault.register(out, source="مصنع نور — توليد برمجي داخلي",
+                        license="Internal-Generated",
+                        attribution_required=False, credit_line="", url="")
+    except Exception:
+        pass
+    return out
+
+
 def fetch_clip(query: str | list[str], seconds: float, workdir: Path, seed: str,
                source: str = "auto") -> Path | None:
     """يجيب لقطة حية للاستعلام (أو أول استعلام ينجح من قائمة استعلامات).
@@ -530,8 +585,15 @@ def fetch_clip(query: str | list[str], seconds: float, workdir: Path, seed: str,
     (docs/MEDIA_VAULT_SOURCES.md) وXT_NET_FOOTAGE=1.
     ترتيب السلسلة زي البلوبرنت: بيكساباي ← بكسلز ← كومنز ← الأرشيف ← ناسا.
     """
+    # ٠) المشاهد المولّدة داخليًا الأول — بلا شبكة وبلا ترخيص خارجي، وبلا حد.
+    if source in ("auto", "vault", "gen"):
+        local = _vault_local(query, seconds, workdir, seed, require_match=True)
+        if local is not None:
+            print(f"[footage] 🎨 مشهد مولّد داخليًا لـ«{query[:30]}»", flush=True)
+            return local
+    # لو الشبكة مقفولة: ملاذ أخير مولّد عشان الرندر ما يفشلش أبدًا.
     if not net_footage_enabled():
-        return None
+        return _vault_local(query, seconds, workdir, seed, require_match=False)
     LIB.mkdir(parents=True, exist_ok=True)
     workdir.mkdir(parents=True, exist_ok=True)
     key = hashlib.sha256(f"{source}:{query}".encode()).hexdigest()[:12]
@@ -628,9 +690,9 @@ def fetch_clip(query: str | list[str], seconds: float, workdir: Path, seed: str,
 
     if not cached.exists():
         # تشخيص صريح: الفيديو كله طلع خلفيات مولّدة قبل كده لأن الفشل كان صامت
-        print(f"[footage] ✗ مفيش لقطة لـ«{query[:34]}» ({source}) — "
-              "هنكمل بمسار آخر", flush=True)
-        return None
+        print(f"[footage] ✗ مفيش لقطة شبكية لـ«{query[:34]}» ({source}) — "
+              "ملاذ أخير مولّد", flush=True)
+        return _vault_local(query, seconds, workdir, seed, require_match=False)
 
     # ٣) سجّل الاستخدام دايمًا — جديد ولا جايب من الكاش.
     # بق 2026-09-19: كان التسجيل جوّه فرع «التحميل الجديد» بس، فلما اللقطة
