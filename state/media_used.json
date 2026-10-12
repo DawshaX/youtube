@@ -1976,8 +1976,8 @@
  },
  "clipcache:3b69a475f46e": {
   "source": "video:pixabay",
-  "episode": "ser-anger-s01",
-  "at": "2026-10-12 19:59"
+  "episode": "ser-day-s01",
+  "at": "2026-10-12 22:14"
  },
  "https://cdn.pixabay.com/video/2022/09/04/130226-746395325_medium.mp4": {
   "source": "video:pixabay",
@@ -2133,5 +2133,10 @@
   "source": "video:pixabay",
   "episode": "ser-field-حرفة-l08",
   "at": "2026-10-12 21:28"
+ },
+ "https://cdn.pixabay.com/video/2020/04/02/34818-403432727_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-day-s01",
+  "at": "2026-10-12 22:14"
  }
 }
