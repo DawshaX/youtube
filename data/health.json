@@ -1,5 +1,5 @@
 {
- "checkedAt": "2026-10-12T10:43:01+00:00",
+ "checkedAt": "2026-10-12T20:17:08+00:00",
  "runner": "actions-or-local",
  "all_ok": false,
  "fails": 3,
@@ -98,7 +98,7 @@
   {
    "name": "edge-tts (صوت حقيقي)",
    "status": "fail",
-   "detail": "WSServerHandshakeError: 403, message='Invalid response status', url='wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4&ConnectionId=5a7640732acc4187bb16b9c5779dc799&Sec-MS-GEC=●●●&Sec-MS-GEC-Version=1-143.0.3650.75' — لو من أوفلاين: طبيعي محليًا"
+   "detail": "WSServerHandshakeError: 403, message='Invalid response status', url='wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4&ConnectionId=10ec4f0298bc41658b18feafea36ac4e&Sec-MS-GEC=●●●&Sec-MS-GEC-Version=1-143.0.3650.75' — لو من أوفلاين: طبيعي محليًا"
   }
  ]
 }
