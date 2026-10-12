@@ -1,118 +1,132 @@
 {
- "served": [
-  "ser-study-s01",
-  "ser-money-s01",
-  "ser-kitchen-s01",
-  "ser-anger-l06",
-  "ser-child-s01",
-  "ser-animal-l09",
-  "ser-field-لحظة-l09",
-  "ser-queue-s01",
-  "ser-clean-l12",
-  "ser-field-أرض-s01",
-  "ser-field-ألوان-s01",
-  "ser-family-l13",
-  "ser-field-امتحان-s01",
-  "ser-field-بلكونة-s01",
-  "ser-child-l06"
- ],
- "turn": 1,
- "last_series": "ser-child",
- "done": [
-  {
-   "id": "ser-study-s01",
-   "url": "",
-   "err": "no_footage",
-   "kind": "short"
-  },
-  {
-   "id": "ser-money-s01",
-   "url": "",
-   "err": "no_footage",
-   "kind": "short"
-  },
-  {
-   "id": "ser-kitchen-s01",
-   "url": "",
-   "err": "no_footage",
-   "kind": "short"
-  },
-  {
-   "id": "ser-anger-l06",
-   "url": "",
-   "err": "no_footage",
-   "kind": "long"
-  },
-  {
-   "id": "ser-child-s01",
-   "url": "",
-   "err": "no_footage",
-   "kind": "short"
-  },
-  {
-   "id": "ser-animal-l09",
-   "url": "",
-   "err": "no_footage",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-لحظة-l09",
-   "url": "https://www.youtube.com/watch?v=a4kvrr_7bHg",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-queue-s01",
-   "url": "https://www.youtube.com/watch?v=RrfbELm-4po",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-clean-l12",
-   "url": "https://www.youtube.com/watch?v=C6tekuVWBwY",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-أرض-s01",
-   "url": "https://www.youtube.com/watch?v=3gPRq_raSro",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-ألوان-s01",
-   "url": "https://www.youtube.com/watch?v=Gxzl7KMfDqs",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-family-l13",
-   "url": "https://www.youtube.com/watch?v=LO8K2KBuwjw",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-امتحان-s01",
-   "url": "https://www.youtube.com/watch?v=Xx8ncD8A_50",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-بلكونة-s01",
-   "url": "https://www.youtube.com/watch?v=442ZsnGZe-g",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-child-l06",
-   "url": "https://www.youtube.com/watch?v=-HzQJnDSnSk",
-   "err": "",
-   "kind": "long"
+  "served": [
+    "ser-study-s01",
+    "ser-money-s01",
+    "ser-kitchen-s01",
+    "ser-anger-l06",
+    "ser-child-s01",
+    "ser-animal-l09",
+    "ser-field-لحظة-l09",
+    "ser-queue-s01",
+    "ser-clean-l12",
+    "ser-field-أرض-s01",
+    "ser-field-ألوان-s01",
+    "ser-family-l13",
+    "ser-field-امتحان-s01",
+    "ser-field-بلكونة-s01",
+    "ser-child-l06",
+    "ser-family-s01",
+    "ser-sky-s01"
+  ],
+  "turn": 3,
+  "last_series": "ser-sky",
+  "done": [
+    {
+      "id": "ser-study-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-money-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-kitchen-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-anger-l06",
+      "url": "",
+      "err": "no_footage",
+      "kind": "long"
+    },
+    {
+      "id": "ser-child-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-animal-l09",
+      "url": "",
+      "err": "no_footage",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-لحظة-l09",
+      "url": "https://www.youtube.com/watch?v=a4kvrr_7bHg",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-queue-s01",
+      "url": "https://www.youtube.com/watch?v=RrfbELm-4po",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-clean-l12",
+      "url": "https://www.youtube.com/watch?v=C6tekuVWBwY",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-أرض-s01",
+      "url": "https://www.youtube.com/watch?v=3gPRq_raSro",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-ألوان-s01",
+      "url": "https://www.youtube.com/watch?v=Gxzl7KMfDqs",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-family-l13",
+      "url": "https://www.youtube.com/watch?v=LO8K2KBuwjw",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-امتحان-s01",
+      "url": "https://www.youtube.com/watch?v=Xx8ncD8A_50",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-بلكونة-s01",
+      "url": "https://www.youtube.com/watch?v=442ZsnGZe-g",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-child-l06",
+      "url": "https://www.youtube.com/watch?v=-HzQJnDSnSk",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-family-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-sky-s01",
+      "url": "https://www.youtube.com/watch?v=_cGkWOPmM0s",
+      "err": "",
+      "kind": "short"
+    }
+  ],
+  "day": {
+    "date": "2026-10-12",
+    "short": 1,
+    "long": 0
   }
- ],
- "day": {
-  "date": "2026-10-11",
-  "short": 5,
-  "long": 4
- }
 }
