@@ -7,8 +7,18 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "0e639bf13953e8303ace90627dcf78bfcbe83d31ef8f577dbeccab8a96c51dc9"
+   "fetched_at": "2026-10-12T01:28:52+00:00",
+   "sha256": "f2e95f4522600116780951d5dc84384eb796decaef93c906624e917e9b1f5bcb"
+  },
+  {
+   "path": "assets/footage/gen_candle_flame.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:22:58+00:00",
+   "sha256": "09d8b40a8073c4e5467544fe0794953c86205d6fa0b5396ffae93adc677f582e"
   },
   {
    "path": "assets/footage/gen_desert_dunes.mp4",
@@ -17,8 +27,8 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "28b85114f02d7c95453927850f7a1a1a1b4656ba1fee318a96dfa5470f8688ab"
+   "fetched_at": "2026-10-12T01:29:10+00:00",
+   "sha256": "f9d6aacbac29eeb4ea73cd248b0844c151f56ccc904eeec580c92b37e6df7504"
   },
   {
    "path": "assets/footage/gen_dust_sunbeam.mp4",
@@ -27,8 +37,8 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "3362d29f5bcd6c5edc956a8eb728ae6bb78be11767398839a5e029c7cebb6cb9"
+   "fetched_at": "2026-10-12T01:28:24+00:00",
+   "sha256": "9cb0f1576c8511c4b78c27aa172fc16fcf08f7ef837fa4963c5b23bd9f6a9177"
   },
   {
    "path": "assets/footage/gen_fabric_fold.mp4",
@@ -37,8 +47,18 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "dc6feef1892f0ad69ec27b74daec406784d6d2ce5b8e49d1cd74a149b5056e51"
+   "fetched_at": "2026-10-12T01:30:10+00:00",
+   "sha256": "f08176ea7cd55e66cdb9c5ff0a6a6e0f46bf6e3b71ea36167922a08a792ceea1"
+  },
+  {
+   "path": "assets/footage/gen_golden_dunes.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:19:24+00:00",
+   "sha256": "223282c3e12a7a721af0bc93ef679aff859bca6f08524046fea9c1a914975c56"
   },
   {
    "path": "assets/footage/gen_green_leaves.mp4",
@@ -47,8 +67,8 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "7f7ae6e8a7d31ed39c0af2e6ea4911e43dd497f1ff0f8dcbb9982ac70cee2643"
+   "fetched_at": "2026-10-12T01:27:48+00:00",
+   "sha256": "229cc9aef107a4972f5be99f8c38fa8e54bb30d9e2fe3dacb2daecd007bfa553"
   },
   {
    "path": "assets/footage/gen_kitchen_clean.mp4",
@@ -57,8 +77,28 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "b482ef678cc7b02bb4606611bc5e307772dca07976589058751da5e11fd9440c"
+   "fetched_at": "2026-10-12T01:38:52+00:00",
+   "sha256": "9c4cbd084cb9f31cd89b11fde29df7e152e44da4b64efaa117e5e492b8308716"
+  },
+  {
+   "path": "assets/footage/gen_mashrabiya.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:24:41+00:00",
+   "sha256": "bf7ac8c99b145eaef2e6ec4cc9ffdd01edfc7036e34be91d7141245f9d1be87f"
+  },
+  {
+   "path": "assets/footage/gen_mountain_layers.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:21:08+00:00",
+   "sha256": "45e45eb36447a08b5306129cdc2105030059d8ddabb7c76fa032142af15d80d9"
   },
   {
    "path": "assets/footage/gen_mountain_mist.mp4",
@@ -67,8 +107,8 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "d18f0c8e49a3d2bd8fd725fdd91c5d142d065820032226fdf0b6a91f471dc057"
+   "fetched_at": "2026-10-12T01:29:34+00:00",
+   "sha256": "59c4a7be17b38fb96dfdc5fd10bd52291d50db8c213dd2f54e352f8b5d92c9fa"
   },
   {
    "path": "assets/footage/gen_night_lights.mp4",
@@ -77,8 +117,38 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "34c53b50a44e201f9ff8ec7442a0c20612924c1126b3782132307187f2646b76"
+   "fetched_at": "2026-10-12T01:28:08+00:00",
+   "sha256": "10e93084a4acd7c8dfd47c582b036604baf7ad2d28068e2bae7bd19381b236d6"
+  },
+  {
+   "path": "assets/footage/gen_night_milky.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:21:41+00:00",
+   "sha256": "9e60680a73aff916ba0ab2a86b22faf41649f972b42523f88a921a3408bb00ce"
+  },
+  {
+   "path": "assets/footage/gen_night_stars.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:25:05+00:00",
+   "sha256": "1e93ba5b7361153f141f546c49d3c610e5113c0f2aff6477a7b15e464a8428f7"
+  },
+  {
+   "path": "assets/footage/gen_open_book.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:23:18+00:00",
+   "sha256": "e3a0696be02e05ccd8509ae4e95173391b01eaa80657acbc2b11492df44741b7"
   },
   {
    "path": "assets/footage/gen_palm_sunset.mp4",
@@ -87,8 +157,38 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "c29366aeacd117447b433b2309e21107aa7fcb5bbed67cfd958474697249dc80"
+   "fetched_at": "2026-10-12T01:29:51+00:00",
+   "sha256": "4867329df8bdc639f0929ecf0c3c27e21c12866266a826c9113e3526a6309137"
+  },
+  {
+   "path": "assets/footage/gen_palms_sunset.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:20:21+00:00",
+   "sha256": "ed3c65060292ade35e3c9cd22567f7add9aa1ea9a5dd87ecc77660ff15e40258"
+  },
+  {
+   "path": "assets/footage/gen_rain_glass.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:22:31+00:00",
+   "sha256": "7b42e337bda544141027554fa4f349a7e0ddceeb2f889524e2330c734902a383"
+  },
+  {
+   "path": "assets/footage/gen_rain_window_v2.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:22:04+00:00",
+   "sha256": "0d7a90de9c2914b1280718953aeed1b3d7902263d22e94082f7f0ee4176e0ac6"
   },
   {
    "path": "assets/footage/gen_sky_clouds.mp4",
@@ -97,8 +197,8 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "c263f8d0461eaba493cedac744ea7ac6bde8fbcdbd8d52da048e591912849301"
+   "fetched_at": "2026-10-12T01:27:27+00:00",
+   "sha256": "c4d2701aef5eea89739379e208b6c305bfbdaa9ec35a45b88d3d2391e93bb66b"
   },
   {
    "path": "assets/footage/gen_stone_wall.mp4",
@@ -107,8 +207,8 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "dac63db3583bb6360f7b2ff1a9f1f9671ee4cf1d4d8bec27abbd10c643b7dae3"
+   "fetched_at": "2026-10-12T01:28:38+00:00",
+   "sha256": "410b022204435e419b8896d80c22a1e6e6074f5bdcdd85d76d1b0bd8af685c86"
   },
   {
    "path": "assets/footage/gen_sunlit_floor.mp4",
@@ -117,8 +217,38 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "a8e93645f498cb7ebff700b78526261a96047fc098e187fec2ba19d1e243bfac"
+   "fetched_at": "2026-10-12T01:25:48+00:00",
+   "sha256": "d60ade647e574b508e753f8af4fc178f3d614909e355410ecd5cd6ce6ded5c6e"
+  },
+  {
+   "path": "assets/footage/gen_sunrays_clouds.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:19:48+00:00",
+   "sha256": "6ca314f4831ef1c8072da523220eba99fbca239afc4a3d2bcabcc31b22bd3f7b"
+  },
+  {
+   "path": "assets/footage/gen_sunset_sea.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:19:00+00:00",
+   "sha256": "7d9cdd8945bbaeafc95e186fb189d9d78c71f26f0b0a5555f9239e72b3d1556d"
+  },
+  {
+   "path": "assets/footage/gen_tea_steam.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:37:52+00:00",
+   "sha256": "366448ebeff36240fbdc98b390c37ae605aaaa58584e899f46b185bf9d8a12c0"
   },
   {
    "path": "assets/footage/gen_water_ripple.mp4",
@@ -127,8 +257,18 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "cb69c54a824a3197075e168ed39535cc5f6267e2c2f42cac2f28a4c60274fb1f"
+   "fetched_at": "2026-10-12T01:39:21+00:00",
+   "sha256": "9f64b5fb3b6c39e14b7de30bf5df827a81a31079f2d8a5de85fc440d8638ba72"
+  },
+  {
+   "path": "assets/footage/gen_wheat_field.mp4",
+   "source": "مصنع نور — توليد برمجي داخلي",
+   "license": "Internal-Generated",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "",
+   "fetched_at": "2026-10-12T01:38:19+00:00",
+   "sha256": "0c6bb98d572c45222a0ec3155e06a7041cfc03d3c090b86d4c4ef8368c9ecf48"
   },
   {
    "path": "assets/footage/gen_window_light.mp4",
@@ -137,8 +277,8 @@
    "attribution_required": false,
    "credit_line": "",
    "url": "",
-   "fetched_at": "2026-10-12T00:50:21+00:00",
-   "sha256": "d9c36d871a1b27493ba1188992625bc6213a9cec7bdf5b46a7da738ed828fd06"
+   "fetched_at": "2026-10-12T01:25:23+00:00",
+   "sha256": "d3d49dabea8d70430a4fa2c238bca5c1dca8f34244f8405d7bb0854d6a9bc6f6"
   },
   {
    "path": "state/videolib/1dbee78fdae9.mp4",

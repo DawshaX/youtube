@@ -125,7 +125,9 @@ def _calibrate(frame_fn, lo: float = 42.0, hi: float = 128.0, gamma: float = 0.9
         gain = max(hi / mean, 0.50)
     xs = np.clip(np.arange(256, dtype=np.float32) / 255.0, 0, 1)
     lut = np.clip(255.0 * np.power(xs, gamma) * gain, 0, 255).astype(np.float32)
-    grain = np.random.default_rng(1717).normal(0.0, 2.0, (H, W, 1)).astype(np.float32)
+    grain = np.random.default_rng(1717).normal(0.0, 1.6, (H, W, 1)).astype(np.float32)
+    grain = _blur_mask(grain[..., 0] * 0.5 + 0.5, 0.6)[..., None] * 2.0 - 1.0
+    grain *= 1.6
 
     def wrapped(t: float) -> np.ndarray:
         f = np.clip(frame_fn(t), 0, 255)
@@ -201,13 +203,13 @@ def _scene_kitchen_clean(seed: int):
 
 def _scene_water_ripple(seed: int):
     base = _vertical("#0E2333", "#061019", H, W, 1.0)
-    n = _smooth_noise(H, W, 4, seed + 7, 3)
+    n = _blur_mask(_smooth_noise(H, W, 3, seed + 7, 2), 2.2)
 
     def frame(t: float) -> np.ndarray:
         phase = t / LENGTH_S * math.tau
-        w1 = np.sin(n * 12.0 + phase * 2) * 0.5 + 0.5
-        w2 = np.sin(np.roll(n, 40, axis=1) * 9.0 - phase * 3) * 0.5 + 0.5
-        spark = np.clip(w1 * w2 - 0.55, 0, 1) * 2.4
+        w1 = np.sin(n * 6.0 + phase * 2) * 0.5 + 0.5
+        w2 = np.sin(np.roll(n, 40, axis=1) * 4.5 - phase * 3) * 0.5 + 0.5
+        spark = _blur_mask(np.clip(w1 * w2 - 0.55, 0, 1) * 2.4, 1.6)
         img = base + spark[..., None] * np.array([150, 200, 230], np.float32) * 0.9
         img *= _vignette(H, W, 0.42)
         return img
@@ -461,8 +463,8 @@ def _scene_open_book(seed: int):
 
 def _scene_tea_steam(seed: int):
     base = _vertical("#2B1E13", "#0A0704", H, W, 1.2)
-    n = _smooth_noise(H, W, 4, seed + 6, 3)
-    n2 = _smooth_noise(H, W, 5, seed + 8, 3)
+    n = _blur_mask(_smooth_noise(H, W, 3, seed + 6, 2), 2.0)
+    n2 = _blur_mask(_smooth_noise(H, W, 4, seed + 8, 2), 2.5)
     yy = np.linspace(-1, 1, H, dtype=np.float32)[:, None]
     xx = np.linspace(-1, 1, W, dtype=np.float32)[None, :]
     cup = np.exp(-((yy / 0.26) ** 2 + (xx / 0.34) ** 2) * 1.5)
@@ -483,13 +485,13 @@ def _scene_tea_steam(seed: int):
 
 def _scene_wheat_field(seed: int):
     base = _vertical("#CB9C41", "#6A4A18", H, W, 0.9)
-    stalks = _smooth_noise(H, W, 6, seed + 10, 2)
+    stalks = _blur_mask(_smooth_noise(H, W, 5, seed + 10, 2), 2.0)
     cols = np.linspace(0, 1, W, dtype=np.float32)[None, :]
 
     def frame(t: float) -> np.ndarray:
         p = t / LENGTH_S * math.tau
         sway = np.roll(stalks, int(math.sin(p) * W * 0.04), axis=1)
-        fine = np.clip(np.sin(cols * 430 * math.pi + sway * 7.0) * 0.5 + 0.5, 0, 1)
+        fine = _blur_mask(np.clip(np.sin(cols * 150 * math.pi + sway * 7.0) * 0.5 + 0.5, 0, 1), 1.8)
         img = base * (0.70 + 0.58 * sway[..., None])
         img += fine[..., None] * np.array([255, 224, 148], np.float32) * 0.17
         img *= _vignette(H, W, 0.38)
