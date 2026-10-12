@@ -16,10 +16,11 @@
     "ser-field-بلكونة-s01",
     "ser-child-l06",
     "ser-family-s01",
-    "ser-sky-s01"
+    "ser-sky-s01",
+    "ser-anger-s01"
   ],
-  "turn": 4,
-  "last_series": "ser-sky",
+  "turn": 5,
+  "last_series": "ser-anger",
   "done": [
     {
       "id": "ser-study-s01",
@@ -122,11 +123,17 @@
       "url": "https://www.youtube.com/watch?v=_cGkWOPmM0s",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-anger-s01",
+      "url": "https://www.youtube.com/watch?v=cXyM1eZjDBo",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-12",
-    "short": 1,
+    "short": 2,
     "long": 0
   }
 }
