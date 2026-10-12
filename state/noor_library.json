@@ -13,10 +13,11 @@
     "ser-field-ألوان-s01",
     "ser-family-l13",
     "ser-field-امتحان-s01",
-    "ser-field-بلكونة-s01"
+    "ser-field-بلكونة-s01",
+    "ser-child-l06"
   ],
-  "turn": 23,
-  "last_series": "ser-field-بلكونة",
+  "turn": 1,
+  "last_series": "ser-child",
   "done": [
     {
       "id": "ser-study-s01",
@@ -101,11 +102,17 @@
       "url": "https://www.youtube.com/watch?v=442ZsnGZe-g",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-child-l06",
+      "url": "https://www.youtube.com/watch?v=0gXlnjTVRug",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-11",
     "short": 5,
-    "long": 3
+    "long": 4
   }
 }
