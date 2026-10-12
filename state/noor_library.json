@@ -17,10 +17,11 @@
     "ser-child-l06",
     "ser-family-s01",
     "ser-sky-s01",
-    "ser-anger-s01"
+    "ser-anger-s01",
+    "ser-field-حرفة-l08"
   ],
-  "turn": 6,
-  "last_series": "ser-anger",
+  "turn": 7,
+  "last_series": "ser-field-حرفة",
   "done": [
     {
       "id": "ser-study-s01",
@@ -129,11 +130,17 @@
       "url": "https://www.youtube.com/watch?v=cXyM1eZjDBo",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-field-حرفة-l08",
+      "url": "https://www.youtube.com/watch?v=xGNh3qEnb6w",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-12",
     "short": 2,
-    "long": 0
+    "long": 1
   }
 }
