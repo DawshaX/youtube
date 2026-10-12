@@ -105,6 +105,7 @@ jobs:
           #   ! [rejected] HEAD -> main (fetch first)
           for attempt in 1 2 3 4 5; do
             git pull --rebase --autostash origin "$BRANCH" >/dev/null 2>&1 || true
+            python3 scripts/state_guard.py --fix --quiet || true
             if git push origin "HEAD:$BRANCH"; then break; fi
             echo "دفع محاولة $attempt فشلت (الريموت اتغير) — إعادة محاولة بعد 5 ثوانٍ…"
             sleep 5

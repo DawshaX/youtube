@@ -75,6 +75,7 @@ jobs:
           git config user.name "نور [Bot]"
           git config user.email "noor@daousha.internal"
           git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" >/dev/null 2>&1 || true
+          python3 scripts/state_guard.py --fix --quiet || true
           for f in state/noor_state.json state/noor_ledger.json state/noor_pool.json state/published.json; do
             [ -f "$f" ] && git add -f "$f" || true
           done

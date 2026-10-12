@@ -200,6 +200,8 @@ jobs:
           git commit -m "factory(state): ذاكرة المصنع بعد الدورة [skip ci]"
           for attempt in 1 2 3 4 5; do
             git pull --rebase --autostash origin "$BRANCH" >/dev/null 2>&1 || true
+            # 🛡️ حارس الذاكرة: لو التعارض ساب علامات في state/ نصلّحها قبل الدفع
+            python3 scripts/state_guard.py --fix --quiet || true
             if git push origin "HEAD:$BRANCH"; then echo "✓ الذاكرة اتحفظت"; break; fi
             echo "دفع محاولة $attempt فشلت — إعادة بعد 5 ثوانٍ…"
             sleep 5
