@@ -311,6 +311,16 @@
    "sha256": "670f158a434e43c9367556fee77ee5eb30e08946de2855256e0f7cdfdd027585"
   },
   {
+   "path": "state/videolib/3b69a475f46e.mp4",
+   "source": "pixabay",
+   "license": "Pixabay-License",
+   "attribution_required": false,
+   "credit_line": "",
+   "url": "https://cdn.pixabay.com/video/2020/05/15/39125-420997228_medium.mp4",
+   "fetched_at": "2026-10-12T06:56:24+00:00",
+   "sha256": "00824336d21081f265e0238dfa810f22db7944178a952911d060be3f03437580"
+  },
+  {
    "path": "state/videolib/4d419d579674.mp4",
    "source": "pixabay",
    "license": "Pixabay-License",
