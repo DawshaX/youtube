@@ -93,19 +93,6 @@ jobs:
               sys.exit(1)
           EOF
 
-      - name: 🎨 حراسة المشاهد المولّدة داخليًا — ضمان «مفيش مشاهد ناقصة» أبدًا
-        continue-on-error: true
-        run: |
-          # الأصول المولّدة متسجلة في الريبو، والخطوة دي بس بتتأكد إنها موجودة
-          # وبتبني اللي ناقص (بتتخطى الموجود → ثواني). لو فشلت مفيش ضرر:
-          # الطبقة الجديدة في footage.py بتولّد عند الطلب وقت الرندر نفسه.
-          have=$(ls assets/footage/gen_*.mp4 2>/dev/null | wc -l)
-          echo "مشاهد مولّدة موجودة: $have"
-          if [ "$have" -lt 14 ]; then
-            python -m xtrendaw.noor_next.scenes build || echo "⚠️ البناء مشي بتخطي — الرندر هيولّد عند الطلب"
-          fi
-          ls assets/footage/ | head -20
-
       - name: 🎬 الدورة (حلقة جديدة + نشر/تخزين)
         if: ${{ inputs.mode != 'purge' }}
         env:
@@ -234,6 +221,10 @@ jobs:
           # نسحب الأول: أي دفع متزامن من برّه ما يضيّعش ذاكرة الحلقة (بق حقيقي
           # 2026-09-24: دفع متزامن خلّى خطوة الخزن تخرج «مفيش تغيير» وهي فيها).
           git pull --rebase --autostash origin "$BRANCH" >/dev/null 2>&1 || true
+          # 🛡️ حارس الذاكرة: مفيش ملف مكسور يوصل لـ git.
+          # (بق حقيقي 2026-10-12: تعارض من --autostash كومّت علامات <<<<<<< في
+          #  noor_library/published/media_used → المصنع وقف 10 ساعات.)
+          python3 scripts/state_guard.py --fix --quiet || true
           for f in state/noor_state.json state/noor_pool.json \
                    state/published.json state/media_used.json \
                    state/yt_recent.json state/last_publish.json \
@@ -260,7 +251,17 @@ jobs:
           fi
           git commit -m "noor(state): ذاكرة النور بعد الحلقة [skip ci]"
           for attempt in 1 2 3 4 5; do
+            # 🛡️ الدفع بيتكرر لنفس السبب اللي كسّر الذاكرة قبل كده (تعارض أثناء
+            # السحب). فبنفحص ونصلّح قبل أي محاولة دفع — وبعد آخر محاولة كمان.
             git pull --rebase --autostash origin "$BRANCH" >/dev/null 2>&1 || true
+            python3 scripts/state_guard.py --fix --quiet || true
+            if ! git diff --quiet 2>/dev/null; then
+              git add -f state/noor_library.json state/published.json \
+                         state/media_used.json state/noor_state.json \
+                         state/noor_pool.json state/yt_recent.json \
+                         state/last_publish.json state/last_cycle.json 2>/dev/null || true
+              git commit -m "noor(state): إصلاح ذاكرة بعد تعارض [skip ci]" >/dev/null 2>&1 || true
+            fi
             if git push origin "HEAD:$BRANCH"; then echo "✓ الذاكرة اتحفظت"; break; fi
             echo "دفع محاولة $attempt فشلت — إعادة بعد 5 ثوانٍ…"
             sleep 5

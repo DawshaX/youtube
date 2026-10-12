@@ -17,14 +17,54 @@ LEDGER = ROOT / "state" / "noor_library.json"
 
 
 def _load() -> dict:
+    """يقرأ سجل المكتبة. لو الملف مكسور (تعارض/JSON تالف) بيصلّحه أو يسترجع
+    آخر نسخة سليمة — ومش بيرمي استثناء يوقف المصنع كله.
+    (بق حقيقي 2026-10-12: علامات تعارض جيت خرّبت الملف والمصنع وقف 10 ساعات.)"""
     if not LEDGER.exists():
         return {"served": []}
-    return json.loads(LEDGER.read_text(encoding="utf-8"))
+    try:
+        return json.loads(LEDGER.read_text(encoding="utf-8"))
+    except Exception as exc:  # noqa: BLE001
+        print(f"[one] ⚠️ ذاكرة المكتبة مكسورة ({type(exc).__name__}) — بصلّح…", flush=True)
+        fixed = None
+        try:
+            sys.path.insert(0, str(ROOT / "scripts"))
+            import state_guard  # noqa: PLC0415
+
+            text = LEDGER.read_text(encoding="utf-8", errors="replace")
+            fixed, how = state_guard.repair_text(text)
+            if fixed is None:
+                git_text = state_guard._from_git(str(LEDGER.relative_to(ROOT)))
+                if git_text:
+                    try:
+                        json.loads(git_text)
+                        fixed, how = git_text, "اتسترجع من git"
+                    except Exception:
+                        fixed = None
+            if fixed:
+                LEDGER.write_text(fixed, encoding="utf-8")
+                print(f"[one] 🔧 الذاكرة اتصلّحت: {how}", flush=True)
+                return json.loads(fixed)
+        except Exception as exc2:  # noqa: BLE001
+            print(f"[one] ⚠️ الإصلاح مشي ({type(exc2).__name__})", flush=True)
+        # آخر حل: نحفظ المكسور جانب ونبدأ نضيف — الدورة تكمل بدل ما تفشل
+        try:
+            LEDGER.with_suffix(".json.corrupt").write_text(
+                LEDGER.read_text(encoding="utf-8", errors="replace"), encoding="utf-8"
+            )
+        except Exception:  # noqa: BLE001
+            pass
+        print("[one] ⚠️ بدأنا ذاكرة مكتبة جديدة (المكسورة محفوظة جانب)", flush=True)
+        return {"served": []}
 
 
 def _save(data: dict) -> None:
+    """كتابة ذرّية: ملف مؤقت ثم نقل — عشان مفيش كتابة نص-نص لو الاتصال اتقطع."""
     LEDGER.parent.mkdir(parents=True, exist_ok=True)
-    LEDGER.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    text = json.dumps(data, ensure_ascii=False, indent=2)
+    tmp = LEDGER.with_suffix(".json.tmp")
+    tmp.write_text(text, encoding="utf-8")
+    tmp.replace(LEDGER)
 
 
 def _rows() -> list[dict]:
