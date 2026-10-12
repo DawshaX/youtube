@@ -10,10 +10,11 @@
     "ser-queue-s01",
     "ser-clean-l12",
     "ser-field-أرض-s01",
-    "ser-field-ألوان-s01"
+    "ser-field-ألوان-s01",
+    "ser-family-l13"
   ],
-  "turn": 18,
-  "last_series": "ser-field-ألوان",
+  "turn": 19,
+  "last_series": "ser-family",
   "done": [
     {
       "id": "ser-study-s01",
@@ -80,11 +81,17 @@
       "url": "https://www.youtube.com/watch?v=Gxzl7KMfDqs",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-family-l13",
+      "url": "https://www.youtube.com/watch?v=LO8K2KBuwjw",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-11",
     "short": 3,
-    "long": 2
+    "long": 3
   }
 }
