@@ -32,10 +32,11 @@
     "ser-field-علم الأرض-l08",
     "ser-animal-s01",
     "ser-field-أخ-s01",
-    "ser-field-عبرة-l10"
+    "ser-field-عبرة-l10",
+    "ser-field-استماع-s01"
   ],
-  "turn": 12,
-  "last_series": "ser-field-عبرة",
+  "turn": 13,
+  "last_series": "ser-field-استماع",
   "done": [
     {
       "id": "ser-study-s01",
@@ -234,11 +235,17 @@
       "url": "https://www.youtube.com/watch?v=XIpzGQEn3J4",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-field-استماع-s01",
+      "url": "https://www.youtube.com/watch?v=r-muXusR24k",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-13",
-    "short": 4,
+    "short": 5,
     "long": 2
   }
 }
