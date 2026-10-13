@@ -27,10 +27,11 @@
     "ser-sky-l13",
     "ser-lang-l13",
     "ser-field-تصميم-s01",
-    "ser-field-جبل-s01"
+    "ser-field-جبل-s01",
+    "ser-field-حديقة-s01"
   ],
-  "turn": 23,
-  "last_series": "ser-field-جبل",
+  "turn": 24,
+  "last_series": "ser-field-حديقة",
   "done": [
     {
       "id": "ser-study-s01",
@@ -199,11 +200,17 @@
       "url": "https://www.youtube.com/watch?v=QCnBEEUuDsU",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-field-حديقة-s01",
+      "url": "https://www.youtube.com/watch?v=zXFVTDkMR1E",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-13",
-    "short": 1,
+    "short": 2,
     "long": 0
   }
 }
