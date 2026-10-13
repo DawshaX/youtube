@@ -1985,9 +1985,9 @@
   "at": "2026-10-12 02:32"
  },
  "clipcache:93f8a26e1b10": {
-  "source": "video:pixabay",
-  "episode": "ser-field-حرفة-l08",
-  "at": "2026-10-12 21:28"
+  "source": "video:cache",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:45"
  },
  "https://cdn.pixabay.com/video/2020/02/11/32218-390916595_medium.mp4": {
   "source": "video:pixabay",
@@ -2106,8 +2106,8 @@
  },
  "clipcache:862f8713860b": {
   "source": "video:cache",
-  "episode": "ser-field-حرفة-l08",
-  "at": "2026-10-12 21:29"
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:47"
  },
  "https://cdn.pixabay.com/video/2022/12/11/142579-780232342_medium.mp4": {
   "source": "video:pixabay",
@@ -2115,9 +2115,9 @@
   "at": "2026-10-12 21:27"
  },
  "clipcache:e05cf38a2531": {
-  "source": "video:pixabay",
-  "episode": "ser-field-حرفة-l08",
-  "at": "2026-10-12 21:27"
+  "source": "video:cache",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:47"
  },
  "https://cdn.pixabay.com/video/2024/06/23/217842_medium.mp4": {
   "source": "video:pixabay",
@@ -2126,8 +2126,8 @@
  },
  "clipcache:2b72577fefcb": {
   "source": "video:pixabay",
-  "episode": "ser-field-حرفة-l08",
-  "at": "2026-10-12 21:28"
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:46"
  },
  "https://cdn.pixabay.com/video/2021/01/11/61676-500316016_medium.mp4": {
   "source": "video:pixabay",
@@ -2173,5 +2173,65 @@
   "source": "video:pixabay",
   "episode": "ser-field-بحر-s01",
   "at": "2026-10-13 03:56"
+ },
+ "https://cdn.pixabay.com/video/2022/12/20/143683-784129669_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:43"
+ },
+ "clipcache:f68d8686de6b": {
+  "source": "video:cache",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:47"
+ },
+ "https://cdn.pixabay.com/video/2017/08/29/11610-231571879_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:44"
+ },
+ "https://cdn.pixabay.com/video/2022/04/12/113679-698820563_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:44"
+ },
+ "clipcache:dad2ec6dff72": {
+  "source": "video:cache",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:47"
+ },
+ "https://cdn.pixabay.com/video/2018/04/28/15872-267515595_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:44"
+ },
+ "clipcache:09e80174ba8f": {
+  "source": "video:cache",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:47"
+ },
+ "https://cdn.pixabay.com/video/2026/03/05/338470_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:45"
+ },
+ "clipcache:a79f928003df": {
+  "source": "video:cache",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:47"
+ },
+ "https://cdn.pixabay.com/video/2025/01/07/251262_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:45"
+ },
+ "https://cdn.pixabay.com/video/2021/01/12/61818-500762371_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:45"
+ },
+ "https://cdn.pixabay.com/video/2024/05/14/211895_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-lang-l13",
+  "at": "2026-10-13 04:46"
  }
 }

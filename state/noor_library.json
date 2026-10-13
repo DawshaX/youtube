@@ -23,10 +23,12 @@
     "ser-rain-s01",
     "ser-kitchen-l11",
     "ser-field-إيقاع-s01",
-    "ser-field-بحر-s01"
+    "ser-field-بحر-s01",
+    "ser-sky-l13",
+    "ser-lang-l13"
   ],
-  "turn": 16,
-  "last_series": "ser-field-بحر",
+  "turn": 18,
+  "last_series": "ser-lang",
   "done": [
     {
       "id": "ser-study-s01",
@@ -171,11 +173,23 @@
       "url": "https://www.youtube.com/watch?v=v5LiUAHlBRg",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-sky-l13",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-lang-l13",
+      "url": "https://www.youtube.com/watch?v=PwpxjjcZ-eY",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-12",
     "short": 6,
-    "long": 2
+    "long": 3
   }
 }
