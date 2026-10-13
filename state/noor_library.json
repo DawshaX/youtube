@@ -33,10 +33,11 @@
     "ser-animal-s01",
     "ser-field-أخ-s01",
     "ser-field-عبرة-l10",
-    "ser-field-استماع-s01"
+    "ser-field-استماع-s01",
+    "ser-field-تاريخ-s01"
   ],
-  "turn": 14,
-  "last_series": "ser-field-استماع",
+  "turn": 15,
+  "last_series": "ser-field-تاريخ",
   "done": [
     {
       "id": "ser-study-s01",
@@ -241,11 +242,17 @@
       "url": "https://www.youtube.com/watch?v=r-muXusR24k",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-field-تاريخ-s01",
+      "url": "https://www.youtube.com/watch?v=M-0j32cG-aQ",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-13",
-    "short": 5,
+    "short": 6,
     "long": 2
   }
 }
