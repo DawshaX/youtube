@@ -20,10 +20,11 @@
     "ser-anger-s01",
     "ser-field-حرفة-l08",
     "ser-faith-s01",
-    "ser-rain-s01"
+    "ser-rain-s01",
+    "ser-kitchen-l11"
   ],
-  "turn": 11,
-  "last_series": "ser-rain",
+  "turn": 12,
+  "last_series": "ser-kitchen",
   "done": [
     {
       "id": "ser-study-s01",
@@ -150,11 +151,17 @@
       "url": "https://www.youtube.com/watch?v=Mk1ORSuP90s",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-kitchen-l11",
+      "url": "https://www.youtube.com/watch?v=lFkFGN7bGl8",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-12",
     "short": 4,
-    "long": 1
+    "long": 2
   }
 }
