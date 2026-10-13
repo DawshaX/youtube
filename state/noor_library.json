@@ -19,10 +19,11 @@
     "ser-sky-s01",
     "ser-anger-s01",
     "ser-field-حرفة-l08",
-    "ser-faith-s01"
+    "ser-faith-s01",
+    "ser-rain-s01"
   ],
-  "turn": 10,
-  "last_series": "ser-faith",
+  "turn": 11,
+  "last_series": "ser-rain",
   "done": [
     {
       "id": "ser-study-s01",
@@ -143,11 +144,17 @@
       "url": "https://www.youtube.com/watch?v=GTePdnGxe-U",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-rain-s01",
+      "url": "https://www.youtube.com/watch?v=Mk1ORSuP90s",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-12",
-    "short": 3,
+    "short": 4,
     "long": 1
   }
 }
