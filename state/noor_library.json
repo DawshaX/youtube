@@ -25,10 +25,11 @@
     "ser-field-إيقاع-s01",
     "ser-field-بحر-s01",
     "ser-sky-l13",
-    "ser-lang-l13"
+    "ser-lang-l13",
+    "ser-field-تصميم-s01"
   ],
-  "turn": 19,
-  "last_series": "ser-lang",
+  "turn": 20,
+  "last_series": "ser-field-تصميم",
   "done": [
     {
       "id": "ser-study-s01",
@@ -185,11 +186,17 @@
       "url": "https://www.youtube.com/watch?v=PwpxjjcZ-eY",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-field-تصميم-s01",
+      "url": "https://www.youtube.com/watch?v=7sjTjKOB1O0",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-12",
-    "short": 6,
+    "short": 7,
     "long": 3
   }
 }
