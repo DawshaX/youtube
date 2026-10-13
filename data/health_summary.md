@@ -1,7 +1,7 @@
 [eye] ✓ الكوكيز اتظبطت (pairs (24 كوكي)) — المصادقة شغالة
-## فحص الحالة — 2026-10-13T09:23:05+00:00
+## فحص الحالة — 2026-10-13T17:35:50+00:00
 
-**النتيجة: في مشاكل ❌ (3)** · تحذيرات: 4
+**النتيجة: في مشاكل ❌ (2)** · تحذيرات: 4
 
 | الخدمة | الحالة | تفاصيل |
 |---|---|---|
@@ -17,10 +17,11 @@
 | YouTube OAuth (النشر) | ❌ fail | كل توكنات الرفع مرفوضة: المشروع الأساسي: Bad Request |
 | PIXABAY_API_KEY (لقطات فيديو) | ✅ ok | شغال — استجابة 200 |
 | PEXELS (لقطات احتياطية) | ⚠️ warn | غير مضبوط — لقطات بكسلز بتزيد تنوّع الفيديو (اختياري) |
-| NASA_API_KEY (فضاء) | ❌ fail | HTTP -1 — ReadTimeout: HTTPSConnectionPool(host='api.nasa.gov', port=443): Read timed out. (read timeout=20) |
+| NASA_API_KEY (فضاء) | ❌ fail | HTTP 500 — {"code":500,"msg":"Internal Service Error","service_version":"v1"}
+ |
 | OPENVERSE (صور/ميديا) | ✅ ok | شغال (المفتاح اختياري) |
 | RESTCOUNTRIES (مكتبة العالم) | ✅ ok | شغال — بيانات مصر الحقيقية اتجابت (مفتاح مفعّل) |
 | FREESOUND_API_KEY (مؤثرات CC) | ⚠️ warn | غير مضبوط (اختياري) |
 | GNEWS_API_KEY (أخبار) | ✅ ok | شغال — استجابة 200 |
 | CURRENTS_API_KEY (أخبار لحظية) | ⚠️ warn | غير مضبوط (اختياري) |
-| edge-tts (صوت حقيقي) | ❌ fail | WSServerHandshakeError: 403, message='Invalid response status', url='wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4&ConnectionId=0e8dcac3725a4581a06566280d50e109&Sec-MS-GEC=●●●&Sec-MS-GEC-Version=1-143.0.3650.75' — لو من أوفلاين: طبيعي محليًا |
+| edge-tts (صوت حقيقي) | ✅ ok | صوت حقيقي اتولّد (اختبار قصير) |
