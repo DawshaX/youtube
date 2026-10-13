@@ -36,10 +36,11 @@
     "ser-field-استماع-s01",
     "ser-field-تاريخ-s01",
     "ser-faith-l13",
-    "ser-field-سؤال-l06"
+    "ser-field-سؤال-l06",
+    "ser-phone-s01"
   ],
-  "turn": 3,
-  "last_series": "ser-field-سؤال",
+  "turn": 4,
+  "last_series": "ser-phone",
   "done": [
     {
       "id": "ser-study-s01",
@@ -262,11 +263,17 @@
       "url": "https://www.youtube.com/watch?v=4kHrH00O1SA",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-phone-s01",
+      "url": "https://www.youtube.com/watch?v=HHm0-w0TQFo",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-13",
-    "short": 6,
+    "short": 7,
     "long": 3
   }
 }
