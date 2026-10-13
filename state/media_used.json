@@ -2353,5 +2353,35 @@
   "source": "video:pixabay",
   "episode": "ser-field-عبرة-l10",
   "at": "2026-10-13 13:23"
+ },
+ "https://cdn.pixabay.com/video/2022/10/31/137264-766326227_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-اجتماع-s01",
+  "at": "2026-10-13 14:09"
+ },
+ "clipcache:5c51c1272200": {
+  "source": "video:cache",
+  "episode": "ser-field-اجتماع-s01",
+  "at": "2026-10-13 14:09"
+ },
+ "https://cdn.pixabay.com/video/2017/12/17/13441-247710869_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-اجتماع-s01",
+  "at": "2026-10-13 14:09"
+ },
+ "clipcache:bae4b1b8b841": {
+  "source": "video:cache",
+  "episode": "ser-field-اجتماع-s01",
+  "at": "2026-10-13 14:09"
+ },
+ "https://cdn.pixabay.com/video/2024/10/29/238823_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-اجتماع-s01",
+  "at": "2026-10-13 14:09"
+ },
+ "clipcache:0f5e80f4fed4": {
+  "source": "video:cache",
+  "episode": "ser-field-اجتماع-s01",
+  "at": "2026-10-13 14:09"
  }
 }
