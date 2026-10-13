@@ -2248,5 +2248,45 @@
   "source": "video:pixabay",
   "episode": "ser-field-علم الأرض-l08",
   "at": "2026-10-13 09:44"
+ },
+ "https://cdn.pixabay.com/video/2020/01/03/30850-382770814_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-animal-s01",
+  "at": "2026-10-13 11:12"
+ },
+ "clipcache:50bbe78ed108": {
+  "source": "video:cache",
+  "episode": "ser-animal-s01",
+  "at": "2026-10-13 11:12"
+ },
+ "https://cdn.pixabay.com/video/2024/07/07/219829_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-animal-s01",
+  "at": "2026-10-13 11:12"
+ },
+ "clipcache:622f61b564ee": {
+  "source": "video:pixabay",
+  "episode": "ser-animal-s01",
+  "at": "2026-10-13 11:12"
+ },
+ "https://cdn.pixabay.com/video/2020/07/30/46026-447087782_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-animal-s01",
+  "at": "2026-10-13 11:12"
+ },
+ "clipcache:2670c0524de7": {
+  "source": "video:pixabay",
+  "episode": "ser-animal-s01",
+  "at": "2026-10-13 11:12"
+ },
+ "https://cdn.pixabay.com/video/2025/03/15/264964_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-animal-s01",
+  "at": "2026-10-13 11:12"
+ },
+ "clipcache:8e1564be9d5a": {
+  "source": "video:pixabay",
+  "episode": "ser-animal-s01",
+  "at": "2026-10-13 11:12"
  }
 }

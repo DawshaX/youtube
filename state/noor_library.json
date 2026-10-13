@@ -29,10 +29,11 @@
     "ser-field-تصميم-s01",
     "ser-field-جبل-s01",
     "ser-field-حديقة-s01",
-    "ser-field-علم الأرض-l08"
+    "ser-field-علم الأرض-l08",
+    "ser-animal-s01"
   ],
-  "turn": 8,
-  "last_series": "ser-field-علم الأرض",
+  "turn": 9,
+  "last_series": "ser-animal",
   "done": [
     {
       "id": "ser-study-s01",
@@ -213,11 +214,17 @@
       "url": "https://www.youtube.com/watch?v=ndwH6KsQJl4",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-animal-s01",
+      "url": "https://www.youtube.com/watch?v=C7ojr-T8V2I",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-13",
-    "short": 2,
+    "short": 3,
     "long": 1
   }
 }
