@@ -1956,8 +1956,8 @@
  },
  "clipcache:cf30cb61fdb2": {
   "source": "video:pixabay",
-  "episode": "ser-field-علم الأرض-l08",
-  "at": "2026-10-13 09:44"
+  "episode": "ser-field-عبرة-l10",
+  "at": "2026-10-13 13:22"
  },
  "https://cdn.pixabay.com/video/2019/06/13/24386-342401485_medium.mp4": {
   "source": "video:pixabay",
@@ -1975,9 +1975,9 @@
   "at": "2026-10-12 02:25"
  },
  "clipcache:3b69a475f46e": {
-  "source": "video:cache",
-  "episode": "ser-kitchen-l11",
-  "at": "2026-10-13 01:05"
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-l10",
+  "at": "2026-10-13 13:23"
  },
  "https://cdn.pixabay.com/video/2022/09/04/130226-746395325_medium.mp4": {
   "source": "video:pixabay",
@@ -1996,8 +1996,8 @@
  },
  "clipcache:bf1ffbf2969d": {
   "source": "video:pixabay",
-  "episode": "ser-field-أخ-s01",
-  "at": "2026-10-13 12:38"
+  "episode": "ser-field-عبرة-l10",
+  "at": "2026-10-13 13:23"
  },
  "https://cdn.pixabay.com/video/2023/09/04/179120-861046347_medium.mp4": {
   "source": "video:pixabay",
@@ -2338,5 +2338,20 @@
   "source": "video:pixabay",
   "episode": "ser-field-أخ-s01",
   "at": "2026-10-13 12:40"
+ },
+ "https://cdn.pixabay.com/video/2023/09/04/179116-861046333_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-l10",
+  "at": "2026-10-13 13:22"
+ },
+ "https://cdn.pixabay.com/video/2022/09/02/129992-746164384_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-l10",
+  "at": "2026-10-13 13:23"
+ },
+ "https://cdn.pixabay.com/video/2022/08/12/127701-739144766_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-l10",
+  "at": "2026-10-13 13:23"
  }
 }
