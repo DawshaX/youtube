@@ -38,10 +38,11 @@
     "ser-faith-l13",
     "ser-field-سؤال-l06",
     "ser-phone-s01",
-    "ser-host-s01"
+    "ser-host-s01",
+    "ser-field-وهم ونفس-l08"
   ],
-  "turn": 6,
-  "last_series": "ser-host",
+  "turn": 7,
+  "last_series": "ser-field-وهم ونفس",
   "done": [
     {
       "id": "ser-study-s01",
@@ -276,11 +277,17 @@
       "url": "https://www.youtube.com/watch?v=B_eRoSWGJ44",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-field-وهم ونفس-l08",
+      "url": "https://www.youtube.com/watch?v=HdiSGz6QU0o",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-13",
     "short": 8,
-    "long": 3
+    "long": 4
   }
 }
