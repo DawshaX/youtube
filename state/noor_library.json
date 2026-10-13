@@ -34,10 +34,12 @@
     "ser-field-أخ-s01",
     "ser-field-عبرة-l10",
     "ser-field-استماع-s01",
-    "ser-field-تاريخ-s01"
+    "ser-field-تاريخ-s01",
+    "ser-faith-l13",
+    "ser-field-سؤال-l06"
   ],
-  "turn": 15,
-  "last_series": "ser-field-تاريخ",
+  "turn": 2,
+  "last_series": "ser-field-سؤال",
   "done": [
     {
       "id": "ser-study-s01",
@@ -248,11 +250,23 @@
       "url": "https://www.youtube.com/watch?v=M-0j32cG-aQ",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-faith-l13",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-سؤال-l06",
+      "url": "https://www.youtube.com/watch?v=4kHrH00O1SA",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-13",
     "short": 6,
-    "long": 2
+    "long": 3
   }
 }
