@@ -21,10 +21,11 @@
     "ser-field-حرفة-l08",
     "ser-faith-s01",
     "ser-rain-s01",
-    "ser-kitchen-l11"
+    "ser-kitchen-l11",
+    "ser-field-إيقاع-s01"
   ],
-  "turn": 13,
-  "last_series": "ser-kitchen",
+  "turn": 14,
+  "last_series": "ser-field-إيقاع",
   "done": [
     {
       "id": "ser-study-s01",
@@ -157,11 +158,17 @@
       "url": "https://www.youtube.com/watch?v=lFkFGN7bGl8",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-field-إيقاع-s01",
+      "url": "https://www.youtube.com/watch?v=hGCIx5vzcZ0",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-12",
-    "short": 4,
+    "short": 5,
     "long": 2
   }
 }
