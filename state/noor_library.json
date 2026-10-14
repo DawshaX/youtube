@@ -52,10 +52,11 @@
     "ser-field-علم الحياة-l08",
     "ser-day-s01",
     "ser-phone-l13",
-    "ser-field-تدوير-s01"
+    "ser-field-تدوير-s01",
+    "ser-field-جغرافيا-s01"
   ],
-  "turn": 11,
-  "last_series": "ser-field-تدوير",
+  "turn": 12,
+  "last_series": "ser-field-جغرافيا",
   "done": [
     {
       "id": "ser-study-s01",
@@ -374,11 +375,17 @@
       "url": "https://www.youtube.com/watch?v=MjyP9Gfl2cs",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-field-جغرافيا-s01",
+      "url": "https://www.youtube.com/watch?v=yCyXcSiYrJY",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-15",
-    "short": 1,
+    "short": 2,
     "long": 0
   }
 }
