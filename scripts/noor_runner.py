@@ -1211,6 +1211,53 @@ REC_NAMES = {"husary": "محمود خليل الحصري", "minshawi": "محمد
              "abdulbasitmurattal": "عبد الباسط عبد الصمد (مرتّل)"}
 
 
+def _write_status(st: dict, uniq: list) -> None:
+    """🆕 ملف حالة المصنع للوحة التحكم على الموقع.
+
+    **إضافة** — bينكتب جنب `noor.json` وما بيغيّرش حاجة فيه. القيم كلها من
+    ملفات المصنع الحقيقية (صفر أرقام مكتوبة بالإيد)، عشان اللوحة تقول الحقيقة
+    دايمًا. أي فشل هنا ما بيأثّرش على النشر.
+    """
+    try:
+        pub_path = ROOT / "state" / "published.json"
+        pubs = []
+        try:
+            pubs = json.loads(pub_path.read_text(encoding="utf-8"))
+            pubs = pubs if isinstance(pubs, list) else []
+        except Exception:
+            pubs = []
+        shorts = st.get("shorts") or []
+        longs = st.get("longs") or []
+        try:
+            from xtrendaw import noor_vault
+            ready = int(noor_vault.count())
+        except Exception:
+            ready = 0
+        last = (shorts[-1] if shorts else {}) or {}
+        data = {
+            "at": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
+            "ts": int(time.time()),
+            "brand": BRAND,
+            "published_total": len(pubs),
+            "shorts_total": len(shorts),
+            "longs_total": len(longs),
+            "ready_to_publish": ready,
+            "episodes_on_site": len(uniq),
+            "last_title": str(last.get("title") or ""),
+            "last_at": str(last.get("at") or ""),
+            "last_url": str(last.get("url") or ""),
+            "last_kind": str(last.get("kind") or ""),
+            "hour_gap_min": int(HOUR_GAP),
+            "dry": bool(DRY),
+        }
+        (SITE_JSON.parent / "status.json").write_text(
+            json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"[noor] 📊 لوحة التحكم اتحدّثت: {data['published_total']} منشور "
+              f"· {ready} جاهز في الخزّان", flush=True)
+    except Exception as exc:                      # noqa: BLE001
+        print(f"[noor] ⚠ تحديث لوحة التحكم فشل: {type(exc).__name__}", flush=True)
+
+
 def _site_sync() -> None:
     """يحدّث قائمة الموقع: كل حلقة اتنشرت أو اتخزنت بتبان على صفحة نور.
 
@@ -1263,6 +1310,9 @@ def _site_sync() -> None:
              "count": len(uniq), "episodes": uniq[:60]},
             ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"[noor] 🌐 الموقع اتحدّث: {len(uniq)} حلقة معروضة", flush=True)
+
+        # ── 🆕 حالة المصنع للوحة التحكم (إضافة فوق الملف القديم، ما بتمسّهوش)
+        _write_status(st, uniq)
     except Exception as exc:                      # noqa: BLE001
         print(f"[noor] ⚠ تحديث الموقع فشل: {type(exc).__name__}", flush=True)
 

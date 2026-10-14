@@ -15,6 +15,7 @@
 """
 from __future__ import annotations
 
+import json
 import os
 import time
 from datetime import datetime
@@ -321,6 +322,34 @@ def run_pass() -> None:
     except Exception:
         pass
     _daily_digest()
+    publish_bot_identity()
+
+
+def publish_bot_identity() -> None:
+    """🆕 ينشر اسم البوت على الموقع عشان **أزرار التحكم** تشتغل بلا أي سر.
+
+    الفكرة: الموقع ثابت (GitHub Pages) ومايقدرش يشيل توكن GitHub أبدًا
+    (كان هيتسرّب فورًا). فالحل: الموقع يبعت أوامر للبوت عبر تليجرام، والبوت
+    هو اللي بينفّذ. عشان كده الموقع محتاج اسم البوت بس — وهو مش سر.
+    """
+    try:
+        res = _call("getMe")
+        if not res.get("ok"):
+            return
+        user = res.get("result") or {}
+        username = str(user.get("username") or "").strip()
+        if not username:
+            return
+        out = settings.ROOT / "public" / "bot.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps({
+            "username": username,
+            "name": str(user.get("first_name") or ""),
+            "at": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
+            "commands": ["stats", "status", "next", "pause", "resume", "watch"],
+        }, ensure_ascii=False, indent=1), encoding="utf-8")
+    except Exception:
+        pass
 
 
 def run_loop(seconds: int = 1500) -> None:
