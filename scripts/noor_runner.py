@@ -164,20 +164,130 @@ def _too_soon() -> float:
 
 
 
-def _dupe_title(title: str) -> bool:
-    """🚫 ممنوع نشر نفس العنوان تاني (حصل فعلًا ٥+ مرات ⇒ إشارة «محتوى مكرر» عند يوتيوب)."""
-    if not title:
-        return False
-    norm = re.sub(r"\\s+", " ", str(title)).strip()
-    if not norm:
+_TITLE_FEED_CACHE: dict = {"at": 0.0, "titles": set()}
+_CHANNEL_ID = "UC2PCynDtd_wtPrgoAuqH6yw"     # «روح الله» — القناة الوحيدة للنشر
+
+
+def _norm_title(t: str) -> str:
+    """تطبيع قوي للعنوان: إيموجي وترقيم ومسافات وفروق الرسم العربي تتشال.
+
+    ليه قوي كده؟ لأن «معلومة تُضيء: X» و«معلومة تُضئ: X» و«معلومة تُضيء X!!»
+    كلهم **نفس العنوان** في نظر يوتيوب — لازم يبقوا نفس الحاجة في نظرنا كمان.
+    """
+    s = str(t or "")
+    # شيل الإيموجي والرموز بكل نطاقاتها الشائعة
+    s = re.sub(r"[\U0001F000-\U0001FAFF\u2190-\u2BFF\u2600-\u27BF\uFE0F\u200d]", " ", s)
+    # شيل التشكيل العربي (فتحة/ضمة/كسرة/شدة/سكون/تنوين…) — «تُضيء» و«تضيء» نفس الكلمة
+    s = re.sub(r"[\u064B-\u065F\u0670\u06D6-\u06ED]", "", s)
+    s = re.sub(r"[^\w\u0621-\u064A\u0660-\u0669]+", " ", s)
+    # توحيد الرسم العربي: الألف والياء والتاء المربوطة
+    s = re.sub(r"[\u0623\u0625\u0622\u0671]", "\u0627", s)
+    s = s.replace("\u0649", "\u064A").replace("\u0629", "\u0647")
+    return re.sub(r"\s+", " ", s).strip().casefold()
+
+
+def _channel_titles() -> set:
+    """عناوين آخر فيديوهات **القناة نفسها** — من تغذية RSS العامة.
+
+    ⚠️ السبب الحقيقي لوجود الدالة دي (اكتشاف 2026-10-14):
+    لقينا **عنوانين متطابقين منشورين في نفس الساعة**، والمشترك في سجل
+    المصنع كان **واحد بس** — يعني **مصنع تاني بينشر على نفس القناة**.
+    أي حارس تكرار بيقرا سجل مصنع واحد بس مش هيشوف تكرار المصانع التانية.
+
+    الحل: نقرا القناة نفسها. معلومة عامة (RSS مجاني بلا مفتاح)، وبتتخزّن
+    ٨ دقايق عشان ما نزعّجش الخدمة. أي فشل = مجموعة فاضية (فشل آمن).
+    """
+    now = time.time()
+    if now - float(_TITLE_FEED_CACHE["at"] or 0) < 480:
+        return set(_TITLE_FEED_CACHE["titles"] or set())
+    titles = set()
+    try:
+        import urllib.request
+        req = urllib.request.Request(
+            f"https://www.youtube.com/feeds/videos.xml?channel_id={_CHANNEL_ID}",
+            headers={"User-Agent": "noor-factory/1.0"})
+        with urllib.request.urlopen(req, timeout=12) as r:
+            xml = r.read().decode("utf-8", "ignore")
+        for t in re.findall(r"<media:title>(.*?)</media:title>", xml):
+            titles.add(_norm_title(t))
+    except Exception:
+        titles = set()
+    _TITLE_FEED_CACHE["at"] = now
+    _TITLE_FEED_CACHE["titles"] = titles
+    return titles
+
+
+def _title_recent_enough(title: str, hours: int = 20) -> bool:
+    """هل فيه عنوان بنفس أول ٤ كلمات اتنشر قريب؟ (حماية من «شبه تكرار»)
+
+    يوتيوب بيحاسب على **التشابه** مش التطابق بس. «معلومة تُضيء: X» و
+    «معلومة تُضيء: Y» شبه متطابقين لو النمط نفسه اتكرّر ٢٠ مرة في اليوم.
+    """
+    norm = _norm_title(title)
+    head = " ".join(norm.split()[:4])
+    if len(head.split()) < 3:
         return False
     try:
-        from xtrendaw import state
-        recent = [re.sub(r"\\s+", " ", str(p.get("title") or "")).strip()
-                  for p in state.published_log()[-250:]]
+        st = _load()
+        for bucket in ("shorts", "longs"):
+            for row in (st.get(bucket) or [])[-40:]:
+                other = _norm_title(row.get("title") or "")
+                if " ".join(other.split()[:4]) == head:
+                    return True
     except Exception:
+        pass
+    return False
+
+
+def _dupe_title(title: str) -> bool:
+    """🚫 ممنوع نشر نفس العنوان تاني — **ولا حتى من مصنع تاني**.
+
+    المصادر (أي واحدة تلاقي تكرار = رفض):
+      1) سجل النشر بتاع المصنع (٢٥٠ عنوان أخير).
+      2) أرشيف شورتس/طويلة في ذاكرة المصنع.
+      3) **القناة نفسها** — عناوين RSS الحيّة (بتمسك المصانع التانية).
+
+    وكمان: **منع الشبه-تكرار** — لو نفس أول ٤ كلمات اتكرّر في آخر ٤٠ حلقة،
+    ده سبام شكلي حتى لو العنوان مختلف حرفيًا.
+
+    ⚠️ باج حقيقي اتصلح هنا (2026-10-14): الكود القديم كان مكتوب
+    `re.sub(r"\\s+", ...)` — يعني باك-سلاش **حرفي** مش مسافة. النتيجة:
+    التطبيع ما كانش بيعمل حاجة أصلًا وفحص التكرار كان **مكسور من الأصل**.
+    """
+    if not title:
         return False
-    return norm in {t for t in recent if t}
+    norm = _norm_title(title)
+    if not norm:
+        return False
+
+    seen = set()
+    try:
+        from xtrendaw import state
+        for p in state.published_log()[-250:]:
+            seen.add(_norm_title(p.get("title") or ""))
+    except Exception:
+        pass
+    try:
+        st = _load()
+        for bucket in ("shorts", "longs"):
+            for row in (st.get(bucket) or [])[-120:]:
+                seen.add(_norm_title(row.get("title") or ""))
+    except Exception:
+        pass
+    if norm in seen:
+        print(f"[noor] 🚫 عنوان مكرّر في سجلات المصنع: {title[:60]}", flush=True)
+        return True
+
+    if norm in _channel_titles():
+        print("[noor] 🚫 العنوان ده **موجود فعلًا على القناة** "
+              "(يمكن من مصنع تاني): " + title[:60], flush=True)
+        return True
+
+    if _title_recent_enough(title):
+        print("[noor] 🚫 نمط العنوان اتكرّر قريب (شبه-تكرار): "
+              + title[:60], flush=True)
+        return True
+    return False
 
 
 def _polish(video, cover, title):
@@ -1047,7 +1157,10 @@ def _long_series_once() -> int:
         print("[noor] 🎥 مفيش قصص كفاية للطويل — بنرجع للسورة الكاملة", flush=True)
         return _long_surah_once()
     work = WORK / f"longq_{int(time.time())}"
-    res = noor_long.build_long_series(picks, work, max_items=len(picks))
+    _lo = _long_opts()
+    res = noor_long.build_long_series(
+        picks, work, max_items=min(len(picks), _lo["max_items"]),
+        target_sec=_lo["target_sec"], budget_sec=_lo["budget_sec"])
     names = " · ".join(str(p.get("who") or "") for p in picks if p.get("who"))
     from xtrendaw.noor_sense import long_title, long_desc
     title = long_title("qissa", names)
@@ -1145,6 +1258,25 @@ def _long_surah_once() -> int:
 
 
 
+
+def _long_opts() -> dict:
+    """🆕 إعدادات الطويل: هدف المدة + سقف العدد + ميزانية الوقت.
+
+    الأرقام الافتراضية مضبوطة على الخطة (١٢–١٨ دقيقة = مصدر وقت المشاهدة)،
+    وميزانية الوقت ٢٤٠٠ ثانية عشان الدورة (مهلة ٤٥ دقيقة) ما تموتش.
+    """
+    def _num(k: str, d: str) -> float:
+        try:
+            return float(os.environ.get(k) or d)
+        except ValueError:
+            return float(d)
+
+    return {
+        "target_sec": _num("NOOR_LONG_TARGET_MIN", "13") * 60.0,
+        "max_items": int(_num("NOOR_LONG_MAX_ITEMS", "18")),
+        "budget_sec": _num("NOOR_LONG_BUDGET_MIN", "32") * 60.0,
+    }
+
 def _long_kind_once(kind: str) -> int:
     """🎥 حلقة طويلة من سلسلة موثّقة: قصص / معجزات / حمد / نصر."""
     from xtrendaw import noor_long, noor_plan
@@ -1156,13 +1288,16 @@ def _long_kind_once(kind: str) -> int:
         spec = dict(spec)
         spec["id"] = key
         picks.append(spec)
-        if len(picks) >= int(os.environ.get("NOOR_LONG_ITEMS", "3")):
+        if len(picks) >= int(_long_opts()["max_items"]):
             break
     if len(picks) < 2:
         print(f"[noor] 🎥 سلسلة {kind} خلصت — بنرجع لسورة كاملة", flush=True)
         return _long_surah_once()
     work = WORK / f"long_{kind}_{int(time.time())}"
-    res = noor_long.build_long_series(picks, work, max_items=len(picks))
+    _lo = _long_opts()
+    res = noor_long.build_long_series(
+        picks, work, max_items=min(len(picks), _lo["max_items"]),
+        target_sec=_lo["target_sec"], budget_sec=_lo["budget_sec"])
     names = " · ".join(str(p.get("who") or "") for p in picks if p.get("who"))
     labels = {
         "qissa": "قصص الأنبياء", "mujiza": "معجزات من القرآن",

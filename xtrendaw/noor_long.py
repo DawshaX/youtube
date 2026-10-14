@@ -28,17 +28,47 @@ def _dur(path: Path) -> float:
 
 
 def build_long_series(items: list[dict], workdir: Path,
-                      max_items: int = 5) -> dict:
+                      max_items: int = 5,
+                      target_sec: float = 0.0,
+                      budget_sec: float = 0.0) -> dict:
     """حلقة طويلة = كذا قصة/آية متتابعة بمحرّك نور السينمائي.
 
     items: عناصر فيها {kind, hook, surah, ayah, ayah_to, who, theme}
+
+    🆕 `target_sec` — هدف المدة بالثواني. لو محدد، الدالة بتكمّل مقاطع لحد ما
+    توصل للهدف **بشرطين للأمان**:
+      • `max_items` سقف صلب على العدد (ما تتعداه أبدًا).
+      • `budget_sec` ميزانية وقت: لو الرندر خد وقت أكبر، بتوقف وبتجمّع اللي
+        خلص. ده بيحمي دورة المصنع من الموت بالتايم أوت.
+
+    ليه ده مهم؟ القياس الحقيقي: أطول فيديو على القناة كان **٣.٨ دقيقة**،
+    والخطة بتقول ١٠–٢٠ دقيقة هو مصدر وقت المشاهدة الحقيقي (Long-form هو
+    اللي بيجي منه المشتركين). الهدف الصلب بالعدد لوحده كان بيخلي الرندر
+    يا إما قصير أوي أو بيضرب التايم أوت.
     """
+    import time as _t
+
     from . import noor_premium as np
     from .noor_pool import APPLY
 
     workdir.mkdir(parents=True, exist_ok=True)
     segs: list[Path] = []
-    used = items[:max_items]
+    started = _t.time()
+    total_sec = 0.0
+    hard_cap = max(1, int(max_items))
+    used: list[dict] = []
+    for it in items:
+        if len(used) >= hard_cap:
+            break
+        if used and target_sec and total_sec >= target_sec:
+            break
+        if used and budget_sec and (_t.time() - started) >= budget_sec:
+            print(f"[noor] ⏱️ ميزانية الوقت خلصت عند {total_sec / 60:.1f} دقيقة "
+                  f"— بنجمّع اللي خلص", flush=True)
+            break
+        used.append(it)
+    if not used and items:
+        used = items[:1]
     for i, it in enumerate(used):
         sub = workdir / f"seg{i:02d}"
         title_piece = it.get("who") or it.get("theme") or ""
@@ -58,8 +88,9 @@ def build_long_series(items: list[dict], workdir: Path,
                          "brand": f"نور — {it.get('theme') or 'قصص القرآن'}"},
                         sub)
         segs.append(res["video"])
-        print(f"[noor] 🎞️ مقطع {i + 1}/{len(used)} خلص ({title_piece})",
-              flush=True)
+        total_sec += float(_dur(res["video"]) or 0)
+        print(f"[noor] 🎞️ مقطع {i + 1}/{len(used)} خلص ({title_piece}) — "
+              f"الإجمالي {total_sec / 60:.1f} دقيقة", flush=True)
 
     if not segs:
         raise RuntimeError("مفيش مقاطع للطويل")

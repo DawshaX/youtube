@@ -271,8 +271,22 @@ def title_of(*, kind: str, hook: str, ref: str = "", reciter: str = "") -> str:
     return title[:95].strip(" |")
 
 
+def _dedupe_names(names: str, limit: int = 4) -> str:
+    """يشيل الأسماء المكرّرة ويرتّبهم — العنوان ما يقولش «يوسف · يوسف · يعقوب».
+
+    (باج حقيقي على القناة: الفيديو الطويل الوحيد كان عنوانه
+     «قصص من القرآن: يوسف · يوسف · يعقوب» — اسم مكرّر في وش المشاهد.)
+    """
+    seen: list[str] = []
+    for raw in re.split(r"[·،,|]", str(names or "")):
+        n = raw.strip(" .·،,")
+        if n and n not in seen:
+            seen.append(n)
+    return " · ".join(seen[:limit])
+
+
 def long_title(kind: str, names: str) -> str:
-    names = (names or "").strip()
+    names = _dedupe_names(names)
     if kind == "quran":
         return f"سورة {names} كاملة | تلاوة هادئة"[:95]
     labels = {

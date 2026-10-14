@@ -176,10 +176,16 @@ def _publish_life(row: dict) -> int:
     title = f"{made['lines'][0][:70]} | {row.get('series_title') or 'نور'}"
     src = row.get("source") or ""
     credits = "\n".join(made["credits"]) or "لقطات مرخّصة."
-    who = made.get("soul")
-    host = f"الشخصية: {who}، أصلية للمصنع.\n" if who else ""
-    craft = f"أسلوب اللقطات: {made.get('format')} — صناعة المصنع، مش نسخ لفيديو.\n" if made.get("format") else ""
-    desc = f"{host}{craft}{row.get('spoken') or ''}\n\n{src}\n\n{credits}"
+    # ⚠️ درس حقيقي (2026-10-14): الوصف العام كان بيبدأ بـ
+    #   «الشخصية: ليل، أصلية للمصنع. أسلوب اللقطات: … — صناعة المصنع»
+    #   يعني **ملاحظات إنتاج داخلية** في وش المشاهد. ده (١) بيقول للمشاهد
+    #   إن ده محتوى آلي فيقلّ ثقته، (٢) بيحرق أول ١٥٠ حرف — وهي الجزء اللي
+    #   يوتيوب بياخده للبحث والاقتراح.
+    #   الحل: الوصف يبدأ **بالمحتوى نفسه**، وبعدين الفايدة، وبعدين الإسناد.
+    body = (row.get("spoken") or "").strip()
+    benefit = str(row.get("benefit") or row.get("source") or "").strip()
+    fair = "🤍 محتوى مصنوع بعناية. بلا وجوه حقيقية، وبلا وسائط محفوظة الحقوق."
+    desc = "\n\n".join(x for x in (body, benefit, src, credits, fair) if x)
     url, err = runner._publish(made["video"], None, title[:95], desc, ["نور", row.get("series_title") or "خير"], synthetic=True)
     if err in ("quota_guard", "too_soon"):
         return 2
