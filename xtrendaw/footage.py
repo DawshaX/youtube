@@ -585,8 +585,15 @@ def fetch_clip(query: str | list[str], seconds: float, workdir: Path, seed: str,
     (docs/MEDIA_VAULT_SOURCES.md) وXT_NET_FOOTAGE=1.
     ترتيب السلسلة زي البلوبرنت: بيكساباي ← بكسلز ← كومنز ← الأرشيف ← ناسا.
     """
-    # ٠) المشاهد المولّدة داخليًا الأول — بلا شبكة وبلا ترخيص خارجي، وبلا حد.
-    if source in ("auto", "vault", "gen"):
+    # ٠) كنز المشاهد المولّدة — كان **الأول** في السلسلة، وده كان بيخلي
+    #    الفيديو كله خلفيات مولّدة. شفناها بالعين في رندر حقيقي على السيرفر:
+    #    الحلقة كلها ٤ مشاهد متشابهة (تدرّج ضوء على ظلام) — من غير أي لقطة
+    #    حقيقية، مع إن المصادر الشبكية مفعّلة (XT_NET_FOOTAGE=1)! السبب إن
+    #    الكنز الداخلي كان بيرجّع من أول سطر، فالشبكة ما بتوصلش دورها أصلًا.
+    #    وده أخطر حاجة: **٩٦٢ فيديو بنفس الخلفيات** = بصمة «محتوى متشابه».
+    #    بقى **احتياطي مضمون** في آخر السلسلة. الرجوع للأصل: XT_VAULT_FIRST=1
+    if (source in ("auto", "vault", "gen")
+            and settings.get("XT_VAULT_FIRST", "0") == "1"):
         local = _vault_local(query, seconds, workdir, seed, require_match=True)
         if local is not None:
             print(f"[footage] 🎨 مشهد مولّد داخليًا لـ«{query[:30]}»", flush=True)
@@ -692,7 +699,10 @@ def fetch_clip(query: str | list[str], seconds: float, workdir: Path, seed: str,
         # تشخيص صريح: الفيديو كله طلع خلفيات مولّدة قبل كده لأن الفشل كان صامت
         print(f"[footage] ✗ مفيش لقطة شبكية لـ«{query[:34]}» ({source}) — "
               "ملاذ أخير مولّد", flush=True)
-        return _vault_local(query, seconds, workdir, seed, require_match=False)
+        # الملاذ الأخير: الكنز الداخلي (ده دوره الصح) — مطابق للكلمة أولًا،
+        # وإلا أي مشهد مولّد عشان الرندر ما يفشلش أبدًا.
+        return (_vault_local(query, seconds, workdir, seed, require_match=True)
+                or _vault_local(query, seconds, workdir, seed, require_match=False))
 
     # ٣) سجّل الاستخدام دايمًا — جديد ولا جايب من الكاش.
     # بق 2026-09-19: كان التسجيل جوّه فرع «التحميل الجديد» بس، فلما اللقطة
