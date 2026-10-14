@@ -111,14 +111,26 @@ jobs:
         if: always()
         run: |
           mkdir -p /tmp/out
-          find work -maxdepth 2 -name "*.mp4" -size +100k 2>/dev/null | head -3 | while read f; do
-            cp "$f" /tmp/out/ 2>/dev/null || true
-          done
-          find work -maxdepth 2 -name "cover*.png" 2>/dev/null | head -3 | while read f; do
-            cp "$f" /tmp/out/ 2>/dev/null || true
-          done
+          echo "── كل مقاطع الفيديو في مجلد العمل ──"
+          find "$GITHUB_WORKSPACE" -name "*.mp4" -size +100k 2>/dev/null | head -20 || true
+          echo "── الأغلفة ──"
+          find "$GITHUB_WORKSPACE" -name "cover*.png" 2>/dev/null | head -10 || true
+
+          # أحدث وأكبر فيديو = الحلقة النهائية (بعد التمريرة السينمائية)
+          V=$(find "$GITHUB_WORKSPACE" -name "*.mp4" -size +100k 2>/dev/null | xargs -r ls -S 2>/dev/null | head -1)
+          if [ -n "$V" ]; then
+            cp "$V" /tmp/out/final_episode.mp4
+            echo "✅ الفيديو النهائي: $V"
+            ffmpeg -hide_banner -i "$V" 2>&1 | grep -E "Duration|Stream" | head -4 || true
+          else
+            echo "⚠️ ملقيتش فيديو"
+          fi
+
+          C=$(find "$GITHUB_WORKSPACE" -name "cover*.png" 2>/dev/null | head -1)
+          [ -n "$C" ] && cp "$C" /tmp/out/cover.png && echo "✅ الغلاف: $C"
+
           cp /tmp/pro_check.log /tmp/out/ 2>/dev/null || true
-          ls -la /tmp/out || true
+          ls -la /tmp/out
 
       - uses: actions/upload-artifact@v4
         if: always()
