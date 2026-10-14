@@ -251,7 +251,12 @@ jobs:
           # (بق حقيقي 2026-10-12: تعارض من --autostash كومّت علامات <<<<<<< في
           #  noor_library/published/media_used → المصنع وقف 10 ساعات.)
           python3 scripts/state_guard.py --fix --quiet || true
-          for f in state/noor_state.json state/noor_pool.json \
+          # 🎥 مصنع الطويل: يبني الحلقات الطويلة من المكتبة لو ناقصة.
+          #    (القياس: أطول حاجة في المكتبة كانت **٤٥ ثانية** اسمها «طويل».
+          #     ووقت المشاهدة — اللي بيجيب المشتركين — بيتولّد من الطويل.)
+          #    آمن: لو موجودة مش بيكرّرها، ولو وقع ما بيوقفش النشر.
+          NOOR_LONG_WRITE=1 python3 scripts/noor_long_maker.py 2>&1 | tail -12 || true
+          for f in data/noor_next/one_library.jsonl \
                    state/published.json state/media_used.json \
                    state/yt_recent.json state/last_publish.json \
                    state/last_cycle.json state/noor_library.json; do
