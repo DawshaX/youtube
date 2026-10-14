@@ -1,6 +1,7 @@
 """رندر حلقة مكتملة: لقطة حية لكل جملة، شخصية أصلية، وأسلوب لقطات من المصنع."""
 from __future__ import annotations
 
+import os
 import subprocess
 from pathlib import Path
 
@@ -16,6 +17,10 @@ from .studio import burn_words, circle, halo, layer, licensed_whoosh, mark, mix_
 from .timeline import sentences, sacred_text
 
 W, H, FPS = 1080, 1920, 30
+# 🧱 سقف سلسلة الانتقالات في أمر ffmpeg واحد.
+#    ليه؟ ffmpeg بيحجز كل مدخل في الذاكرة. سلسلة xfade بـ١٦ مدخل
+#    = انفجار ذاكرة (متجرّب). ٨ آمنة ومجرّبة.
+MAX_CHAIN = max(2, int(os.environ.get("NOOR_XFADE_CHAIN") or "8"))
 
 
 def _run(cmd: list[str]) -> None:
@@ -132,7 +137,37 @@ def _spans(lines: list[str], total: float) -> list[tuple[float, float]]:
 
 
 def _join(clips: list[Path], durs: list[float], transition: str, dst: Path) -> float:
-    """انتقال حقيقي بين اللقطات. القصّ الجاف لوحده مش مونتاج."""
+    """مونتاج بانتقالات حقيقية — **بدون سقف على عدد اللقطات**.
+
+    ليه هرمي (مستويات)؟ الحلقة الطويلة (١٠–٢٠ دقيقة) فيها ٥٠–٢٠٠ جملة،
+    وقبل كده كان بيتولّد أمر ffmpeg واحد فيه ٢٠٠ مدخل و١٩٩ انتقال ⇒
+    انفجار ذاكرة أكيد. دلوقتي: بنقسّم لمجموعات ٨، كل مجموعة تتعمل لوحدها،
+    وبعدين نتائج المجموعات تتجمع بنفس الطريقة — لحد ما تفضل حاجة واحدة.
+    النتيجة: انتقالات ناعمة على الطول كله، والذاكرة ثابتة مهما طالت الحلقة.
+    """
+    if len(clips) <= 1:
+        return _join_chain(clips, durs, transition, dst)
+    if len(clips) <= MAX_CHAIN:
+        return _join_chain(clips, durs, transition, dst)
+    chunks: list[Path] = []
+    cdurs: list[float] = []
+    for i in range(0, len(clips), MAX_CHAIN):
+        part = clips[i:i + MAX_CHAIN]
+        pdur = durs[i:i + MAX_CHAIN]
+        if len(part) == 1:
+            chunks.append(part[0])
+            cdurs.append(pdur[0])
+            continue
+        out = dst.with_name(f"{dst.stem}.p{i // MAX_CHAIN}{dst.suffix}")
+        cdurs.append(_join_chain(part, pdur, transition, out))
+        chunks.append(out)
+        print(f"[studio] 🧩 مجموعة مونتاج {i // MAX_CHAIN + 1}: "
+              f"{len(part)} لقطة", flush=True)
+    return _join(chunks, cdurs, transition, dst)
+
+
+def _join_chain(clips: list[Path], durs: list[float], transition: str, dst: Path) -> float:
+    """سلسلة انتقالات واحدة — للعدد الصغير بس (شوف MAX_CHAIN)."""
     if len(clips) == 1:
         dst.write_bytes(clips[0].read_bytes())
         return durs[0]

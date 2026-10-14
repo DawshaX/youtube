@@ -10,8 +10,38 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-SHORT_CAP = int(os.environ.get("NOOR_SHORTS_PER_DAY", "8"))
-LONG_CAP = int(os.environ.get("NOOR_LONGS_PER_DAY", "4"))
+SHORT_CAP_BASE = int(os.environ.get("NOOR_SHORTS_PER_DAY", "8"))
+LONG_CAP_BASE = int(os.environ.get("NOOR_LONGS_PER_DAY", "4"))
+
+
+def _today_seed() -> int:
+    """بذرة ثابتة من التاريخ — نفس اليوم = نفس النتيجة دايمًا."""
+    import zlib
+    return zlib.crc32(_day().encode())
+
+
+def _caps() -> tuple[int, int]:
+    """🎛️ سقف اليوم — **مش رقم ثابت**.
+
+    ليه؟ القياس كان صريح: ١١ فيديو في ٢٤ ساعة = **١٠ مشاهدات**، والبحث في
+    يوتيوب بعنوان الفيديو بالحرف مش بيرجّعه. يعني يوتيوب **موقّف التوزيع**،
+    والأسباب المرجّحة: ١٢ فيديو كل يوم بنفس العدد ونفس الشكل — ده «مصنع»
+    مش «قناة» في نظر سياسة المحتوى غير الأصيل.
+
+    فالحل: عدد أقل + **متغيّر كل يوم** (مش عشوائي — محسوب من التاريخ، فمفيش
+    احتمال نشر مكرّر أو مواعيد سايبة). النتيجة: القناة تبان بشرية ومتنفّسة،
+    وكل فيديو ياخد نصيب أكبر من وقت الرندر والمونتاج.
+
+    ترجع للعدد القديم فورًا: NOOR_SHORTS_PER_DAY=8 · NOOR_LONGS_PER_DAY=4
+    و NOOR_DAILY_VARIATION=0.
+    """
+    if os.environ.get("NOOR_DAILY_VARIATION") != "1":
+        return SHORT_CAP_BASE, LONG_CAP_BASE
+    seed = _today_seed()
+    s_delta = (seed % 4) - 1          # −١ · ٠ · ٠ · +١
+    l_delta = ((seed // 4) % 3) - 1   # −١ · ٠ · +١ (حمولة رندر معقولة)
+    return (max(1, SHORT_CAP_BASE + s_delta),
+            max(1, LONG_CAP_BASE + l_delta))
 LIB = ROOT / "data" / "noor_next" / "one_library.jsonl"
 LEDGER = ROOT / "state" / "noor_library.json"
 
@@ -74,12 +104,19 @@ def _rows() -> list[dict]:
 
 
 def _day() -> str:
+    """يوم النشر بتوقيت **القاهرة** — مش لوس أنجلوس.
+
+    ليه؟ الجمهور عربي، وجدول المواعيد (noor_grid) بتوقيت القاهرة، وسقف
+    اليوم لازم يقيس نفس اليوم اللي الجمهور عايشه. كان بيقيس بتوقيت
+    كاليفورنيا ⇒ اليوم بيتقفل ٩–١٠ ساعات قبل ما يوم القاهرة يخلص،
+    والمواعيد اللي بعده بتتحسب على يوم تاني.
+    """
     import datetime as dt
     try:
         from zoneinfo import ZoneInfo
-        tz = ZoneInfo("America/Los_Angeles")
+        tz = ZoneInfo("Africa/Cairo")
     except Exception:
-        tz = dt.timezone(dt.timedelta(hours=-7))
+        tz = dt.timezone(dt.timedelta(hours=2))
     return dt.datetime.now(tz).date().isoformat()
 
 
@@ -105,11 +142,12 @@ def _bump(kind: str) -> None:
 def wanted_kind(shorts: int | None = None, longs: int | None = None) -> str | None:
     if shorts is None or longs is None:
         shorts, longs = _counts()
-    if shorts >= SHORT_CAP and longs >= LONG_CAP:
+    s_cap, l_cap = _caps()
+    if shorts >= s_cap and longs >= l_cap:
         return None
-    if longs >= LONG_CAP:
+    if longs >= l_cap:
         return "short"
-    if shorts >= SHORT_CAP:
+    if shorts >= s_cap:
         return "long"
     return "long" if (shorts + longs) % 3 == 2 else "short"
 
@@ -293,7 +331,8 @@ def main() -> int:
     if kind is None:
         print(f"[one] سقف اليوم خلص: {shorts} شورت و{longs} طويل", flush=True)
         return 0
-    print(f"[one] اليوم {shorts}/{SHORT_CAP} شورت و{longs}/{LONG_CAP} طويل — الجاية {kind}", flush=True)
+    s_cap, l_cap = _caps()
+    print(f"[one] اليوم {shorts}/{s_cap} شورت و{longs}/{l_cap} طويل — الجاية {kind}", flush=True)
     for _ in range(3):
         row = next_item(kind)
         if not row:

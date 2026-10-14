@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import os as _os
 from zoneinfo import ZoneInfo
 
 CAIRO = ZoneInfo("Africa/Cairo")
@@ -121,6 +122,111 @@ SCENES = {
 }
 
 
+# ─────────────────────────────────────────────────────────────────────────
+# 🎛️ منظم الإيقاع (Cadence Governor) + إزاحة التوقيت — **إضافة، مش حذف**
+#
+# ليه؟ القياس قال: ١١ فيديو في ٢٤ ساعة = **١٠ مشاهدات**، والبحث في يوتيوب
+# بعنوان الفيديو بالحرف **مش بيرجّعه**. ده مش ضعف جودة — ده نمط آلي:
+# ١٥ فيديو كل يوم على **ساعات ثابتة بالدقيقة**، ٣٦٥ يوم في السنة، من غير
+# فاصل واحد. ده بالظبط الوصف اللي سياسة «المحتوى غير الأصيل» بتحارب.
+#
+# الحل **مش إيقاف المصنع** (ممنوع) — الحل **اختيار أنسب المواعيد**:
+#   NOOR_GRID_MAX_PER_DAY = 0 (افتراضي) → زي ما هو، ١٥/يوم بالظبط.
+#   NOOR_GRID_MAX_PER_DAY = N (مثلاً ٦) → أنسب N مواعيد في اليوم بس.
+#   NOOR_GRID_JITTER = 1 → إزاحة ±٢٢ دقيقة لكل موعد، محسوبة من التاريخ
+#                          نفسه (نفس النتيجة لو رجعت تشغّلها تاني).
+#
+# ملحوظة مهمة: **كل الخانات ١٥ لسه موجودة**، والـvalidate لسه بيتأكد منها.
+# اللي بيتغيّر بس: عددها اللي بيوصل للنشر. رجّع الرقم لـ0 وأرجع لـ١٥ فورًا.
+_SLOT_INDEX = {id(s): i for i, s in enumerate(SLOTS)}
+
+
+def _hour_value(h: int) -> float:
+    """قيمة الساعة لنمو القناة (توقيت القاهرة، من عادات الجمهور العربي).
+
+    الذروة: ٧–١١ مساءً (٩) · ثانوي: ١٢–٤ عصرًا (٧) · فجر/صبح: ٥–٧ (٨) —
+    جمهور الورد والذكر بيصحى بدري، وده جمهور قنوات القرآن بالظبط.
+    الليل المتأخر أخف (٤) لأن المنافسة فيه على نطاق واسع.
+    """
+    if 19 <= h <= 23:
+        return 9.0
+    if 5 <= h <= 7:
+        return 8.0
+    if 12 <= h <= 16:
+        return 7.0
+    if 8 <= h <= 11:
+        return 6.0
+    return 4.0
+
+
+def _slot_score(i: int, form: str) -> float:
+    """الطويل = ٣× الشورت (مصدر وقت المشاهدة والمشتركين) + قيمة الساعة."""
+    return (3.0 if form == "long" else 1.0) * 10.0 + _hour_value(SLOTS[i]["h"])
+
+
+def _cap_per_day() -> int:
+    """سقف الفيديوهات في اليوم. 0 = بلا سقف (السلوك الأصلي بالحرف)."""
+    try:
+        return max(0, int(_os.environ.get("NOOR_GRID_MAX_PER_DAY") or "0"))
+    except ValueError:
+        return 0
+
+
+def _band(h: int) -> int:
+    """نطاق اليوم: فجر · ضحى · ظهر · مساء · ليل."""
+    if h < 8:
+        return 0
+    if h < 12:
+        return 1
+    if h < 17:
+        return 2
+    if h < 21:
+        return 3
+    return 4
+
+
+def _keep_indexes() -> set[int] | None:
+    """أنسب N خانة — **بتغطية اليوم كله** مش أعلى درجات بس.
+
+    ليه التنويع؟ قناة قرآن جمهورها بيسمع الفجر والصبح (ورد يومي)، وجمهور
+    تاني بالليل. لو اخترنا «أعلى درجة» بس، الطويلات الليلية هتاكل اليوم
+    كله والفجر يضيع — والمصنع بيتحول من «قناة» لـ«مصنع طويلات».
+    الجزاء ٦ نقاط على كل نقطة إضافية في نفس النطاق ⇒ اليوم بيتوزّع طبيعي.
+    """
+    cap = _cap_per_day()
+    if cap <= 0 or cap >= len(SLOTS):
+        return None
+    chosen: list[int] = []
+    band_count: dict[int, int] = {}
+    pool = sorted(range(len(SLOTS)),
+                  key=lambda i: -_slot_score(i, SLOTS[i]["form"]))
+    while len(chosen) < cap and pool:
+        best_i, best_v = None, -1e9
+        for i in pool:
+            v = _slot_score(i, SLOTS[i]["form"]) - 6.0 * band_count.get(
+                _band(SLOTS[i]["h"]), 0)
+            if v > best_v:
+                best_i, best_v = i, v
+        chosen.append(best_i)
+        b = _band(SLOTS[best_i]["h"])
+        band_count[b] = band_count.get(b, 0) + 1
+        pool.remove(best_i)
+    return set(chosen)
+
+
+def _jitter(day: dt.date, i: int) -> int:
+    """إزاحة دقايق ثابتة لنفس اليوم — عشان الجدول ما يبقاش بصمة آلية.
+
+    المحسوبة من التاريخ + رقم الخانة ⇒ نفس القيمة كل مرة (مفيش عشوائية
+    حقيقية = مفيش مواعيد بتفوت)، بس **مختلفة كل يوم**.
+    """
+    if _os.environ.get("NOOR_GRID_JITTER") != "1":
+        return 0
+    import zlib
+    h = zlib.crc32(f"{day.isoformat()}#{i}".encode()) % 45  # 0..44
+    return h - 22  # −٢٢ .. +٢٢ دقيقة
+
+
 def cairo_now(now: dt.datetime | None = None) -> dt.datetime:
     if now is None:
         now = dt.datetime.now(dt.timezone.utc)
@@ -131,19 +237,30 @@ def cairo_now(now: dt.datetime | None = None) -> dt.datetime:
 
 def day_slots(weekday: int, day: dt.date | None = None) -> list[dict]:
     kinds = WEEK[weekday]
+    keep = _keep_indexes()          # 🎛️ منظم الإيقاع (None = كل الخانات)
+    jday = day or cairo_now().date()
     out = []
-    for slot, kind in zip(SLOTS, kinds):
+    for i, (slot, kind) in enumerate(zip(SLOTS, kinds)):
+        if keep is not None and i not in keep:
+            continue
+        # 🕰️ إزاحة التوقيت: h/m الفعليين، والمفتاح يفضل على الاسمي
+        eff = (dt.datetime(2000, 1, 1, slot["h"], slot["m"])
+               + dt.timedelta(minutes=_jitter(jday, i)))
         item = {
-            "h": slot["h"], "m": slot["m"], "form": slot["form"],
+            "h": eff.hour, "m": eff.minute,
+            "h0": slot["h"], "m0": slot["m"],
+            "form": slot["form"],
             "slot_name": slot["name"], "kind": kind,
             "kind_ar": TYPE_AR.get(kind, kind),
             "theme": DAY_THEME[weekday],
             "day_ar": WEEKDAY_AR[weekday],
         }
         if day is not None:
+            # المفتاح على الوقت **الاسمي** — عشان كل الأرشيف والدولة القديمة
+            # تفضل مربوطة بصحيح (مفيش نشر مكرّر بعد التحديث).
             item["key"] = (f"{day.isoformat()}T{slot['h']:02d}:{slot['m']:02d}"
                            f"|{kind}|{slot['form']}")
-            item["label"] = (f"{WEEKDAY_AR[weekday]} {slot['h']:02d}:{slot['m']:02d} "
+            item["label"] = (f"{WEEKDAY_AR[weekday]} {item['h']:02d}:{item['m']:02d} "
                              f"{slot['name']} · {item['kind_ar']} · {slot['form']}")
         out.append(item)
     return out
