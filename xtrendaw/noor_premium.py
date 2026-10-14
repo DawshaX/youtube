@@ -588,8 +588,12 @@ def render(spec: dict, workdir: Path) -> dict:
     # ── 2) الفصول: كل فصل = (نص على الشاشة + صوته + مدته)
     beats: list[dict] = []
     w_hook, d_hook = say(hook, workdir, "hook", rate="+10%")
+    # 🆕 حجم الهوك حسب طوله: الهوك القصير بيتكبر (كلمة واحدة = صدمة بصرية)،
+    #    والطويل بيتصغّر شوية عشان يفضل مقروء من غير ما يزحم الشاشة.
+    _hw = len(str(hook or "").split())
+    _hsize = 132 if _hw <= 4 else (116 if _hw <= 8 else 96)
     beats.append({"lines": [hook], "audio": w_hook, "dur": d_hook + 0.25,
-                  "size": 96, "tag": "", "reveal": False, "kind": "hook"})
+                  "size": _hsize, "tag": "", "reveal": False, "kind": "hook"})
     for k, it in enumerate(items):
         tag = ("﴿ " + it["ay"]["surah"] + " — " + str(it["ay"]["number"]) + " ﴾")
         beats.append({"lines": [it["ay"]["text"].strip()], "audio": it["rec"],
@@ -670,8 +674,12 @@ def render(spec: dict, workdir: Path) -> dict:
             groups = [words[j:j + step] for j in range(0, len(words), step)] or [words]
             n = len(groups)
             for k in range(1, n + 1):
+                # 🆕 الآية كانت عند ٤٠٪ (فوق النص) والنص العادي عند ٤٦٪ —
+                #    الاتنين في نص الشاشة، فالمشاهد عينه بتلف. الآية بقت في
+                #    نطاق واحد مع النص (٥٦٪) = إيقاع بصري ثابت ومريح، وفوق
+                #    أزرار يوتيوب بمسافة آمنة.
                 png = overlay([" ".join(" ".join(g) for g in groups[:k])],
-                              workdir / f"b{i}_{k}.png", size=b["size"], y=0.40,
+                              workdir / f"b{i}_{k}.png", size=b["size"], y=0.56,
                               max_lines=4, tag=b["tag"] if k == n else "")
                 d_ = b["dur"] / n
                 segs.append(_clip_seg(bg, t0, d_, png, workdir, f"s{i}_{k}",
@@ -684,9 +692,17 @@ def render(spec: dict, workdir: Path) -> dict:
             groups = [words[j:j + step] for j in range(0, len(words), step)] or [words]
             n = len(groups)
             st = b["size"] - (10 if b["kind"] == "tafsir" else 0)
+            # 🆕 موضع النص: ٤٦٪ كان نص الشاشة بالظبط — والمشاهد بيرتاح يقرا
+            #    في التلت السفلي (منطقة الإبهام)، وفوق أزرار يوتيوب بهامش آمن.
+            #    الآية تفضل أعلى شوية (٥٦٪) لأنها بتبقى أطول وعايزة مساحة.
+            _y = 0.58 if b["kind"] == "ayah" else 0.62
+            # الهوك أول حاجة المشاهد بيشوفها — نرفعه شوية لـ٦٠٪ عشان يبان
+            # كأنه «لافتة» مش سطر عادي.
+            if b.get("kind") == "hook":
+                _y = 0.60
             for k in range(1, n + 1):
                 shown = " ".join(" ".join(g) for g in groups[:k])
-                png = overlay([shown], workdir / f"b{i}_{k}.png", size=st, y=0.46,
+                png = overlay([shown], workdir / f"b{i}_{k}.png", size=st, y=_y,
                               max_lines=5, tag=b["tag"] if k == n else "",
                               font_path=FONT_UI_B if b["kind"] != "ayah" else None)
                 d_ = b["dur"] / n
