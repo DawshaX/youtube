@@ -46,10 +46,12 @@
     "ser-road-l13",
     "ser-field-جسم ونَفَس-s01",
     "ser-field-حرفة-s01",
-    "ser-field-حريق-s01"
+    "ser-field-حريق-s01",
+    "ser-field-جسم ونَفَس-l06",
+    "ser-queue-l08"
   ],
-  "turn": 17,
-  "last_series": "ser-field-حريق",
+  "turn": 3,
+  "last_series": "ser-queue",
   "done": [
     {
       "id": "ser-study-s01",
@@ -332,6 +334,18 @@
       "url": "https://www.youtube.com/watch?v=jBFsWp2Geqk",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-field-جسم ونَفَس-l06",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-queue-l08",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
     }
   ],
   "day": {
