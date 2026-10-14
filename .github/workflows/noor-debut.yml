@@ -12,6 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
+      # ── 🎬 الاستوديو الاحترافي (طبقات الإضافة — كل واحدة ليها مفتاح) ──
+      #   (كل المفاتيح دي **إضافة**: لو أي واحدة اتشالت أو بقت 0، المصنع
+      #    بيكمل بنفسه بالمسار القديم بلا أي توقف.)
+      NOOR_PRO_HOOKS: "1"
+      NOOR_PRO_MUSIC: "1"
+      NOOR_PRO_EFFECTS: "1"
+      NOOR_PRO_COVERS: "1"
+      NOOR_PRO_METADATA: "1"
       PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
       PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
       PEXELS: ${{ secrets.PEXELS }}

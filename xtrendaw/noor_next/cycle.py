@@ -86,8 +86,8 @@ def publish_next(form: str = "short") -> int:
             st["served"] = list(dict.fromkeys([*(st.get("served") or []), ep["id"]]))
             _save(st)
             continue
-        title = f"{made['lines'][0][:70]} | {ep.get('series_title') or 'نور'}"
         credits = "\n".join(made["credits"]) or "لقطات مرخّصة من مكتبات حرة."
+        title = f"{made['lines'][0][:70]} | {ep.get('series_title') or 'نور'}"
         desc = (
             f"{ep.get('spoken') or ''}\n\n"
             f"{ep.get('benefit') or ''}\n\n"
@@ -95,6 +95,34 @@ def publish_next(form: str = "short") -> int:
             "من غير وجوه. النص المقدس من مصدره، ومش متألف هنا."
         )
         tags = ["نور", ep.get("series_title") or "خير", "shorts" if form != "long" else "فيديو"]
+
+        # ── 🆕 ميتاداتا الاستوديو: عنوان للبحث + وصف كامل + ١٥ وسم + تعليق مثبّت
+        #    (بتحل مشكلة «العناوين الإنجليزية والقوالب المكرّرة» اللي كانت بتقتل الوصول)
+        meta = {}
+        try:
+            from xtrendaw.pro import integrate as _pro_int
+
+            meta = _pro_int.upgrade_metadata(
+                ep, hook=str(made.get("hook") or ""),
+                body=str(ep.get("benefit") or ""),
+                sources=list(made.get("credits") or []),
+                kind=str(ep.get("kind") or ""),
+                kw=str(ep.get("field") or ep.get("series_title") or ""),
+                mood_credit=str(made.get("music_mood") or ""),
+                # العنوان القديم بيفضل **خطة بديلة** بس — مش بيطغى على العنوان المحسّن
+                legacy_title="" if made.get("hook") else title,
+            )
+        except Exception as exc:  # noqa: BLE001
+            print(f"[pro] ميتاداتا اتخطت: {type(exc).__name__}", flush=True)
+        if meta.get("title"):
+            title = meta["title"]
+        if meta.get("description"):
+            desc = meta["description"]
+        if meta.get("tags"):
+            tags = meta["tags"]
+        pinned = meta.get("pinned") or ""
+        if pinned:
+            print(f"[pro] تعليق مثبّت: {pinned[:60]}", flush=True)
         url, err = runner._publish(made["video"], None, title[:95], desc, tags, synthetic=True)
         if err in ("quota_guard", "too_soon"):
             print(f"[library] النشر استنى: {err}", flush=True)
@@ -111,6 +139,9 @@ def publish_next(form: str = "short") -> int:
         st["last_series"] = ep.get("series_id") or ""
         st.setdefault("done", []).append({
             "id": ep["id"], "title": title, "url": url or "", "vault": vault_url, "err": err,
+            "hook": made.get("hook") or "", "cover": str(made.get("cover") or ""),
+            "pinned": pinned, "music": made.get("music_mood") or "",
+            "effects": (made.get("pro") or {}).get("effects") or [],
         })
         _save(st)
         print(f"[library] {'اتنشر' if url else 'اتخزن'} {ep['id']} {url or vault_url}", flush=True)

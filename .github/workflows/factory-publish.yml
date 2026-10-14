@@ -86,6 +86,14 @@ jobs:
         id: cycle
         env:
           # ── النشر ──────────────────────────────────────────────
+          # ── 🎬 الاستوديو الاحترافي (طبقات الإضافة — كل واحدة ليها مفتاح) ──
+          #   (كل المفاتيح دي **إضافة**: لو أي واحدة اتشالت أو بقت 0، المصنع
+          #    بيكمل بنفسه بالمسار القديم بلا أي توقف.)
+          NOOR_PRO_HOOKS: "1"
+          NOOR_PRO_MUSIC: "1"
+          NOOR_PRO_EFFECTS: "1"
+          NOOR_PRO_COVERS: "1"
+          NOOR_PRO_METADATA: "1"
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}

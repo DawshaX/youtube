@@ -180,10 +180,61 @@ def _caption(text: str, path: Path, y: float, fill: str, size: int) -> None:
     )
 
 
+def _pro_studio(episode: dict) -> dict:
+    """🆕 يرقّي الحلقة بمحرّكات الاستوديو الاحترافي (هوك + مزاج موسيقي).
+
+    آمن تمامًا: لو المكتبة مش موجودة أو أي حاجة فشلت، الحلقة بترجع زي ما هي.
+    الفشل مش بيوقف المصنع أبدًا.
+    """
+    try:
+        from xtrendaw.pro import integrate
+
+        return integrate.upgrade_item(dict(episode))
+    except Exception as exc:  # noqa: BLE001
+        print(f"[pro] الترقية اتخطت: {type(exc).__name__}", flush=True)
+        return episode
+
+
+def _hook_into_spoken(episode: dict, spoken: str) -> str:
+    """يحقن الهوك في **أول جملة منطوقة** عشان يتقال فعلًا، مش يبان بس.
+
+    القاعدة المتفق عليها: أول ثانية هي اللي بتقرّر، والهوك لازم يكون مسموع
+    ومكتوب في نفس الوقت. بتحقن بس لو الجملة الحالية ضعيفة — عشان ما نضيّعش
+    نص أصلي قوي عند القناة.
+    """
+    hook = str(episode.get("hook") or "").strip()
+    if not hook or sacred_text(spoken):
+        return spoken
+    try:
+        from xtrendaw.pro import hooks
+
+        lines = sentences(spoken)
+        if not lines:
+            return spoken
+        first = lines[0].strip()
+        if hook[:24] in spoken:          # الهوك موجود أصلًا
+            return spoken
+        if hooks.is_weak(first):          # جملة ضعيفة → نستبدلها بالهوك
+            rest = " ".join(lines[1:]).strip()
+            merged = f"{hook} {rest}".strip()
+            print(f"[pro] هوك جديد مسموع: {hook[:48]}", flush=True)
+            return merged
+        # الجملة الأصلية قوية: نضيف سؤال الهوك قبلها (بيفتح الفضول)
+        if hook.endswith(("؟", "?")):
+            print(f"[pro] سؤال افتتاحي: {hook[:48]}", flush=True)
+            return f"{hook} {spoken}".strip()
+        return spoken
+    except Exception as exc:  # noqa: BLE001
+        print(f"[pro] حقن الهوك اتخطى: {type(exc).__name__}", flush=True)
+        return spoken
+
+
 def render(episode: dict, work: Path) -> dict | None:
+    episode = _pro_studio(episode)
     spoken = (episode.get("spoken") or "").strip()
     if not spoken or sacred_text(spoken):
         return None
+    spoken = _hook_into_spoken(episode, spoken)
     lines = sentences(spoken)
     if len(lines) < 2:
         return None
@@ -312,13 +363,55 @@ def render(episode: dict, work: Path) -> dict | None:
             voiced = fitted
     normal = work / "normal.wav"
     loudnorm(voiced, normal, _run)
+
+    # ── 🆕 موسيقى الاستوديو: مقام مخصّص للحلقة + خفض تلقائي وقت الكلام
+    #    (القرآن والدعاء = بلا موسيقى خالص بقاعدة الموسيقى نفسها)
+    audio_final = normal
+    try:
+        from xtrendaw.pro import integrate as _pro_int
+        from xtrendaw.pro import music_pro as _pro_music
+
+        mood = str(episode.get("_music_mood") or "")
+        level = float(episode.get("_music_level") or 0.0)
+        if mood and level > 0 and _pro_int.enabled().get("music") and normal.exists():
+            mixed, music_credit = _pro_music.mix_with_voice(
+                normal, work / "scored.wav", mood=mood, volume=level,
+            )
+            if mixed.exists() and mixed.stat().st_size > 2048:
+                audio_final = mixed
+                print(f"[pro] 🎵 مزيكا «{mood}» عند {level:.2f} — {music_credit[:60]}",
+                      flush=True)
+        elif mood:
+            music_credit = f"بلا موسيقى ({mood}) — {episode.get('_music_why') or ''}".strip()
+            print(f"[pro] 🕊️ {music_credit[:80]}", flush=True)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[pro] المزيكا اتخطت: {type(exc).__name__}", flush=True)
+
     lines = used
     out = work / "episode.mp4"
     _run([
-        "ffmpeg", "-y", "-i", str(framed), "-i", str(normal),
+        "ffmpeg", "-y", "-i", str(framed), "-i", str(audio_final),
         "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac",
         "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(out),
     ])
+
+    # ── 🆕 التمريرة الختامية: تدريج سينمائي + حبيبات + شريط تقدّم + غلاف
+    cover = None
+    pro_report: dict = {}
+    try:
+        from xtrendaw.pro import integrate as _pro_int
+
+        if out.exists():
+            finished, pro_report = _pro_int.finish_video(
+                out, work, episode, feeling=feeling,
+            )
+            if finished.exists() and finished.stat().st_size > 2048:
+                out = finished
+            cover = pro_report.get("cover")
+            if pro_report.get("effects"):
+                print(f"[pro] 🎬 {', '.join(pro_report['effects'])}", flush=True)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[pro] التمريرة الختامية اتخطت: {type(exc).__name__}", flush=True)
     shots = [
         {"i": i, "say": line, "dur": durs[i], "visual": "footage", "motion": motion_for(fmt, i)}
         for i, line in enumerate(lines)
@@ -349,4 +442,10 @@ def render(episode: dict, work: Path) -> dict | None:
         "voice": voice,
         "credits": list(dict.fromkeys(credits)),
         "lines": lines,
+        "hook": episode.get("hook") or "",
+        "hook_style": episode.get("hook_style") or "",
+        "music_mood": episode.get("_music_mood") or "",
+        "music_level": episode.get("_music_level") or 0.0,
+        "cover": cover,
+        "pro": pro_report,
     }
