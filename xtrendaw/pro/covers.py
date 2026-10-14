@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 import subprocess
 from pathlib import Path
 
@@ -326,7 +327,30 @@ def compose(topic: dict, out_path: Path, *, seed: str = "",
                  at=frame_at)
 
 
+# كلمات **ما تنفعش** تكون على غلاف: كلام عن الفيديو نفسه، أو حشو، أو ميتاداتا.
+COVER_STOP = {
+    "الفيديو", "فيديو", "الشورت", "شورت", "short", "shorts", "قناة", "اشترك",
+    "تابعنا", "تابعونا", "الحلقة", "حلقة", "الجزء", "جزء", "سلسلة", "اليوم",
+    "دلوقتي", "معاكم", "معنا", "تعالوا", "يلا", "ده", "دي", "هذا", "هذه",
+    "من", "في", "على", "عن", "إلى", "الى", "اللي", "الذي", "التي", "و",
+    "بلا", "مع", "كان", "لو", "أو", "او", "ثم", "قد", "كل", "أي", "اي",
+}
+
+
 def short_title(hook: str, limit: int = 6) -> str:
-    """يجهّز عنوان الغلاف — ٣-٦ كلمات بس."""
-    words = [w for w in str(hook or "").split() if w.strip(" .،,|")]
-    return " ".join(words[:limit]).strip(" .،,|") or "آية وسكينة"
+    """يجهّز كلمات الغلاف — **٣-٦ كلمات معنى**، مش أي كلام في الأول.
+
+    ⚠️ درس حقيقي: النسخة الأولى كانت بتاخد أول ٦ كلمات من العنوان، فطلع
+    غلاف مكتوب عليه «نفس الفيديو» — يعني **كلام عن الفيديو مش عن الموضوع**.
+    الغلاف لازم يقول **الفايدة** للمشاهد في لمحة، فبنشيل الحشو والميتاداتا.
+    """
+    raw = str(hook or "")
+    # القوس والهاشتاج والرموز بتحرف المعنى على الغلاف — نشيلهم
+    raw = re.sub(r"[#﴿﴾«»\[\]()\"'|]", " ", raw)
+    words = [w.strip(" .،,:;!?…—–-") for w in raw.split()]
+    keep = [w for w in words if w and w not in COVER_STOP and len(w) > 1]
+    # لو التنقية شالت كل حاجة (عنوان غريب)، نرجع للكلمات الأصلية بلا حشو القناة
+    if not keep:
+        keep = [w for w in words if w and w not in COVER_STOP] or words
+    out = " ".join(keep[:limit]).strip()
+    return out or "آية وسكينة"

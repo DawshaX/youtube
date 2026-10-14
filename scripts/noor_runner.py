@@ -180,8 +180,46 @@ def _dupe_title(title: str) -> bool:
     return norm in {t for t in recent if t}
 
 
+def _polish(video, cover, title):
+    """🎬 التمريرة السينمائية الختامية قبل الرفع — **إضافة بحتة**.
+
+    نقطة واحدة بتغطي كل مسارات النشر (شورتس · طويلة · تصنيفات · خزّان)، لأن
+    كلهم بيروحوا لـ `_publish` في الآخر. علامة `.pro.json` بتمنع الترميز
+    المزدوج لو الفيديو اتعدّى خلاص في مسار تاني.
+
+    أي فشل = بيرجع الفيديو والغلاف زي ما كانوا. صفر توقف.
+    """
+    try:
+        v = Path(video)
+        if not v.exists() or os.environ.get("NOOR_PRO_EFFECTS", "1") == "0":
+            return video, cover
+        mark = v.parent / (v.stem + ".pro.json")
+        if mark.exists():
+            return video, cover
+        from xtrendaw.pro import effects as _fx
+        fin, rep = _fx.apply_all(v, v.parent, {}, feeling="")
+        if fin and Path(fin).exists() and Path(fin).stat().st_size > 2048:
+            video = fin
+            print(f"[pro] 🎬 تمريرة النشر: {', '.join(rep.get('applied') or [])}",
+                  flush=True)
+        if not cover and os.environ.get("NOOR_PRO_COVERS", "1") != "0":
+            from xtrendaw.pro import covers as _cv
+            c = _cv.build(Path(video), v.parent / "cover_pro.png",
+                          title_hook=_cv.short_title(str(title or "")),
+                          episode_id=str(title or "")[:40], at=1.3)
+            if c.exists():
+                cover = c
+                print("[pro] 🖼️ غلاف احترافي اتعمل", flush=True)
+    except Exception as exc:                                # noqa: BLE001
+        print(f"[pro] تمريرة النشر اتخطت: {type(exc).__name__}", flush=True)
+    return video, cover
+
+
 def _publish(video, cover, title, desc, tags, synthetic=False):
     from xtrendaw import settings, state
+    # التمريرة قبل فحص المعاينة — عشان وضع المعاينة يوريك الناتج **الحقيقي**
+    # (الفيديو بالتدريج والغلاف)، مش نسخة ناقصة تتاخد عليها قرار غلط.
+    video, cover = _polish(video, cover, title)
     if DRY:
         return None, "dry_run"
     from xtrendaw.publish import youtube as yt
@@ -199,33 +237,6 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
         return None, "too_soon"
     st = _load()
     at = _pick_at(st)                      # فوري لو القناة ساكتة، وإلا ساعة فاضية
-
-    # 🎬 التمريرة السينمائية الختامية — نقطة واحدة بتغطي كل مسارات النشر
-    #    (شورتس · طويلة · تصنيفات · خزّان). العلامة .pro.json بتمنع تكرار
-    #    الترميز لو الفيديو اتعدّى خلاص. أي فشل = نشر بالفيديو الأصلي.
-    try:
-        from xtrendaw.pro import effects as _fx
-        _v = Path(video)
-        _mark = _v.parent / (_v.stem + ".pro.json")
-        if _v.exists() and not _mark.exists() and \
-                os.environ.get("NOOR_PRO_EFFECTS", "1") != "0":
-            _fin, _rep = _fx.apply_all(_v, _v.parent, {}, feeling="")
-            if _fin and Path(_fin).exists() and Path(_fin).stat().st_size > 2048:
-                video = _fin
-                print(f"[pro] 🎬 تمريرة النشر: {', '.join(_rep.get('applied') or [])}",
-                      flush=True)
-            if not cover and os.environ.get("NOOR_PRO_COVERS", "1") != "0":
-                try:
-                    from xtrendaw.pro import covers as _cv
-                    _c = _cv.build(Path(video), _v.parent / "cover_pro.png",
-                                   title_hook=_cv.short_title(title),
-                                   episode_id=title[:40], at=1.3)
-                    if _c.exists():
-                        cover = _c
-                except Exception:
-                    pass
-    except Exception as _e:                                 # noqa: BLE001
-        print(f"[pro] تمريرة النشر اتخطت: {type(_e).__name__}", flush=True)
 
     url, err = yt.publish(video, title, desc, tags, cover=cover,
                           synthetic=synthetic, category="27", publish_at=at)
@@ -347,14 +358,19 @@ def _pro_finish(item: dict, res: dict, work: Path) -> dict:
             def _log(msg: str) -> None:
                 print(msg, flush=True)
 
-            final, cover = _pro.finish_video(
+            # ⚠️ الدالة بترجّع (الفيديو, **تقرير** فيه الغلاف) — الغلاف جوه
+            #    التقرير مش قيمة تانية. (ده اللي كان بيرمي TypeError.)
+            final, rep = _pro.finish_video(
                 Path(video), work, {**item, **out}, feeling="",
             )
             if final and Path(final).exists() and Path(final).stat().st_size > 2048:
                 out["video"] = final
-            if cover and Path(cover).exists():
-                out["cover"] = cover
-                _log(f"[pro] 🖼️ غلاف احترافي: {Path(cover).name}")
+            made_cover = (rep or {}).get("cover")
+            if made_cover and Path(made_cover).exists():
+                out["cover"] = made_cover
+                _log(f"[pro] 🖼️ غلاف احترافي: {Path(made_cover).name}")
+            if (rep or {}).get("effects"):
+                _log(f"[pro] 🎬 {' · '.join(rep['effects'])}")
     except Exception as exc:                                # noqa: BLE001
         print(f"[pro] التمريرة اتخطت: {type(exc).__name__}", flush=True)
     return out
