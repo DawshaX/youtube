@@ -208,6 +208,7 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
             st.setdefault("slots", []).append(at[:13])       # اتشغلت الساعة دي
             _save(st)
         print(f"[noor] ⏰ وقت النشر: {at or 'فوري (القناة كانت ساكتة)'}", flush=True)
+        _announce(url, title)                                # 🆕 إعلان فوري
     elif err and "quota" in str(err).lower():
         # جوجل قالت «الحصة خلصت» → بنتعلّم السقف الحقيقي بدل التخمين
         state.set_quota_ceiling(state.published_today_pt())
@@ -263,6 +264,46 @@ def _alert_once(key: str, text: str) -> None:
         return
     _ALERTED.add(key)
     _alert(text)
+
+
+def _announce(url: str, title: str) -> None:
+    """🆕 إعلان الحلقة الجديدة على قناة تليجرام — توزيع مجاني بلا كوتة.
+
+    ليه ده مهم للنمو؟ كل مشترك في تليجرام بيشوف الحلقة فورًا ويدوس، وأول
+    ساعة من المشاهدات هي اللي بتقرّر يوتيوب يوسّع الفيديو ولا لأ. صفر تكلفة
+    وصفر مفاتيح جديدة — بنستخدم توكن البوت الموجود أصلًا.
+
+    **إضافة بحتة**: لو تليجرام مش متظبط، الدالة بترجع بهدوء من غير أي أثر
+    على النشر.
+    """
+    if not url:
+        return
+    try:
+        import random
+
+        from xtrendaw.publish import telegram as tg
+
+        opens = (
+            "🤍 حلقة جديدة نزلت دلوقتي",
+            "🕊️ نور جديد على القناة",
+            "🌿 خد دقيقة مع الحلقة دي",
+            "✨ اقتباس جديد من المصنع",
+        )
+        asks = (
+            "تسمعها وتقول لي لمسّت فيك إيه 🤍",
+            "ابعتها لحد محتاج يسمعها.",
+            "قول لي في التعليق: إيه اللي وقفت عنده؟",
+            "خد دقيقة لنفسك واستمع.",
+        )
+        seed = abs(hash(url)) % 10**6
+        head = opens[seed % len(opens)]
+        tail = asks[(seed // 7) % len(asks)]
+        if tg.send_text(f"{head}\n\n{title[:180]}\n\n▶️ {url}\n\n{tail}"):
+            print("[noor] 📣 الحلقة اتعلمت على تليجرام", flush=True)
+        else:
+            print("[noor] ℹ️ تليجرام مش متظبط — الإعلان اتخطى", flush=True)
+    except Exception as exc:                                  # noqa: BLE001
+        print(f"[noor] ℹ️ إعلان تليجرام اتخطى: {type(exc).__name__}", flush=True)
 
 
 def _vault(video, cover, meta) -> str:
