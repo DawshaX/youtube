@@ -48,10 +48,11 @@
     "ser-field-حرفة-s01",
     "ser-field-حريق-s01",
     "ser-field-جسم ونَفَس-l06",
-    "ser-queue-l08"
+    "ser-queue-l08",
+    "ser-field-علم الحياة-l08"
   ],
-  "turn": 3,
-  "last_series": "ser-queue",
+  "turn": 4,
+  "last_series": "ser-field-علم الحياة",
   "done": [
     {
       "id": "ser-study-s01",
@@ -346,11 +347,17 @@
       "url": "",
       "err": "duplicate",
       "kind": "long"
+    },
+    {
+      "id": "ser-field-علم الحياة-l08",
+      "url": "https://www.youtube.com/watch?v=UaGi0uIixl8",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-14",
     "short": 4,
-    "long": 1
+    "long": 2
   }
 }
