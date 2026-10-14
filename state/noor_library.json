@@ -43,10 +43,11 @@
     "ser-field-أكل-s01",
     "ser-field-اجتماع-s01",
     "ser-host-l12",
-    "ser-road-l13"
+    "ser-road-l13",
+    "ser-field-جسم ونَفَس-s01"
   ],
-  "turn": 12,
-  "last_series": "ser-road",
+  "turn": 13,
+  "last_series": "ser-field-جسم ونَفَس",
   "done": [
     {
       "id": "ser-study-s01",
@@ -311,11 +312,17 @@
       "url": "https://www.youtube.com/watch?v=4i69eWQ2C9o",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-field-جسم ونَفَس-s01",
+      "url": "https://www.youtube.com/watch?v=XqSb4FCdh00",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-14",
-    "short": 2,
+    "short": 3,
     "long": 1
   }
 }
