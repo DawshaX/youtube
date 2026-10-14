@@ -40,10 +40,11 @@
     "ser-phone-s01",
     "ser-host-s01",
     "ser-field-وهم ونفس-l08",
-    "ser-field-أكل-s01"
+    "ser-field-أكل-s01",
+    "ser-field-اجتماع-s01"
   ],
-  "turn": 8,
-  "last_series": "ser-field-أكل",
+  "turn": 9,
+  "last_series": "ser-field-اجتماع",
   "done": [
     {
       "id": "ser-study-s01",
@@ -290,11 +291,17 @@
       "url": "https://www.youtube.com/watch?v=RiqL4gxiIW8",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-field-اجتماع-s01",
+      "url": "https://www.youtube.com/watch?v=3RoxOii_vdI",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-14",
-    "short": 1,
+    "short": 2,
     "long": 0
   }
 }
