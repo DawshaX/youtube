@@ -50,10 +50,11 @@
     "ser-field-جسم ونَفَس-l06",
     "ser-queue-l08",
     "ser-field-علم الحياة-l08",
-    "ser-day-s01"
+    "ser-day-s01",
+    "ser-phone-l13"
   ],
-  "turn": 6,
-  "last_series": "ser-day",
+  "turn": 8,
+  "last_series": "ser-phone",
   "done": [
     {
       "id": "ser-study-s01",
@@ -360,6 +361,12 @@
       "url": "https://www.youtube.com/watch?v=x2nIQ_31hdI",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-phone-l13",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
     }
   ],
   "day": {
