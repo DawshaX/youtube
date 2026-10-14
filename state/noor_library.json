@@ -41,10 +41,12 @@
     "ser-host-s01",
     "ser-field-وهم ونفس-l08",
     "ser-field-أكل-s01",
-    "ser-field-اجتماع-s01"
+    "ser-field-اجتماع-s01",
+    "ser-host-l12",
+    "ser-road-l13"
   ],
-  "turn": 9,
-  "last_series": "ser-field-اجتماع",
+  "turn": 11,
+  "last_series": "ser-road",
   "done": [
     {
       "id": "ser-study-s01",
@@ -297,11 +299,23 @@
       "url": "https://www.youtube.com/watch?v=Lya754-RR0g",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-host-l12",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-road-l13",
+      "url": "https://www.youtube.com/watch?v=4i69eWQ2C9o",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-14",
     "short": 2,
-    "long": 0
+    "long": 1
   }
 }
