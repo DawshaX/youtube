@@ -44,10 +44,12 @@
     "ser-field-اجتماع-s01",
     "ser-host-l12",
     "ser-road-l13",
-    "ser-field-جسم ونَفَس-s01"
+    "ser-field-جسم ونَفَس-s01",
+    "ser-field-حرفة-s01",
+    "ser-field-حريق-s01"
   ],
-  "turn": 14,
-  "last_series": "ser-field-جسم ونَفَس",
+  "turn": 16,
+  "last_series": "ser-field-حريق",
   "done": [
     {
       "id": "ser-study-s01",
@@ -318,11 +320,23 @@
       "url": "https://www.youtube.com/watch?v=XqSb4FCdh00",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-field-حرفة-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-حريق-s01",
+      "url": "https://www.youtube.com/watch?v=jBFsWp2Geqk",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-14",
-    "short": 3,
+    "short": 4,
     "long": 1
   }
 }
