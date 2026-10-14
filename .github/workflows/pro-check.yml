@@ -1,0 +1,129 @@
+name: 🎬 فحص الاستوديو الاحترافي (رندر حقيقي · صفر نشر)
+
+# تشغيل يدوي فقط. ليه موجود؟
+#   الاستوديو الاحترافي (هوك · موسيقى · مؤثرات · أغلفة · ميتاداتا) بيدخل في
+#   مسار الإنتاج الحي. الاختبارات المحلية ما بتغطّيش بيئة GitHub نفسها
+#   (نسخة ffmpeg مختلفة · خطوط عربية · كوديك). الوركفلو ده بيرندر **حلقة
+#   حقيقية كاملة** من نفس المسار الإنتاجي، **بصفر نشر وصفر رفع** على أي قناة،
+#   وبيطلّع الفيديو والغلاف كمرفقات عشان الجودة تتراجع بالعين.
+#
+#   ده **إضافة بحتة**: ما بيلمسش أي مصنع شغّال ولا بيشارك في طابور النشر.
+
+on:
+  workflow_dispatch:
+    inputs:
+      n:
+        description: 'عدد الحلقات للتجربة'
+        type: number
+        default: 1
+
+permissions:
+  contents: read
+
+jobs:
+  pro:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: تجهيز الرندر
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg espeak-ng fonts-dejavu-core libraqm0 fonts-noto-core
+          python -m pip install --quiet pillow numpy requests edge-tts \
+            imageio-ffmpeg arabic-reshaper python-bidi pyyaml
+
+      - name: فحص الطبقات الخمسة (وحدة وحدة)
+        env:
+          NOOR_PRO_HOOKS: "1"
+          NOOR_PRO_MUSIC: "1"
+          NOOR_PRO_EFFECTS: "1"
+          NOOR_PRO_COVERS: "1"
+          NOOR_PRO_METADATA: "1"
+        run: |
+          python - <<'EOF'
+          import sys, os
+          sys.path.insert(0, ".")
+          from xtrendaw.pro import integrate, hooks, music_pro, metadata, covers
+          from pathlib import Path
+
+          print("── ١) تفعيل الطبقات ──")
+          print(integrate.activate())
+
+          print("\n── ٢) محرّك الهوك (٢٠ حلقة) ──")
+          import json
+          rows = []
+          try:
+              for ln in Path("data/noor_next/episodes.jsonl").read_text(encoding="utf-8").splitlines():
+                  if ln.strip():
+                      rows.append(json.loads(ln))
+          except Exception as e:
+              print("  تعذّر قراءة المكتبة:", e)
+          for r in rows[:20]:
+              g = hooks.pick(text=r.get("spoken") or "", topic=r.get("field") or "",
+                             kind=r.get("kind") or "", episode_id=str(r.get("id") or ""))
+              print(f"  [{g['style']:10}] {g['hook'][:62]}")
+          print(f"  إجمالي: {len(rows)} حلقة في المكتبة")
+
+          print("\n── ٣) الموسيقى (مقامات + بذرة ثابتة) ──")
+          for mood in list(music_pro.MOODS)[:6]:
+              p = Path(f"/tmp/m_{mood}.wav")
+              music_pro.compose(6.0, p, mood=mood, volume=0.15)
+              print(f"  {mood:8} → {p.stat().st_size // 1024}KB")
+          print("  قاعدة مقدّسة:", music_pro.for_episode({"kind": "ayah"}))
+
+          print("\n── ٤) الميتاداتا ──")
+          m = integrate.upgrade_metadata({"id": "pro-check", "kind": "life"},
+                                         hook="الهمّ اللي في صدرك له وقت؟",
+                                         body="ابدأ بخطوة صغيرة.", kw="سكينة")
+          print("  العنوان:", m["title"])
+          print("  الوصف:", len(m["description"]), "حرف (الحد ٤٩٠٠)")
+          print("  الوسوم:", len(m["tags"]))
+          print("  التعليق:", m["pinned"])
+          assert len(m["description"]) <= 4900, "الوصف تعدّى حد يوتيوب!"
+          print("  ✅ كل الفحوصات عدّت")
+          EOF
+
+      - name: 🎬 رندر حلقة حقيقية من المسار الإنتاجي (صفر نشر)
+        env:
+          NOOR_DRY: "1"
+          NOOR_PRO_HOOKS: "1"
+          NOOR_PRO_MUSIC: "0"      # مصنع نور = صفر موسيقى (قاعدة صاحب القناة)
+          NOOR_PRO_EFFECTS: "1"
+          NOOR_PRO_COVERS: "1"
+          NOOR_PRO_METADATA: "1"
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PEXELS: ${{ secrets.PEXELS }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          PIXABAY: ${{ secrets.PIXABAY }}
+        run: |
+          set -o pipefail
+          timeout 1500 python scripts/noor_runner.py --short 2>&1 | tee /tmp/pro_check.log | tail -70
+          echo "── ملخص الاستوديو من اللوج ──"
+          grep -E "\[pro\]|الاستوديو|هوك" /tmp/pro_check.log | head -30 || true
+
+      - name: اجمع الفيديو والغلاف للمراجعة
+        if: always()
+        run: |
+          mkdir -p /tmp/out
+          find work -maxdepth 2 -name "*.mp4" -size +100k 2>/dev/null | head -3 | while read f; do
+            cp "$f" /tmp/out/ 2>/dev/null || true
+          done
+          find work -maxdepth 2 -name "cover*.png" 2>/dev/null | head -3 | while read f; do
+            cp "$f" /tmp/out/ 2>/dev/null || true
+          done
+          cp /tmp/pro_check.log /tmp/out/ 2>/dev/null || true
+          ls -la /tmp/out || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pro-check-output
+          path: /tmp/out
+          retention-days: 7
+          if-no-files-found: warn

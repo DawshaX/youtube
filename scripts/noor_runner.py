@@ -23,6 +23,7 @@ import hashlib
 import json
 import os
 import pathlib
+from pathlib import Path
 import re
 import subprocess
 import sys
@@ -198,6 +199,34 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
         return None, "too_soon"
     st = _load()
     at = _pick_at(st)                      # فوري لو القناة ساكتة، وإلا ساعة فاضية
+
+    # 🎬 التمريرة السينمائية الختامية — نقطة واحدة بتغطي كل مسارات النشر
+    #    (شورتس · طويلة · تصنيفات · خزّان). العلامة .pro.json بتمنع تكرار
+    #    الترميز لو الفيديو اتعدّى خلاص. أي فشل = نشر بالفيديو الأصلي.
+    try:
+        from xtrendaw.pro import effects as _fx
+        _v = Path(video)
+        _mark = _v.parent / (_v.stem + ".pro.json")
+        if _v.exists() and not _mark.exists() and \
+                os.environ.get("NOOR_PRO_EFFECTS", "1") != "0":
+            _fin, _rep = _fx.apply_all(_v, _v.parent, {}, feeling="")
+            if _fin and Path(_fin).exists() and Path(_fin).stat().st_size > 2048:
+                video = _fin
+                print(f"[pro] 🎬 تمريرة النشر: {', '.join(_rep.get('applied') or [])}",
+                      flush=True)
+            if not cover and os.environ.get("NOOR_PRO_COVERS", "1") != "0":
+                try:
+                    from xtrendaw.pro import covers as _cv
+                    _c = _cv.build(Path(video), _v.parent / "cover_pro.png",
+                                   title_hook=_cv.short_title(title),
+                                   episode_id=title[:40], at=1.3)
+                    if _c.exists():
+                        cover = _c
+                except Exception:
+                    pass
+    except Exception as _e:                                 # noqa: BLE001
+        print(f"[pro] تمريرة النشر اتخطت: {type(_e).__name__}", flush=True)
+
     url, err = yt.publish(video, title, desc, tags, cover=cover,
                           synthetic=synthetic, category="27", publish_at=at)
     if url and "watch?v=" in url:
@@ -264,6 +293,71 @@ def _alert_once(key: str, text: str) -> None:
         return
     _ALERTED.add(key)
     _alert(text)
+
+
+def _pro_finish(item: dict, res: dict, work: Path) -> dict:
+    """🎬 تمريرة الاستوديو الاحترافي على الحلقة النهائية — **إضافة بحتة**.
+
+    بتعمل ٣ حاجات فوق اللي المصنع بيعمله أصلًا (بلا مساس بأي حاجة قديمة):
+      1. **هوك أقوى للعنوان** — من كلام الحلقة نفسه (مش قالب جاهز).
+      2. **تمريرة سينمائية** — تدريج لوني + حبيبات فيلم + شريط تقدّم.
+      3. **غلاف عالي النقر** — لو المصنع ما طلّعش غلاف، أو تحسينه.
+
+    ⚠️ **الموسيقى مقفولة هنا بالقصد**: قاعدة صاحب القناة على مصنع نور
+    «صفر موسيقى». المفاتيح NOOR_PRO_MUSIC موجودة لو أراد تفعيلها لكلام بس.
+
+    أي فشل = بيتم تسجيله في اللوج والمصنع بيكمل بالفيديو الأصلي. صفر توقف.
+    """
+    out = dict(res or {})
+    try:
+        from xtrendaw.pro import integrate as _pro
+
+        state = _pro.enabled()
+        if not any(state.values()):
+            return out
+
+        # ── ١) هوك من كلام الحلقة ──
+        if state.get("hooks"):
+            try:
+                from xtrendaw.pro import hooks as _hk
+
+                text = " ".join(str(x) for x in (
+                    out.get("text"), item.get("hook"),
+                    " ".join(str(y) for y in (item.get("lines") or [])),
+                ) if x)
+                got = _hk.pick(
+                    text=text, topic=str(item.get("theme") or ""),
+                    kind=str(item.get("kind") or ""),
+                    surah=str(item.get("surah_name") or ""),
+                    who=str(item.get("who") or ""),
+                    episode_id=str(item.get("id") or ""),
+                    spoken_fallback=str(item.get("hook") or ""),
+                )
+                if got.get("hook") and got.get("source") == "مولّد":
+                    out["hook"] = got["hook"]
+                    out["hook_style"] = got.get("style")
+                    print(f"[pro] 🎯 هوك جديد ({got.get('style')}): "
+                          f"{got['hook'][:60]}", flush=True)
+            except Exception as exc:                        # noqa: BLE001
+                print(f"[pro] الهوك اتخطى: {type(exc).__name__}", flush=True)
+
+        # ── ٢) التمريرة السينمائية + ٣) الغلاف ──
+        video = out.get("video")
+        if video and Path(video).exists():
+            def _log(msg: str) -> None:
+                print(msg, flush=True)
+
+            final, cover = _pro.finish_video(
+                Path(video), work, {**item, **out}, feeling="",
+            )
+            if final and Path(final).exists() and Path(final).stat().st_size > 2048:
+                out["video"] = final
+            if cover and Path(cover).exists():
+                out["cover"] = cover
+                _log(f"[pro] 🖼️ غلاف احترافي: {Path(cover).name}")
+    except Exception as exc:                                # noqa: BLE001
+        print(f"[pro] التمريرة اتخطت: {type(exc).__name__}", flush=True)
+    return out
 
 
 def _announce(url: str, title: str) -> None:
@@ -849,6 +943,10 @@ def _short_one() -> int:
         extra = "#آية_وسكينة #تدبر"
         hook_line = item["hook"]
 
+    # 🎬 تمريرة الاستوديو الاحترافي (إضافة): هوك أقوى + تدريج + غلاف
+    res = _pro_finish(item, res, work)
+    if res.get("hook"):
+        hook_line = res["hook"]
     tags = _tags_of(item, res, item["kind"], str(res.get("reciter") or ""))
     if os.environ.get("NOOR_SENSE", "1") != "0":
         try:

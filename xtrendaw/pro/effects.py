@@ -310,6 +310,12 @@ def apply_all(video: Path, work: Path, item: dict, *, feeling: str = "",
         if finishing_pass(cur, styled, style=style, grain=True, bar=True):
             cur = styled
             report["applied"].extend(["تدريج " + style, "حبيبات فيلم", "شريط تقدّم"])
+            # علامة على الفيديو: «دي اتعدّت خلاص» — عشان ما نعيدش الترميز مرتين
+            try:
+                (Path(cur).parent / (Path(cur).stem + ".pro.json")).write_text(
+                    '{"pro": 1}', encoding="utf-8")
+            except Exception:
+                pass
         else:
             report["skipped"].append("التمريرة النهائية")
         return cur, report
