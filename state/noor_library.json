@@ -39,10 +39,11 @@
     "ser-field-سؤال-l06",
     "ser-phone-s01",
     "ser-host-s01",
-    "ser-field-وهم ونفس-l08"
+    "ser-field-وهم ونفس-l08",
+    "ser-field-أكل-s01"
   ],
-  "turn": 7,
-  "last_series": "ser-field-وهم ونفس",
+  "turn": 8,
+  "last_series": "ser-field-أكل",
   "done": [
     {
       "id": "ser-study-s01",
@@ -283,11 +284,17 @@
       "url": "https://www.youtube.com/watch?v=HdiSGz6QU0o",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-field-أكل-s01",
+      "url": "https://www.youtube.com/watch?v=RiqL4gxiIW8",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
-    "date": "2026-10-13",
-    "short": 8,
-    "long": 4
+    "date": "2026-10-14",
+    "short": 1,
+    "long": 0
   }
 }
