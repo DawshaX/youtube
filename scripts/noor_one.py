@@ -143,6 +143,15 @@ def wanted_kind(shorts: int | None = None, longs: int | None = None) -> str | No
     if shorts is None or longs is None:
         shorts, longs = _counts()
     s_cap, l_cap = _caps()
+    # 🎯 طلب صريح من الوركفلو (mode=long / mode=short).
+    #    كان الوركفلو بيعمل FLAG وبيمرّره لـnoor_runner — وnoor_one ما كانش
+    #    بيقراه أصلًا ⇒ الوضع اليدوي «طويل» كان بيتجاهله ويطلع شورت. الفجوة
+    #    دي اتقفلت: الطلب الصريح بيتنفّذ، ولو السقف خلص بنرجع للمنطق العادي.
+    forced = (os.environ.get("NOOR_FORCE_FORM") or "").strip()
+    if forced == "long" and longs < l_cap:
+        return "long"
+    if forced == "short" and shorts < s_cap:
+        return "short"
     if shorts >= s_cap and longs >= l_cap:
         return None
     if longs >= l_cap:

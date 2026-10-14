@@ -147,6 +147,7 @@ jobs:
           # 🧱 سقف سلسلة الانتقالات (ذاكرة ثابتة على أي طول حلقة)
           NOOR_XFADE_CHAIN: '8'
           # 🗓️ منظم جدول القاهرة (لو الجدول اشتغل): نفس المنطق
+          NOOR_FORCE_FORM: ${{ inputs.mode || 'cycle' }}  # mode=long/short ينفّذ الطلب فعلًا
           NOOR_GRID_MAX_PER_DAY: '6'
           NOOR_GRID_JITTER: '1'
           NOOR_MIN_GAP_MIN: '45'     # ١٥ نشرة/يوم — الجدول هو المسافة الحقيقية
