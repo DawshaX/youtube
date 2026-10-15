@@ -60,10 +60,12 @@
     "ser-tongue-s01",
     "ser-field-نكشة-l12",
     "long-bayt",
-    "long-lisan"
+    "long-lisan",
+    "ser-tongue-l08",
+    "ser-day-l10"
   ],
-  "turn": 9,
-  "last_series": "longmix-lisan",
+  "turn": 3,
+  "last_series": "ser-day",
   "done": [
     {
       "id": "ser-study-s01",
@@ -429,6 +431,18 @@
       "id": "long-lisan",
       "url": "",
       "err": "RuntimeError",
+      "kind": "long"
+    },
+    {
+      "id": "ser-tongue-l08",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-day-l10",
+      "url": "",
+      "err": "duplicate",
       "kind": "long"
     }
   ],
