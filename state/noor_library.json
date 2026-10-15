@@ -54,10 +54,13 @@
     "ser-phone-l13",
     "ser-field-تدوير-s01",
     "ser-field-جغرافيا-s01",
-    "ser-body-l08"
+    "ser-body-l08",
+    "ser-road-s01",
+    "ser-lang-s01",
+    "ser-tongue-s01"
   ],
-  "turn": 1,
-  "last_series": "ser-body",
+  "turn": 4,
+  "last_series": "ser-tongue",
   "done": [
     {
       "id": "ser-study-s01",
@@ -388,11 +391,29 @@
       "url": "https://www.youtube.com/watch?v=ZF8-tQlCVfw",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-road-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-lang-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-tongue-s01",
+      "url": "https://www.youtube.com/watch?v=HHBUrGTSGBc",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-15",
-    "short": 2,
+    "short": 3,
     "long": 1
   }
 }
