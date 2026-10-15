@@ -65,10 +65,12 @@
     "ser-day-l10",
     "long-nafas",
     "ser-rain-l08",
-    "ser-study-l12"
+    "ser-study-l12",
+    "ser-body-s01",
+    "ser-field-بناء-s01"
   ],
-  "turn": 2,
-  "last_series": "ser-study",
+  "turn": 4,
+  "last_series": "ser-field-بناء",
   "done": [
     {
       "id": "ser-study-s01",
@@ -465,11 +467,23 @@
       "url": "https://www.youtube.com/watch?v=QR2eL7eBPXg",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-body-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-بناء-s01",
+      "url": "https://www.youtube.com/watch?v=TuOkEvI18tg",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
-    "date": "2026-10-15",
-    "short": 3,
-    "long": 3
+    "date": "2026-10-16",
+    "short": 1,
+    "long": 0
   }
 }
