@@ -86,8 +86,8 @@
  },
  "clipcache:b5add6ccb9b7": {
   "source": "video:pixabay",
-  "episode": "ser-day-l10",
-  "at": "2026-10-15 06:34"
+  "episode": "long-yom",
+  "at": "2026-10-15 07:22"
  },
  "https://cdn.pixabay.com/video/2024/08/17/226996_medium.mp4": {
   "source": "video:pixabay",
@@ -2551,8 +2551,8 @@
  },
  "clipcache:ad09152ecfe8": {
   "source": "video:cache",
-  "episode": "long-lisan",
-  "at": "2026-10-15 05:50"
+  "episode": "long-yom",
+  "at": "2026-10-15 07:57"
  },
  "https://cdn.pixabay.com/video/2017/01/07/7093-198553482_medium.mp4": {
   "source": "video:pixabay",
@@ -2830,9 +2830,9 @@
   "at": "2026-10-14 14:48"
  },
  "clipcache:2d128b34b7f2": {
-  "source": "video:pixabay",
-  "episode": "ser-day-l10",
-  "at": "2026-10-15 06:37"
+  "source": "video:cache",
+  "episode": "long-yom",
+  "at": "2026-10-15 07:49"
  },
  "https://cdn.pixabay.com/video/2024/02/25/201968-916877887_medium.mp4": {
   "source": "video:pixabay",
@@ -2951,8 +2951,8 @@
  },
  "clipcache:85d11e7f01c2": {
   "source": "video:pixabay",
-  "episode": "long-lisan",
-  "at": "2026-10-15 05:30"
+  "episode": "long-yom",
+  "at": "2026-10-15 07:58"
  },
  "https://cdn.pixabay.com/video/2024/06/22/217708_medium.mp4": {
   "source": "video:pixabay",
@@ -3206,8 +3206,8 @@
  },
  "clipcache:ebcae096d83e": {
   "source": "video:pixabay",
-  "episode": "ser-road-s01",
-  "at": "2026-10-15 02:20"
+  "episode": "long-yom",
+  "at": "2026-10-15 07:43"
  },
  "https://cdn.pixabay.com/video/2022/10/29/137018-765427143_medium.mp4": {
   "source": "video:pixabay",
@@ -3321,8 +3321,8 @@
  },
  "clipcache:b67cfb43cabc": {
   "source": "video:pixabay",
-  "episode": "ser-field-نكشة-l12",
-  "at": "2026-10-15 03:18"
+  "episode": "long-yom",
+  "at": "2026-10-15 07:51"
  },
  "https://cdn.pixabay.com/video/2026/09/08/375119_medium.mp4": {
   "source": "video:pixabay",
@@ -3346,8 +3346,8 @@
  },
  "clipcache:57151bb91c11": {
   "source": "video:pixabay",
-  "episode": "ser-day-l10",
-  "at": "2026-10-15 06:40"
+  "episode": "long-yom",
+  "at": "2026-10-15 07:21"
  },
  "https://cdn.pixabay.com/video/2024/05/03/210492_medium.mp4": {
   "source": "video:pixabay",
@@ -3476,8 +3476,8 @@
  },
  "clipcache:990f268e4765": {
   "source": "video:pixabay",
-  "episode": "long-nafas",
-  "at": "2026-10-14 21:38"
+  "episode": "long-yom",
+  "at": "2026-10-15 07:31"
  },
  "https://cdn.pixabay.com/video/2020/11/07/54942-486852958_medium.mp4": {
   "source": "video:pixabay",
@@ -4040,9 +4040,9 @@
   "at": "2026-10-14 19:54"
  },
  "clipcache:b308dd66008e": {
-  "source": "video:pixabay",
+  "source": "video:cache",
   "episode": "long-yom",
-  "at": "2026-10-14 20:36"
+  "at": "2026-10-15 07:36"
  },
  "https://cdn.pixabay.com/video/2026/09/18/377341_medium.mp4": {
   "source": "video:pixabay",
@@ -5268,5 +5268,50 @@
   "source": "video:pixabay",
   "episode": "ser-study-l12",
   "at": "2026-10-15 06:58"
+ },
+ "https://cdn.pixabay.com/video/2016/05/12/3160-166338886_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "long-yom",
+  "at": "2026-10-15 07:17"
+ },
+ "https://cdn.pixabay.com/video/2025/10/16/310247_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "long-yom",
+  "at": "2026-10-15 07:21"
+ },
+ "https://cdn.pixabay.com/video/2026/10/10/381979_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "long-yom",
+  "at": "2026-10-15 07:22"
+ },
+ "https://cdn.pixabay.com/video/2022/07/14/124105-730195435_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "long-yom",
+  "at": "2026-10-15 07:31"
+ },
+ "https://cdn.pixabay.com/video/2026/04/15/346676_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "long-yom",
+  "at": "2026-10-15 07:35"
+ },
+ "https://cdn.pixabay.com/video/2019/09/04/26541-357855274_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "long-yom",
+  "at": "2026-10-15 07:43"
+ },
+ "https://cdn.pixabay.com/video/2020/11/29/57736-486749473_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "long-yom",
+  "at": "2026-10-15 07:47"
+ },
+ "https://cdn.pixabay.com/video/2019/09/27/27288-363287624_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "long-yom",
+  "at": "2026-10-15 07:51"
+ },
+ "https://cdn.pixabay.com/video/2019/11/04/28707-371213524_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "long-yom",
+  "at": "2026-10-15 07:58"
  }
 }
