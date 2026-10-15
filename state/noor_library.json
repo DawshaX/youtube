@@ -62,10 +62,11 @@
     "long-bayt",
     "long-lisan",
     "ser-tongue-l08",
-    "ser-day-l10"
+    "ser-day-l10",
+    "long-nafas"
   ],
-  "turn": 4,
-  "last_series": "ser-day",
+  "turn": 6,
+  "last_series": "longmix-nafas",
   "done": [
     {
       "id": "ser-study-s01",
@@ -443,6 +444,12 @@
       "id": "ser-day-l10",
       "url": "",
       "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "long-nafas",
+      "url": "",
+      "err": "RuntimeError",
       "kind": "long"
     }
   ],
