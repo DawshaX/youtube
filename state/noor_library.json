@@ -58,10 +58,11 @@
     "ser-road-s01",
     "ser-lang-s01",
     "ser-tongue-s01",
-    "ser-field-نكشة-l12"
+    "ser-field-نكشة-l12",
+    "long-bayt"
   ],
-  "turn": 5,
-  "last_series": "ser-field-نكشة",
+  "turn": 7,
+  "last_series": "longmix-bayt",
   "done": [
     {
       "id": "ser-study-s01",
@@ -415,6 +416,12 @@
       "id": "ser-field-نكشة-l12",
       "url": "https://www.youtube.com/watch?v=2XkMMy0Izt4",
       "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "long-bayt",
+      "url": "",
+      "err": "RuntimeError",
       "kind": "long"
     }
   ],
