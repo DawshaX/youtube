@@ -63,10 +63,12 @@
     "long-lisan",
     "ser-tongue-l08",
     "ser-day-l10",
-    "long-nafas"
+    "long-nafas",
+    "ser-rain-l08",
+    "ser-study-l12"
   ],
-  "turn": 6,
-  "last_series": "longmix-nafas",
+  "turn": 2,
+  "last_series": "ser-study",
   "done": [
     {
       "id": "ser-study-s01",
@@ -451,11 +453,23 @@
       "url": "",
       "err": "RuntimeError",
       "kind": "long"
+    },
+    {
+      "id": "ser-rain-l08",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-study-l12",
+      "url": "https://www.youtube.com/watch?v=QR2eL7eBPXg",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-15",
     "short": 3,
-    "long": 2
+    "long": 3
   }
 }
