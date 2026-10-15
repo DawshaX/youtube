@@ -67,10 +67,11 @@
     "ser-rain-l08",
     "ser-study-l12",
     "ser-body-s01",
-    "ser-field-بناء-s01"
+    "ser-field-بناء-s01",
+    "ser-field-تجربة-s01"
   ],
-  "turn": 4,
-  "last_series": "ser-field-بناء",
+  "turn": 5,
+  "last_series": "ser-field-تجربة",
   "done": [
     {
       "id": "ser-study-s01",
@@ -479,11 +480,17 @@
       "url": "https://www.youtube.com/watch?v=TuOkEvI18tg",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "ser-field-تجربة-s01",
+      "url": "https://www.youtube.com/watch?v=PDtKUrsOFHQ",
+      "err": "",
+      "kind": "short"
     }
   ],
   "day": {
     "date": "2026-10-16",
-    "short": 1,
+    "short": 2,
     "long": 0
   }
 }
