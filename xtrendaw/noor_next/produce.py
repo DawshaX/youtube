@@ -9,11 +9,13 @@ from xtrendaw import footage, textrender, tts
 from xtrendaw.noor_look import pick as pick_look
 
 from .formats import motion_for, pick_format
-from .montage import loudnorm, overlay_frame, pick_feeling, pick_transition, write_timeline
+from .montage import (FRAME, loudnorm, overlay_frame, pick_feeling,
+                        pick_transition, write_timeline)
 from .palettes import palette_for
 from .queries import queries_for
 from .souls import pick_soul, portrait
-from .studio import burn_words, circle, halo, layer, licensed_whoosh, mark, mix_bed, say
+from .studio import (burn_words, circle, decorate, halo, layer,
+                     licensed_whoosh, mark, mix_bed, say)
 from .timeline import sentences, sacred_text
 
 W, H, FPS = 1080, 1920, 30
@@ -467,15 +469,28 @@ def render(episode: dict, work: Path) -> dict | None:
     _T = _lap("تلوين الكلمة", _T)
     drawn = ("cartoon", "clay3d", "flat", "watercolor", "pastel", "lowpoly", "neon", "dusk", "sport")
     face = portrait(soul) if soul and soul.get("style") in drawn else None
+    avatar_png = None
     if face:
-        avatar = work / "avatar.png"
-        if circle(face, avatar):
-            over = layer(over, work / "avatar.mp4", avatar, "46", "'1510+5*sin(t)'", _run)
+        avatar_png = work / "avatar.png"
+        if not circle(face, avatar_png):
+            avatar_png = None
     badge = work / "mark.png"
     mark(badge, (soul or {}).get("mark") or "#E2B07A")
-    over = layer(over, work / "marked.mp4", badge, "960", "72", _run)
     framed = work / "framed.mp4"
-    overlay_frame(over, framed, _run)
+    # 🧩 تمريرة واحدة للزينة كلها (أفاتار + علامة + إطار) بدل ٣ تمريرات
+    #    كاملة على الفيديو — الفرق دقايق في الحلقة الطويلة بلا أي فرق في الشكل.
+    #    لو وقعت لأي سبب: نرجع للطريقة القديمة بثلاث تمريرات (ما بتكسرش أبدًا).
+    got = decorate(over, framed, avatar=avatar_png,
+                   badge=badge if badge.exists() else None,
+                   frame=FRAME if FRAME.exists() else None, run=_run)
+    if got is not None:
+        over = got
+    else:
+        if avatar_png:
+            over = layer(over, work / "avatar.mp4", avatar_png, "46",
+                         "'1510+5*sin(t)'", _run)
+        over = layer(over, work / "marked.mp4", badge, "960", "72", _run)
+        overlay_frame(over, framed, _run)
     _T = _lap("الطبقات والإطار", _T)
     music_credit = None
     voiced = audio

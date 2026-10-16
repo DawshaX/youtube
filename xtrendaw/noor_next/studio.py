@@ -161,3 +161,54 @@ def layer(video: Path, dst: Path, png: Path, x: str, y: str, run) -> Path:
 
 def say(text: str, path: Path, voice: str, rate: str, pitch: str) -> list[dict]:
     return asyncio.run(speak_words(text, path, voice, rate, pitch))
+
+
+# ─────────────── 🧩 طبقات الزينة في **تمريرة واحدة** ───────────────
+# ليه: الأفاتار + العلامة + الإطار كانوا **٣ تمريرات ffmpeg كاملة** على
+# الفيديو كله (كل واحدة بترمز المدة كلها من الأول). على حلقة ١٠ دقايق ده
+# يعني دقايق مهدورة من مهلة الدورة (٤٥ دقيقة) بلا أي فرق في النتيجة:
+# الثلاثة مجرد `overlay` على نفس المدخل، وينفع يتعملوا في مرشّح واحد.
+# القياس قبل التحسين: دورة الحلقة الطويلة بتفوت المهلة ٤٣ دقيقة وتفشل.
+# الأمانة: لو أي حاجة وقعت، بيرجع `None` والمصنع يكمل بالطريقة القديمة.
+def decorate(video: Path, dst: Path, *, avatar: Path | None = None,
+             badge: Path | None = None, frame: Path | None = None,
+             run=None) -> Path | None:
+    """يطبّق الأفاتار + العلامة + الإطار في **نداء ffmpeg واحد**.
+
+    يرجّع المسار الجديد عند النجاح، و`None` لو فشل (المصنع يرجّع للطريقة
+    القديمة بثلاث تمريرات — مفيش كسر أبدًا).
+    """
+    try:
+        if run is None:
+            from .render import run as _r          # noqa: PLC0415
+            run = _r
+        inputs: list[str] = ["-i", str(video)]
+        chain: list[str] = []
+        label = "0:v"
+        idx = 1
+        if avatar is not None and Path(avatar).exists():
+            inputs += ["-i", str(avatar)]
+            chain.append(f"[{idx}]format=rgba[av{idx}]")
+            chain.append(f"[{label}][av{idx}]overlay=46:'1510+5*sin(t)'[v{idx}]")
+            label, idx = f"v{idx}", idx + 1
+        if badge is not None and Path(badge).exists():
+            inputs += ["-i", str(badge)]
+            chain.append(f"[{idx}]format=rgba[bd{idx}]")
+            chain.append(f"[{label}][bd{idx}]overlay=960:72[v{idx}]")
+            label, idx = f"v{idx}", idx + 1
+        if frame is not None and Path(frame).exists():
+            inputs += ["-i", str(frame)]
+            chain.append(f"[{idx}]scale=1080:1920,format=rgba,"
+                         f"colorkey=0x000000:0.12:0.08[fr{idx}]")
+            chain.append(f"[{label}][fr{idx}]overlay=0:0[v{idx}]")
+            label, idx = f"v{idx}", idx + 1
+        if idx == 1:                                # مفيش أي طبقة
+            return None
+        run(["ffmpeg", "-y", *inputs, "-filter_complex", ";".join(chain),
+             "-map", f"[{label}]", "-c:v", "libx264", "-preset", "veryfast",
+             "-crf", "18", "-pix_fmt", "yuv420p", "-an", str(dst)])
+        return dst if dst.exists() and dst.stat().st_size > 2048 else None
+    except Exception as exc:                        # noqa: BLE001
+        print(f"[studio] طبقات الزينة اتخطت ({type(exc).__name__}) — "
+              "بنرجع للطريقة القديمة", flush=True)
+        return None
