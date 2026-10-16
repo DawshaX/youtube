@@ -206,6 +206,24 @@ def _seconds(video: Path) -> float:
     return 0.0
 
 
+def grain_allowed(video: Path) -> bool:
+    """هل الحبيبات مسموحة على الفيديو ده؟ (القرار في مكان واحد)
+
+    ⚡ الحبيبات بتُحسب على كل فريم، فتكلفتها بتكبر مع المدة. القياس: تمريرة
+    واحدة على حلقة ١٠ دقايق خدت **أكتر من ١٣ دقيقة** لوحدها على معالج
+    ثنائي النواة — والمهلة اليومية للدورة ٤٥ دقيقة، فالحلقة ما كانتش بتخلص.
+    والحبيبات أصلًا لمسة **شورتس** (فيديو قصير).
+    ⇒ فوق `NOOR_GRAIN_MAX_SEC` (افتراضي ٩٠ ثانية): تدريج بس، بلا حبيبات.
+    """
+    import os as _os
+    try:
+        limit = float(_os.environ.get("NOOR_GRAIN_MAX_SEC", "90"))
+    except Exception:
+        limit = 90.0
+    secs = _seconds(video)
+    return (secs <= 0) or (secs <= limit)
+
+
 def _has_audio(video: Path) -> bool:
     """يفحص وجود مسار صوتي فعلًا — عشان ما نضيّعش الصوت في التمريرة النهائية."""
     for exe in _ffmpeg_candidates():
@@ -245,13 +263,10 @@ def finishing_pass(video: Path, dst: Path, *, style: str = "",
     #    على حلقة ١٠ دقايق خدت أكتر من ١٣ دقيقة على معالج ثنائي النواة
     #    (الحبيبات بتُعاد على كل فريم). والحبيبات أصلًا لمسة **شورتس**.
     #    عشان كده: أي فيديو أطول من ٩٠ ثانية = تدريج بس، بلا حبيبات.
-    if grain:
-        secs = _seconds(video)
-        if secs > float(__import__("os").environ.get(
-                "NOOR_GRAIN_MAX_SEC", "90")):
-            print(f"[pro] ⚡ الحبيبات اتقفلت (الفيديو {secs:.0f}ث طويل) — "
-                  "أسرع بكتير وبلا فرق مرئي", flush=True)
-            grain = False
+    if grain and not grain_allowed(video):
+        print(f"[pro] ⚡ الحبيبات اتقفلت (الفيديو {_seconds(video):.0f}ث طويل) — "
+              "أسرع بكتير وبلا فرق مرئي", flush=True)
+        grain = False
     chain = [grade_chain(style, grain)]
     if bar:
         hexc = bar_color.lstrip("#")
@@ -361,7 +376,11 @@ def apply_all(video: Path, work: Path, item: dict, *, feeling: str = "",
         style = pick_grade(item, feeling)
         if finishing_pass(cur, styled, style=style, grain=True, bar=True):
             cur = styled
-            report["applied"].extend(["تدريج " + style, "حبيبات فيلم", "شريط تقدّم"])
+            report["applied"].extend(["تدريج " + style, "شريط تقدّم"])
+            # ⚠️ صدق في التقرير: ما نكتبش «حبيبات فيلم» لو اتقفلت (التقرير
+            #    بيروح للوصف العام للمشاهد)
+            if grain_allowed(video):
+                report["applied"].append("حبيبات فيلم")
             # علامة على الفيديو: «دي اتعدّت خلاص» — عشان ما نعيدش الترميز مرتين
             try:
                 (Path(cur).parent / (Path(cur).stem + ".pro.json")).write_text(

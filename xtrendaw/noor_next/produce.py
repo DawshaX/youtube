@@ -285,6 +285,19 @@ def _pro_studio(episode: dict) -> dict:
         return episode
 
 
+def _t0() -> float:
+    import time as _t
+    return _t.time()
+
+
+def _lap(tag: str, start: float) -> float:
+    """يطبع مدة المرحلة بالثواني ويرجّع الوقت الحالي (لسلسلة قياسات)."""
+    import time as _t
+    now = _t.time()
+    print(f"[⏱️ مرحلة] {tag}: {now - start:.0f}ث", flush=True)
+    return now
+
+
 def _hook_into_spoken(episode: dict, spoken: str) -> str:
     """يحقن الهوك في **أول جملة منطوقة** عشان يتقال فعلًا، مش يبان بس.
 
@@ -320,6 +333,9 @@ def _hook_into_spoken(episode: dict, spoken: str) -> str:
 
 
 def render(episode: dict, work: Path) -> dict | None:
+    # ⏱️ عدّاد المراحل: كل مرحلة بوقتها الحقيقي — عشان نعرف فين بيتحرق الوقت
+    #    (الطويل لازم يخلص جوّه مهلة الدورة ٤٥ دقيقة، فالقياس مش رفاهية).
+    _T = _t0()
     episode = _pro_studio(episode)
     spoken = (episode.get("spoken") or "").strip()
     if not spoken or sacred_text(spoken):
@@ -348,6 +364,7 @@ def render(episode: dict, work: Path) -> dict | None:
     )
     audio = Path(speech["wav"])
     total = float(speech.get("duration") or 0)
+    _T = _lap(f"النطق ({len(say_text.split())} كلمة)", _T)
     if total < 2 or not audio.exists():
         print("[studio] الصوت ما طلّعش", flush=True)
         return None
@@ -419,6 +436,7 @@ def render(episode: dict, work: Path) -> dict | None:
         return None
     silent = work / "silent.mp4"
     visual_len = _join(clips, durs, transition, silent)
+    _T = _lap(f"اللقطات والمونتاج ({len(clips)} لقطة)", _T)
     scale = visual_len / sum(durs) if sum(durs) else 1.0
     cmd = ["ffmpeg", "-y", "-i", str(silent)]
     for png in caps:
@@ -438,6 +456,7 @@ def render(episode: dict, work: Path) -> dict | None:
         "-pix_fmt", "yuv420p", "-an", str(over),
     ])
     _run(cmd)
+    _T = _lap("طبقة الجمل", _T)
     if words and total > 0:
         fit = visual_len / total
         words = [{"t": w["t"] * fit, "d": w["d"] * fit, "w": w["w"]} for w in words]
@@ -445,6 +464,7 @@ def render(episode: dict, work: Path) -> dict | None:
         over = burn_words(over, words, work, pal.get("text") or "#F7F1E6", _run)
     except Exception as exc:
         print(f"[studio] تلوين الكلمة اتخطى: {type(exc).__name__}", flush=True)
+    _T = _lap("تلوين الكلمة", _T)
     drawn = ("cartoon", "clay3d", "flat", "watercolor", "pastel", "lowpoly", "neon", "dusk", "sport")
     face = portrait(soul) if soul and soul.get("style") in drawn else None
     if face:
@@ -456,6 +476,7 @@ def render(episode: dict, work: Path) -> dict | None:
     over = layer(over, work / "marked.mp4", badge, "960", "72", _run)
     framed = work / "framed.mp4"
     overlay_frame(over, framed, _run)
+    _T = _lap("الطبقات والإطار", _T)
     music_credit = None
     voiced = audio
     ratio = (visual_len / total) if total else 1.0
@@ -516,6 +537,7 @@ def render(episode: dict, work: Path) -> dict | None:
         "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac",
         "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(out),
     ])
+    _T = _lap("الصوت والمزج والدمج", _T)
 
     # ── 🆕 التمريرة الختامية: تدريج سينمائي + حبيبات + شريط تقدّم + غلاف
     cover = None

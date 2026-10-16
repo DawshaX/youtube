@@ -122,7 +122,11 @@ def finish_video(video: Path, work: Path, item: dict, *,
     final = video
     try:
         if enabled()["effects"]:
+            import time as _t
+            _t0 = _t.time()
             final, rep = effects.apply_all(video, work, item, feeling=feeling)
+            print(f"[⏱️ مرحلة] التمريرة الختامية (تدريج/حبيبات/شريط): "
+                  f"{_t.time() - _t0:.0f}ث", flush=True)
             out["effects"] = rep.get("applied", [])
             out["skipped"] = rep.get("skipped", [])
     except Exception as exc:  # noqa: BLE001
