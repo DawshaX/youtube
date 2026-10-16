@@ -73,10 +73,11 @@
     "long-sitr",
     "ser-field-وهم ونفس-s04",
     "ser-host-s07",
-    "ser-field-محيط-s01"
+    "ser-field-محيط-s01",
+    "ser-rain-s03"
   ],
-  "turn": 58,
-  "last_series": "ser-field-محيط",
+  "turn": 59,
+  "last_series": "ser-rain",
   "done": [
     {
       "id": "ser-study-s01",
@@ -530,11 +531,20 @@
       "series_id": "ser-field-محيط",
       "emotion": "دهشة",
       "at": "2026-10-16 21:40"
+    },
+    {
+      "id": "ser-rain-s03",
+      "url": "https://www.youtube.com/watch?v=vmEvuvAh9h8",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-rain",
+      "emotion": "لحظة",
+      "at": "2026-10-16 22:25"
     }
   ],
   "day": {
     "date": "2026-10-17",
-    "short": 1,
+    "short": 2,
     "long": 0
   }
 }
