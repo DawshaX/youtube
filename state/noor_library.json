@@ -1,510 +1,510 @@
 {
- "served": [
-  "ser-study-s01",
-  "ser-money-s01",
-  "ser-kitchen-s01",
-  "ser-anger-l06",
-  "ser-child-s01",
-  "ser-animal-l09",
-  "ser-field-لحظة-l09",
-  "ser-queue-s01",
-  "ser-clean-l12",
-  "ser-field-أرض-s01",
-  "ser-field-ألوان-s01",
-  "ser-family-l13",
-  "ser-field-امتحان-s01",
-  "ser-field-بلكونة-s01",
-  "ser-child-l06",
-  "ser-family-s01",
-  "ser-sky-s01",
-  "ser-anger-s01",
-  "ser-field-حرفة-l08",
-  "ser-faith-s01",
-  "ser-rain-s01",
-  "ser-kitchen-l11",
-  "ser-field-إيقاع-s01",
-  "ser-field-بحر-s01",
-  "ser-sky-l13",
-  "ser-lang-l13",
-  "ser-field-تصميم-s01",
-  "ser-field-جبل-s01",
-  "ser-field-حديقة-s01",
-  "ser-field-علم الأرض-l08",
-  "ser-animal-s01",
-  "ser-field-أخ-s01",
-  "ser-field-عبرة-l10",
-  "ser-field-استماع-s01",
-  "ser-field-تاريخ-s01",
-  "ser-faith-l13",
-  "ser-field-سؤال-l06",
-  "ser-phone-s01",
-  "ser-host-s01",
-  "ser-field-وهم ونفس-l08",
-  "ser-field-أكل-s01",
-  "ser-field-اجتماع-s01",
-  "ser-host-l12",
-  "ser-road-l13",
-  "ser-field-جسم ونَفَس-s01",
-  "ser-field-حرفة-s01",
-  "ser-field-حريق-s01",
-  "ser-field-جسم ونَفَس-l06",
-  "ser-queue-l08",
-  "ser-field-علم الحياة-l08",
-  "ser-day-s01",
-  "ser-phone-l13",
-  "ser-field-تدوير-s01",
-  "ser-field-جغرافيا-s01",
-  "ser-body-l08",
-  "ser-road-s01",
-  "ser-lang-s01",
-  "ser-tongue-s01",
-  "ser-field-نكشة-l12",
-  "long-bayt",
-  "long-lisan",
-  "ser-tongue-l08",
-  "ser-day-l10",
-  "long-nafas",
-  "ser-rain-l08",
-  "ser-study-l12",
-  "ser-body-s01",
-  "ser-field-بناء-s01",
-  "ser-field-تجربة-s01",
-  "ser-field-حروف-s01",
-  "long-sitr"
- ],
- "turn": 3,
- "last_series": "longmix-sitr",
- "done": [
-  {
-   "id": "ser-study-s01",
-   "url": "",
-   "err": "no_footage",
-   "kind": "short"
-  },
-  {
-   "id": "ser-money-s01",
-   "url": "",
-   "err": "no_footage",
-   "kind": "short"
-  },
-  {
-   "id": "ser-kitchen-s01",
-   "url": "",
-   "err": "no_footage",
-   "kind": "short"
-  },
-  {
-   "id": "ser-anger-l06",
-   "url": "",
-   "err": "no_footage",
-   "kind": "long"
-  },
-  {
-   "id": "ser-child-s01",
-   "url": "",
-   "err": "no_footage",
-   "kind": "short"
-  },
-  {
-   "id": "ser-animal-l09",
-   "url": "",
-   "err": "no_footage",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-لحظة-l09",
-   "url": "https://www.youtube.com/watch?v=a4kvrr_7bHg",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-queue-s01",
-   "url": "https://www.youtube.com/watch?v=RrfbELm-4po",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-clean-l12",
-   "url": "https://www.youtube.com/watch?v=C6tekuVWBwY",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-أرض-s01",
-   "url": "https://www.youtube.com/watch?v=3gPRq_raSro",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-ألوان-s01",
-   "url": "https://www.youtube.com/watch?v=Gxzl7KMfDqs",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-family-l13",
-   "url": "https://www.youtube.com/watch?v=LO8K2KBuwjw",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-امتحان-s01",
-   "url": "https://www.youtube.com/watch?v=Xx8ncD8A_50",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-بلكونة-s01",
-   "url": "https://www.youtube.com/watch?v=442ZsnGZe-g",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-child-l06",
-   "url": "https://www.youtube.com/watch?v=-HzQJnDSnSk",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-family-s01",
-   "url": "",
-   "err": "duplicate",
-   "kind": "short"
-  },
-  {
-   "id": "ser-sky-s01",
-   "url": "https://www.youtube.com/watch?v=_cGkWOPmM0s",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-anger-s01",
-   "url": "https://www.youtube.com/watch?v=cXyM1eZjDBo",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-حرفة-l08",
-   "url": "https://www.youtube.com/watch?v=xGNh3qEnb6w",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-faith-s01",
-   "url": "https://www.youtube.com/watch?v=GTePdnGxe-U",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-rain-s01",
-   "url": "https://www.youtube.com/watch?v=Mk1ORSuP90s",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-kitchen-l11",
-   "url": "https://www.youtube.com/watch?v=lFkFGN7bGl8",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-إيقاع-s01",
-   "url": "https://www.youtube.com/watch?v=hGCIx5vzcZ0",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-بحر-s01",
-   "url": "https://www.youtube.com/watch?v=v5LiUAHlBRg",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-sky-l13",
-   "url": "",
-   "err": "duplicate",
-   "kind": "long"
-  },
-  {
-   "id": "ser-lang-l13",
-   "url": "https://www.youtube.com/watch?v=PwpxjjcZ-eY",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-تصميم-s01",
-   "url": "https://www.youtube.com/watch?v=7sjTjKOB1O0",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-جبل-s01",
-   "url": "https://www.youtube.com/watch?v=QCnBEEUuDsU",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-حديقة-s01",
-   "url": "https://www.youtube.com/watch?v=zXFVTDkMR1E",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-علم الأرض-l08",
-   "url": "https://www.youtube.com/watch?v=ndwH6KsQJl4",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-animal-s01",
-   "url": "https://www.youtube.com/watch?v=C7ojr-T8V2I",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-أخ-s01",
-   "url": "https://www.youtube.com/watch?v=iAqYHBHgTAE",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-عبرة-l10",
-   "url": "https://www.youtube.com/watch?v=XIpzGQEn3J4",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-استماع-s01",
-   "url": "https://www.youtube.com/watch?v=r-muXusR24k",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-تاريخ-s01",
-   "url": "https://www.youtube.com/watch?v=M-0j32cG-aQ",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-faith-l13",
-   "url": "",
-   "err": "duplicate",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-سؤال-l06",
-   "url": "https://www.youtube.com/watch?v=4kHrH00O1SA",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-phone-s01",
-   "url": "https://www.youtube.com/watch?v=HHm0-w0TQFo",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-host-s01",
-   "url": "https://www.youtube.com/watch?v=B_eRoSWGJ44",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-وهم ونفس-l08",
-   "url": "https://www.youtube.com/watch?v=HdiSGz6QU0o",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-أكل-s01",
-   "url": "https://www.youtube.com/watch?v=RiqL4gxiIW8",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-اجتماع-s01",
-   "url": "https://www.youtube.com/watch?v=Lya754-RR0g",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-host-l12",
-   "url": "",
-   "err": "duplicate",
-   "kind": "long"
-  },
-  {
-   "id": "ser-road-l13",
-   "url": "https://www.youtube.com/watch?v=4i69eWQ2C9o",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-جسم ونَفَس-s01",
-   "url": "https://www.youtube.com/watch?v=XqSb4FCdh00",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-حرفة-s01",
-   "url": "",
-   "err": "duplicate",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-حريق-s01",
-   "url": "https://www.youtube.com/watch?v=jBFsWp2Geqk",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-جسم ونَفَس-l06",
-   "url": "",
-   "err": "duplicate",
-   "kind": "long"
-  },
-  {
-   "id": "ser-queue-l08",
-   "url": "",
-   "err": "duplicate",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-علم الحياة-l08",
-   "url": "https://www.youtube.com/watch?v=UaGi0uIixl8",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-day-s01",
-   "url": "https://www.youtube.com/watch?v=x2nIQ_31hdI",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-phone-l13",
-   "url": "",
-   "err": "duplicate",
-   "kind": "long"
-  },
-  {
-   "id": "ser-field-تدوير-s01",
-   "url": "https://www.youtube.com/watch?v=MjyP9Gfl2cs",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-جغرافيا-s01",
-   "url": "https://www.youtube.com/watch?v=yCyXcSiYrJY",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-body-l08",
-   "url": "https://www.youtube.com/watch?v=ZF8-tQlCVfw",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-road-s01",
-   "url": "",
-   "err": "duplicate",
-   "kind": "short"
-  },
-  {
-   "id": "ser-lang-s01",
-   "url": "",
-   "err": "duplicate",
-   "kind": "short"
-  },
-  {
-   "id": "ser-tongue-s01",
-   "url": "https://www.youtube.com/watch?v=nrkKfdrAkGI",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-نكشة-l12",
-   "url": "https://www.youtube.com/watch?v=2XkMMy0Izt4",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "long-bayt",
-   "url": "",
-   "err": "RuntimeError",
-   "kind": "long"
-  },
-  {
-   "id": "long-lisan",
-   "url": "",
-   "err": "RuntimeError",
-   "kind": "long"
-  },
-  {
-   "id": "ser-tongue-l08",
-   "url": "",
-   "err": "duplicate",
-   "kind": "long"
-  },
-  {
-   "id": "ser-day-l10",
-   "url": "",
-   "err": "duplicate",
-   "kind": "long"
-  },
-  {
-   "id": "long-nafas",
-   "url": "",
-   "err": "RuntimeError",
-   "kind": "long"
-  },
-  {
-   "id": "ser-rain-l08",
-   "url": "",
-   "err": "duplicate",
-   "kind": "long"
-  },
-  {
-   "id": "ser-study-l12",
-   "url": "https://www.youtube.com/watch?v=QR2eL7eBPXg",
-   "err": "",
-   "kind": "long"
-  },
-  {
-   "id": "ser-body-s01",
-   "url": "",
-   "err": "duplicate",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-بناء-s01",
-   "url": "https://www.youtube.com/watch?v=TuOkEvI18tg",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-تجربة-s01",
-   "url": "",
-   "err": "duplicate",
-   "kind": "short"
-  },
-  {
-   "id": "ser-field-حروف-s01",
-   "url": "https://www.youtube.com/watch?v=VEfSANKKMtU",
-   "err": "",
-   "kind": "short"
-  },
-  {
-   "id": "long-sitr",
-   "url": "https://www.youtube.com/watch?v=hA_0L40905E",
-   "err": "",
-   "kind": "long"
+  "served": [
+    "ser-study-s01",
+    "ser-money-s01",
+    "ser-kitchen-s01",
+    "ser-anger-l06",
+    "ser-child-s01",
+    "ser-animal-l09",
+    "ser-field-لحظة-l09",
+    "ser-queue-s01",
+    "ser-clean-l12",
+    "ser-field-أرض-s01",
+    "ser-field-ألوان-s01",
+    "ser-family-l13",
+    "ser-field-امتحان-s01",
+    "ser-field-بلكونة-s01",
+    "ser-child-l06",
+    "ser-family-s01",
+    "ser-sky-s01",
+    "ser-anger-s01",
+    "ser-field-حرفة-l08",
+    "ser-faith-s01",
+    "ser-rain-s01",
+    "ser-kitchen-l11",
+    "ser-field-إيقاع-s01",
+    "ser-field-بحر-s01",
+    "ser-sky-l13",
+    "ser-lang-l13",
+    "ser-field-تصميم-s01",
+    "ser-field-جبل-s01",
+    "ser-field-حديقة-s01",
+    "ser-field-علم الأرض-l08",
+    "ser-animal-s01",
+    "ser-field-أخ-s01",
+    "ser-field-عبرة-l10",
+    "ser-field-استماع-s01",
+    "ser-field-تاريخ-s01",
+    "ser-faith-l13",
+    "ser-field-سؤال-l06",
+    "ser-phone-s01",
+    "ser-host-s01",
+    "ser-field-وهم ونفس-l08",
+    "ser-field-أكل-s01",
+    "ser-field-اجتماع-s01",
+    "ser-host-l12",
+    "ser-road-l13",
+    "ser-field-جسم ونَفَس-s01",
+    "ser-field-حرفة-s01",
+    "ser-field-حريق-s01",
+    "ser-field-جسم ونَفَس-l06",
+    "ser-queue-l08",
+    "ser-field-علم الحياة-l08",
+    "ser-day-s01",
+    "ser-phone-l13",
+    "ser-field-تدوير-s01",
+    "ser-field-جغرافيا-s01",
+    "ser-body-l08",
+    "ser-road-s01",
+    "ser-lang-s01",
+    "ser-tongue-s01",
+    "ser-field-نكشة-l12",
+    "long-bayt",
+    "long-lisan",
+    "ser-tongue-l08",
+    "ser-day-l10",
+    "long-nafas",
+    "ser-rain-l08",
+    "ser-study-l12",
+    "ser-body-s01",
+    "ser-field-بناء-s01",
+    "ser-field-تجربة-s01",
+    "ser-field-حروف-s01",
+    "long-sitr"
+  ],
+  "turn": 4,
+  "last_series": "longmix-sitr",
+  "done": [
+    {
+      "id": "ser-study-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-money-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-kitchen-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-anger-l06",
+      "url": "",
+      "err": "no_footage",
+      "kind": "long"
+    },
+    {
+      "id": "ser-child-s01",
+      "url": "",
+      "err": "no_footage",
+      "kind": "short"
+    },
+    {
+      "id": "ser-animal-l09",
+      "url": "",
+      "err": "no_footage",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-لحظة-l09",
+      "url": "https://www.youtube.com/watch?v=a4kvrr_7bHg",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-queue-s01",
+      "url": "https://www.youtube.com/watch?v=RrfbELm-4po",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-clean-l12",
+      "url": "https://www.youtube.com/watch?v=C6tekuVWBwY",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-أرض-s01",
+      "url": "https://www.youtube.com/watch?v=3gPRq_raSro",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-ألوان-s01",
+      "url": "https://www.youtube.com/watch?v=Gxzl7KMfDqs",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-family-l13",
+      "url": "https://www.youtube.com/watch?v=LO8K2KBuwjw",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-امتحان-s01",
+      "url": "https://www.youtube.com/watch?v=Xx8ncD8A_50",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-بلكونة-s01",
+      "url": "https://www.youtube.com/watch?v=442ZsnGZe-g",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-child-l06",
+      "url": "https://www.youtube.com/watch?v=-HzQJnDSnSk",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-family-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-sky-s01",
+      "url": "https://www.youtube.com/watch?v=_cGkWOPmM0s",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-anger-s01",
+      "url": "https://www.youtube.com/watch?v=cXyM1eZjDBo",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-حرفة-l08",
+      "url": "https://www.youtube.com/watch?v=xGNh3qEnb6w",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-faith-s01",
+      "url": "https://www.youtube.com/watch?v=GTePdnGxe-U",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-rain-s01",
+      "url": "https://www.youtube.com/watch?v=Mk1ORSuP90s",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-kitchen-l11",
+      "url": "https://www.youtube.com/watch?v=lFkFGN7bGl8",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-إيقاع-s01",
+      "url": "https://www.youtube.com/watch?v=hGCIx5vzcZ0",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-بحر-s01",
+      "url": "https://www.youtube.com/watch?v=v5LiUAHlBRg",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-sky-l13",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-lang-l13",
+      "url": "https://www.youtube.com/watch?v=PwpxjjcZ-eY",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-تصميم-s01",
+      "url": "https://www.youtube.com/watch?v=7sjTjKOB1O0",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-جبل-s01",
+      "url": "https://www.youtube.com/watch?v=QCnBEEUuDsU",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-حديقة-s01",
+      "url": "https://www.youtube.com/watch?v=zXFVTDkMR1E",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-علم الأرض-l08",
+      "url": "https://www.youtube.com/watch?v=ndwH6KsQJl4",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-animal-s01",
+      "url": "https://www.youtube.com/watch?v=C7ojr-T8V2I",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-أخ-s01",
+      "url": "https://www.youtube.com/watch?v=iAqYHBHgTAE",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-عبرة-l10",
+      "url": "https://www.youtube.com/watch?v=XIpzGQEn3J4",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-استماع-s01",
+      "url": "https://www.youtube.com/watch?v=r-muXusR24k",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-تاريخ-s01",
+      "url": "https://www.youtube.com/watch?v=M-0j32cG-aQ",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-faith-l13",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-سؤال-l06",
+      "url": "https://www.youtube.com/watch?v=4kHrH00O1SA",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-phone-s01",
+      "url": "https://www.youtube.com/watch?v=HHm0-w0TQFo",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-host-s01",
+      "url": "https://www.youtube.com/watch?v=B_eRoSWGJ44",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-وهم ونفس-l08",
+      "url": "https://www.youtube.com/watch?v=HdiSGz6QU0o",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-أكل-s01",
+      "url": "https://www.youtube.com/watch?v=RiqL4gxiIW8",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-اجتماع-s01",
+      "url": "https://www.youtube.com/watch?v=Lya754-RR0g",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-host-l12",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-road-l13",
+      "url": "https://www.youtube.com/watch?v=4i69eWQ2C9o",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-جسم ونَفَس-s01",
+      "url": "https://www.youtube.com/watch?v=XqSb4FCdh00",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-حرفة-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-حريق-s01",
+      "url": "https://www.youtube.com/watch?v=jBFsWp2Geqk",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-جسم ونَفَس-l06",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-queue-l08",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-علم الحياة-l08",
+      "url": "https://www.youtube.com/watch?v=UaGi0uIixl8",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-day-s01",
+      "url": "https://www.youtube.com/watch?v=x2nIQ_31hdI",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-phone-l13",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-field-تدوير-s01",
+      "url": "https://www.youtube.com/watch?v=MjyP9Gfl2cs",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-جغرافيا-s01",
+      "url": "https://www.youtube.com/watch?v=yCyXcSiYrJY",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-body-l08",
+      "url": "https://www.youtube.com/watch?v=ZF8-tQlCVfw",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-road-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-lang-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-tongue-s01",
+      "url": "https://www.youtube.com/watch?v=nrkKfdrAkGI",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-نكشة-l12",
+      "url": "https://www.youtube.com/watch?v=2XkMMy0Izt4",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "long-bayt",
+      "url": "",
+      "err": "RuntimeError",
+      "kind": "long"
+    },
+    {
+      "id": "long-lisan",
+      "url": "",
+      "err": "RuntimeError",
+      "kind": "long"
+    },
+    {
+      "id": "ser-tongue-l08",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-day-l10",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "long-nafas",
+      "url": "",
+      "err": "RuntimeError",
+      "kind": "long"
+    },
+    {
+      "id": "ser-rain-l08",
+      "url": "",
+      "err": "duplicate",
+      "kind": "long"
+    },
+    {
+      "id": "ser-study-l12",
+      "url": "https://www.youtube.com/watch?v=QR2eL7eBPXg",
+      "err": "",
+      "kind": "long"
+    },
+    {
+      "id": "ser-body-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-بناء-s01",
+      "url": "https://www.youtube.com/watch?v=TuOkEvI18tg",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-تجربة-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short"
+    },
+    {
+      "id": "ser-field-حروف-s01",
+      "url": "https://www.youtube.com/watch?v=VEfSANKKMtU",
+      "err": "",
+      "kind": "short"
+    },
+    {
+      "id": "long-sitr",
+      "url": "https://www.youtube.com/watch?v=hA_0L40905E",
+      "err": "",
+      "kind": "long"
+    }
+  ],
+  "day": {
+    "date": "2026-10-16",
+    "short": 2,
+    "long": 1
   }
- ],
- "day": {
-  "date": "2026-10-16",
-  "short": 2,
-  "long": 1
- }
 }
