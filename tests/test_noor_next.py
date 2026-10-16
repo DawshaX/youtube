@@ -88,11 +88,29 @@ class VoiceTests(unittest.TestCase):
 
 class QueryTests(unittest.TestCase):
     def test_sentence_gets_its_own_shot(self):
+        """نية الاختبار الأصلية (2026-10-12): كل جملة تاخد لقطتها، وكله بلا وجوه.
+
+        ⚠️ تعديل موثّق (2026-10-16) — بالقياس مش بالتخمين:
+        نية «بلا وجوه» كانت مكتوبة **جوه نص البحث** («onion … no people»)،
+        والقياس على المصادر المجانية أثبت إن التعليمات دي **بتصفّر النتايج**:
+            «sunlit floor empty no faces no people» → 0 مرشحين
+            «mosque dome»                        → 3 مرشحين
+        فهي بقت فلاتر في كود الجلب (`QUALITY_FILTERS`)، والاختبار بقى يحرس
+        الحقيقتين: (١) الجملة بتجمع لقطتها من HINTS (٢) التعليمات ما تتسرّبش.
+        """
         qs = queries_for("البصل بيدمع لأن بخاره يلمس العين.", "kitchen morning no people")
-        self.assertIn("onion on wooden board no people", qs)
+        self.assertIn("onion wooden board", qs)              # الجملة جمعت لقطتها
+        self.assertTrue(any("kitchen morning" in q for q in qs))  # والمشهد بيوجّه
+        for bad in ("no people", "no faces", "no face", "no text"):
+            self.assertFalse(any(bad in q for q in qs), f"«{bad}» اتسرّبت للبحث")
+        self.assertFalse(any(q.startswith("empty ") for q in qs))
         angled = queries_for("الدور ييجي.", "queue line marks floor", salt=1)
         self.assertTrue(any("queue" in q or "wide shot" in q for q in angled))
-        self.assertTrue(all("no people" in q or "onion" in q for q in qs))
+        # التنويع بـsalt لازم يفرّق فعلًا (زاوية + شبكة أمان مختلفة)
+        self.assertNotEqual(
+            queries_for("الدور ييجي.", "queue line marks floor", salt=1),
+            queries_for("الدور ييجي.", "queue line marks floor", salt=2),
+        )
 
 
 class VaultTests(unittest.TestCase):

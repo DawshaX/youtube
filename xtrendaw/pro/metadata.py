@@ -103,6 +103,23 @@ TITLE_PATTERNS = {
 }
 
 
+def _emoji_re() -> str:
+    return r"[\U0001F300-\U0001FAFF\u2600-\u27BF]"
+
+
+def _same_ish(a: str, b: str) -> bool:
+    """هل النصين نفس المعنى تقريبًا؟ (للحماية من العنوان المكرّر)"""
+    a, b = _clean(a).lower(), _clean(b).lower()
+    if not a or not b:
+        return False
+    if a in b or b in a:
+        return True
+    wa, wb = set(a.split()), set(b.split())
+    if not wa or not wb:
+        return False
+    return len(wa & wb) / float(min(len(wa), len(wb))) >= 0.6
+
+
 def _clean(text: str, limit: int = 0) -> str:
     t = re.sub(r"\s+", " ", str(text or "")).strip()
     if limit and len(t) > limit:
@@ -137,11 +154,21 @@ def title_for(item: dict, *, hook: str = "", kind: str = "", kw: str = "",
         return _clean(long_title, 100)
 
     k = str(kind or item.get("kind") or item.get("plan_kind") or "life")
+    h = _clean(hook or item.get("hook") or item.get("title") or "", 62)
+
+    # 🛡️ عنوان الطويل (حلقات الساعات) مكتوب بإيد في مصنع الطويل وجواه المدة
+    #    الحقيقية بالدقيقة — فمفيش أي قالب يزوّده أو يكرّره. بنسيبه زي ما هو.
+    #    (باج حقيقي 2026-10-16: الطويل كان عنوانه بيتكرّر مرتين لأن الـkw
+    #     بتاعه هو نفسه عنوانه — القالب «{hook} | {kw} 🌿» طبعه مرتين.)
+    if k in ("long", "long_qissa", "long_story"):
+        out = _clean(long_title or h or "فيديو هادئ", 100)
+        if not re.search(_emoji_re(), out):
+            out = f"{out} 🌿"
+        return out
+
     patterns = TITLE_PATTERNS.get(k)
     if not patterns:
         patterns = TITLE_PATTERNS["life"]
-
-    h = _clean(hook or item.get("hook") or "", 62)
     surah = _clean(kw or item.get("surah_name") or item.get("surah")
                    or item.get("theme") or item.get("field") or "", 24)
     rec = _clean(reciter or item.get("reciter_name") or "", 26)
@@ -149,17 +176,24 @@ def title_for(item: dict, *, hook: str = "", kind: str = "", kw: str = "",
 
     seed = sum(ord(c) for c in str(item.get("id") or item.get("hook") or "نور"))
     # أفضلية أول قالب لو مفيش قارئ (مش بنحط «تلاوة » فاضية)
+    # 🛡️ لو الـkw مكرّر للهوك (أو جزء منه) نشيله — من غير عنوان مكرّر
+    if surah and _same_ish(surah, h):
+        surah = ""
+
     usable = [p for p in patterns if "{rec}" not in p or rec]
     tpl = usable[seed % len(usable)] if usable else patterns[0]
 
-    out = tpl.format(hook=h, kw=surah or "القرآن", num=num, rec=rec).strip()
+    out = tpl.format(hook=h, kw=surah, num=num, rec=rec).strip()
+    # لمسة نظافة: قوالب كان فيها {kw} ومفيش kw ⇒ فاضلة «| 🌿» أو «| » — تتلمّ
+    out = re.sub(r"\s*[|—]\s*(?=" + _emoji_re() + ")", " ", out)
+    out = re.sub(r"\s*[|—]\s*$", "", out)
     out = re.sub(r"\s*[|—]\s*(?=[|—])", " ", out)
     out = re.sub(r"\s{2,}", " ", out).strip(" |—.")
     if not out:
         out = h or "آية وسكينة"
 
     # إيموجي احتياطي لو مفيش أي إيموجي
-    if not re.search(r"[\U0001F300-\U0001FAFF\u2600-\u27BF]", out):
+    if not re.search(_emoji_re(), out):
         out = f"{out} {_emoji_for(item, k) or '🤍'}".strip()
     return _clean(out, 95)
 
