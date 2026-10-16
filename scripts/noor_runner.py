@@ -201,17 +201,37 @@ def _channel_titles() -> set:
     if now - float(_TITLE_FEED_CACHE["at"] or 0) < 480:
         return set(_TITLE_FEED_CACHE["titles"] or set())
     titles = set()
-    try:
-        import urllib.request
-        req = urllib.request.Request(
-            f"https://www.youtube.com/feeds/videos.xml?channel_id={_CHANNEL_ID}",
-            headers={"User-Agent": "noor-factory/1.0"})
-        with urllib.request.urlopen(req, timeout=12) as r:
-            xml = r.read().decode("utf-8", "ignore")
-        for t in re.findall(r"<media:title>(.*?)</media:title>", xml):
-            titles.add(_norm_title(t))
-    except Exception:
-        titles = set()
+    # ١) تغذية RSS (الأخف) — لكنها **وقفت وبترجّع 404** (اتأكدنا 2026-10-16)،
+    #    فبقى لازم بديل، وإلا الحارس بيفتكر القناة فاضية ويفقد عينه.
+    for feed in (
+        f"https://www.youtube.com/feeds/videos.xml?channel_id={_CHANNEL_ID}",
+        f"https://www.youtube.com/feeds/videos.xml?playlist_id=UU{_CHANNEL_ID[2:]}",
+    ):
+        try:
+            import urllib.request
+            req = urllib.request.Request(feed, headers={
+                "User-Agent": "Mozilla/5.0 (compatible; noor-factory/1.0)",
+                "Accept": "application/atom+xml,application/xml"})
+            with urllib.request.urlopen(req, timeout=12) as r:
+                xml = r.read().decode("utf-8", "ignore")
+            found = re.findall(r"<media:title>(.*?)</media:title>", xml)
+            if found:
+                titles.update(_norm_title(t) for t in found)
+                break
+        except Exception:
+            continue
+    # ٢) لو التغذية وقعت: الـAPI الرسمي بنفس توكن المصنع (مضمون)
+    if not titles:
+        try:
+            from xtrendaw.publish import youtube as _yt
+            for row in _yt.recent_uploads(25) or []:
+                if row.get("title"):
+                    titles.add(_norm_title(row["title"]))
+            if titles:
+                print(f"[noor] 📡 حارس التكرار: {len(titles)} عنوان من الـAPI "
+                      "(RSS واقف)", flush=True)
+        except Exception:
+            pass
     _TITLE_FEED_CACHE["at"] = now
     _TITLE_FEED_CACHE["titles"] = titles
     return titles

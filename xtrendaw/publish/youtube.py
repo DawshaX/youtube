@@ -280,3 +280,52 @@ def check_blocked_api(video_id: str):
         return "ok"
     except Exception:
         return None
+
+
+# ── 📡 آخر رفعات القناة — بالـAPI الرسمي ─────────────────────────────────
+def recent_uploads(limit: int = 25) -> list[dict]:
+    """آخر فيديوهات القناة عبر الـAPI الرسمي (بديل مضمون لـRSS).
+
+    ليه اتضافت؟ خلاصة حارس التكرار كانت بتقرا تغذية RSS، والتغذية دي **وقفت
+    وبتِرجّع 404** (اتأكدنا 2026-10-16: القناة والفيديوهات شغالة 200، لكن
+    `/feeds/videos.xml` بيرجّع 404 من أكثر من شبكة). يعني الحارس كان بيفقد
+    عينه على القناة ويفتكر إنها فاضية — أخطر حاجة ممكنة لمصنع بينشر كتير.
+
+    دي بتستخدم نفس التوكن اللي المصنع بيعتمد عليه أصلًا:
+    قائمة الرفع (UU…) ← عناصرها. تكلفتها من الحصة: وحدتين لكل نداء.
+    """
+    tok = _token()
+    if not tok:
+        return []
+    head = {"Authorization": f"Bearer {tok}"}
+    try:
+        r = requests.get(
+            "https://www.googleapis.com/youtube/v3/channels",
+            params={"part": "contentDetails", "mine": "true"},
+            headers=head, timeout=30)
+        if not r.ok:
+            return []
+        items = r.json().get("items") or []
+        if not items:
+            return []
+        uploads = (((items[0].get("contentDetails") or {})
+                    .get("relatedPlaylists") or {}).get("uploads") or "")
+        if not uploads:
+            return []
+        r2 = requests.get(
+            "https://www.googleapis.com/youtube/v3/playlistItems",
+            params={"part": "snippet", "playlistId": uploads,
+                    "maxResults": max(1, min(int(limit), 50))},
+            headers=head, timeout=30)
+        if not r2.ok:
+            return []
+        out = []
+        for it in r2.json().get("items") or []:
+            sn = it.get("snippet") or {}
+            out.append({"id": ((it.get("contentDetails") or {}).get("videoId")
+                               or (sn.get("resourceId") or {}).get("videoId") or ""),
+                        "title": sn.get("title") or "",
+                        "published": sn.get("publishedAt") or ""})
+        return out
+    except Exception:
+        return []
