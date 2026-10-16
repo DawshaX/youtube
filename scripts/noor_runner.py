@@ -346,7 +346,7 @@ def _polish(video, cover, title):
 
 
 def _publish(video, cover, title, desc, tags, synthetic=False,
-             publish_at=None):
+             publish_at=None, pinned=""):
     from xtrendaw import settings, state
     # التمريرة قبل فحص المعاينة — عشان وضع المعاينة يوريك الناتج **الحقيقي**
     # (الفيديو بالتدريج والغلاف)، مش نسخة ناقصة تتاخد عليها قرار غلط.
@@ -381,6 +381,14 @@ def _publish(video, cover, title, desc, tags, synthetic=False,
             st.setdefault("slots", []).append(at[:13])       # اتشغلت الساعة دي
             _save(st)
         print(f"[noor] ⏰ وقت النشر: {at or 'فوري (القناة كانت ساكتة)'}", flush=True)
+        # 💬 التعليق المثبّت: أول تفاعل على الفيديو + بيحمل الدعوة/الفهرس.
+        #    (لو الصلاحية مش متاحة: رسالة واحدة ونكمّل — النشر ما اتأثرش)
+        if pinned:
+            try:
+                if yt.comment(vid, pinned):
+                    print("[noor] 💬 تعليق مثبّت اتنشر", flush=True)
+            except Exception as exc:  # noqa: BLE001
+                print(f"[noor] 💬 التعليق اتخطى: {type(exc).__name__}", flush=True)
         _announce(url, title)                                # 🆕 إعلان فوري
     elif err and "quota" in str(err).lower():
         # جوجل قالت «الحصة خلصت» → بنتعلّم السقف الحقيقي بدل التخمين

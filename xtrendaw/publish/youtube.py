@@ -329,3 +329,44 @@ def recent_uploads(limit: int = 25) -> list[dict]:
         return out
     except Exception:
         return []
+
+
+# ─────────────── 💬 التعليق المثبّت (إشارة تفاعل حقيقية) ───────────────
+# ليه: التعليقات من أقوى إشارات الترتيب عند يوتيوب، والتعليق المثبّت بيفتح
+#      الحوار أول ما الفيديو ينزل (المشاهد بيلاقي سؤال جاهز يرد عليه) وكمان
+#      بيحمل الدعوة/الفهرس. الكود كان **بينتج** نص التعليق من زمان
+#      (`metadata.pinned_comment`) بس **ما كانش بيتبعت أبدًا** — سطر ميت
+#      في المصنع. دي إضافته.
+# ⚠️ محتاج صلاحية التعليق (force-ssl). لو التوكن مش معاه الصلاحية: الفشل
+#    **مش بيمنع النشر** ولا بيرجّع استثناء — بيرجّع False وخلاص.
+def comment(video_id: str, text: str) -> bool:
+    """ينشر تعليق على الفيديو (بيرجّع True لو نجح). مفيش فشل بيمنع النشر."""
+    text = " ".join(str(text or "").split()).strip()
+    if not video_id or not text or not settings.has_youtube():
+        return False
+    accounts = list(settings.YOUTUBE_ACCOUNTS) or [settings.YOUTUBE]
+    for acc in accounts:
+        tk = _token(acc)
+        if not tk:
+            continue
+        try:
+            r = requests.post(
+                "https://www.googleapis.com/youtube/v3/commentThreads",
+                headers={"Authorization": f"Bearer {tk}",
+                         "Content-Type": "application/json"},
+                params={"part": "snippet"}, timeout=60,
+                json={"snippet": {
+                    "videoId": video_id,
+                    "topLevelComment": {"snippet": {"textOriginal": text[:9000]}},
+                }})
+            if r.status_code in (200, 201):
+                return True
+            msg = r.text[:120].replace("\n", " ")
+            if r.status_code == 403 and "scope" in msg.lower():
+                print("[yt] 💬 صلاحية التعليق مش متاحة "
+                      "(force-ssl) — بنكمّل عادي", flush=True)
+                return False
+            print(f"[yt] 💬 التعليق فشل ({r.status_code}): {msg}", flush=True)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[yt] 💬 التعليق اتخطى: {type(exc).__name__}", flush=True)
+    return False

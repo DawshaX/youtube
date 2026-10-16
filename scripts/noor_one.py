@@ -372,6 +372,7 @@ def _publish_life(row: dict) -> int:
             return 1
     title = f"{made['lines'][0][:70]} | {row.get('series_title') or 'نور'}"
     tags = ["نور", row.get("series_title") or "خير"]
+    pinned = ""
     src = row.get("source") or ""
     credits = "\n".join(made["credits"]) or "لقطات مرخّصة."
     # ⚠️ درس حقيقي (2026-10-14): الوصف العام كان بيبدأ بـ
@@ -422,6 +423,7 @@ def _publish_life(row: dict) -> int:
                 desc = str(em["description"])
             if em.get("tags"):
                 tags = list(em["tags"])
+            pinned = str(em.get("pinned") or "")
             print(f"[one] 🎥 ميتاداتا الطويل: {title[:60]}", flush=True)
         except Exception as exc:  # noqa: BLE001
             print(f"[one] ميتاداتا الطويل اتخطت: {type(exc).__name__}", flush=True)
@@ -446,15 +448,23 @@ def _publish_life(row: dict) -> int:
         if at:
             _queue_mark(at)
     url, err = runner._publish(made["video"], None, title[:95], desc, tags,
-                               synthetic=True, publish_at=at)
+                               synthetic=True, publish_at=at, pinned=pinned)
     if not url and at and err and err not in ("quota_guard", "too_soon",
                                               "duplicate"):
         # احتياطي: لو الجدولة نفسها اترفضت (قناة غير موثّقة مثلًا)، الحلقة
         # **ما تضيعش** — بننزلها فورًا. الأهم إن المحتوى يوصل، مش الموعد.
         print(f"[one] ⚠️ الجدولة مشيت ({err}) — بننزل فورًا", flush=True)
         url, err = runner._publish(made["video"], None, title[:95], desc, tags,
-                                   synthetic=True, publish_at=None)
+                                   synthetic=True, publish_at=None, pinned=pinned)
         at = None
+    if not pinned:
+        try:
+            from xtrendaw.pro import metadata as _pm
+            pinned = _pm.pinned_comment(
+                row, hook=str(row.get("hook") or ""),
+                kind=str(row.get("kind") or ""))
+        except Exception:                      # noqa: BLE001
+            pinned = ""
     if err in ("quota_guard", "too_soon"):
         return 2
     if at:
