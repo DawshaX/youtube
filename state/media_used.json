@@ -5748,5 +5748,35 @@
   "source": "video:pixabay",
   "episode": "long-yom",
   "at": "2026-10-16 09:42"
+ },
+ "https://cdn.pixabay.com/video/2016/11/15/6399-191636228_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-محيط-s01",
+  "at": "2026-10-16 21:37"
+ },
+ "clipcache:462065dd10bf": {
+  "source": "video:pixabay",
+  "episode": "ser-field-محيط-s01",
+  "at": "2026-10-16 21:37"
+ },
+ "https://cdn.pixabay.com/video/2022/09/11/130978-749667877_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-محيط-s01",
+  "at": "2026-10-16 21:37"
+ },
+ "clipcache:816a3ed3d131": {
+  "source": "video:cache",
+  "episode": "ser-field-محيط-s01",
+  "at": "2026-10-16 21:38"
+ },
+ "https://cdn.pixabay.com/video/2022/08/09/127256-738105411_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-محيط-s01",
+  "at": "2026-10-16 21:38"
+ },
+ "clipcache:96ddd220c853": {
+  "source": "video:pixabay",
+  "episode": "ser-field-محيط-s01",
+  "at": "2026-10-16 21:38"
  }
 }
