@@ -325,7 +325,8 @@ def _polish(video, cover, title):
     return video, cover
 
 
-def _publish(video, cover, title, desc, tags, synthetic=False):
+def _publish(video, cover, title, desc, tags, synthetic=False,
+             publish_at=None):
     from xtrendaw import settings, state
     # التمريرة قبل فحص المعاينة — عشان وضع المعاينة يوريك الناتج **الحقيقي**
     # (الفيديو بالتدريج والغلاف)، مش نسخة ناقصة تتاخد عليها قرار غلط.
@@ -346,7 +347,9 @@ def _publish(video, cover, title, desc, tags, synthetic=False):
               f"{HOUR_GAP} دقيقة على الأقل (حلقة كل ساعة)", flush=True)
         return None, "too_soon"
     st = _load()
-    at = _pick_at(st)                      # فوري لو القناة ساكتة، وإلا ساعة فاضية
+    # publish_at صريح (من قائمة انتظار الطويل) بيتقدّم على أي حساب تاني —
+    # صاحب القناة طلب إن الطويل ينزل على الكيو في وقته بالظبط.
+    at = publish_at or _pick_at(st)        # فوري لو القناة ساكتة، وإلا ساعة فاضية
 
     url, err = yt.publish(video, title, desc, tags, cover=cover,
                           synthetic=synthetic, category="27", publish_at=at)

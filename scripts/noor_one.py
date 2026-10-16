@@ -161,6 +161,128 @@ def wanted_kind(shorts: int | None = None, longs: int | None = None) -> str | No
     return "long" if (shorts + longs) % 3 == 2 else "short"
 
 
+
+# ── 🕰️ قائمة انتظار الطويل (الكيو) ──────────────────────────────────────
+# طلب صاحب القناة (2026-10-14): الريلز ٦ بس في اليوم، والباقي **فيديوهات
+# طويلة تنزل على الكيو**. يعني الطويل ما ينفعش ينزل مع الريلز في نفس اللحظة
+# وبنفس الرشقة — ينزل **مجدول** في خانة من شبكة مواعيد الذروة، ويظهر عند
+# المشاهد في وقته (وفوق كده الفيديو يفضل Private لحد الموعد = صفر رشق).
+#
+# المواعيد مختارة من عادات الجمهور العربي (توقيت القاهرة): بعد الظهر، قبل
+# المغرب، بعد العشا، وآخر الليل. الأربعة مبعدين عن بعض مدة كافية.
+QUEUE_HOURS = tuple(int(x) for x in (
+    os.environ.get("NOOR_LONG_QUEUE_HOURS") or "13,17,21,23").split(","))
+QUEUE_MIN_LEAD = int(os.environ.get("NOOR_LONG_QUEUE_LEAD_MIN", "25"))
+
+
+def _queue_at(now=None) -> str | None:
+    """أقرب خانة فاضية في كيو الطويل → UTC ISO (أو None لو الكيو مقفول).
+
+    الخانات المحجوزة محفوظة في ذاكرة المكتبة (``long_queue``) ⇒ إعادة تشغيل
+    الدورة ما بتحجزش نفس الخانة مرتين، ومفيش «فيديوين على نفس الساعة».
+    """
+    if (os.environ.get("NOOR_LONG_QUEUE") or "0") != "1":
+        return None
+    import datetime as dt
+    try:
+        from zoneinfo import ZoneInfo
+        tz = ZoneInfo("Africa/Cairo")
+    except Exception:
+        tz = dt.timezone(dt.timedelta(hours=2))
+    local = (now or dt.datetime.now(dt.timezone.utc)).astimezone(tz)
+    booked = set(_load().get("long_queue") or [])
+    limit = local + dt.timedelta(minutes=QUEUE_MIN_LEAD)
+    for add in range(0, 8):
+        day = (local + dt.timedelta(days=add)).date()
+        for hour in QUEUE_HOURS:
+            slot = dt.datetime(day.year, day.month, day.day, hour, 0, tzinfo=tz)
+            if slot <= limit:
+                continue
+            key = slot.strftime("%Y-%m-%dT%H:%M")
+            if key in booked:
+                continue
+            print(f"[one] 🕰️ خانة الكيو: {key} (القاهرة)", flush=True)
+            return slot.astimezone(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return None
+
+
+def _queue_mark(at: str) -> None:
+    """نحجز الخانة فورًا — عشان دورة تانية ما تاخدهاش."""
+    st = _load()
+    booked = list(st.get("long_queue") or [])
+    try:
+        import datetime as dt
+        key = dt.datetime.strptime(at, "%Y-%m-%dT%H:%M:%SZ").replace(
+            tzinfo=dt.timezone.utc).strftime("%Y-%m-%dT%H:00")
+        from zoneinfo import ZoneInfo
+        key = dt.datetime.strptime(at, "%Y-%m-%dT%H:%M:%SZ").replace(
+            tzinfo=dt.timezone.utc).astimezone(
+            ZoneInfo("Africa/Cairo")).strftime("%Y-%m-%dT%H:%M")
+    except Exception:
+        key = at[:16]
+    booked.append(key)
+    st["long_queue"] = booked[-60:]
+    _save(st)
+
+
+# ── ⭐ اختيار «الأفضل» مش «أي حاجة» ─────────────────────────────────────
+# طلب صاحب القناة: «خليهم الأفضل». يعني النسخة اللي تنزل من الـ٦ دول لازم
+# تكون أقوى نسخة متاحة في المكتبة **دلوقتي**، مش أول صف في الطابور.
+def _score_item(row: dict, st: dict) -> float:
+    """درجة قوة الحلقة من إشارات حقيقية في بياناتها.
+
+    مش درجة ذوق شخصي: بنقيس حاجات بتفرق فعلًا في الاحتفاظ —
+    هوك قوي (مش «اتكلم عن…») · طول كلام كافي · فايدة واضحة · مش سلسلة
+    اتكررت قريب · مش نفس الإحساس اللي نزل امبارح.
+    """
+    score = 0.0
+    hook = str(row.get("hook") or "").strip()
+    spoken = str(row.get("spoken") or "").strip()
+    words = len(spoken.split())
+    score += min(words / 34.0, 1.6)                 # كلام كافي = وقت مشاهدة
+    if 12 <= len(hook.split()) <= 14:
+        score += 0.3                                # طول هوك مناسب
+    if hook.endswith(("؟", "?")):
+        score += 0.5                                # سؤال = فضول
+    try:
+        from xtrendaw.pro.hooks import is_weak
+        if hook and is_weak(hook):
+            score -= 1.2                            # «اتكلم عن» = ضعيف
+    except Exception:
+        pass
+    if str(row.get("benefit") or "").strip():
+        score += 0.45                               # فايدة واضحة للمشاهد
+    if any(ch.isdigit() for ch in hook):
+        score += 0.3                                # رقم في الهوك = توقّف
+    last_series = str(st.get("last_series") or "")
+    if str(row.get("series_id") or "") == last_series:
+        score -= 2.0                                # نفس السلسلة = تكرار
+    done = st.get("done") or []
+    recent_series = [str(d.get("series_id") or "") for d in done[-9:]]
+    sid = str(row.get("series_id") or "")
+    score -= 1.5 * recent_series.count(sid)         # سلسلة قريبة جدًا
+    recent_kinds = [str(d.get("emotion") or "") for d in done[-5:]]
+    emo = str(row.get("emotion") or "")
+    if emo:
+        score -= 0.7 * recent_kinds.count(emo)      # نفس الإحساس مرتين
+    return score
+
+
+def _best_of(rows: list[dict], st: dict) -> dict | None:
+    """أعلى درجة، ومع التساوي الأقدم أولًا (ترتيب ثابت = مفيش مفاجآت)."""
+    if not rows:
+        return None
+    scored = []
+    for i, row in enumerate(rows):
+        try:
+            sc = _score_item(row, st)
+        except Exception:
+            sc = 0.0
+        scored.append((-sc, i, row))
+    scored.sort(key=lambda x: (x[0], x[1]))
+    return scored[0][2]
+
+
 def next_item(kind: str | None = None) -> dict | None:
     st = _load()
     done = set(st.get("served") or [])
@@ -178,7 +300,16 @@ def next_item(kind: str | None = None) -> dict | None:
     pool = fresh or [r for r in _rows() if ok(r)]
     if not pool:
         return None
-    # لفّ بين العائلات عشان القديم والجديد يطلعوا، ومش نوع واحد ياكل الطابور.
+    # ⭐ «الأفضل» مش «أي حاجة»: بنرتّب المرشحين بدرجة قوة حقيقية (هوك ·
+    #    طول كلام · فايدة · بُعد عن التكرار) وناخد أعلاها. الطابور الأول
+    #    (لفّ العائلات) بقى **احتياطي** لو التسجيل وقع لأي سبب.
+    best = _best_of(pool, st)
+    if best is not None:
+        st["turn"] = int(st.get("turn") or 0) + 1
+        _save(st)
+        print(f"[one] ⭐ اختيار الأفضل: {best.get('id')} — "
+              f"{str(best.get('hook') or '')[:50]}", flush=True)
+        return best
     families: dict[str, list[dict]] = {}
     for row in pool:
         families.setdefault(str(row.get("series_id") or row.get("engine") or "عام"), []).append(row)
@@ -193,7 +324,14 @@ def _mark(row: dict, url: str = "", err: str = "") -> None:
     st = _load()
     st["served"] = list(dict.fromkeys([*(st.get("served") or []), row["id"]]))
     st["last_series"] = row.get("series_id") or ""
-    st.setdefault("done", []).append({"id": row["id"], "url": url, "err": err, "kind": row.get("kind")})
+    # نسجّل الحقول اللي الإحصاء الدرجات بيحتاجها (سلسلة/إحساس) — من غيرها
+    # «بُعد عن التكرار» ما كانش هيتحسب صح.
+    st.setdefault("done", []).append({
+        "id": row["id"], "url": url, "err": err, "kind": row.get("kind"),
+        "series_id": row.get("series_id") or "",
+        "emotion": row.get("emotion") or "",
+        "at": __import__("time").strftime("%Y-%m-%d %H:%M",
+                                          __import__("time").gmtime())})
     _save(st)
     if url:
         _bump(str(row.get("kind") or "short"))
@@ -233,9 +371,30 @@ def _publish_life(row: dict) -> int:
     benefit = str(row.get("benefit") or row.get("source") or "").strip()
     fair = "🤍 محتوى مصنوع بعناية. بلا وجوه حقيقية، وبلا وسائط محفوظة الحقوق."
     desc = "\n\n".join(x for x in (body, benefit, src, credits, fair) if x)
-    url, err = runner._publish(made["video"], None, title[:95], desc, ["نور", row.get("series_title") or "خير"], synthetic=True)
+    # 🕰️ الطويل بينزل على **الكيو**: بنحجز له خانة في شبكة مواعيد الذروة
+    #    بينزل فيها فعلًا (الفيديو يفضل Private لحد الموعد). الريلز تفضل
+    #    فورية زي ما هي — الطلب كان على الطويل بس.
+    at = None
+    if str(row.get("kind")) == "long":
+        at = _queue_at()
+        if at:
+            _queue_mark(at)
+    url, err = runner._publish(made["video"], None, title[:95], desc,
+                               ["نور", row.get("series_title") or "خير"],
+                               synthetic=True, publish_at=at)
+    if not url and at and err and err not in ("quota_guard", "too_soon",
+                                              "duplicate"):
+        # احتياطي: لو الجدولة نفسها اترفضت (قناة غير موثّقة مثلًا)، الحلقة
+        # **ما تضيعش** — بننزلها فورًا. الأهم إن المحتوى يوصل، مش الموعد.
+        print(f"[one] ⚠️ الجدولة مشيت ({err}) — بننزل فورًا", flush=True)
+        url, err = runner._publish(made["video"], None, title[:95], desc,
+                                   ["نور", row.get("series_title") or "خير"],
+                                   synthetic=True, publish_at=None)
+        at = None
     if err in ("quota_guard", "too_soon"):
         return 2
+    if at:
+        print(f"[one] 🕰️ الطويل دخل الكيو على {at} (UTC)", flush=True)
     _mark(row, url or "", err or "")
     print(f"[one] life {row['id']} {url or err}", flush=True)
     return 0 if url or runner.DRY else 1

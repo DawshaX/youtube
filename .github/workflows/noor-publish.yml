@@ -141,9 +141,15 @@ jobs:
           #    دلوقتي: متوسط ٦/يوم، متغيّر ٥–٨ حسب اليوم (ثابت لكل يوم —
           #    مفيش عشوائية ⇒ مفيش نشر مكرّر ولا مواعيد ضايعة).
           #    رجوع فوري للقديم: 8 / 4 و NOOR_DAILY_VARIATION=0
-          NOOR_SHORTS_PER_DAY: '4'
-          NOOR_LONGS_PER_DAY: '2'
-          NOOR_DAILY_VARIATION: '1'
+          # 🎬 طلب صاحب القناة (2026-10-14): «٦ ريلز بس في اليوم، والباقي
+          #    فيديوهات طويلة تنزل على الكيو». فأقلّينا الريلز لـ٦ **بالظبط**
+          #    (بلا تنويع)، وضاعفنا الطويل لـ٤، والطويل بيتنشر **مجدول** في
+          #    شبكة مواعيد الذروة (قائمة انتظار حقيقية مش رشقة على الساعة).
+          NOOR_SHORTS_PER_DAY: '6'
+          NOOR_LONGS_PER_DAY: '4'
+          NOOR_DAILY_VARIATION: '0'
+          NOOR_LONG_QUEUE: '1'
+          NOOR_CAPTION_SCALE: '1.35' 
           # 🧱 سقف سلسلة الانتقالات (ذاكرة ثابتة على أي طول حلقة)
           NOOR_XFADE_CHAIN: '8'
           # 🗓️ منظم جدول القاهرة (لو الجدول اشتغل): نفس المنطق
@@ -256,7 +262,8 @@ jobs:
           #    (القياس: أطول حاجة في المكتبة كانت **٤٥ ثانية** اسمها «طويل».
           #     ووقت المشاهدة — اللي بيجيب المشتركين — بيتولّد من الطويل.)
           #    آمن: لو موجودة مش بيكرّرها، ولو وقع ما بيوقفش النشر.
-          NOOR_LONG_WRITE=1 python3 scripts/noor_long_maker.py 2>&1 | tail -12 || true
+          NOOR_LONG_WRITE=1 NOOR_LONG_MIN_WORDS=600 \
+            python3 scripts/noor_long_maker.py 2>&1 | tail -14 || true
           for f in data/noor_next/one_library.jsonl \
                    state/published.json state/media_used.json \
                    state/yt_recent.json state/last_publish.json \

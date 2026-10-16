@@ -21,6 +21,11 @@ W, H, FPS = 1080, 1920, 30
 #    ليه؟ ffmpeg بيحجز كل مدخل في الذاكرة. سلسلة xfade بـ١٦ مدخل
 #    = انفجار ذاكرة (متجرّب). ٨ آمنة ومجرّبة.
 MAX_CHAIN = max(2, int(os.environ.get("NOOR_XFADE_CHAIN") or "8"))
+# 🔍 حجم الكابشن في **مسار الإنتاج الحقيقي**. القياس: كان ٦٢–٧٦ بكسل —
+#    صغير على موبايل، والمشاهد مش بيلحق يقرا الجملة قبل ما تتغير. (الإعداد
+#    الكبير ١٠٠/٨٨/٧٠ كان في مسار تاني **مش مستخدم في النشر**!) فالحجم هنا
+#    بقى مضروب في معامل واحد واضح. الرجوع للأصل: NOOR_CAPTION_SCALE=1
+CAPTION_SCALE = max(0.5, float(os.environ.get("NOOR_CAPTION_SCALE") or "1.35"))
 
 
 def _run(cmd: list[str]) -> None:
@@ -336,7 +341,9 @@ def render(episode: dict, work: Path) -> dict | None:
         grade = ",".join(part.strip(",") for part in grades if part)
         _style_clip(got, styled, dur, grade, motion_for(fmt, i))
         png = work / f"cap-{i}.png"
-        _caption(line, png, float(look.get("y") or 0.62), pal.get("text") or "#F7F1E6", int(feel["size"]))
+        _caption(line, png, float(look.get("y") or 0.62),
+                 pal.get("text") or "#F7F1E6",
+                 max(58, int(round(int(feel["size"]) * CAPTION_SCALE))))
         clips.append(styled)
         caps.append(png)
         durs.append(dur)

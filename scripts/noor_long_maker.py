@@ -181,6 +181,141 @@ def _by_series() -> dict[str, list[dict]]:
     return fam
 
 
+# ── الكتاب التاني: المخزون الديني المنطوق (٢٠٢ صف · ١٨٥ ينفع للطويل)
+#    ليه ده مهم؟ الطويل محتاج **وقود مستمر**. حلقات الأصناف بتطلّع ~١٨ حلقة
+#    طويلة بس (المكتبة كلها ٤٥٦ حلقة قصيرة ≈ ٢٤ ألف كلمة). المخزون الديني
+#    (أدعية/أذكار/أحاديث/معلومات) بيضيف وقود تاني بنفس الأسلوب، وكل جملة
+#    من النص الأصلي الموثّق — بلا تأليف وبلا زيادة.
+RELIGIOUS = [
+    {
+        "id": "adhkar",
+        "title": "أذكار تريّح قلبك: جلسة {m} دقيقة",
+        "shelves": ["ذكر من المصدر", "دعاء من المصدر"],
+        "open": ("الجلسة دي معاك على مهلك. مش محتاج تحفظ حاجة، ولا تلزم نفسك "
+                 "بعدد. اسمع الذكر مرة، ولو عجبك كرّره في يومك. "
+                 "بسم الله نبدأ."),
+        "close": ("لو وصلت لآخر الجلسة، خُد ذكر واحد بس وكرّره النهاردة. "
+                  "الذكر اللي بيثبت هو اللي بيبقى معاك في يومك."),
+    },
+    {
+        "id": "duaa",
+        "title": "أدعية من الكتاب والسنّة: جلسة {m} دقيقة",
+        "shelves": ["دعاء من المصدر", "ذكر من المصدر"],
+        "open": ("الأدعية دي مش كلام نتألّفه — دي أدعية محفوظة من الكتاب "
+                 "والسنة، بنسمعها مع بعض بالترتيب. ادعي بواحد بس بقلب حاضر، "
+                 "خير من كتير بصوت سايب."),
+        "close": ("خد دعوة واحدة بس من الجلسة دي وكرّرها كل يوم. "
+                  "الدعاء اللي بيصبر عليه صاحبه هو اللي بيفرحه."),
+    },
+    {
+        "id": "hadith-silsila",
+        "title": "من كلام النبي ﷺ ومعلومة تنفع: جلسة {m} دقيقة",
+        "shelves": ["حديث من المصدر", "معلومة من المصدر"],
+        "open": ("هنسمع مع بعض أحاديث صحيحة، واحدة واحدة، بلا شرح طويل "
+                 "وبلا تأويل من عندنا. الحديث له مصدره مكتوب في الوصف، "
+                 "وشوف بعينك قبل ما تنقل."),
+        "close": ("خد حديث واحد بس من اللي سمعته، ونفّذه النهاردة. "
+                  "العلم اللي بيتعمل بيه هو اللي ينفع صاحبه."),
+    },
+    {
+        "id": "maarifa",
+        "title": "معلومات تنفعك: جلسة {m} دقيقة",
+        "shelves": ["معلومة من المصدر"],
+        "open": ("جلسة معلومة، كل معلومة معاها مصدرها. مفيش أرقام من دماغنا "
+                 "ومفيش مبالغة — انت حر تراجع كل حاجة بنفسك."),
+        "close": ("المعرفة اللي بتفضل معاك هي اللي بتحلّ مشكلة عندك فعلًا. "
+                  "خد معلومة واحدة وجرّبها."),
+    },
+    {
+        "id": "jalsa",
+        "title": "جلسة ذكر وحكمة: {m} دقيقة مع الكتاب والسنة",
+        "shelves": ["ذكر من المصدر", "دعاء من المصدر", "حديث من المصدر",
+                    "معلومة من المصدر"],
+        "open": ("الجلسة دي جامعة: ذكر، ودعاء، وكلام من النبي ﷺ، ومعلومة تنفعك. "
+                 "خدها على مهلك — مش مطلوب منك تسمعها كلها في مرة. "
+                 "لو وقفت عند حاجة أثّرت فيك، ارجع لها تاني."),
+        "close": ("اللي بينفع مش اللي سمعته، اللي عملت بيه. خد واحد بس "
+                  "من الجلسة دي — ذكر تلزمه، أو دعاء تدعو بيه، أو عمل "
+                  "تعمله — وريّح قلبك."),
+    },
+]
+
+
+def _spoken_by_shelf() -> dict[str, list[dict]]:
+    """المخزون الديني المنطوق مجمّع بالرف (مع استبعاد الكلام المقدّس —
+    المحرّك بيرفض يحوّل آية أو نص مقدّس لصوت، وده محترم بالكامل)."""
+    from xtrendaw.noor_next.timeline import sacred_text
+    out: dict[str, list[dict]] = defaultdict(list)
+    for row in _rows():
+        if row.get("engine") != "spoken":
+            continue
+        text = str(row.get("spoken") or "").strip()
+        if not text or sacred_text(text):
+            continue
+        out[str(row.get("series_title") or "")].append(row)
+    return out
+
+
+def build_religious(col: dict, shelves: dict[str, list[dict]],
+                    cap_words: int) -> dict | None:
+    """حلقة طويلة من المخزون الديني — بلا تكرار جملة، وبخاتمة حقيقية."""
+    uniq = Unique()
+    parts: list[str] = []
+    lead = uniq.add(col["open"])
+    parts.append(lead)
+    words = len(lead.split())
+    used = 0
+    for shelf in col["shelves"]:
+        items = shelves.get(shelf) or []
+        if not items:
+            continue
+        for row in items:
+            if words >= cap_words:
+                break
+            got = uniq.add(str(row.get("spoken") or ""))
+            if not got:
+                continue
+            parts.append(got)
+            words += len(got.split())
+            used += 1
+    if used < 8:
+        return None
+    tail = uniq.add(col["close"])
+    if tail:
+        parts.append(tail)
+    text = "\n\n".join(p for p in parts if p.strip())
+    text = _regroup(text, int(os.environ.get("NOOR_LONG_LINE_WORDS") or "15"))
+    floor = int(os.environ.get("NOOR_LONG_MIN_WORDS") or "700")
+    if len(text.split()) < floor:
+        print(f"[طول] {col['id']}: {len(text.split())} كلمة — أقل من الأرضية "
+              f"({floor})", flush=True)
+        return None
+    mins = max(1, round(estimate_sec(text) / 60))
+    title = str(col["title"]).replace("{m}", str(mins))
+    return {
+        "id": f"long-{col['id']}",
+        "series_id": f"longmix-{col['id']}",
+        "series_title": title,
+        "episode": 1,
+        "episodes_in_series": 1,
+        "kind": "long",
+        "engine": "life",
+        "emotion": "سكينة",
+        "hook": title,
+        "spoken": text,
+        "scene": "calm wide shot no faces",
+        "search": [str(col["title"]).split(":")[0], "أذكار", "دعاء", "أحاديث",
+                   "ذكر", "راحة نفسية"],
+        "benefit": col["close"].strip(),
+        "factory": False,
+        "ready_for_factory": True,
+        "status": "ready",
+        "origin": "مصنع الطويل — من المخزون الديني الموثّق",
+        "rules": ["من غير وجوه", "من غير نص مقدس متألف",
+                  "من غير وعد علاج أو ثراء", "المدة من الكلام مش من صمت"],
+    }
+
+
 def estimate_sec(text: str) -> float:
     """تقدير مدة الكلام: معدل عربي طبيعي ≈ ١٤٠ كلمة/دقيقة."""
     return len(text.split()) / 140.0 * 60.0
@@ -334,12 +469,24 @@ def build(col: dict, fam: dict[str, list[dict]], cap_words: int) -> dict | None:
 def main() -> int:
     cap = int(os.environ.get("NOOR_LONG_TARGET_WORDS") or "1500")
     fam = _by_series()
+    shelves = _spoken_by_shelf()
     have = {r.get("id") for r in _rows()}
     made = []
     for col in COLLECTIONS:
         row = build(col, fam, cap)
         if not row:
             print(f"[طول] ⚠️ مجموعة {col['id']} ناقصة سلاسل — اتخطّت")
+            continue
+        if row["id"] in have:
+            print(f"[طول] ↺ {col['id']} موجود بالفعل — مش هنكرّره")
+            made.append(row)
+            continue
+        made.append(row)
+    # الكتاب التاني: حلقات من المخزون الديني (وقود مستمر للكيو)
+    for col in RELIGIOUS:
+        row = build_religious(col, shelves, cap)
+        if not row:
+            print(f"[طول] ⚠️ مجموعة {col['id']} ناقصة نصوص — اتخطّت")
             continue
         if row["id"] in have:
             print(f"[طول] ↺ {col['id']} موجود بالفعل — مش هنكرّره")
