@@ -70,10 +70,11 @@
     "ser-field-بناء-s01",
     "ser-field-تجربة-s01",
     "ser-field-حروف-s01",
-    "long-sitr"
+    "long-sitr",
+    "ser-field-وهم ونفس-s04"
   ],
-  "turn": 7,
-  "last_series": "longmix-sitr",
+  "turn": 8,
+  "last_series": "ser-field-وهم ونفس",
   "done": [
     {
       "id": "ser-study-s01",
@@ -500,11 +501,20 @@
       "url": "https://www.youtube.com/watch?v=hA_0L40905E",
       "err": "",
       "kind": "long"
+    },
+    {
+      "id": "ser-field-وهم ونفس-s04",
+      "url": "https://www.youtube.com/watch?v=33_0Ys27CCg",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-field-وهم ونفس",
+      "emotion": "حياة",
+      "at": "2026-10-16 02:55"
     }
   ],
   "day": {
     "date": "2026-10-16",
-    "short": 2,
+    "short": 3,
     "long": 1
   }
 }
