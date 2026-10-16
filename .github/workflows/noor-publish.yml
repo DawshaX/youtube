@@ -211,10 +211,15 @@ jobs:
           fi
           echo "▶ المصنع الجديد من المكتبة. من غير الرجوع للشكل القديم."
           set +e
-          timeout 2700 python scripts/noor_one.py 2>&1 | tee /tmp/noor.log
-          RC=${PIPESTATUS[0]}
-          set -e
+          # ⚠️ درس حقيقي (2026-10-16): `| tee` خلّى المهلة تفشل في القتل —
+          #    لما timeot بيقتل بايثون، ffmpeg اليتيم بيفضل ماسك أنبوب المخرجات،
+          #    و`tee` مستني نهاية الملف للأبد ⇒ الخطوة عدّت ٦٠ دقيقة بدل ٤٥
+          #    وقربت تقتل الوظيفة كلها (وتقطع سلسلة النبضة).
+          #    الحل: كتابة مباشرة للملف (بلا أنبوب) + kill-after كضمان.
+          timeout --kill-after=45 2700 python scripts/noor_one.py > /tmp/noor.log 2>&1
+          RC=$?
           echo "rc=${RC}"
+          tail -60 /tmp/noor.log
           if grep -q "watch?v=" /tmp/noor.log; then
             exit 0
           fi

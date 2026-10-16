@@ -187,6 +187,25 @@ def progress_bar(src: Path, dst: Path, color: str = "#E8C37A",
 # ─────────────────────────────────────────────────────────────────────
 # 5) الطبقة الختامية — تجميع كل المؤثرات في تمريرة واحدة
 # ─────────────────────────────────────────────────────────────────────
+def _seconds(video: Path) -> float:
+    """مدة الملف بالثواني (0 لو مش عارف) — تفشل بهدوء."""
+    import shutil as _sh
+    import subprocess
+    for exe in _ffmpeg_candidates():
+        probe = exe.replace("ffmpeg", "ffprobe")
+        if not _sh.which(probe):
+            continue
+        try:
+            r = subprocess.run(
+                [probe, "-v", "error", "-show_entries", "format=duration",
+                 "-of", "default=nw=1:nk=1", str(video)],
+                capture_output=True, text=True, timeout=60)
+            return float((r.stdout or "0").strip() or 0)
+        except Exception:
+            continue
+    return 0.0
+
+
 def _has_audio(video: Path) -> bool:
     """يفحص وجود مسار صوتي فعلًا — عشان ما نضيّعش الصوت في التمريرة النهائية."""
     for exe in _ffmpeg_candidates():
@@ -222,6 +241,17 @@ def finishing_pass(video: Path, dst: Path, *, style: str = "",
     ⚠️ **الصوت بيتنقل كما هو** (`-c:a copy`) — المصنع بيرندر الصوت والفيديو
     مع بعض، فحذف الصوت هنا كان بيضيّع الحلقة كلها.
     """
+    # ⚡ الحبيبات على فيديو طويل = قاتل الوقت. القياس: تمريرة واحدة بحبيبات
+    #    على حلقة ١٠ دقايق خدت أكتر من ١٣ دقيقة على معالج ثنائي النواة
+    #    (الحبيبات بتُعاد على كل فريم). والحبيبات أصلًا لمسة **شورتس**.
+    #    عشان كده: أي فيديو أطول من ٩٠ ثانية = تدريج بس، بلا حبيبات.
+    if grain:
+        secs = _seconds(video)
+        if secs > float(__import__("os").environ.get(
+                "NOOR_GRAIN_MAX_SEC", "90")):
+            print(f"[pro] ⚡ الحبيبات اتقفلت (الفيديو {secs:.0f}ث طويل) — "
+                  "أسرع بكتير وبلا فرق مرئي", flush=True)
+            grain = False
     chain = [grade_chain(style, grain)]
     if bar:
         hexc = bar_color.lstrip("#")
