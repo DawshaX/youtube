@@ -41,6 +41,7 @@ def main() -> int:
         print("[صيانة] الطابور فاضي")
         return 0
     done = list(bag.get("done") or [])
+    blocked = list(bag.get("blocked") or [])
     left = []
     rc = 0
     for row in todo:
@@ -60,19 +61,33 @@ def main() -> int:
         except Exception as exc:  # noqa: BLE001
             ok, out = False, [f"{type(exc).__name__}: {str(exc)[:120]}"]
             print(f"[صيانة] فشل: {out[0]}", flush=True)
+        tries = int((row or {}).get("tries") or 0) + 1
         if ok:
             # العنصر **يتنقل** لسجل `done` كامل بوقته — مفيش حذف لأي معرفة
-            done.append({**row, "id": vid, "ok": True,
+            done.append({**row, "id": vid, "ok": True, "tries": tries,
                          "at": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
                          "local_files": "زي ما هي — الحذف عن بُعد فقط"})
+        elif tries >= 5:
+            # 🛡️ سقف المحاولات: الفشل المتكرر (زي صلاحية OAuth ناقصة) ما يفضلش
+            #    يستهلك محاولة كل دورة للأبد. العنصر **يتنقل** لسجل `blocked`
+            #    بكل تاريخه وسببه — مفيش حذف لأي معرفة، ونتنيبه في السجل.
+            blocked.append({**row, "id": vid, "ok": False, "tries": tries,
+                            "blocked_at": time.strftime(
+                                "%Y-%m-%d %H:%M UTC", time.gmtime()),
+                            "why": ((out[-1] if out else "")[:160] or
+                                    "الفشل متكرر — محتاج صلاحية أوسع (delete) "
+                                    "على توكن جوجل")})
+            print(f"[صيانة] ⛔ {vid} اتوقف بعد {tries} محاولات — "
+                  "محتاج صلاحية أوسع (اتسجّل في blocked)", flush=True)
         else:
-            row = {**row, "id": vid, "last_try":
-                   time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
+            row = {**row, "id": vid, "tries": tries,
+                   "last_try": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
                    "last_out": (out[-1] if out else "")[:160]}
             left.append(row)
             rc = 1
     bag["todo"] = left
     bag["done"] = done
+    bag["blocked"] = blocked
     QUEUE.write_text(json.dumps(bag, ensure_ascii=False, indent=1) + "\n",
                      encoding="utf-8")
     return rc
