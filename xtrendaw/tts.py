@@ -321,6 +321,155 @@ def _local_fallback_audio(text: str, out_dir: Path, name: str) -> dict:
     return {"wav": wav, "duration": duration, "words": _spread(text, 0, duration), "timing_source": "fallback"}
 
 
+# ── 🔊 النطق الطويل المضمون (إصلاح باج حقيقي 2026-10-16) ─────────────────
+# المشكلة اللي حصلت فعلًا على القناة: الحلقة الطويلة (١١٠٠ كلمة) رجعت من
+# خدمة الصوت بمقطع **١٥ ثانية** بس. والمونتاج بيختم بـ`-shortest` ⇒ الفيديو
+# كله اتصفّى ١٥ ثانية، ونزل على القناة كده. يعني الحلقة ضاعت من غير ما حد
+# ياخد باله (اللوج كان بيقول «نجح»).
+#
+# الحل على ٣ طبقات:
+#   ١) النص الطويل بيتنطق **على أجزاء** (كل جزء جمل كاملة) ثم يتدمجوا.
+#   ٢) بعد كل جزء بنقيس المدة ونتأكد إنها منطقية مقابل عدد الكلمات.
+#   ٣) لو الجزء رجع قصير بشكل مستحيل، نعيده على أجزاء أصغر.
+# وبعد الدمج النهائي في فحص أخير: المدة لازم تقرب من المتوقّع، وإلا استثناء
+# صريح — أحسن من حلقة ناقصة تنزل على القناة.
+# مقيس فعلًا على الصوت المستخدم في المصنع: ٧٤٩ كلمة = ٤٠٠ ثانية
+# ⇒ 1.87 كلمة/ثانية (التقدير القديم 2.6 كان بيقلّل المدة المتوقّعة،
+# فبوابة الفحص كانت بتعدّي صوت ناقص بسهولة).
+_AR_SPEED = 1.87
+import re as _re
+
+
+def _speech_chunks(text: str, limit: int = 900) -> list[str]:
+    """تقسيم النص لأجزاء عند نهايات الجمل — مش في وسط الكلام."""
+    text = (text or "").strip()
+    if len(text) <= limit:
+        return [text] if text else []
+    sentences = _re.split(r"(?<=[.؟!،])\s+", text)
+    chunks, buf = [], ""
+    for sen in sentences:
+        if not sen:
+            continue
+        if buf and len(buf) + len(sen) + 1 > limit:
+            chunks.append(buf.strip())
+            buf = ""
+        buf = f"{buf} {sen}".strip()
+    if buf:
+        chunks.append(buf.strip())
+    out: list[str] = []
+    for ch in chunks:                      # جزء لسه طويل → نقطعه على مسافات
+        while len(ch) > limit:
+            cut = ch.rfind(" ", 0, limit)
+            cut = cut if cut > 0 else limit
+            out.append(ch[:cut].strip())
+            ch = ch[cut:].strip()
+        if ch:
+            out.append(ch)
+    return out
+
+
+def _expected_sec(text: str, rate: str | None = None) -> float:
+    """المدة المتوقّعة من عدد الكلمات (وأي تسريع مطلوب)."""
+    words = max(1, len((text or "").split()))
+    speed = _AR_SPEED
+    m = _re.match(r"([+-])(\d+)%", str(rate or ""))
+    if m:
+        sign, val = m.group(1), int(m.group(2)) / 100.0
+        speed *= (1 + val) if sign == "+" else (1 - val)
+    return words / max(0.5, speed)
+
+
+def _concat_wavs(wavs: list[Path], dst: Path) -> bool:
+    """دمج أجزاء الصوت بالترتيب (بلا إعادة ترميز — نفس الصيغة)."""
+    if not wavs:
+        return False
+    if len(wavs) == 1:
+        dst.write_bytes(wavs[0].read_bytes())
+        return dst.exists()
+    lst = dst.with_suffix(".txt")
+    lst.write_text("".join(f"file '{w.as_posix()}'\n" for w in wavs),
+                   encoding="utf-8")
+    r = subprocess.run(
+        [ffmpeg(), "-y", "-f", "concat", "-safe", "0", "-i", str(lst),
+         "-c", "copy", str(dst)], capture_output=True, text=True)
+    return r.returncode == 0 and dst.exists() and dst.stat().st_size > 1024
+
+
+def synthesize_long(text: str, lang: str, out_dir: Path, name: str = "long",
+                    rate: str | None = None, pitch: str | None = None,
+                    voice: str | None = None) -> dict:
+    """نطق نص طويل على أجزاء → ملف واحد + توقيتات كلمة-بكلمة متراكمة."""
+    out_dir.mkdir(parents=True, exist_ok=True)
+    chunks = _speech_chunks(text)
+    if len(chunks) <= 1:
+        return synthesize_line(text, lang, out_dir, name,
+                               rate=rate, pitch=pitch, voice=voice)
+    wavs: list[Path] = []
+    words: list[dict] = []
+    cursor = 0.0
+    for i, part in enumerate(chunks):
+        got = None
+        for attempt, limit in ((0, 900), (1, 420), (2, 220)):
+            try:
+                got = synthesize_line(part, lang, out_dir, f"{name}_{i}_{attempt}",
+                                      rate=rate, pitch=pitch, voice=voice)
+            except Exception:
+                got = None
+            if not got:
+                continue
+            want = _expected_sec(part, rate)
+            if got["duration"] >= want * 0.55:
+                break
+            print(f"[tts] ⚠️ الجزء {i + 1} رجع {got['duration']:.0f}ث بدل "
+                  f"~{want:.0f}ث — بنعيده على أجزاء أصغر", flush=True)
+            part_chunks = _speech_chunks(part, limit)
+            if len(part_chunks) <= 1:
+                break
+            # نعيد الجزء نفسه كأجزاء صغيرة بالتراكب على نفس المكان
+            sub_ok = True
+            for j, small in enumerate(part_chunks):
+                try:
+                    sg = synthesize_line(small, lang, out_dir,
+                                         f"{name}_{i}_{attempt}_s{j}",
+                                         rate=rate, pitch=pitch, voice=voice)
+                except Exception:
+                    sub_ok = False
+                    break
+                wavs.append(Path(sg["wav"]))
+                for w in sg.get("words") or []:
+                    words.append({"word": w.get("word") or "",
+                                  "start": round(float(w.get("start") or 0) + cursor, 3),
+                                  "end": round(float(w.get("end") or 0) + cursor, 3)})
+                cursor += float(sg["duration"])
+            if sub_ok:
+                got = None
+                break
+        if not got:
+            continue
+        wavs.append(Path(got["wav"]))
+        for w in got.get("words") or []:
+            words.append({"word": w.get("word") or "",
+                          "start": round(float(w.get("start") or 0) + cursor, 3),
+                          "end": round(float(w.get("end") or 0) + cursor, 3)})
+        cursor += float(got["duration"])
+    if not wavs:
+        raise RuntimeError("النطق الطويل فشل — مفيش أجزاء صوت")
+    # الأجزاء أصلًا WAV موحّد (٤٤.١ك · ستيريو · PCM) من to_wav جوه synthesize_line
+    # ⇒ الدمج بلا إعادة ترميز مباشرة على المسار النهائي.
+    merged = out_dir / f"{name}.wav"
+    if not _concat_wavs(wavs, merged):
+        raise RuntimeError("دمج أجزاء الصوت فشل")
+    duration = probe_duration(merged)
+    want = _expected_sec(text, rate)
+    print(f"[tts] 🎙️ نطق طويل: {len(chunks)} أجزاء · {duration:.0f}ث "
+          f"(المتوقّع ~{want:.0f}ث)", flush=True)
+    if duration < want * 0.5:
+        raise RuntimeError(
+            f"الصوت الناتج قصير بشكل مستحيل: {duration:.0f}ث من ~{want:.0f}ث")
+    return {"wav": merged, "duration": duration, "words": words,
+            "timing_source": "chunked"}
+
+
 def synthesize_line(text: str, lang: str, out_dir: Path, name: str = "line",
                     rate: str | None = None, pitch: str | None = None,
                     voice: str | None = None) -> dict:

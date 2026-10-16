@@ -120,6 +120,42 @@ _XFADE = {
 }
 
 
+
+def _fewer_shots(lines: list[str], target: int = 22, cap: int = 3,
+                 max_shots: int | None = None) -> list[str]:
+    """يقلّل عدد اللقطات في الحلقة الطويلة بدمج الجمل القصيرة.
+
+    ليه؟ الحلقة الطويلة (١١٠٠ كلمة) كانت بتطلع **٦٣ لقطة** ⇒ ٦٣ تحميل لقطة
+    من النت + ٦٣ تمريرة تنسيق + مونتاج ⇒ الدورة الواحدة خدت **٤٠ دقيقة**
+    (وقريبة من مهلة الـ٤٥). ومع الريمكس الهرمي الأمر بقى أهدى.
+    والأهم: المونتاج الطويل بطبيعته **أهدى** — لقطة كل ٢٢ كلمة (≈ ١٢ ثانية)
+    أنسب للمشاهد من قص كل ٥ ثواني.
+    """
+    words_all = sum(len(x.split()) for x in lines)
+    if words_all < 260:
+        return lines                       # الشورتس زي ما هي بالظبط
+    # سقف صريح لعدد اللقطات: كل لقطة ≈ تحميل + تنسيق + تمريرة. الـ٤٠ لقطة
+    # بتخلّي أطول حلقة تخلص في حدود نص المهلة (متجرّب: ٦٣ لقطة خدت ٤٠ دقيقة).
+    limit = int(max_shots if max_shots is not None
+                else os.environ.get("NOOR_LONG_MAX_SHOTS") or "40")
+    target = max(target, -(-words_all // max(1, limit)))
+    # لازم نسمح بجمل أكتر في المجموعة لو الهدف بيطلب كده (وإلا عدد اللقطات
+    # يقف عند len(lines)/cap ويتخطّى السقف — ده حصل مع أطول حلقة: ٥٦ لقطة).
+    cap = max(int(cap), -(-len(lines) // max(1, limit)))
+    out: list[str] = []
+    buf: list[str] = []
+    words = 0
+    for line in lines:
+        buf.append(line)
+        words += len(line.split())
+        if words >= target or len(buf) >= cap:
+            out.append(" ".join(buf))
+            buf, words = [], 0
+    if buf:
+        out.append(" ".join(buf))
+    return out
+
+
 def _spans(lines: list[str], total: float) -> list[tuple[float, float]]:
     weights = [max(8, len(line)) for line in lines]
     whole = sum(weights) or 1
@@ -278,6 +314,7 @@ def render(episode: dict, work: Path) -> dict | None:
     lines = sentences(spoken)
     if len(lines) < 2:
         return None
+    lines = _fewer_shots(lines)     # الطويل: لقطة كل ~٢٢ كلمة بدل ٦٠+ لقطة
     pal = palette_for(episode)
     look = pick_look({"id": episode.get("id"), "hook": lines[0], "kind": pal["id"]})
     feeling, feel = pick_feeling(episode)
@@ -287,14 +324,24 @@ def render(episode: dict, work: Path) -> dict | None:
     voice, rate, pitch = _voice(episode, pal, soul)
     work.mkdir(parents=True, exist_ok=True)
     # الصوت مرة واحدة. التقطيع جملة-جملة كان بيطلّع النطق متقطع وبايظ.
-    speech = tts.synthesize_line(
-        tts.speakable(spoken), "ar", work, "full",
-        rate=rate, pitch=pitch, voice=voice,
+    # ⚠️ باج حقيقي (2026-10-16): النص الطويل (١١٠٠ كلمة) رجع من خدمة الصوت
+    #    **١٥ ثانية** بدل ٦٧٨ — واللوج قال «نجح»، والـ`-shortest` في الآخر
+    #    قصّ الفيديو على الصوت، فنزلت حلقة ١٥ ثانية على القناة. عشان كده:
+    #    النص الطويل بيتنطق **مُجزّأ** وبفحص مدة إجباري.
+    say_text = tts.speakable(spoken)
+    speech = tts.synthesize_long(
+        say_text, "ar", work, "full", rate=rate, pitch=pitch, voice=voice,
     )
     audio = Path(speech["wav"])
     total = float(speech.get("duration") or 0)
     if total < 2 or not audio.exists():
         print("[studio] الصوت ما طلّعش", flush=True)
+        return None
+    # فحص أخير قبل ما نكمّل: الصوت لازم يقرب من المتوقّع من عدد الكلمات
+    want = tts._expected_sec(say_text, rate)
+    if want > 30 and total < want * 0.6:
+        print(f"[studio] ✗ الصوت ناقص ({total:.0f}ث من ~{want:.0f}ث) — "
+              "مش هننشر حلقة مقطوعة", flush=True)
         return None
     spans = _spans(lines, total)
     words = []
@@ -431,6 +478,20 @@ def render(episode: dict, work: Path) -> dict | None:
 
     lines = used
     out = work / "episode.mp4"
+    # `-shortest` بيقصّ الفيديو على طول الصوت. ده كان بيحوّل حلقة ٦٠٠ ثانية
+    # لحلقة ١٥ ثانية لو الصوت جه ناقص. دلوقتي: بناخد أقصرهم **بس لو الفرق
+    # صغير**؛ ولو الصوت أقصر بكتير من الصورة، بنمدّه صمت ونكمّل (الفيديو
+    # مش هيتشوّه، والحلقة ما تضيعش)، والفحص فوق أصلاً بيمنع الحالة دي.
+    a_dur, v_dur = _dur(audio_final), _dur(framed)
+    if v_dur and a_dur and a_dur < v_dur * 0.9:
+        print(f"[studio] ⚠️ الصوت ({a_dur:.0f}ث) أقصر من الصورة ({v_dur:.0f}ث) — "
+              "بنمدّ الصوت بدل قص الفيديو", flush=True)
+        padded = work / "padded.wav"
+        _run(["ffmpeg", "-y", "-i", str(audio_final),
+              "-af", f"apad=whole_dur={v_dur:.2f}", "-t", f"{v_dur:.2f}",
+              "-ar", "48000", "-ac", "2", str(padded)])
+        if padded.exists() and padded.stat().st_size > 2048:
+            audio_final = padded
     _run([
         "ffmpeg", "-y", "-i", str(framed), "-i", str(audio_final),
         "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac",

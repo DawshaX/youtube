@@ -358,6 +358,18 @@ def _publish_life(row: dict) -> int:
         # متتحرقش الحلقة. اللوحة الفاضية مش فيديو، والمحاولة الجاية ممكن تلاقي لقطة.
         print(f"[one] {row.get('id')} اتأجل: مفيش مشاهد مرخّصة كفاية", flush=True)
         return 1
+    # 🛡️ بوابة أمان (درس 2026-10-16): حلقة «طويلة» نزلت ١٥ ثانية لأن الصوت
+    #    رجع ناقص. مستحيل نسمح بده تاني: الطويل المفروض دقايق، ولو طلع أقل
+    #    من نص المتوقّع **ما ينزلش** — يتحفظ ونجرّبه تاني بدل ما نحرق القناة.
+    if str(row.get("kind")) == "long":
+        from xtrendaw import tts as _tts
+        want = _tts._expected_sec(str(row.get("spoken") or ""))
+        got = float(made.get("duration") or 0)
+        if want > 60 and got < want * 0.55:
+            print(f"[one] 🛡️ حلقة طويلة قصيرة ({got:.0f}ث من ~{want:.0f}ث) — "
+                  "مش هتنزل. اتأجلت.", flush=True)
+            _mark(row, "", "short_render")
+            return 1
     title = f"{made['lines'][0][:70]} | {row.get('series_title') or 'نور'}"
     src = row.get("source") or ""
     credits = "\n".join(made["credits"]) or "لقطات مرخّصة."
