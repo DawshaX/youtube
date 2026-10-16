@@ -384,6 +384,9 @@ def build_religious(col: dict, shelves: dict[str, list[dict]],
     """حلقة طويلة من المخزون الديني — بلا تكرار جملة، وبخاتمة حقيقية."""
     uniq = Unique()
     parts: list[str] = []
+    # ⏱️ حدود الفصول الحقيقية (بكلمات): كل رف بيبدأ عنده القسم بتاعه.
+    #    من غير الفصول دي مفيش فهرس في الوصف — والفهرس بيرفع الاحتفاظ.
+    marks: list[dict] = []
     lead = uniq.add(col["open"])
     parts.append(lead)
     words = len(lead.split())
@@ -392,6 +395,7 @@ def build_religious(col: dict, shelves: dict[str, list[dict]],
         items = shelves.get(shelf) or []
         if not items:
             continue
+        marks.append({"at_word": words, "label": str(shelf)})
         for row in items:
             if words >= cap_words:
                 break
@@ -425,6 +429,7 @@ def build_religious(col: dict, shelves: dict[str, list[dict]],
         "engine": "life",
         "emotion": "سكينة",
         "hook": title,
+        "chapters_hint": marks,
         "spoken": text,
         "scene": "calm wide shot no faces",
         "search": [str(col["title"]).split(":")[0], "أذكار", "دعاء", "أحاديث",
@@ -531,6 +536,7 @@ def build(col: dict, fam: dict[str, list[dict]], cap_words: int) -> dict | None:
     lead = uniq.add(col["open"])
     words = len(lead.split())
     parts: list[str] = [lead]
+    marks: list[dict] = []          # ⏱️ حدود الفصول من بنية الحلقة نفسها
     want = [s for s in col["series"] if fam.get(s)]
     if len(want) < 3:
         return None
@@ -543,6 +549,7 @@ def build(col: dict, fam: dict[str, list[dict]], cap_words: int) -> dict | None:
             break
         name = col["chapters"][ci] if ci < len(col["chapters"]) else sid
         head = _bridge(col["id"], ci, name)
+        marks.append({"at_word": words, "label": str(name)})
         chunk: list[str] = [head]
         for ep in eps:
             if words >= cap_words:
@@ -582,6 +589,7 @@ def build(col: dict, fam: dict[str, list[dict]], cap_words: int) -> dict | None:
         "engine": "life",
         "emotion": "سكينة",
         "hook": title,
+        "chapters_hint": marks,
         "spoken": text,
         "scene": "calm wide shot no faces",
         "search": [str(col["title"]).split(":")[0], "نصيحة", "خير", "تدبر",
@@ -632,6 +640,30 @@ def main() -> int:
         sec = estimate_sec(row["spoken"])
         print(f"  {row['id']:14} {w:5} كلمة ≈ {sec / 60:4.1f} دقيقة | "
               f"{row['series_title'][:38]}")
+    # 🧩 دمج الزيادات في الصفوف الموجودة — **إضافة بحتة**: أي حقل جديد
+    #    (زي `chapters_hint`) بيتحطّ في الصف القديم، ومفيش حرف بيتشال منه.
+    #    الطريقة: نسخة من الصف القديم + الحقل الجديد مفروش عليه.
+    merged = 0
+    if os.environ.get("NOOR_LONG_MERGE") == "1" and made:
+        by_id = {r.get("id"): r for r in made}
+        rows = _rows()
+        changed = False
+        for row in rows:
+            fresh = by_id.get(row.get("id"))
+            if not fresh:
+                continue
+            for key, val in fresh.items():
+                if key in ("id", "spoken", "series_title", "hook"):
+                    continue          # النص والعنوان الأصلي ما يتلمسوش
+                if val and not row.get(key):
+                    row[key] = val
+                    merged += 1
+                    changed = True
+        if changed:
+            LIB.write_text(
+                "\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + "\n",
+                encoding="utf-8")
+            print(f"[طول] 🧩 اندمج {merged} حقل جديد في الصفوف الموجودة")
     if os.environ.get("NOOR_LONG_WRITE") != "1":
         print("\n(تجربة — مش كتبنا. اكتب NOOR_LONG_WRITE=1 للنشر في المكتبة)")
         return 0

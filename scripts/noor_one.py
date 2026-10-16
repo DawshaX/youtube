@@ -371,6 +371,7 @@ def _publish_life(row: dict) -> int:
             _mark(row, "", "short_render")
             return 1
     title = f"{made['lines'][0][:70]} | {row.get('series_title') or 'نور'}"
+    tags = ["نور", row.get("series_title") or "خير"]
     src = row.get("source") or ""
     credits = "\n".join(made["credits"]) or "لقطات مرخّصة."
     # ⚠️ درس حقيقي (2026-10-14): الوصف العام كان بيبدأ بـ
@@ -383,6 +384,59 @@ def _publish_life(row: dict) -> int:
     benefit = str(row.get("benefit") or row.get("source") or "").strip()
     fair = "🤍 محتوى مصنوع بعناية. بلا وجوه حقيقية، وبلا وسائط محفوظة الحقوق."
     desc = "\n\n".join(x for x in (body, benefit, src, credits, fair) if x)
+
+    # ── 🎥 المسار الاحترافي للفيديو الطويل ─────────────────────────────────
+    # الفيديو الطويل (١٠–٢٠ دقيقة) هو اللي بيجيب وقت المشاهدة والمشتركين،
+    # فلازم ياخد ميتاداتا على مقاسه — مش نفس معالجة الشورت:
+    #   • **العنوان**: عنوان الجلسة زي ما هو (بالمدة المقيسة). العنوان القديم
+    #     كان بيتولّد من أول سطر منطوق + اسم الجلسة ⇒ **مكرّر مرتين** بالحرف
+    #     (باج حقيقي اتنشر على القناة: «ستر ورفق: رحلة ٨ دقيقة… | ستر ورفق…»).
+    #   • **الوصف**: كان بيتكوّم فيه نص الحلقة كامل (١٥٠٠ كلمة ≈ ٨٥٠٠ حرف)
+    #     ويوتيوب بيقصّ عند ٤٩٠٠ ⇒ الفايدة والإسناد والدعوة والهاشتاجات
+    #     **كلها كانت بتضيع**. دلوقتي: مدخل قوي → مقتطف → إسناد → دعوة
+    #     متنوّعة → هاشتاجات على مقاس الطويل (بلا #shorts) → **فهرس الجلسة**.
+    #   • **الفهرس**: من حدود النص الحقيقية + المدة المقيسة (مش تخمين).
+    if str(row.get("kind")) == "long":
+        try:
+            from xtrendaw.pro import integrate as _pro_int
+            # المقتطف: أول **جمل كاملة** (مش قصّ في نص الجملة) وسقف ~٩٠ كلمة
+            from xtrendaw.noor_next.timeline import sentences as _sents
+            picked, acc = [], 0
+            for line in _sents(body):
+                picked.append(line.strip())
+                acc += len(line.split())
+                if acc >= 90 or len(picked) >= 4:
+                    break
+            excerpt = " ".join(picked) or " ".join(body.split()[:90])
+            # اسم الجلسة **قبل النقطتين** أنضف كوسم من العنوان الطويل المقصوص
+            kw_short = str(row.get("series_title") or "").split(":")[0].strip()
+            em = _pro_int.upgrade_metadata(
+                row, hook=str(row.get("hook") or ""), body=excerpt,
+                sources=[credits] if credits else [], kind="long",
+                kw=kw_short,
+                reciter=str(row.get("reciter_name") or ""),
+            )
+            if em.get("title"):
+                title = str(em["title"])[:95]
+            if em.get("description"):
+                desc = str(em["description"])
+            if em.get("tags"):
+                tags = list(em["tags"])
+            print(f"[one] 🎥 ميتاداتا الطويل: {title[:60]}", flush=True)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[one] ميتاداتا الطويل اتخطت: {type(exc).__name__}", flush=True)
+        try:
+            from xtrendaw.noor_next.chapters import block as _chblock
+            ch = _chblock(row.get("chapters_hint"), len(body.split()),
+                          float(made.get("duration") or 0))
+            if ch:
+                room = 4900 - len(desc)
+                if room > 40:
+                    desc = desc + "\n\n" + ch[:room]
+                    print(f"[one] ⏱️  فهرس الجلسة اتضاف ({ch.count(chr(10))} قسم)",
+                          flush=True)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[one] الفهرس اتخطى: {type(exc).__name__}", flush=True)
     # 🕰️ الطويل بينزل على **الكيو**: بنحجز له خانة في شبكة مواعيد الذروة
     #    بينزل فيها فعلًا (الفيديو يفضل Private لحد الموعد). الريلز تفضل
     #    فورية زي ما هي — الطلب كان على الطويل بس.
@@ -391,16 +445,14 @@ def _publish_life(row: dict) -> int:
         at = _queue_at()
         if at:
             _queue_mark(at)
-    url, err = runner._publish(made["video"], None, title[:95], desc,
-                               ["نور", row.get("series_title") or "خير"],
+    url, err = runner._publish(made["video"], None, title[:95], desc, tags,
                                synthetic=True, publish_at=at)
     if not url and at and err and err not in ("quota_guard", "too_soon",
                                               "duplicate"):
         # احتياطي: لو الجدولة نفسها اترفضت (قناة غير موثّقة مثلًا)، الحلقة
         # **ما تضيعش** — بننزلها فورًا. الأهم إن المحتوى يوصل، مش الموعد.
         print(f"[one] ⚠️ الجدولة مشيت ({err}) — بننزل فورًا", flush=True)
-        url, err = runner._publish(made["video"], None, title[:95], desc,
-                                   ["نور", row.get("series_title") or "خير"],
+        url, err = runner._publish(made["video"], None, title[:95], desc, tags,
                                    synthetic=True, publish_at=None)
         at = None
     if err in ("quota_guard", "too_soon"):
