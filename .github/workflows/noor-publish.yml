@@ -93,6 +93,30 @@ jobs:
               sys.exit(1)
           EOF
 
+      # 🛠️ صيانة القناة — زيادة (2026-10-16): طابور حذف **عن بُعد فقط**.
+      #    حلقة معطوبة (١٥ ثانية) لازم تتشال من القناة، بس من غير ما نستهلك
+      #    دورة كاملة (mode=purge) ونعطّل سلسلة النبضة. الطابور والمُشغّل في
+      #    `state/maintenance.json` + `scripts/maintenance_run.py`.
+      #    ⚠️ الحذف عن بُعد فقط — أي ملف محلي بيفضل مكانه (قاعدة صاحب القناة).
+      #    ولو فشل لأي سبب: الدورة تكمل عادي (ما بيكسرش النشر أبدًا).
+      - name: 🛠️ صيانة القناة (طابور الحذف عن بُعد)
+        if: ${{ always() && inputs.mode != 'purge' }}
+        continue-on-error: true
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_CLIENT_ID_2: ${{ secrets.YOUTUBE_CLIENT_ID_2 }}
+          YOUTUBE_CLIENT_SECRET_2: ${{ secrets.YOUTUBE_CLIENT_SECRET_2 }}
+          YOUTUBE_REFRESH_TOKEN_2: ${{ secrets.YOUTUBE_REFRESH_TOKEN_2 }}
+          YOUTUBE_CLIENT_ID_3: ${{ secrets.YOUTUBE_CLIENT_ID_3 }}
+          YOUTUBE_CLIENT_SECRET_3: ${{ secrets.YOUTUBE_CLIENT_SECRET_3 }}
+          YOUTUBE_REFRESH_TOKEN_3: ${{ secrets.YOUTUBE_REFRESH_TOKEN_3 }}
+          YOUTUBE_CLIENT_ID_4: ${{ secrets.YOUTUBE_CLIENT_ID_4 }}
+          YOUTUBE_CLIENT_SECRET_4: ${{ secrets.YOUTUBE_CLIENT_SECRET_4 }}
+          YOUTUBE_REFRESH_TOKEN_4: ${{ secrets.YOUTUBE_REFRESH_TOKEN_4 }}
+        run: timeout 240 python scripts/maintenance_run.py
+
       - name: 🎬 الدورة (حلقة جديدة + نشر/تخزين)
         if: ${{ inputs.mode != 'purge' }}
         env:
@@ -272,7 +296,8 @@ jobs:
           for f in data/noor_next/one_library.jsonl \
                    state/published.json state/media_used.json \
                    state/yt_recent.json state/last_publish.json \
-                   state/last_cycle.json state/noor_library.json; do
+                   state/last_cycle.json state/noor_library.json \
+                   state/maintenance.json; do
             [ -f "$f" ] && git add -f "$f"
           done
           # ملفات الأحاديث الصغيرة (الكاش الكبير مستثنى في .gitignore)
