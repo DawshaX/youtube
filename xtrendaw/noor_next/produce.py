@@ -85,7 +85,15 @@ def _crop(motion: str, seconds: float) -> tuple[str, str]:
     return f"(in_w-out_w)*t/{dur:.2f}", "(in_h-out_h)*0.35"
 
 
-def _style_clip(src: Path, dst: Path, seconds: float, grade: str, motion: str) -> None:
+def _style_clip(src: Path, dst: Path, seconds: float, grade: str, motion: str,
+                loop_edges: bool = False) -> None:
+    """loop_edges=True ⇒ الشريحة دي **مفتوحة من الطرفين** (للريل اللي بيلفّ).
+
+    ليه؟ يوتيوب بيلفّ الشورت تلقائيًا. لو آخر مشهد بيروح لأسود وأول مشهد
+    جاي من أسود، المشاهد بيشوف «رمشة سودة» كل لفة. لما نطفّي التلاشي على
+    أول شريحة وآخر شريحة، اللفة تبقى **متواصلة** — والمشاهد بيكمّل من غير
+    ما يحس إنه رجع للأول. ده بيزوّد عدد اللفّات (إشارة قوية للشورتس).
+    """
     fade = 0.27
     out_st = max(0.2, seconds - fade)
     x, y = _crop(motion, seconds)
@@ -93,7 +101,11 @@ def _style_clip(src: Path, dst: Path, seconds: float, grade: str, motion: str) -
         f"scale={int(W * 1.08)}:{int(H * 1.08)}:force_original_aspect_ratio=increase,"
         f"crop={W}:{H}:x='{x}':y='{y}'"
     )
-    tail = f"fade=t=in:st=0:d={fade},fade=t=out:st={out_st:.2f}:d={fade},fps=30,format=yuv420p"
+    if loop_edges:
+        tail = "fps=30,format=yuv420p"
+    else:
+        tail = (f"fade=t=in:st=0:d={fade},fade=t=out:st={out_st:.2f}:d={fade},"
+                "fps=30,format=yuv420p")
     fancy = f"{base},{grade},{tail}" if grade else f"{base},{tail}"
     plain = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps=30,format=yuv420p"
 
@@ -386,7 +398,12 @@ def render(episode: dict, work: Path) -> dict | None:
         if fmt.get("neon"):
             grades.append("eq=saturation=1.12")
         grade = ",".join(part.strip(",") for part in grades if part)
-        _style_clip(got, styled, dur, grade, motion_for(fmt, i))
+        # 🎬 الكور: الشورتس بس — أول وآخر لقطة بلا تلاشي (لفة متواصلة).
+        #    الحلقات الطويلة تفضل بتلاشيها الطبيعي (مش بتلفّ أصلًا).
+        _loop = (len(lines) <= 12 and (i == 0 or i == len(lines) - 1)
+                 and os.environ.get("NOOR_LOOP_SHORTS", "1") == "1")
+        _style_clip(got, styled, dur, grade, motion_for(fmt, i),
+                    loop_edges=_loop)
         png = work / f"cap-{i}.png"
         _caption(line, png, float(look.get("y") or 0.62),
                  pal.get("text") or "#F7F1E6",
