@@ -69,10 +69,11 @@
     "ser-body-s01",
     "ser-field-بناء-s01",
     "ser-field-تجربة-s01",
-    "ser-field-حروف-s01"
+    "ser-field-حروف-s01",
+    "long-sitr"
   ],
-  "turn": 6,
-  "last_series": "ser-field-حروف",
+  "turn": 3,
+  "last_series": "longmix-sitr",
   "done": [
     {
       "id": "ser-study-s01",
@@ -493,11 +494,17 @@
       "url": "https://www.youtube.com/watch?v=VEfSANKKMtU",
       "err": "",
       "kind": "short"
+    },
+    {
+      "id": "long-sitr",
+      "url": "https://www.youtube.com/watch?v=hA_0L40905E",
+      "err": "",
+      "kind": "long"
     }
   ],
   "day": {
     "date": "2026-10-16",
     "short": 2,
-    "long": 0
+    "long": 1
   }
 }
