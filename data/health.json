@@ -1,8 +1,8 @@
 {
- "checkedAt": "2026-10-17T17:08:05+00:00",
+ "checkedAt": "2026-10-17T19:22:18+00:00",
  "runner": "actions-or-local",
  "all_ok": false,
- "fails": 1,
+ "fails": 3,
  "warns": 4,
  "checks": [
   {
@@ -32,8 +32,8 @@
   },
   {
    "name": "YOUTUBE_COOKIES_B64 (كوكيز العين)",
-   "status": "ok",
-   "detail": "الجلسة شغالة (24 زوج كوكي) — مسار العين (بيانات بس) بلا تنزيل"
+   "status": "fail",
+   "detail": "الكوكيز ماتت/مرفوضة — أعد تصديرها (دقيقتين): HTTPError: 429 Client Error: Too Many Requests for url: https://www.google.com/sorry/index?continue=https://www.youtube.com/watch%3Fv%3D2Vv-BfVoq4g&q=●●●"
   },
   {
    "name": "GROQ_API_KEY (مخ الذكاء 1)",
@@ -67,8 +67,8 @@
   },
   {
    "name": "NASA_API_KEY (فضاء)",
-   "status": "ok",
-   "detail": "شغال"
+   "status": "fail",
+   "detail": "HTTP 500 — {\"code\":500,\"msg\":\"Internal Service Error\",\"service_version\":\"v1\"}\n"
   },
   {
    "name": "OPENVERSE (صور/ميديا)",
