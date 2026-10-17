@@ -74,10 +74,11 @@
     "ser-field-وهم ونفس-s04",
     "ser-host-s07",
     "ser-field-محيط-s01",
-    "ser-rain-s03"
+    "ser-rain-s03",
+    "ser-anger-s05"
   ],
-  "turn": 110,
-  "last_series": "ser-rain",
+  "turn": 111,
+  "last_series": "ser-anger",
   "done": [
     {
       "id": "ser-study-s01",
@@ -540,11 +541,20 @@
       "series_id": "ser-rain",
       "emotion": "لحظة",
       "at": "2026-10-16 22:25"
+    },
+    {
+      "id": "ser-anger-s05",
+      "url": "https://www.youtube.com/watch?v=quvAXY6vqLo",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-anger",
+      "emotion": "وعي",
+      "at": "2026-10-17 21:26"
     }
   ],
   "day": {
-    "date": "2026-10-17",
-    "short": 2,
+    "date": "2026-10-18",
+    "short": 1,
     "long": 0
   }
 }
