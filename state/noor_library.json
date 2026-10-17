@@ -75,10 +75,11 @@
     "ser-host-s07",
     "ser-field-محيط-s01",
     "ser-rain-s03",
-    "ser-anger-s05"
+    "ser-anger-s05",
+    "ser-day-s05"
   ],
-  "turn": 112,
-  "last_series": "ser-anger",
+  "turn": 113,
+  "last_series": "ser-day",
   "done": [
     {
       "id": "ser-study-s01",
@@ -550,11 +551,20 @@
       "series_id": "ser-anger",
       "emotion": "وعي",
       "at": "2026-10-17 21:26"
+    },
+    {
+      "id": "ser-day-s05",
+      "url": "https://www.youtube.com/watch?v=hbGQ9fAC-Fg",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-day",
+      "emotion": "جد",
+      "at": "2026-10-17 22:53"
     }
   ],
   "day": {
     "date": "2026-10-18",
-    "short": 1,
+    "short": 2,
     "long": 0
   }
 }
