@@ -89,10 +89,11 @@
     "long-ilm",
     "long-shughl",
     "long-safar",
-    "long-seha"
+    "long-seha",
+    "ser-sky-s11"
   ],
-  "turn": 158,
-  "last_series": "longmix-seha",
+  "turn": 159,
+  "last_series": "ser-sky",
   "done": [
     {
       "id": "ser-study-s01",
@@ -690,12 +691,21 @@
       "series_id": "longmix-seha",
       "emotion": "سكينة",
       "at": "2026-10-18 20:33"
+    },
+    {
+      "id": "ser-sky-s11",
+      "url": "https://www.youtube.com/watch?v=80mXQCz7GiQ",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-sky",
+      "emotion": "دهشة",
+      "at": "2026-10-18 21:09"
     }
   ],
   "day": {
-    "date": "2026-10-18",
-    "short": 4,
-    "long": 1
+    "date": "2026-10-19",
+    "short": 1,
+    "long": 0
   },
   "long_queue": [
     "2026-10-18T13:00"
