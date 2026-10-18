@@ -85,10 +85,11 @@
     "long-adhkar",
     "long-duaa",
     "long-hadith-silsila",
-    "long-jalsa"
+    "long-jalsa",
+    "long-ilm"
   ],
-  "turn": 151,
-  "last_series": "longmix-jalsa",
+  "turn": 153,
+  "last_series": "longmix-ilm",
   "done": [
     {
       "id": "ser-study-s01",
@@ -650,6 +651,15 @@
       "series_id": "longmix-jalsa",
       "emotion": "سكينة",
       "at": "2026-10-18 16:34"
+    },
+    {
+      "id": "long-ilm",
+      "url": "",
+      "err": "short_render",
+      "kind": "long",
+      "series_id": "longmix-ilm",
+      "emotion": "سكينة",
+      "at": "2026-10-18 17:27"
     }
   ],
   "day": {
