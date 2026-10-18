@@ -90,10 +90,12 @@
     "long-shughl",
     "long-safar",
     "long-seha",
-    "ser-sky-s11"
+    "ser-sky-s11",
+    "ser-field-علم الأرض-s01",
+    "ser-rain-s04"
   ],
-  "turn": 159,
-  "last_series": "ser-sky",
+  "turn": 161,
+  "last_series": "ser-rain",
   "done": [
     {
       "id": "ser-study-s01",
@@ -700,11 +702,29 @@
       "series_id": "ser-sky",
       "emotion": "دهشة",
       "at": "2026-10-18 21:09"
+    },
+    {
+      "id": "ser-field-علم الأرض-s01",
+      "url": "",
+      "err": "duplicate",
+      "kind": "short",
+      "series_id": "ser-field-علم الأرض",
+      "emotion": "حياة",
+      "at": "2026-10-18 21:55"
+    },
+    {
+      "id": "ser-rain-s04",
+      "url": "https://www.youtube.com/watch?v=FiHEbCzz1UQ",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-rain",
+      "emotion": "لحظة",
+      "at": "2026-10-18 22:01"
     }
   ],
   "day": {
     "date": "2026-10-19",
-    "short": 1,
+    "short": 2,
     "long": 0
   },
   "long_queue": [
