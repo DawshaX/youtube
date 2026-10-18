@@ -76,10 +76,11 @@
     "ser-field-محيط-s01",
     "ser-rain-s03",
     "ser-anger-s05",
-    "ser-day-s05"
+    "ser-day-s05",
+    "long-yom"
   ],
-  "turn": 134,
-  "last_series": "ser-day",
+  "turn": 137,
+  "last_series": "longmix-yom",
   "done": [
     {
       "id": "ser-study-s01",
@@ -560,6 +561,15 @@
       "series_id": "ser-day",
       "emotion": "جد",
       "at": "2026-10-17 22:53"
+    },
+    {
+      "id": "long-yom",
+      "url": "",
+      "err": "short_render",
+      "kind": "long",
+      "series_id": "longmix-yom",
+      "emotion": "سكينة",
+      "at": "2026-10-18 08:08"
     }
   ],
   "day": {
