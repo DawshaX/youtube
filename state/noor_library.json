@@ -83,10 +83,11 @@
     "ser-child-s04",
     "long-iman",
     "long-adhkar",
-    "long-duaa"
+    "long-duaa",
+    "long-hadith-silsila"
   ],
-  "turn": 147,
-  "last_series": "longmix-duaa",
+  "turn": 149,
+  "last_series": "longmix-hadith-silsila",
   "done": [
     {
       "id": "ser-study-s01",
@@ -630,6 +631,15 @@
       "series_id": "longmix-duaa",
       "emotion": "سكينة",
       "at": "2026-10-18 14:30"
+    },
+    {
+      "id": "long-hadith-silsila",
+      "url": "",
+      "err": "short_render",
+      "kind": "long",
+      "series_id": "longmix-hadith-silsila",
+      "emotion": "سكينة",
+      "at": "2026-10-18 15:23"
     }
   ],
   "day": {
