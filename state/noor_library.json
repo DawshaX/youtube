@@ -77,10 +77,11 @@
     "ser-rain-s03",
     "ser-anger-s05",
     "ser-day-s05",
-    "long-yom"
+    "long-yom",
+    "ser-field-ضحك نظيف-l10"
   ],
-  "turn": 137,
-  "last_series": "longmix-yom",
+  "turn": 138,
+  "last_series": "ser-field-ضحك نظيف",
   "done": [
     {
       "id": "ser-study-s01",
@@ -570,11 +571,23 @@
       "series_id": "longmix-yom",
       "emotion": "سكينة",
       "at": "2026-10-18 08:08"
+    },
+    {
+      "id": "ser-field-ضحك نظيف-l10",
+      "url": "https://www.youtube.com/watch?v=g11wf__xx4U",
+      "err": "",
+      "kind": "long",
+      "series_id": "ser-field-ضحك نظيف",
+      "emotion": "حياة",
+      "at": "2026-10-18 09:17"
     }
   ],
   "day": {
     "date": "2026-10-18",
     "short": 2,
-    "long": 0
-  }
+    "long": 1
+  },
+  "long_queue": [
+    "2026-10-18T13:00"
+  ]
 }
