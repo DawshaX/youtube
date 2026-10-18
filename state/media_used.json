@@ -2520,9 +2520,9 @@
   "at": "2026-10-14 14:18"
  },
  "clipcache:06e23379463e": {
-  "source": "video:cache",
-  "episode": "long-hadith-silsila",
-  "at": "2026-10-18 15:18"
+  "source": "video:pexels",
+  "episode": "long-akhlaq",
+  "at": "2026-10-18 23:15"
  },
  "https://cdn.pixabay.com/video/2022/02/03/106622-673570439_medium.mp4": {
   "source": "video:pixabay",
@@ -3046,8 +3046,8 @@
  },
  "clipcache:38b598fd98a9": {
   "source": "video:pexels",
-  "episode": "long-shughl",
-  "at": "2026-10-18 18:14"
+  "episode": "long-akhlaq",
+  "at": "2026-10-18 23:03"
  },
  "https://cdn.pixabay.com/video/2019/10/04/27539-364430966_medium.mp4": {
   "source": "video:pixabay",
@@ -3120,9 +3120,9 @@
   "at": "2026-10-14 15:23"
  },
  "clipcache:9f5bb85bef8e": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "long-akhlaq",
-  "at": "2026-10-18 20:37"
+  "at": "2026-10-18 22:44"
  },
  "https://cdn.pixabay.com/video/2017/03/15/8389-208562373_medium.mp4": {
   "source": "video:pixabay",
@@ -3205,9 +3205,9 @@
   "at": "2026-10-14 15:33"
  },
  "clipcache:ebcae096d83e": {
-  "source": "video:pixabay",
-  "episode": "ser-rain-s04",
-  "at": "2026-10-18 21:59"
+  "source": "video:Wikimedia Commons",
+  "episode": "long-dahk",
+  "at": "2026-10-18 23:26"
  },
  "https://cdn.pixabay.com/video/2022/10/29/137018-765427143_medium.mp4": {
   "source": "video:pixabay",
@@ -4920,9 +4920,9 @@
   "at": "2026-10-15 04:27"
  },
  "clipcache:129556f5403d": {
-  "source": "video:pixabay",
+  "source": "video:pexels",
   "episode": "long-akhlaq",
-  "at": "2026-10-18 20:46"
+  "at": "2026-10-18 23:03"
  },
  "https://cdn.pixabay.com/video/2017/01/22/7489-200670868_medium.mp4": {
   "source": "video:pixabay",
@@ -7303,5 +7303,35 @@
   "source": "video:pexels",
   "episode": "ser-rain-s04",
   "at": "2026-10-18 22:00"
+ },
+ "https://videos.pexels.com/video-files/6269862/6269862-sd_640_360_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "long-akhlaq",
+  "at": "2026-10-18 22:44"
+ },
+ "https://videos.pexels.com/video-files/12278146/12278146-hd_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "long-akhlaq",
+  "at": "2026-10-18 22:54"
+ },
+ "https://videos.pexels.com/video-files/31093649/13286148_720_1280_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "long-akhlaq",
+  "at": "2026-10-18 23:03"
+ },
+ "https://videos.pexels.com/video-files/5495831/5495831-sd_640_338_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "long-akhlaq",
+  "at": "2026-10-18 23:03"
+ },
+ "https://videos.pexels.com/video-files/34922524/14793295_640_360_50fps.mp4": {
+  "source": "video:pexels",
+  "episode": "long-akhlaq",
+  "at": "2026-10-18 23:15"
+ },
+ "https://upload.wikimedia.org/wikipedia/commons/2/29/Partial_Solar_Eclipse_at_Sunrise_January_2011_Near_Windsor_UK_-_Canon_FS200.webm?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original": {
+  "source": "video:Wikimedia Commons",
+  "episode": "long-dahk",
+  "at": "2026-10-18 23:26"
  }
 }
