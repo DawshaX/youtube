@@ -84,10 +84,11 @@
     "long-iman",
     "long-adhkar",
     "long-duaa",
-    "long-hadith-silsila"
+    "long-hadith-silsila",
+    "long-jalsa"
   ],
-  "turn": 149,
-  "last_series": "longmix-hadith-silsila",
+  "turn": 151,
+  "last_series": "longmix-jalsa",
   "done": [
     {
       "id": "ser-study-s01",
@@ -640,6 +641,15 @@
       "series_id": "longmix-hadith-silsila",
       "emotion": "سكينة",
       "at": "2026-10-18 15:23"
+    },
+    {
+      "id": "long-jalsa",
+      "url": "",
+      "err": "short_render",
+      "kind": "long",
+      "series_id": "longmix-jalsa",
+      "emotion": "سكينة",
+      "at": "2026-10-18 16:34"
     }
   ],
   "day": {
