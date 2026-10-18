@@ -79,10 +79,11 @@
     "ser-day-s05",
     "long-yom",
     "ser-field-ضحك نظيف-l10",
-    "ser-sky-s06"
+    "ser-sky-s06",
+    "ser-child-s04"
   ],
-  "turn": 140,
-  "last_series": "ser-sky",
+  "turn": 141,
+  "last_series": "ser-child",
   "done": [
     {
       "id": "ser-study-s01",
@@ -590,11 +591,20 @@
       "series_id": "ser-sky",
       "emotion": "دهشة",
       "at": "2026-10-18 10:31"
+    },
+    {
+      "id": "ser-child-s04",
+      "url": "https://www.youtube.com/watch?v=5_bMTmFzVXs",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-child",
+      "emotion": "طفل",
+      "at": "2026-10-18 11:16"
     }
   ],
   "day": {
     "date": "2026-10-18",
-    "short": 3,
+    "short": 4,
     "long": 1
   },
   "long_queue": [
