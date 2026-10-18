@@ -80,10 +80,11 @@
     "long-yom",
     "ser-field-ضحك نظيف-l10",
     "ser-sky-s06",
-    "ser-child-s04"
+    "ser-child-s04",
+    "long-iman"
   ],
-  "turn": 141,
-  "last_series": "ser-child",
+  "turn": 143,
+  "last_series": "longmix-iman",
   "done": [
     {
       "id": "ser-study-s01",
@@ -600,6 +601,15 @@
       "series_id": "ser-child",
       "emotion": "طفل",
       "at": "2026-10-18 11:16"
+    },
+    {
+      "id": "long-iman",
+      "url": "",
+      "err": "short_render",
+      "kind": "long",
+      "series_id": "longmix-iman",
+      "emotion": "سكينة",
+      "at": "2026-10-18 12:26"
     }
   ],
   "day": {
