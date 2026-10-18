@@ -86,10 +86,12 @@
     "long-duaa",
     "long-hadith-silsila",
     "long-jalsa",
-    "long-ilm"
+    "long-ilm",
+    "long-shughl",
+    "long-safar"
   ],
-  "turn": 153,
-  "last_series": "longmix-ilm",
+  "turn": 156,
+  "last_series": "longmix-safar",
   "done": [
     {
       "id": "ser-study-s01",
@@ -660,6 +662,24 @@
       "series_id": "longmix-ilm",
       "emotion": "سكينة",
       "at": "2026-10-18 17:27"
+    },
+    {
+      "id": "long-shughl",
+      "url": "",
+      "err": "short_render",
+      "kind": "long",
+      "series_id": "longmix-shughl",
+      "emotion": "سكينة",
+      "at": "2026-10-18 18:26"
+    },
+    {
+      "id": "long-safar",
+      "url": "",
+      "err": "short_render",
+      "kind": "long",
+      "series_id": "longmix-safar",
+      "emotion": "سكينة",
+      "at": "2026-10-18 18:41"
     }
   ],
   "day": {
