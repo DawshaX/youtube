@@ -82,10 +82,11 @@
     "ser-sky-s06",
     "ser-child-s04",
     "long-iman",
-    "long-adhkar"
+    "long-adhkar",
+    "long-duaa"
   ],
-  "turn": 145,
-  "last_series": "longmix-adhkar",
+  "turn": 147,
+  "last_series": "longmix-duaa",
   "done": [
     {
       "id": "ser-study-s01",
@@ -620,6 +621,15 @@
       "series_id": "longmix-adhkar",
       "emotion": "سكينة",
       "at": "2026-10-18 13:28"
+    },
+    {
+      "id": "long-duaa",
+      "url": "",
+      "err": "short_render",
+      "kind": "long",
+      "series_id": "longmix-duaa",
+      "emotion": "سكينة",
+      "at": "2026-10-18 14:30"
     }
   ],
   "day": {
