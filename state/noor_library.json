@@ -88,10 +88,11 @@
     "long-jalsa",
     "long-ilm",
     "long-shughl",
-    "long-safar"
+    "long-safar",
+    "long-seha"
   ],
-  "turn": 156,
-  "last_series": "longmix-safar",
+  "turn": 158,
+  "last_series": "longmix-seha",
   "done": [
     {
       "id": "ser-study-s01",
@@ -680,6 +681,15 @@
       "series_id": "longmix-safar",
       "emotion": "سكينة",
       "at": "2026-10-18 19:43"
+    },
+    {
+      "id": "long-seha",
+      "url": "",
+      "err": "short_render",
+      "kind": "long",
+      "series_id": "longmix-seha",
+      "emotion": "سكينة",
+      "at": "2026-10-18 20:33"
     }
   ],
   "day": {
