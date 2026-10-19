@@ -95,10 +95,11 @@
     "ser-rain-s04",
     "long-akhlaq",
     "long-dahk",
-    "long-sitr-v2"
+    "long-sitr-v2",
+    "ser-anger-s02"
   ],
-  "turn": 167,
-  "last_series": "longmix-sitr-v2",
+  "turn": 168,
+  "last_series": "ser-anger",
   "done": [
     {
       "id": "ser-study-s01",
@@ -750,11 +751,20 @@
       "series_id": "longmix-sitr-v2",
       "emotion": "سكينة",
       "at": "2026-10-19 02:14"
+    },
+    {
+      "id": "ser-anger-s02",
+      "url": "https://www.youtube.com/watch?v=hK9xe4TvW_c",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-anger",
+      "emotion": "وعي",
+      "at": "2026-10-19 21:13"
     }
   ],
   "day": {
-    "date": "2026-10-19",
-    "short": 2,
+    "date": "2026-10-20",
+    "short": 1,
     "long": 0
   },
   "long_queue": [
