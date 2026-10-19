@@ -96,10 +96,11 @@
     "long-akhlaq",
     "long-dahk",
     "long-sitr-v2",
-    "ser-anger-s02"
+    "ser-anger-s02",
+    "ser-field-نمل-s01"
   ],
-  "turn": 169,
-  "last_series": "ser-anger",
+  "turn": 170,
+  "last_series": "ser-field-نمل",
   "done": [
     {
       "id": "ser-study-s01",
@@ -760,11 +761,20 @@
       "series_id": "ser-anger",
       "emotion": "وعي",
       "at": "2026-10-19 21:13"
+    },
+    {
+      "id": "ser-field-نمل-s01",
+      "url": "https://www.youtube.com/watch?v=XK88rQ6qokA",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-field-نمل",
+      "emotion": "حياة",
+      "at": "2026-10-19 22:43"
     }
   ],
   "day": {
     "date": "2026-10-20",
-    "short": 1,
+    "short": 2,
     "long": 0
   },
   "long_queue": [
