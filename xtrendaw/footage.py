@@ -486,17 +486,32 @@ def _pixabay_candidates(query: str) -> list:
         return []
 
 
+# قاطع بكسلز: أول 429 في الدورة يقفل المصدر لباقي التشغيلة (بدل 26 استعلام
+# فاشل بوقوف 25+ ثانية لكل واحد — دي كانت بتكلّف الدورة 10+ دقيقة ضايعة).
+_PEXELS_THROTTLED = False
+
+
 def _pexels_candidates(query: str) -> list:
     """Pexels Videos API — رخصة Pexels (بلا إسناد). محتاج `PEXELS_API_KEY`."""
+    global _PEXELS_THROTTLED
     key = settings.PEXELS_API_KEY
     if not key or not query:
-        print(f"[footage] ⚠ بكسلز: {'مفيش مفتاح' if not key else 'استعلام فاضي'}",
-              flush=True)
+        if not getattr(_pexels_candidates, "_warned", False):
+            print(f"[footage] ⚠ بكسلز: {'مفيش مفتاح' if not key else 'استعلام فاضي'}",
+                  flush=True)
+            _pexels_candidates._warned = True
         return []
+    if _PEXELS_THROTTLED:
+        return []                                # مقطوع بقية الدورة بهدوء
     try:
         r = requests.get("https://api.pexels.com/videos/search",
                          params={"query": query, "per_page": 10},
                          headers={**UA, "Authorization": key}, timeout=25)
+        if r.status_code == 429:
+            _PEXELS_THROTTLED = True
+            print("[footage] 🚦 بكسلز وصل حد المعدل (429) — قافله لباقي "
+                  "الدورة وبنكمل من بيكساباي/الملاذات", flush=True)
+            return []
         if not r.ok:
             print(f"[footage] ⚠ بكسلز HTTP {r.status_code}: "
                   f"{r.text[:120]}", flush=True)
@@ -641,12 +656,31 @@ def fetch_clip(query: str | list[str], seconds: float, workdir: Path, seed: str,
         except Exception:
             _seen_media = {}
         accepted = None
-        for c in cands:
+        # 🧠 احتراف بدل الجوع (2026-10-19): الاستبعاد الأبدي كان بيقتل
+        # الفيديوهات الطويلة — أول ما مخزون المصدر يخلص من «الجديد»، كل
+        # المرشحين بيترفضوا والمشهد يقع (26 مشهد × 4 أنواع = ساعات نشر ضايعة).
+        # النظام الاحترافي (زي البروفيشنال بيعملوا في الاستوديو):
+        #   أ) الجديد أولًا دايمًا — الخام الطازج هو الأفضل.
+        #   ب) لو خلص الجديد: نعيد «الأقدم عرضًا» (LRU) بدل ما نوقف — مشاهد
+        #      التيك توك/يوتيوب نفسها بتشوف اللقطة كل أسابيع مش كل فيديو.
+        #   ج) حارس الحلقة الواحدة ثابت: اللقطة ما تتكررش جوه نفس الفيديو أبدًا.
+        _ep_now = str(seed).split(":")[0]
+        def _dup_in_ep(c):
+            try:
+                from . import state as _st
+                return _st.episode_seen(_ep_now, c.get("url", ""))
+            except Exception:
+                return False
+        cands = [c for c in cands if not _dup_in_ep(c)]
+        fresh = [c for c in cands if c.get("url", "") not in _seen_media]
+        recycled = sorted(
+            (c for c in cands if c.get("url", "") in _seen_media),
+            key=lambda c: str((_seen_media.get(c.get("url", "")) or {}).get("at", "")))
+        if not fresh and recycled:
+            print(f"[footage] ♻️ الجديد خلص ({len(recycled)} مرشح متعرّض) — "
+                  f"بنعيد الأقدم عرضًا بدل وقف المشهد", flush=True)
+        for c in fresh + recycled:
             url = c.get("url", "")
-            if url in _seen_media:
-                print(f"[footage] ↺ استبعدت لقطة مستخدمة قبل كده "
-                      f"({c.get('_source', 'web')}) — بدور على غيرها", flush=True)
-                continue
             if url in bad or not _dl(url, raw):
                 continue
             dur = _probe_dur(raw)

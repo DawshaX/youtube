@@ -166,15 +166,21 @@ def produce_episode(topic: dict, workdir: Path, narration_lang: str = "ar",
     sfx_credits: list = []
     try:
         from . import sfx as _sfx
+        from . import soundscape as _scape
+        _sid = str(topic.get("id") or topic.get("title") or "")
         events = []
         if plan["items"]:
-            w = _sfx.pick("whoosh", workdir / "sfx")
+            # فريساوند أولًا، ولما المفتاح مش موجود: ووش مولّد داخليًا —
+            # الانتقال الصوتي الاحترافي ما ينفعش يعتمد على API خارجي.
+            w = _sfx.pick("whoosh", workdir / "sfx") \
+                or _scape.sfx_wav("whoosh", _sid, workdir / "sfx")
             if w:
                 events.append((plan["items"][0]["start"], w))
         take = next((it for it in plan["items"] if it.get("seg") == "takeaway"),
                     None)
         if take:
-            im = _sfx.pick("impact", workdir / "sfx")
+            im = _sfx.pick("impact", workdir / "sfx") \
+                or _scape.sfx_wav("chime", _sid + ":tk", workdir / "sfx")
             if im:
                 events.append((take["start"], im))
         sfx_credits = _sfx.session_credits()

@@ -531,6 +531,32 @@ def render(episode: dict, work: Path) -> dict | None:
     except Exception as exc:  # noqa: BLE001
         print(f"[pro] المزيكا اتخطت: {type(exc).__name__}", flush=True)
 
+    # ── 🌧️ الساوندسكيب: أجواء طبيعية مولّدة بذكاء من المحتوى نفسه
+    #    (مطر/ليل/عصافير/نار/بحر/نسيم) — صفر موسيقى سارية، صفر حقوق،
+    #    وكل فيديو ليه بصمة صوتية مختلفة بالبذرة. القرآن بأخف درجة وقار.
+    try:
+        from xtrendaw import soundscape as _scape
+        _id = str(episode.get("id") or episode.get("title") or "")
+        _amb = _scape.pick_ambience(episode)
+        _amb_wav = _scape.ambience_wav(_amb, visual_len, _id, work)
+        if _amb_wav is not None and audio_final.exists():
+            _lvl = _scape.level_for(episode)
+            _atmp = work / "scaped.wav"
+            _run(["ffmpeg", "-y", "-i", str(audio_final), "-i", str(_amb_wav),
+                  "-filter_complex",
+                  f"[1:a]volume={_lvl:.3f}[amb];"
+                  f"[amb][0:a]sidechaincompress=threshold=0.06:ratio=6:attack=20:release=400[duck];"
+                  f"[0:a][duck]amix=inputs=2:duration=first:normalize=0[m]",
+                  "-map", "[m]", "-ar", "48000", "-ac", "2", str(_atmp)])
+            if _atmp.exists() and _atmp.stat().st_size > 2048:
+                audio_final = _atmp
+                music_credit = ((music_credit + " · ") if music_credit else "") \
+                               + _scape.describe(episode)
+                print(f"[soundscape] 🌧️ أجواء «{_amb}» بخفض تلقائي عند {_lvl:.3f}",
+                      flush=True)
+    except Exception as exc:  # noqa: BLE001 — تجميل، المصنع ما يقفش عليه
+        print(f"[soundscape] اتخطى: {type(exc).__name__}", flush=True)
+
     lines = used
     out = work / "episode.mp4"
     # `-shortest` بيقصّ الفيديو على طول الصوت. ده كان بيحوّل حلقة ٦٠٠ ثانية
