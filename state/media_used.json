@@ -2561,8 +2561,8 @@
  },
  "clipcache:ed1f89423d55": {
   "source": "video:cache",
-  "episode": "long-hadith-silsila",
-  "at": "2026-10-18 15:20"
+  "episode": "long-sitr-v2",
+  "at": "2026-10-19 02:10"
  },
  "https://cdn.pixabay.com/video/2020/03/12/33594-398880294_medium.mp4": {
   "source": "video:pixabay",
@@ -3091,8 +3091,8 @@
  },
  "clipcache:6ecaa3821973": {
   "source": "video:pexels",
-  "episode": "long-shughl",
-  "at": "2026-10-18 19:22"
+  "episode": "long-sitr-v2",
+  "at": "2026-10-19 02:08"
  },
  "https://cdn.pixabay.com/video/2020/08/04/46349-447447979_medium.mp4": {
   "source": "video:pixabay",
@@ -5590,9 +5590,9 @@
   "at": "2026-10-16 00:16"
  },
  "clipcache:c2d59c3f187f": {
-  "source": "video:cache",
+  "source": "video:pexels",
   "episode": "long-sitr-v2",
-  "at": "2026-10-19 01:26"
+  "at": "2026-10-19 02:11"
  },
  "https://cdn.pixabay.com/video/2018/04/02/15341-262921910_medium.mp4": {
   "source": "video:pixabay",
@@ -7348,5 +7348,20 @@
   "source": "video:pixabay",
   "episode": "long-sitr-v2",
   "at": "2026-10-19 01:19"
+ },
+ "https://videos.pexels.com/video-files/27987858/12282393_682_360_50fps.mp4": {
+  "source": "video:pexels",
+  "episode": "long-sitr-v2",
+  "at": "2026-10-19 01:54"
+ },
+ "https://videos.pexels.com/video-files/24821068/11898311_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "long-sitr-v2",
+  "at": "2026-10-19 02:08"
+ },
+ "https://videos.pexels.com/video-files/39593749/16877095_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "long-sitr-v2",
+  "at": "2026-10-19 02:11"
  }
 }

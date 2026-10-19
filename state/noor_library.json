@@ -94,10 +94,11 @@
     "ser-field-علم الأرض-s01",
     "ser-rain-s04",
     "long-akhlaq",
-    "long-dahk"
+    "long-dahk",
+    "long-sitr-v2"
   ],
-  "turn": 166,
-  "last_series": "longmix-dahk",
+  "turn": 167,
+  "last_series": "longmix-sitr-v2",
   "done": [
     {
       "id": "ser-study-s01",
@@ -740,6 +741,15 @@
       "series_id": "longmix-dahk",
       "emotion": "سكينة",
       "at": "2026-10-19 01:05"
+    },
+    {
+      "id": "long-sitr-v2",
+      "url": "",
+      "err": "short_render",
+      "kind": "long",
+      "series_id": "longmix-sitr-v2",
+      "emotion": "سكينة",
+      "at": "2026-10-19 02:14"
     }
   ],
   "day": {
