@@ -97,10 +97,11 @@
     "long-dahk",
     "long-sitr-v2",
     "ser-anger-s02",
-    "ser-field-نمل-s01"
+    "ser-field-نمل-s01",
+    "ser-field-ظلمة-s01"
   ],
-  "turn": 170,
-  "last_series": "ser-field-نمل",
+  "turn": 171,
+  "last_series": "ser-field-ظلمة",
   "done": [
     {
       "id": "ser-study-s01",
@@ -770,11 +771,20 @@
       "series_id": "ser-field-نمل",
       "emotion": "حياة",
       "at": "2026-10-19 22:43"
+    },
+    {
+      "id": "ser-field-ظلمة-s01",
+      "url": "https://www.youtube.com/watch?v=SMFSFh-RNh0",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-field-ظلمة",
+      "emotion": "لحظة",
+      "at": "2026-10-20 21:19"
     }
   ],
   "day": {
-    "date": "2026-10-20",
-    "short": 2,
+    "date": "2026-10-21",
+    "short": 1,
     "long": 0
   },
   "long_queue": [
