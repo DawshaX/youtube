@@ -99,10 +99,11 @@
     "ser-anger-s02",
     "ser-field-نمل-s01",
     "ser-field-ظلمة-s01",
-    "ser-queue-s05"
+    "ser-queue-s05",
+    "ser-sky-s07"
   ],
-  "turn": 172,
-  "last_series": "ser-queue",
+  "turn": 173,
+  "last_series": "ser-sky",
   "done": [
     {
       "id": "ser-study-s01",
@@ -790,11 +791,20 @@
       "series_id": "ser-queue",
       "emotion": "هزار",
       "at": "2026-10-20 22:07"
+    },
+    {
+      "id": "ser-sky-s07",
+      "url": "https://www.youtube.com/watch?v=h8SQCAT00yo",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-sky",
+      "emotion": "دهشة",
+      "at": "2026-10-21 21:16"
     }
   ],
   "day": {
-    "date": "2026-10-21",
-    "short": 2,
+    "date": "2026-10-22",
+    "short": 1,
     "long": 0
   },
   "long_queue": [
