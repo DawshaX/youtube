@@ -101,10 +101,11 @@
     "ser-field-ظلمة-s01",
     "ser-queue-s05",
     "ser-sky-s07",
-    "ser-faith-s09"
+    "ser-faith-s09",
+    "ser-family-s11"
   ],
-  "turn": 174,
-  "last_series": "ser-faith",
+  "turn": 175,
+  "last_series": "ser-family",
   "done": [
     {
       "id": "ser-study-s01",
@@ -810,11 +811,20 @@
       "series_id": "ser-faith",
       "emotion": "جد",
       "at": "2026-10-21 22:03"
+    },
+    {
+      "id": "ser-family-s11",
+      "url": "https://www.youtube.com/watch?v=HDKfhNZ8AzU",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-family",
+      "emotion": "حب",
+      "at": "2026-10-22 22:00"
     }
   ],
   "day": {
-    "date": "2026-10-22",
-    "short": 2,
+    "date": "2026-10-23",
+    "short": 1,
     "long": 0
   },
   "long_queue": [
