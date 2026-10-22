@@ -1976,8 +1976,8 @@
  },
  "clipcache:3b69a475f46e": {
   "source": "video:pexels",
-  "episode": "ser-anger-s02",
-  "at": "2026-10-19 21:09"
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:42"
  },
  "https://cdn.pixabay.com/video/2022/09/04/130226-746395325_medium.mp4": {
   "source": "video:pixabay",
@@ -1996,8 +1996,8 @@
  },
  "clipcache:bf1ffbf2969d": {
   "source": "video:pexels",
-  "episode": "ser-field-ظلمة-s01",
-  "at": "2026-10-20 21:16"
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:42"
  },
  "https://cdn.pixabay.com/video/2023/09/04/179120-861046347_medium.mp4": {
   "source": "video:pixabay",
@@ -2871,8 +2871,8 @@
  },
  "clipcache:08b14c5331a1": {
   "source": "video:pixabay",
-  "episode": "long-lisan",
-  "at": "2026-10-15 05:34"
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:43"
  },
  "https://cdn.pixabay.com/video/2022/08/08/127157-737736883_medium.mp4": {
   "source": "video:pixabay",
@@ -2880,9 +2880,9 @@
   "at": "2026-10-14 14:52"
  },
  "clipcache:5d989a3f5233": {
-  "source": "video:cache",
-  "episode": "long-shughl",
-  "at": "2026-10-18 17:45"
+  "source": "video:pexels",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:45"
  },
  "https://cdn.pixabay.com/video/2022/11/09/138315-769163810_medium.mp4": {
   "source": "video:pixabay",
@@ -7763,5 +7763,65 @@
   "source": "video:pexels",
   "episode": "ser-family-s11",
   "at": "2026-10-22 21:59"
+ },
+ "https://videos.pexels.com/video-files/7691998/7691998-hd_720_1366_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:42"
+ },
+ "https://videos.pexels.com/video-files/6646702/6646702-sd_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:42"
+ },
+ "https://cdn.pixabay.com/video/2020/04/08/35427-407130886_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:43"
+ },
+ "https://cdn.pixabay.com/video/2024/04/01/206379_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:43"
+ },
+ "clipcache:f46bed9749bf": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:43"
+ },
+ "https://cdn.pixabay.com/video/2020/01/21/31472-387312362_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:44"
+ },
+ "clipcache:395cbaf31257": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:44"
+ },
+ "https://cdn.pixabay.com/video/2026/10/08/381413_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:44"
+ },
+ "clipcache:6e11389fb5e4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:44"
+ },
+ "https://cdn.pixabay.com/video/2023/01/10/146013-788094717_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:45"
+ },
+ "clipcache:aaca5097900c": {
+  "source": "video:pixabay",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:45"
+ },
+ "https://videos.pexels.com/video-files/7592806/7592806-sd_640_310_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-field-عبرة-s02",
+  "at": "2026-10-22 22:45"
  }
 }

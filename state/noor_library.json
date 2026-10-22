@@ -102,10 +102,11 @@
     "ser-queue-s05",
     "ser-sky-s07",
     "ser-faith-s09",
-    "ser-family-s11"
+    "ser-family-s11",
+    "ser-field-عبرة-s02"
   ],
-  "turn": 175,
-  "last_series": "ser-family",
+  "turn": 176,
+  "last_series": "ser-field-عبرة",
   "done": [
     {
       "id": "ser-study-s01",
@@ -820,11 +821,20 @@
       "series_id": "ser-family",
       "emotion": "حب",
       "at": "2026-10-22 22:00"
+    },
+    {
+      "id": "ser-field-عبرة-s02",
+      "url": "https://www.youtube.com/watch?v=Y4_UlSE4cpU",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-field-عبرة",
+      "emotion": "حياة",
+      "at": "2026-10-22 22:47"
     }
   ],
   "day": {
     "date": "2026-10-23",
-    "short": 1,
+    "short": 2,
     "long": 0
   },
   "long_queue": [
