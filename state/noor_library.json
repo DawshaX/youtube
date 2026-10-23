@@ -103,10 +103,11 @@
     "ser-sky-s07",
     "ser-faith-s09",
     "ser-family-s11",
-    "ser-field-عبرة-s02"
+    "ser-field-عبرة-s02",
+    "ser-rain-s02"
   ],
-  "turn": 176,
-  "last_series": "ser-field-عبرة",
+  "turn": 177,
+  "last_series": "ser-rain",
   "done": [
     {
       "id": "ser-study-s01",
@@ -830,11 +831,20 @@
       "series_id": "ser-field-عبرة",
       "emotion": "حياة",
       "at": "2026-10-22 22:47"
+    },
+    {
+      "id": "ser-rain-s02",
+      "url": "https://www.youtube.com/watch?v=Mk-FjgUwO4Q",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-rain",
+      "emotion": "لحظة",
+      "at": "2026-10-23 22:11"
     }
   ],
   "day": {
-    "date": "2026-10-23",
-    "short": 2,
+    "date": "2026-10-24",
+    "short": 1,
     "long": 0
   },
   "long_queue": [
