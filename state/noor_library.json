@@ -104,10 +104,11 @@
     "ser-faith-s09",
     "ser-family-s11",
     "ser-field-عبرة-s02",
-    "ser-rain-s02"
+    "ser-rain-s02",
+    "ser-field-فلتر-s01"
   ],
-  "turn": 178,
-  "last_series": "ser-rain",
+  "turn": 179,
+  "last_series": "ser-field-فلتر",
   "done": [
     {
       "id": "ser-study-s01",
@@ -840,11 +841,20 @@
       "series_id": "ser-rain",
       "emotion": "لحظة",
       "at": "2026-10-23 22:11"
+    },
+    {
+      "id": "ser-field-فلتر-s01",
+      "url": "https://www.youtube.com/watch?v=wlQotfvsJto",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-field-فلتر",
+      "emotion": "وعي",
+      "at": "2026-10-23 23:59"
     }
   ],
   "day": {
     "date": "2026-10-24",
-    "short": 1,
+    "short": 2,
     "long": 0
   },
   "long_queue": [
