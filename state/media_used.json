@@ -471,8 +471,8 @@
  },
  "https://cdn.pixabay.com/video/2020/01/20/31440-386853550_medium.mp4": {
   "source": "video:pixabay",
-  "episode": "card738",
-  "at": "2026-10-07 13:13"
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:52"
  },
  "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/7._Photograph_of_polar_stars%2C_ordinary_camera%2C_2hr_exposure_%2822759327951%29.jpg/1280px-7._Photograph_of_polar_stars%2C_ordinary_camera%2C_2hr_exposure_%2822759327951%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail": {
   "source": "image:commons",
@@ -1771,8 +1771,8 @@
  },
  "clipcache:aed7f6592c3c": {
   "source": "video:pexels",
-  "episode": "ser-family-s11",
-  "at": "2026-10-22 21:57"
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:53"
  },
  "https://cdn.pixabay.com/video/2024/11/09/240531_medium.mp4": {
   "source": "video:pixabay",
@@ -2530,9 +2530,9 @@
   "at": "2026-10-14 14:18"
  },
  "clipcache:a39e93416414": {
-  "source": "video:pexels",
-  "episode": "ser-field-فيزياء-s02",
-  "at": "2026-10-24 21:08"
+  "source": "video:pixabay",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:52"
  },
  "https://cdn.pixabay.com/video/2022/06/21/121657-724710499_medium.mp4": {
   "source": "video:pixabay",
@@ -2820,9 +2820,9 @@
   "at": "2026-10-14 14:47"
  },
  "clipcache:27014c24c017": {
-  "source": "video:pixabay",
-  "episode": "ser-field-فيزياء-s02",
-  "at": "2026-10-24 21:06"
+  "source": "video:pexels",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:54"
  },
  "https://cdn.pixabay.com/video/2021/12/27/102693-660745117_medium.mp4": {
   "source": "video:pixabay",
@@ -2901,8 +2901,8 @@
  },
  "clipcache:97b12594296e": {
   "source": "video:pexels",
-  "episode": "long-jalsa",
-  "at": "2026-10-18 15:37"
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:55"
  },
  "https://cdn.pixabay.com/video/2025/09/14/304019_medium.mp4": {
   "source": "video:pixabay",
@@ -3020,9 +3020,9 @@
   "at": "2026-10-14 15:19"
  },
  "clipcache:a839e12ee636": {
-  "source": "video:cache",
-  "episode": "long-seha",
-  "at": "2026-10-18 20:15"
+  "source": "video:pexels",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:53"
  },
  "https://cdn.pixabay.com/video/2026/01/05/326081_medium.mp4": {
   "source": "video:pixabay",
@@ -3801,8 +3801,8 @@
  },
  "clipcache:3b4b70655ca2": {
   "source": "video:cache",
-  "episode": "ser-day-l10",
-  "at": "2026-10-15 06:44"
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:53"
  },
  "https://cdn.pixabay.com/video/2016/11/04/6266-190550868_medium.mp4": {
   "source": "video:pixabay",
@@ -3810,9 +3810,9 @@
   "at": "2026-10-14 18:08"
  },
  "clipcache:bd7025a20897": {
-  "source": "video:cache",
-  "episode": "ser-day-l10",
-  "at": "2026-10-15 06:45"
+  "source": "video:pixabay",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:53"
  },
  "https://cdn.pixabay.com/video/2026/01/02/325636_medium.mp4": {
   "source": "video:pixabay",
@@ -3820,9 +3820,9 @@
   "at": "2026-10-14 18:09"
  },
  "clipcache:df86494532ca": {
-  "source": "video:pixabay",
-  "episode": "ser-day-s05",
-  "at": "2026-10-17 22:52"
+  "source": "video:pexels",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:55"
  },
  "https://cdn.pixabay.com/video/2022/11/14/138931-770799907_medium.mp4": {
   "source": "video:pixabay",
@@ -8013,5 +8013,40 @@
   "source": "video:pexels",
   "episode": "ser-field-فيزياء-s02",
   "at": "2026-10-24 21:09"
+ },
+ "https://videos.pexels.com/video-files/33766128/14334168_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:52"
+ },
+ "https://videos.pexels.com/video-files/17041569/17041569-hd_720_1280_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:53"
+ },
+ "https://videos.pexels.com/video-files/7292659/7292659-sd_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:53"
+ },
+ "https://cdn.pixabay.com/video/2020/09/19/50352-460423340_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:53"
+ },
+ "https://videos.pexels.com/video-files/32241481/13749907_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:54"
+ },
+ "https://videos.pexels.com/video-files/37002333/15675867_720_1280_60fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:55"
+ },
+ "https://videos.pexels.com/video-files/30827836/13184236_720_1280_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-day-s04",
+  "at": "2026-10-24 21:55"
  }
 }

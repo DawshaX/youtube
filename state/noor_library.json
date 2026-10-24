@@ -106,10 +106,11 @@
     "ser-field-عبرة-s02",
     "ser-rain-s02",
     "ser-field-فلتر-s01",
-    "ser-field-فيزياء-s02"
+    "ser-field-فيزياء-s02",
+    "ser-day-s04"
   ],
-  "turn": 180,
-  "last_series": "ser-field-فيزياء",
+  "turn": 181,
+  "last_series": "ser-day",
   "done": [
     {
       "id": "ser-study-s01",
@@ -860,11 +861,20 @@
       "series_id": "ser-field-فيزياء",
       "emotion": "دهشة",
       "at": "2026-10-24 21:10"
+    },
+    {
+      "id": "ser-day-s04",
+      "url": "https://www.youtube.com/watch?v=GR0yJ6S11Cs",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-day",
+      "emotion": "جد",
+      "at": "2026-10-24 21:57"
     }
   ],
   "day": {
     "date": "2026-10-25",
-    "short": 1,
+    "short": 2,
     "long": 0
   },
   "long_queue": [
