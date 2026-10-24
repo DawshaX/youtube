@@ -105,10 +105,11 @@
     "ser-family-s11",
     "ser-field-عبرة-s02",
     "ser-rain-s02",
-    "ser-field-فلتر-s01"
+    "ser-field-فلتر-s01",
+    "ser-field-فيزياء-s02"
   ],
-  "turn": 179,
-  "last_series": "ser-field-فلتر",
+  "turn": 180,
+  "last_series": "ser-field-فيزياء",
   "done": [
     {
       "id": "ser-study-s01",
@@ -850,11 +851,20 @@
       "series_id": "ser-field-فلتر",
       "emotion": "وعي",
       "at": "2026-10-23 23:59"
+    },
+    {
+      "id": "ser-field-فيزياء-s02",
+      "url": "https://www.youtube.com/watch?v=0AQdvLKnlRc",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-field-فيزياء",
+      "emotion": "دهشة",
+      "at": "2026-10-24 21:10"
     }
   ],
   "day": {
-    "date": "2026-10-24",
-    "short": 2,
+    "date": "2026-10-25",
+    "short": 1,
     "long": 0
   },
   "long_queue": [

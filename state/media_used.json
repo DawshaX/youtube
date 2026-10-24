@@ -2531,8 +2531,8 @@
  },
  "clipcache:a39e93416414": {
   "source": "video:pexels",
-  "episode": "ser-family-s11",
-  "at": "2026-10-22 21:57"
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:08"
  },
  "https://cdn.pixabay.com/video/2022/06/21/121657-724710499_medium.mp4": {
   "source": "video:pixabay",
@@ -2590,9 +2590,9 @@
   "at": "2026-10-23 22:09"
  },
  "clipcache:a554a0fc2ec9": {
-  "source": "video:Wikimedia Commons",
-  "episode": "ser-field-فلتر-s01",
-  "at": "2026-10-23 23:58"
+  "source": "video:pixabay",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:07"
  },
  "https://cdn.pixabay.com/video/2025/10/31/313145_medium.mp4": {
   "source": "video:pixabay",
@@ -2801,8 +2801,8 @@
  },
  "clipcache:e3342d8fb13f": {
   "source": "video:pixabay",
-  "episode": "ser-family-s11",
-  "at": "2026-10-22 21:56"
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:04"
  },
  "https://cdn.pixabay.com/video/2022/12/20/143645-784138067_medium.mp4": {
   "source": "video:pixabay",
@@ -2820,9 +2820,9 @@
   "at": "2026-10-14 14:47"
  },
  "clipcache:27014c24c017": {
-  "source": "video:pexels",
-  "episode": "ser-queue-s05",
-  "at": "2026-10-20 22:05"
+  "source": "video:pixabay",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:06"
  },
  "https://cdn.pixabay.com/video/2021/12/27/102693-660745117_medium.mp4": {
   "source": "video:pixabay",
@@ -3036,8 +3036,8 @@
  },
  "clipcache:d68121df2f39": {
   "source": "video:pexels",
-  "episode": "ser-faith-s09",
-  "at": "2026-10-21 22:01"
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:09"
  },
  "https://cdn.pixabay.com/video/2016/04/04/2675-161512558_medium.mp4": {
   "source": "video:pixabay",
@@ -3146,8 +3146,8 @@
  },
  "https://cdn.pixabay.com/video/2020/04/26/37304-413555901_medium.mp4": {
   "source": "video:pixabay",
-  "episode": "ser-queue-l08",
-  "at": "2026-10-14 15:32"
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:04"
  },
  "https://cdn.pixabay.com/video/2018/01/07/13719-250154078_medium.mp4": {
   "source": "video:pixabay",
@@ -3376,8 +3376,8 @@
  },
  "https://cdn.pixabay.com/video/2017/07/28/10982-227351691_medium.mp4": {
   "source": "video:pixabay",
-  "episode": "ser-queue-l08",
-  "at": "2026-10-14 15:44"
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:07"
  },
  "https://cdn.pixabay.com/video/2021/10/01/90447-626004877_medium.mp4": {
   "source": "video:pixabay",
@@ -7948,5 +7948,70 @@
   "source": "video:Wikimedia Commons",
   "episode": "ser-field-فلتر-s01",
   "at": "2026-10-23 23:58"
+ },
+ "https://cdn.pixabay.com/video/2018/11/06/19167-299997239_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:04"
+ },
+ "clipcache:0fbddbf53561": {
+  "source": "video:cache",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:08"
+ },
+ "https://videos.pexels.com/video-files/39613471/16885429_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:05"
+ },
+ "clipcache:755a5392d923": {
+  "source": "video:pexels",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:05"
+ },
+ "https://cdn.pixabay.com/video/2019/06/11/24340-341474166_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:05"
+ },
+ "clipcache:2603624fdf2e": {
+  "source": "video:cache",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:06"
+ },
+ "https://cdn.pixabay.com/video/2022/10/27/136740-764817305_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:05"
+ },
+ "clipcache:9351a7e270c7": {
+  "source": "video:pixabay",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:05"
+ },
+ "https://cdn.pixabay.com/video/2025/06/25/287797_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:06"
+ },
+ "clipcache:9bf670c2b178": {
+  "source": "video:cache",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:08"
+ },
+ "https://cdn.pixabay.com/video/2026/09/08/375121_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:06"
+ },
+ "https://videos.pexels.com/video-files/4153742/4153742-sd_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:08"
+ },
+ "https://videos.pexels.com/video-files/34276965/14521307_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-field-فيزياء-s02",
+  "at": "2026-10-24 21:09"
  }
 }
