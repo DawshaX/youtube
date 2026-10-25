@@ -107,10 +107,11 @@
     "ser-rain-s02",
     "ser-field-فلتر-s01",
     "ser-field-فيزياء-s02",
-    "ser-day-s04"
+    "ser-day-s04",
+    "ser-field-صداقة-s01"
   ],
-  "turn": 181,
-  "last_series": "ser-day",
+  "turn": 182,
+  "last_series": "ser-field-صداقة",
   "done": [
     {
       "id": "ser-study-s01",
@@ -870,11 +871,20 @@
       "series_id": "ser-day",
       "emotion": "جد",
       "at": "2026-10-24 21:57"
+    },
+    {
+      "id": "ser-field-صداقة-s01",
+      "url": "https://www.youtube.com/watch?v=VPNJaL0Tp8k",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-field-صداقة",
+      "emotion": "حب",
+      "at": "2026-10-25 21:48"
     }
   ],
   "day": {
-    "date": "2026-10-25",
-    "short": 2,
+    "date": "2026-10-26",
+    "short": 1,
     "long": 0
   },
   "long_queue": [
