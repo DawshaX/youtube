@@ -110,10 +110,11 @@
     "ser-day-s04",
     "ser-field-صداقة-s01",
     "ser-field-علم الحياة-s04",
-    "ser-field-لحظة-s04"
+    "ser-field-لحظة-s04",
+    "ser-queue-s02"
   ],
-  "turn": 185,
-  "last_series": "ser-field-لحظة",
+  "turn": 186,
+  "last_series": "ser-queue",
   "done": [
     {
       "id": "ser-study-s01",
@@ -900,11 +901,20 @@
       "series_id": "ser-field-لحظة",
       "emotion": "لحظة",
       "at": "2026-10-26 21:22"
+    },
+    {
+      "id": "ser-queue-s02",
+      "url": "https://www.youtube.com/watch?v=JEaTe0yN4wc",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-queue",
+      "emotion": "هزار",
+      "at": "2026-10-26 22:10"
     }
   ],
   "day": {
     "date": "2026-10-27",
-    "short": 1,
+    "short": 2,
     "long": 0
   },
   "long_queue": [
