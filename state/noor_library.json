@@ -112,10 +112,11 @@
     "ser-field-علم الحياة-s04",
     "ser-field-لحظة-s04",
     "ser-queue-s02",
-    "ser-sky-s12"
+    "ser-sky-s12",
+    "ser-faith-s06"
   ],
-  "turn": 187,
-  "last_series": "ser-sky",
+  "turn": 188,
+  "last_series": "ser-faith",
   "done": [
     {
       "id": "ser-study-s01",
@@ -920,11 +921,20 @@
       "series_id": "ser-sky",
       "emotion": "دهشة",
       "at": "2026-10-27 21:33"
+    },
+    {
+      "id": "ser-faith-s06",
+      "url": "https://www.youtube.com/watch?v=SQZstpgQAl8",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-faith",
+      "emotion": "جد",
+      "at": "2026-10-27 22:21"
     }
   ],
   "day": {
     "date": "2026-10-28",
-    "short": 1,
+    "short": 2,
     "long": 0
   },
   "long_queue": [
