@@ -114,10 +114,11 @@
     "ser-queue-s02",
     "ser-sky-s12",
     "ser-faith-s06",
-    "ser-field-حسد-s01"
+    "ser-field-حسد-s01",
+    "ser-phone-s07"
   ],
-  "turn": 189,
-  "last_series": "ser-field-حسد",
+  "turn": 190,
+  "last_series": "ser-phone",
   "done": [
     {
       "id": "ser-study-s01",
@@ -940,11 +941,20 @@
       "series_id": "ser-field-حسد",
       "emotion": "وعي",
       "at": "2026-10-28 21:44"
+    },
+    {
+      "id": "ser-phone-s07",
+      "url": "https://www.youtube.com/watch?v=ug-yG9cn4MU",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-phone",
+      "emotion": "حياة",
+      "at": "2026-10-28 22:32"
     }
   ],
   "day": {
     "date": "2026-10-29",
-    "short": 1,
+    "short": 2,
     "long": 0
   },
   "long_queue": [

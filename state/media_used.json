@@ -2601,8 +2601,8 @@
  },
  "clipcache:23bb1bdc9641": {
   "source": "video:pixabay",
-  "episode": "ser-field-حسد-s01",
-  "at": "2026-10-28 21:40"
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:31"
  },
  "https://cdn.pixabay.com/video/2020/07/13/44575-439924989_medium.mp4": {
   "source": "video:pixabay",
@@ -2841,8 +2841,8 @@
  },
  "clipcache:ff7f31da0569": {
   "source": "video:pexels",
-  "episode": "ser-field-ظلمة-s01",
-  "at": "2026-10-20 21:17"
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:27"
  },
  "https://cdn.pixabay.com/video/2022/06/16/120529-721287031_medium.mp4": {
   "source": "video:pixabay",
@@ -3051,8 +3051,8 @@
  },
  "https://cdn.pixabay.com/video/2019/10/04/27539-364430966_medium.mp4": {
   "source": "video:pixabay",
-  "episode": "ser-field-جسم ونَفَس-l06",
-  "at": "2026-10-14 15:21"
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:31"
  },
  "clipcache:241706d92d1e": {
   "source": "video:cache",
@@ -3206,8 +3206,8 @@
  },
  "clipcache:ebcae096d83e": {
   "source": "video:pexels",
-  "episode": "ser-field-حسد-s01",
-  "at": "2026-10-28 21:41"
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:30"
  },
  "https://cdn.pixabay.com/video/2022/10/29/137018-765427143_medium.mp4": {
   "source": "video:pixabay",
@@ -3835,9 +3835,9 @@
   "at": "2026-10-14 18:54"
  },
  "clipcache:52a71acaef73": {
-  "source": "video:cache",
-  "episode": "ser-field-حسد-s01",
-  "at": "2026-10-28 21:40"
+  "source": "video:pixabay",
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:29"
  },
  "https://cdn.pixabay.com/video/2019/02/26/21664-320282109_medium.mp4": {
   "source": "video:pixabay",
@@ -3846,8 +3846,8 @@
  },
  "clipcache:b5bd17ab6c34": {
   "source": "video:cache",
-  "episode": "ser-field-حسد-s01",
-  "at": "2026-10-28 21:40"
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:29"
  },
  "https://cdn.pixabay.com/video/2022/03/31/112429-694704491_medium.mp4": {
   "source": "video:pixabay",
@@ -3855,9 +3855,9 @@
   "at": "2026-10-14 18:56"
  },
  "clipcache:ac765062ef7a": {
-  "source": "video:cache",
-  "episode": "ser-field-حسد-s01",
-  "at": "2026-10-28 21:41"
+  "source": "video:pexels",
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:28"
  },
  "https://cdn.pixabay.com/video/2020/01/21/31471-387312359_medium.mp4": {
   "source": "video:pixabay",
@@ -3865,9 +3865,9 @@
   "at": "2026-10-14 18:57"
  },
  "clipcache:4813ec839d4e": {
-  "source": "video:pexels",
-  "episode": "ser-field-حسد-s01",
-  "at": "2026-10-28 21:37"
+  "source": "video:cache",
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:28"
  },
  "https://cdn.pixabay.com/video/2026/08/24/372441_medium.mp4": {
   "source": "video:pixabay",
@@ -3881,8 +3881,8 @@
  },
  "clipcache:8e7749a39c5f": {
   "source": "video:cache",
-  "episode": "ser-field-حسد-s01",
-  "at": "2026-10-28 21:41"
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:29"
  },
  "https://cdn.pixabay.com/video/2025/08/28/300192_medium.mp4": {
   "source": "video:pixabay",
@@ -8373,5 +8373,40 @@
   "source": "video:pexels",
   "episode": "ser-field-حسد-s01",
   "at": "2026-10-28 21:41"
+ },
+ "https://videos.pexels.com/video-files/6077007/6077007-sd_640_338_25fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:26"
+ },
+ "https://videos.pexels.com/video-files/40357622/17242359_720_1280_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:27"
+ },
+ "https://videos.pexels.com/video-files/3890369/3890369-sd_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:28"
+ },
+ "https://videos.pexels.com/video-files/19428462/19428462-sd_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:28"
+ },
+ "https://videos.pexels.com/video-files/6093293/6093293-sd_640_360_24fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:29"
+ },
+ "https://cdn.pixabay.com/video/2025/02/17/258819_medium.mp4": {
+  "source": "video:pixabay",
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:29"
+ },
+ "https://videos.pexels.com/video-files/32966811/14051232_640_360_30fps.mp4": {
+  "source": "video:pexels",
+  "episode": "ser-phone-s07",
+  "at": "2026-10-28 22:30"
  }
 }
