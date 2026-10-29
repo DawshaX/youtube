@@ -116,10 +116,11 @@
     "ser-faith-s06",
     "ser-field-حسد-s01",
     "ser-phone-s07",
-    "ser-family-s09"
+    "ser-family-s09",
+    "ser-field-ضحك-s03"
   ],
-  "turn": 191,
-  "last_series": "ser-family",
+  "turn": 192,
+  "last_series": "ser-field-ضحك",
   "done": [
     {
       "id": "ser-study-s01",
@@ -960,11 +961,20 @@
       "series_id": "ser-family",
       "emotion": "حب",
       "at": "2026-10-29 22:28"
+    },
+    {
+      "id": "ser-field-ضحك-s03",
+      "url": "https://www.youtube.com/watch?v=P9PxQey25f4",
+      "err": "",
+      "kind": "short",
+      "series_id": "ser-field-ضحك",
+      "emotion": "هزار",
+      "at": "2026-10-29 23:17"
     }
   ],
   "day": {
     "date": "2026-10-30",
-    "short": 1,
+    "short": 2,
     "long": 0
   },
   "long_queue": [
