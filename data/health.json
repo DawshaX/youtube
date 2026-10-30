@@ -1,8 +1,8 @@
 {
- "checkedAt": "2026-10-29T21:48:23+00:00",
+ "checkedAt": "2026-10-30T01:56:37+00:00",
  "runner": "actions-or-local",
  "all_ok": false,
- "fails": 3,
+ "fails": 2,
  "warns": 4,
  "checks": [
   {
@@ -68,12 +68,12 @@
   {
    "name": "NASA_API_KEY (فضاء)",
    "status": "fail",
-   "detail": "HTTP 500 — {\"code\":500,\"msg\":\"Internal Service Error\",\"service_version\":\"v1\"}\n"
+   "detail": "HTTP -1 — ReadTimeout: HTTPSConnectionPool(host='api.nasa.gov', port=443): Read timed out. (read timeout=20)"
   },
   {
    "name": "OPENVERSE (صور/ميديا)",
-   "status": "fail",
-   "detail": "HTTP -1 — ReadTimeout: HTTPSConnectionPool(host='api.openverse.org', port=443): Read timed out. (read timeout=20)"
+   "status": "ok",
+   "detail": "شغال (المفتاح اختياري)"
   },
   {
    "name": "RESTCOUNTRIES (مكتبة العالم)",
